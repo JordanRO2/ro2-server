@@ -38,13 +38,13 @@ If the NuGet cache gets corrupted: `dotnet restore --packages ".packages"`.
 
 ```bash
 # Login server (port 7101)
-dotnet run --project src/RO2.Server.Login --no-build --packages ".packages"
+dotnet run --project source/Hosts/RO2.Server.Login --no-build --packages ".packages"
 
 # Zone server (port 7201)
-dotnet run --project src/RO2.Server.Zone --no-build --packages ".packages"
+dotnet run --project source/Hosts/RO2.Server.Zone --no-build --packages ".packages"
 
 # Chat server (port 7401)
-dotnet run --project src/RO2.Server.Chat --no-build --packages ".packages"
+dotnet run --project source/Hosts/RO2.Server.Chat --no-build --packages ".packages"
 ```
 
 Convenience launchers: `start-all.bat`, `start-debug-all.bat`.
@@ -65,28 +65,31 @@ Edit `config.json`:
 ## Architecture
 
 ```
-src/
-  RO2.Domain/               # Entities, enums, value objects, game-data models
-  RO2.Application/          # Use cases, repository interfaces
-  RO2.Infrastructure/       # Cross-cutting infrastructure wiring
-  RO2.Network/              # ProudNet protocol, RMI handlers, packets
-  RO2.BuildingBlocks/       # Shared primitives
-  RO2.BuildingBlocks.Bus/   # In-process message bus
-  RO2.Persistence.Mongo/    # MongoDB persistence provider (default)
-  RO2.Persistence.Postgres/ # PostgreSQL persistence provider
-  RO2.Persistence.Redis/    # Redis persistence provider
-  RO2.Server.Login/         # Login server  (7101)
-  RO2.Server.Zone/          # Zone server   (7201)
-  RO2.Server.Chat/          # Chat server   (7401)
-services/
-  identity/                 # Identity bounded context (DDD): Domain, Application,
-                            #   Infrastructure + Mongo and Postgres implementations
+source/
+  Shared/
+    RO2.BuildingBlocks/        # Shared primitives
+    RO2.BuildingBlocks.Bus/    # In-process message bus
+  Game/
+    RO2.Domain/                # Entities, enums, value objects, game-data models
+    RO2.Application/           # Use cases, repository interfaces
+  Platform/
+    RO2.Infrastructure/        # Cross-cutting infrastructure wiring
+    RO2.Network/               # ProudNet protocol, RMI handlers, packets
+    RO2.Persistence.Mongo/     # MongoDB persistence provider (default)
+    RO2.Persistence.Postgres/  # PostgreSQL persistence provider
+    RO2.Persistence.Redis/     # Redis persistence provider
+  Identity/                    # Identity bounded context (DDD): Domain / Application /
+                               #   Infrastructure + Mongo and Postgres implementations
+  Hosts/
+    RO2.Server.Login/          # Login server  (7101)
+    RO2.Server.Zone/           # Zone server   (7201)
+    RO2.Server.Chat/           # Chat server   (7401)
 tests/
-  RO2.Tests/                # Unit + integration tests
+  RO2.Tests/                   # Unit + integration tests
 ```
 
-Game data is **not hardcoded** — it is generated from client `.tbl`/XLSX files into
-JSON under `data/` (and `data/strings/`) via the tools in `tools/`.
+Game data is **not hardcoded** — it is generated from the client's `.tbl`/XLSX tables into
+JSON under `data/` (and `data/strings/`) by the `data-pipeline/` project.
 
 ## Documentation
 
