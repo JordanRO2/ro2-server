@@ -1,0 +1,260 @@
+[
+  {
+    "ID": 1,
+    "Craft_ItemName": "단검",
+    "String_ItemType": 511,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 2,
+    "Craft_ItemName": "한손검",
+    "String_ItemType": 512,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 3,
+    "Craft_ItemName": "둔기",
+    "String_ItemType": 514,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 4,
+    "Craft_ItemName": "양손검",
+    "String_ItemType": 513,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 5,
+    "Craft_ItemName": "지팡이",
+    "String_ItemType": 523,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 6,
+    "Craft_ItemName": "양손창",
+    "String_ItemType": 519,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 7,
+    "Craft_ItemName": "장착류",
+    "String_ItemType": 526,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 8,
+    "Craft_ItemName": "투구(중갑)",
+    "String_ItemType": 7315,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 9,
+    "Craft_ItemName": "상의(중갑)",
+    "String_ItemType": 7310,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 10,
+    "Craft_ItemName": "하의(중갑)",
+    "String_ItemType": 7311,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 11,
+    "Craft_ItemName": "장갑(중갑)",
+    "String_ItemType": 7312,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 12,
+    "Craft_ItemName": "신발(중갑)",
+    "String_ItemType": 7313,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 13,
+    "Craft_ItemName": "투구(경갑/천)",
+    "String_ItemType": 8520,
+    "ProType_ID": 4
+  },
+  {
+    "ID": 14,
+    "Craft_ItemName": "상의(경갑/천)",
+    "String_ItemType": 8521,
+    "ProType_ID": 4
+  },
+  {
+    "ID": 15,
+    "Craft_ItemName": "하의(경갑/천)",
+    "String_ItemType": 8522,
+    "ProType_ID": 4
+  },
+  {
+    "ID": 16,
+    "Craft_ItemName": "장갑(경갑/천)",
+    "String_ItemType": 8523,
+    "ProType_ID": 4
+  },
+  {
+    "ID": 17,
+    "Craft_ItemName": "신발(경갑/천)",
+    "String_ItemType": 8524,
+    "ProType_ID": 4
+  },
+  {
+    "ID": 18,
+    "Craft_ItemName": "투사체",
+    "String_ItemType": 8525,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 19,
+    "Craft_ItemName": "회복 포션",
+    "String_ItemType": 534,
+    "ProType_ID": 2
+  },
+  {
+    "ID": 20,
+    "Craft_ItemName": "회복 음식",
+    "String_ItemType": 7731,
+    "ProType_ID": 1
+  },
+  {
+    "ID": 21,
+    "Craft_ItemName": "방패",
+    "String_ItemType": 532,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 22,
+    "Craft_ItemName": "활",
+    "String_ItemType": 521,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 23,
+    "Craft_ItemName": "광물",
+    "String_ItemType": 10038,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 24,
+    "Craft_ItemName": "천",
+    "String_ItemType": 10039,
+    "ProType_ID": 4
+  },
+  {
+    "ID": 25,
+    "Craft_ItemName": "가죽",
+    "String_ItemType": 10040,
+    "ProType_ID": 4
+  },
+  {
+    "ID": 26,
+    "Craft_ItemName": "약초",
+    "String_ItemType": 10041,
+    "ProType_ID": 2
+  },
+  {
+    "ID": 27,
+    "Craft_ItemName": "재료 가공",
+    "String_ItemType": 10042,
+    "ProType_ID": 1
+  },
+  {
+    "ID": 28,
+    "Craft_ItemName": "강화 포션",
+    "String_ItemType": 10043,
+    "ProType_ID": 2
+  },
+  {
+    "ID": 29,
+    "Craft_ItemName": "증폭 포션",
+    "String_ItemType": 10044,
+    "ProType_ID": 2
+  },
+  {
+    "ID": 30,
+    "Craft_ItemName": "강화 음식",
+    "String_ItemType": 10045,
+    "ProType_ID": 1
+  },
+  {
+    "ID": 31,
+    "Craft_ItemName": "룬 홀 펀치",
+    "String_ItemType": 10381,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 32,
+    "Craft_ItemName": "룬",
+    "String_ItemType": 10382,
+    "ProType_ID": 4
+  },
+  {
+    "ID": 33,
+    "Craft_ItemName": "재료 가공",
+    "String_ItemType": 10042,
+    "ProType_ID": 2
+  },
+  {
+    "ID": 34,
+    "Craft_ItemName": "재료 가공",
+    "String_ItemType": 10042,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 35,
+    "Craft_ItemName": "재료 가공",
+    "String_ItemType": 10042,
+    "ProType_ID": 4
+  },
+  {
+    "ID": 36,
+    "Craft_ItemName": "제련석",
+    "String_ItemType": 8526,
+    "ProType_ID": 2
+  },
+  {
+    "ID": 37,
+    "Craft_ItemName": "사이더",
+    "String_ItemType": 11100,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 38,
+    "Craft_ItemName": "핸들",
+    "String_ItemType": 11101,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 39,
+    "Craft_ItemName": "인형",
+    "String_ItemType": 11102,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 40,
+    "Craft_ItemName": "액세서리",
+    "String_ItemType": 11594,
+    "ProType_ID": 4
+  },
+  {
+    "ID": 41,
+    "Craft_ItemName": "무기 축복",
+    "String_ItemType": 11595,
+    "ProType_ID": 3
+  },
+  {
+    "ID": 42,
+    "Craft_ItemName": "방어구 축복",
+    "String_ItemType": 11596,
+    "ProType_ID": 4
+  },
+  {
+    "ID": 43,
+    "Craft_ItemName": "바이블",
+    "String_ItemType": 11826,
+    "ProType_ID": 3
+  }
+]

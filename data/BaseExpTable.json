@@ -1,0 +1,302 @@
+[
+  {
+    "Base_Level": 1,
+    "Base_Exp_Next": 69,
+    "NPC_Base_Exp": 10,
+    "Pro_Exp_Next": 69
+  },
+  {
+    "Base_Level": 2,
+    "Base_Exp_Next": 295,
+    "NPC_Base_Exp": 21,
+    "Pro_Exp_Next": 295
+  },
+  {
+    "Base_Level": 3,
+    "Base_Exp_Next": 695,
+    "NPC_Base_Exp": 31,
+    "Pro_Exp_Next": 695
+  },
+  {
+    "Base_Level": 4,
+    "Base_Exp_Next": 1287,
+    "NPC_Base_Exp": 42,
+    "Pro_Exp_Next": 1287
+  },
+  {
+    "Base_Level": 5,
+    "Base_Exp_Next": 2088,
+    "NPC_Base_Exp": 52,
+    "Pro_Exp_Next": 2088
+  },
+  {
+    "Base_Level": 6,
+    "Base_Exp_Next": 3116,
+    "NPC_Base_Exp": 63,
+    "Pro_Exp_Next": 3116
+  },
+  {
+    "Base_Level": 7,
+    "Base_Exp_Next": 4389,
+    "NPC_Base_Exp": 73,
+    "Pro_Exp_Next": 4389
+  },
+  {
+    "Base_Level": 8,
+    "Base_Exp_Next": 5926,
+    "NPC_Base_Exp": 84,
+    "Pro_Exp_Next": 5926
+  },
+  {
+    "Base_Level": 9,
+    "Base_Exp_Next": 7744,
+    "NPC_Base_Exp": 95,
+    "Pro_Exp_Next": 7744
+  },
+  {
+    "Base_Level": 10,
+    "Base_Exp_Next": 8876,
+    "NPC_Base_Exp": 106,
+    "Pro_Exp_Next": 8876
+  },
+  {
+    "Base_Level": 11,
+    "Base_Exp_Next": 11069,
+    "NPC_Base_Exp": 116,
+    "Pro_Exp_Next": 11069
+  },
+  {
+    "Base_Level": 12,
+    "Base_Exp_Next": 13566,
+    "NPC_Base_Exp": 127,
+    "Pro_Exp_Next": 13566
+  },
+  {
+    "Base_Level": 13,
+    "Base_Exp_Next": 16384,
+    "NPC_Base_Exp": 138,
+    "Pro_Exp_Next": 16384
+  },
+  {
+    "Base_Level": 14,
+    "Base_Exp_Next": 19541,
+    "NPC_Base_Exp": 149,
+    "Pro_Exp_Next": 19541
+  },
+  {
+    "Base_Level": 15,
+    "Base_Exp_Next": 23054,
+    "NPC_Base_Exp": 160,
+    "Pro_Exp_Next": 23054
+  },
+  {
+    "Base_Level": 16,
+    "Base_Exp_Next": 26942,
+    "NPC_Base_Exp": 171,
+    "Pro_Exp_Next": 26942
+  },
+  {
+    "Base_Level": 17,
+    "Base_Exp_Next": 31221,
+    "NPC_Base_Exp": 182,
+    "Pro_Exp_Next": 31221
+  },
+  {
+    "Base_Level": 18,
+    "Base_Exp_Next": 35912,
+    "NPC_Base_Exp": 193,
+    "Pro_Exp_Next": 35912
+  },
+  {
+    "Base_Level": 19,
+    "Base_Exp_Next": 41032,
+    "NPC_Base_Exp": 204,
+    "Pro_Exp_Next": 41032
+  },
+  {
+    "Base_Level": 20,
+    "Base_Exp_Next": 42365,
+    "NPC_Base_Exp": 215,
+    "Pro_Exp_Next": 42365
+  },
+  {
+    "Base_Level": 21,
+    "Base_Exp_Next": 47854,
+    "NPC_Base_Exp": 227,
+    "Pro_Exp_Next": 47854
+  },
+  {
+    "Base_Level": 22,
+    "Base_Exp_Next": 53787,
+    "NPC_Base_Exp": 238,
+    "Pro_Exp_Next": 53787
+  },
+  {
+    "Base_Level": 23,
+    "Base_Exp_Next": 60182,
+    "NPC_Base_Exp": 249,
+    "Pro_Exp_Next": 60182
+  },
+  {
+    "Base_Level": 24,
+    "Base_Exp_Next": 67059,
+    "NPC_Base_Exp": 261,
+    "Pro_Exp_Next": 67059
+  },
+  {
+    "Base_Level": 25,
+    "Base_Exp_Next": 74436,
+    "NPC_Base_Exp": 272,
+    "Pro_Exp_Next": 74436
+  },
+  {
+    "Base_Level": 26,
+    "Base_Exp_Next": 82334,
+    "NPC_Base_Exp": 284,
+    "Pro_Exp_Next": 82334
+  },
+  {
+    "Base_Level": 27,
+    "Base_Exp_Next": 90772,
+    "NPC_Base_Exp": 296,
+    "Pro_Exp_Next": 90772
+  },
+  {
+    "Base_Level": 28,
+    "Base_Exp_Next": 99772,
+    "NPC_Base_Exp": 307,
+    "Pro_Exp_Next": 99772
+  },
+  {
+    "Base_Level": 29,
+    "Base_Exp_Next": 109355,
+    "NPC_Base_Exp": 319,
+    "Pro_Exp_Next": 109355
+  },
+  {
+    "Base_Level": 30,
+    "Base_Exp_Next": 109581,
+    "NPC_Base_Exp": 331,
+    "Pro_Exp_Next": 109581
+  },
+  {
+    "Base_Level": 31,
+    "Base_Exp_Next": 119496,
+    "NPC_Base_Exp": 343,
+    "Pro_Exp_Next": 119496
+  },
+  {
+    "Base_Level": 32,
+    "Base_Exp_Next": 130007,
+    "NPC_Base_Exp": 355,
+    "Pro_Exp_Next": 130007
+  },
+  {
+    "Base_Level": 33,
+    "Base_Exp_Next": 141137,
+    "NPC_Base_Exp": 368,
+    "Pro_Exp_Next": 141137
+  },
+  {
+    "Base_Level": 34,
+    "Base_Exp_Next": 152908,
+    "NPC_Base_Exp": 380,
+    "Pro_Exp_Next": 152908
+  },
+  {
+    "Base_Level": 35,
+    "Base_Exp_Next": 165345,
+    "NPC_Base_Exp": 393,
+    "Pro_Exp_Next": 165345
+  },
+  {
+    "Base_Level": 36,
+    "Base_Exp_Next": 178471,
+    "NPC_Base_Exp": 405,
+    "Pro_Exp_Next": 178471
+  },
+  {
+    "Base_Level": 37,
+    "Base_Exp_Next": 192313,
+    "NPC_Base_Exp": 418,
+    "Pro_Exp_Next": 192313
+  },
+  {
+    "Base_Level": 38,
+    "Base_Exp_Next": 206896,
+    "NPC_Base_Exp": 431,
+    "Pro_Exp_Next": 206896
+  },
+  {
+    "Base_Level": 39,
+    "Base_Exp_Next": 222247,
+    "NPC_Base_Exp": 444,
+    "Pro_Exp_Next": 222247
+  },
+  {
+    "Base_Level": 40,
+    "Base_Exp_Next": 238396,
+    "NPC_Base_Exp": 457,
+    "Pro_Exp_Next": 238396
+  },
+  {
+    "Base_Level": 41,
+    "Base_Exp_Next": 255371,
+    "NPC_Base_Exp": 470,
+    "Pro_Exp_Next": 255371
+  },
+  {
+    "Base_Level": 42,
+    "Base_Exp_Next": 273204,
+    "NPC_Base_Exp": 484,
+    "Pro_Exp_Next": 273204
+  },
+  {
+    "Base_Level": 43,
+    "Base_Exp_Next": 291926,
+    "NPC_Base_Exp": 498,
+    "Pro_Exp_Next": 291926
+  },
+  {
+    "Base_Level": 44,
+    "Base_Exp_Next": 311571,
+    "NPC_Base_Exp": 511,
+    "Pro_Exp_Next": 311571
+  },
+  {
+    "Base_Level": 45,
+    "Base_Exp_Next": 332174,
+    "NPC_Base_Exp": 526,
+    "Pro_Exp_Next": 332174
+  },
+  {
+    "Base_Level": 46,
+    "Base_Exp_Next": 353772,
+    "NPC_Base_Exp": 540,
+    "Pro_Exp_Next": 353772
+  },
+  {
+    "Base_Level": 47,
+    "Base_Exp_Next": 376404,
+    "NPC_Base_Exp": 554,
+    "Pro_Exp_Next": 376404
+  },
+  {
+    "Base_Level": 48,
+    "Base_Exp_Next": 400108,
+    "NPC_Base_Exp": 569,
+    "Pro_Exp_Next": 400108
+  },
+  {
+    "Base_Level": 49,
+    "Base_Exp_Next": 424928,
+    "NPC_Base_Exp": 584,
+    "Pro_Exp_Next": 424928
+  },
+  {
+    "Base_Level": 50,
+    "Base_Exp_Next": 999999,
+    "NPC_Base_Exp": 599,
+    "Pro_Exp_Next": 999999
+  }
+]

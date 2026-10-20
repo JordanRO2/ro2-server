@@ -1,0 +1,46 @@
+[
+  {
+    "JobType": 1,
+    "Chest": 12611000,
+    "Leg": 12621001,
+    "Arm": 12631001,
+    "Foot": 12641001,
+    "Back": 0,
+    "Right_Hand": 0,
+    "Left_Hand": 0,
+    "Description": "요리사"
+  },
+  {
+    "JobType": 2,
+    "Chest": 12611002,
+    "Leg": 12621002,
+    "Arm": 12631002,
+    "Foot": 12641002,
+    "Back": 0,
+    "Right_Hand": 0,
+    "Left_Hand": 0,
+    "Description": "의사"
+  },
+  {
+    "JobType": 3,
+    "Chest": 12611003,
+    "Leg": 12621003,
+    "Arm": 12631003,
+    "Foot": 12641003,
+    "Back": 0,
+    "Right_Hand": 0,
+    "Left_Hand": 0,
+    "Description": "대장장이"
+  },
+  {
+    "JobType": 4,
+    "Chest": 12611004,
+    "Leg": 12621004,
+    "Arm": 12631004,
+    "Foot": 12641004,
+    "Back": 0,
+    "Right_Hand": 0,
+    "Left_Hand": 0,
+    "Description": "재봉사"
+  }
+]

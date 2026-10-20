@@ -1,0 +1,398 @@
+[
+  {
+    "Lv": 1,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 2,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 3,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 4,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 5,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 6,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 7,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 8,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 9,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 10,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 11,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 12,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 13,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 14,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 15,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 16,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 17,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 18,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 19,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 20,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 21,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 22,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 23,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 24,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 25,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 26,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 27,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 28,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 29,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 30,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 31,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 32,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 33,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 34,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 35,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 36,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 37,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 38,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 39,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 40,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 41,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 42,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 43,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 44,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 45,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 46,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 47,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 48,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 49,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 50,
+    "Max_Status": 50
+  },
+  {
+    "Lv": 51,
+    "Max_Status": 60
+  },
+  {
+    "Lv": 52,
+    "Max_Status": 60
+  },
+  {
+    "Lv": 53,
+    "Max_Status": 60
+  },
+  {
+    "Lv": 54,
+    "Max_Status": 60
+  },
+  {
+    "Lv": 55,
+    "Max_Status": 60
+  },
+  {
+    "Lv": 56,
+    "Max_Status": 60
+  },
+  {
+    "Lv": 57,
+    "Max_Status": 60
+  },
+  {
+    "Lv": 58,
+    "Max_Status": 60
+  },
+  {
+    "Lv": 59,
+    "Max_Status": 60
+  },
+  {
+    "Lv": 60,
+    "Max_Status": 60
+  },
+  {
+    "Lv": 61,
+    "Max_Status": 70
+  },
+  {
+    "Lv": 62,
+    "Max_Status": 70
+  },
+  {
+    "Lv": 63,
+    "Max_Status": 70
+  },
+  {
+    "Lv": 64,
+    "Max_Status": 70
+  },
+  {
+    "Lv": 65,
+    "Max_Status": 70
+  },
+  {
+    "Lv": 66,
+    "Max_Status": 70
+  },
+  {
+    "Lv": 67,
+    "Max_Status": 70
+  },
+  {
+    "Lv": 68,
+    "Max_Status": 70
+  },
+  {
+    "Lv": 69,
+    "Max_Status": 70
+  },
+  {
+    "Lv": 70,
+    "Max_Status": 70
+  },
+  {
+    "Lv": 71,
+    "Max_Status": 80
+  },
+  {
+    "Lv": 72,
+    "Max_Status": 80
+  },
+  {
+    "Lv": 73,
+    "Max_Status": 80
+  },
+  {
+    "Lv": 74,
+    "Max_Status": 80
+  },
+  {
+    "Lv": 75,
+    "Max_Status": 80
+  },
+  {
+    "Lv": 76,
+    "Max_Status": 80
+  },
+  {
+    "Lv": 77,
+    "Max_Status": 80
+  },
+  {
+    "Lv": 78,
+    "Max_Status": 80
+  },
+  {
+    "Lv": 79,
+    "Max_Status": 80
+  },
+  {
+    "Lv": 80,
+    "Max_Status": 80
+  },
+  {
+    "Lv": 81,
+    "Max_Status": 90
+  },
+  {
+    "Lv": 82,
+    "Max_Status": 90
+  },
+  {
+    "Lv": 83,
+    "Max_Status": 90
+  },
+  {
+    "Lv": 84,
+    "Max_Status": 90
+  },
+  {
+    "Lv": 85,
+    "Max_Status": 90
+  },
+  {
+    "Lv": 86,
+    "Max_Status": 90
+  },
+  {
+    "Lv": 87,
+    "Max_Status": 90
+  },
+  {
+    "Lv": 88,
+    "Max_Status": 90
+  },
+  {
+    "Lv": 89,
+    "Max_Status": 90
+  },
+  {
+    "Lv": 90,
+    "Max_Status": 90
+  },
+  {
+    "Lv": 91,
+    "Max_Status": 99
+  },
+  {
+    "Lv": 92,
+    "Max_Status": 99
+  },
+  {
+    "Lv": 93,
+    "Max_Status": 99
+  },
+  {
+    "Lv": 94,
+    "Max_Status": 99
+  },
+  {
+    "Lv": 95,
+    "Max_Status": 99
+  },
+  {
+    "Lv": 96,
+    "Max_Status": 99
+  },
+  {
+    "Lv": 97,
+    "Max_Status": 99
+  },
+  {
+    "Lv": 98,
+    "Max_Status": 99
+  },
+  {
+    "Lv": 99,
+    "Max_Status": 99
+  }
+]

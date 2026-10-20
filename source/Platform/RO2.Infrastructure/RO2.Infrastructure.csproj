@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Provider-neutral persistence composition root. The Mongo-specific repositories, the
+    MongoDbContext and the cross-process stores now live in RO2.Persistence.Mongo; this
+    project owns only AddPersistence, which turns DatabaseConfig.Provider into one of those
+    provider assemblies. A second provider (Postgres) will be a sibling ProjectReference.
+  -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Game\RO2.Domain\RO2.Domain.csproj" />
+    <ProjectReference Include="..\..\Game\RO2.Application\RO2.Application.csproj" />
+    <ProjectReference Include="..\RO2.Persistence.Mongo\RO2.Persistence.Mongo.csproj" />
+    <ProjectReference Include="..\RO2.Persistence.Postgres\RO2.Persistence.Postgres.csproj" />
+    <ProjectReference Include="..\RO2.Persistence.Redis\RO2.Persistence.Redis.csproj" />
+  </ItemGroup>
+
+</Project>

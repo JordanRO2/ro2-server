@@ -1,0 +1,611 @@
+[
+  {
+    "Index": 1,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 1,
+    "String_SelectIcon": ".\\UI\\icon\\Armor\\Equip_MushroomDress_Female_01.dds",
+    "UpdateCode": "합성판_선택_버섯"
+  },
+  {
+    "Index": 2,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 2,
+    "String_SelectIcon": ".\\UI\\icon\\Armor\\Equip_MushroomDress_male_01.dds",
+    "UpdateCode": "합성판_선택_버섯"
+  },
+  {
+    "Index": 3,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 3,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Cat_Male_01.dds",
+    "UpdateCode": "합성판_선택_고양이&토끼"
+  },
+  {
+    "Index": 4,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 4,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Rabbit_Female_01.dds",
+    "UpdateCode": "합성판_선택_고양이&토끼"
+  },
+  {
+    "Index": 5,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 5,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Phantomthief_Male_01.dds",
+    "UpdateCode": "합성판_선택_탐정&괴도"
+  },
+  {
+    "Index": 6,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 6,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Detective_Female_01.dds",
+    "UpdateCode": "합성판_선택_탐정&괴도"
+  },
+  {
+    "Index": 7,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 7,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Recruit_FeMale_01.dds",
+    "UpdateCode": "합성판_선택_리크룻"
+  },
+  {
+    "Index": 8,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 8,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Recruit_Male_01.dds",
+    "UpdateCode": "합성판_선택_리크룻"
+  },
+  {
+    "Index": 9,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 9,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Gothloli_female_01.dds",
+    "UpdateCode": "합성판_선택_고스로리"
+  },
+  {
+    "Index": 10,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 10,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Gothloli_Male_01.dds",
+    "UpdateCode": "합성판_선택_고스로리"
+  },
+  {
+    "Index": 11,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 11,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Summerlook_Male_01.dds",
+    "UpdateCode": "합성판_선택_바캉스&비치메모리"
+  },
+  {
+    "Index": 12,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 12,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\THEME_BeachMemory_Female_01.dds",
+    "UpdateCode": "합성판_선택_바캉스&비치메모리"
+  },
+  {
+    "Index": 13,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 13,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\THEME_Cowboy_male_01.dds",
+    "UpdateCode": "합성판_선택_황야의 무법자"
+  },
+  {
+    "Index": 14,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 14,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\THEME_Cowboy_Female_01.dds",
+    "UpdateCode": "합성판_선택_황야의 무법자"
+  },
+  {
+    "Index": 15,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 15,
+    "String_SelectIcon": ".\\UI\\icon\\Armor\\Equip_Female_Dancer_01.dds",
+    "UpdateCode": "합성판_선택_보안관&쇼걸"
+  },
+  {
+    "Index": 16,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 16,
+    "String_SelectIcon": ".\\UI\\icon\\Armor\\Equip_Male_Sheriff_01.dds",
+    "UpdateCode": "합성판_선택_보안관&쇼걸"
+  },
+  {
+    "Index": 17,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 17,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\THEME_Sailorlook_female_01.dds",
+    "UpdateCode": "합성판_선택_마린 캐주얼"
+  },
+  {
+    "Index": 18,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 18,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\THEME_Sailorlook_Male_01.dds",
+    "UpdateCode": "합성판_선택_마린 캐주얼"
+  },
+  {
+    "Index": 19,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 19,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Football_Male_01.dds",
+    "UpdateCode": "합성판_선택_미식축구"
+  },
+  {
+    "Index": 20,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 20,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Football_Female_01.dds",
+    "UpdateCode": "합성판_선택_미식축구"
+  },
+  {
+    "Index": 21,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 21,
+    "String_SelectIcon": ".\\UI\\icon\\Armor\\Equip_Female_Reinhard_01.dds",
+    "UpdateCode": "합성판_선택_라인하르트&카밀"
+  },
+  {
+    "Index": 22,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 22,
+    "String_SelectIcon": ".\\UI\\icon\\Armor\\Equip_Female_Kami_01.dds",
+    "UpdateCode": "합성판_선택_라인하르트&카밀"
+  },
+  {
+    "Index": 23,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 23,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Schoollook_Male_02.dds",
+    "UpdateCode": "합성판_선택_교복"
+  },
+  {
+    "Index": 24,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 24,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Schoollook_Female_02.dds",
+    "UpdateCode": "합성판_선택_교복"
+  },
+  {
+    "Index": 25,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 25,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Halloween_Male_CHEST_01.dds",
+    "UpdateCode": "합성판_선택_할로윈 루크"
+  },
+  {
+    "Index": 26,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 26,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Halloween_Female_CHEST_01.dds",
+    "UpdateCode": "합성판_선택_할로윈 루크"
+  },
+  {
+    "Index": 27,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 27,
+    "String_SelectIcon": ".\\UI\\icon\\Armor\\Equip_PalmDress_Female_01.dds",
+    "UpdateCode": "합성판_선택_야자수"
+  },
+  {
+    "Index": 28,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 28,
+    "String_SelectIcon": ".\\UI\\icon\\Armor\\Equip_PalmDress_Female_01.dds",
+    "UpdateCode": "합성판_선택_야자수"
+  },
+  {
+    "Index": 29,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 29,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Pajamalook_Male_01.dds",
+    "UpdateCode": "합성판_선택_잠옷"
+  },
+  {
+    "Index": 30,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 30,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Pajamalook_female_01.dds",
+    "UpdateCode": "합성판_선택_잠옷"
+  },
+  {
+    "Index": 31,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 31,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Springlook_Male_01.dds",
+    "UpdateCode": "합성판_선택_봄나들이"
+  },
+  {
+    "Index": 32,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 32,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Springlook_female_01.dds",
+    "UpdateCode": "합성판_선택_봄나들이"
+  },
+  {
+    "Index": 33,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 33,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Wolf_Male_01.dds",
+    "UpdateCode": "합성판_선택_빨간망토&늑대"
+  },
+  {
+    "Index": 34,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 34,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Redmanteau_Female_01.dds",
+    "UpdateCode": "합성판_선택_빨간망토&늑대"
+  },
+  {
+    "Index": 35,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 35,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Male_SnowMan_01.dds",
+    "UpdateCode": "합성판_선택_스노우맨"
+  },
+  {
+    "Index": 36,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 36,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Female_SnowGirl_01.dds",
+    "UpdateCode": "합성판_선택_스노우맨"
+  },
+  {
+    "Index": 37,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 37,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Santalook_Male_01.dds",
+    "UpdateCode": "합성판_선택_산타"
+  },
+  {
+    "Index": 38,
+    "Equip_SlotID": 16,
+    "SelectGroupID": 38,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\THEME_Santalook_Female_01.dds",
+    "UpdateCode": "합성판_선택_산타"
+  },
+  {
+    "Index": 39,
+    "Equip_SlotID": 15,
+    "SelectGroupID": 1,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_DetectiveGLASSES_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 40,
+    "Equip_SlotID": 15,
+    "SelectGroupID": 2,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_BeachSunglasses_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 41,
+    "Equip_SlotID": 15,
+    "SelectGroupID": 3,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_WolfMask_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 42,
+    "Equip_SlotID": 15,
+    "SelectGroupID": 4,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_SadoMask_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 43,
+    "Equip_SlotID": 15,
+    "SelectGroupID": 5,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_MaskofQueen_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 44,
+    "Equip_SlotID": 15,
+    "SelectGroupID": 6,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_Masksofdemons_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 45,
+    "Equip_SlotID": 15,
+    "SelectGroupID": 7,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_ButterflyMask_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 46,
+    "Equip_SlotID": 15,
+    "SelectGroupID": 8,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_GrannyGlasses_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 47,
+    "Equip_SlotID": 15,
+    "SelectGroupID": 9,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_Teredglasses_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 48,
+    "Equip_SlotID": 15,
+    "SelectGroupID": 10,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_SchoolboyGlasses_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 49,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 1,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_Pajamalook_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 50,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 2,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_Cat_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 51,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 3,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_Rabbit_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 52,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 4,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_Schoollook_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 53,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 5,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_Phantomthief_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 54,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 6,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_Detective_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 55,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 7,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_Gothloli_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 56,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 8,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Gothloli_female_HEAD_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 57,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 9,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\THEME_Sailorlook_Male_HEAD_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 58,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 10,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_TongPin_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 59,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 11,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\THEME_BeachMemory_Female_HEAD_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 60,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 12,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_CowboyMale_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 61,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 13,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_CowboyFemale_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 62,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 14,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_Football_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 63,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 15,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_MysticRose_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 64,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 16,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_IdeaWings_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 65,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 17,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_Knowledgefears_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 66,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 18,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_SilkHat_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 67,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 19,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_NewSBoyCap_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 68,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 20,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_Capblend_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 69,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 21,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_HatDoom_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 70,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 22,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Female_Halloween_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 71,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 23,
+    "String_SelectIcon": ".\\UI\\icon\\Armor\\Equip_Female_HEAD_Reinhard_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 72,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 24,
+    "String_SelectIcon": ".\\UI\\icon\\Armor\\Equip_Female_HEAD_Kami_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 73,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 25,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_Cowboy_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 74,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 26,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Male_Snow_HEAD_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 75,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 27,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_Wolf_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 76,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 28,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_Redmanteau_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 77,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 29,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\THEME_Santalook_male_HEAD_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 78,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 30,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\THEME_Santalook_female_HEAD_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 79,
+    "Equip_SlotID": 19,
+    "SelectGroupID": 1,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_Snorkel_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 80,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 24,
+    "String_SelectIcon": ".\\UI\\icon\\Armor\\Equip_Female_HEAD_Kami_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 81,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 25,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_Cowboy_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 82,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 26,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Male_Snow_HEAD_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 83,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 27,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_Wolf_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 84,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 28,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_Redmanteau_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 85,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 29,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\THEME_Santalook_male_HEAD_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 86,
+    "Equip_SlotID": 14,
+    "SelectGroupID": 30,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\THEME_Santalook_female_HEAD_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  },
+  {
+    "Index": 87,
+    "Equip_SlotID": 19,
+    "SelectGroupID": 1,
+    "String_SelectIcon": ".\\UI\\Icon\\Armor\\Equip_Accessory_Snorkel_01.dds",
+    "UpdateCode": "합성판_선택_싱말전용액세서리"
+  }
+]

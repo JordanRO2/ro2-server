@@ -1,0 +1,82 @@
+[
+  {
+    "Enforce": 1,
+    "Grade_DUMMY": 1,
+    "Grade_Normal": 2,
+    "Grade_MAGIC": 3,
+    "Grade_RARE": 4,
+    "Grade_EPIC": 5
+  },
+  {
+    "Enforce": 2,
+    "Grade_DUMMY": 2,
+    "Grade_Normal": 3,
+    "Grade_MAGIC": 4,
+    "Grade_RARE": 5,
+    "Grade_EPIC": 6
+  },
+  {
+    "Enforce": 3,
+    "Grade_DUMMY": 3,
+    "Grade_Normal": 4,
+    "Grade_MAGIC": 5,
+    "Grade_RARE": 6,
+    "Grade_EPIC": 7
+  },
+  {
+    "Enforce": 4,
+    "Grade_DUMMY": 4,
+    "Grade_Normal": 5,
+    "Grade_MAGIC": 6,
+    "Grade_RARE": 7,
+    "Grade_EPIC": 8
+  },
+  {
+    "Enforce": 5,
+    "Grade_DUMMY": 5,
+    "Grade_Normal": 6,
+    "Grade_MAGIC": 7,
+    "Grade_RARE": 8,
+    "Grade_EPIC": 9
+  },
+  {
+    "Enforce": 6,
+    "Grade_DUMMY": 6,
+    "Grade_Normal": 7,
+    "Grade_MAGIC": 8,
+    "Grade_RARE": 9,
+    "Grade_EPIC": 10
+  },
+  {
+    "Enforce": 7,
+    "Grade_DUMMY": 7,
+    "Grade_Normal": 8,
+    "Grade_MAGIC": 9,
+    "Grade_RARE": 10,
+    "Grade_EPIC": 11
+  },
+  {
+    "Enforce": 8,
+    "Grade_DUMMY": 8,
+    "Grade_Normal": 9,
+    "Grade_MAGIC": 10,
+    "Grade_RARE": 11,
+    "Grade_EPIC": 12
+  },
+  {
+    "Enforce": 9,
+    "Grade_DUMMY": 9,
+    "Grade_Normal": 10,
+    "Grade_MAGIC": 11,
+    "Grade_RARE": 12,
+    "Grade_EPIC": 13
+  },
+  {
+    "Enforce": 10,
+    "Grade_DUMMY": 10,
+    "Grade_Normal": 11,
+    "Grade_MAGIC": 12,
+    "Grade_RARE": 13,
+    "Grade_EPIC": 14
+  }
+]

@@ -1,0 +1,482 @@
+[
+  {
+    "Token": "STRING",
+    "Type": "STRING",
+    "Desc": "NONE"
+  },
+  {
+    "Token": "ATTACKER",
+    "Type": "STRING",
+    "Desc": "공격자."
+  },
+  {
+    "Token": "TARGET",
+    "Type": "STRING",
+    "Desc": "대상."
+  },
+  {
+    "Token": "DAMAGE",
+    "Type": "INT",
+    "Desc": "대미지."
+  },
+  {
+    "Token": "NORMAL_DAM",
+    "Type": "INT",
+    "Desc": "일반 공격 대미지."
+  },
+  {
+    "Token": "SKILL_DAM",
+    "Type": "INT",
+    "Desc": "스킬(마법) 공격 대미지."
+  },
+  {
+    "Token": "SKILL_DELAY",
+    "Type": "FLOAT",
+    "Desc": "스킬 딜레이."
+  },
+  {
+    "Token": "CHAR_NAME",
+    "Type": "STRING",
+    "Desc": "캐릭터 이름."
+  },
+  {
+    "Token": "QUEST_NAME",
+    "Type": "STRING",
+    "Desc": "퀘스트 이름."
+  },
+  {
+    "Token": "FIND_SKILL_NAME",
+    "Type": "CUSTOM",
+    "Desc": "INT값으로 넘어온 변수를 가지고 스킬 이름을 출력 "
+  },
+  {
+    "Token": "FIND_ITEM_NAME",
+    "Type": "CUSTOM",
+    "Desc": "INT값으로 넘어온 변수를 가지고 아이템 이름을 출력 "
+  },
+  {
+    "Token": "FIND_ENCHANT_TYPE",
+    "Type": "CUSTOM",
+    "Desc": "INT값으로 넘어온 변수를 가지고 인챈트타입을 출력"
+  },
+  {
+    "Token": "VALUE",
+    "Type": "INT",
+    "Desc": "값."
+  },
+  {
+    "Token": "ICON_ID",
+    "Type": "STRING",
+    "Desc": "아이콘 ID."
+  },
+  {
+    "Token": "MESSAGE",
+    "Type": "STRING",
+    "Desc": "메시지"
+  },
+  {
+    "Token": "NAME",
+    "Type": "STRING",
+    "Desc": "이름."
+  },
+  {
+    "Token": "MIN_VALUE",
+    "Type": "INT",
+    "Desc": "최소 값."
+  },
+  {
+    "Token": "MAX_VALUE",
+    "Type": "INT",
+    "Desc": "최대 값."
+  },
+  {
+    "Token": "CUR_VALUE",
+    "Type": "INT",
+    "Desc": "현재 값."
+  },
+  {
+    "Token": "FIND_WTYPE_NAME",
+    "Type": "CUSTOM",
+    "Desc": "해당 무기 타입 이름."
+  },
+  {
+    "Token": "WEAPONTYPENAME",
+    "Type": "STRING",
+    "Desc": "무기 종류명."
+  },
+  {
+    "Token": "WEAPON_NAME",
+    "Type": "STRING",
+    "Desc": "무기 이름."
+  },
+  {
+    "Token": "JOB_NAME",
+    "Type": "STRING",
+    "Desc": "직업 이름."
+  },
+  {
+    "Token": "STONE_NAME",
+    "Type": "STRING",
+    "Desc": "스톤 이름."
+  },
+  {
+    "Token": "STANCE_NAME",
+    "Type": "STRING",
+    "Desc": "자세 이름."
+  },
+  {
+    "Token": "SUMMON_NAME",
+    "Type": "STRING",
+    "Desc": "소환 이름."
+  },
+  {
+    "Token": "NPC_NAME",
+    "Type": "STRING",
+    "Desc": "NPC 이름."
+  },
+  {
+    "Token": "SKILL_LEVEL",
+    "Type": "INT",
+    "Desc": "스킬 레벨."
+  },
+  {
+    "Token": "ITEM_STACK",
+    "Type": "INT",
+    "Desc": "아이템 더미(겹침 갯수)"
+  },
+  {
+    "Token": "HOUR",
+    "Type": "INT",
+    "Desc": "시"
+  },
+  {
+    "Token": "MINUTE",
+    "Type": "INT",
+    "Desc": "분"
+  },
+  {
+    "Token": "ZENY",
+    "Type": "INT",
+    "Desc": "제니"
+  },
+  {
+    "Token": "RUFI",
+    "Type": "INT",
+    "Desc": "루피"
+  },
+  {
+    "Token": "DATE",
+    "Type": "STRING",
+    "Desc": "날짜"
+  },
+  {
+    "Token": "MONTH",
+    "Type": "INT",
+    "Desc": "월"
+  },
+  {
+    "Token": "DAY",
+    "Type": "INT",
+    "Desc": "일"
+  },
+  {
+    "Token": "MATTACK_SPEED",
+    "Type": "STRING",
+    "Desc": "근접 공격 속도."
+  },
+  {
+    "Token": "MATTACK_RANGE",
+    "Type": "STRING",
+    "Desc": "근접 공격 거리."
+  },
+  {
+    "Token": "RATTACK_SEED",
+    "Type": "STRING",
+    "Desc": "원거리 공격 속도."
+  },
+  {
+    "Token": "RATTACK_RANGE",
+    "Type": "STRING",
+    "Desc": "원거리 공격 거리."
+  },
+  {
+    "Token": "SERVER_NAME",
+    "Type": "STRING",
+    "Desc": "서버 명."
+  },
+  {
+    "Token": "PAGE",
+    "Type": "INT",
+    "Desc": "페이지."
+  },
+  {
+    "Token": "YEAR",
+    "Type": "INT",
+    "Desc": "년."
+  },
+  {
+    "Token": "SECOND",
+    "Type": "INT",
+    "Desc": "초."
+  },
+  {
+    "Token": "SECOND_STRING",
+    "Type": "STRING",
+    "Desc": "초."
+  },
+  {
+    "Token": "MINUTE_STRING",
+    "Type": "STRING",
+    "Desc": "분."
+  },
+  {
+    "Token": "HOUR_STRING",
+    "Type": "STRING",
+    "Desc": "시."
+  },
+  {
+    "Token": "DAY_STRING",
+    "Type": "STRING",
+    "Desc": "일."
+  },
+  {
+    "Token": "EXP_RATE",
+    "Type": "INT",
+    "Desc": "경험치 증가/감소율."
+  },
+  {
+    "Token": "ITEM_RATE",
+    "Type": "INT",
+    "Desc": "아이템 드롭율."
+  },
+  {
+    "Token": "FATIGUE_TYPE",
+    "Type": "STRING",
+    "Desc": "피로도 타입."
+  },
+  {
+    "Token": "PLAY_TIME",
+    "Type": "STRING",
+    "Desc": "플레이 시간. (실 시간)"
+  },
+  {
+    "Token": "REST_TIME",
+    "Type": "STRING",
+    "Desc": "휴식 시간. (실 시간)"
+  },
+  {
+    "Token": "MAPNAME",
+    "Type": "STRING",
+    "Desc": "맵 이름."
+  },
+  {
+    "Token": "REAL_TIME",
+    "Type": "STRING",
+    "Desc": "현재 시간을 다음의 방식으로 출력한다. (게임이 아닌 실제 시간)"
+  },
+  {
+    "Token": "출력 방식 - 시간/분/초.",
+    "Type": "",
+    "Desc": ""
+  },
+  {
+    "Token": "MYNAME",
+    "Type": "CUSTOM",
+    "Desc": "나의 이름을 출력"
+  },
+  {
+    "Token": "HOUR_STRING",
+    "Type": "STRING",
+    "Desc": "시간을 문자열 값으로 입력"
+  },
+  {
+    "Token": "MINUTE_STRING",
+    "Type": "STRING",
+    "Desc": "분을 문자열 값으로 입력"
+  },
+  {
+    "Token": "SECOND_STRING",
+    "Type": "STRING",
+    "Desc": "초를 문자열 값으로 입력 "
+  },
+  {
+    "Token": "GUILD_NAME",
+    "Type": "STRING",
+    "Desc": "길드 이름."
+  },
+  {
+    "Token": "GUILD_SKILL",
+    "Type": "STRING",
+    "Desc": "길스 스킬 이름."
+  },
+  {
+    "Token": "GUILD_POSITION",
+    "Type": "STRING",
+    "Desc": "길드원 등급."
+  },
+  {
+    "Token": "CUR_PAGE",
+    "Type": "INT",
+    "Desc": "현재 페이지"
+  },
+  {
+    "Token": "MAX_PAGE",
+    "Type": "INT",
+    "Desc": "최대 페이지 "
+  },
+  {
+    "Token": "COMMAND",
+    "Type": "STRING",
+    "Desc": "옵션 단축키 설정 항목"
+  },
+  {
+    "Token": "KEY",
+    "Type": "STRING",
+    "Desc": "옵션 단축키 설정 값"
+  },
+  {
+    "Token": "SKILL_NAME",
+    "Type": "STRING",
+    "Desc": "스킬 이름"
+  },
+  {
+    "Token": "MON_NAME",
+    "Type": "STRING",
+    "Desc": "몬스터 이름"
+  },
+  {
+    "Token": "STEP_NAME",
+    "Type": "STRING",
+    "Desc": "스텝 이름"
+  },
+  {
+    "Token": "VALUE_INT",
+    "Type": "INT",
+    "Desc": "버프레벨 (정수)"
+  },
+  {
+    "Token": "VALUE_FLOAT",
+    "Type": "FLOAT",
+    "Desc": "버프레벨 (실수)"
+  },
+  {
+    "Token": "SAVE_BASE",
+    "Type": "STRING",
+    "Desc": "저장된 거점"
+  },
+  {
+    "Token": "SKILL_DESCOPT1_INT",
+    "Type": "INT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct DescOption1 필드 참조"
+  },
+  {
+    "Token": "SKILL_DESCOPT2_INT",
+    "Type": "INT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct DescOption2 필드 참조"
+  },
+  {
+    "Token": "SKILL_DESCOPT3_INT",
+    "Type": "INT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct DescOption3 필드 참조"
+  },
+  {
+    "Token": "SKILL_DESCOPT4_INT",
+    "Type": "INT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct DescOption4 필드 참조"
+  },
+  {
+    "Token": "SKILL_DESCOPT5_INT",
+    "Type": "INT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct DescOption5 필드 참조"
+  },
+  {
+    "Token": "SKILL_DESCOPT1_FLOAT",
+    "Type": "FLOAT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct DescOption1 필드 참조"
+  },
+  {
+    "Token": "SKILL_DESCOPT2_FLOAT",
+    "Type": "FLOAT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct DescOption2 필드 참조"
+  },
+  {
+    "Token": "SKILL_DESCOPT3_FLOAT",
+    "Type": "FLOAT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct DescOption3 필드 참조"
+  },
+  {
+    "Token": "SKILL_DESCOPT4_FLOAT",
+    "Type": "FLOAT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct DescOption4 필드 참조"
+  },
+  {
+    "Token": "SKILL_DESCOPT5_FLOAT",
+    "Type": "FLOAT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct DescOption5 필드 참조"
+  },
+  {
+    "Token": "SKILL_EFFECT_DUR_FLOAT",
+    "Type": "FLOAT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct Effect_Duration 필드 참조"
+  },
+  {
+    "Token": "SKILL_COOLTIME_FLOAT",
+    "Type": "FLOAT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct Cooldown_Time 필드 참조"
+  },
+  {
+    "Token": "SKILL_DUR_FLOAT",
+    "Type": "FLOAT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct Skill_Duration 필드 참조"
+  },
+  {
+    "Token": "SKILL_NORMAL_INF_NUM",
+    "Type": "INT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct Number_Of_Normal_Influences 필드 참조"
+  },
+  {
+    "Token": "SKILL_EFFECT_DUR_INT",
+    "Type": "INT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct Effect_Duration 필드 참조"
+  },
+  {
+    "Token": "SKILL_COOLTIME_INT",
+    "Type": "INT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct Cooldown_Time 필드 참조"
+  },
+  {
+    "Token": "SKILL_DUR_INT",
+    "Type": "INT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct Skill_Duration 필드 참조"
+  },
+  {
+    "Token": "NEED_COUNT",
+    "Type": "INT",
+    "Desc": "인장합성에 필요한 인장 개수"
+  },
+  {
+    "Token": "SKILL_DESCOPT1",
+    "Type": "INT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct DescOption1 필드 참조"
+  },
+  {
+    "Token": "SKILL_DESCOPT2",
+    "Type": "INT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct DescOption2 필드 참조"
+  },
+  {
+    "Token": "SKILL_DESCOPT3",
+    "Type": "INT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct DescOption3 필드 참조"
+  },
+  {
+    "Token": "SKILL_DESCOPT4",
+    "Type": "INT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct DescOption4 필드 참조"
+  },
+  {
+    "Token": "SKILL_DESCOPT5",
+    "Type": "INT",
+    "Desc": "해당 스킬 ID 의 Skill_Table_SkillLevel.ct DescOption5 필드 참조"
+  }
+]

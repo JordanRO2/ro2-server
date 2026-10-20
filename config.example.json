@@ -1,0 +1,30 @@
+{
+  "Login": {
+    "Host": "0.0.0.0",
+    "Port": 7101
+  },
+  "Zone": {
+    "Host": "0.0.0.0",
+    "Port": 7201
+  },
+  "Database": {
+    "ConnectionString": "mongodb://localhost:27017",
+    "DatabaseName": "ro2_server"
+  },
+  "Game": {
+    "ExpRate": 1,
+    "DropRate": 1,
+    "GoldRate": 1,
+    "ClientVersion": "1.1.7.2.37",
+    "ZoneTokenLifetimeMinutes": 5,
+    "GmDefaultZenyAmount": 10000000,
+    "GmMaxGiveQuantity": 9999,
+    "GmMaxGiveRecords": 200
+  },
+  "Tick": {
+    "MinHz": 20,
+    "MaxHz": 128,
+    "Adaptive": true,
+    "MaxCatchUpSteps": 5
+  }
+}

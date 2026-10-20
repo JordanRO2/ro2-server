@@ -1,0 +1,50 @@
+[
+  {
+    "Category_ID": 1,
+    "Category_Name": "특정 던전",
+    "String_ID": 10156,
+    "Reward_GroupID": 0,
+    "System_Mail_ID": 2,
+    "UpdateCode": "기본",
+    "Money": 0,
+    "Exp": 0,
+    "1st_Item_ID": 0,
+    "1st_Item_Num": 0,
+    "2nd_Item_ID": 0,
+    "2nd_Item_Num": 0,
+    "3rd_Item_ID": 0,
+    "3rd_Item_Num": 0
+  },
+  {
+    "Category_ID": 2,
+    "Category_Name": "무작위 던전 ( Normal 난이도 )",
+    "String_ID": 10158,
+    "Reward_GroupID": 1,
+    "System_Mail_ID": 2,
+    "UpdateCode": "기본",
+    "Money": 0,
+    "Exp": 0,
+    "1st_Item_ID": 0,
+    "1st_Item_Num": 0,
+    "2nd_Item_ID": 0,
+    "2nd_Item_Num": 0,
+    "3rd_Item_ID": 0,
+    "3rd_Item_Num": 0
+  },
+  {
+    "Category_ID": 3,
+    "Category_Name": "무작위 던전 ( Hard 난이도 )",
+    "String_ID": 10159,
+    "Reward_GroupID": 2,
+    "System_Mail_ID": 2,
+    "UpdateCode": "기본",
+    "Money": 0,
+    "Exp": 0,
+    "1st_Item_ID": 51000006,
+    "1st_Item_Num": 1,
+    "2nd_Item_ID": 0,
+    "2nd_Item_Num": 0,
+    "3rd_Item_ID": 0,
+    "3rd_Item_Num": 0
+  }
+]

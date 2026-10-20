@@ -1,0 +1,79 @@
+[
+  {
+    "Item_Id": 70003185,
+    "ItemStringName": "능력치 효과 기간 연장권(1일)",
+    "Date_Type": 1,
+    "Date_Time": 1,
+    "DateExtend_ID": 1
+  },
+  {
+    "Item_Id": 70003186,
+    "ItemStringName": "능력치 효과 기간 연장권(3일)",
+    "Date_Type": 1,
+    "Date_Time": 3,
+    "DateExtend_ID": 1
+  },
+  {
+    "Item_Id": 70003187,
+    "ItemStringName": "능력치 효과 기간 연장권(5일)",
+    "Date_Type": 1,
+    "Date_Time": 5,
+    "DateExtend_ID": 1
+  },
+  {
+    "Item_Id": 70003188,
+    "ItemStringName": "능력치 효과 기간 연장권(7일)",
+    "Date_Type": 1,
+    "Date_Time": 7,
+    "DateExtend_ID": 1
+  },
+  {
+    "Item_Id": 70003189,
+    "ItemStringName": "능력치 효과 기간 연장권(15일)",
+    "Date_Type": 1,
+    "Date_Time": 15,
+    "DateExtend_ID": 1
+  },
+  {
+    "Item_Id": 70003190,
+    "ItemStringName": "능력치 효과 기간 연장권(30일)",
+    "Date_Type": 1,
+    "Date_Time": 30,
+    "DateExtend_ID": 1
+  },
+  {
+    "Item_Id": 70003191,
+    "ItemStringName": "능력치 효과 기간 연장권(90일)",
+    "Date_Type": 1,
+    "Date_Time": 90,
+    "DateExtend_ID": 1
+  },
+  {
+    "Item_Id": 70003192,
+    "ItemStringName": "능력치 효과 기간 연장권(1시간)",
+    "Date_Type": 2,
+    "Date_Time": 3600,
+    "DateExtend_ID": 2
+  },
+  {
+    "Item_Id": 70003193,
+    "ItemStringName": "능력치 효과 기간 연장권(5시간)",
+    "Date_Type": 2,
+    "Date_Time": 18000,
+    "DateExtend_ID": 2
+  },
+  {
+    "Item_Id": 70003194,
+    "ItemStringName": "능력치 효과 기간 연장권(10시간)",
+    "Date_Type": 2,
+    "Date_Time": 36000,
+    "DateExtend_ID": 2
+  },
+  {
+    "Item_Id": 70003195,
+    "ItemStringName": "능력치 효과 기간 연장권(24시간)",
+    "Date_Type": 2,
+    "Date_Time": 86400,
+    "DateExtend_ID": 2
+  }
+]

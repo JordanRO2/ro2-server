@@ -1,0 +1,906 @@
+[
+  {
+    "Guild_Skill_ID": 120101,
+    "Skill_Name": "결속 체계 확장 1 Lv",
+    "String_Skill_Name": 3610001201,
+    "Skill_User": 0,
+    "Skill_Description": "길드에 가입할수 있는 최대 인원을 최대 36명까지 증가시킨다.",
+    "String_Skill_Description": 3620120101
+  },
+  {
+    "Guild_Skill_ID": 120102,
+    "Skill_Name": "결속 체계 확장 2 Lv",
+    "String_Skill_Name": 3610001201,
+    "Skill_User": 0,
+    "Skill_Description": "길드에 가입할수 있는 최대 인원을 최대 52명까지 증가시킨다.",
+    "String_Skill_Description": 3620120102
+  },
+  {
+    "Guild_Skill_ID": 120103,
+    "Skill_Name": "결속 체계 확장 3 Lv",
+    "String_Skill_Name": 3610001201,
+    "Skill_User": 0,
+    "Skill_Description": "길드에 가입할수 있는 최대 인원을 최대 68명까지 증가시킨다.",
+    "String_Skill_Description": 3620120103
+  },
+  {
+    "Guild_Skill_ID": 120104,
+    "Skill_Name": "결속 체계 확장 4 Lv",
+    "String_Skill_Name": 3610001201,
+    "Skill_User": 0,
+    "Skill_Description": "길드에 가입할수 있는 최대 인원을 최대 84명까지 증가시킨다.",
+    "String_Skill_Description": 3620120104
+  },
+  {
+    "Guild_Skill_ID": 120105,
+    "Skill_Name": "결속 체계 확장 5 Lv",
+    "String_Skill_Name": 3610001201,
+    "Skill_User": 0,
+    "Skill_Description": "길드에 가입할수 있는 최대 인원을 최대 100명까지 증가시킨다.",
+    "String_Skill_Description": 3620120105
+  },
+  {
+    "Guild_Skill_ID": 130201,
+    "Skill_Name": "고속 질주 1 Lv",
+    "String_Skill_Name": 3610001302,
+    "Skill_User": 0,
+    "Skill_Description": "탈것의 이동속도를 5% 증가시킨다.",
+    "String_Skill_Description": 3620130201
+  },
+  {
+    "Guild_Skill_ID": 120301,
+    "Skill_Name": "결속의 상징 1 Lv",
+    "String_Skill_Name": 3610001203,
+    "Skill_User": 0,
+    "Skill_Description": "길드 전용 탈것을 이용할 수 있다.",
+    "String_Skill_Description": 3620120301
+  },
+  {
+    "Guild_Skill_ID": 120401,
+    "Skill_Name": "길드의 번영 1 Lv",
+    "String_Skill_Name": 3610001204,
+    "Skill_User": 0,
+    "Skill_Description": "길드 창고 이용 개수와 소지금을 증가시킨다.",
+    "String_Skill_Description": 3620120401
+  },
+  {
+    "Guild_Skill_ID": 120402,
+    "Skill_Name": "길드의 번영 2 Lv",
+    "String_Skill_Name": 3610001204,
+    "Skill_User": 0,
+    "Skill_Description": "길드 창고 이용 개수와 소지금을 증가시킨다.",
+    "String_Skill_Description": 3620120402
+  },
+  {
+    "Guild_Skill_ID": 120403,
+    "Skill_Name": "길드의 번영 3 Lv",
+    "String_Skill_Name": 3610001204,
+    "Skill_User": 0,
+    "Skill_Description": "길드 창고 이용 개수와 소지금을 증가시킨다.",
+    "String_Skill_Description": 3620120403
+  },
+  {
+    "Guild_Skill_ID": 120404,
+    "Skill_Name": "길드의 번영 4 Lv",
+    "String_Skill_Name": 3610001204,
+    "Skill_User": 0,
+    "Skill_Description": "길드 창고 이용 개수와 소지금을 증가시킨다.",
+    "String_Skill_Description": 3620120404
+  },
+  {
+    "Guild_Skill_ID": 120405,
+    "Skill_Name": "길드의 번영 5 Lv",
+    "String_Skill_Name": 3610001204,
+    "Skill_User": 0,
+    "Skill_Description": "길드 창고 이용 개수와 소지금을 증가시킨다.",
+    "String_Skill_Description": 3620120405
+  },
+  {
+    "Guild_Skill_ID": 120501,
+    "Skill_Name": "자금 지원 1 Lv",
+    "String_Skill_Name": 3610001205,
+    "Skill_User": 0,
+    "Skill_Description": "장비 수리에 소비되는 비용을 1% 감소시킨다.",
+    "String_Skill_Description": 3620120501
+  },
+  {
+    "Guild_Skill_ID": 120502,
+    "Skill_Name": "자금 지원 2 Lv",
+    "String_Skill_Name": 3610001205,
+    "Skill_User": 0,
+    "Skill_Description": "장비 수리에 소비되는 비용을 2% 감소시킨다.",
+    "String_Skill_Description": 3620120502
+  },
+  {
+    "Guild_Skill_ID": 120503,
+    "Skill_Name": "자금 지원 3 Lv",
+    "String_Skill_Name": 3610001205,
+    "Skill_User": 0,
+    "Skill_Description": "장비 수리에 소비되는 비용을 3% 감소시킨다.",
+    "String_Skill_Description": 3620120503
+  },
+  {
+    "Guild_Skill_ID": 120504,
+    "Skill_Name": "자금 지원 4 Lv",
+    "String_Skill_Name": 3610001205,
+    "Skill_User": 0,
+    "Skill_Description": "장비 수리에 소비되는 비용을 4% 감소시킨다.",
+    "String_Skill_Description": 3620120504
+  },
+  {
+    "Guild_Skill_ID": 120505,
+    "Skill_Name": "자금 지원 5 Lv",
+    "String_Skill_Name": 3610001205,
+    "Skill_User": 0,
+    "Skill_Description": "장비 수리에 소비되는 비용을 5% 감소시킨다.",
+    "String_Skill_Description": 3620120505
+  },
+  {
+    "Guild_Skill_ID": 120601,
+    "Skill_Name": "장비 강화 1 Lv",
+    "String_Skill_Name": 3610001206,
+    "Skill_User": 0,
+    "Skill_Description": "사망시 손실되는 장비의 내구도를 1% 감소시킨다.",
+    "String_Skill_Description": 3620120601
+  },
+  {
+    "Guild_Skill_ID": 120602,
+    "Skill_Name": "장비 강화 2 Lv",
+    "String_Skill_Name": 3610001206,
+    "Skill_User": 0,
+    "Skill_Description": "사망시 손실되는 장비의 내구도를 2% 감소시킨다.",
+    "String_Skill_Description": 3620120602
+  },
+  {
+    "Guild_Skill_ID": 120603,
+    "Skill_Name": "장비 강화 3 Lv",
+    "String_Skill_Name": 3610001206,
+    "Skill_User": 0,
+    "Skill_Description": "사망시 손실되는 장비의 내구도를 3% 감소시킨다.",
+    "String_Skill_Description": 3620120603
+  },
+  {
+    "Guild_Skill_ID": 120604,
+    "Skill_Name": "장비 강화 4 Lv",
+    "String_Skill_Name": 3610001206,
+    "Skill_User": 0,
+    "Skill_Description": "사망시 손실되는 장비의 내구도를 4% 감소시킨다.",
+    "String_Skill_Description": 3620120604
+  },
+  {
+    "Guild_Skill_ID": 120605,
+    "Skill_Name": "장비 강화 5 Lv",
+    "String_Skill_Name": 3610001206,
+    "Skill_User": 0,
+    "Skill_Description": "사망시 손실되는 장비의 내구도를 5% 감소시킨다.",
+    "String_Skill_Description": 3620120605
+  },
+  {
+    "Guild_Skill_ID": 220101,
+    "Skill_Name": "보급 강화 1 Lv",
+    "String_Skill_Name": 3610002201,
+    "Skill_User": 0,
+    "Skill_Description": "병기 탑승시 소모되는 보급품의 수량이 10% 만큼 감소되고, 병기 건설 시 건설량은 10%만큼 증가합니다.",
+    "String_Skill_Description": 3620220101
+  },
+  {
+    "Guild_Skill_ID": 220102,
+    "Skill_Name": "보급 강화 2 Lv",
+    "String_Skill_Name": 3610002201,
+    "Skill_User": 0,
+    "Skill_Description": "병기 탑승시 소모되는 보급품의 수량이 20% 만큼 감소되고, 병기 건설 시 건설량은 20%만큼 증가합니다.",
+    "String_Skill_Description": 3620220102
+  },
+  {
+    "Guild_Skill_ID": 220103,
+    "Skill_Name": "보급 강화 3 Lv",
+    "String_Skill_Name": 3610002201,
+    "Skill_User": 0,
+    "Skill_Description": "병기 탑승시 소모되는 보급품의 수량이 30% 만큼 감소되고, 병기 건설 시 건설량은 30%만큼 증가합니다.",
+    "String_Skill_Description": 3620220103
+  },
+  {
+    "Guild_Skill_ID": 220104,
+    "Skill_Name": "보급 강화 4 Lv",
+    "String_Skill_Name": 3610002201,
+    "Skill_User": 0,
+    "Skill_Description": "병기 탑승시 소모되는 보급품의 수량이 40% 만큼 감소되고, 병기 건설 시 건설량은 40%만큼 증가합니다.",
+    "String_Skill_Description": 3620220104
+  },
+  {
+    "Guild_Skill_ID": 220105,
+    "Skill_Name": "보급 강화 5 Lv",
+    "String_Skill_Name": 3610002201,
+    "Skill_User": 0,
+    "Skill_Description": "병기 탑승시 소모되는 보급품의 수량이 50% 만큼 감소되고, 병기 건설 시 건설량은 50%만큼 증가합니다.",
+    "String_Skill_Description": 3620220105
+  },
+  {
+    "Guild_Skill_ID": 220201,
+    "Skill_Name": "물자 확보 1 Lv",
+    "String_Skill_Name": 3610002202,
+    "Skill_User": 0,
+    "Skill_Description": "보급품 최대 소지량이 1개 증가합니다.",
+    "String_Skill_Description": 3620220201
+  },
+  {
+    "Guild_Skill_ID": 220202,
+    "Skill_Name": "물자 확보 2 Lv",
+    "String_Skill_Name": 3610002202,
+    "Skill_User": 0,
+    "Skill_Description": "보급품 최대 소지량이 2개 증가합니다.",
+    "String_Skill_Description": 3620220202
+  },
+  {
+    "Guild_Skill_ID": 220203,
+    "Skill_Name": "물자 확보 3 Lv",
+    "String_Skill_Name": 3610002202,
+    "Skill_User": 0,
+    "Skill_Description": "보급품 최대 소지량이 3개 증가합니다.",
+    "String_Skill_Description": 3620220203
+  },
+  {
+    "Guild_Skill_ID": 220204,
+    "Skill_Name": "물자 확보 4 Lv",
+    "String_Skill_Name": 3610002202,
+    "Skill_User": 0,
+    "Skill_Description": "보급품 최대 소지량이 4개 증가합니다.",
+    "String_Skill_Description": 3620220204
+  },
+  {
+    "Guild_Skill_ID": 220205,
+    "Skill_Name": "물자 확보 5 Lv",
+    "String_Skill_Name": 3610002202,
+    "Skill_User": 0,
+    "Skill_Description": "보급품 최대 소지량이 5개 증가합니다.",
+    "String_Skill_Description": 3620220205
+  },
+  {
+    "Guild_Skill_ID": 220301,
+    "Skill_Name": "강인한 정신력 1 Lv",
+    "String_Skill_Name": 3610002203,
+    "Skill_User": 0,
+    "Skill_Description": "병기 탑승(변신) 중 회복되는 SP 수치가 3초당 2%만큼 추가로 증가 합니다.",
+    "String_Skill_Description": 3620220301
+  },
+  {
+    "Guild_Skill_ID": 220302,
+    "Skill_Name": "강인한 정신력 2 Lv",
+    "String_Skill_Name": 3610002203,
+    "Skill_User": 0,
+    "Skill_Description": "병기 탑승(변신) 중 회복되는 SP 수치가 3초당 4%만큼 추가로 증가 합니다.",
+    "String_Skill_Description": 3620220302
+  },
+  {
+    "Guild_Skill_ID": 220303,
+    "Skill_Name": "강인한 정신력 3 Lv",
+    "String_Skill_Name": 3610002203,
+    "Skill_User": 0,
+    "Skill_Description": "병기 탑승(변신) 중 회복되는 SP 수치가 3초당 6%만큼 추가로 증가 합니다.",
+    "String_Skill_Description": 3620220303
+  },
+  {
+    "Guild_Skill_ID": 220304,
+    "Skill_Name": "강인한 정신력 4 Lv",
+    "String_Skill_Name": 3610002203,
+    "Skill_User": 0,
+    "Skill_Description": "병기 탑승(변신) 중 회복되는 SP 수치가 3초당 8%만큼 추가로 증가 합니다.",
+    "String_Skill_Description": 3620220304
+  },
+  {
+    "Guild_Skill_ID": 220305,
+    "Skill_Name": "강인한 정신력 5 Lv",
+    "String_Skill_Name": 3610002203,
+    "Skill_User": 0,
+    "Skill_Description": "병기 탑승(변신) 중 회복되는 SP 수치가 3초당 10%만큼 추가로 증가 합니다.",
+    "String_Skill_Description": 3620220305
+  },
+  {
+    "Guild_Skill_ID": 220401,
+    "Skill_Name": "추가 수당 1 Lv",
+    "String_Skill_Name": 3610002204,
+    "Skill_User": 0,
+    "Skill_Description": "습득하는 경험치가 1%만큼 증가합니다.",
+    "String_Skill_Description": 3620220401
+  },
+  {
+    "Guild_Skill_ID": 220402,
+    "Skill_Name": "추가 수당 2 Lv",
+    "String_Skill_Name": 3610002204,
+    "Skill_User": 0,
+    "Skill_Description": "습득하는 경험치가 2%만큼 증가합니다.",
+    "String_Skill_Description": 3620220402
+  },
+  {
+    "Guild_Skill_ID": 220403,
+    "Skill_Name": "추가 수당 3 Lv",
+    "String_Skill_Name": 3610002204,
+    "Skill_User": 0,
+    "Skill_Description": "습득하는 경험치가 3%만큼 증가합니다.",
+    "String_Skill_Description": 3620220403
+  },
+  {
+    "Guild_Skill_ID": 220404,
+    "Skill_Name": "추가 수당 4 Lv",
+    "String_Skill_Name": 3610002204,
+    "Skill_User": 0,
+    "Skill_Description": "습득하는 경험치가 4%만큼 증가합니다.",
+    "String_Skill_Description": 3620220404
+  },
+  {
+    "Guild_Skill_ID": 220405,
+    "Skill_Name": "추가 수당 5 Lv",
+    "String_Skill_Name": 3610002204,
+    "Skill_User": 0,
+    "Skill_Description": "습득하는 경험치가 5%만큼 증가합니다.",
+    "String_Skill_Description": 3620220405
+  },
+  {
+    "Guild_Skill_ID": 220406,
+    "Skill_Name": "추가 수당 6 Lv",
+    "String_Skill_Name": 3610002204,
+    "Skill_User": 0,
+    "Skill_Description": "습득하는 경험치가 6%만큼 증가합니다.",
+    "String_Skill_Description": 3620220406
+  },
+  {
+    "Guild_Skill_ID": 220407,
+    "Skill_Name": "추가 수당 7 Lv",
+    "String_Skill_Name": 3610002204,
+    "Skill_User": 0,
+    "Skill_Description": "습득하는 경험치가 7%만큼 증가합니다.",
+    "String_Skill_Description": 3620220407
+  },
+  {
+    "Guild_Skill_ID": 220408,
+    "Skill_Name": "추가 수당 8 Lv",
+    "String_Skill_Name": 3610002204,
+    "Skill_User": 0,
+    "Skill_Description": "습득하는 경험치가 8%만큼 증가합니다.",
+    "String_Skill_Description": 3620220408
+  },
+  {
+    "Guild_Skill_ID": 220409,
+    "Skill_Name": "추가 수당 9 Lv",
+    "String_Skill_Name": 3610002204,
+    "Skill_User": 0,
+    "Skill_Description": "습득하는 경험치가 9%만큼 증가합니다.",
+    "String_Skill_Description": 3620220409
+  },
+  {
+    "Guild_Skill_ID": 220410,
+    "Skill_Name": "추가 수당 10 Lv",
+    "String_Skill_Name": 3610002204,
+    "Skill_User": 0,
+    "Skill_Description": "습득하는 경험치가 10%만큼 증가합니다.",
+    "String_Skill_Description": 3620220410
+  },
+  {
+    "Guild_Skill_ID": 220501,
+    "Skill_Name": "잭팟 777 1 Lv",
+    "String_Skill_Name": 3610002205,
+    "Skill_User": 0,
+    "Skill_Description": "아이템 드랍 확률이 1%만큼 증가합니다.",
+    "String_Skill_Description": 3620220501
+  },
+  {
+    "Guild_Skill_ID": 220502,
+    "Skill_Name": "잭팟 777 2 Lv",
+    "String_Skill_Name": 3610002205,
+    "Skill_User": 0,
+    "Skill_Description": "아이템 드랍 확률이 2%만큼 증가합니다.",
+    "String_Skill_Description": 3620220502
+  },
+  {
+    "Guild_Skill_ID": 220503,
+    "Skill_Name": "잭팟 777 3 Lv",
+    "String_Skill_Name": 3610002205,
+    "Skill_User": 0,
+    "Skill_Description": "아이템 드랍 확률이 3%만큼 증가합니다.",
+    "String_Skill_Description": 3620220503
+  },
+  {
+    "Guild_Skill_ID": 220504,
+    "Skill_Name": "잭팟 777 4 Lv",
+    "String_Skill_Name": 3610002205,
+    "Skill_User": 0,
+    "Skill_Description": "아이템 드랍 확률이 4%만큼 증가합니다.",
+    "String_Skill_Description": 3620220504
+  },
+  {
+    "Guild_Skill_ID": 220505,
+    "Skill_Name": "잭팟 777 5 Lv",
+    "String_Skill_Name": 3610002205,
+    "Skill_User": 0,
+    "Skill_Description": "아이템 드랍 확률이 5%만큼 증가합니다.",
+    "String_Skill_Description": 3620220505
+  },
+  {
+    "Guild_Skill_ID": 220506,
+    "Skill_Name": "잭팟 777 6 Lv",
+    "String_Skill_Name": 3610002205,
+    "Skill_User": 0,
+    "Skill_Description": "아이템 드랍 확률이 6%만큼 증가합니다.",
+    "String_Skill_Description": 3620220506
+  },
+  {
+    "Guild_Skill_ID": 220507,
+    "Skill_Name": "잭팟 777 7 Lv",
+    "String_Skill_Name": 3610002205,
+    "Skill_User": 0,
+    "Skill_Description": "아이템 드랍 확률이 7%만큼 증가합니다.",
+    "String_Skill_Description": 3620220507
+  },
+  {
+    "Guild_Skill_ID": 220508,
+    "Skill_Name": "잭팟 777 8 Lv",
+    "String_Skill_Name": 3610002205,
+    "Skill_User": 0,
+    "Skill_Description": "아이템 드랍 확률이 8%만큼 증가합니다.",
+    "String_Skill_Description": 3620220508
+  },
+  {
+    "Guild_Skill_ID": 220509,
+    "Skill_Name": "잭팟 777 9 Lv",
+    "String_Skill_Name": 3610002205,
+    "Skill_User": 0,
+    "Skill_Description": "아이템 드랍 확률이 9%만큼 증가합니다.",
+    "String_Skill_Description": 3620220509
+  },
+  {
+    "Guild_Skill_ID": 220510,
+    "Skill_Name": "잭팟 777 10 Lv",
+    "String_Skill_Name": 3610002205,
+    "Skill_User": 0,
+    "Skill_Description": "아이템 드랍 확률이 10%만큼 증가합니다.",
+    "String_Skill_Description": 3620220510
+  },
+  {
+    "Guild_Skill_ID": 220601,
+    "Skill_Name": "PT 체조 1 Lv",
+    "String_Skill_Name": 3610002206,
+    "Skill_User": 0,
+    "Skill_Description": "최대 HP가 1%만큼 증가합니다.",
+    "String_Skill_Description": 3620220601
+  },
+  {
+    "Guild_Skill_ID": 220602,
+    "Skill_Name": "PT 체조 2 Lv",
+    "String_Skill_Name": 3610002206,
+    "Skill_User": 0,
+    "Skill_Description": "최대 HP가 2%만큼 증가합니다.",
+    "String_Skill_Description": 3620220602
+  },
+  {
+    "Guild_Skill_ID": 220603,
+    "Skill_Name": "PT 체조 3 Lv",
+    "String_Skill_Name": 3610002206,
+    "Skill_User": 0,
+    "Skill_Description": "최대 HP가 3%만큼 증가합니다.",
+    "String_Skill_Description": 3620220603
+  },
+  {
+    "Guild_Skill_ID": 220604,
+    "Skill_Name": "PT 체조 4 Lv",
+    "String_Skill_Name": 3610002206,
+    "Skill_User": 0,
+    "Skill_Description": "최대 HP가 4%만큼 증가합니다.",
+    "String_Skill_Description": 3620220604
+  },
+  {
+    "Guild_Skill_ID": 220605,
+    "Skill_Name": "PT 체조 5 Lv",
+    "String_Skill_Name": 3610002206,
+    "Skill_User": 0,
+    "Skill_Description": "최대 HP가 5%만큼 증가합니다.",
+    "String_Skill_Description": 3620220605
+  },
+  {
+    "Guild_Skill_ID": 220606,
+    "Skill_Name": "PT 체조 6 Lv",
+    "String_Skill_Name": 3610002206,
+    "Skill_User": 0,
+    "Skill_Description": "최대 HP가 6%만큼 증가합니다.",
+    "String_Skill_Description": 3620220606
+  },
+  {
+    "Guild_Skill_ID": 220607,
+    "Skill_Name": "PT 체조 7 Lv",
+    "String_Skill_Name": 3610002206,
+    "Skill_User": 0,
+    "Skill_Description": "최대 HP가 7%만큼 증가합니다.",
+    "String_Skill_Description": 3620220607
+  },
+  {
+    "Guild_Skill_ID": 220608,
+    "Skill_Name": "PT 체조 8 Lv",
+    "String_Skill_Name": 3610002206,
+    "Skill_User": 0,
+    "Skill_Description": "최대 HP가 8%만큼 증가합니다.",
+    "String_Skill_Description": 3620220608
+  },
+  {
+    "Guild_Skill_ID": 220609,
+    "Skill_Name": "PT 체조 9 Lv",
+    "String_Skill_Name": 3610002206,
+    "Skill_User": 0,
+    "Skill_Description": "최대 HP가 9%만큼 증가합니다.",
+    "String_Skill_Description": 3620220609
+  },
+  {
+    "Guild_Skill_ID": 220610,
+    "Skill_Name": "PT 체조 10 Lv",
+    "String_Skill_Name": 3610002206,
+    "Skill_User": 0,
+    "Skill_Description": "최대 HP가 10%만큼 증가합니다.",
+    "String_Skill_Description": 3620220610
+  },
+  {
+    "Guild_Skill_ID": 220701,
+    "Skill_Name": "전술 훈련 1 Lv",
+    "String_Skill_Name": 3610002207,
+    "Skill_User": 0,
+    "Skill_Description": "자신의 물리/마법 공격력이 1%만큼 증가합니다.",
+    "String_Skill_Description": 3620220701
+  },
+  {
+    "Guild_Skill_ID": 220702,
+    "Skill_Name": "전술 훈련 2 Lv",
+    "String_Skill_Name": 3610002207,
+    "Skill_User": 0,
+    "Skill_Description": "자신의 물리/마법 공격력이 2%만큼 증가합니다.",
+    "String_Skill_Description": 3620220702
+  },
+  {
+    "Guild_Skill_ID": 220703,
+    "Skill_Name": "전술 훈련 3 Lv",
+    "String_Skill_Name": 3610002207,
+    "Skill_User": 0,
+    "Skill_Description": "자신의 물리/마법 공격력이 3%만큼 증가합니다.",
+    "String_Skill_Description": 3620220703
+  },
+  {
+    "Guild_Skill_ID": 220704,
+    "Skill_Name": "전술 훈련 4 Lv",
+    "String_Skill_Name": 3610002207,
+    "Skill_User": 0,
+    "Skill_Description": "자신의 물리/마법 공격력이 4%만큼 증가합니다.",
+    "String_Skill_Description": 3620220704
+  },
+  {
+    "Guild_Skill_ID": 220705,
+    "Skill_Name": "전술 훈련 5 Lv",
+    "String_Skill_Name": 3610002207,
+    "Skill_User": 0,
+    "Skill_Description": "자신의 물리/마법 공격력이 5%만큼 증가합니다.",
+    "String_Skill_Description": 3620220705
+  },
+  {
+    "Guild_Skill_ID": 220706,
+    "Skill_Name": "전술 훈련 6 Lv",
+    "String_Skill_Name": 3610002207,
+    "Skill_User": 0,
+    "Skill_Description": "자신의 물리/마법 공격력이 6%만큼 증가합니다.",
+    "String_Skill_Description": 3620220706
+  },
+  {
+    "Guild_Skill_ID": 220707,
+    "Skill_Name": "전술 훈련 7 Lv",
+    "String_Skill_Name": 3610002207,
+    "Skill_User": 0,
+    "Skill_Description": "자신의 물리/마법 공격력이 7%만큼 증가합니다.",
+    "String_Skill_Description": 3620220707
+  },
+  {
+    "Guild_Skill_ID": 220708,
+    "Skill_Name": "전술 훈련 8 Lv",
+    "String_Skill_Name": 3610002207,
+    "Skill_User": 0,
+    "Skill_Description": "자신의 물리/마법 공격력이 8%만큼 증가합니다.",
+    "String_Skill_Description": 3620220708
+  },
+  {
+    "Guild_Skill_ID": 220709,
+    "Skill_Name": "전술 훈련 9 Lv",
+    "String_Skill_Name": 3610002207,
+    "Skill_User": 0,
+    "Skill_Description": "자신의 물리/마법 공격력이 9%만큼 증가합니다.",
+    "String_Skill_Description": 3620220709
+  },
+  {
+    "Guild_Skill_ID": 220710,
+    "Skill_Name": "전술 훈련 10 Lv",
+    "String_Skill_Name": 3610002207,
+    "Skill_User": 0,
+    "Skill_Description": "자신의 물리/마법 공격력이 10%만큼 증가합니다.",
+    "String_Skill_Description": 3620220710
+  },
+  {
+    "Guild_Skill_ID": 210101,
+    "Skill_Name": "급소 차기 1 Lv",
+    "String_Skill_Name": 3610002101,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 방어율을 5%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210101
+  },
+  {
+    "Guild_Skill_ID": 210102,
+    "Skill_Name": "급소 차기 2 Lv",
+    "String_Skill_Name": 3610002101,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 방어율을 10%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210102
+  },
+  {
+    "Guild_Skill_ID": 210103,
+    "Skill_Name": "급소 차기 3 Lv",
+    "String_Skill_Name": 3610002101,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 방어율을 15%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210103
+  },
+  {
+    "Guild_Skill_ID": 210104,
+    "Skill_Name": "급소 차기 4 Lv",
+    "String_Skill_Name": 3610002101,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 방어율을 20%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210104
+  },
+  {
+    "Guild_Skill_ID": 210105,
+    "Skill_Name": "급소 차기 5 Lv",
+    "String_Skill_Name": 3610002101,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 방어율을 25%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210105
+  },
+  {
+    "Guild_Skill_ID": 210106,
+    "Skill_Name": "급소 차기 6 Lv",
+    "String_Skill_Name": 3610002101,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 방어율을 30%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210106
+  },
+  {
+    "Guild_Skill_ID": 210107,
+    "Skill_Name": "급소 차기 7 Lv",
+    "String_Skill_Name": 3610002101,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 방어율을 35%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210107
+  },
+  {
+    "Guild_Skill_ID": 210201,
+    "Skill_Name": "눈 찌르기 1 Lv",
+    "String_Skill_Name": 3610002102,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 명중율을 5%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210201
+  },
+  {
+    "Guild_Skill_ID": 210202,
+    "Skill_Name": "눈 찌르기 2 Lv",
+    "String_Skill_Name": 3610002102,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 명중율을 10%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210202
+  },
+  {
+    "Guild_Skill_ID": 210203,
+    "Skill_Name": "눈 찌르기 3 Lv",
+    "String_Skill_Name": 3610002102,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 명중율을 15%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210203
+  },
+  {
+    "Guild_Skill_ID": 210204,
+    "Skill_Name": "눈 찌르기 4 Lv",
+    "String_Skill_Name": 3610002102,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 명중율을 20%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210204
+  },
+  {
+    "Guild_Skill_ID": 210205,
+    "Skill_Name": "눈 찌르기 5 Lv",
+    "String_Skill_Name": 3610002102,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 명중율을 25%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210205
+  },
+  {
+    "Guild_Skill_ID": 210206,
+    "Skill_Name": "눈 찌르기 6 Lv",
+    "String_Skill_Name": 3610002102,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 명중율을 30%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210206
+  },
+  {
+    "Guild_Skill_ID": 210207,
+    "Skill_Name": "눈 찌르기 7 Lv",
+    "String_Skill_Name": 3610002102,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 명중율을 35%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210207
+  },
+  {
+    "Guild_Skill_ID": 210301,
+    "Skill_Name": "멍 때리기 1 Lv",
+    "String_Skill_Name": 3610002103,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 가속율을 5%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210301
+  },
+  {
+    "Guild_Skill_ID": 210302,
+    "Skill_Name": "멍 때리기 2 Lv",
+    "String_Skill_Name": 3610002103,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 가속율을 10%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210302
+  },
+  {
+    "Guild_Skill_ID": 210303,
+    "Skill_Name": "멍 때리기 3 Lv",
+    "String_Skill_Name": 3610002103,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 가속율을 15%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210303
+  },
+  {
+    "Guild_Skill_ID": 210304,
+    "Skill_Name": "멍 때리기 4 Lv",
+    "String_Skill_Name": 3610002103,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 가속율을 20%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210304
+  },
+  {
+    "Guild_Skill_ID": 210305,
+    "Skill_Name": "멍 때리기 5 Lv",
+    "String_Skill_Name": 3610002103,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 가속율을 25%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210305
+  },
+  {
+    "Guild_Skill_ID": 210306,
+    "Skill_Name": "멍 때리기 6 Lv",
+    "String_Skill_Name": 3610002103,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 가속율을 30%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210306
+  },
+  {
+    "Guild_Skill_ID": 210307,
+    "Skill_Name": "멍 때리기 7 Lv",
+    "String_Skill_Name": 3610002103,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 가속율을 35%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210307
+  },
+  {
+    "Guild_Skill_ID": 210401,
+    "Skill_Name": "만성피로 1 Lv",
+    "String_Skill_Name": 3610002104,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 활력율을 5%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210401
+  },
+  {
+    "Guild_Skill_ID": 210402,
+    "Skill_Name": "만성피로 2 Lv",
+    "String_Skill_Name": 3610002104,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 활력율을 10%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210402
+  },
+  {
+    "Guild_Skill_ID": 210403,
+    "Skill_Name": "만성피로 3 Lv",
+    "String_Skill_Name": 3610002104,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 활력율을 15%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210403
+  },
+  {
+    "Guild_Skill_ID": 210404,
+    "Skill_Name": "만성피로 4 Lv",
+    "String_Skill_Name": 3610002104,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 활력율을 20%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210404
+  },
+  {
+    "Guild_Skill_ID": 210405,
+    "Skill_Name": "만성피로 5 Lv",
+    "String_Skill_Name": 3610002104,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 활력율을 25%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210405
+  },
+  {
+    "Guild_Skill_ID": 210406,
+    "Skill_Name": "만성피로 6 Lv",
+    "String_Skill_Name": 3610002104,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 활력율을 30%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210406
+  },
+  {
+    "Guild_Skill_ID": 210407,
+    "Skill_Name": "만성피로 7 Lv",
+    "String_Skill_Name": 3610002104,
+    "Skill_User": 2,
+    "Skill_Description": "30초간 대상의 활력율을 35%만큼 감소시킵니다.",
+    "String_Skill_Description": 3620210407
+  },
+  {
+    "Guild_Skill_ID": 210501,
+    "Skill_Name": "긴급 호출 1 Lv",
+    "String_Skill_Name": 3610002105,
+    "Skill_User": 1,
+    "Skill_Description": "길드마스터 위치로 길드원 전체를 소환합니다. \\n재사용 대기시간 : 35분",
+    "String_Skill_Description": 3620210501
+  },
+  {
+    "Guild_Skill_ID": 210502,
+    "Skill_Name": "긴급 호출 2 Lv",
+    "String_Skill_Name": 3610002105,
+    "Skill_User": 1,
+    "Skill_Description": "길드마스터 위치로 길드원 전체를 소환합니다. \\n재사용 대기시간 : 25분",
+    "String_Skill_Description": 3620210502
+  },
+  {
+    "Guild_Skill_ID": 210503,
+    "Skill_Name": "긴급 호출 3 Lv",
+    "String_Skill_Name": 3610002105,
+    "Skill_User": 1,
+    "Skill_Description": "길드마스터 위치로 길드원 전체를 소환합니다. \\n재사용 대기시간 : 15분",
+    "String_Skill_Description": 3620210503
+  },
+  {
+    "Guild_Skill_ID": 200101,
+    "Skill_Name": "Siege Weapon 1 Lv",
+    "String_Skill_Name": 3610002001,
+    "Skill_User": 0,
+    "Skill_Description": "Increase Guild Siege Weapon to 20",
+    "String_Skill_Description": 3620200101
+  },
+  {
+    "Guild_Skill_ID": 200102,
+    "Skill_Name": "Siege Weapon 2 Lv",
+    "String_Skill_Name": 3610002001,
+    "Skill_User": 0,
+    "Skill_Description": "Increase Guild Siege Weapon to 40",
+    "String_Skill_Description": 3620200102
+  },
+  {
+    "Guild_Skill_ID": 200103,
+    "Skill_Name": "Siege Weapon 3 Lv",
+    "String_Skill_Name": 3610002001,
+    "Skill_User": 0,
+    "Skill_Description": "Increase Guild Siege Weapon to 60",
+    "String_Skill_Description": 3620200103
+  },
+  {
+    "Guild_Skill_ID": 200104,
+    "Skill_Name": "Siege Weapon 4 Lv",
+    "String_Skill_Name": 3610002001,
+    "Skill_User": 0,
+    "Skill_Description": "Increase Guild Siege Weapon to 80",
+    "String_Skill_Description": 3620200104
+  },
+  {
+    "Guild_Skill_ID": 200105,
+    "Skill_Name": "Siege Weapon 5 Lv",
+    "String_Skill_Name": 3610002001,
+    "Skill_User": 0,
+    "Skill_Description": "Increase Guild Siege Weapon to 100",
+    "String_Skill_Description": 3620200105
+  }
+]

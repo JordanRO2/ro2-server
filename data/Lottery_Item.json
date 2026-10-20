@@ -1,0 +1,26 @@
+[
+  {
+    "Group_ID": 1,
+    "String_ID": 15316,
+    "Icon_Element": 1,
+    "참고": "프론테라"
+  },
+  {
+    "Group_ID": 2,
+    "String_ID": 15316,
+    "Icon_Element": 1,
+    "참고": "프론테라2"
+  },
+  {
+    "Group_ID": 3,
+    "String_ID": 15317,
+    "Icon_Element": 2,
+    "참고": "모로코"
+  },
+  {
+    "Group_ID": 4,
+    "String_ID": 15317,
+    "Icon_Element": 2,
+    "참고": "모로코2"
+  }
+]

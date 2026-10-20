@@ -1,0 +1,72 @@
+[
+  {
+    "ItemID": 30000288,
+    "Ratio_Socket_0": 5000,
+    "Ratio_Socket_1": 3000,
+    "Ratio_Socket_2": 1500,
+    "Ratio_Socket_3": 500
+  },
+  {
+    "ItemID": 60000166,
+    "Ratio_Socket_0": 5000,
+    "Ratio_Socket_1": 3000,
+    "Ratio_Socket_2": 1500,
+    "Ratio_Socket_3": 500
+  },
+  {
+    "ItemID": 60000478,
+    "Ratio_Socket_0": 5000,
+    "Ratio_Socket_1": 3000,
+    "Ratio_Socket_2": 1500,
+    "Ratio_Socket_3": 500
+  },
+  {
+    "ItemID": 70000134,
+    "Ratio_Socket_0": 5000,
+    "Ratio_Socket_1": 3000,
+    "Ratio_Socket_2": 1500,
+    "Ratio_Socket_3": 500
+  },
+  {
+    "ItemID": 70000135,
+    "Ratio_Socket_0": 5000,
+    "Ratio_Socket_1": 3000,
+    "Ratio_Socket_2": 1500,
+    "Ratio_Socket_3": 500
+  },
+  {
+    "ItemID": 70000894,
+    "Ratio_Socket_0": 5000,
+    "Ratio_Socket_1": 3000,
+    "Ratio_Socket_2": 1500,
+    "Ratio_Socket_3": 500
+  },
+  {
+    "ItemID": 70000895,
+    "Ratio_Socket_0": 5000,
+    "Ratio_Socket_1": 3000,
+    "Ratio_Socket_2": 1500,
+    "Ratio_Socket_3": 500
+  },
+  {
+    "ItemID": 70004010,
+    "Ratio_Socket_0": 5000,
+    "Ratio_Socket_1": 3000,
+    "Ratio_Socket_2": 1500,
+    "Ratio_Socket_3": 500
+  },
+  {
+    "ItemID": 70004011,
+    "Ratio_Socket_0": 5000,
+    "Ratio_Socket_1": 3000,
+    "Ratio_Socket_2": 1500,
+    "Ratio_Socket_3": 500
+  },
+  {
+    "ItemID": 66600025,
+    "Ratio_Socket_0": 5000,
+    "Ratio_Socket_1": 3000,
+    "Ratio_Socket_2": 1500,
+    "Ratio_Socket_3": 500
+  }
+]

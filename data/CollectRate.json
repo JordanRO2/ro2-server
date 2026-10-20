@@ -1,0 +1,72 @@
+[
+  {
+    "Index": 1,
+    "Num_Start": 0,
+    "Num_End": 10,
+    "Skill_Cooltime": 120000,
+    "Skill_Max": 2
+  },
+  {
+    "Index": 2,
+    "Num_Start": 11,
+    "Num_End": 21,
+    "Skill_Cooltime": 110000,
+    "Skill_Max": 2
+  },
+  {
+    "Index": 3,
+    "Num_Start": 22,
+    "Num_End": 32,
+    "Skill_Cooltime": 100000,
+    "Skill_Max": 2
+  },
+  {
+    "Index": 4,
+    "Num_Start": 33,
+    "Num_End": 43,
+    "Skill_Cooltime": 90000,
+    "Skill_Max": 2
+  },
+  {
+    "Index": 5,
+    "Num_Start": 44,
+    "Num_End": 54,
+    "Skill_Cooltime": 80000,
+    "Skill_Max": 2
+  },
+  {
+    "Index": 6,
+    "Num_Start": 55,
+    "Num_End": 65,
+    "Skill_Cooltime": 70000,
+    "Skill_Max": 2
+  },
+  {
+    "Index": 7,
+    "Num_Start": 66,
+    "Num_End": 76,
+    "Skill_Cooltime": 60000,
+    "Skill_Max": 3
+  },
+  {
+    "Index": 8,
+    "Num_Start": 77,
+    "Num_End": 87,
+    "Skill_Cooltime": 50000,
+    "Skill_Max": 3
+  },
+  {
+    "Index": 9,
+    "Num_Start": 88,
+    "Num_End": 98,
+    "Skill_Cooltime": 40000,
+    "Skill_Max": 3
+  },
+  {
+    "Index": 10,
+    "Num_Start": 99,
+    "Num_End": 1000,
+    "Skill_Cooltime": 30000,
+    "Skill_Max": 4
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "TimeSet_ID": 3000,
+    "NationEnable": 511,
+    "OrItemID0": 90000001,
+    "OrItemID1": 0,
+    "OrItemID2": 0,
+    "OrItemID3": 0,
+    "OrItemID4": 0,
+    "OrItemID5": 0,
+    "OrItemID6": 0,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 1,
+    "String_Set_Name": 1320003000,
+    "UpdateCode": "기본"
+  }
+]

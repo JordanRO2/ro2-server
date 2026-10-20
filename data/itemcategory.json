@@ -1,0 +1,920 @@
+[
+  {
+    "Index": 1,
+    "Name": "무기",
+    "String_Category_Name": 1400000000,
+    "High_Category": 1,
+    "Medium_Category": 0,
+    "Low_Category": 0,
+    "IconIndex": 0
+  },
+  {
+    "Index": 2,
+    "Name": "소드",
+    "String_Category_Name": 1400000001,
+    "High_Category": 1,
+    "Medium_Category": 1,
+    "Low_Category": 0,
+    "IconIndex": 1
+  },
+  {
+    "Index": 3,
+    "Name": "그레이트 소드",
+    "String_Category_Name": 1400000002,
+    "High_Category": 1,
+    "Medium_Category": 2,
+    "Low_Category": 0,
+    "IconIndex": 2
+  },
+  {
+    "Index": 4,
+    "Name": "오러소드",
+    "String_Category_Name": 1400000003,
+    "High_Category": 1,
+    "Medium_Category": 3,
+    "Low_Category": 0,
+    "IconIndex": 3
+  },
+  {
+    "Index": 5,
+    "Name": "스태프",
+    "String_Category_Name": 1400000004,
+    "High_Category": 1,
+    "Medium_Category": 4,
+    "Low_Category": 0,
+    "IconIndex": 4
+  },
+  {
+    "Index": 6,
+    "Name": "로드",
+    "String_Category_Name": 1400000005,
+    "High_Category": 1,
+    "Medium_Category": 5,
+    "Low_Category": 0,
+    "IconIndex": 5
+  },
+  {
+    "Index": 7,
+    "Name": "룬 스태프",
+    "String_Category_Name": 1400000006,
+    "High_Category": 1,
+    "Medium_Category": 6,
+    "Low_Category": 0,
+    "IconIndex": 6
+  },
+  {
+    "Index": 8,
+    "Name": "보우",
+    "String_Category_Name": 1400000007,
+    "High_Category": 1,
+    "Medium_Category": 7,
+    "Low_Category": 0,
+    "IconIndex": 7
+  },
+  {
+    "Index": 9,
+    "Name": "화살통",
+    "String_Category_Name": 1400000008,
+    "High_Category": 1,
+    "Medium_Category": 8,
+    "Low_Category": 0,
+    "IconIndex": 8
+  },
+  {
+    "Index": 10,
+    "Name": "헌터보우",
+    "String_Category_Name": 1400000009,
+    "High_Category": 1,
+    "Medium_Category": 9,
+    "Low_Category": 0,
+    "IconIndex": 9
+  },
+  {
+    "Index": 11,
+    "Name": "스피어",
+    "String_Category_Name": 1400000010,
+    "High_Category": 1,
+    "Medium_Category": 10,
+    "Low_Category": 0,
+    "IconIndex": 10
+  },
+  {
+    "Index": 12,
+    "Name": "대거",
+    "String_Category_Name": 1400000011,
+    "High_Category": 1,
+    "Medium_Category": 11,
+    "Low_Category": 0,
+    "IconIndex": 11
+  },
+  {
+    "Index": 13,
+    "Name": "클로",
+    "String_Category_Name": 1400000012,
+    "High_Category": 1,
+    "Medium_Category": 12,
+    "Low_Category": 0,
+    "IconIndex": 12
+  },
+  {
+    "Index": 14,
+    "Name": "듀얼대거",
+    "String_Category_Name": 1400000013,
+    "High_Category": 1,
+    "Medium_Category": 13,
+    "Low_Category": 0,
+    "IconIndex": 13
+  },
+  {
+    "Index": 15,
+    "Name": "메이스",
+    "String_Category_Name": 1400000014,
+    "High_Category": 1,
+    "Medium_Category": 14,
+    "Low_Category": 0,
+    "IconIndex": 14
+  },
+  {
+    "Index": 16,
+    "Name": "홀리 메이스",
+    "String_Category_Name": 1400000015,
+    "High_Category": 1,
+    "Medium_Category": 15,
+    "Low_Category": 0,
+    "IconIndex": 15
+  },
+  {
+    "Index": 17,
+    "Name": "너클",
+    "String_Category_Name": 1400000016,
+    "High_Category": 1,
+    "Medium_Category": 16,
+    "Low_Category": 0,
+    "IconIndex": 16
+  },
+  {
+    "Index": 18,
+    "Name": "스틱",
+    "String_Category_Name": 1400000017,
+    "High_Category": 1,
+    "Medium_Category": 17,
+    "Low_Category": 0,
+    "IconIndex": 17
+  },
+  {
+    "Index": 19,
+    "Name": "사이더",
+    "String_Category_Name": 1400000018,
+    "High_Category": 1,
+    "Medium_Category": 18,
+    "Low_Category": 0,
+    "IconIndex": 18
+  },
+  {
+    "Index": 20,
+    "Name": "핸들",
+    "String_Category_Name": 1400000019,
+    "High_Category": 1,
+    "Medium_Category": 19,
+    "Low_Category": 0,
+    "IconIndex": 19
+  },
+  {
+    "Index": 21,
+    "Name": "인형",
+    "String_Category_Name": 1400000020,
+    "High_Category": 1,
+    "Medium_Category": 20,
+    "Low_Category": 0,
+    "IconIndex": 20
+  },
+  {
+    "Index": 22,
+    "Name": "방패",
+    "String_Category_Name": 1400000040,
+    "High_Category": 1,
+    "Medium_Category": 21,
+    "Low_Category": 0,
+    "IconIndex": 21
+  },
+  {
+    "Index": 23,
+    "Name": "바이블",
+    "String_Category_Name": 11826,
+    "High_Category": 1,
+    "Medium_Category": 22,
+    "Low_Category": 0,
+    "IconIndex": 22
+  },
+  {
+    "Index": 24,
+    "Name": "방어구",
+    "String_Category_Name": 1400000021,
+    "High_Category": 2,
+    "Medium_Category": 0,
+    "Low_Category": 0,
+    "IconIndex": 23
+  },
+  {
+    "Index": 25,
+    "Name": "천",
+    "String_Category_Name": 1400000022,
+    "High_Category": 2,
+    "Medium_Category": 1,
+    "Low_Category": 0,
+    "IconIndex": 24
+  },
+  {
+    "Index": 26,
+    "Name": "천 상의",
+    "String_Category_Name": 1400000023,
+    "High_Category": 2,
+    "Medium_Category": 1,
+    "Low_Category": 1,
+    "IconIndex": 25
+  },
+  {
+    "Index": 27,
+    "Name": "천 하의",
+    "String_Category_Name": 1400000024,
+    "High_Category": 2,
+    "Medium_Category": 1,
+    "Low_Category": 2,
+    "IconIndex": 26
+  },
+  {
+    "Index": 28,
+    "Name": "천 투구",
+    "String_Category_Name": 1400000025,
+    "High_Category": 2,
+    "Medium_Category": 1,
+    "Low_Category": 3,
+    "IconIndex": 27
+  },
+  {
+    "Index": 29,
+    "Name": "천 장갑",
+    "String_Category_Name": 1400000026,
+    "High_Category": 2,
+    "Medium_Category": 1,
+    "Low_Category": 4,
+    "IconIndex": 28
+  },
+  {
+    "Index": 30,
+    "Name": "천 신발",
+    "String_Category_Name": 1400000027,
+    "High_Category": 2,
+    "Medium_Category": 1,
+    "Low_Category": 5,
+    "IconIndex": 29
+  },
+  {
+    "Index": 31,
+    "Name": "경갑",
+    "String_Category_Name": 1400000028,
+    "High_Category": 2,
+    "Medium_Category": 2,
+    "Low_Category": 0,
+    "IconIndex": 30
+  },
+  {
+    "Index": 32,
+    "Name": "경갑 상의",
+    "String_Category_Name": 1400000029,
+    "High_Category": 2,
+    "Medium_Category": 2,
+    "Low_Category": 1,
+    "IconIndex": 31
+  },
+  {
+    "Index": 33,
+    "Name": "경갑 하의",
+    "String_Category_Name": 1400000030,
+    "High_Category": 2,
+    "Medium_Category": 2,
+    "Low_Category": 2,
+    "IconIndex": 32
+  },
+  {
+    "Index": 34,
+    "Name": "경갑 투구",
+    "String_Category_Name": 1400000031,
+    "High_Category": 2,
+    "Medium_Category": 2,
+    "Low_Category": 3,
+    "IconIndex": 33
+  },
+  {
+    "Index": 35,
+    "Name": "경갑 장갑",
+    "String_Category_Name": 1400000032,
+    "High_Category": 2,
+    "Medium_Category": 2,
+    "Low_Category": 4,
+    "IconIndex": 34
+  },
+  {
+    "Index": 36,
+    "Name": "경갑 신발",
+    "String_Category_Name": 1400000033,
+    "High_Category": 2,
+    "Medium_Category": 2,
+    "Low_Category": 5,
+    "IconIndex": 35
+  },
+  {
+    "Index": 37,
+    "Name": "중갑",
+    "String_Category_Name": 1400000034,
+    "High_Category": 2,
+    "Medium_Category": 3,
+    "Low_Category": 0,
+    "IconIndex": 36
+  },
+  {
+    "Index": 38,
+    "Name": "중갑 상의",
+    "String_Category_Name": 1400000035,
+    "High_Category": 2,
+    "Medium_Category": 3,
+    "Low_Category": 1,
+    "IconIndex": 37
+  },
+  {
+    "Index": 39,
+    "Name": "중갑 하의",
+    "String_Category_Name": 1400000036,
+    "High_Category": 2,
+    "Medium_Category": 3,
+    "Low_Category": 2,
+    "IconIndex": 38
+  },
+  {
+    "Index": 40,
+    "Name": "중갑 투구",
+    "String_Category_Name": 1400000037,
+    "High_Category": 2,
+    "Medium_Category": 3,
+    "Low_Category": 3,
+    "IconIndex": 39
+  },
+  {
+    "Index": 41,
+    "Name": "중갑 장갑",
+    "String_Category_Name": 1400000038,
+    "High_Category": 2,
+    "Medium_Category": 3,
+    "Low_Category": 4,
+    "IconIndex": 40
+  },
+  {
+    "Index": 42,
+    "Name": "중갑 신발",
+    "String_Category_Name": 1400000039,
+    "High_Category": 2,
+    "Medium_Category": 3,
+    "Low_Category": 5,
+    "IconIndex": 41
+  },
+  {
+    "Index": 43,
+    "Name": "액세서리",
+    "String_Category_Name": 1400000041,
+    "High_Category": 3,
+    "Medium_Category": 0,
+    "Low_Category": 0,
+    "IconIndex": 42
+  },
+  {
+    "Index": 44,
+    "Name": "목걸이",
+    "String_Category_Name": 1400000042,
+    "High_Category": 3,
+    "Medium_Category": 1,
+    "Low_Category": 0,
+    "IconIndex": 43
+  },
+  {
+    "Index": 45,
+    "Name": "귀고리",
+    "String_Category_Name": 1400000043,
+    "High_Category": 3,
+    "Medium_Category": 2,
+    "Low_Category": 0,
+    "IconIndex": 44
+  },
+  {
+    "Index": 46,
+    "Name": "반지",
+    "String_Category_Name": 1400000044,
+    "High_Category": 3,
+    "Medium_Category": 3,
+    "Low_Category": 0,
+    "IconIndex": 45
+  },
+  {
+    "Index": 47,
+    "Name": "장신구",
+    "String_Category_Name": 1400000045,
+    "High_Category": 3,
+    "Medium_Category": 4,
+    "Low_Category": 0,
+    "IconIndex": 46
+  },
+  {
+    "Index": 48,
+    "Name": "꾸미기",
+    "String_Category_Name": 1400000046,
+    "High_Category": 4,
+    "Medium_Category": 0,
+    "Low_Category": 0,
+    "IconIndex": 47
+  },
+  {
+    "Index": 49,
+    "Name": "꾸미기의상",
+    "String_Category_Name": 1400000047,
+    "High_Category": 4,
+    "Medium_Category": 1,
+    "Low_Category": 0,
+    "IconIndex": 48
+  },
+  {
+    "Index": 50,
+    "Name": "꾸미기장신구",
+    "String_Category_Name": 1400000048,
+    "High_Category": 4,
+    "Medium_Category": 2,
+    "Low_Category": 0,
+    "IconIndex": 49
+  },
+  {
+    "Index": 51,
+    "Name": "카드",
+    "String_Category_Name": 1400000049,
+    "High_Category": 5,
+    "Medium_Category": 0,
+    "Low_Category": 0,
+    "IconIndex": 50
+  },
+  {
+    "Index": 52,
+    "Name": "재료",
+    "String_Category_Name": 1400000050,
+    "High_Category": 6,
+    "Medium_Category": 0,
+    "Low_Category": 0,
+    "IconIndex": 51
+  },
+  {
+    "Index": 53,
+    "Name": "소모용품",
+    "String_Category_Name": 1400000069,
+    "High_Category": 7,
+    "Medium_Category": 0,
+    "Low_Category": 0,
+    "IconIndex": 52
+  },
+  {
+    "Index": 54,
+    "Name": "포션",
+    "String_Category_Name": 1400000070,
+    "High_Category": 7,
+    "Medium_Category": 1,
+    "Low_Category": 0,
+    "IconIndex": 53
+  },
+  {
+    "Index": 55,
+    "Name": "회복포션",
+    "String_Category_Name": 1400000071,
+    "High_Category": 7,
+    "Medium_Category": 1,
+    "Low_Category": 1,
+    "IconIndex": 54
+  },
+  {
+    "Index": 56,
+    "Name": "강화포션",
+    "String_Category_Name": 1400000072,
+    "High_Category": 7,
+    "Medium_Category": 1,
+    "Low_Category": 2,
+    "IconIndex": 55
+  },
+  {
+    "Index": 57,
+    "Name": "증폭포션",
+    "String_Category_Name": 1400000073,
+    "High_Category": 7,
+    "Medium_Category": 1,
+    "Low_Category": 3,
+    "IconIndex": 56
+  },
+  {
+    "Index": 58,
+    "Name": "음식",
+    "String_Category_Name": 1400000075,
+    "High_Category": 7,
+    "Medium_Category": 2,
+    "Low_Category": 0,
+    "IconIndex": 57
+  },
+  {
+    "Index": 59,
+    "Name": "회복 음식",
+    "String_Category_Name": 1400000076,
+    "High_Category": 7,
+    "Medium_Category": 2,
+    "Low_Category": 1,
+    "IconIndex": 58
+  },
+  {
+    "Index": 60,
+    "Name": "강화 음식",
+    "String_Category_Name": 1400000077,
+    "High_Category": 7,
+    "Medium_Category": 2,
+    "Low_Category": 2,
+    "IconIndex": 59
+  },
+  {
+    "Index": 61,
+    "Name": "룬",
+    "String_Category_Name": 1400000079,
+    "High_Category": 7,
+    "Medium_Category": 3,
+    "Low_Category": 0,
+    "IconIndex": 60
+  },
+  {
+    "Index": 62,
+    "Name": "룬홀 펀치",
+    "String_Category_Name": 1400000080,
+    "High_Category": 7,
+    "Medium_Category": 3,
+    "Low_Category": 1,
+    "IconIndex": 61
+  },
+  {
+    "Index": 63,
+    "Name": "룬",
+    "String_Category_Name": 1400000081,
+    "High_Category": 7,
+    "Medium_Category": 3,
+    "Low_Category": 2,
+    "IconIndex": 62
+  },
+  {
+    "Index": 64,
+    "Name": "스크롤",
+    "String_Category_Name": 1400000082,
+    "High_Category": 7,
+    "Medium_Category": 4,
+    "Low_Category": 0,
+    "IconIndex": 63
+  },
+  {
+    "Index": 65,
+    "Name": "강화 버프",
+    "String_Category_Name": 1400000083,
+    "High_Category": 7,
+    "Medium_Category": 4,
+    "Low_Category": 1,
+    "IconIndex": 64
+  },
+  {
+    "Index": 66,
+    "Name": "전투 보조",
+    "String_Category_Name": 1400000084,
+    "High_Category": 7,
+    "Medium_Category": 4,
+    "Low_Category": 2,
+    "IconIndex": 65
+  },
+  {
+    "Index": 67,
+    "Name": "기타",
+    "String_Category_Name": 1400000085,
+    "High_Category": 7,
+    "Medium_Category": 5,
+    "Low_Category": 0,
+    "IconIndex": 66
+  },
+  {
+    "Index": 68,
+    "Name": "직업용품",
+    "String_Category_Name": 1400000086,
+    "High_Category": 8,
+    "Medium_Category": 0,
+    "Low_Category": 0,
+    "IconIndex": 67
+  },
+  {
+    "Index": 69,
+    "Name": "도안",
+    "String_Category_Name": 1400000087,
+    "High_Category": 8,
+    "Medium_Category": 1,
+    "Low_Category": 0,
+    "IconIndex": 68
+  },
+  {
+    "Index": 70,
+    "Name": "블랙스미스",
+    "String_Category_Name": 1400000088,
+    "High_Category": 8,
+    "Medium_Category": 1,
+    "Low_Category": 1,
+    "IconIndex": 69
+  },
+  {
+    "Index": 71,
+    "Name": "아티잔",
+    "String_Category_Name": 1400000089,
+    "High_Category": 8,
+    "Medium_Category": 1,
+    "Low_Category": 2,
+    "IconIndex": 70
+  },
+  {
+    "Index": 72,
+    "Name": "알케미스트",
+    "String_Category_Name": 1400000090,
+    "High_Category": 8,
+    "Medium_Category": 1,
+    "Low_Category": 3,
+    "IconIndex": 71
+  },
+  {
+    "Index": 73,
+    "Name": "쉐프",
+    "String_Category_Name": 1400000091,
+    "High_Category": 8,
+    "Medium_Category": 1,
+    "Low_Category": 4,
+    "IconIndex": 72
+  },
+  {
+    "Index": 74,
+    "Name": "강화",
+    "String_Category_Name": 1400000092,
+    "High_Category": 9,
+    "Medium_Category": 0,
+    "Low_Category": 0,
+    "IconIndex": 73
+  },
+  {
+    "Index": 75,
+    "Name": "카드 합성석",
+    "String_Category_Name": 1400000093,
+    "High_Category": 9,
+    "Medium_Category": 1,
+    "Low_Category": 0,
+    "IconIndex": 74
+  },
+  {
+    "Index": 76,
+    "Name": "제련석",
+    "String_Category_Name": 1400000094,
+    "High_Category": 9,
+    "Medium_Category": 2,
+    "Low_Category": 0,
+    "IconIndex": 75
+  },
+  {
+    "Index": 77,
+    "Name": "기타",
+    "String_Category_Name": 1400000095,
+    "High_Category": 10,
+    "Medium_Category": 0,
+    "Low_Category": 0,
+    "IconIndex": 76
+  },
+  {
+    "Index": 78,
+    "Name": "강화 음식",
+    "String_Category_Name": 1400000077,
+    "High_Category": 7,
+    "Medium_Category": 2,
+    "Low_Category": 2,
+    "IconIndex": 77
+  },
+  {
+    "Index": 79,
+    "Name": "기타",
+    "String_Category_Name": 1400000078,
+    "High_Category": 7,
+    "Medium_Category": 2,
+    "Low_Category": 3,
+    "IconIndex": 78
+  },
+  {
+    "Index": 80,
+    "Name": "룬",
+    "String_Category_Name": 1400000079,
+    "High_Category": 7,
+    "Medium_Category": 3,
+    "Low_Category": 0,
+    "IconIndex": 79
+  },
+  {
+    "Index": 81,
+    "Name": "룬홀 펀치",
+    "String_Category_Name": 1400000080,
+    "High_Category": 7,
+    "Medium_Category": 3,
+    "Low_Category": 1,
+    "IconIndex": 80
+  },
+  {
+    "Index": 82,
+    "Name": "룬",
+    "String_Category_Name": 1400000081,
+    "High_Category": 7,
+    "Medium_Category": 3,
+    "Low_Category": 2,
+    "IconIndex": 81
+  },
+  {
+    "Index": 83,
+    "Name": "스크롤",
+    "String_Category_Name": 1400000082,
+    "High_Category": 7,
+    "Medium_Category": 4,
+    "Low_Category": 0,
+    "IconIndex": 82
+  },
+  {
+    "Index": 84,
+    "Name": "강화 버프",
+    "String_Category_Name": 1400000083,
+    "High_Category": 7,
+    "Medium_Category": 4,
+    "Low_Category": 1,
+    "IconIndex": 83
+  },
+  {
+    "Index": 85,
+    "Name": "전투 보조",
+    "String_Category_Name": 1400000084,
+    "High_Category": 7,
+    "Medium_Category": 4,
+    "Low_Category": 2,
+    "IconIndex": 84
+  },
+  {
+    "Index": 86,
+    "Name": "기타",
+    "String_Category_Name": 1400000085,
+    "High_Category": 7,
+    "Medium_Category": 5,
+    "Low_Category": 0,
+    "IconIndex": 85
+  },
+  {
+    "Index": 87,
+    "Name": "직업용품",
+    "String_Category_Name": 1400000086,
+    "High_Category": 8,
+    "Medium_Category": 0,
+    "Low_Category": 0,
+    "IconIndex": 86
+  },
+  {
+    "Index": 88,
+    "Name": "도안",
+    "String_Category_Name": 1400000087,
+    "High_Category": 8,
+    "Medium_Category": 1,
+    "Low_Category": 0,
+    "IconIndex": 87
+  },
+  {
+    "Index": 89,
+    "Name": "블랙스미스",
+    "String_Category_Name": 1400000088,
+    "High_Category": 8,
+    "Medium_Category": 1,
+    "Low_Category": 1,
+    "IconIndex": 88
+  },
+  {
+    "Index": 90,
+    "Name": "아티잔",
+    "String_Category_Name": 1400000089,
+    "High_Category": 8,
+    "Medium_Category": 1,
+    "Low_Category": 2,
+    "IconIndex": 89
+  },
+  {
+    "Index": 91,
+    "Name": "알케미스트",
+    "String_Category_Name": 1400000090,
+    "High_Category": 8,
+    "Medium_Category": 1,
+    "Low_Category": 3,
+    "IconIndex": 90
+  },
+  {
+    "Index": 92,
+    "Name": "쉐프",
+    "String_Category_Name": 1400000091,
+    "High_Category": 8,
+    "Medium_Category": 1,
+    "Low_Category": 4,
+    "IconIndex": 91
+  },
+  {
+    "Index": 93,
+    "Name": "강화",
+    "String_Category_Name": 1400000092,
+    "High_Category": 9,
+    "Medium_Category": 0,
+    "Low_Category": 0,
+    "IconIndex": 92
+  },
+  {
+    "Index": 94,
+    "Name": "카드 합성석",
+    "String_Category_Name": 1400000093,
+    "High_Category": 9,
+    "Medium_Category": 1,
+    "Low_Category": 0,
+    "IconIndex": 93
+  },
+  {
+    "Index": 95,
+    "Name": "제련석",
+    "String_Category_Name": 1400000094,
+    "High_Category": 9,
+    "Medium_Category": 2,
+    "Low_Category": 0,
+    "IconIndex": 94
+  },
+  {
+    "Index": 96,
+    "Name": "기타",
+    "String_Category_Name": 1400000095,
+    "High_Category": 10,
+    "Medium_Category": 0,
+    "Low_Category": 0,
+    "IconIndex": 95
+  },
+  {
+    "Index": 97,
+    "Name": "분해석",
+    "String_Category_Name": 1400000096,
+    "High_Category": 10,
+    "Medium_Category": 1,
+    "Low_Category": 0,
+    "IconIndex": 96
+  },
+  {
+    "Index": 98,
+    "Name": "가방",
+    "String_Category_Name": 1400000097,
+    "High_Category": 10,
+    "Medium_Category": 2,
+    "Low_Category": 0,
+    "IconIndex": 97
+  },
+  {
+    "Index": 99,
+    "Name": "잡템",
+    "String_Category_Name": 0,
+    "High_Category": 10,
+    "Medium_Category": 3,
+    "Low_Category": 0,
+    "IconIndex": 98
+  },
+  {
+    "Index": 100,
+    "Name": "바이블",
+    "String_Category_Name": 11826,
+    "High_Category": 1,
+    "Medium_Category": 21,
+    "Low_Category": 0,
+    "IconIndex": 99
+  },
+  {
+    "Index": 101,
+    "Name": "DNA조각",
+    "String_Category_Name": 1400000100,
+    "High_Category": 6,
+    "Medium_Category": 5,
+    "Low_Category": 1,
+    "IconIndex": 100
+  },
+  {
+    "Index": 102,
+    "Name": "단백질",
+    "String_Category_Name": 1400000101,
+    "High_Category": 6,
+    "Medium_Category": 5,
+    "Low_Category": 2,
+    "IconIndex": 101
+  }
+]

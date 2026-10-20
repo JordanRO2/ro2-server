@@ -1,0 +1,67 @@
+[
+  {
+    "Zone_Index": 1,
+    "Zone_Name_StrID": 750000,
+    "Zone_Name_Ref": "묘르닐 서부(필드)"
+  },
+  {
+    "Zone_Index": 2,
+    "Zone_Name_StrID": 750001,
+    "Zone_Name_Ref": "묘르닐 동부(필드)"
+  },
+  {
+    "Zone_Index": 3,
+    "Zone_Name_StrID": 750002,
+    "Zone_Name_Ref": "남부평원(필드)"
+  },
+  {
+    "Zone_Index": 4,
+    "Zone_Name_StrID": 750003,
+    "Zone_Name_Ref": "늑대굴(5인 던전)"
+  },
+  {
+    "Zone_Index": 5,
+    "Zone_Name_StrID": 750004,
+    "Zone_Name_Ref": "이즈루드 언덕(필드)"
+  },
+  {
+    "Zone_Index": 6,
+    "Zone_Name_StrID": 750005,
+    "Zone_Name_Ref": "해신의 신전(5인 던전)"
+  },
+  {
+    "Zone_Index": 7,
+    "Zone_Name_StrID": 750006,
+    "Zone_Name_Ref": "페이욘 숲(필드)"
+  },
+  {
+    "Zone_Index": 8,
+    "Zone_Name_StrID": 750007,
+    "Zone_Name_Ref": "비림총(5인 던전)"
+  },
+  {
+    "Zone_Index": 9,
+    "Zone_Name_StrID": 750008,
+    "Zone_Name_Ref": "메이플 숲(필드)"
+  },
+  {
+    "Zone_Index": 10,
+    "Zone_Name_StrID": 750009,
+    "Zone_Name_Ref": "버려진 연구소(5인 던전)"
+  },
+  {
+    "Zone_Index": 11,
+    "Zone_Name_StrID": 750010,
+    "Zone_Name_Ref": "갈라진 평원(필드)"
+  },
+  {
+    "Zone_Index": 12,
+    "Zone_Name_StrID": 750011,
+    "Zone_Name_Ref": "맹독의 나락(5인 던전)"
+  },
+  {
+    "Zone_Index": 13,
+    "Zone_Name_StrID": 750012,
+    "Zone_Name_Ref": "베르타 삼각주(필드)"
+  }
+]

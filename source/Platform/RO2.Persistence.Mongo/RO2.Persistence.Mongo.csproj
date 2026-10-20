@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Lets the tests render OneShotTokenStore's consume filter / TTL index model, and construct the
+         repositories with an unconnected MongoDbContext, without a live Mongo. -->
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Game\RO2.Domain\RO2.Domain.csproj" />
+    <ProjectReference Include="..\..\Game\RO2.Application\RO2.Application.csproj" />
+  </ItemGroup>
+
+</Project>

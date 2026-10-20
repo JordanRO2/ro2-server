@@ -1,0 +1,746 @@
+[
+  {
+    "ID": 70000001,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "스피넬 (무제한)"
+  },
+  {
+    "ID": 70000001,
+    "cause": 2,
+    "Item_Type": 16,
+    "plan": "스피넬 (무제한)"
+  },
+  {
+    "ID": 60000034,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "스피넬(드래곤사가 제휴 이벤트)"
+  },
+  {
+    "ID": 60000034,
+    "cause": 2,
+    "Item_Type": 16,
+    "plan": "스피넬(드래곤사가 제휴 이벤트)"
+  },
+  {
+    "ID": 60000050,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "스피넬"
+  },
+  {
+    "ID": 60000050,
+    "cause": 2,
+    "Item_Type": 16,
+    "plan": "스피넬"
+  },
+  {
+    "ID": 60000206,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "스피넬"
+  },
+  {
+    "ID": 60000206,
+    "cause": 2,
+    "Item_Type": 16,
+    "plan": "스피넬"
+  },
+  {
+    "ID": 30000281,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "스피넬"
+  },
+  {
+    "ID": 30000281,
+    "cause": 2,
+    "Item_Type": 16,
+    "plan": "스피넬"
+  },
+  {
+    "ID": 70000621,
+    "cause": 1,
+    "Item_Type": 0,
+    "plan": "블랙 스피넬"
+  },
+  {
+    "ID": 70000621,
+    "cause": 2,
+    "Item_Type": 16,
+    "plan": "블랙 스피넬"
+  },
+  {
+    "ID": 70000622,
+    "cause": 1,
+    "Item_Type": 0,
+    "plan": "그레이 스피넬"
+  },
+  {
+    "ID": 70000622,
+    "cause": 2,
+    "Item_Type": 16,
+    "plan": "그레이 스피넬"
+  },
+  {
+    "ID": 70000655,
+    "cause": 1,
+    "Item_Type": 0,
+    "plan": "블루 스피넬 (무제한)"
+  },
+  {
+    "ID": 70000655,
+    "cause": 2,
+    "Item_Type": 16,
+    "plan": "블루 스피넬 (무제한)"
+  },
+  {
+    "ID": 70000656,
+    "cause": 1,
+    "Item_Type": 0,
+    "plan": "레드 스피넬 (무제한)"
+  },
+  {
+    "ID": 70000656,
+    "cause": 2,
+    "Item_Type": 16,
+    "plan": "레드 스피넬 (무제한)"
+  },
+  {
+    "ID": 70000881,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 A"
+  },
+  {
+    "ID": 70000881,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 A"
+  },
+  {
+    "ID": 70000882,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 B"
+  },
+  {
+    "ID": 70000882,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 B"
+  },
+  {
+    "ID": 70000883,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 C"
+  },
+  {
+    "ID": 70000883,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 C"
+  },
+  {
+    "ID": 70000884,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 D"
+  },
+  {
+    "ID": 70000884,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 D"
+  },
+  {
+    "ID": 70000885,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 E"
+  },
+  {
+    "ID": 70000885,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 E"
+  },
+  {
+    "ID": 70000950,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "RO1 Merchant Costume Token (무제한)"
+  },
+  {
+    "ID": 70000950,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "RO1 Merchant Costume Token (무제한)"
+  },
+  {
+    "ID": 70001053,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "스피넬 (무제한)"
+  },
+  {
+    "ID": 70001053,
+    "cause": 2,
+    "Item_Type": 16,
+    "plan": "스피넬 (무제한)"
+  },
+  {
+    "ID": 70001066,
+    "cause": 1,
+    "Item_Type": 0,
+    "plan": "블루 스피넬 (무제한)"
+  },
+  {
+    "ID": 70001066,
+    "cause": 2,
+    "Item_Type": 16,
+    "plan": "블루 스피넬 (무제한)"
+  },
+  {
+    "ID": 70001068,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 A"
+  },
+  {
+    "ID": 70001068,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 A"
+  },
+  {
+    "ID": 70001069,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 B"
+  },
+  {
+    "ID": 70001069,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 B"
+  },
+  {
+    "ID": 70001070,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 C"
+  },
+  {
+    "ID": 70001070,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 C"
+  },
+  {
+    "ID": 70001071,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 D"
+  },
+  {
+    "ID": 70001071,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 D"
+  },
+  {
+    "ID": 70001072,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 E"
+  },
+  {
+    "ID": 70001072,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 E"
+  },
+  {
+    "ID": 60000797,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "파우더 교환권"
+  },
+  {
+    "ID": 60000797,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "파우더 교환권"
+  },
+  {
+    "ID": 60000798,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "탐험가 패키지 교환권"
+  },
+  {
+    "ID": 60000798,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "탐험가 패키지 교환권"
+  },
+  {
+    "ID": 60000799,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "초기화 주문서 교환권"
+  },
+  {
+    "ID": 60000799,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "초기화 주문서 교환권"
+  },
+  {
+    "ID": 60000852,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "토끼와고양이 액세서리 교환권"
+  },
+  {
+    "ID": 60000852,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "토끼와고양이 액세서리 교환권"
+  },
+  {
+    "ID": 60000878,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "카나리아 액세서리 교환권"
+  },
+  {
+    "ID": 60000878,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "카나리아 액세서리 교환권"
+  },
+  {
+    "ID": 60000879,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "카나리아 코스튬 교환권"
+  },
+  {
+    "ID": 60000879,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "카나리아 코스튬 교환권"
+  },
+  {
+    "ID": 70002008,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 A"
+  },
+  {
+    "ID": 70002008,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 A"
+  },
+  {
+    "ID": 70002009,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 B"
+  },
+  {
+    "ID": 70002009,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 B"
+  },
+  {
+    "ID": 70002010,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 C"
+  },
+  {
+    "ID": 70002010,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 C"
+  },
+  {
+    "ID": 70002011,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 D"
+  },
+  {
+    "ID": 70002011,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 D"
+  },
+  {
+    "ID": 70002012,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 E"
+  },
+  {
+    "ID": 70002012,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 E"
+  },
+  {
+    "ID": 70005004,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 A"
+  },
+  {
+    "ID": 70005004,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 A"
+  },
+  {
+    "ID": 70005005,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 A"
+  },
+  {
+    "ID": 70005005,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 A"
+  },
+  {
+    "ID": 70005006,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 B"
+  },
+  {
+    "ID": 70005006,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 B"
+  },
+  {
+    "ID": 70005007,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 B"
+  },
+  {
+    "ID": 70005007,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 B"
+  },
+  {
+    "ID": 70005008,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 C"
+  },
+  {
+    "ID": 70005008,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 C"
+  },
+  {
+    "ID": 70005009,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 C"
+  },
+  {
+    "ID": 70005009,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 C"
+  },
+  {
+    "ID": 70005010,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 D"
+  },
+  {
+    "ID": 70005010,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 D"
+  },
+  {
+    "ID": 70005011,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 D"
+  },
+  {
+    "ID": 70005011,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 D"
+  },
+  {
+    "ID": 70005012,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 E"
+  },
+  {
+    "ID": 70005012,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 E"
+  },
+  {
+    "ID": 70005013,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 E"
+  },
+  {
+    "ID": 70005013,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 E"
+  },
+  {
+    "ID": 60002130,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "스피넬 (무제한)"
+  },
+  {
+    "ID": 60002130,
+    "cause": 2,
+    "Item_Type": 16,
+    "plan": "스피넬 (무제한)"
+  },
+  {
+    "ID": 60002131,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "스피넬 (무제한)"
+  },
+  {
+    "ID": 60002131,
+    "cause": 2,
+    "Item_Type": 16,
+    "plan": "스피넬 (무제한)"
+  },
+  {
+    "ID": 60002166,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 E"
+  },
+  {
+    "ID": 60002166,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 E"
+  },
+  {
+    "ID": 60002167,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 E"
+  },
+  {
+    "ID": 60002167,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 E"
+  },
+  {
+    "ID": 60002158,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 A"
+  },
+  {
+    "ID": 60002158,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 A"
+  },
+  {
+    "ID": 60002159,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 A"
+  },
+  {
+    "ID": 60002159,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 A"
+  },
+  {
+    "ID": 60002164,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 D"
+  },
+  {
+    "ID": 60002164,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 D"
+  },
+  {
+    "ID": 60002165,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 D"
+  },
+  {
+    "ID": 60002165,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 D"
+  },
+  {
+    "ID": 60002160,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 B"
+  },
+  {
+    "ID": 60002160,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 B"
+  },
+  {
+    "ID": 60002161,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 B"
+  },
+  {
+    "ID": 60002161,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 B"
+  },
+  {
+    "ID": 60002162,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 C"
+  },
+  {
+    "ID": 60002162,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 C"
+  },
+  {
+    "ID": 60002163,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "연마 보조제 큐브 C"
+  },
+  {
+    "ID": 60002163,
+    "cause": 2,
+    "Item_Type": 0,
+    "plan": "연마 보조제 큐브 C"
+  },
+  {
+    "ID": 60002156,
+    "cause": 1,
+    "Item_Type": 0,
+    "plan": "블루 스피넬 (무제한)"
+  },
+  {
+    "ID": 60002156,
+    "cause": 2,
+    "Item_Type": 16,
+    "plan": "블루 스피넬 (무제한)"
+  },
+  {
+    "ID": 60002157,
+    "cause": 1,
+    "Item_Type": 0,
+    "plan": "블루 스피넬 (무제한)"
+  },
+  {
+    "ID": 60002157,
+    "cause": 2,
+    "Item_Type": 16,
+    "plan": "블루 스피넬 (무제한)"
+  },
+  {
+    "ID": 99900005,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "ROR Crossover Costume Box (M)"
+  },
+  {
+    "ID": 99900005,
+    "cause": 2,
+    "Item_Type": 107,
+    "plan": "ROR Crossover Costume Box (F)"
+  },
+  {
+    "ID": 34000476,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "Santa Costume Package (M)"
+  },
+  {
+    "ID": 34000476,
+    "cause": 2,
+    "Item_Type": 107,
+    "plan": "Santa Costume Package (F)"
+  },
+  {
+    "ID": 99900016,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "Epic Hooded Pajama Random Box"
+  },
+  {
+    "ID": 99900016,
+    "cause": 2,
+    "Item_Type": 107,
+    "plan": "Epic Poring Master Random Box"
+  },
+  {
+    "ID": 60002449,
+    "cause": 1,
+    "Item_Type": 107,
+    "plan": "Spinel"
+  },
+  {
+    "ID": 60002449,
+    "cause": 2,
+    "Item_Type": 16,
+    "plan": "Spinel"
+  },
+  {
+    "ID": 60002450,
+    "cause": 1,
+    "Item_Type": 0,
+    "plan": "Blue Spinel"
+  },
+  {
+    "ID": 60002450,
+    "cause": 2,
+    "Item_Type": 16,
+    "plan": "Blue Spinel"
+  }
+]

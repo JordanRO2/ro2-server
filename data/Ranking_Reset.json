@@ -1,0 +1,26 @@
+[
+  {
+    "Reset_Type": 1,
+    "Desc": "(일간) 매일 5시 예제",
+    "Reset_Month": 0,
+    "Reset_Day": 0,
+    "Reset_Week": "0:0:0:0:0:0:0",
+    "Public_Time": 5
+  },
+  {
+    "Reset_Type": 2,
+    "Desc": "(주간) 매주 일 5시 예제",
+    "Reset_Month": 0,
+    "Reset_Day": 0,
+    "Reset_Week": "1:0:0:0:0:0:0",
+    "Public_Time": 5
+  },
+  {
+    "Reset_Type": 3,
+    "Desc": "(월간) 매월 1일 5시 예시",
+    "Reset_Month": 1,
+    "Reset_Day": 1,
+    "Reset_Week": "0:0:0:0:0:0:0",
+    "Public_Time": 5
+  }
+]

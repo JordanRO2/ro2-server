@@ -1,0 +1,3354 @@
+[
+  {
+    "ID": 80010630,
+    "Condition_Type": 8,
+    "Condition_Value1": 911110380,
+    "Condition_Value2": 5,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010660,
+    "Condition_Type": 4,
+    "Condition_Value1": 12,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010670,
+    "Condition_Type": 4,
+    "Condition_Value1": 12,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010680,
+    "Condition_Type": 4,
+    "Condition_Value1": 12,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010690,
+    "Condition_Type": 4,
+    "Condition_Value1": 12,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010700,
+    "Condition_Type": 4,
+    "Condition_Value1": 12,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010710,
+    "Condition_Type": 4,
+    "Condition_Value1": 12,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010720,
+    "Condition_Type": 8,
+    "Condition_Value1": 411000200,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010730,
+    "Condition_Type": 8,
+    "Condition_Value1": 411000280,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010740,
+    "Condition_Type": 8,
+    "Condition_Value1": 411000280,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010750,
+    "Condition_Type": 8,
+    "Condition_Value1": 411000280,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010760,
+    "Condition_Type": 8,
+    "Condition_Value1": 411000380,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010770,
+    "Condition_Type": 8,
+    "Condition_Value1": 411000400,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010780,
+    "Condition_Type": 8,
+    "Condition_Value1": 411000440,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010790,
+    "Condition_Type": 8,
+    "Condition_Value1": 411000490,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010800,
+    "Condition_Type": 8,
+    "Condition_Value1": 411000630,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010810,
+    "Condition_Type": 8,
+    "Condition_Value1": 411000670,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010820,
+    "Condition_Type": 8,
+    "Condition_Value1": 411000470,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010830,
+    "Condition_Type": 8,
+    "Condition_Value1": 411000550,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010840,
+    "Condition_Type": 8,
+    "Condition_Value1": 411210040,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010850,
+    "Condition_Type": 8,
+    "Condition_Value1": 411110010,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010870,
+    "Condition_Type": 8,
+    "Condition_Value1": 411210120,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010880,
+    "Condition_Type": 8,
+    "Condition_Value1": 442210302,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010970,
+    "Condition_Type": 8,
+    "Condition_Value1": 243020030,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011071,
+    "Condition_Type": 8,
+    "Condition_Value1": 911000970,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011072,
+    "Condition_Type": 8,
+    "Condition_Value1": 911110200,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011073,
+    "Condition_Type": 8,
+    "Condition_Value1": 911000960,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011074,
+    "Condition_Type": 8,
+    "Condition_Value1": 911110150,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011075,
+    "Condition_Type": 8,
+    "Condition_Value1": 911110180,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011080,
+    "Condition_Type": 8,
+    "Condition_Value1": 213000660,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011090,
+    "Condition_Type": 8,
+    "Condition_Value1": 213000590,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011100,
+    "Condition_Type": 8,
+    "Condition_Value1": 911010160,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011250,
+    "Condition_Type": 8,
+    "Condition_Value1": 232010070,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011260,
+    "Condition_Type": 1,
+    "Condition_Value1": 40001186,
+    "Condition_Value2": 1,
+    "Condition_Value3": 1,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011270,
+    "Condition_Type": 8,
+    "Condition_Value1": 232010080,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011280,
+    "Condition_Type": 8,
+    "Condition_Value1": 232010060,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011600,
+    "Condition_Type": 8,
+    "Condition_Value1": 911000480,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011700,
+    "Condition_Type": 8,
+    "Condition_Value1": 911000490,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011730,
+    "Condition_Type": 8,
+    "Condition_Value1": 413000330,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011740,
+    "Condition_Type": 8,
+    "Condition_Value1": 413000330,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011750,
+    "Condition_Type": 8,
+    "Condition_Value1": 413000330,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011760,
+    "Condition_Type": 8,
+    "Condition_Value1": 413000330,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011770,
+    "Condition_Type": 8,
+    "Condition_Value1": 911010100,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011780,
+    "Condition_Type": 8,
+    "Condition_Value1": 911110430,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011790,
+    "Condition_Type": 8,
+    "Condition_Value1": 911110440,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011800,
+    "Condition_Type": 8,
+    "Condition_Value1": 911110450,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011810,
+    "Condition_Type": 8,
+    "Condition_Value1": 911110460,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011820,
+    "Condition_Type": 8,
+    "Condition_Value1": 911110470,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011830,
+    "Condition_Type": 8,
+    "Condition_Value1": 911110510,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011840,
+    "Condition_Type": 8,
+    "Condition_Value1": 912110100,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011850,
+    "Condition_Type": 8,
+    "Condition_Value1": 912010020,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011860,
+    "Condition_Type": 8,
+    "Condition_Value1": 911110730,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011870,
+    "Condition_Type": 8,
+    "Condition_Value1": 911000800,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80011880,
+    "Condition_Type": 8,
+    "Condition_Value1": 911000820,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80012090,
+    "Condition_Type": 8,
+    "Condition_Value1": 112210005,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80012100,
+    "Condition_Type": 8,
+    "Condition_Value1": 112210006,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80012110,
+    "Condition_Type": 8,
+    "Condition_Value1": 112210012,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80012120,
+    "Condition_Type": 8,
+    "Condition_Value1": 111150001,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80012130,
+    "Condition_Type": 8,
+    "Condition_Value1": 111150013,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80012170,
+    "Condition_Type": 8,
+    "Condition_Value1": 911110750,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80012220,
+    "Condition_Type": 8,
+    "Condition_Value1": 911110800,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013000,
+    "Condition_Type": 8,
+    "Condition_Value1": 123000038,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013010,
+    "Condition_Type": 8,
+    "Condition_Value1": 123000041,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013010,
+    "Condition_Type": 8,
+    "Condition_Value1": 123000077,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013020,
+    "Condition_Type": 8,
+    "Condition_Value1": 123000058,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013020,
+    "Condition_Type": 8,
+    "Condition_Value1": 123000094,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013030,
+    "Condition_Type": 8,
+    "Condition_Value1": 123000058,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013030,
+    "Condition_Type": 8,
+    "Condition_Value1": 123000094,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013040,
+    "Condition_Type": 8,
+    "Condition_Value1": 123000058,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013040,
+    "Condition_Type": 8,
+    "Condition_Value1": 123000094,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013050,
+    "Condition_Type": 8,
+    "Condition_Value1": 123000058,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013050,
+    "Condition_Type": 8,
+    "Condition_Value1": 123000094,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013060,
+    "Condition_Type": 8,
+    "Condition_Value1": 123000074,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013070,
+    "Condition_Type": 8,
+    "Condition_Value1": 123000084,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013080,
+    "Condition_Type": 8,
+    "Condition_Value1": 123100022,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013090,
+    "Condition_Type": 8,
+    "Condition_Value1": 914000060,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013091,
+    "Condition_Type": 8,
+    "Condition_Value1": 914000170,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013092,
+    "Condition_Type": 8,
+    "Condition_Value1": 914000290,
+    "Condition_Value2": 5,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013096,
+    "Condition_Type": 0,
+    "Condition_Value1": 0,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013097,
+    "Condition_Type": 0,
+    "Condition_Value1": 0,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013098,
+    "Condition_Type": 0,
+    "Condition_Value1": 0,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013099,
+    "Condition_Type": 0,
+    "Condition_Value1": 0,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80013100,
+    "Condition_Type": 0,
+    "Condition_Value1": 0,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80040000,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010360,
+    "Condition_Value2": 5,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80080000,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010164,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100000,
+    "Condition_Type": 8,
+    "Condition_Value1": 411000054,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100010,
+    "Condition_Type": 8,
+    "Condition_Value1": 111020014,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100020,
+    "Condition_Type": 8,
+    "Condition_Value1": 111020063,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100030,
+    "Condition_Type": 8,
+    "Condition_Value1": 211020032,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100040,
+    "Condition_Type": 8,
+    "Condition_Value1": 211020041,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100050,
+    "Condition_Type": 8,
+    "Condition_Value1": 111020011,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100060,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010040,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100060,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010041,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100070,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010270,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100080,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010380,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100090,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010381,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100100,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010382,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100110,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010383,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100120,
+    "Condition_Type": 8,
+    "Condition_Value1": 211000011,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100130,
+    "Condition_Type": 8,
+    "Condition_Value1": 211000014,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100140,
+    "Condition_Type": 8,
+    "Condition_Value1": 611000040,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100150,
+    "Condition_Type": 8,
+    "Condition_Value1": 211000042,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100160,
+    "Condition_Type": 8,
+    "Condition_Value1": 211110130,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100170,
+    "Condition_Type": 8,
+    "Condition_Value1": 211110140,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100180,
+    "Condition_Type": 8,
+    "Condition_Value1": 211112041,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100190,
+    "Condition_Type": 8,
+    "Condition_Value1": 211112180,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100200,
+    "Condition_Type": 8,
+    "Condition_Value1": 211112192,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100210,
+    "Condition_Type": 8,
+    "Condition_Value1": 211112201,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100220,
+    "Condition_Type": 8,
+    "Condition_Value1": 211112131,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100230,
+    "Condition_Type": 8,
+    "Condition_Value1": 111111190,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100240,
+    "Condition_Type": 8,
+    "Condition_Value1": 111111150,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100250,
+    "Condition_Type": 8,
+    "Condition_Value1": 111111400,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100260,
+    "Condition_Type": 8,
+    "Condition_Value1": 111111530,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100270,
+    "Condition_Type": 8,
+    "Condition_Value1": 211111130,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100280,
+    "Condition_Type": 8,
+    "Condition_Value1": 211111060,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100290,
+    "Condition_Type": 8,
+    "Condition_Value1": 211111060,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100300,
+    "Condition_Type": 8,
+    "Condition_Value1": 611000040,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100310,
+    "Condition_Type": 8,
+    "Condition_Value1": 112116010,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100320,
+    "Condition_Type": 8,
+    "Condition_Value1": 112116030,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100330,
+    "Condition_Type": 8,
+    "Condition_Value1": 112116320,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100340,
+    "Condition_Type": 8,
+    "Condition_Value1": 112116110,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100350,
+    "Condition_Type": 8,
+    "Condition_Value1": 112116460,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100360,
+    "Condition_Type": 8,
+    "Condition_Value1": 112116380,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100370,
+    "Condition_Type": 8,
+    "Condition_Value1": 112116380,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100380,
+    "Condition_Type": 8,
+    "Condition_Value1": 212116040,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100390,
+    "Condition_Type": 8,
+    "Condition_Value1": 212116090,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100400,
+    "Condition_Type": 8,
+    "Condition_Value1": 212116050,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100410,
+    "Condition_Type": 8,
+    "Condition_Value1": 212116070,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100420,
+    "Condition_Type": 8,
+    "Condition_Value1": 212116110,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100430,
+    "Condition_Type": 8,
+    "Condition_Value1": 212116210,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100440,
+    "Condition_Type": 8,
+    "Condition_Value1": 212116340,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100450,
+    "Condition_Type": 8,
+    "Condition_Value1": 212116310,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100460,
+    "Condition_Type": 8,
+    "Condition_Value1": 212116310,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100470,
+    "Condition_Type": 8,
+    "Condition_Value1": 212116310,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100480,
+    "Condition_Type": 8,
+    "Condition_Value1": 212116310,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100490,
+    "Condition_Type": 8,
+    "Condition_Value1": 212116320,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100500,
+    "Condition_Type": 8,
+    "Condition_Value1": 212116130,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100510,
+    "Condition_Type": 8,
+    "Condition_Value1": 112010034,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100520,
+    "Condition_Type": 8,
+    "Condition_Value1": 112010042,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100530,
+    "Condition_Type": 8,
+    "Condition_Value1": 112010034,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100540,
+    "Condition_Type": 8,
+    "Condition_Value1": 112010071,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100550,
+    "Condition_Type": 8,
+    "Condition_Value1": 212010210,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100560,
+    "Condition_Type": 8,
+    "Condition_Value1": 112010310,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100570,
+    "Condition_Type": 8,
+    "Condition_Value1": 112010064,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100580,
+    "Condition_Type": 8,
+    "Condition_Value1": 212010420,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100590,
+    "Condition_Type": 8,
+    "Condition_Value1": 612010020,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100600,
+    "Condition_Type": 8,
+    "Condition_Value1": 212010540,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100610,
+    "Condition_Type": 8,
+    "Condition_Value1": 112010105,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100620,
+    "Condition_Type": 8,
+    "Condition_Value1": 112010106,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100630,
+    "Condition_Type": 8,
+    "Condition_Value1": 212113050,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100650,
+    "Condition_Type": 8,
+    "Condition_Value1": 212113130,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100660,
+    "Condition_Type": 8,
+    "Condition_Value1": 212113170,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100670,
+    "Condition_Type": 8,
+    "Condition_Value1": 212113340,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100680,
+    "Condition_Type": 8,
+    "Condition_Value1": 212113530,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100690,
+    "Condition_Type": 8,
+    "Condition_Value1": 212113540,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100700,
+    "Condition_Type": 8,
+    "Condition_Value1": 212113540,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100710,
+    "Condition_Type": 8,
+    "Condition_Value1": 111111111,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100720,
+    "Condition_Type": 8,
+    "Condition_Value1": 212113570,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100730,
+    "Condition_Type": 8,
+    "Condition_Value1": 112113390,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100740,
+    "Condition_Type": 8,
+    "Condition_Value1": 612010060,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100750,
+    "Condition_Type": 8,
+    "Condition_Value1": 112113400,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100760,
+    "Condition_Type": 8,
+    "Condition_Value1": 212113180,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100770,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010320,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100770,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010330,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100770,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010340,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100780,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010340,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100790,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010390,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100800,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010400,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100810,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010360,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100820,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010372,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100830,
+    "Condition_Type": 8,
+    "Condition_Value1": 212013020,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100840,
+    "Condition_Type": 8,
+    "Condition_Value1": 212013050,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100850,
+    "Condition_Type": 8,
+    "Condition_Value1": 212013170,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100860,
+    "Condition_Type": 8,
+    "Condition_Value1": 212013300,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100870,
+    "Condition_Type": 8,
+    "Condition_Value1": 112013290,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100880,
+    "Condition_Type": 8,
+    "Condition_Value1": 212013660,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100890,
+    "Condition_Type": 8,
+    "Condition_Value1": 212013610,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100890,
+    "Condition_Type": 8,
+    "Condition_Value1": 212013611,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100900,
+    "Condition_Type": 8,
+    "Condition_Value1": 112110150,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100910,
+    "Condition_Type": 8,
+    "Condition_Value1": 112110220,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100920,
+    "Condition_Type": 8,
+    "Condition_Value1": 112110240,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100930,
+    "Condition_Type": 8,
+    "Condition_Value1": 112110240,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100940,
+    "Condition_Type": 8,
+    "Condition_Value1": 112110240,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100950,
+    "Condition_Type": 8,
+    "Condition_Value1": 112110340,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100960,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010376,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100960,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010376,
+    "Condition_Value2": 4,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100960,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010376,
+    "Condition_Value2": 5,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100970,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010373,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100980,
+    "Condition_Type": 8,
+    "Condition_Value1": 212010010,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80100990,
+    "Condition_Type": 8,
+    "Condition_Value1": 112010023,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80101000,
+    "Condition_Type": 8,
+    "Condition_Value1": 112010025,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80101010,
+    "Condition_Type": 8,
+    "Condition_Value1": 999990010,
+    "Condition_Value2": 5,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80101020,
+    "Condition_Type": 8,
+    "Condition_Value1": 999990010,
+    "Condition_Value2": 5,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80101030,
+    "Condition_Type": 8,
+    "Condition_Value1": 999990010,
+    "Condition_Value2": 5,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80101040,
+    "Condition_Type": 8,
+    "Condition_Value1": 999990010,
+    "Condition_Value2": 5,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80101050,
+    "Condition_Type": 8,
+    "Condition_Value1": 999990010,
+    "Condition_Value2": 5,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80101060,
+    "Condition_Type": 8,
+    "Condition_Value1": 999990010,
+    "Condition_Value2": 5,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80101070,
+    "Condition_Type": 8,
+    "Condition_Value1": 999990010,
+    "Condition_Value2": 5,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80101080,
+    "Condition_Type": 8,
+    "Condition_Value1": 999990010,
+    "Condition_Value2": 5,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80101090,
+    "Condition_Type": 8,
+    "Condition_Value1": 999990010,
+    "Condition_Value2": 5,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80101100,
+    "Condition_Type": 8,
+    "Condition_Value1": 999990010,
+    "Condition_Value2": 5,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80101110,
+    "Condition_Type": 8,
+    "Condition_Value1": 999990010,
+    "Condition_Value2": 5,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80101120,
+    "Condition_Type": 8,
+    "Condition_Value1": 999990010,
+    "Condition_Value2": 5,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80101130,
+    "Condition_Type": 8,
+    "Condition_Value1": 999990010,
+    "Condition_Value2": 5,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80101140,
+    "Condition_Type": 8,
+    "Condition_Value1": 999990010,
+    "Condition_Value2": 5,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80101150,
+    "Condition_Type": 8,
+    "Condition_Value1": 999990010,
+    "Condition_Value2": 5,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80101160,
+    "Condition_Type": 8,
+    "Condition_Value1": 999990010,
+    "Condition_Value2": 5,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80101170,
+    "Condition_Type": 8,
+    "Condition_Value1": 112116490,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80101180,
+    "Condition_Type": 8,
+    "Condition_Value1": 999990010,
+    "Condition_Value2": 5,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80110000,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010320,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80110000,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010330,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80110000,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010340,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80120000,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010320,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80120000,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010330,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80120000,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010340,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80130000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80140000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80150000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80160000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80160000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80170000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80180000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80180000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80190000,
+    "Condition_Type": 8,
+    "Condition_Value1": 411000019,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80200000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80200000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80210000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80210000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80220000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80230000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80230000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80240000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80240000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80250000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80250000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80260000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80270000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80280000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80280000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80290000,
+    "Condition_Type": 8,
+    "Condition_Value1": 141020013,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80310000,
+    "Condition_Type": 8,
+    "Condition_Value1": 141020022,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80320000,
+    "Condition_Type": 1,
+    "Condition_Value1": 40000078,
+    "Condition_Value2": 4,
+    "Condition_Value3": 1,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80360000,
+    "Condition_Type": 4,
+    "Condition_Value1": 2,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80361000,
+    "Condition_Type": 4,
+    "Condition_Value1": 2,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80362000,
+    "Condition_Type": 4,
+    "Condition_Value1": 2,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80370000,
+    "Condition_Type": 4,
+    "Condition_Value1": 4,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80371000,
+    "Condition_Type": 4,
+    "Condition_Value1": 4,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80372000,
+    "Condition_Type": 4,
+    "Condition_Value1": 4,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80380000,
+    "Condition_Type": 4,
+    "Condition_Value1": 2,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80381000,
+    "Condition_Type": 4,
+    "Condition_Value1": 2,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80382000,
+    "Condition_Type": 4,
+    "Condition_Value1": 2,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80390000,
+    "Condition_Type": 4,
+    "Condition_Value1": 4,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80391000,
+    "Condition_Type": 4,
+    "Condition_Value1": 4,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80392000,
+    "Condition_Type": 4,
+    "Condition_Value1": 4,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80400000,
+    "Condition_Type": 4,
+    "Condition_Value1": 2,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80401000,
+    "Condition_Type": 4,
+    "Condition_Value1": 2,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80402000,
+    "Condition_Type": 4,
+    "Condition_Value1": 2,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80410000,
+    "Condition_Type": 4,
+    "Condition_Value1": 4,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80411000,
+    "Condition_Type": 4,
+    "Condition_Value1": 4,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80412000,
+    "Condition_Type": 4,
+    "Condition_Value1": 4,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80420000,
+    "Condition_Type": 4,
+    "Condition_Value1": 2,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80421000,
+    "Condition_Type": 4,
+    "Condition_Value1": 2,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80422000,
+    "Condition_Type": 4,
+    "Condition_Value1": 2,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80430000,
+    "Condition_Type": 4,
+    "Condition_Value1": 4,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80431000,
+    "Condition_Type": 4,
+    "Condition_Value1": 4,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80432000,
+    "Condition_Type": 4,
+    "Condition_Value1": 4,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80450000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211110510,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80460000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211113050,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80470000,
+    "Condition_Type": 8,
+    "Condition_Value1": 111110018,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80480000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211111080,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80490000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211111120,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80500000,
+    "Condition_Type": 8,
+    "Condition_Value1": 111110062,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80510000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211110240,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80520000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211110001,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80530000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211113014,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80540000,
+    "Condition_Type": 8,
+    "Condition_Value1": 111110330,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80550000,
+    "Condition_Type": 8,
+    "Condition_Value1": 111010032,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80560000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211110072,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80570000,
+    "Condition_Type": 4,
+    "Condition_Value1": 2,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80571000,
+    "Condition_Type": 4,
+    "Condition_Value1": 2,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80572000,
+    "Condition_Type": 4,
+    "Condition_Value1": 2,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80580000,
+    "Condition_Type": 4,
+    "Condition_Value1": 4,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80581000,
+    "Condition_Type": 4,
+    "Condition_Value1": 4,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80582000,
+    "Condition_Type": 4,
+    "Condition_Value1": 4,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80600000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211111220,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80610000,
+    "Condition_Type": 4,
+    "Condition_Value1": 2,
+    "Condition_Value2": 30,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80630000,
+    "Condition_Type": 4,
+    "Condition_Value1": 3,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80680000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211010051,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80720000,
+    "Condition_Type": 8,
+    "Condition_Value1": 411000012,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80740000,
+    "Condition_Type": 8,
+    "Condition_Value1": 111110030,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80750000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211110320,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80760000,
+    "Condition_Type": 8,
+    "Condition_Value1": 111110250,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80770000,
+    "Condition_Type": 8,
+    "Condition_Value1": 899990400,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80780000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211110620,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80790000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211110650,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80800000,
+    "Condition_Type": 8,
+    "Condition_Value1": 111110410,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80810000,
+    "Condition_Type": 8,
+    "Condition_Value1": 111110430,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80820000,
+    "Condition_Type": 8,
+    "Condition_Value1": 411000053,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80830000,
+    "Condition_Type": 8,
+    "Condition_Value1": 411000053,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80840000,
+    "Condition_Type": 8,
+    "Condition_Value1": 411000053,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80860000,
+    "Condition_Type": 8,
+    "Condition_Value1": 899990101,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80870000,
+    "Condition_Type": 8,
+    "Condition_Value1": 899990101,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80880000,
+    "Condition_Type": 8,
+    "Condition_Value1": 899990101,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80890000,
+    "Condition_Type": 8,
+    "Condition_Value1": 899990101,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80900000,
+    "Condition_Type": 8,
+    "Condition_Value1": 899990500,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80910000,
+    "Condition_Type": 8,
+    "Condition_Value1": 411000104,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80920000,
+    "Condition_Type": 8,
+    "Condition_Value1": 411000051,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80950000,
+    "Condition_Type": 8,
+    "Condition_Value1": 111113020,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80960000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211112023,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80970000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211112027,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80980000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211112033,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80990000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211112060,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81000000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211112090,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81010000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211112091,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81020000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211112114,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81030000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211112121,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81040000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211112130,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81050000,
+    "Condition_Type": 8,
+    "Condition_Value1": 899990501,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81060000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211112160,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81070000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211112170,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81080000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211112171,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81090000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211112174,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81100000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211112175,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81110000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211112177,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81120000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211112178,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81130000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81140000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81150000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81160000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81160000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81170000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81170000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81180000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81190000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81200000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81200000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81210000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81220000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81220000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81230000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81240000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81240000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81250000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81260000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81270000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81270000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81280000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81290000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81300000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81310000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81310000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81320000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81330000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81340000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81350000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81360000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81360000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81370000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81370000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81380000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81390000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81400000,
+    "Condition_Type": 4,
+    "Condition_Value1": 1,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81410000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81420000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81430000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81440000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81450000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81460000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81470000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81480000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81490000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81500000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81510000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81520000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81530000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81540000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81550000,
+    "Condition_Type": 4,
+    "Condition_Value1": 8,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81560000,
+    "Condition_Type": 8,
+    "Condition_Value1": 612110030,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81570000,
+    "Condition_Type": 8,
+    "Condition_Value1": 612110030,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81580000,
+    "Condition_Type": 8,
+    "Condition_Value1": 612110050,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81590000,
+    "Condition_Type": 8,
+    "Condition_Value1": 612110050,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81830000,
+    "Condition_Type": 8,
+    "Condition_Value1": 212116550,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81840000,
+    "Condition_Type": 8,
+    "Condition_Value1": 212116600,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81850000,
+    "Condition_Type": 8,
+    "Condition_Value1": 112116512,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81860000,
+    "Condition_Type": 8,
+    "Condition_Value1": 112116511,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 81870000,
+    "Condition_Type": 8,
+    "Condition_Value1": 112116640,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82020000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211130021,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82030000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211130025,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82040000,
+    "Condition_Type": 8,
+    "Condition_Value1": 211130050,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82050000,
+    "Condition_Type": 8,
+    "Condition_Value1": 112116680,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82070000,
+    "Condition_Type": 4,
+    "Condition_Value1": 4,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82080000,
+    "Condition_Type": 4,
+    "Condition_Value1": 4,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82090000,
+    "Condition_Type": 4,
+    "Condition_Value1": 4,
+    "Condition_Value2": 1,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82240000,
+    "Condition_Type": 8,
+    "Condition_Value1": 213010022,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82260000,
+    "Condition_Type": 8,
+    "Condition_Value1": 213010140,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82290000,
+    "Condition_Type": 8,
+    "Condition_Value1": 231010040,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82290001,
+    "Condition_Type": 8,
+    "Condition_Value1": 231010050,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82290002,
+    "Condition_Type": 8,
+    "Condition_Value1": 231010060,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82310000,
+    "Condition_Type": 8,
+    "Condition_Value1": 213010380,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82320000,
+    "Condition_Type": 8,
+    "Condition_Value1": 213010380,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82340000,
+    "Condition_Type": 8,
+    "Condition_Value1": 613010040,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82340001,
+    "Condition_Type": 8,
+    "Condition_Value1": 613000070,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82340002,
+    "Condition_Type": 8,
+    "Condition_Value1": 613000080,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82340003,
+    "Condition_Type": 8,
+    "Condition_Value1": 613010050,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82340004,
+    "Condition_Type": 8,
+    "Condition_Value1": 613010080,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82350000,
+    "Condition_Type": 8,
+    "Condition_Value1": 911010050,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82360000,
+    "Condition_Type": 8,
+    "Condition_Value1": 911110250,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82370000,
+    "Condition_Type": 8,
+    "Condition_Value1": 912110080,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82380000,
+    "Condition_Type": 8,
+    "Condition_Value1": 911110260,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82450000,
+    "Condition_Type": 8,
+    "Condition_Value1": 111130180,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82460000,
+    "Condition_Type": 8,
+    "Condition_Value1": 911110390,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82470000,
+    "Condition_Type": 8,
+    "Condition_Value1": 111130140,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82490000,
+    "Condition_Type": 8,
+    "Condition_Value1": 111130200,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82500000,
+    "Condition_Type": 8,
+    "Condition_Value1": 111130310,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82510000,
+    "Condition_Type": 0,
+    "Condition_Value1": 0,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82510001,
+    "Condition_Type": 0,
+    "Condition_Value1": 0,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82510002,
+    "Condition_Type": 0,
+    "Condition_Value1": 0,
+    "Condition_Value2": 0,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 80010860,
+    "Condition_Type": 8,
+    "Condition_Value1": 411210270,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  },
+  {
+    "ID": 82390000,
+    "Condition_Type": 8,
+    "Condition_Value1": 213010570,
+    "Condition_Value2": 2,
+    "Condition_Value3": 0,
+    "Error_MSG_ID": 0
+  }
+]

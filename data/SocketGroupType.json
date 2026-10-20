@@ -1,0 +1,83 @@
+[
+  {
+    "SocketGroupTypeID": 1,
+    "Desc": "Normal Runes",
+    "TargetItem_Socket_Type1": 1,
+    "TargetItem_Socket_Type2": 7,
+    "TargetItem_Socket_Type3": 0,
+    "TargetItem_Socket_Type4": 0,
+    "TargetItem_Socket_Type5": 0
+  },
+  {
+    "SocketGroupTypeID": 2,
+    "Desc": "Blue Seed Rune",
+    "TargetItem_Socket_Type1": 2,
+    "TargetItem_Socket_Type2": 0,
+    "TargetItem_Socket_Type3": 0,
+    "TargetItem_Socket_Type4": 0,
+    "TargetItem_Socket_Type5": 0
+  },
+  {
+    "SocketGroupTypeID": 3,
+    "Desc": "Red Seed Rune",
+    "TargetItem_Socket_Type1": 3,
+    "TargetItem_Socket_Type2": 0,
+    "TargetItem_Socket_Type3": 0,
+    "TargetItem_Socket_Type4": 0,
+    "TargetItem_Socket_Type5": 0
+  },
+  {
+    "SocketGroupTypeID": 4,
+    "Desc": "Green Seed Rune",
+    "TargetItem_Socket_Type1": 4,
+    "TargetItem_Socket_Type2": 0,
+    "TargetItem_Socket_Type3": 0,
+    "TargetItem_Socket_Type4": 0,
+    "TargetItem_Socket_Type5": 0
+  },
+  {
+    "SocketGroupTypeID": 5,
+    "Desc": "Cheonglim Saron",
+    "TargetItem_Socket_Type1": 5,
+    "TargetItem_Socket_Type2": 0,
+    "TargetItem_Socket_Type3": 0,
+    "TargetItem_Socket_Type4": 0,
+    "TargetItem_Socket_Type5": 0
+  },
+  {
+    "SocketGroupTypeID": 6,
+    "Desc": "New + Cheonglim",
+    "TargetItem_Socket_Type1": 7,
+    "TargetItem_Socket_Type2": 5,
+    "TargetItem_Socket_Type3": 8,
+    "TargetItem_Socket_Type4": 1,
+    "TargetItem_Socket_Type5": 0
+  },
+  {
+    "SocketGroupTypeID": 7,
+    "Desc": "Blue + Red + Green",
+    "TargetItem_Socket_Type1": 2,
+    "TargetItem_Socket_Type2": 3,
+    "TargetItem_Socket_Type3": 4,
+    "TargetItem_Socket_Type4": 9,
+    "TargetItem_Socket_Type5": 0
+  },
+  {
+    "SocketGroupTypeID": 8,
+    "Desc": "<<Unused>>",
+    "TargetItem_Socket_Type1": 0,
+    "TargetItem_Socket_Type2": 0,
+    "TargetItem_Socket_Type3": 0,
+    "TargetItem_Socket_Type4": 0,
+    "TargetItem_Socket_Type5": 0
+  },
+  {
+    "SocketGroupTypeID": 9,
+    "Desc": "MVP Card",
+    "TargetItem_Socket_Type1": 9,
+    "TargetItem_Socket_Type2": 0,
+    "TargetItem_Socket_Type3": 0,
+    "TargetItem_Socket_Type4": 0,
+    "TargetItem_Socket_Type5": 0
+  }
+]

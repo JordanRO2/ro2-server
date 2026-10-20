@@ -1,0 +1,2102 @@
+[
+  {
+    "Index": 1,
+    "Basic_Val": 300,
+    "Abili_Val": 0,
+    "Prefix_String": 11746,
+    "desc": "침팬치",
+    "Abili_ID_1": 2,
+    "Abili_ID_2": 4002,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 2,
+    "Basic_Val": 2000,
+    "Abili_Val": 0,
+    "Prefix_String": 11746,
+    "desc": "침팬치",
+    "Abili_ID_1": 4,
+    "Abili_ID_2": 4004,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 3,
+    "Basic_Val": 4000,
+    "Abili_Val": 0,
+    "Prefix_String": 11747,
+    "desc": "오랑우탄",
+    "Abili_ID_1": 6,
+    "Abili_ID_2": 4006,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 4,
+    "Basic_Val": 10000,
+    "Abili_Val": 0,
+    "Prefix_String": 11747,
+    "desc": "오랑우탄",
+    "Abili_ID_1": 8,
+    "Abili_ID_2": 4008,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 5,
+    "Basic_Val": 20000,
+    "Abili_Val": 0,
+    "Prefix_String": 11748,
+    "desc": "고릴라",
+    "Abili_ID_1": 10,
+    "Abili_ID_2": 4010,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 6,
+    "Basic_Val": 30000,
+    "Abili_Val": 0,
+    "Prefix_String": 11748,
+    "desc": "고릴라",
+    "Abili_ID_1": 12,
+    "Abili_ID_2": 4012,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 7,
+    "Basic_Val": 40000,
+    "Abili_Val": 0,
+    "Prefix_String": 11748,
+    "desc": "고릴라",
+    "Abili_ID_1": 14,
+    "Abili_ID_2": 4014,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 8,
+    "Basic_Val": 50000,
+    "Abili_Val": 0,
+    "Prefix_String": 11748,
+    "desc": "고릴라",
+    "Abili_ID_1": 16,
+    "Abili_ID_2": 4016,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 9,
+    "Basic_Val": 60000,
+    "Abili_Val": 0,
+    "Prefix_String": 11748,
+    "desc": "고릴라",
+    "Abili_ID_1": 18,
+    "Abili_ID_2": 4018,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 10,
+    "Basic_Val": 70000,
+    "Abili_Val": 0,
+    "Prefix_String": 11748,
+    "desc": "고릴라",
+    "Abili_ID_1": 20,
+    "Abili_ID_2": 4020,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 11,
+    "Basic_Val": 300,
+    "Abili_Val": 0,
+    "Prefix_String": 11749,
+    "desc": "사슴",
+    "Abili_ID_1": 1002,
+    "Abili_ID_2": 4002,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 12,
+    "Basic_Val": 2000,
+    "Abili_Val": 0,
+    "Prefix_String": 11749,
+    "desc": "사슴",
+    "Abili_ID_1": 1004,
+    "Abili_ID_2": 4004,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 13,
+    "Basic_Val": 4000,
+    "Abili_Val": 0,
+    "Prefix_String": 11750,
+    "desc": "노루",
+    "Abili_ID_1": 1006,
+    "Abili_ID_2": 4006,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 14,
+    "Basic_Val": 10000,
+    "Abili_Val": 0,
+    "Prefix_String": 11750,
+    "desc": "노루",
+    "Abili_ID_1": 1008,
+    "Abili_ID_2": 4008,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 15,
+    "Basic_Val": 20000,
+    "Abili_Val": 0,
+    "Prefix_String": 11751,
+    "desc": "엘크",
+    "Abili_ID_1": 1010,
+    "Abili_ID_2": 4010,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 16,
+    "Basic_Val": 30000,
+    "Abili_Val": 0,
+    "Prefix_String": 11751,
+    "desc": "엘크",
+    "Abili_ID_1": 1012,
+    "Abili_ID_2": 4012,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 17,
+    "Basic_Val": 40000,
+    "Abili_Val": 0,
+    "Prefix_String": 11751,
+    "desc": "엘크",
+    "Abili_ID_1": 1014,
+    "Abili_ID_2": 4014,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 18,
+    "Basic_Val": 50000,
+    "Abili_Val": 0,
+    "Prefix_String": 11751,
+    "desc": "엘크",
+    "Abili_ID_1": 1016,
+    "Abili_ID_2": 4016,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 19,
+    "Basic_Val": 60000,
+    "Abili_Val": 0,
+    "Prefix_String": 11751,
+    "desc": "엘크",
+    "Abili_ID_1": 1018,
+    "Abili_ID_2": 4018,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 20,
+    "Basic_Val": 70000,
+    "Abili_Val": 0,
+    "Prefix_String": 11751,
+    "desc": "엘크",
+    "Abili_ID_1": 1020,
+    "Abili_ID_2": 4020,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 21,
+    "Basic_Val": 300,
+    "Abili_Val": 0,
+    "Prefix_String": 11752,
+    "desc": "좀비",
+    "Abili_ID_1": 2002,
+    "Abili_ID_2": 4002,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 22,
+    "Basic_Val": 2000,
+    "Abili_Val": 0,
+    "Prefix_String": 11752,
+    "desc": "좀비",
+    "Abili_ID_1": 2004,
+    "Abili_ID_2": 4004,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 23,
+    "Basic_Val": 4000,
+    "Abili_Val": 0,
+    "Prefix_String": 11753,
+    "desc": "구울",
+    "Abili_ID_1": 2006,
+    "Abili_ID_2": 4006,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 24,
+    "Basic_Val": 10000,
+    "Abili_Val": 0,
+    "Prefix_String": 11753,
+    "desc": "구울",
+    "Abili_ID_1": 2008,
+    "Abili_ID_2": 4008,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 25,
+    "Basic_Val": 20000,
+    "Abili_Val": 0,
+    "Prefix_String": 11754,
+    "desc": "좀비 마스터",
+    "Abili_ID_1": 2010,
+    "Abili_ID_2": 4010,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 26,
+    "Basic_Val": 30000,
+    "Abili_Val": 0,
+    "Prefix_String": 11754,
+    "desc": "좀비 마스터",
+    "Abili_ID_1": 2012,
+    "Abili_ID_2": 4012,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 27,
+    "Basic_Val": 40000,
+    "Abili_Val": 0,
+    "Prefix_String": 11754,
+    "desc": "좀비 마스터",
+    "Abili_ID_1": 2014,
+    "Abili_ID_2": 4014,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 28,
+    "Basic_Val": 50000,
+    "Abili_Val": 0,
+    "Prefix_String": 11754,
+    "desc": "좀비 마스터",
+    "Abili_ID_1": 2016,
+    "Abili_ID_2": 4016,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 29,
+    "Basic_Val": 60000,
+    "Abili_Val": 0,
+    "Prefix_String": 11754,
+    "desc": "좀비 마스터",
+    "Abili_ID_1": 2018,
+    "Abili_ID_2": 4018,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 30,
+    "Basic_Val": 70000,
+    "Abili_Val": 0,
+    "Prefix_String": 11754,
+    "desc": "좀비 마스터",
+    "Abili_ID_1": 2020,
+    "Abili_ID_2": 4020,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 31,
+    "Basic_Val": 300,
+    "Abili_Val": 0,
+    "Prefix_String": 11755,
+    "desc": "도둑벌레",
+    "Abili_ID_1": 2,
+    "Abili_ID_2": 3002,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 32,
+    "Basic_Val": 2000,
+    "Abili_Val": 0,
+    "Prefix_String": 11755,
+    "desc": "도둑벌레",
+    "Abili_ID_1": 4,
+    "Abili_ID_2": 3004,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 33,
+    "Basic_Val": 4000,
+    "Abili_Val": 0,
+    "Prefix_String": 11756,
+    "desc": "강도벌레",
+    "Abili_ID_1": 6,
+    "Abili_ID_2": 3006,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 34,
+    "Basic_Val": 10000,
+    "Abili_Val": 0,
+    "Prefix_String": 11756,
+    "desc": "강도벌레",
+    "Abili_ID_1": 8,
+    "Abili_ID_2": 3008,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 35,
+    "Basic_Val": 20000,
+    "Abili_Val": 0,
+    "Prefix_String": 11757,
+    "desc": "황금 도둑벌레",
+    "Abili_ID_1": 10,
+    "Abili_ID_2": 3010,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 36,
+    "Basic_Val": 30000,
+    "Abili_Val": 0,
+    "Prefix_String": 11757,
+    "desc": "황금 도둑벌레",
+    "Abili_ID_1": 12,
+    "Abili_ID_2": 3012,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 37,
+    "Basic_Val": 40000,
+    "Abili_Val": 0,
+    "Prefix_String": 11757,
+    "desc": "황금 도둑벌레",
+    "Abili_ID_1": 14,
+    "Abili_ID_2": 3014,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 38,
+    "Basic_Val": 50000,
+    "Abili_Val": 0,
+    "Prefix_String": 11757,
+    "desc": "황금 도둑벌레",
+    "Abili_ID_1": 16,
+    "Abili_ID_2": 3016,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 39,
+    "Basic_Val": 60000,
+    "Abili_Val": 0,
+    "Prefix_String": 11757,
+    "desc": "황금 도둑벌레",
+    "Abili_ID_1": 18,
+    "Abili_ID_2": 3018,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 40,
+    "Basic_Val": 70000,
+    "Abili_Val": 0,
+    "Prefix_String": 11757,
+    "desc": "황금 도둑벌레",
+    "Abili_ID_1": 20,
+    "Abili_ID_2": 3020,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 41,
+    "Basic_Val": 300,
+    "Abili_Val": 0,
+    "Prefix_String": 11758,
+    "desc": "도마뱀",
+    "Abili_ID_1": 1002,
+    "Abili_ID_2": 3002,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 42,
+    "Basic_Val": 2000,
+    "Abili_Val": 0,
+    "Prefix_String": 11758,
+    "desc": "도마뱀",
+    "Abili_ID_1": 1004,
+    "Abili_ID_2": 3004,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 43,
+    "Basic_Val": 4000,
+    "Abili_Val": 0,
+    "Prefix_String": 11759,
+    "desc": "목도리 도마뱀",
+    "Abili_ID_1": 1006,
+    "Abili_ID_2": 3006,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 44,
+    "Basic_Val": 10000,
+    "Abili_Val": 0,
+    "Prefix_String": 11759,
+    "desc": "목도리 도마뱀",
+    "Abili_ID_1": 1008,
+    "Abili_ID_2": 3008,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 45,
+    "Basic_Val": 20000,
+    "Abili_Val": 0,
+    "Prefix_String": 11760,
+    "desc": "코모도",
+    "Abili_ID_1": 1010,
+    "Abili_ID_2": 3010,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 46,
+    "Basic_Val": 30000,
+    "Abili_Val": 0,
+    "Prefix_String": 11760,
+    "desc": "코모도",
+    "Abili_ID_1": 1012,
+    "Abili_ID_2": 3012,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 47,
+    "Basic_Val": 40000,
+    "Abili_Val": 0,
+    "Prefix_String": 11760,
+    "desc": "코모도",
+    "Abili_ID_1": 1014,
+    "Abili_ID_2": 3014,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 48,
+    "Basic_Val": 50000,
+    "Abili_Val": 0,
+    "Prefix_String": 11760,
+    "desc": "코모도",
+    "Abili_ID_1": 1016,
+    "Abili_ID_2": 3016,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 49,
+    "Basic_Val": 60000,
+    "Abili_Val": 0,
+    "Prefix_String": 11760,
+    "desc": "코모도",
+    "Abili_ID_1": 1018,
+    "Abili_ID_2": 3018,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 50,
+    "Basic_Val": 70000,
+    "Abili_Val": 0,
+    "Prefix_String": 11760,
+    "desc": "코모도",
+    "Abili_ID_1": 1020,
+    "Abili_ID_2": 3020,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 51,
+    "Basic_Val": 300,
+    "Abili_Val": 0,
+    "Prefix_String": 11761,
+    "desc": "여우",
+    "Abili_ID_1": 2002,
+    "Abili_ID_2": 3002,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 52,
+    "Basic_Val": 2000,
+    "Abili_Val": 0,
+    "Prefix_String": 11761,
+    "desc": "여우",
+    "Abili_ID_1": 2004,
+    "Abili_ID_2": 3004,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 53,
+    "Basic_Val": 4000,
+    "Abili_Val": 0,
+    "Prefix_String": 11762,
+    "desc": "불여우",
+    "Abili_ID_1": 2006,
+    "Abili_ID_2": 3006,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 54,
+    "Basic_Val": 10000,
+    "Abili_Val": 0,
+    "Prefix_String": 11762,
+    "desc": "불여우",
+    "Abili_ID_1": 2008,
+    "Abili_ID_2": 3008,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 55,
+    "Basic_Val": 20000,
+    "Abili_Val": 0,
+    "Prefix_String": 11763,
+    "desc": "구미호",
+    "Abili_ID_1": 2010,
+    "Abili_ID_2": 3010,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 56,
+    "Basic_Val": 30000,
+    "Abili_Val": 0,
+    "Prefix_String": 11763,
+    "desc": "구미호",
+    "Abili_ID_1": 2012,
+    "Abili_ID_2": 3012,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 57,
+    "Basic_Val": 40000,
+    "Abili_Val": 0,
+    "Prefix_String": 11763,
+    "desc": "구미호",
+    "Abili_ID_1": 2014,
+    "Abili_ID_2": 3014,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 58,
+    "Basic_Val": 50000,
+    "Abili_Val": 0,
+    "Prefix_String": 11763,
+    "desc": "구미호",
+    "Abili_ID_1": 2016,
+    "Abili_ID_2": 3016,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 59,
+    "Basic_Val": 60000,
+    "Abili_Val": 0,
+    "Prefix_String": 11763,
+    "desc": "구미호",
+    "Abili_ID_1": 2018,
+    "Abili_ID_2": 3018,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 60,
+    "Basic_Val": 70000,
+    "Abili_Val": 0,
+    "Prefix_String": 11763,
+    "desc": "구미호",
+    "Abili_ID_1": 2020,
+    "Abili_ID_2": 3020,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 61,
+    "Basic_Val": 300,
+    "Abili_Val": 0,
+    "Prefix_String": 11764,
+    "desc": "포링",
+    "Abili_ID_1": 5002,
+    "Abili_ID_2": 6002,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 62,
+    "Basic_Val": 2000,
+    "Abili_Val": 0,
+    "Prefix_String": 11764,
+    "desc": "포링",
+    "Abili_ID_1": 5004,
+    "Abili_ID_2": 6004,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 63,
+    "Basic_Val": 4000,
+    "Abili_Val": 0,
+    "Prefix_String": 11765,
+    "desc": "포포링",
+    "Abili_ID_1": 5006,
+    "Abili_ID_2": 6006,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 64,
+    "Basic_Val": 10000,
+    "Abili_Val": 0,
+    "Prefix_String": 11765,
+    "desc": "포포링",
+    "Abili_ID_1": 5008,
+    "Abili_ID_2": 6008,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 65,
+    "Basic_Val": 20000,
+    "Abili_Val": 0,
+    "Prefix_String": 11766,
+    "desc": "마스터링",
+    "Abili_ID_1": 5010,
+    "Abili_ID_2": 6010,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 66,
+    "Basic_Val": 30000,
+    "Abili_Val": 0,
+    "Prefix_String": 11766,
+    "desc": "마스터링",
+    "Abili_ID_1": 5012,
+    "Abili_ID_2": 6012,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 67,
+    "Basic_Val": 40000,
+    "Abili_Val": 0,
+    "Prefix_String": 11766,
+    "desc": "마스터링",
+    "Abili_ID_1": 5014,
+    "Abili_ID_2": 6014,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 68,
+    "Basic_Val": 50000,
+    "Abili_Val": 0,
+    "Prefix_String": 11766,
+    "desc": "마스터링",
+    "Abili_ID_1": 5016,
+    "Abili_ID_2": 6016,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 69,
+    "Basic_Val": 60000,
+    "Abili_Val": 0,
+    "Prefix_String": 11766,
+    "desc": "마스터링",
+    "Abili_ID_1": 5018,
+    "Abili_ID_2": 6018,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 70,
+    "Basic_Val": 70000,
+    "Abili_Val": 0,
+    "Prefix_String": 11766,
+    "desc": "마스터링",
+    "Abili_ID_1": 5020,
+    "Abili_ID_2": 6020,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 71,
+    "Basic_Val": 300,
+    "Abili_Val": 0,
+    "Prefix_String": 11767,
+    "desc": "곰",
+    "Abili_ID_1": 4002,
+    "Abili_ID_2": 9002,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 72,
+    "Basic_Val": 2000,
+    "Abili_Val": 0,
+    "Prefix_String": 11767,
+    "desc": "곰",
+    "Abili_ID_1": 4004,
+    "Abili_ID_2": 9004,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 73,
+    "Basic_Val": 4000,
+    "Abili_Val": 0,
+    "Prefix_String": 11768,
+    "desc": "불곰",
+    "Abili_ID_1": 4006,
+    "Abili_ID_2": 9006,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 74,
+    "Basic_Val": 10000,
+    "Abili_Val": 0,
+    "Prefix_String": 11768,
+    "desc": "불곰",
+    "Abili_ID_1": 4008,
+    "Abili_ID_2": 9008,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 75,
+    "Basic_Val": 20000,
+    "Abili_Val": 0,
+    "Prefix_String": 11769,
+    "desc": "북극곰",
+    "Abili_ID_1": 4010,
+    "Abili_ID_2": 9010,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 76,
+    "Basic_Val": 30000,
+    "Abili_Val": 0,
+    "Prefix_String": 11769,
+    "desc": "북극곰",
+    "Abili_ID_1": 4012,
+    "Abili_ID_2": 9012,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 77,
+    "Basic_Val": 40000,
+    "Abili_Val": 0,
+    "Prefix_String": 11769,
+    "desc": "북극곰",
+    "Abili_ID_1": 4014,
+    "Abili_ID_2": 9014,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 78,
+    "Basic_Val": 50000,
+    "Abili_Val": 0,
+    "Prefix_String": 11769,
+    "desc": "북극곰",
+    "Abili_ID_1": 4016,
+    "Abili_ID_2": 9016,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 79,
+    "Basic_Val": 60000,
+    "Abili_Val": 0,
+    "Prefix_String": 11769,
+    "desc": "북극곰",
+    "Abili_ID_1": 4018,
+    "Abili_ID_2": 9018,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 80,
+    "Basic_Val": 70000,
+    "Abili_Val": 0,
+    "Prefix_String": 11769,
+    "desc": "북극곰",
+    "Abili_ID_1": 4020,
+    "Abili_ID_2": 9020,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 81,
+    "Basic_Val": 300,
+    "Abili_Val": 0,
+    "Prefix_String": 11770,
+    "desc": "거미",
+    "Abili_ID_1": 14002,
+    "Abili_ID_2": 15002,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 82,
+    "Basic_Val": 2000,
+    "Abili_Val": 0,
+    "Prefix_String": 11770,
+    "desc": "거미",
+    "Abili_ID_1": 14004,
+    "Abili_ID_2": 15004,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 83,
+    "Basic_Val": 4000,
+    "Abili_Val": 0,
+    "Prefix_String": 11771,
+    "desc": "타란툴라",
+    "Abili_ID_1": 14006,
+    "Abili_ID_2": 15006,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 84,
+    "Basic_Val": 10000,
+    "Abili_Val": 0,
+    "Prefix_String": 11771,
+    "desc": "타란툴라",
+    "Abili_ID_1": 14008,
+    "Abili_ID_2": 15008,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 85,
+    "Basic_Val": 20000,
+    "Abili_Val": 0,
+    "Prefix_String": 11772,
+    "desc": "아르고스",
+    "Abili_ID_1": 14010,
+    "Abili_ID_2": 15010,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 86,
+    "Basic_Val": 30000,
+    "Abili_Val": 0,
+    "Prefix_String": 11772,
+    "desc": "아르고스",
+    "Abili_ID_1": 14012,
+    "Abili_ID_2": 15012,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 87,
+    "Basic_Val": 40000,
+    "Abili_Val": 0,
+    "Prefix_String": 11772,
+    "desc": "아르고스",
+    "Abili_ID_1": 14014,
+    "Abili_ID_2": 15014,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 88,
+    "Basic_Val": 50000,
+    "Abili_Val": 0,
+    "Prefix_String": 11772,
+    "desc": "아르고스",
+    "Abili_ID_1": 14016,
+    "Abili_ID_2": 15016,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 89,
+    "Basic_Val": 60000,
+    "Abili_Val": 0,
+    "Prefix_String": 11772,
+    "desc": "아르고스",
+    "Abili_ID_1": 14018,
+    "Abili_ID_2": 15018,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 90,
+    "Basic_Val": 70000,
+    "Abili_Val": 0,
+    "Prefix_String": 11772,
+    "desc": "아르고스",
+    "Abili_ID_1": 14020,
+    "Abili_ID_2": 15020,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 91,
+    "Basic_Val": 300,
+    "Abili_Val": 0,
+    "Prefix_String": 10962,
+    "desc": "알터",
+    "Abili_ID_1": 2,
+    "Abili_ID_2": 16002,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 92,
+    "Basic_Val": 2000,
+    "Abili_Val": 0,
+    "Prefix_String": 10962,
+    "desc": "알터",
+    "Abili_ID_1": 4,
+    "Abili_ID_2": 16004,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 93,
+    "Basic_Val": 4000,
+    "Abili_Val": 0,
+    "Prefix_String": 10962,
+    "desc": "알터",
+    "Abili_ID_1": 6,
+    "Abili_ID_2": 16006,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 94,
+    "Basic_Val": 10000,
+    "Abili_Val": 0,
+    "Prefix_String": 10962,
+    "desc": "알터",
+    "Abili_ID_1": 8,
+    "Abili_ID_2": 16008,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 95,
+    "Basic_Val": 20000,
+    "Abili_Val": 0,
+    "Prefix_String": 10962,
+    "desc": "알터",
+    "Abili_ID_1": 10,
+    "Abili_ID_2": 16010,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 96,
+    "Basic_Val": 30000,
+    "Abili_Val": 0,
+    "Prefix_String": 10962,
+    "desc": "알터",
+    "Abili_ID_1": 12,
+    "Abili_ID_2": 16012,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 97,
+    "Basic_Val": 40000,
+    "Abili_Val": 0,
+    "Prefix_String": 10962,
+    "desc": "알터",
+    "Abili_ID_1": 14,
+    "Abili_ID_2": 16014,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 98,
+    "Basic_Val": 50000,
+    "Abili_Val": 0,
+    "Prefix_String": 10962,
+    "desc": "알터",
+    "Abili_ID_1": 16,
+    "Abili_ID_2": 16016,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 99,
+    "Basic_Val": 60000,
+    "Abili_Val": 0,
+    "Prefix_String": 10962,
+    "desc": "알터",
+    "Abili_ID_1": 18,
+    "Abili_ID_2": 16018,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 100,
+    "Basic_Val": 70000,
+    "Abili_Val": 0,
+    "Prefix_String": 10962,
+    "desc": "알터",
+    "Abili_ID_1": 20,
+    "Abili_ID_2": 16020,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 101,
+    "Basic_Val": 300,
+    "Abili_Val": 0,
+    "Prefix_String": 8615,
+    "desc": "아쳐",
+    "Abili_ID_1": 1002,
+    "Abili_ID_2": 16002,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 102,
+    "Basic_Val": 2000,
+    "Abili_Val": 0,
+    "Prefix_String": 8615,
+    "desc": "아쳐",
+    "Abili_ID_1": 1004,
+    "Abili_ID_2": 16004,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 103,
+    "Basic_Val": 4000,
+    "Abili_Val": 0,
+    "Prefix_String": 8615,
+    "desc": "아쳐",
+    "Abili_ID_1": 1006,
+    "Abili_ID_2": 16006,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 104,
+    "Basic_Val": 10000,
+    "Abili_Val": 0,
+    "Prefix_String": 8615,
+    "desc": "아쳐",
+    "Abili_ID_1": 1008,
+    "Abili_ID_2": 16008,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 105,
+    "Basic_Val": 20000,
+    "Abili_Val": 0,
+    "Prefix_String": 8615,
+    "desc": "아쳐",
+    "Abili_ID_1": 1010,
+    "Abili_ID_2": 16010,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 106,
+    "Basic_Val": 30000,
+    "Abili_Val": 0,
+    "Prefix_String": 8615,
+    "desc": "아쳐",
+    "Abili_ID_1": 1012,
+    "Abili_ID_2": 16012,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 107,
+    "Basic_Val": 40000,
+    "Abili_Val": 0,
+    "Prefix_String": 8615,
+    "desc": "아쳐",
+    "Abili_ID_1": 1014,
+    "Abili_ID_2": 16014,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 108,
+    "Basic_Val": 50000,
+    "Abili_Val": 0,
+    "Prefix_String": 8615,
+    "desc": "아쳐",
+    "Abili_ID_1": 1016,
+    "Abili_ID_2": 16016,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 109,
+    "Basic_Val": 60000,
+    "Abili_Val": 0,
+    "Prefix_String": 8615,
+    "desc": "아쳐",
+    "Abili_ID_1": 1018,
+    "Abili_ID_2": 16018,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 110,
+    "Basic_Val": 70000,
+    "Abili_Val": 0,
+    "Prefix_String": 8615,
+    "desc": "아쳐",
+    "Abili_ID_1": 1020,
+    "Abili_ID_2": 16020,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 111,
+    "Basic_Val": 300,
+    "Abili_Val": 0,
+    "Prefix_String": 8614,
+    "desc": "매지션",
+    "Abili_ID_1": 2002,
+    "Abili_ID_2": 16002,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 112,
+    "Basic_Val": 2000,
+    "Abili_Val": 0,
+    "Prefix_String": 8614,
+    "desc": "매지션",
+    "Abili_ID_1": 2004,
+    "Abili_ID_2": 16004,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 113,
+    "Basic_Val": 4000,
+    "Abili_Val": 0,
+    "Prefix_String": 8614,
+    "desc": "매지션",
+    "Abili_ID_1": 2006,
+    "Abili_ID_2": 16006,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 114,
+    "Basic_Val": 10000,
+    "Abili_Val": 0,
+    "Prefix_String": 8614,
+    "desc": "매지션",
+    "Abili_ID_1": 2008,
+    "Abili_ID_2": 16008,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 115,
+    "Basic_Val": 20000,
+    "Abili_Val": 0,
+    "Prefix_String": 8614,
+    "desc": "매지션",
+    "Abili_ID_1": 2010,
+    "Abili_ID_2": 16010,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 116,
+    "Basic_Val": 30000,
+    "Abili_Val": 0,
+    "Prefix_String": 8614,
+    "desc": "매지션",
+    "Abili_ID_1": 2012,
+    "Abili_ID_2": 16012,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 117,
+    "Basic_Val": 40000,
+    "Abili_Val": 0,
+    "Prefix_String": 8614,
+    "desc": "매지션",
+    "Abili_ID_1": 2014,
+    "Abili_ID_2": 16014,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 118,
+    "Basic_Val": 50000,
+    "Abili_Val": 0,
+    "Prefix_String": 8614,
+    "desc": "매지션",
+    "Abili_ID_1": 2016,
+    "Abili_ID_2": 16016,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 119,
+    "Basic_Val": 60000,
+    "Abili_Val": 0,
+    "Prefix_String": 8614,
+    "desc": "매지션",
+    "Abili_ID_1": 2018,
+    "Abili_ID_2": 16018,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 120,
+    "Basic_Val": 70000,
+    "Abili_Val": 0,
+    "Prefix_String": 8614,
+    "desc": "매지션",
+    "Abili_ID_1": 2020,
+    "Abili_ID_2": 16020,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 121,
+    "Basic_Val": 300,
+    "Abili_Val": 0,
+    "Prefix_String": 8619,
+    "desc": "알케미스트",
+    "Abili_ID_1": 4002,
+    "Abili_ID_2": 16002,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 122,
+    "Basic_Val": 2000,
+    "Abili_Val": 0,
+    "Prefix_String": 8619,
+    "desc": "알케미스트",
+    "Abili_ID_1": 4004,
+    "Abili_ID_2": 16004,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 123,
+    "Basic_Val": 4000,
+    "Abili_Val": 0,
+    "Prefix_String": 8619,
+    "desc": "알케미스트",
+    "Abili_ID_1": 4006,
+    "Abili_ID_2": 16006,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 124,
+    "Basic_Val": 10000,
+    "Abili_Val": 0,
+    "Prefix_String": 8619,
+    "desc": "알케미스트",
+    "Abili_ID_1": 4008,
+    "Abili_ID_2": 16008,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 125,
+    "Basic_Val": 20000,
+    "Abili_Val": 0,
+    "Prefix_String": 8619,
+    "desc": "알케미스트",
+    "Abili_ID_1": 4010,
+    "Abili_ID_2": 16010,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 126,
+    "Basic_Val": 30000,
+    "Abili_Val": 0,
+    "Prefix_String": 8619,
+    "desc": "알케미스트",
+    "Abili_ID_1": 4012,
+    "Abili_ID_2": 16012,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 127,
+    "Basic_Val": 40000,
+    "Abili_Val": 0,
+    "Prefix_String": 8619,
+    "desc": "알케미스트",
+    "Abili_ID_1": 4014,
+    "Abili_ID_2": 16014,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 128,
+    "Basic_Val": 50000,
+    "Abili_Val": 0,
+    "Prefix_String": 8619,
+    "desc": "알케미스트",
+    "Abili_ID_1": 4016,
+    "Abili_ID_2": 16016,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 129,
+    "Basic_Val": 60000,
+    "Abili_Val": 0,
+    "Prefix_String": 8619,
+    "desc": "알케미스트",
+    "Abili_ID_1": 4018,
+    "Abili_ID_2": 16018,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 130,
+    "Basic_Val": 70000,
+    "Abili_Val": 0,
+    "Prefix_String": 8619,
+    "desc": "알케미스트",
+    "Abili_ID_1": 4020,
+    "Abili_ID_2": 16020,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 131,
+    "Basic_Val": 300,
+    "Abili_Val": 0,
+    "Prefix_String": 8620,
+    "desc": "블랙스미스",
+    "Abili_ID_1": 4002,
+    "Abili_ID_2": 17002,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 132,
+    "Basic_Val": 2000,
+    "Abili_Val": 0,
+    "Prefix_String": 8620,
+    "desc": "블랙스미스",
+    "Abili_ID_1": 4004,
+    "Abili_ID_2": 17004,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 133,
+    "Basic_Val": 4000,
+    "Abili_Val": 0,
+    "Prefix_String": 8620,
+    "desc": "블랙스미스",
+    "Abili_ID_1": 4006,
+    "Abili_ID_2": 17006,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 134,
+    "Basic_Val": 10000,
+    "Abili_Val": 0,
+    "Prefix_String": 8620,
+    "desc": "블랙스미스",
+    "Abili_ID_1": 4008,
+    "Abili_ID_2": 17008,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 135,
+    "Basic_Val": 20000,
+    "Abili_Val": 0,
+    "Prefix_String": 8620,
+    "desc": "블랙스미스",
+    "Abili_ID_1": 4010,
+    "Abili_ID_2": 17010,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 136,
+    "Basic_Val": 30000,
+    "Abili_Val": 0,
+    "Prefix_String": 8620,
+    "desc": "블랙스미스",
+    "Abili_ID_1": 4012,
+    "Abili_ID_2": 17012,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 137,
+    "Basic_Val": 40000,
+    "Abili_Val": 0,
+    "Prefix_String": 8620,
+    "desc": "블랙스미스",
+    "Abili_ID_1": 4014,
+    "Abili_ID_2": 17014,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 138,
+    "Basic_Val": 50000,
+    "Abili_Val": 0,
+    "Prefix_String": 8620,
+    "desc": "블랙스미스",
+    "Abili_ID_1": 4016,
+    "Abili_ID_2": 17016,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 139,
+    "Basic_Val": 60000,
+    "Abili_Val": 0,
+    "Prefix_String": 8620,
+    "desc": "블랙스미스",
+    "Abili_ID_1": 4018,
+    "Abili_ID_2": 17018,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 140,
+    "Basic_Val": 70000,
+    "Abili_Val": 0,
+    "Prefix_String": 8620,
+    "desc": "블랙스미스",
+    "Abili_ID_1": 4020,
+    "Abili_ID_2": 17020,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 141,
+    "Basic_Val": 300,
+    "Abili_Val": 0,
+    "Prefix_String": 8613,
+    "desc": "소드맨",
+    "Abili_ID_1": 2,
+    "Abili_ID_2": 17002,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 142,
+    "Basic_Val": 2000,
+    "Abili_Val": 0,
+    "Prefix_String": 8613,
+    "desc": "소드맨",
+    "Abili_ID_1": 4,
+    "Abili_ID_2": 17004,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 143,
+    "Basic_Val": 4000,
+    "Abili_Val": 0,
+    "Prefix_String": 8613,
+    "desc": "소드맨",
+    "Abili_ID_1": 6,
+    "Abili_ID_2": 17006,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 144,
+    "Basic_Val": 10000,
+    "Abili_Val": 0,
+    "Prefix_String": 8613,
+    "desc": "소드맨",
+    "Abili_ID_1": 8,
+    "Abili_ID_2": 17008,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 145,
+    "Basic_Val": 20000,
+    "Abili_Val": 0,
+    "Prefix_String": 8613,
+    "desc": "소드맨",
+    "Abili_ID_1": 10,
+    "Abili_ID_2": 17010,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 146,
+    "Basic_Val": 30000,
+    "Abili_Val": 0,
+    "Prefix_String": 8613,
+    "desc": "소드맨",
+    "Abili_ID_1": 12,
+    "Abili_ID_2": 17012,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 147,
+    "Basic_Val": 40000,
+    "Abili_Val": 0,
+    "Prefix_String": 8613,
+    "desc": "소드맨",
+    "Abili_ID_1": 14,
+    "Abili_ID_2": 17014,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 148,
+    "Basic_Val": 50000,
+    "Abili_Val": 0,
+    "Prefix_String": 8613,
+    "desc": "소드맨",
+    "Abili_ID_1": 16,
+    "Abili_ID_2": 17016,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 149,
+    "Basic_Val": 60000,
+    "Abili_Val": 0,
+    "Prefix_String": 8613,
+    "desc": "소드맨",
+    "Abili_ID_1": 18,
+    "Abili_ID_2": 17018,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 150,
+    "Basic_Val": 70000,
+    "Abili_Val": 0,
+    "Prefix_String": 8613,
+    "desc": "소드맨",
+    "Abili_ID_1": 20,
+    "Abili_ID_2": 17020,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 151,
+    "Basic_Val": 300,
+    "Abili_Val": 0,
+    "Prefix_String": 8616,
+    "desc": "씨프",
+    "Abili_ID_1": 1002,
+    "Abili_ID_2": 17002,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 152,
+    "Basic_Val": 2000,
+    "Abili_Val": 0,
+    "Prefix_String": 8616,
+    "desc": "씨프",
+    "Abili_ID_1": 1004,
+    "Abili_ID_2": 17004,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 153,
+    "Basic_Val": 4000,
+    "Abili_Val": 0,
+    "Prefix_String": 8616,
+    "desc": "씨프",
+    "Abili_ID_1": 1006,
+    "Abili_ID_2": 17006,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 154,
+    "Basic_Val": 10000,
+    "Abili_Val": 0,
+    "Prefix_String": 8616,
+    "desc": "씨프",
+    "Abili_ID_1": 1008,
+    "Abili_ID_2": 17008,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 155,
+    "Basic_Val": 20000,
+    "Abili_Val": 0,
+    "Prefix_String": 8616,
+    "desc": "씨프",
+    "Abili_ID_1": 1010,
+    "Abili_ID_2": 17010,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 156,
+    "Basic_Val": 30000,
+    "Abili_Val": 0,
+    "Prefix_String": 8616,
+    "desc": "씨프",
+    "Abili_ID_1": 1012,
+    "Abili_ID_2": 17012,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 157,
+    "Basic_Val": 40000,
+    "Abili_Val": 0,
+    "Prefix_String": 8616,
+    "desc": "씨프",
+    "Abili_ID_1": 1014,
+    "Abili_ID_2": 17014,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 158,
+    "Basic_Val": 50000,
+    "Abili_Val": 0,
+    "Prefix_String": 8616,
+    "desc": "씨프",
+    "Abili_ID_1": 1016,
+    "Abili_ID_2": 17016,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 159,
+    "Basic_Val": 60000,
+    "Abili_Val": 0,
+    "Prefix_String": 8616,
+    "desc": "씨프",
+    "Abili_ID_1": 1018,
+    "Abili_ID_2": 17018,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 160,
+    "Basic_Val": 70000,
+    "Abili_Val": 0,
+    "Prefix_String": 8616,
+    "desc": "씨프",
+    "Abili_ID_1": 1020,
+    "Abili_ID_2": 17020,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 161,
+    "Basic_Val": 300,
+    "Abili_Val": 0,
+    "Prefix_String": 8617,
+    "desc": "어콜라이트",
+    "Abili_ID_1": 2002,
+    "Abili_ID_2": 17002,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 162,
+    "Basic_Val": 2000,
+    "Abili_Val": 0,
+    "Prefix_String": 8617,
+    "desc": "어콜라이트",
+    "Abili_ID_1": 2004,
+    "Abili_ID_2": 17004,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 163,
+    "Basic_Val": 4000,
+    "Abili_Val": 0,
+    "Prefix_String": 8617,
+    "desc": "어콜라이트",
+    "Abili_ID_1": 2006,
+    "Abili_ID_2": 17006,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 164,
+    "Basic_Val": 10000,
+    "Abili_Val": 0,
+    "Prefix_String": 8617,
+    "desc": "어콜라이트",
+    "Abili_ID_1": 2008,
+    "Abili_ID_2": 17008,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 165,
+    "Basic_Val": 20000,
+    "Abili_Val": 0,
+    "Prefix_String": 8617,
+    "desc": "어콜라이트",
+    "Abili_ID_1": 2010,
+    "Abili_ID_2": 17010,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 166,
+    "Basic_Val": 30000,
+    "Abili_Val": 0,
+    "Prefix_String": 8617,
+    "desc": "어콜라이트",
+    "Abili_ID_1": 2012,
+    "Abili_ID_2": 17012,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 167,
+    "Basic_Val": 40000,
+    "Abili_Val": 0,
+    "Prefix_String": 8617,
+    "desc": "어콜라이트",
+    "Abili_ID_1": 2014,
+    "Abili_ID_2": 17014,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 168,
+    "Basic_Val": 50000,
+    "Abili_Val": 0,
+    "Prefix_String": 8617,
+    "desc": "어콜라이트",
+    "Abili_ID_1": 2016,
+    "Abili_ID_2": 17016,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 169,
+    "Basic_Val": 60000,
+    "Abili_Val": 0,
+    "Prefix_String": 8617,
+    "desc": "어콜라이트",
+    "Abili_ID_1": 2018,
+    "Abili_ID_2": 17018,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 170,
+    "Basic_Val": 70000,
+    "Abili_Val": 0,
+    "Prefix_String": 8617,
+    "desc": "어콜라이트",
+    "Abili_ID_1": 2020,
+    "Abili_ID_2": 17020,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 171,
+    "Basic_Val": 300,
+    "Abili_Val": 0,
+    "Prefix_String": 11773,
+    "desc": "늑대",
+    "Abili_ID_1": 10002,
+    "Abili_ID_2": 12002,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 172,
+    "Basic_Val": 2000,
+    "Abili_Val": 0,
+    "Prefix_String": 11773,
+    "desc": "늑대",
+    "Abili_ID_1": 10004,
+    "Abili_ID_2": 12004,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 173,
+    "Basic_Val": 4000,
+    "Abili_Val": 0,
+    "Prefix_String": 11774,
+    "desc": "라쿠프",
+    "Abili_ID_1": 10006,
+    "Abili_ID_2": 12006,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 174,
+    "Basic_Val": 10000,
+    "Abili_Val": 0,
+    "Prefix_String": 11774,
+    "desc": "라쿠프",
+    "Abili_ID_1": 10008,
+    "Abili_ID_2": 12008,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 175,
+    "Basic_Val": 20000,
+    "Abili_Val": 0,
+    "Prefix_String": 11775,
+    "desc": "시아톤",
+    "Abili_ID_1": 10010,
+    "Abili_ID_2": 12010,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 176,
+    "Basic_Val": 30000,
+    "Abili_Val": 0,
+    "Prefix_String": 11775,
+    "desc": "시아톤",
+    "Abili_ID_1": 10012,
+    "Abili_ID_2": 12012,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 177,
+    "Basic_Val": 40000,
+    "Abili_Val": 0,
+    "Prefix_String": 11775,
+    "desc": "시아톤",
+    "Abili_ID_1": 10014,
+    "Abili_ID_2": 12014,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 178,
+    "Basic_Val": 50000,
+    "Abili_Val": 0,
+    "Prefix_String": 11775,
+    "desc": "시아톤",
+    "Abili_ID_1": 10016,
+    "Abili_ID_2": 12016,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 179,
+    "Basic_Val": 60000,
+    "Abili_Val": 0,
+    "Prefix_String": 11775,
+    "desc": "시아톤",
+    "Abili_ID_1": 10018,
+    "Abili_ID_2": 12018,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 180,
+    "Basic_Val": 70000,
+    "Abili_Val": 0,
+    "Prefix_String": 11775,
+    "desc": "시아톤",
+    "Abili_ID_1": 10020,
+    "Abili_ID_2": 12020,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 181,
+    "Basic_Val": 300,
+    "Abili_Val": 0,
+    "Prefix_String": 11776,
+    "desc": "세비지 베베",
+    "Abili_ID_1": 2,
+    "Abili_ID_2": 1002,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 182,
+    "Basic_Val": 2000,
+    "Abili_Val": 0,
+    "Prefix_String": 11776,
+    "desc": "세비지 베베",
+    "Abili_ID_1": 4,
+    "Abili_ID_2": 1004,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 183,
+    "Basic_Val": 4000,
+    "Abili_Val": 0,
+    "Prefix_String": 11777,
+    "desc": "세비지",
+    "Abili_ID_1": 6,
+    "Abili_ID_2": 1006,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 184,
+    "Basic_Val": 10000,
+    "Abili_Val": 0,
+    "Prefix_String": 11777,
+    "desc": "세비지",
+    "Abili_ID_1": 8,
+    "Abili_ID_2": 1008,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 185,
+    "Basic_Val": 20000,
+    "Abili_Val": 0,
+    "Prefix_String": 11778,
+    "desc": "헤비 세비지",
+    "Abili_ID_1": 10,
+    "Abili_ID_2": 1010,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 186,
+    "Basic_Val": 30000,
+    "Abili_Val": 0,
+    "Prefix_String": 11778,
+    "desc": "헤비 세비지",
+    "Abili_ID_1": 12,
+    "Abili_ID_2": 1012,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 187,
+    "Basic_Val": 40000,
+    "Abili_Val": 0,
+    "Prefix_String": 11778,
+    "desc": "헤비 세비지",
+    "Abili_ID_1": 14,
+    "Abili_ID_2": 1014,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 188,
+    "Basic_Val": 50000,
+    "Abili_Val": 0,
+    "Prefix_String": 11778,
+    "desc": "헤비 세비지",
+    "Abili_ID_1": 16,
+    "Abili_ID_2": 1016,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 189,
+    "Basic_Val": 60000,
+    "Abili_Val": 0,
+    "Prefix_String": 11778,
+    "desc": "헤비 세비지",
+    "Abili_ID_1": 18,
+    "Abili_ID_2": 1018,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 190,
+    "Basic_Val": 70000,
+    "Abili_Val": 0,
+    "Prefix_String": 11778,
+    "desc": "헤비 세비지",
+    "Abili_ID_1": 20,
+    "Abili_ID_2": 1020,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 191,
+    "Basic_Val": 300,
+    "Abili_Val": 0,
+    "Prefix_String": 11779,
+    "desc": "무카",
+    "Abili_ID_1": 2002,
+    "Abili_ID_2": 1002,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 192,
+    "Basic_Val": 2000,
+    "Abili_Val": 0,
+    "Prefix_String": 11779,
+    "desc": "무카",
+    "Abili_ID_1": 2004,
+    "Abili_ID_2": 1004,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 193,
+    "Basic_Val": 4000,
+    "Abili_Val": 0,
+    "Prefix_String": 11780,
+    "desc": "아미고",
+    "Abili_ID_1": 2006,
+    "Abili_ID_2": 1006,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 194,
+    "Basic_Val": 10000,
+    "Abili_Val": 0,
+    "Prefix_String": 11780,
+    "desc": "아미고",
+    "Abili_ID_1": 2008,
+    "Abili_ID_2": 1008,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 195,
+    "Basic_Val": 20000,
+    "Abili_Val": 0,
+    "Prefix_String": 11781,
+    "desc": "세뇨리따",
+    "Abili_ID_1": 2010,
+    "Abili_ID_2": 1010,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 196,
+    "Basic_Val": 30000,
+    "Abili_Val": 0,
+    "Prefix_String": 11781,
+    "desc": "세뇨리따",
+    "Abili_ID_1": 2012,
+    "Abili_ID_2": 1012,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 197,
+    "Basic_Val": 40000,
+    "Abili_Val": 0,
+    "Prefix_String": 11781,
+    "desc": "세뇨리따",
+    "Abili_ID_1": 2014,
+    "Abili_ID_2": 1014,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 198,
+    "Basic_Val": 50000,
+    "Abili_Val": 0,
+    "Prefix_String": 11781,
+    "desc": "세뇨리따",
+    "Abili_ID_1": 2016,
+    "Abili_ID_2": 1016,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 199,
+    "Basic_Val": 60000,
+    "Abili_Val": 0,
+    "Prefix_String": 11781,
+    "desc": "세뇨리따",
+    "Abili_ID_1": 2018,
+    "Abili_ID_2": 1018,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 200,
+    "Basic_Val": 70000,
+    "Abili_Val": 0,
+    "Prefix_String": 11781,
+    "desc": "세뇨리따",
+    "Abili_ID_1": 2020,
+    "Abili_ID_2": 1020,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 201,
+    "Basic_Val": 300,
+    "Abili_Val": 0,
+    "Prefix_String": 11779,
+    "desc": "무카",
+    "Abili_ID_1": 14002,
+    "Abili_ID_2": 20002,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 202,
+    "Basic_Val": 2000,
+    "Abili_Val": 0,
+    "Prefix_String": 11779,
+    "desc": "무카",
+    "Abili_ID_1": 14004,
+    "Abili_ID_2": 20004,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 203,
+    "Basic_Val": 4000,
+    "Abili_Val": 0,
+    "Prefix_String": 11780,
+    "desc": "아미고",
+    "Abili_ID_1": 14006,
+    "Abili_ID_2": 20006,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 204,
+    "Basic_Val": 10000,
+    "Abili_Val": 0,
+    "Prefix_String": 11780,
+    "desc": "아미고",
+    "Abili_ID_1": 14008,
+    "Abili_ID_2": 20008,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 205,
+    "Basic_Val": 20000,
+    "Abili_Val": 0,
+    "Prefix_String": 11781,
+    "desc": "세뇨리따",
+    "Abili_ID_1": 14010,
+    "Abili_ID_2": 20010,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 206,
+    "Basic_Val": 30000,
+    "Abili_Val": 0,
+    "Prefix_String": 11781,
+    "desc": "세뇨리따",
+    "Abili_ID_1": 14012,
+    "Abili_ID_2": 20012,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 207,
+    "Basic_Val": 40000,
+    "Abili_Val": 0,
+    "Prefix_String": 11781,
+    "desc": "세뇨리따",
+    "Abili_ID_1": 14014,
+    "Abili_ID_2": 20014,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 208,
+    "Basic_Val": 50000,
+    "Abili_Val": 0,
+    "Prefix_String": 11781,
+    "desc": "세뇨리따",
+    "Abili_ID_1": 14016,
+    "Abili_ID_2": 20016,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 209,
+    "Basic_Val": 60000,
+    "Abili_Val": 0,
+    "Prefix_String": 11781,
+    "desc": "세뇨리따",
+    "Abili_ID_1": 14018,
+    "Abili_ID_2": 20018,
+    "Abili_ID_3": 0
+  },
+  {
+    "Index": 210,
+    "Basic_Val": 70000,
+    "Abili_Val": 0,
+    "Prefix_String": 11781,
+    "desc": "세뇨리따",
+    "Abili_ID_1": 14020,
+    "Abili_ID_2": 20020,
+    "Abili_ID_3": 0
+  }
+]

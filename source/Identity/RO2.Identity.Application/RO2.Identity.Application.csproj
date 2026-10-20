@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- §7 rule #2: Application -> own Domain + BuildingBlocks.* (here .Bus for IEventBus /
+         IIntegrationEvent). The cross-service contracts will move to RO2.Contracts.IntegrationEvents
+         in a later step; for this additive carve they live in this Application project. -->
+    <ProjectReference Include="..\RO2.Identity.Domain\RO2.Identity.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks.Bus\RO2.BuildingBlocks.Bus.csproj" />
+  </ItemGroup>
+
+</Project>

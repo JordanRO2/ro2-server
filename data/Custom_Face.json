@@ -1,0 +1,233 @@
+[
+  {
+    "ID": 1,
+    "RaceID": 1,
+    "ItemInfoID": 50000101,
+    "Texture": "UI/Texture/Intro_Common.tga",
+    "U1": 8,
+    "V1": 861,
+    "U2": 60,
+    "V2": 913,
+    "Text": ".\\Item\\PCParts\\Face\\Male\\MALE_Face_01.nif"
+  },
+  {
+    "ID": 2,
+    "RaceID": 1,
+    "ItemInfoID": 50000102,
+    "Texture": "UI/Texture/Intro_Common.tga",
+    "U1": 60,
+    "V1": 861,
+    "U2": 112,
+    "V2": 913,
+    "Text": ".\\Item\\PCParts\\Face\\Male\\MALE_Face_02.nif"
+  },
+  {
+    "ID": 3,
+    "RaceID": 1,
+    "ItemInfoID": 50000103,
+    "Texture": "UI/Texture/Intro_Common.tga",
+    "U1": 112,
+    "V1": 861,
+    "U2": 164,
+    "V2": 913,
+    "Text": ".\\Item\\PCParts\\Face\\Male\\MALE_Face_03.nif"
+  },
+  {
+    "ID": 4,
+    "RaceID": 1,
+    "ItemInfoID": 50000104,
+    "Texture": "UI/Texture/Intro_Common.tga",
+    "U1": 164,
+    "V1": 861,
+    "U2": 216,
+    "V2": 913,
+    "Text": ".\\Item\\PCParts\\Face\\Male\\MALE_Face_04.nif"
+  },
+  {
+    "ID": 5,
+    "RaceID": 1,
+    "ItemInfoID": 50000105,
+    "Texture": "UI/Texture/Intro_Common.tga",
+    "U1": 216,
+    "V1": 861,
+    "U2": 268,
+    "V2": 913,
+    "Text": ".\\Item\\PCParts\\Face\\Male\\MALE_Face_05.nif"
+  },
+  {
+    "ID": 6,
+    "RaceID": 1,
+    "ItemInfoID": 50000106,
+    "Texture": "UI/Texture/Intro_Common.tga",
+    "U1": 268,
+    "V1": 861,
+    "U2": 320,
+    "V2": 913,
+    "Text": ".\\Item\\PCParts\\Face\\Male\\MALE_Face_06.nif"
+  },
+  {
+    "ID": 7,
+    "RaceID": 1,
+    "ItemInfoID": 50000107,
+    "Texture": "UI/Texture/Intro_Common.tga",
+    "U1": 320,
+    "V1": 861,
+    "U2": 372,
+    "V2": 913,
+    "Text": ".\\Item\\PCParts\\Face\\Male\\MALE_Face_07.nif"
+  },
+  {
+    "ID": 8,
+    "RaceID": 1,
+    "ItemInfoID": 50000108,
+    "Texture": "UI/Texture/Intro_Common.tga",
+    "U1": 372,
+    "V1": 861,
+    "U2": 424,
+    "V2": 913,
+    "Text": ".\\Item\\PCParts\\Face\\Male\\MALE_Face_08.nif"
+  },
+  {
+    "ID": 9,
+    "RaceID": 1,
+    "ItemInfoID": 50000109,
+    "Texture": "UI/Texture/Intro_Common.tga",
+    "U1": 372,
+    "V1": 861,
+    "U2": 424,
+    "V2": 913,
+    "Text": ".\\Item\\PCParts\\Face\\Male\\MALE_Face_09.nif"
+  },
+  {
+    "ID": 10,
+    "RaceID": 2,
+    "ItemInfoID": 50000128,
+    "Texture": "UI/Texture/Intro_Common.tga",
+    "U1": 164,
+    "V1": 810,
+    "U2": 216,
+    "V2": 862,
+    "Text": ".\\Item\\PCParts\\Face\\Male\\Noel_MALE_Face_01.nif"
+  },
+  {
+    "ID": 11,
+    "RaceID": 2,
+    "ItemInfoID": 50000138,
+    "Texture": "UI/Texture/Intro_Common.tga",
+    "U1": 164,
+    "V1": 810,
+    "U2": 216,
+    "V2": 862,
+    "Text": ".\\Item\\PCParts\\Face\\Male\\Noel_MALE_Face_02.nif"
+  },
+  {
+    "ID": 12,
+    "RaceID": 2,
+    "ItemInfoID": 50000139,
+    "Texture": "UI/Texture/Intro_Common.tga",
+    "U1": 164,
+    "V1": 810,
+    "U2": 216,
+    "V2": 862,
+    "Text": ".\\Item\\PCParts\\Face\\Male\\Noel_MALE_Face_03.nif"
+  },
+  {
+    "ID": 13,
+    "RaceID": 2,
+    "ItemInfoID": 50000140,
+    "Texture": "UI/Texture/Intro_Common.tga",
+    "U1": 164,
+    "V1": 810,
+    "U2": 216,
+    "V2": 862,
+    "Text": ".\\Item\\PCParts\\Face\\Male\\Noel_MALE_Face_04.nif"
+  },
+  {
+    "ID": 14,
+    "RaceID": 2,
+    "ItemInfoID": 50000141,
+    "Texture": "UI/Texture/Intro_Common.tga",
+    "U1": 164,
+    "V1": 810,
+    "U2": 216,
+    "V2": 862,
+    "Text": ".\\Item\\PCParts\\Face\\Male\\Noel_MALE_Face_05.nif"
+  },
+  {
+    "ID": 15,
+    "RaceID": 2,
+    "ItemInfoID": 50000142,
+    "Texture": "UI/Texture/Intro_Common.tga",
+    "U1": 164,
+    "V1": 810,
+    "U2": 216,
+    "V2": 862,
+    "Text": ".\\Item\\PCParts\\Face\\Male\\Noel_MALE_Face_06.nif"
+  },
+  {
+    "ID": 16,
+    "RaceID": 2,
+    "ItemInfoID": 50000143,
+    "Texture": "UI/Texture/Intro_Common.tga",
+    "U1": 164,
+    "V1": 810,
+    "U2": 216,
+    "V2": 862,
+    "Text": ".\\Item\\PCParts\\Face\\Male\\Noel_MALE_Face_07.nif"
+  },
+  {
+    "ID": 17,
+    "RaceID": 2,
+    "ItemInfoID": 50000144,
+    "Texture": "UI/Texture/Intro_Common.tga",
+    "U1": 164,
+    "V1": 810,
+    "U2": 216,
+    "V2": 862,
+    "Text": ".\\Item\\PCParts\\Face\\Male\\Noel_MALE_Face_08.nif"
+  },
+  {
+    "ID": 18,
+    "RaceID": 2,
+    "ItemInfoID": 50000145,
+    "Texture": "UI/Texture/Intro_Common.tga",
+    "U1": 164,
+    "V1": 810,
+    "U2": 216,
+    "V2": 862,
+    "Text": ".\\Item\\PCParts\\Face\\Male\\Noel_MALE_Face_09.nif"
+  },
+  {
+    "ID": 19,
+    "RaceID": 2,
+    "ItemInfoID": 50000146,
+    "Texture": "UI/Texture/Intro_Common.tga",
+    "U1": 164,
+    "V1": 810,
+    "U2": 216,
+    "V2": 862,
+    "Text": ".\\Item\\PCParts\\Face\\Male\\Noel_MALE_Face_10.nif"
+  },
+  {
+    "ID": 20,
+    "RaceID": 2,
+    "ItemInfoID": 50000147,
+    "Texture": "UI/Texture/Intro_Common.tga",
+    "U1": 164,
+    "V1": 810,
+    "U2": 216,
+    "V2": 862,
+    "Text": ".\\Item\\PCParts\\Face\\Male\\Noel_MALE_Face_11.nif"
+  },
+  {
+    "ID": 21,
+    "RaceID": 2,
+    "ItemInfoID": 50000148,
+    "Texture": "UI/Texture/Intro_Common.tga",
+    "U1": 164,
+    "V1": 810,
+    "U2": 216,
+    "V2": 862,
+    "Text": ".\\Item\\PCParts\\Face\\Male\\Noel_MALE_Face_12.nif"
+  }
+]

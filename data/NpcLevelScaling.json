@@ -1,0 +1,452 @@
+[
+  {
+    "Level": 1,
+    "Base_HP": 212,
+    "Base_ATK": 13,
+    "Base_MATK": 11,
+    "Base_DEF": 6,
+    "Base_MDEF": 4,
+    "Base_EXP": 10
+  },
+  {
+    "Level": 2,
+    "Base_HP": 251,
+    "Base_ATK": 17,
+    "Base_MATK": 14,
+    "Base_DEF": 8,
+    "Base_MDEF": 5,
+    "Base_EXP": 20
+  },
+  {
+    "Level": 3,
+    "Base_HP": 290,
+    "Base_ATK": 20,
+    "Base_MATK": 17,
+    "Base_DEF": 9,
+    "Base_MDEF": 6,
+    "Base_EXP": 30
+  },
+  {
+    "Level": 4,
+    "Base_HP": 329,
+    "Base_ATK": 24,
+    "Base_MATK": 20,
+    "Base_DEF": 11,
+    "Base_MDEF": 7,
+    "Base_EXP": 40
+  },
+  {
+    "Level": 5,
+    "Base_HP": 368,
+    "Base_ATK": 27,
+    "Base_MATK": 23,
+    "Base_DEF": 12,
+    "Base_MDEF": 9,
+    "Base_EXP": 50
+  },
+  {
+    "Level": 6,
+    "Base_HP": 407,
+    "Base_ATK": 31,
+    "Base_MATK": 26,
+    "Base_DEF": 14,
+    "Base_MDEF": 10,
+    "Base_EXP": 60
+  },
+  {
+    "Level": 7,
+    "Base_HP": 446,
+    "Base_ATK": 34,
+    "Base_MATK": 29,
+    "Base_DEF": 15,
+    "Base_MDEF": 11,
+    "Base_EXP": 70
+  },
+  {
+    "Level": 8,
+    "Base_HP": 485,
+    "Base_ATK": 38,
+    "Base_MATK": 32,
+    "Base_DEF": 17,
+    "Base_MDEF": 12,
+    "Base_EXP": 80
+  },
+  {
+    "Level": 9,
+    "Base_HP": 524,
+    "Base_ATK": 41,
+    "Base_MATK": 35,
+    "Base_DEF": 18,
+    "Base_MDEF": 13,
+    "Base_EXP": 90
+  },
+  {
+    "Level": 10,
+    "Base_HP": 563,
+    "Base_ATK": 45,
+    "Base_MATK": 38,
+    "Base_DEF": 20,
+    "Base_MDEF": 15,
+    "Base_EXP": 100
+  },
+  {
+    "Level": 11,
+    "Base_HP": 602,
+    "Base_ATK": 48,
+    "Base_MATK": 41,
+    "Base_DEF": 21,
+    "Base_MDEF": 16,
+    "Base_EXP": 110
+  },
+  {
+    "Level": 12,
+    "Base_HP": 641,
+    "Base_ATK": 52,
+    "Base_MATK": 44,
+    "Base_DEF": 23,
+    "Base_MDEF": 17,
+    "Base_EXP": 120
+  },
+  {
+    "Level": 13,
+    "Base_HP": 680,
+    "Base_ATK": 55,
+    "Base_MATK": 47,
+    "Base_DEF": 24,
+    "Base_MDEF": 18,
+    "Base_EXP": 130
+  },
+  {
+    "Level": 14,
+    "Base_HP": 719,
+    "Base_ATK": 59,
+    "Base_MATK": 50,
+    "Base_DEF": 26,
+    "Base_MDEF": 19,
+    "Base_EXP": 140
+  },
+  {
+    "Level": 15,
+    "Base_HP": 758,
+    "Base_ATK": 62,
+    "Base_MATK": 53,
+    "Base_DEF": 27,
+    "Base_MDEF": 21,
+    "Base_EXP": 150
+  },
+  {
+    "Level": 16,
+    "Base_HP": 797,
+    "Base_ATK": 66,
+    "Base_MATK": 56,
+    "Base_DEF": 29,
+    "Base_MDEF": 22,
+    "Base_EXP": 160
+  },
+  {
+    "Level": 17,
+    "Base_HP": 836,
+    "Base_ATK": 69,
+    "Base_MATK": 59,
+    "Base_DEF": 30,
+    "Base_MDEF": 23,
+    "Base_EXP": 170
+  },
+  {
+    "Level": 18,
+    "Base_HP": 876,
+    "Base_ATK": 73,
+    "Base_MATK": 62,
+    "Base_DEF": 32,
+    "Base_MDEF": 24,
+    "Base_EXP": 180
+  },
+  {
+    "Level": 19,
+    "Base_HP": 915,
+    "Base_ATK": 76,
+    "Base_MATK": 65,
+    "Base_DEF": 33,
+    "Base_MDEF": 25,
+    "Base_EXP": 190
+  },
+  {
+    "Level": 20,
+    "Base_HP": 954,
+    "Base_ATK": 80,
+    "Base_MATK": 68,
+    "Base_DEF": 35,
+    "Base_MDEF": 27,
+    "Base_EXP": 200
+  },
+  {
+    "Level": 21,
+    "Base_HP": 993,
+    "Base_ATK": 83,
+    "Base_MATK": 71,
+    "Base_DEF": 36,
+    "Base_MDEF": 28,
+    "Base_EXP": 210
+  },
+  {
+    "Level": 22,
+    "Base_HP": 1032,
+    "Base_ATK": 87,
+    "Base_MATK": 74,
+    "Base_DEF": 38,
+    "Base_MDEF": 29,
+    "Base_EXP": 220
+  },
+  {
+    "Level": 23,
+    "Base_HP": 1071,
+    "Base_ATK": 90,
+    "Base_MATK": 77,
+    "Base_DEF": 39,
+    "Base_MDEF": 30,
+    "Base_EXP": 230
+  },
+  {
+    "Level": 24,
+    "Base_HP": 1110,
+    "Base_ATK": 94,
+    "Base_MATK": 80,
+    "Base_DEF": 41,
+    "Base_MDEF": 31,
+    "Base_EXP": 240
+  },
+  {
+    "Level": 25,
+    "Base_HP": 1149,
+    "Base_ATK": 97,
+    "Base_MATK": 83,
+    "Base_DEF": 42,
+    "Base_MDEF": 33,
+    "Base_EXP": 250
+  },
+  {
+    "Level": 26,
+    "Base_HP": 1188,
+    "Base_ATK": 101,
+    "Base_MATK": 86,
+    "Base_DEF": 44,
+    "Base_MDEF": 34,
+    "Base_EXP": 260
+  },
+  {
+    "Level": 27,
+    "Base_HP": 1227,
+    "Base_ATK": 104,
+    "Base_MATK": 89,
+    "Base_DEF": 45,
+    "Base_MDEF": 35,
+    "Base_EXP": 270
+  },
+  {
+    "Level": 28,
+    "Base_HP": 1266,
+    "Base_ATK": 108,
+    "Base_MATK": 92,
+    "Base_DEF": 47,
+    "Base_MDEF": 36,
+    "Base_EXP": 280
+  },
+  {
+    "Level": 29,
+    "Base_HP": 1305,
+    "Base_ATK": 111,
+    "Base_MATK": 95,
+    "Base_DEF": 48,
+    "Base_MDEF": 37,
+    "Base_EXP": 290
+  },
+  {
+    "Level": 30,
+    "Base_HP": 1344,
+    "Base_ATK": 115,
+    "Base_MATK": 98,
+    "Base_DEF": 50,
+    "Base_MDEF": 39,
+    "Base_EXP": 300
+  },
+  {
+    "Level": 31,
+    "Base_HP": 1383,
+    "Base_ATK": 118,
+    "Base_MATK": 101,
+    "Base_DEF": 51,
+    "Base_MDEF": 40,
+    "Base_EXP": 310
+  },
+  {
+    "Level": 32,
+    "Base_HP": 1422,
+    "Base_ATK": 122,
+    "Base_MATK": 104,
+    "Base_DEF": 53,
+    "Base_MDEF": 41,
+    "Base_EXP": 320
+  },
+  {
+    "Level": 33,
+    "Base_HP": 1461,
+    "Base_ATK": 125,
+    "Base_MATK": 107,
+    "Base_DEF": 54,
+    "Base_MDEF": 42,
+    "Base_EXP": 330
+  },
+  {
+    "Level": 34,
+    "Base_HP": 1500,
+    "Base_ATK": 129,
+    "Base_MATK": 110,
+    "Base_DEF": 56,
+    "Base_MDEF": 43,
+    "Base_EXP": 340
+  },
+  {
+    "Level": 35,
+    "Base_HP": 1539,
+    "Base_ATK": 132,
+    "Base_MATK": 113,
+    "Base_DEF": 57,
+    "Base_MDEF": 45,
+    "Base_EXP": 350
+  },
+  {
+    "Level": 36,
+    "Base_HP": 1578,
+    "Base_ATK": 136,
+    "Base_MATK": 116,
+    "Base_DEF": 59,
+    "Base_MDEF": 46,
+    "Base_EXP": 360
+  },
+  {
+    "Level": 37,
+    "Base_HP": 1617,
+    "Base_ATK": 139,
+    "Base_MATK": 119,
+    "Base_DEF": 60,
+    "Base_MDEF": 47,
+    "Base_EXP": 370
+  },
+  {
+    "Level": 38,
+    "Base_HP": 1656,
+    "Base_ATK": 143,
+    "Base_MATK": 122,
+    "Base_DEF": 62,
+    "Base_MDEF": 48,
+    "Base_EXP": 380
+  },
+  {
+    "Level": 39,
+    "Base_HP": 1695,
+    "Base_ATK": 146,
+    "Base_MATK": 125,
+    "Base_DEF": 63,
+    "Base_MDEF": 49,
+    "Base_EXP": 390
+  },
+  {
+    "Level": 40,
+    "Base_HP": 1734,
+    "Base_ATK": 150,
+    "Base_MATK": 128,
+    "Base_DEF": 65,
+    "Base_MDEF": 51,
+    "Base_EXP": 400
+  },
+  {
+    "Level": 41,
+    "Base_HP": 1773,
+    "Base_ATK": 153,
+    "Base_MATK": 131,
+    "Base_DEF": 66,
+    "Base_MDEF": 52,
+    "Base_EXP": 410
+  },
+  {
+    "Level": 42,
+    "Base_HP": 1812,
+    "Base_ATK": 157,
+    "Base_MATK": 134,
+    "Base_DEF": 68,
+    "Base_MDEF": 53,
+    "Base_EXP": 420
+  },
+  {
+    "Level": 43,
+    "Base_HP": 1851,
+    "Base_ATK": 160,
+    "Base_MATK": 137,
+    "Base_DEF": 69,
+    "Base_MDEF": 54,
+    "Base_EXP": 430
+  },
+  {
+    "Level": 44,
+    "Base_HP": 1890,
+    "Base_ATK": 164,
+    "Base_MATK": 140,
+    "Base_DEF": 71,
+    "Base_MDEF": 55,
+    "Base_EXP": 440
+  },
+  {
+    "Level": 45,
+    "Base_HP": 1929,
+    "Base_ATK": 167,
+    "Base_MATK": 143,
+    "Base_DEF": 72,
+    "Base_MDEF": 57,
+    "Base_EXP": 450
+  },
+  {
+    "Level": 46,
+    "Base_HP": 1968,
+    "Base_ATK": 171,
+    "Base_MATK": 146,
+    "Base_DEF": 74,
+    "Base_MDEF": 58,
+    "Base_EXP": 460
+  },
+  {
+    "Level": 47,
+    "Base_HP": 2007,
+    "Base_ATK": 174,
+    "Base_MATK": 149,
+    "Base_DEF": 75,
+    "Base_MDEF": 59,
+    "Base_EXP": 470
+  },
+  {
+    "Level": 48,
+    "Base_HP": 2046,
+    "Base_ATK": 178,
+    "Base_MATK": 152,
+    "Base_DEF": 77,
+    "Base_MDEF": 60,
+    "Base_EXP": 480
+  },
+  {
+    "Level": 49,
+    "Base_HP": 2085,
+    "Base_ATK": 181,
+    "Base_MATK": 155,
+    "Base_DEF": 78,
+    "Base_MDEF": 61,
+    "Base_EXP": 490
+  },
+  {
+    "Level": 50,
+    "Base_HP": 2125,
+    "Base_ATK": 185,
+    "Base_MATK": 158,
+    "Base_DEF": 80,
+    "Base_MDEF": 63,
+    "Base_EXP": 500
+  }
+]

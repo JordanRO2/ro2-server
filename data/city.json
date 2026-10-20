@@ -1,0 +1,101 @@
+[
+  {
+    "City_Index": 1,
+    "Map_Index": 20,
+    "Revival_X": 1305.0,
+    "Revival_Y": 290.0,
+    "Revival_Z": 53.0,
+    "City_State": 0,
+    "City_Mark": "GM_Bg_Dc_00.tga",
+    "City_Name": "론델",
+    "String_City_Name": 320600
+  },
+  {
+    "City_Index": 2,
+    "Map_Index": 3020,
+    "Revival_X": 141.0,
+    "Revival_Y": 1114.0,
+    "Revival_Z": 96.5,
+    "City_State": 0,
+    "City_Mark": "GM_Bg_Dc_02.tga",
+    "City_Name": "발데스",
+    "String_City_Name": 320601
+  },
+  {
+    "City_Index": 3,
+    "Map_Index": 3040,
+    "Revival_X": 337.0,
+    "Revival_Y": 924.0,
+    "Revival_Z": 32.0,
+    "City_State": 0,
+    "City_Mark": "GM_Bg_Dc_08.tga",
+    "City_Name": "노바 룩스",
+    "String_City_Name": 320602
+  },
+  {
+    "City_Index": 4,
+    "Map_Index": 30,
+    "Revival_X": 1630.0,
+    "Revival_Y": 1230.0,
+    "Revival_Z": 35.5,
+    "City_State": 0,
+    "City_Mark": "GM_Bg_Dc_05.tga",
+    "City_Name": "알반",
+    "String_City_Name": 320603
+  },
+  {
+    "City_Index": 5,
+    "Map_Index": 50,
+    "Revival_X": 1540.0,
+    "Revival_Y": 560.0,
+    "Revival_Z": 18.0,
+    "City_State": 0,
+    "City_Mark": "GM_Bg_Dc_04.tga",
+    "City_Name": "트리프리",
+    "String_City_Name": 320604
+  },
+  {
+    "City_Index": 6,
+    "Map_Index": 60,
+    "Revival_X": 486.0,
+    "Revival_Y": 1916.0,
+    "Revival_Z": 80.0,
+    "City_State": 0,
+    "City_Mark": "GM_Bg_Dc_01.tga",
+    "City_Name": "코헨",
+    "String_City_Name": 320605
+  },
+  {
+    "City_Index": 7,
+    "Map_Index": 60,
+    "Revival_X": 1706.0,
+    "Revival_Y": 330.0,
+    "Revival_Z": 120.0,
+    "City_State": 0,
+    "City_Mark": "GM_Bg_Dc_03.tga",
+    "City_Name": "플랑시 연구소",
+    "String_City_Name": 320606
+  },
+  {
+    "City_Index": 8,
+    "Map_Index": 70,
+    "Revival_X": 0.0,
+    "Revival_Y": 0.0,
+    "Revival_Z": 0.0,
+    "City_State": 0,
+    "City_Mark": "GM_Bg_Dc_06.tga",
+    "City_Name": "쿠르트",
+    "String_City_Name": 320607
+  },
+  {
+    "City_Index": 9,
+    "Map_Index": 3070,
+    "Revival_X": 0.0,
+    "Revival_Y": 0.0,
+    "Revival_Z": 0.0,
+    "City_State": 0,
+    "City_Mark": "GM_Bg_Dc_07.tga",
+    "City_Name": "자카트",
+    "String_City_Name": 320608
+  }
+]

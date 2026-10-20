@@ -1,0 +1,30 @@
+[
+  {
+    "ItemID": 22300001,
+    "Material_Type": 4
+  },
+  {
+    "ItemID": 22300101,
+    "Material_Type": 1
+  },
+  {
+    "ItemID": 22300201,
+    "Material_Type": 2
+  },
+  {
+    "ItemID": 22300301,
+    "Material_Type": 3
+  },
+  {
+    "ItemID": 22300401,
+    "Material_Type": 1
+  },
+  {
+    "ItemID": 22300501,
+    "Material_Type": 2
+  },
+  {
+    "ItemID": 22300601,
+    "Material_Type": 3
+  }
+]

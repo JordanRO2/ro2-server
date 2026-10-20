@@ -1,0 +1,26 @@
+[
+  {
+    "Index": 1,
+    "Condition1": 10000,
+    "Condition2": 0,
+    "Condition3": 0
+  },
+  {
+    "Index": 2,
+    "Condition1": 30000,
+    "Condition2": 0,
+    "Condition3": 0
+  },
+  {
+    "Index": 3,
+    "Condition1": 100000,
+    "Condition2": 0,
+    "Condition3": 0
+  },
+  {
+    "Index": 4,
+    "Condition1": 300000,
+    "Condition2": 0,
+    "Condition3": 0
+  }
+]

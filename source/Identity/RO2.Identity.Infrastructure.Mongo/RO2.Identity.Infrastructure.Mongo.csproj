@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <!-- MongoDB persistence for the Identity bounded context, sibling of RO2.Identity.Infrastructure.Postgres,
+       behind IAccountRepository. Mirrors the app's RO2.Persistence.Mongo. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Identity.Domain\RO2.Identity.Domain.csproj" />
+    <ProjectReference Include="..\RO2.Identity.Application\RO2.Identity.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+</Project>

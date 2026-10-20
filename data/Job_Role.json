@@ -1,0 +1,107 @@
+[
+  {
+    "Job_ID": 1,
+    "Job_Name": "소드맨",
+    "Tanker": 1,
+    "Healer": 0,
+    "Dealer": 1
+  },
+  {
+    "Job_ID": 2,
+    "Job_Name": "매지션",
+    "Tanker": 0,
+    "Healer": 0,
+    "Dealer": 1
+  },
+  {
+    "Job_ID": 3,
+    "Job_Name": "아쳐",
+    "Tanker": 0,
+    "Healer": 0,
+    "Dealer": 1
+  },
+  {
+    "Job_ID": 4,
+    "Job_Name": "씨프",
+    "Tanker": 0,
+    "Healer": 0,
+    "Dealer": 1
+  },
+  {
+    "Job_ID": 5,
+    "Job_Name": "어콜라이트",
+    "Tanker": 0,
+    "Healer": 1,
+    "Dealer": 1
+  },
+  {
+    "Job_ID": 6,
+    "Job_Name": "워리어",
+    "Tanker": 1,
+    "Healer": 0,
+    "Dealer": 1
+  },
+  {
+    "Job_ID": 7,
+    "Job_Name": "나이트",
+    "Tanker": 1,
+    "Healer": 0,
+    "Dealer": 1
+  },
+  {
+    "Job_ID": 8,
+    "Job_Name": "위저드",
+    "Tanker": 0,
+    "Healer": 0,
+    "Dealer": 1
+  },
+  {
+    "Job_ID": 9,
+    "Job_Name": "엘리멘탈리스트",
+    "Tanker": 0,
+    "Healer": 1,
+    "Dealer": 1
+  },
+  {
+    "Job_ID": 10,
+    "Job_Name": "레인저",
+    "Tanker": 0,
+    "Healer": 0,
+    "Dealer": 1
+  },
+  {
+    "Job_ID": 11,
+    "Job_Name": "비스트마스터",
+    "Tanker": 1,
+    "Healer": 0,
+    "Dealer": 1
+  },
+  {
+    "Job_ID": 12,
+    "Job_Name": "어쌔신",
+    "Tanker": 0,
+    "Healer": 0,
+    "Dealer": 1
+  },
+  {
+    "Job_ID": 13,
+    "Job_Name": "로그",
+    "Tanker": 0,
+    "Healer": 0,
+    "Dealer": 1
+  },
+  {
+    "Job_ID": 14,
+    "Job_Name": "프리스트",
+    "Tanker": 0,
+    "Healer": 1,
+    "Dealer": 1
+  },
+  {
+    "Job_ID": 15,
+    "Job_Name": "몽크",
+    "Tanker": 1,
+    "Healer": 0,
+    "Dealer": 1
+  }
+]

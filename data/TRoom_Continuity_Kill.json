@@ -1,0 +1,44 @@
+[
+  {
+    "Continuity_Kill": 1,
+    "message_ID": "NULL",
+    "SOUND_ID": 0,
+    "Bonus_Item": 22220018,
+    "Bonus_Item_val": 1
+  },
+  {
+    "Continuity_Kill": 2,
+    "message_ID": "학살중입니다",
+    "SOUND_ID": 727,
+    "Bonus_Item": 22220018,
+    "Bonus_Item_val": 3
+  },
+  {
+    "Continuity_Kill": 3,
+    "message_ID": "미쳐 날뛰고 있습니다",
+    "SOUND_ID": 728,
+    "Bonus_Item": 22220018,
+    "Bonus_Item_val": 5
+  },
+  {
+    "Continuity_Kill": 4,
+    "message_ID": "도저히 막을 수 없습니다",
+    "SOUND_ID": 729,
+    "Bonus_Item": 22220018,
+    "Bonus_Item_val": 7
+  },
+  {
+    "Continuity_Kill": 5,
+    "message_ID": "전설적입니다",
+    "SOUND_ID": 730,
+    "Bonus_Item": 22220018,
+    "Bonus_Item_val": 9
+  },
+  {
+    "Continuity_Kill": 6,
+    "message_ID": "전설의 화신",
+    "SOUND_ID": 731,
+    "Bonus_Item": 22220018,
+    "Bonus_Item_val": 10
+  }
+]

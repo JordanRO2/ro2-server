@@ -1,0 +1,4378 @@
+[
+  {
+    "ID": 80010660,
+    "PC_ProJob": 12,
+    "Item_ID": 33000608,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010670,
+    "PC_ProJob": 12,
+    "Item_ID": 33000611,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010680,
+    "PC_ProJob": 12,
+    "Item_ID": 33000615,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010690,
+    "PC_ProJob": 12,
+    "Item_ID": 33000619,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010700,
+    "PC_ProJob": 12,
+    "Item_ID": 33000623,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010710,
+    "PC_ProJob": 12,
+    "Item_ID": 33000636,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010720,
+    "PC_ProJob": 0,
+    "Item_ID": 40001060,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010730,
+    "PC_ProJob": 0,
+    "Item_ID": 40001062,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010740,
+    "PC_ProJob": 0,
+    "Item_ID": 40001063,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010750,
+    "PC_ProJob": 0,
+    "Item_ID": 40001064,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010760,
+    "PC_ProJob": 0,
+    "Item_ID": 40001068,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010770,
+    "PC_ProJob": 0,
+    "Item_ID": 40001070,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010780,
+    "PC_ProJob": 0,
+    "Item_ID": 40001072,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010800,
+    "PC_ProJob": 0,
+    "Item_ID": 40001080,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010820,
+    "PC_ProJob": 0,
+    "Item_ID": 40001075,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010830,
+    "PC_ProJob": 0,
+    "Item_ID": 40001079,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010840,
+    "PC_ProJob": 0,
+    "Item_ID": 40001124,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010850,
+    "PC_ProJob": 0,
+    "Item_ID": 40001084,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010870,
+    "PC_ProJob": 0,
+    "Item_ID": 40001085,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010880,
+    "PC_ProJob": 0,
+    "Item_ID": 40001085,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010980,
+    "PC_ProJob": 0,
+    "Item_ID": 60000991,
+    "Min_Num": 1,
+    "Max_Num": 3,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010990,
+    "PC_ProJob": 0,
+    "Item_ID": 60000990,
+    "Min_Num": 1,
+    "Max_Num": 5,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011071,
+    "PC_ProJob": 0,
+    "Item_ID": 40001150,
+    "Min_Num": 3,
+    "Max_Num": 3,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011072,
+    "PC_ProJob": 0,
+    "Item_ID": 40001155,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011073,
+    "PC_ProJob": 0,
+    "Item_ID": 40001152,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011074,
+    "PC_ProJob": 0,
+    "Item_ID": 40001160,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011075,
+    "PC_ProJob": 0,
+    "Item_ID": 40001154,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011080,
+    "PC_ProJob": 0,
+    "Item_ID": 40001147,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011100,
+    "PC_ProJob": 0,
+    "Item_ID": 40001162,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011250,
+    "PC_ProJob": 0,
+    "Item_ID": 40001185,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011270,
+    "PC_ProJob": 0,
+    "Item_ID": 40001186,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011600,
+    "PC_ProJob": 0,
+    "Item_ID": 60000887,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011700,
+    "PC_ProJob": 0,
+    "Item_ID": 60000888,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011730,
+    "PC_ProJob": 0,
+    "Item_ID": 40001100,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011740,
+    "PC_ProJob": 0,
+    "Item_ID": 40001102,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011750,
+    "PC_ProJob": 0,
+    "Item_ID": 40001111,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011760,
+    "PC_ProJob": 0,
+    "Item_ID": 40001112,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011770,
+    "PC_ProJob": 0,
+    "Item_ID": 40001195,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011780,
+    "PC_ProJob": 0,
+    "Item_ID": 40001196,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011800,
+    "PC_ProJob": 0,
+    "Item_ID": 40001197,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011810,
+    "PC_ProJob": 0,
+    "Item_ID": 40001198,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011820,
+    "PC_ProJob": 0,
+    "Item_ID": 40001199,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011830,
+    "PC_ProJob": 0,
+    "Item_ID": 40001202,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011840,
+    "PC_ProJob": 0,
+    "Item_ID": 40001206,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011850,
+    "PC_ProJob": 0,
+    "Item_ID": 40001205,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011860,
+    "PC_ProJob": 0,
+    "Item_ID": 40001204,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011870,
+    "PC_ProJob": 0,
+    "Item_ID": 40001221,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011880,
+    "PC_ProJob": 0,
+    "Item_ID": 40001224,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011950,
+    "PC_ProJob": 0,
+    "Item_ID": 33000762,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011960,
+    "PC_ProJob": 0,
+    "Item_ID": 33000758,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011970,
+    "PC_ProJob": 0,
+    "Item_ID": 33000757,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011980,
+    "PC_ProJob": 0,
+    "Item_ID": 33000751,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80011990,
+    "PC_ProJob": 0,
+    "Item_ID": 33000759,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80012000,
+    "PC_ProJob": 0,
+    "Item_ID": 33000752,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80012010,
+    "PC_ProJob": 0,
+    "Item_ID": 33000760,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80012020,
+    "PC_ProJob": 0,
+    "Item_ID": 33000764,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80012030,
+    "PC_ProJob": 0,
+    "Item_ID": 33000755,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80012040,
+    "PC_ProJob": 0,
+    "Item_ID": 33000756,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80012050,
+    "PC_ProJob": 0,
+    "Item_ID": 33000761,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80012060,
+    "PC_ProJob": 0,
+    "Item_ID": 33000754,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80012070,
+    "PC_ProJob": 0,
+    "Item_ID": 33000753,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80012080,
+    "PC_ProJob": 0,
+    "Item_ID": 33000763,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80012090,
+    "PC_ProJob": 0,
+    "Item_ID": 40001247,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80012110,
+    "PC_ProJob": 0,
+    "Item_ID": 40001248,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80012120,
+    "PC_ProJob": 0,
+    "Item_ID": 40001249,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80012130,
+    "PC_ProJob": 0,
+    "Item_ID": 40001252,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80012170,
+    "PC_ProJob": 0,
+    "Item_ID": 40001255,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80012180,
+    "PC_ProJob": 0,
+    "Item_ID": 22500005,
+    "Min_Num": 1,
+    "Max_Num": 3,
+    "Rate": 10000
+  },
+  {
+    "ID": 80013000,
+    "PC_ProJob": 0,
+    "Item_ID": 70006004,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80013010,
+    "PC_ProJob": 0,
+    "Item_ID": 70006002,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80013060,
+    "PC_ProJob": 0,
+    "Item_ID": 70006000,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80013070,
+    "PC_ProJob": 0,
+    "Item_ID": 70006008,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80013090,
+    "PC_ProJob": 0,
+    "Item_ID": 22500007,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80013091,
+    "PC_ProJob": 0,
+    "Item_ID": 22500009,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100010,
+    "PC_ProJob": 0,
+    "Item_ID": 40000187,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100030,
+    "PC_ProJob": 0,
+    "Item_ID": 40000199,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100050,
+    "PC_ProJob": 0,
+    "Item_ID": 40000188,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100060,
+    "PC_ProJob": 0,
+    "Item_ID": 40000536,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100070,
+    "PC_ProJob": 0,
+    "Item_ID": 40000266,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100120,
+    "PC_ProJob": 0,
+    "Item_ID": 40000208,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100130,
+    "PC_ProJob": 0,
+    "Item_ID": 40000215,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100140,
+    "PC_ProJob": 0,
+    "Item_ID": 40000877,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100150,
+    "PC_ProJob": 0,
+    "Item_ID": 40000220,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100160,
+    "PC_ProJob": 0,
+    "Item_ID": 40000226,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100170,
+    "PC_ProJob": 0,
+    "Item_ID": 40000231,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100180,
+    "PC_ProJob": 0,
+    "Item_ID": 40000049,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100190,
+    "PC_ProJob": 0,
+    "Item_ID": 40000063,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100200,
+    "PC_ProJob": 0,
+    "Item_ID": 40000064,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100210,
+    "PC_ProJob": 0,
+    "Item_ID": 40000075,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100220,
+    "PC_ProJob": 0,
+    "Item_ID": 40000060,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100230,
+    "PC_ProJob": 0,
+    "Item_ID": 40000088,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100240,
+    "PC_ProJob": 0,
+    "Item_ID": 40000089,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100250,
+    "PC_ProJob": 0,
+    "Item_ID": 40000290,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100260,
+    "PC_ProJob": 0,
+    "Item_ID": 40000291,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100270,
+    "PC_ProJob": 0,
+    "Item_ID": 40000090,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100310,
+    "PC_ProJob": 0,
+    "Item_ID": 40000313,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100320,
+    "PC_ProJob": 0,
+    "Item_ID": 40000314,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100330,
+    "PC_ProJob": 0,
+    "Item_ID": 40000402,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100340,
+    "PC_ProJob": 0,
+    "Item_ID": 40000321,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100350,
+    "PC_ProJob": 0,
+    "Item_ID": 40000405,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100360,
+    "PC_ProJob": 0,
+    "Item_ID": 40000341,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100370,
+    "PC_ProJob": 0,
+    "Item_ID": 40000336,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100400,
+    "PC_ProJob": 0,
+    "Item_ID": 40000350,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100420,
+    "PC_ProJob": 0,
+    "Item_ID": 40000358,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100430,
+    "PC_ProJob": 0,
+    "Item_ID": 40000365,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100490,
+    "PC_ProJob": 0,
+    "Item_ID": 40000380,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100500,
+    "PC_ProJob": 0,
+    "Item_ID": 40000359,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100510,
+    "PC_ProJob": 0,
+    "Item_ID": 40000406,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100520,
+    "PC_ProJob": 0,
+    "Item_ID": 40000412,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100530,
+    "PC_ProJob": 0,
+    "Item_ID": 40000413,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100540,
+    "PC_ProJob": 0,
+    "Item_ID": 40000414,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100550,
+    "PC_ProJob": 0,
+    "Item_ID": 40000429,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100560,
+    "PC_ProJob": 0,
+    "Item_ID": 40000432,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100570,
+    "PC_ProJob": 0,
+    "Item_ID": 40000439,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100580,
+    "PC_ProJob": 0,
+    "Item_ID": 40000444,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100590,
+    "PC_ProJob": 0,
+    "Item_ID": 40000445,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100600,
+    "PC_ProJob": 0,
+    "Item_ID": 40000449,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100610,
+    "PC_ProJob": 0,
+    "Item_ID": 40000450,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100620,
+    "PC_ProJob": 0,
+    "Item_ID": 40000848,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100630,
+    "PC_ProJob": 0,
+    "Item_ID": 40000459,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100650,
+    "PC_ProJob": 0,
+    "Item_ID": 40000462,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100660,
+    "PC_ProJob": 0,
+    "Item_ID": 40000466,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100680,
+    "PC_ProJob": 0,
+    "Item_ID": 40000531,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100690,
+    "PC_ProJob": 0,
+    "Item_ID": 40000524,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100700,
+    "PC_ProJob": 0,
+    "Item_ID": 40000525,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100730,
+    "PC_ProJob": 0,
+    "Item_ID": 40000519,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100740,
+    "PC_ProJob": 0,
+    "Item_ID": 40000898,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100820,
+    "PC_ProJob": 0,
+    "Item_ID": 21110001,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100830,
+    "PC_ProJob": 0,
+    "Item_ID": 40000556,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100850,
+    "PC_ProJob": 0,
+    "Item_ID": 40000575,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100860,
+    "PC_ProJob": 0,
+    "Item_ID": 40000583,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100870,
+    "PC_ProJob": 0,
+    "Item_ID": 40000632,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100880,
+    "PC_ProJob": 0,
+    "Item_ID": 40000609,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100890,
+    "PC_ProJob": 0,
+    "Item_ID": 40000611,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100900,
+    "PC_ProJob": 0,
+    "Item_ID": 40000679,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100910,
+    "PC_ProJob": 0,
+    "Item_ID": 40000682,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100920,
+    "PC_ProJob": 0,
+    "Item_ID": 40000683,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100930,
+    "PC_ProJob": 0,
+    "Item_ID": 40000684,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100940,
+    "PC_ProJob": 0,
+    "Item_ID": 40000685,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100950,
+    "PC_ProJob": 0,
+    "Item_ID": 40000687,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80100970,
+    "PC_ProJob": 0,
+    "Item_ID": 40000119,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80101000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000832,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80101000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000833,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80101010,
+    "PC_ProJob": 0,
+    "Item_ID": 40000009,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80101020,
+    "PC_ProJob": 0,
+    "Item_ID": 40000009,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80101030,
+    "PC_ProJob": 0,
+    "Item_ID": 40000009,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80101040,
+    "PC_ProJob": 0,
+    "Item_ID": 40000009,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80101050,
+    "PC_ProJob": 0,
+    "Item_ID": 40000009,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80101060,
+    "PC_ProJob": 0,
+    "Item_ID": 40000009,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80101070,
+    "PC_ProJob": 0,
+    "Item_ID": 40000009,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80101080,
+    "PC_ProJob": 0,
+    "Item_ID": 40000009,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80101090,
+    "PC_ProJob": 0,
+    "Item_ID": 40000009,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80101100,
+    "PC_ProJob": 0,
+    "Item_ID": 40000009,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80101110,
+    "PC_ProJob": 0,
+    "Item_ID": 40000009,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80101120,
+    "PC_ProJob": 0,
+    "Item_ID": 40000009,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80101130,
+    "PC_ProJob": 0,
+    "Item_ID": 40000009,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80101140,
+    "PC_ProJob": 0,
+    "Item_ID": 40000009,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80101150,
+    "PC_ProJob": 0,
+    "Item_ID": 40000009,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80101160,
+    "PC_ProJob": 0,
+    "Item_ID": 40000009,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80101180,
+    "PC_ProJob": 0,
+    "Item_ID": 40000009,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80130000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300021,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80140000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300022,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80150000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300023,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80160000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300028,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80160000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400013,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80160000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400014,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80160000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400015,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80160000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400012,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80170000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300029,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80180000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300030,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80180000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400013,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80180000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400014,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80180000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400015,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80180000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400012,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80190000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000824,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80200000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300001,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80200000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400001,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80200000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400002,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80200000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80210000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300002,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80210000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400001,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80210000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400002,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80210000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80220000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80230000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300011,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80230000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400004,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80230000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400005,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80230000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400006,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80230000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80240000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300007,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80240000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400004,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80240000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400005,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80240000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400006,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80240000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80250000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300013,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80250000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400019,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80250000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400020,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80250000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400021,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80250000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400018,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80260000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300015,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80270000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300016,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80280000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300017,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80280000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400022,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80280000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400023,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80280000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400024,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80280000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400021,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80290000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000074,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80310000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000078,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80350000,
+    "PC_ProJob": 0,
+    "Item_ID": 31302003,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80360000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200001,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80360000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200002,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80360000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80361000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200002,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80361000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200001,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80361000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80362000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80362000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200001,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80362000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200002,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80370000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100001,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80370000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100002,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80370000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80371000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100002,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80371000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100001,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80371000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80372000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80372000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100001,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80372000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100002,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80380000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200011,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80380000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200012,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80380000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200013,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80380000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80381000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200012,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80381000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200011,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80381000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200013,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80381000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80382000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200013,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80382000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200011,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80382000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200012,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80382000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80390000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100011,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80390000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100012,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80390000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100013,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80390000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80391000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100012,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80391000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100011,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80391000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100013,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80391000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80392000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100013,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80392000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100011,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80392000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100012,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80392000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80400000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200021,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80400000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200022,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80400000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200023,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80400000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200013,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80401000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200022,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80401000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200021,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80401000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200023,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80401000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200013,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80402000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200023,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80402000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200021,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80402000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200022,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80402000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200013,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80410000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100021,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80410000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100022,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80410000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100023,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80410000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100013,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80411000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100022,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80411000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100021,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80411000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100023,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80411000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100013,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80412000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100023,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80412000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100021,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80412000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100022,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80412000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100013,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80420000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200031,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80420000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200032,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80420000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200033,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80420000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200023,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80421000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200032,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80421000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200031,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80421000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200033,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80421000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200023,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80422000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200033,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80422000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200031,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80422000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200032,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80422000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200023,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80430000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100031,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80430000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100032,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80430000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100033,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80430000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100023,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80431000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100032,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80431000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100031,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80431000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100033,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80431000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100023,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80432000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100033,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80432000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100031,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80432000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100032,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80432000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100023,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80450000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000239,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80460000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000085,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80470000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000087,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80490000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000306,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80500000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000097,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80510000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000228,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80520000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000237,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80530000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000102,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80540000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000249,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80550000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000062,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80560000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000111,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80570000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200041,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80570000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200042,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80570000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200043,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80570000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200033,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80571000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200042,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80571000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200041,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80571000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200043,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80571000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200033,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80572000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200043,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80572000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200041,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80572000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200042,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80572000,
+    "PC_ProJob": 2,
+    "Item_ID": 32200033,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80580000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100041,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80580000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100042,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80580000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100043,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80580000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100033,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80581000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100042,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80581000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100041,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80581000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100043,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80581000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100033,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80582000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100043,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 80582000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100041,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 80582000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100042,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80582000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100033,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 80600000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000291,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80610000,
+    "PC_ProJob": 0,
+    "Item_ID": 36100004,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80630000,
+    "PC_ProJob": 0,
+    "Item_ID": 36200002,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80680000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000009,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80720000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000017,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80740000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000236,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80750000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000237,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80760000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000241,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80770000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000069,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80780000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000242,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80790000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000113,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80800000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000120,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80810000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000123,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80900000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000072,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80950000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000149,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80960000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000152,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80970000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000154,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80980000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000155,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80990000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000156,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 81000000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000162,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 81010000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000163,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 81020000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000165,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 81030000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000167,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 81040000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000168,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 81050000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000105,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 81060000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000170,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 81070000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000172,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 81090000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000173,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 81100000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000174,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 81110000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000175,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 81120000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000176,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 81130000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81140000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300004,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81150000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300005,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81160000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300006,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81160000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400001,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81160000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400002,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 81160000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81170000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300008,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81170000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400019,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81170000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400020,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 81170000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400021,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81170000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400018,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81180000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300009,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81190000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300010,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81200000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300014,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81200000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400004,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81200000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400005,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 81200000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400006,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81200000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81210000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300018,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81220000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300019,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81220000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400007,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81220000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400008,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 81220000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400009,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81220000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400006,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81230000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300020,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81240000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300012,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81240000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400022,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81240000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400023,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 81240000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400024,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81240000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400021,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81250000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300042,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81260000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300024,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81270000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300025,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81270000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400025,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81270000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400026,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 81270000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400027,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81270000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400024,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81280000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300026,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81290000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300027,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81300000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300031,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81310000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300032,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81310000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400013,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81310000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400014,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 81310000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400015,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81310000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400012,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81320000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300033,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81330000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300034,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81340000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300035,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81350000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300036,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81360000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300037,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81360000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400028,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81360000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400029,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 81360000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400030,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81360000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400027,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81370000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300038,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81370000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400028,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81370000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400029,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 81370000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400030,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81370000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400027,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81380000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300039,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81390000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300040,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81400000,
+    "PC_ProJob": 1,
+    "Item_ID": 32300041,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81410000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400001,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81410000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400002,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 81410000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81420000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400004,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81420000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400005,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 81420000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400006,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81420000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81430000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400007,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81430000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400008,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 81430000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400009,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81430000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400006,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81440000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400010,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81440000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400011,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 81440000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400012,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81440000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400009,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81450000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400013,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81450000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400014,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 81450000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400015,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81450000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400012,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81460000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400016,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81460000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400017,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 81460000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400018,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81470000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400019,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81470000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400020,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 81470000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400021,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81470000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400018,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81480000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400022,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81480000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400023,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 81480000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400024,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81480000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400021,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81490000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400025,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81490000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400026,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 81490000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400027,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81490000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400024,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81500000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400028,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81500000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400029,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 81500000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400030,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81500000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400027,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 81510000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400001,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81510000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400002,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 5000
+  },
+  {
+    "ID": 81510000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 2000
+  },
+  {
+    "ID": 81510000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400016,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81510000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400017,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 5000
+  },
+  {
+    "ID": 81510000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400018,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 2000
+  },
+  {
+    "ID": 81520000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400004,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81520000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400005,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 5000
+  },
+  {
+    "ID": 81520000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400006,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 2000
+  },
+  {
+    "ID": 81520000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400019,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81520000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400020,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 5000
+  },
+  {
+    "ID": 81520000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400021,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 2000
+  },
+  {
+    "ID": 81520000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 2000
+  },
+  {
+    "ID": 81520000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400018,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 2000
+  },
+  {
+    "ID": 81530000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400007,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81530000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400008,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 5000
+  },
+  {
+    "ID": 81530000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400009,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 2000
+  },
+  {
+    "ID": 81530000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400022,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81530000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400023,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 5000
+  },
+  {
+    "ID": 81530000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400024,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 2000
+  },
+  {
+    "ID": 81530000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400006,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 2000
+  },
+  {
+    "ID": 81530000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400021,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 2000
+  },
+  {
+    "ID": 81540000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400010,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81540000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400011,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 5000
+  },
+  {
+    "ID": 81540000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400012,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 2000
+  },
+  {
+    "ID": 81540000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400025,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81540000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400026,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 5000
+  },
+  {
+    "ID": 81540000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400027,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 2000
+  },
+  {
+    "ID": 81540000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400009,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 2000
+  },
+  {
+    "ID": 81540000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400024,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 2000
+  },
+  {
+    "ID": 81550000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400013,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81550000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400014,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 5000
+  },
+  {
+    "ID": 81550000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400015,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 2000
+  },
+  {
+    "ID": 81550000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400028,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 81550000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400029,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 5000
+  },
+  {
+    "ID": 81550000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400030,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 2000
+  },
+  {
+    "ID": 81550000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400012,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 2000
+  },
+  {
+    "ID": 81550000,
+    "PC_ProJob": 8,
+    "Item_ID": 32400027,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 2000
+  },
+  {
+    "ID": 81560000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000899,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 81570000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000907,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 81580000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000877,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 81590000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000878,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 81830000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000919,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 81840000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000924,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 81850000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000940,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 81860000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000941,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 81870000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000942,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82020000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000947,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82030000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000948,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82040000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000947,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82070000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100001,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 82070000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100002,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 82070000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 82080000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100002,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 82080000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100001,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 82080000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 82090000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100003,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 10000
+  },
+  {
+    "ID": 82090000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100001,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 7000
+  },
+  {
+    "ID": 82090000,
+    "PC_ProJob": 4,
+    "Item_ID": 32100002,
+    "Min_Num": 1,
+    "Max_Num": 2,
+    "Rate": 3000
+  },
+  {
+    "ID": 82240000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000963,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82260000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000965,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82260000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000976,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82290000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000985,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82290001,
+    "PC_ProJob": 0,
+    "Item_ID": 40000987,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82290002,
+    "PC_ProJob": 0,
+    "Item_ID": 40000986,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82300000,
+    "PC_ProJob": 0,
+    "Item_ID": 22261077,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82310000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000989,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82320000,
+    "PC_ProJob": 0,
+    "Item_ID": 40000990,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82340000,
+    "PC_ProJob": 0,
+    "Item_ID": 40001023,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82340001,
+    "PC_ProJob": 0,
+    "Item_ID": 40001018,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82340002,
+    "PC_ProJob": 0,
+    "Item_ID": 40001019,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82340003,
+    "PC_ProJob": 0,
+    "Item_ID": 40001024,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82340004,
+    "PC_ProJob": 0,
+    "Item_ID": 40001026,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82350000,
+    "PC_ProJob": 0,
+    "Item_ID": 40001027,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82370000,
+    "PC_ProJob": 0,
+    "Item_ID": 40001030,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82460000,
+    "PC_ProJob": 0,
+    "Item_ID": 40001054,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 3000
+  },
+  {
+    "ID": 82470000,
+    "PC_ProJob": 0,
+    "Item_ID": 40001055,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82470000,
+    "PC_ProJob": 0,
+    "Item_ID": 40001034,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82490000,
+    "PC_ProJob": 0,
+    "Item_ID": 40001056,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 82500000,
+    "PC_ProJob": 0,
+    "Item_ID": 40001058,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  },
+  {
+    "ID": 80010860,
+    "PC_ProJob": 0,
+    "Item_ID": 40001116,
+    "Min_Num": 1,
+    "Max_Num": 1,
+    "Rate": 10000
+  }
+]

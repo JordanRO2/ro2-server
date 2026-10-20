@@ -1,0 +1,436 @@
+[
+  {
+    "Action": 1,
+    "ItemIndex": 0,
+    "String_Index": 11711,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 1,
+    "ItemIndex": 0,
+    "String_Index": 11712,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 1,
+    "ItemIndex": 0,
+    "String_Index": 11714,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 1,
+    "ItemIndex": 0,
+    "String_Index": 11839,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 1,
+    "ItemIndex": 0,
+    "String_Index": 11840,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 1,
+    "ItemIndex": 0,
+    "String_Index": 11841,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 1,
+    "ItemIndex": 0,
+    "String_Index": 11842,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 1,
+    "ItemIndex": 0,
+    "String_Index": 11843,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 1,
+    "ItemIndex": 0,
+    "String_Index": 11844,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 1,
+    "ItemIndex": 0,
+    "String_Index": 11845,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 1,
+    "ItemIndex": 0,
+    "String_Index": 11846,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 1,
+    "ItemIndex": 0,
+    "String_Index": 11847,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 1,
+    "ItemIndex": 0,
+    "String_Index": 11848,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 2,
+    "ItemIndex": 0,
+    "String_Index": 11849,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 2,
+    "ItemIndex": 0,
+    "String_Index": 11850,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 2,
+    "ItemIndex": 0,
+    "String_Index": 11851,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 2,
+    "ItemIndex": 0,
+    "String_Index": 11852,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 2,
+    "ItemIndex": 0,
+    "String_Index": 11853,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 2,
+    "ItemIndex": 0,
+    "String_Index": 11867,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 3,
+    "ItemIndex": 0,
+    "String_Index": 11858,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 3,
+    "ItemIndex": 0,
+    "String_Index": 11859,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 3,
+    "ItemIndex": 0,
+    "String_Index": 11860,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 3,
+    "ItemIndex": 0,
+    "String_Index": 11861,
+    "Time": 5,
+    "UpdateCode": "카프라_대화(테스트용)"
+  },
+  {
+    "Action": 3,
+    "ItemIndex": 0,
+    "String_Index": 11862,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 4,
+    "ItemIndex": 0,
+    "String_Index": 16094,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 4,
+    "ItemIndex": 0,
+    "String_Index": 16095,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 4,
+    "ItemIndex": 0,
+    "String_Index": 16096,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 5,
+    "ItemIndex": 0,
+    "String_Index": 16100,
+    "Time": 6,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 5,
+    "ItemIndex": 0,
+    "String_Index": 16101,
+    "Time": 7,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 5,
+    "ItemIndex": 0,
+    "String_Index": 16102,
+    "Time": 8,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 6,
+    "ItemIndex": 0,
+    "String_Index": 11863,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 6,
+    "ItemIndex": 0,
+    "String_Index": 11864,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 6,
+    "ItemIndex": 0,
+    "String_Index": 11865,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 7,
+    "ItemIndex": 0,
+    "String_Index": 16097,
+    "Time": 6,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 7,
+    "ItemIndex": 0,
+    "String_Index": 16098,
+    "Time": 7,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 7,
+    "ItemIndex": 0,
+    "String_Index": 16099,
+    "Time": 8,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 8,
+    "ItemIndex": 0,
+    "String_Index": 16103,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 8,
+    "ItemIndex": 0,
+    "String_Index": 16104,
+    "Time": 6,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 8,
+    "ItemIndex": 0,
+    "String_Index": 16105,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 9,
+    "ItemIndex": 0,
+    "String_Index": 11854,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 9,
+    "ItemIndex": 0,
+    "String_Index": 11855,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 9,
+    "ItemIndex": 0,
+    "String_Index": 11856,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 9,
+    "ItemIndex": 0,
+    "String_Index": 11857,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 10,
+    "ItemIndex": 0,
+    "String_Index": 16106,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 10,
+    "ItemIndex": 0,
+    "String_Index": 16107,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 11,
+    "ItemIndex": 0,
+    "String_Index": 16108,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 11,
+    "ItemIndex": 0,
+    "String_Index": 16109,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 12,
+    "ItemIndex": 0,
+    "String_Index": 11866,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 12,
+    "ItemIndex": 0,
+    "String_Index": 11713,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 12,
+    "ItemIndex": 0,
+    "String_Index": 11872,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 12,
+    "ItemIndex": 0,
+    "String_Index": 11873,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 12,
+    "ItemIndex": 0,
+    "String_Index": 11874,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 12,
+    "ItemIndex": 0,
+    "String_Index": 11875,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 12,
+    "ItemIndex": 0,
+    "String_Index": 11876,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 12,
+    "ItemIndex": 0,
+    "String_Index": 11877,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 13,
+    "ItemIndex": 70000805,
+    "String_Index": 11878,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 13,
+    "ItemIndex": 70000820,
+    "String_Index": 11879,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 13,
+    "ItemIndex": 60000739,
+    "String_Index": 11880,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 14,
+    "ItemIndex": 0,
+    "String_Index": 11868,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 14,
+    "ItemIndex": 0,
+    "String_Index": 11869,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 14,
+    "ItemIndex": 0,
+    "String_Index": 11870,
+    "Time": 5,
+    "UpdateCode": "기본"
+  },
+  {
+    "Action": 15,
+    "ItemIndex": 0,
+    "String_Index": 11871,
+    "Time": 5,
+    "UpdateCode": "기본"
+  }
+]

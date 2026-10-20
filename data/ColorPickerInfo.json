@@ -1,0 +1,578 @@
+[
+  {
+    "Group_ItemID": 70000007,
+    "Select_Num": 3,
+    "ColorPickerGroup_ID": 1,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/LowQuality/%d.bmp"
+  },
+  {
+    "Group_ItemID": 70000008,
+    "Select_Num": 3,
+    "ColorPickerGroup_ID": 2,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/MiddleQuality/%d.bmp"
+  },
+  {
+    "Group_ItemID": 70000009,
+    "Select_Num": 3,
+    "ColorPickerGroup_ID": 0,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/%d.bmp"
+  },
+  {
+    "Group_ItemID": 60000032,
+    "Select_Num": 3,
+    "ColorPickerGroup_ID": 3,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/LowQuality/%d.bmp"
+  },
+  {
+    "Group_ItemID": 60000045,
+    "Select_Num": 3,
+    "ColorPickerGroup_ID": 2,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/MiddleQuality/%d.bmp"
+  },
+  {
+    "Group_ItemID": 60000209,
+    "Select_Num": 3,
+    "ColorPickerGroup_ID": 0,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/%d.bmp"
+  },
+  {
+    "Group_ItemID": 30000278,
+    "Select_Num": 3,
+    "ColorPickerGroup_ID": 2,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/MiddleQuality/%d.bmp"
+  },
+  {
+    "Group_ItemID": 30000279,
+    "Select_Num": 3,
+    "ColorPickerGroup_ID": 0,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/%d.bmp"
+  },
+  {
+    "Group_ItemID": 70000330,
+    "Select_Num": 3,
+    "ColorPickerGroup_ID": 0,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/%d.bmp"
+  },
+  {
+    "Group_ItemID": 70001633,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 4,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/4.bmp"
+  },
+  {
+    "Group_ItemID": 70001634,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 5,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/5.bmp"
+  },
+  {
+    "Group_ItemID": 70001637,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 6,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/6.bmp"
+  },
+  {
+    "Group_ItemID": 70001638,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 7,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/7.bmp"
+  },
+  {
+    "Group_ItemID": 70001639,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 8,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/8.bmp"
+  },
+  {
+    "Group_ItemID": 70001640,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 9,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/9.bmp"
+  },
+  {
+    "Group_ItemID": 70001641,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 10,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/10.bmp"
+  },
+  {
+    "Group_ItemID": 70001642,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 11,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/11.bmp"
+  },
+  {
+    "Group_ItemID": 70001643,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 12,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/12.bmp"
+  },
+  {
+    "Group_ItemID": 50001000,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 13,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/13.bmp"
+  },
+  {
+    "Group_ItemID": 50001001,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 14,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/14.bmp"
+  },
+  {
+    "Group_ItemID": 50001002,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 15,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/15.bmp"
+  },
+  {
+    "Group_ItemID": 50001003,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 16,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/16.bmp"
+  },
+  {
+    "Group_ItemID": 50001004,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 17,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/17.bmp"
+  },
+  {
+    "Group_ItemID": 50001005,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 18,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/18.bmp"
+  },
+  {
+    "Group_ItemID": 50001006,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 19,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/19.bmp"
+  },
+  {
+    "Group_ItemID": 50001007,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 20,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/20.bmp"
+  },
+  {
+    "Group_ItemID": 50001008,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 21,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/21.bmp"
+  },
+  {
+    "Group_ItemID": 50001009,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 22,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/22.bmp"
+  },
+  {
+    "Group_ItemID": 50001010,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 23,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/23.bmp"
+  },
+  {
+    "Group_ItemID": 50001011,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 24,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/24.bmp"
+  },
+  {
+    "Group_ItemID": 50001012,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 25,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/25.bmp"
+  },
+  {
+    "Group_ItemID": 50001013,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 26,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/26.bmp"
+  },
+  {
+    "Group_ItemID": 50001014,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 27,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/27.bmp"
+  },
+  {
+    "Group_ItemID": 50001015,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 28,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/28.bmp"
+  },
+  {
+    "Group_ItemID": 50001016,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 29,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/29.bmp"
+  },
+  {
+    "Group_ItemID": 50001017,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 30,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/30.bmp"
+  },
+  {
+    "Group_ItemID": 50001018,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 31,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/31.bmp"
+  },
+  {
+    "Group_ItemID": 50001019,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 32,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/32.bmp"
+  },
+  {
+    "Group_ItemID": 50001020,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 33,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/33.bmp"
+  },
+  {
+    "Group_ItemID": 50001021,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 34,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/34.bmp"
+  },
+  {
+    "Group_ItemID": 50001022,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 35,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/35.bmp"
+  },
+  {
+    "Group_ItemID": 50001023,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 36,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/36.bmp"
+  },
+  {
+    "Group_ItemID": 50001024,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 37,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/37.bmp"
+  },
+  {
+    "Group_ItemID": 50001025,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 38,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/38.bmp"
+  },
+  {
+    "Group_ItemID": 50001026,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 39,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/39.bmp"
+  },
+  {
+    "Group_ItemID": 50001027,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 40,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/40.bmp"
+  },
+  {
+    "Group_ItemID": 50001028,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 41,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/41.bmp"
+  },
+  {
+    "Group_ItemID": 50001029,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 42,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/42.bmp"
+  },
+  {
+    "Group_ItemID": 50001030,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 43,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/43.bmp"
+  },
+  {
+    "Group_ItemID": 50001031,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 44,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/44.bmp"
+  },
+  {
+    "Group_ItemID": 50001032,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 45,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/45.bmp"
+  },
+  {
+    "Group_ItemID": 50001033,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 46,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/46.bmp"
+  },
+  {
+    "Group_ItemID": 50001034,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 47,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/47.bmp"
+  },
+  {
+    "Group_ItemID": 50001035,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 48,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/48.bmp"
+  },
+  {
+    "Group_ItemID": 50001036,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 49,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/49.bmp"
+  },
+  {
+    "Group_ItemID": 50001037,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 50,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/50.bmp"
+  },
+  {
+    "Group_ItemID": 50001038,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 51,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/51.bmp"
+  },
+  {
+    "Group_ItemID": 50001039,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 52,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/52.bmp"
+  },
+  {
+    "Group_ItemID": 50001040,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 53,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/53.bmp"
+  },
+  {
+    "Group_ItemID": 50001041,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 54,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/54.bmp"
+  },
+  {
+    "Group_ItemID": 50001042,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 55,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/55.bmp"
+  },
+  {
+    "Group_ItemID": 50001043,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 56,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/56.bmp"
+  },
+  {
+    "Group_ItemID": 50001044,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 57,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/57.bmp"
+  },
+  {
+    "Group_ItemID": 50001045,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 58,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/58.bmp"
+  },
+  {
+    "Group_ItemID": 50001046,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 59,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/59.bmp"
+  },
+  {
+    "Group_ItemID": 50001047,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 60,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/60.bmp"
+  },
+  {
+    "Group_ItemID": 50001048,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 61,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/61.bmp"
+  },
+  {
+    "Group_ItemID": 50001049,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 62,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/62.bmp"
+  },
+  {
+    "Group_ItemID": 50001050,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 63,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/63.bmp"
+  },
+  {
+    "Group_ItemID": 50001051,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 64,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/64.bmp"
+  },
+  {
+    "Group_ItemID": 50001052,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 65,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/65.bmp"
+  },
+  {
+    "Group_ItemID": 50001053,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 66,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/66.bmp"
+  },
+  {
+    "Group_ItemID": 50001054,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 67,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/67.bmp"
+  },
+  {
+    "Group_ItemID": 50001055,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 68,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/68.bmp"
+  },
+  {
+    "Group_ItemID": 50001056,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 69,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/69.bmp"
+  },
+  {
+    "Group_ItemID": 50001057,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 70,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/70.bmp"
+  },
+  {
+    "Group_ItemID": 50001058,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 71,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/71.bmp"
+  },
+  {
+    "Group_ItemID": 50001059,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 72,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/72.bmp"
+  },
+  {
+    "Group_ItemID": 50001060,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 73,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/73.bmp"
+  },
+  {
+    "Group_ItemID": 50001061,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 74,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/74.bmp"
+  },
+  {
+    "Group_ItemID": 50001062,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 75,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/75.bmp"
+  },
+  {
+    "Group_ItemID": 50001063,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 76,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/76.bmp"
+  },
+  {
+    "Group_ItemID": 50001064,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 77,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/77.bmp"
+  },
+  {
+    "Group_ItemID": 50001065,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 78,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/78.bmp"
+  },
+  {
+    "Group_ItemID": 50001066,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 79,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/79.bmp"
+  },
+  {
+    "Group_ItemID": 50001067,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 80,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/80.bmp"
+  },
+  {
+    "Group_ItemID": 50001068,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 81,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/81.bmp"
+  },
+  {
+    "Group_ItemID": 70001946,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 4,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/4.bmp"
+  },
+  {
+    "Group_ItemID": 70001947,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 5,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/5.bmp"
+  },
+  {
+    "Group_ItemID": 70001948,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 6,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/6.bmp"
+  },
+  {
+    "Group_ItemID": 70001949,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 7,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/7.bmp"
+  },
+  {
+    "Group_ItemID": 70001950,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 8,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/8.bmp"
+  },
+  {
+    "Group_ItemID": 70001951,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 9,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/9.bmp"
+  },
+  {
+    "Group_ItemID": 70001952,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 10,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/10.bmp"
+  },
+  {
+    "Group_ItemID": 70001953,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 11,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/11.bmp"
+  },
+  {
+    "Group_ItemID": 70001954,
+    "Select_Num": 1,
+    "ColorPickerGroup_ID": 12,
+    "ColorPicker_Name": "UI/Texture/ColorPicker/Premium/12.bmp"
+  }
+]

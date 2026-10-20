@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+    <PackageReference Include="Serilog.Extensions.Hosting" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Game\RO2.Domain\RO2.Domain.csproj" />
+    <ProjectReference Include="..\..\Game\RO2.Application\RO2.Application.csproj" />
+    <ProjectReference Include="..\..\Platform\RO2.Infrastructure\RO2.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Platform\RO2.Persistence.Mongo\RO2.Persistence.Mongo.csproj" />
+    <ProjectReference Include="..\..\Platform\RO2.Network\RO2.Network.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Identity service: Login is now the auth gateway. It dispatches the Identity application commands
+         (Authenticate / Set+VerifySecondPassword) and resolves the Identity Mongo-backed account store.
+         Account auth lives ENTIRELY in the Identity context now; the old RO2.Application IAccountRepository
+         auth path has been removed from Login. -->
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Identity\RO2.Identity.Domain\RO2.Identity.Domain.csproj" />
+    <ProjectReference Include="..\..\Identity\RO2.Identity.Application\RO2.Identity.Application.csproj" />
+    <ProjectReference Include="..\..\Identity\RO2.Identity.Infrastructure\RO2.Identity.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Identity\RO2.Identity.Infrastructure.Mongo\RO2.Identity.Infrastructure.Mongo.csproj" />
+    <ProjectReference Include="..\..\Identity\RO2.Identity.Infrastructure.Postgres\RO2.Identity.Infrastructure.Postgres.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks.Bus\RO2.BuildingBlocks.Bus.csproj" />
+  </ItemGroup>
+
+</Project>

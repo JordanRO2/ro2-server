@@ -1,0 +1,22 @@
+[
+  {
+    "ID": 1,
+    "ProTypeName": "요리",
+    "String_ProType": 7606
+  },
+  {
+    "ID": 2,
+    "ProTypeName": "연금술",
+    "String_ProType": 7607
+  },
+  {
+    "ID": 3,
+    "ProTypeName": "대장기술",
+    "String_ProType": 7608
+  },
+  {
+    "ID": 4,
+    "ProTypeName": "세공술",
+    "String_ProType": 7609
+  }
+]

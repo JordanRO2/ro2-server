@@ -1,0 +1,47 @@
+[
+  {
+    "Premium_Effect_Type": 1,
+    "Memo": "경험치",
+    "String_Description": 15201
+  },
+  {
+    "Premium_Effect_Type": 2,
+    "Memo": "전문직업 경험치",
+    "String_Description": 15202
+  },
+  {
+    "Premium_Effect_Type": 3,
+    "Memo": "타이틀 효과",
+    "String_Description": 15203
+  },
+  {
+    "Premium_Effect_Type": 4,
+    "Memo": "DailyGift",
+    "String_Description": 15204
+  },
+  {
+    "Premium_Effect_Type": 5,
+    "Memo": "제자리 부활(골드)",
+    "String_Description": 15205
+  },
+  {
+    "Premium_Effect_Type": 6,
+    "Memo": "버프",
+    "String_Description": 15206
+  },
+  {
+    "Premium_Effect_Type": 7,
+    "Memo": "시간 제한 버프",
+    "String_Description": 15207
+  },
+  {
+    "Premium_Effect_Type": 8,
+    "Memo": "시스템 메일 발송",
+    "String_Description": 15208
+  },
+  {
+    "Premium_Effect_Type": 9,
+    "Memo": "제자리 부활(실버)",
+    "String_Description": 15209
+  }
+]

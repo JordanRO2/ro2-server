@@ -1,0 +1,92 @@
+[
+  {
+    "Index": 1,
+    "EffectLua": "eff_jobchange",
+    "Loop": 0,
+    "Desc": "전직"
+  },
+  {
+    "Index": 2,
+    "EffectLua": "eff_levelup",
+    "Loop": 0,
+    "Desc": "레벨업"
+  },
+  {
+    "Index": 3,
+    "EffectLua": "eff_rebirth",
+    "Loop": 0,
+    "Desc": "부활"
+  },
+  {
+    "Index": 4,
+    "EffectLua": "eff_teleportstart",
+    "Loop": 0,
+    "Desc": "텔레포트"
+  },
+  {
+    "Index": 5,
+    "EffectLua": "eff_ditem_01_e01",
+    "Loop": 1,
+    "Desc": "아이템드랍(소)"
+  },
+  {
+    "Index": 6,
+    "EffectLua": "eff_quest_ready",
+    "Loop": 1,
+    "Desc": "퀘스트 준비"
+  },
+  {
+    "Index": 7,
+    "EffectLua": "eff_quest_preview",
+    "Loop": 1,
+    "Desc": "퀘스트 레벨3부족"
+  },
+  {
+    "Index": 8,
+    "EffectLua": "eff_quest_progressing",
+    "Loop": 1,
+    "Desc": "퀘스트 진행"
+  },
+  {
+    "Index": 9,
+    "EffectLua": "eff_quest_mission",
+    "Loop": 1,
+    "Desc": "퀘스트 미션 npc"
+  },
+  {
+    "Index": 10,
+    "EffectLua": "eff_quest_reward",
+    "Loop": 1,
+    "Desc": "퀘스트 보상"
+  },
+  {
+    "Index": 11,
+    "EffectLua": "eff_giont_revive",
+    "Loop": 0,
+    "Desc": "빙의수(지온트)시작"
+  },
+  {
+    "Index": 12,
+    "EffectLua": "eff_giont_destruction",
+    "Loop": 0,
+    "Desc": "빙의수(지온트)끝"
+  },
+  {
+    "Index": 13,
+    "EffectLua": "eff_help",
+    "Loop": 1,
+    "Desc": "부활도움요청"
+  },
+  {
+    "Index": 14,
+    "EffectLua": "eff_battle_team_a",
+    "Loop": 0,
+    "Desc": "전장트리거 팀A"
+  },
+  {
+    "Index": 15,
+    "EffectLua": "eff_battle_team_b",
+    "Loop": 0,
+    "Desc": "전장트리거 팀B"
+  }
+]

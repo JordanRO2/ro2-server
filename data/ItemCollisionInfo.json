@@ -1,0 +1,252 @@
+[
+  {
+    "CollisionType_ID": 1,
+    "Col_Head_Top": 25,
+    "Col_Head_Mid": 25,
+    "Col_Head_Bot": 25,
+    "Col_Body_Up": 0,
+    "Col_Hand": 0,
+    "Col_Body_Dn": 0,
+    "Col_Foot": 0
+  },
+  {
+    "CollisionType_ID": 2,
+    "Col_Head_Top": 0,
+    "Col_Head_Mid": 0,
+    "Col_Head_Bot": 0,
+    "Col_Body_Up": 5,
+    "Col_Hand": 0,
+    "Col_Body_Dn": 0,
+    "Col_Foot": 0
+  },
+  {
+    "CollisionType_ID": 3,
+    "Col_Head_Top": 0,
+    "Col_Head_Mid": 0,
+    "Col_Head_Bot": 0,
+    "Col_Body_Up": 0,
+    "Col_Hand": 0,
+    "Col_Body_Dn": 2,
+    "Col_Foot": 0
+  },
+  {
+    "CollisionType_ID": 4,
+    "Col_Head_Top": 0,
+    "Col_Head_Mid": 0,
+    "Col_Head_Bot": 0,
+    "Col_Body_Up": 0,
+    "Col_Hand": 15,
+    "Col_Body_Dn": 0,
+    "Col_Foot": 0
+  },
+  {
+    "CollisionType_ID": 5,
+    "Col_Head_Top": 0,
+    "Col_Head_Mid": 0,
+    "Col_Head_Bot": 0,
+    "Col_Body_Up": 0,
+    "Col_Hand": 0,
+    "Col_Body_Dn": 0,
+    "Col_Foot": 15
+  },
+  {
+    "CollisionType_ID": 6,
+    "Col_Head_Top": 5,
+    "Col_Head_Mid": 0,
+    "Col_Head_Bot": 0,
+    "Col_Body_Up": 0,
+    "Col_Hand": 0,
+    "Col_Body_Dn": 0,
+    "Col_Foot": 0
+  },
+  {
+    "CollisionType_ID": 7,
+    "Col_Head_Top": 0,
+    "Col_Head_Mid": 2,
+    "Col_Head_Bot": 0,
+    "Col_Body_Up": 0,
+    "Col_Hand": 0,
+    "Col_Body_Dn": 0,
+    "Col_Foot": 0
+  },
+  {
+    "CollisionType_ID": 8,
+    "Col_Head_Top": 0,
+    "Col_Head_Mid": 0,
+    "Col_Head_Bot": 2,
+    "Col_Body_Up": 0,
+    "Col_Hand": 0,
+    "Col_Body_Dn": 0,
+    "Col_Foot": 0
+  },
+  {
+    "CollisionType_ID": 9,
+    "Col_Head_Top": 0,
+    "Col_Head_Mid": 0,
+    "Col_Head_Bot": 0,
+    "Col_Body_Up": 15,
+    "Col_Hand": 0,
+    "Col_Body_Dn": 0,
+    "Col_Foot": 0
+  },
+  {
+    "CollisionType_ID": 10,
+    "Col_Head_Top": 0,
+    "Col_Head_Mid": 0,
+    "Col_Head_Bot": 0,
+    "Col_Body_Up": 0,
+    "Col_Hand": 0,
+    "Col_Body_Dn": 5,
+    "Col_Foot": 0
+  },
+  {
+    "CollisionType_ID": 11,
+    "Col_Head_Top": 0,
+    "Col_Head_Mid": 0,
+    "Col_Head_Bot": 0,
+    "Col_Body_Up": 15,
+    "Col_Hand": 0,
+    "Col_Body_Dn": 0,
+    "Col_Foot": 0
+  },
+  {
+    "CollisionType_ID": 12,
+    "Col_Head_Top": 0,
+    "Col_Head_Mid": 0,
+    "Col_Head_Bot": 0,
+    "Col_Body_Up": 5,
+    "Col_Hand": 0,
+    "Col_Body_Dn": 5,
+    "Col_Foot": 0
+  },
+  {
+    "CollisionType_ID": 13,
+    "Col_Head_Top": 0,
+    "Col_Head_Mid": 0,
+    "Col_Head_Bot": 0,
+    "Col_Body_Up": 0,
+    "Col_Hand": 0,
+    "Col_Body_Dn": 2,
+    "Col_Foot": 0
+  },
+  {
+    "CollisionType_ID": 14,
+    "Col_Head_Top": 25,
+    "Col_Head_Mid": 25,
+    "Col_Head_Bot": 25,
+    "Col_Body_Up": 15,
+    "Col_Hand": 25,
+    "Col_Body_Dn": 25,
+    "Col_Foot": 25
+  },
+  {
+    "CollisionType_ID": 15,
+    "Col_Head_Top": 0,
+    "Col_Head_Mid": 15,
+    "Col_Head_Bot": 0,
+    "Col_Body_Up": 0,
+    "Col_Hand": 0,
+    "Col_Body_Dn": 0,
+    "Col_Foot": 0
+  },
+  {
+    "CollisionType_ID": 16,
+    "Col_Head_Top": 0,
+    "Col_Head_Mid": 2,
+    "Col_Head_Bot": 2,
+    "Col_Body_Up": 0,
+    "Col_Hand": 0,
+    "Col_Body_Dn": 0,
+    "Col_Foot": 0
+  },
+  {
+    "CollisionType_ID": 17,
+    "Col_Head_Top": 5,
+    "Col_Head_Mid": 25,
+    "Col_Head_Bot": 25,
+    "Col_Body_Up": 15,
+    "Col_Hand": 15,
+    "Col_Body_Dn": 15,
+    "Col_Foot": 15
+  },
+  {
+    "CollisionType_ID": 18,
+    "Col_Head_Top": 5,
+    "Col_Head_Mid": 25,
+    "Col_Head_Bot": 25,
+    "Col_Body_Up": 15,
+    "Col_Hand": 15,
+    "Col_Body_Dn": 15,
+    "Col_Foot": 15
+  },
+  {
+    "CollisionType_ID": 19,
+    "Col_Head_Top": 5,
+    "Col_Head_Mid": 25,
+    "Col_Head_Bot": 25,
+    "Col_Body_Up": 25,
+    "Col_Hand": 15,
+    "Col_Body_Dn": 25,
+    "Col_Foot": 15
+  },
+  {
+    "CollisionType_ID": 20,
+    "Col_Head_Top": 5,
+    "Col_Head_Mid": 15,
+    "Col_Head_Bot": 25,
+    "Col_Body_Up": 15,
+    "Col_Hand": 15,
+    "Col_Body_Dn": 15,
+    "Col_Foot": 15
+  },
+  {
+    "CollisionType_ID": 21,
+    "Col_Head_Top": 0,
+    "Col_Head_Mid": 15,
+    "Col_Head_Bot": 2,
+    "Col_Body_Up": 0,
+    "Col_Hand": 0,
+    "Col_Body_Dn": 0,
+    "Col_Foot": 0
+  },
+  {
+    "CollisionType_ID": 22,
+    "Col_Head_Top": 5,
+    "Col_Head_Mid": 25,
+    "Col_Head_Bot": 2,
+    "Col_Body_Up": 25,
+    "Col_Hand": 15,
+    "Col_Body_Dn": 25,
+    "Col_Foot": 15
+  },
+  {
+    "CollisionType_ID": 23,
+    "Col_Head_Top": 5,
+    "Col_Head_Mid": 2,
+    "Col_Head_Bot": 25,
+    "Col_Body_Up": 25,
+    "Col_Hand": 15,
+    "Col_Body_Dn": 25,
+    "Col_Foot": 15
+  },
+  {
+    "CollisionType_ID": 24,
+    "Col_Head_Top": 25,
+    "Col_Head_Mid": 15,
+    "Col_Head_Bot": 25,
+    "Col_Body_Up": 25,
+    "Col_Hand": 15,
+    "Col_Body_Dn": 25,
+    "Col_Foot": 15
+  },
+  {
+    "CollisionType_ID": 25,
+    "Col_Head_Top": 15,
+    "Col_Head_Mid": 25,
+    "Col_Head_Bot": 25,
+    "Col_Body_Up": 15,
+    "Col_Hand": 15,
+    "Col_Body_Dn": 15,
+    "Col_Foot": 15
+  }
+]

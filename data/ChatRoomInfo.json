@@ -1,0 +1,27 @@
+[
+  {
+    "Chat_Type": 1,
+    "Chat_Memo": "근거리 채팅방 제목 제한 글자수",
+    "Value": "50,"
+  },
+  {
+    "Chat_Type": 2,
+    "Chat_Memo": "참여 인원 최대 제한수",
+    "Value": "10,20"
+  },
+  {
+    "Chat_Type": 3,
+    "Chat_Memo": "채팅방 비밀번호 입력 가능 제한수",
+    "Value": "4,"
+  },
+  {
+    "Chat_Type": 4,
+    "Chat_Memo": "기본소셜액션",
+    "Value": "59,"
+  },
+  {
+    "Chat_Type": 5,
+    "Chat_Memo": "사설채팅방 이름 글자수",
+    "Value": "10,"
+  }
+]

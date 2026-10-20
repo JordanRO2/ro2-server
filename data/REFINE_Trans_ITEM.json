@@ -1,0 +1,58 @@
+[
+  {
+    "ITEM_ID": 70000889,
+    "DESC": "제련 전승 초기화 이용권 (인게임)",
+    "Succ_Rate": 2000,
+    "DISC_RATE": 0,
+    "Max_Value": 7500,
+    "limit_level": 5
+  },
+  {
+    "ITEM_ID": 60000758,
+    "DESC": "제련 전승 초기화 이용권 (이벤트)",
+    "Succ_Rate": 20000,
+    "DISC_RATE": 10000,
+    "Max_Value": 10000,
+    "limit_level": 25
+  },
+  {
+    "ITEM_ID": 60000801,
+    "DESC": "제련 전승 초기화 이용권 (vip)싱말",
+    "Succ_Rate": 8000,
+    "DISC_RATE": 10000,
+    "Max_Value": 10000,
+    "limit_level": 5
+  },
+  {
+    "ITEM_ID": 60000802,
+    "DESC": "제련 전승 초기화 이용권 (성장상자)",
+    "Succ_Rate": 2000,
+    "DISC_RATE": 0,
+    "Max_Value": 7500,
+    "limit_level": 5
+  },
+  {
+    "ITEM_ID": 70001178,
+    "DESC": "제련 전승 초기화 이용권 (전국가)",
+    "Succ_Rate": 8600,
+    "DISC_RATE": 10000,
+    "Max_Value": 10000,
+    "limit_level": 5
+  },
+  {
+    "ITEM_ID": 70001543,
+    "DESC": "제련 전승 초기화 이용권 (전국가_할인)",
+    "Succ_Rate": 8600,
+    "DISC_RATE": 10000,
+    "Max_Value": 10000,
+    "limit_level": 5
+  },
+  {
+    "ITEM_ID": 22402007,
+    "DESC": "제련 전승 초기화 이용권 (뮤닐교환)",
+    "Succ_Rate": 2000,
+    "DISC_RATE": 0,
+    "Max_Value": 7500,
+    "limit_level": 5
+  }
+]

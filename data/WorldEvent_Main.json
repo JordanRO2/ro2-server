@@ -1,0 +1,122 @@
+[
+  {
+    "World_Event_ID": 122101,
+    "DESC": "포링 바위에게 보석 받치는 단계",
+    "Stage_Level": 1,
+    "Stage_Duration_Time": 0,
+    "Check_Group_ID_1": 112210101,
+    "Check_Group_ID_2": 0,
+    "Event_Group_ID": 12210101,
+    "Return_Stage": 0,
+    "Next_Stage": 2,
+    "NationEnable": 15
+  },
+  {
+    "World_Event_ID": 122101,
+    "DESC": "남남 노인에게 보석 / 버섯을 받치는 단계",
+    "Stage_Level": 2,
+    "Stage_Duration_Time": 10080,
+    "Check_Group_ID_1": 112210102,
+    "Check_Group_ID_2": 212210101,
+    "Event_Group_ID": 12210102,
+    "Return_Stage": 1,
+    "Next_Stage": 3,
+    "NationEnable": 15
+  },
+  {
+    "World_Event_ID": 122101,
+    "DESC": "폭포 토끼에게 버섯 / 꽃을 받치는 단계",
+    "Stage_Level": 3,
+    "Stage_Duration_Time": 10080,
+    "Check_Group_ID_1": 112210103,
+    "Check_Group_ID_2": 212210102,
+    "Event_Group_ID": 12210103,
+    "Return_Stage": 2,
+    "Next_Stage": 4,
+    "NationEnable": 15
+  },
+  {
+    "World_Event_ID": 122101,
+    "DESC": "동굴 입구에게 꽃을 받치는 단계",
+    "Stage_Level": 4,
+    "Stage_Duration_Time": 10080,
+    "Check_Group_ID_1": 112210104,
+    "Check_Group_ID_2": 212210103,
+    "Event_Group_ID": 12210104,
+    "Return_Stage": 3,
+    "Next_Stage": 5,
+    "NationEnable": 15
+  },
+  {
+    "World_Event_ID": 122101,
+    "DESC": "모든 조건이 만족하여 자와이 인던 입구 호출",
+    "Stage_Level": 5,
+    "Stage_Duration_Time": 1380,
+    "Check_Group_ID_1": 0,
+    "Check_Group_ID_2": 0,
+    "Event_Group_ID": 12210105,
+    "Return_Stage": 1,
+    "Next_Stage": 1,
+    "NationEnable": 15
+  },
+  {
+    "World_Event_ID": 110001,
+    "DESC": "산타 0에게 포장지를 받치는 단계",
+    "Stage_Level": 1,
+    "Stage_Duration_Time": 0,
+    "Check_Group_ID_1": 111000101,
+    "Check_Group_ID_2": 0,
+    "Event_Group_ID": 11000101,
+    "Return_Stage": 0,
+    "Next_Stage": 2,
+    "NationEnable": 15
+  },
+  {
+    "World_Event_ID": 110001,
+    "DESC": "산타 1에게 포장지를 받치는 단계",
+    "Stage_Level": 2,
+    "Stage_Duration_Time": 720,
+    "Check_Group_ID_1": 111000102,
+    "Check_Group_ID_2": 0,
+    "Event_Group_ID": 11000102,
+    "Return_Stage": 1,
+    "Next_Stage": 3,
+    "NationEnable": 15
+  },
+  {
+    "World_Event_ID": 110001,
+    "DESC": "산타 2에게 포장지를 받치는 단계",
+    "Stage_Level": 3,
+    "Stage_Duration_Time": 720,
+    "Check_Group_ID_1": 111000103,
+    "Check_Group_ID_2": 0,
+    "Event_Group_ID": 11000103,
+    "Return_Stage": 2,
+    "Next_Stage": 4,
+    "NationEnable": 15
+  },
+  {
+    "World_Event_ID": 110001,
+    "DESC": "산타 3에게 포장지를 받치는 단계",
+    "Stage_Level": 4,
+    "Stage_Duration_Time": 720,
+    "Check_Group_ID_1": 111000104,
+    "Check_Group_ID_2": 0,
+    "Event_Group_ID": 11000104,
+    "Return_Stage": 3,
+    "Next_Stage": 5,
+    "NationEnable": 15
+  },
+  {
+    "World_Event_ID": 110001,
+    "DESC": "산타 4에게 포장지를 받치는 단계",
+    "Stage_Level": 5,
+    "Stage_Duration_Time": 1440,
+    "Check_Group_ID_1": 111000105,
+    "Check_Group_ID_2": 0,
+    "Event_Group_ID": 11000105,
+    "Return_Stage": 4,
+    "Next_Stage": 5,
+    "NationEnable": 15
+  }
+]

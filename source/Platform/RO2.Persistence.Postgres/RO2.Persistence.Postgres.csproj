@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    PostgreSQL persistence provider (Phase 3). A sibling of RO2.Persistence.Mongo behind the same
+    RO2.Application interfaces, selected by DatabaseConfig.Provider = "Postgres" in AddPersistence.
+    Built aggregate-by-aggregate; see docs/architecture/DATA-STORE-ROADMAP.md for the porting order.
+  -->
+  <ItemGroup>
+    <PackageReference Include="Npgsql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Game\RO2.Domain\RO2.Domain.csproj" />
+    <ProjectReference Include="..\..\Game\RO2.Application\RO2.Application.csproj" />
+  </ItemGroup>
+
+</Project>

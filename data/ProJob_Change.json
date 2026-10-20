@@ -1,0 +1,17 @@
+[
+  {
+    "ItemID": 21330007,
+    "Memo": "(전문직업 전환 아이템)_쓰이지않음",
+    "ProJobLevel_And_Exp": 0
+  },
+  {
+    "ItemID": 21330008,
+    "Memo": "(전문직업 전환 일반 상점 아이템)",
+    "ProJobLevel_And_Exp": 0
+  },
+  {
+    "ItemID": 70000019,
+    "Memo": "(전문직업 전환 캐쉬 아이템)",
+    "ProJobLevel_And_Exp": 0
+  }
+]

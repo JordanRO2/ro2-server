@@ -1,0 +1,202 @@
+[
+  {
+    "IndexID": 1,
+    "ItemID": 60000089,
+    "DungeonID": 7
+  },
+  {
+    "IndexID": 2,
+    "ItemID": 60000093,
+    "DungeonID": 10
+  },
+  {
+    "IndexID": 3,
+    "ItemID": 60000094,
+    "DungeonID": 13
+  },
+  {
+    "IndexID": 4,
+    "ItemID": 60000095,
+    "DungeonID": 16
+  },
+  {
+    "IndexID": 5,
+    "ItemID": 60000096,
+    "DungeonID": 19
+  },
+  {
+    "IndexID": 6,
+    "ItemID": 60000097,
+    "DungeonID": 22
+  },
+  {
+    "IndexID": 7,
+    "ItemID": 60000098,
+    "DungeonID": 25
+  },
+  {
+    "IndexID": 8,
+    "ItemID": 60000099,
+    "DungeonID": 28
+  },
+  {
+    "IndexID": 9,
+    "ItemID": 60000100,
+    "DungeonID": 31
+  },
+  {
+    "IndexID": 10,
+    "ItemID": 60000101,
+    "DungeonID": 34
+  },
+  {
+    "IndexID": 11,
+    "ItemID": 60000102,
+    "DungeonID": 36
+  },
+  {
+    "IndexID": 12,
+    "ItemID": 60000106,
+    "DungeonID": 37
+  },
+  {
+    "IndexID": 13,
+    "ItemID": 60000103,
+    "DungeonID": 39
+  },
+  {
+    "IndexID": 14,
+    "ItemID": 60000107,
+    "DungeonID": 40
+  },
+  {
+    "IndexID": 15,
+    "ItemID": 60000104,
+    "DungeonID": 42
+  },
+  {
+    "IndexID": 16,
+    "ItemID": 60000108,
+    "DungeonID": 43
+  },
+  {
+    "IndexID": 17,
+    "ItemID": 60000105,
+    "DungeonID": 45
+  },
+  {
+    "IndexID": 18,
+    "ItemID": 60000109,
+    "DungeonID": 46
+  },
+  {
+    "IndexID": 19,
+    "ItemID": 60000090,
+    "DungeonID": 36
+  },
+  {
+    "IndexID": 20,
+    "ItemID": 60000090,
+    "DungeonID": 39
+  },
+  {
+    "IndexID": 21,
+    "ItemID": 60000122,
+    "DungeonID": 0
+  },
+  {
+    "IndexID": 22,
+    "ItemID": 70000076,
+    "DungeonID": 0
+  },
+  {
+    "IndexID": 23,
+    "ItemID": 70000099,
+    "DungeonID": 7
+  },
+  {
+    "IndexID": 24,
+    "ItemID": 70000100,
+    "DungeonID": 10
+  },
+  {
+    "IndexID": 25,
+    "ItemID": 70000101,
+    "DungeonID": 13
+  },
+  {
+    "IndexID": 26,
+    "ItemID": 70000102,
+    "DungeonID": 16
+  },
+  {
+    "IndexID": 27,
+    "ItemID": 70000103,
+    "DungeonID": 19
+  },
+  {
+    "IndexID": 28,
+    "ItemID": 70000104,
+    "DungeonID": 22
+  },
+  {
+    "IndexID": 29,
+    "ItemID": 70000105,
+    "DungeonID": 25
+  },
+  {
+    "IndexID": 30,
+    "ItemID": 70000106,
+    "DungeonID": 28
+  },
+  {
+    "IndexID": 31,
+    "ItemID": 70000107,
+    "DungeonID": 31
+  },
+  {
+    "IndexID": 32,
+    "ItemID": 70000108,
+    "DungeonID": 34
+  },
+  {
+    "IndexID": 33,
+    "ItemID": 70000109,
+    "DungeonID": 36
+  },
+  {
+    "IndexID": 34,
+    "ItemID": 70000110,
+    "DungeonID": 39
+  },
+  {
+    "IndexID": 35,
+    "ItemID": 70000111,
+    "DungeonID": 42
+  },
+  {
+    "IndexID": 36,
+    "ItemID": 70000112,
+    "DungeonID": 45
+  },
+  {
+    "IndexID": 37,
+    "ItemID": 70000113,
+    "DungeonID": 37
+  },
+  {
+    "IndexID": 38,
+    "ItemID": 70000114,
+    "DungeonID": 40
+  },
+  {
+    "IndexID": 39,
+    "ItemID": 70000115,
+    "DungeonID": 43
+  },
+  {
+    "IndexID": 40,
+    "ItemID": 70000116,
+    "DungeonID": 46
+  }
+]

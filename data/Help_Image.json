@@ -1,0 +1,292 @@
+[
+  {
+    "ID": 1,
+    "HelpString": "경매",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\HelpImage\\Help_Auction01.dds",
+    "UV": "0/0/512/512",
+    "ButtonType": 1,
+    "ButtonCoordinate": "279/456",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 2,
+    "HelpString": "가방",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\HelpImage\\Help_Bag01.dds",
+    "UV": "0/0/512/512",
+    "ButtonType": 1,
+    "ButtonCoordinate": "279/456",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 3,
+    "HelpString": "전투기본",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\HelpImage\\Help_Battle01.dds",
+    "UV": "0/0/512/512",
+    "ButtonType": 1,
+    "ButtonCoordinate": "279/456",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 4,
+    "HelpString": "전투고급",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\HelpImage\\Help_Battle02.dds",
+    "UV": "0/0/512/512",
+    "ButtonType": 1,
+    "ButtonCoordinate": "279/456",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 5,
+    "HelpString": "카드",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\HelpImage\\Help_Card01.dds",
+    "UV": "0/0/512/512",
+    "ButtonType": 1,
+    "ButtonCoordinate": "279/456",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 6,
+    "HelpString": "던전",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\HelpImage\\Help_Dungeon01.dds",
+    "UV": "0/0/512/512",
+    "ButtonType": 1,
+    "ButtonCoordinate": "279/456",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 7,
+    "HelpString": "비행 이동 서비스",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\HelpImage\\Help_Fly01.dds",
+    "UV": "0/0/512/512",
+    "ButtonType": 1,
+    "ButtonCoordinate": "279/456",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 8,
+    "HelpString": "채집",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\HelpImage\\Help_Gather01.dds",
+    "UV": "0/0/512/512",
+    "ButtonType": 1,
+    "ButtonCoordinate": "279/456",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 9,
+    "HelpString": "전직",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\HelpImage\\Help_Job01.dds",
+    "UV": "0/0/512/512",
+    "ButtonType": 1,
+    "ButtonCoordinate": "279/456",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 10,
+    "HelpString": "제조",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\HelpImage\\Help_Make01.dds",
+    "UV": "0/0/512/512",
+    "ButtonType": 1,
+    "ButtonCoordinate": "279/456",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 11,
+    "HelpString": "미니맵",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\HelpImage\\Help_Minimap01.dds",
+    "UV": "0/0/512/512",
+    "ButtonType": 1,
+    "ButtonCoordinate": "279/456",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 12,
+    "HelpString": "이동",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\HelpImage\\Help_Move01.dds",
+    "UV": "0/0/512/512",
+    "ButtonType": 1,
+    "ButtonCoordinate": "279/456",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 13,
+    "HelpString": "퀘스트",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\HelpImage\\Help_Quest01.dds",
+    "UV": "0/0/512/512",
+    "ButtonType": 1,
+    "ButtonCoordinate": "279/456",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 14,
+    "HelpString": "제련분해",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\HelpImage\\Help_Smelt01.dds",
+    "UV": "0/0/512/512",
+    "ButtonType": 1,
+    "ButtonCoordinate": "279/456",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 15,
+    "HelpString": "창고",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\HelpImage\\Help_Storage01.dds",
+    "UV": "0/0/512/512",
+    "ButtonType": 1,
+    "ButtonCoordinate": "279/456",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 16,
+    "HelpString": "월드맵",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\HelpImage\\Help_Worldmap01.dds",
+    "UV": "0/0/512/512",
+    "ButtonType": 1,
+    "ButtonCoordinate": "279/456",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 17,
+    "HelpString": "연구소 습격 사건",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\HelpImage\\Image_Attack01.dds",
+    "UV": "0/0/512/512",
+    "ButtonType": 1,
+    "ButtonCoordinate": "203/443",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 18,
+    "HelpString": "트라우마",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\HelpImage\\Image_Trauma01.dds",
+    "UV": "0/0/512/512",
+    "ButtonType": 1,
+    "ButtonCoordinate": "203/443",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 19,
+    "HelpString": "여신교",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\HelpImage\\Image_Preiya01.dds",
+    "UV": "0/0/512/512",
+    "ButtonType": 1,
+    "ButtonCoordinate": "203/443",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 20,
+    "HelpString": "잡 마스터",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\HelpImage\\Image_Jobmaster01.dds",
+    "UV": "0/0/512/512",
+    "ButtonType": 1,
+    "ButtonCoordinate": "203/443",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 100,
+    "HelpString": "기어바즈",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\Stage\\ArenaBoss_001.dds",
+    "UV": "0/0/468/424",
+    "ButtonType": 1,
+    "ButtonCoordinate": "203/443",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 101,
+    "HelpString": "엔트라이온",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\Stage\\ArenaBoss_002.dds",
+    "UV": "0/0/468/424",
+    "ButtonType": 1,
+    "ButtonCoordinate": "203/443",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 102,
+    "HelpString": "바돈 형제",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\Stage\\ArenaBoss_003.dds",
+    "UV": "0/0/468/424",
+    "ButtonType": 1,
+    "ButtonCoordinate": "203/443",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 103,
+    "HelpString": "제노 스파이더",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\Stage\\ArenaBoss_004.dds",
+    "UV": "0/0/468/424",
+    "ButtonType": 1,
+    "ButtonCoordinate": "203/443",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 104,
+    "HelpString": "자이언트 드릴러",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\Stage\\ArenaBoss_005.dds",
+    "UV": "0/0/468/424",
+    "ButtonType": 1,
+    "ButtonCoordinate": "203/443",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 105,
+    "HelpString": "페르투스",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\Stage\\ArenaBoss_006.dds",
+    "UV": "0/0/468/424",
+    "ButtonType": 1,
+    "ButtonCoordinate": "203/443",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 106,
+    "HelpString": "황혼의 에인헤랴르",
+    "Image_Path": ".\\lang\\%d\\UI\\Texture\\Stage\\ArenaBoss_007.dds",
+    "UV": "0/0/468/424",
+    "ButtonType": 1,
+    "ButtonCoordinate": "203/443",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 21,
+    "HelpString": "퀘스트 시작 아이템",
+    "Image_Path": ".\\UI\\Texture\\HelpImage\\Help_Quest_Startitem01.dds",
+    "UV": "0/0/468/424",
+    "ButtonType": 1,
+    "ButtonCoordinate": "232/372",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "ID": 22,
+    "HelpString": "아이템 루팅",
+    "Image_Path": ".\\UI\\Texture\\HelpImage\\Help_Item_Rooting01.dds",
+    "UV": "0/0/468/424",
+    "ButtonType": 1,
+    "ButtonCoordinate": "232/372",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "Index": 1,
+    "desc": "큐티베어 로브",
+    "Robe_Item_ID": 12711461,
+    "RobeDefault_Color": 0
+  },
+  {
+    "Index": 2,
+    "desc": "고딕 로브",
+    "Robe_Item_ID": 12711462,
+    "RobeDefault_Color": 0
+  },
+  {
+    "Index": 3,
+    "desc": "엘레강스 로브",
+    "Robe_Item_ID": 12711463,
+    "RobeDefault_Color": 0
+  },
+  {
+    "Index": 4,
+    "desc": "엔젤링 로브",
+    "Robe_Item_ID": 12711464,
+    "RobeDefault_Color": 0
+  },
+  {
+    "Index": 5,
+    "desc": "마제스틱 로브",
+    "Robe_Item_ID": 12711465,
+    "RobeDefault_Color": 0
+  }
+]

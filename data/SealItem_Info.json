@@ -1,0 +1,112 @@
+[
+  {
+    "ItemID": 22402012,
+    "Seal_Type": 1,
+    "Desc(기획용)": "불칸의 인장",
+    "Need_Count": 1,
+    "Need_MP": 0,
+    "Need_Gold": 100000,
+    "Seal_Reinforce_ID": 100001,
+    "NationEnable": 255,
+    "UpdateCode": "기본"
+  },
+  {
+    "ItemID": 22402013,
+    "Seal_Type": 1,
+    "Desc(기획용)": "베리엘의 인장",
+    "Need_Count": 1,
+    "Need_MP": 0,
+    "Need_Gold": 100000,
+    "Seal_Reinforce_ID": 100001,
+    "NationEnable": 255,
+    "UpdateCode": "기본"
+  },
+  {
+    "ItemID": 22402014,
+    "Seal_Type": 1,
+    "Desc(기획용)": "호엔하임의 인장",
+    "Need_Count": 1,
+    "Need_MP": 0,
+    "Need_Gold": 100000,
+    "Seal_Reinforce_ID": 100001,
+    "NationEnable": 255,
+    "UpdateCode": "기본"
+  },
+  {
+    "ItemID": 22402015,
+    "Seal_Type": 1,
+    "Desc(기획용)": "데메테르의 인장",
+    "Need_Count": 1,
+    "Need_MP": 0,
+    "Need_Gold": 100000,
+    "Seal_Reinforce_ID": 100001,
+    "NationEnable": 255,
+    "UpdateCode": "기본"
+  },
+  {
+    "ItemID": 22402016,
+    "Seal_Type": 1,
+    "Desc(기획용)": "가디언의 인장",
+    "Need_Count": 1,
+    "Need_MP": 100,
+    "Need_Gold": 500000,
+    "Seal_Reinforce_ID": 100002,
+    "NationEnable": 255,
+    "UpdateCode": "기본"
+  },
+  {
+    "ItemID": 22402032,
+    "Seal_Type": 1,
+    "Desc(기획용)": "불칸의 인장 (Cheny)",
+    "Need_Count": 1,
+    "Need_MP": 0,
+    "Need_Gold": 777,
+    "Seal_Reinforce_ID": 200001,
+    "NationEnable": 255,
+    "UpdateCode": "기본"
+  },
+  {
+    "ItemID": 22402033,
+    "Seal_Type": 1,
+    "Desc(기획용)": "베리엘의 인장_(Cheny)",
+    "Need_Count": 1,
+    "Need_MP": 0,
+    "Need_Gold": 777,
+    "Seal_Reinforce_ID": 200001,
+    "NationEnable": 255,
+    "UpdateCode": "기본"
+  },
+  {
+    "ItemID": 22402034,
+    "Seal_Type": 1,
+    "Desc(기획용)": "호엔하임의 인장 (Cheny)",
+    "Need_Count": 1,
+    "Need_MP": 0,
+    "Need_Gold": 777,
+    "Seal_Reinforce_ID": 200001,
+    "NationEnable": 255,
+    "UpdateCode": "기본"
+  },
+  {
+    "ItemID": 22402035,
+    "Seal_Type": 1,
+    "Desc(기획용)": "데메테르의 인장 (Cheny)",
+    "Need_Count": 1,
+    "Need_MP": 0,
+    "Need_Gold": 777,
+    "Seal_Reinforce_ID": 200001,
+    "NationEnable": 255,
+    "UpdateCode": "기본"
+  },
+  {
+    "ItemID": 22402036,
+    "Seal_Type": 1,
+    "Desc(기획용)": "가디언의 인장 (Cheny)",
+    "Need_Count": 1,
+    "Need_MP": 7,
+    "Need_Gold": 77,
+    "Seal_Reinforce_ID": 200002,
+    "NationEnable": 255,
+    "UpdateCode": "기본"
+  }
+]

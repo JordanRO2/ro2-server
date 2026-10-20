@@ -1,0 +1,6095 @@
+[
+  {
+    "NPC_ID": 11110000,
+    "Name_description": "카프라 로시나",
+    "Name": 2011110000,
+    "Icon_Number": 13,
+    "Chamgo": "경매 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_경매장"
+  },
+  {
+    "NPC_ID": 21810000,
+    "Name_description": "카프라 르메인",
+    "Name": 2021810000,
+    "Icon_Number": 13,
+    "Chamgo": "경매 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_경매장"
+  },
+  {
+    "NPC_ID": 21820000,
+    "Name_description": "카프라 휀가드너",
+    "Name": 2021820000,
+    "Icon_Number": 13,
+    "Chamgo": "경매 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_경매장"
+  },
+  {
+    "NPC_ID": 11090000,
+    "Name_description": "카프라 세일린",
+    "Name": 2011090000,
+    "Icon_Number": 3,
+    "Chamgo": "창고 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13060000,
+    "Name_description": "카프라 실비아",
+    "Name": 2013060000,
+    "Icon_Number": 3,
+    "Chamgo": "창고 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13160000,
+    "Name_description": "카프라 블리아",
+    "Name": 2013160000,
+    "Icon_Number": 3,
+    "Chamgo": "창고 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13220000,
+    "Name_description": "카프라 라우니",
+    "Name": 2013220000,
+    "Icon_Number": 3,
+    "Chamgo": "창고 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21500000,
+    "Name_description": "카프라 초콜레타",
+    "Name": 2021500000,
+    "Icon_Number": 3,
+    "Chamgo": "창고 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21510000,
+    "Name_description": "카프라 시에나",
+    "Name": 2021510000,
+    "Icon_Number": 3,
+    "Chamgo": "창고 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21520000,
+    "Name_description": "카프라 라임그린",
+    "Name": 2021520000,
+    "Icon_Number": 3,
+    "Chamgo": "창고 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21530000,
+    "Name_description": "카프라 그리넬로",
+    "Name": 2021530000,
+    "Icon_Number": 3,
+    "Chamgo": "창고 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21540000,
+    "Name_description": "카프라 씨그린",
+    "Name": 2021540000,
+    "Icon_Number": 3,
+    "Chamgo": "창고 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21550000,
+    "Name_description": "카프라 다콜리",
+    "Name": 2021550000,
+    "Icon_Number": 3,
+    "Chamgo": "창고 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21560000,
+    "Name_description": "카프라 골든로드",
+    "Name": 2021560000,
+    "Icon_Number": 3,
+    "Chamgo": "창고 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21570000,
+    "Name_description": "카프라 라운그린",
+    "Name": 2021570000,
+    "Icon_Number": 3,
+    "Chamgo": "창고 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21580000,
+    "Name_description": "카프라 아쿠아마린",
+    "Name": 2021580000,
+    "Icon_Number": 3,
+    "Chamgo": "창고 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21590000,
+    "Name_description": "카프라 테알",
+    "Name": 2021590000,
+    "Icon_Number": 3,
+    "Chamgo": "창고 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21600000,
+    "Name_description": "카프라 티스틸",
+    "Name": 2021600000,
+    "Icon_Number": 3,
+    "Chamgo": "창고 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21610000,
+    "Name_description": "카프라 크림신",
+    "Name": 2021610000,
+    "Icon_Number": 3,
+    "Chamgo": "창고 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21620000,
+    "Name_description": "카프라 퓨시아",
+    "Name": 2021620000,
+    "Icon_Number": 3,
+    "Chamgo": "창고 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21630000,
+    "Name_description": "카프라 인디고",
+    "Name": 2021630000,
+    "Icon_Number": 3,
+    "Chamgo": "창고 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 12110000,
+    "Name_description": "카드 마스터",
+    "Name": 2012110000,
+    "Icon_Number": 16,
+    "Chamgo": "카드 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11010000,
+    "Name_description": "쉐프 피노이",
+    "Name": 2011010000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 쉐프",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11030000,
+    "Name_description": "헤이스",
+    "Name": 2011030000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 알케미스트",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11050000,
+    "Name_description": "블랙스미스 그루파즈",
+    "Name": 2011050000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 블랙스미스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11070000,
+    "Name_description": "메린",
+    "Name": 2011070000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 아티잔",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 12070000,
+    "Name_description": "고든",
+    "Name": 2012070000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 쉐프",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 12080000,
+    "Name_description": "엠블라",
+    "Name": 2012080000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 알케미스트",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 12090000,
+    "Name_description": "망치 소녀 예나",
+    "Name": 2012090000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 블랙스미스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 12100000,
+    "Name_description": "우울한 레이",
+    "Name": 2012100000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 아티잔",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13250000,
+    "Name_description": "제이마",
+    "Name": 2013250000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 쉐프",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13260000,
+    "Name_description": "스바츠타인",
+    "Name": 2013260000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 알케미스트",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13270000,
+    "Name_description": "슈트르",
+    "Name": 2013270000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 블랙스미스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13280000,
+    "Name_description": "도르체",
+    "Name": 2013280000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 아티잔",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13290000,
+    "Name_description": "베나르",
+    "Name": 2013290000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 쉐프",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13300000,
+    "Name_description": "킬바츠",
+    "Name": 2013300000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 알케미스트",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13310000,
+    "Name_description": "브리오",
+    "Name": 2013310000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 블랙스미스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13320000,
+    "Name_description": "라콘",
+    "Name": 2013320000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 아티잔",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13330000,
+    "Name_description": "파머스",
+    "Name": 2013330000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 쉐프",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13340000,
+    "Name_description": "퀴어리",
+    "Name": 2013340000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 알케미스트",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13350000,
+    "Name_description": "폴드란",
+    "Name": 2013350000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 블랙스미스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13360000,
+    "Name_description": "세리아즈",
+    "Name": 2013360000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 아티잔",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13370000,
+    "Name_description": "실마릴",
+    "Name": 2013370000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 쉐프",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13380000,
+    "Name_description": "루비아",
+    "Name": 2013380000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 알케미스트",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13390000,
+    "Name_description": "리셀롯",
+    "Name": 2013390000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 블랙스미스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13400000,
+    "Name_description": "파이미츠",
+    "Name": 2013400000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 아티잔",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21830000,
+    "Name_description": "제이마",
+    "Name": 2021830000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 쉐프",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21840000,
+    "Name_description": "쿠커",
+    "Name": 2021840000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 쉐프",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21850000,
+    "Name_description": "베나르",
+    "Name": 2021850000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 쉐프",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21860000,
+    "Name_description": "파머스",
+    "Name": 2021860000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 쉐프",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21870000,
+    "Name_description": "실마릴",
+    "Name": 2021870000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 쉐프",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21880000,
+    "Name_description": "코코토",
+    "Name": 2021880000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 쉐프",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21890000,
+    "Name_description": "킬바츠",
+    "Name": 2021890000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 알케미스트",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21900000,
+    "Name_description": "스바츠타인",
+    "Name": 2021900000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 알케미스트",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21910000,
+    "Name_description": "퀴어리",
+    "Name": 2021910000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 알케미스트",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21920000,
+    "Name_description": "루비아",
+    "Name": 2021920000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 알케미스트",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21930000,
+    "Name_description": "록타코",
+    "Name": 2021930000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 알케미스트",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21940000,
+    "Name_description": "아일란",
+    "Name": 2021940000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 알케미스트",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21950000,
+    "Name_description": "슈트르",
+    "Name": 2021950000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 블랙스미스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21960000,
+    "Name_description": "브리오",
+    "Name": 2021960000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 블랙스미스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21970000,
+    "Name_description": "폴드란",
+    "Name": 2021970000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 블랙스미스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21980000,
+    "Name_description": "리셀롯",
+    "Name": 2021980000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 블랙스미스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21990000,
+    "Name_description": "로드카",
+    "Name": 2021990000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 블랙스미스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 22000000,
+    "Name_description": "플레토르",
+    "Name": 2022000000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 블랙스미스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 22010000,
+    "Name_description": "도르체",
+    "Name": 2022010000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 아티잔",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 22020000,
+    "Name_description": "라콘",
+    "Name": 2022020000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 아티잔",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 22030000,
+    "Name_description": "세리아즈",
+    "Name": 2022030000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 아티잔",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 22040000,
+    "Name_description": "파이미츠",
+    "Name": 2022040000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 아티잔",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 22050000,
+    "Name_description": "길로르타",
+    "Name": 2022050000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 아티잔",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 22060000,
+    "Name_description": "부르크",
+    "Name": 2022060000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 아티잔",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13240000,
+    "Name_description": "인챈티아",
+    "Name": 2013240000,
+    "Icon_Number": 18,
+    "Chamgo": "제련 분해 전문가",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10010000,
+    "Name_description": "에리카",
+    "Name": 2010010000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10300000,
+    "Name_description": "카프라 세린",
+    "Name": 2010300000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10370000,
+    "Name_description": "카프라 세르나",
+    "Name": 2010370000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10380000,
+    "Name_description": "카프라 말비나",
+    "Name": 2010380000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10390000,
+    "Name_description": "카프라 네리시아",
+    "Name": 2010390000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11150000,
+    "Name_description": "카프라 에시",
+    "Name": 2011150000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11160000,
+    "Name_description": "카프라 세나",
+    "Name": 2011160000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11250000,
+    "Name_description": "카프라 레벤",
+    "Name": 2011250000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13410000,
+    "Name_description": "카프라 니코",
+    "Name": 2013410000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13420000,
+    "Name_description": "카프라 니나",
+    "Name": 2013420000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13430000,
+    "Name_description": "카프라 레니",
+    "Name": 2013430000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13440000,
+    "Name_description": "카프라 리카",
+    "Name": 2013440000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13450000,
+    "Name_description": "카프라 리아",
+    "Name": 2013450000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13460000,
+    "Name_description": "카프라 미나",
+    "Name": 2013460000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13470000,
+    "Name_description": "카프라 사라",
+    "Name": 2013470000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13480000,
+    "Name_description": "카프라 세라",
+    "Name": 2013480000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13490000,
+    "Name_description": "카프라 지나",
+    "Name": 2013490000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13500000,
+    "Name_description": "카프라 리라",
+    "Name": 2013500000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13510000,
+    "Name_description": "카프라 리리",
+    "Name": 2013510000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13520000,
+    "Name_description": "카프라 미샤",
+    "Name": 2013520000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21640000,
+    "Name_description": "카프라 라이셀먼",
+    "Name": 2021640000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21650000,
+    "Name_description": "카프라 로엘",
+    "Name": 2021650000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21660000,
+    "Name_description": "카프라 네이비아",
+    "Name": 2021660000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21670000,
+    "Name_description": "카프라 허니듀",
+    "Name": 2021670000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21680000,
+    "Name_description": "카프라 비스켓",
+    "Name": 2021680000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21690000,
+    "Name_description": "카프라 블랜치",
+    "Name": 2021690000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21700000,
+    "Name_description": "카프라 아몬드",
+    "Name": 2021700000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21710000,
+    "Name_description": "카프라 페루",
+    "Name": 2021710000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21720000,
+    "Name_description": "카프라 실키",
+    "Name": 2021720000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21730000,
+    "Name_description": "카프라 아즐라",
+    "Name": 2021730000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21740000,
+    "Name_description": "카프라 올드레스",
+    "Name": 2021740000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21750000,
+    "Name_description": "카프라 민티",
+    "Name": 2021750000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21760000,
+    "Name_description": "카프라 파파이아",
+    "Name": 2021760000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21770000,
+    "Name_description": "카프라 퍼프",
+    "Name": 2021770000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21780000,
+    "Name_description": "카프라 소프",
+    "Name": 2021780000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21790000,
+    "Name_description": "카프라 오르디스",
+    "Name": 2021790000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21800000,
+    "Name_description": "카프라 프로랄",
+    "Name": 2021800000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10810000,
+    "Name_description": "켐블리",
+    "Name": 2010810000,
+    "Icon_Number": 12,
+    "Chamgo": "길드 관리인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 22080000,
+    "Name_description": "슬로비오",
+    "Name": 2022080000,
+    "Icon_Number": 12,
+    "Chamgo": "길드 관리인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 70010000,
+    "Name_description": "우편함",
+    "Name": 2070010000,
+    "Icon_Number": 10,
+    "Chamgo": "우편함",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10190000,
+    "Name_description": "글레인",
+    "Name": 2010190000,
+    "Icon_Number": 8,
+    "Chamgo": "수리 전문가",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10250000,
+    "Name_description": "밀레인",
+    "Name": 2010250000,
+    "Icon_Number": 8,
+    "Chamgo": "수리 전문가",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10840000,
+    "Name_description": "알렉스",
+    "Name": 2010840000,
+    "Icon_Number": 8,
+    "Chamgo": "수리 전문가",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10960000,
+    "Name_description": "스테아르",
+    "Name": 2010960000,
+    "Icon_Number": 8,
+    "Chamgo": "수리 전문가",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11410000,
+    "Name_description": "마이저",
+    "Name": 2011410000,
+    "Icon_Number": 8,
+    "Chamgo": "수리 전문가",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11480000,
+    "Name_description": "벨로나",
+    "Name": 2011480000,
+    "Icon_Number": 8,
+    "Chamgo": "수리 전문가",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11620000,
+    "Name_description": "페일드",
+    "Name": 2011620000,
+    "Icon_Number": 8,
+    "Chamgo": "수리 전문가",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11700000,
+    "Name_description": "라펠츠",
+    "Name": 2011700000,
+    "Icon_Number": 8,
+    "Chamgo": "수리 전문가",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11860000,
+    "Name_description": "발크란",
+    "Name": 2011860000,
+    "Icon_Number": 8,
+    "Chamgo": "수리 전문가",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10090000,
+    "Name_description": "카프라 밀레니아",
+    "Name": 2010090000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10260000,
+    "Name_description": "카프라 레나",
+    "Name": 2010260000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11120000,
+    "Name_description": "카프라 뷰렛",
+    "Name": 2011120000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11130000,
+    "Name_description": "카프라 베리나",
+    "Name": 2011130000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11140000,
+    "Name_description": "카프라 에블린",
+    "Name": 2011140000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11490000,
+    "Name_description": "블로섬",
+    "Name": 2011490000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11920000,
+    "Name_description": "카프라 포니",
+    "Name": 2011920000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 12160000,
+    "Name_description": "카프라 리노아",
+    "Name": 2012160000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13050000,
+    "Name_description": "카프라 세피아",
+    "Name": 2013050000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13150000,
+    "Name_description": "카프라 세티나",
+    "Name": 2013150000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13210000,
+    "Name_description": "카프라 엘리아",
+    "Name": 2013210000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21360000,
+    "Name_description": "카프라 샤일라",
+    "Name": 2021360000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21370000,
+    "Name_description": "카프라 딤그레이",
+    "Name": 2021370000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21380000,
+    "Name_description": "카프라 스노우",
+    "Name": 2021380000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21390000,
+    "Name_description": "카프라 엘리스블루",
+    "Name": 2021390000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21400000,
+    "Name_description": "카프라 리넨",
+    "Name": 2021400000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21410000,
+    "Name_description": "카프라 미스티로즈",
+    "Name": 2021410000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21420000,
+    "Name_description": "카프라 모카",
+    "Name": 2021420000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21430000,
+    "Name_description": "카프라 아이보리",
+    "Name": 2021430000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21440000,
+    "Name_description": "카프라 뷰리우드",
+    "Name": 2021440000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21450000,
+    "Name_description": "카프라 시안",
+    "Name": 2021450000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21460000,
+    "Name_description": "카프라 스테이블루",
+    "Name": 2021460000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21470000,
+    "Name_description": "카프라 디핑크",
+    "Name": 2021470000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21480000,
+    "Name_description": "카프라 샌디브란",
+    "Name": 2021480000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21490000,
+    "Name_description": "카프라 파이어브릭",
+    "Name": 2021490000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 12020000,
+    "Name_description": "PvP 아레나 경비병",
+    "Name": 2012020000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_아레나"
+  },
+  {
+    "NPC_ID": 12030000,
+    "Name_description": "PvP 아레나 경비병",
+    "Name": 2012030000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_아레나"
+  },
+  {
+    "NPC_ID": 12040000,
+    "Name_description": "아레나 경비병",
+    "Name": 2012040000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_아레나"
+  },
+  {
+    "NPC_ID": 12050000,
+    "Name_description": "아레나 경비병",
+    "Name": 2012050000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_아레나"
+  },
+  {
+    "NPC_ID": 10030000,
+    "Name_description": "접수원 라나",
+    "Name": 2010030000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20860000,
+    "Name_description": "클리프막시",
+    "Name": 2020860000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20870000,
+    "Name_description": "렌드루사",
+    "Name": 2020870000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20880000,
+    "Name_description": "라바티코",
+    "Name": 2020880000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10490000,
+    "Name_description": "피오나",
+    "Name": 2010490000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10980000,
+    "Name_description": "리피온",
+    "Name": 2010980000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11520000,
+    "Name_description": "로센느",
+    "Name": 2011520000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11670000,
+    "Name_description": "레기나",
+    "Name": 2011670000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20890000,
+    "Name_description": "에임로토",
+    "Name": 2020890000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20900000,
+    "Name_description": "레뷰코",
+    "Name": 2020900000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20910000,
+    "Name_description": "리센드",
+    "Name": 2020910000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20920000,
+    "Name_description": "이리코스말",
+    "Name": 2020920000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20930000,
+    "Name_description": "덴게르트",
+    "Name": 2020930000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20940000,
+    "Name_description": "로우하이",
+    "Name": 2020940000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20950000,
+    "Name_description": "니케다스",
+    "Name": 2020950000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20960000,
+    "Name_description": "라이니시",
+    "Name": 2020960000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20970000,
+    "Name_description": "유피엄",
+    "Name": 2020970000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20980000,
+    "Name_description": "포시팃",
+    "Name": 2020980000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20990000,
+    "Name_description": "루테인",
+    "Name": 2020990000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21000000,
+    "Name_description": "지크스탄",
+    "Name": 2021000000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21010000,
+    "Name_description": "포르뮤라",
+    "Name": 2021010000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21020000,
+    "Name_description": "디에타리",
+    "Name": 2021020000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21030000,
+    "Name_description": "서플멘토",
+    "Name": 2021030000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21040000,
+    "Name_description": "세르빙",
+    "Name": 2021040000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21050000,
+    "Name_description": "소이빈",
+    "Name": 2021050000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21060000,
+    "Name_description": "메리골드",
+    "Name": 2021060000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21070000,
+    "Name_description": "델리벨로",
+    "Name": 2021070000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21080000,
+    "Name_description": "토코스포카",
+    "Name": 2021080000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21090000,
+    "Name_description": "제르소프",
+    "Name": 2021090000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21100000,
+    "Name_description": "젤란티",
+    "Name": 2021100000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10040000,
+    "Name_description": "조수 피터",
+    "Name": 2010040000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21110000,
+    "Name_description": "아지프",
+    "Name": 2021110000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21120000,
+    "Name_description": "스일러",
+    "Name": 2021120000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21130000,
+    "Name_description": "레카",
+    "Name": 2021130000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11020000,
+    "Name_description": "베이쿠키",
+    "Name": 2011020000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21140000,
+    "Name_description": "크이테스",
+    "Name": 2021140000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21150000,
+    "Name_description": "티자이",
+    "Name": 2021150000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21160000,
+    "Name_description": "스비프",
+    "Name": 2021160000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21170000,
+    "Name_description": "커트백",
+    "Name": 2021170000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13200000,
+    "Name_description": "라디커",
+    "Name": 2013200000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21180000,
+    "Name_description": "드레셀",
+    "Name": 2021180000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21190000,
+    "Name_description": "마카포네",
+    "Name": 2021190000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21200000,
+    "Name_description": "라르상",
+    "Name": 2021200000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21210000,
+    "Name_description": "스펭골디아",
+    "Name": 2021210000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21220000,
+    "Name_description": "안젤리아",
+    "Name": 2021220000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21230000,
+    "Name_description": "브란젤리아",
+    "Name": 2021230000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21240000,
+    "Name_description": "스위프터",
+    "Name": 2021240000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21250000,
+    "Name_description": "제인게르트",
+    "Name": 2021250000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21260000,
+    "Name_description": "슝커",
+    "Name": 2021260000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21270000,
+    "Name_description": "티페이데프",
+    "Name": 2021270000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21280000,
+    "Name_description": "슈메이라",
+    "Name": 2021280000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21290000,
+    "Name_description": "템플라테",
+    "Name": 2021290000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21300000,
+    "Name_description": "카카오",
+    "Name": 2021300000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21310000,
+    "Name_description": "하트페이퍼",
+    "Name": 2021310000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21320000,
+    "Name_description": "티라케이",
+    "Name": 2021320000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21330000,
+    "Name_description": "폰듀",
+    "Name": 2021330000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21340000,
+    "Name_description": "헨그리드",
+    "Name": 2021340000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 21350000,
+    "Name_description": "이사드",
+    "Name": 2021350000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10180000,
+    "Name_description": "보크",
+    "Name": 2010180000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10550000,
+    "Name_description": "루비",
+    "Name": 2010550000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20610000,
+    "Name_description": "레디스",
+    "Name": 2020610000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20620000,
+    "Name_description": "엘론",
+    "Name": 2020620000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20630000,
+    "Name_description": "포레스",
+    "Name": 2020630000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10750000,
+    "Name_description": "우트",
+    "Name": 2010750000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10820000,
+    "Name_description": "블라잔",
+    "Name": 2010820000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10830000,
+    "Name_description": "주점 주인 발게르",
+    "Name": 2010830000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10940000,
+    "Name_description": "마르게츠",
+    "Name": 2010940000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11400000,
+    "Name_description": "타이워드",
+    "Name": 2011400000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11450000,
+    "Name_description": "프라체",
+    "Name": 2011450000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11610000,
+    "Name_description": "메티",
+    "Name": 2011610000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11690000,
+    "Name_description": "버나드",
+    "Name": 2011690000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11850000,
+    "Name_description": "노이츠",
+    "Name": 2011850000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20640000,
+    "Name_description": "블리스",
+    "Name": 2020640000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20650000,
+    "Name_description": "라디커",
+    "Name": 2020650000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20660000,
+    "Name_description": "세리크",
+    "Name": 2020660000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20670000,
+    "Name_description": "가스타",
+    "Name": 2020670000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 13020000,
+    "Name_description": "에트",
+    "Name": 2013020000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20680000,
+    "Name_description": "나이테",
+    "Name": 2020680000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20690000,
+    "Name_description": "푸스코트",
+    "Name": 2020690000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20700000,
+    "Name_description": "유티즈",
+    "Name": 2020700000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20710000,
+    "Name_description": "시노프",
+    "Name": 2020710000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20720000,
+    "Name_description": "라테른",
+    "Name": 2020720000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20730000,
+    "Name_description": "타르베이",
+    "Name": 2020730000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20740000,
+    "Name_description": "크롤모",
+    "Name": 2020740000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20750000,
+    "Name_description": "페이른크",
+    "Name": 2020750000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20760000,
+    "Name_description": "미르아",
+    "Name": 2020760000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20770000,
+    "Name_description": "루스타파치오",
+    "Name": 2020770000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20780000,
+    "Name_description": "라이드로",
+    "Name": 2020780000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20790000,
+    "Name_description": "베른겔하임",
+    "Name": 2020790000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20800000,
+    "Name_description": "일레인로타",
+    "Name": 2020800000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20810000,
+    "Name_description": "노이베스트",
+    "Name": 2020810000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20820000,
+    "Name_description": "헨저마크",
+    "Name": 2020820000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20830000,
+    "Name_description": "카이르초프",
+    "Name": 2020830000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20840000,
+    "Name_description": "즈베라다",
+    "Name": 2020840000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20850000,
+    "Name_description": "로이테",
+    "Name": 2020850000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20010000,
+    "Name_description": "버스트",
+    "Name": 2020010000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20020000,
+    "Name_description": "타타카",
+    "Name": 2020020000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20030000,
+    "Name_description": "노파우",
+    "Name": 2020030000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20040000,
+    "Name_description": "칼란드",
+    "Name": 2020040000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20050000,
+    "Name_description": "게른스트",
+    "Name": 2020050000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20060000,
+    "Name_description": "라마드",
+    "Name": 2020060000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20070000,
+    "Name_description": "카우다",
+    "Name": 2020070000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20080000,
+    "Name_description": "카브토",
+    "Name": 2020080000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20090000,
+    "Name_description": "크롤로",
+    "Name": 2020090000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20100000,
+    "Name_description": "그라시드",
+    "Name": 2020100000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20110000,
+    "Name_description": "이포미아",
+    "Name": 2020110000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20120000,
+    "Name_description": "프테라",
+    "Name": 2020120000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20130000,
+    "Name_description": "오플리",
+    "Name": 2020130000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20140000,
+    "Name_description": "벤스타인",
+    "Name": 2020140000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20150000,
+    "Name_description": "티어먼",
+    "Name": 2020150000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20160000,
+    "Name_description": "루비니",
+    "Name": 2020160000,
+    "Icon_Number": 6,
+    "Chamgo": "중갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20170000,
+    "Name_description": "하르커스",
+    "Name": 2020170000,
+    "Icon_Number": 6,
+    "Chamgo": "중갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20180000,
+    "Name_description": "코르치",
+    "Name": 2020180000,
+    "Icon_Number": 6,
+    "Chamgo": "중갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20190000,
+    "Name_description": "비고르",
+    "Name": 2020190000,
+    "Icon_Number": 6,
+    "Chamgo": "중갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20200000,
+    "Name_description": "탈랜드",
+    "Name": 2020200000,
+    "Icon_Number": 6,
+    "Chamgo": "중갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20210000,
+    "Name_description": "자르다닐",
+    "Name": 2020210000,
+    "Icon_Number": 6,
+    "Chamgo": "중갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20220000,
+    "Name_description": "샬타르",
+    "Name": 2020220000,
+    "Icon_Number": 6,
+    "Chamgo": "중갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20230000,
+    "Name_description": "튜디오",
+    "Name": 2020230000,
+    "Icon_Number": 6,
+    "Chamgo": "중갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20240000,
+    "Name_description": "아로트",
+    "Name": 2020240000,
+    "Icon_Number": 6,
+    "Chamgo": "중갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20250000,
+    "Name_description": "티누",
+    "Name": 2020250000,
+    "Icon_Number": 6,
+    "Chamgo": "중갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20260000,
+    "Name_description": "올로브",
+    "Name": 2020260000,
+    "Icon_Number": 6,
+    "Chamgo": "중갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20270000,
+    "Name_description": "아카테스",
+    "Name": 2020270000,
+    "Icon_Number": 6,
+    "Chamgo": "중갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20280000,
+    "Name_description": "나브룬",
+    "Name": 2020280000,
+    "Icon_Number": 6,
+    "Chamgo": "중갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20290000,
+    "Name_description": "겔렌스트",
+    "Name": 2020290000,
+    "Icon_Number": 6,
+    "Chamgo": "중갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20300000,
+    "Name_description": "브론듀스",
+    "Name": 2020300000,
+    "Icon_Number": 6,
+    "Chamgo": "중갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10240000,
+    "Name_description": "초급 방어구 상인",
+    "Name": 2010240000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11470000,
+    "Name_description": "탈리",
+    "Name": 2011470000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 11790000,
+    "Name_description": "도이비",
+    "Name": 2011790000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20310000,
+    "Name_description": "론데라이",
+    "Name": 2020310000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20320000,
+    "Name_description": "라파",
+    "Name": 2020320000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20330000,
+    "Name_description": "그렌스타",
+    "Name": 2020330000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20340000,
+    "Name_description": "카산드리아",
+    "Name": 2020340000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20350000,
+    "Name_description": "트랜저스",
+    "Name": 2020350000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20360000,
+    "Name_description": "가르송",
+    "Name": 2020360000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20370000,
+    "Name_description": "프란메이",
+    "Name": 2020370000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20380000,
+    "Name_description": "헤이룬",
+    "Name": 2020380000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20390000,
+    "Name_description": "기나인",
+    "Name": 2020390000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20400000,
+    "Name_description": "넬라핀타",
+    "Name": 2020400000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20410000,
+    "Name_description": "유레타",
+    "Name": 2020410000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20420000,
+    "Name_description": "루드바크",
+    "Name": 2020420000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20430000,
+    "Name_description": "실로엔",
+    "Name": 2020430000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20440000,
+    "Name_description": "베르스트",
+    "Name": 2020440000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20450000,
+    "Name_description": "클로마이",
+    "Name": 2020450000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20460000,
+    "Name_description": "크달리",
+    "Name": 2020460000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20470000,
+    "Name_description": "드롱카",
+    "Name": 2020470000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20480000,
+    "Name_description": "질레쏘",
+    "Name": 2020480000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20490000,
+    "Name_description": "벨란",
+    "Name": 2020490000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20500000,
+    "Name_description": "샤딘",
+    "Name": 2020500000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20510000,
+    "Name_description": "라일리",
+    "Name": 2020510000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20520000,
+    "Name_description": "에트",
+    "Name": 2020520000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20530000,
+    "Name_description": "퍼플리",
+    "Name": 2020530000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20540000,
+    "Name_description": "사라디에",
+    "Name": 2020540000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20550000,
+    "Name_description": "키리엔",
+    "Name": 2020550000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20560000,
+    "Name_description": "첸들러",
+    "Name": 2020560000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20570000,
+    "Name_description": "토린",
+    "Name": 2020570000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20580000,
+    "Name_description": "카사베르",
+    "Name": 2020580000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20590000,
+    "Name_description": "샤를리아",
+    "Name": 2020590000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 20600000,
+    "Name_description": "오들리",
+    "Name": 2020600000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 10780000,
+    "Name_description": "타크시",
+    "Name": 2010780000,
+    "Icon_Number": 7,
+    "Chamgo": "탈것 관리인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 22070000,
+    "Name_description": "바스",
+    "Name": 2022070000,
+    "Icon_Number": 7,
+    "Chamgo": "탈것 관리인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010000,
+    "Name_description": "묘르닐 산맥 동부로",
+    "Name": 2080010000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010010,
+    "Name_description": "묘르닐 산맥 서부로",
+    "Name": 2080010010,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010020,
+    "Name_description": "발키리의 안식처로",
+    "Name": 2080010020,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010030,
+    "Name_description": "묘르닐 산맥 동부로",
+    "Name": 2080010030,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010040,
+    "Name_description": "오만의 바나헤임으로",
+    "Name": 2080010040,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010050,
+    "Name_description": "페이욘 숲으로",
+    "Name": 2080010050,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010060,
+    "Name_description": "2구역으로",
+    "Name": 2080010060,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010070,
+    "Name_description": "1구역으로",
+    "Name": 2080010070,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010080,
+    "Name_description": "3구역으로",
+    "Name": 2080010080,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010090,
+    "Name_description": "2구역으로",
+    "Name": 2080010090,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010100,
+    "Name_description": "지하수로로",
+    "Name": 2080010100,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010110,
+    "Name_description": "묘르닐 산맥 동부로",
+    "Name": 2080010110,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010120,
+    "Name_description": "프론테라 북문으로",
+    "Name": 2080010120,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010130,
+    "Name_description": "묘르닐 산맥 동부로",
+    "Name": 2080010130,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010140,
+    "Name_description": "남부 평원으로",
+    "Name": 2080010140,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010150,
+    "Name_description": "프론테라 남문으로",
+    "Name": 2080010150,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010160,
+    "Name_description": "늑대굴로",
+    "Name": 2080010160,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010170,
+    "Name_description": "남부 평원으로",
+    "Name": 2080010170,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010180,
+    "Name_description": "이즈루드 동굴로",
+    "Name": 2080010180,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010190,
+    "Name_description": "이즈루드 언덕으로",
+    "Name": 2080010190,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010200,
+    "Name_description": "베르타 삼각주로",
+    "Name": 2080010200,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010210,
+    "Name_description": "이즈루드 언덕으로",
+    "Name": 2080010210,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010220,
+    "Name_description": "심연의 지하수로로",
+    "Name": 2080010220,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010230,
+    "Name_description": "비림총으로",
+    "Name": 2080010230,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010240,
+    "Name_description": "페이욘 숲으로",
+    "Name": 2080010240,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010250,
+    "Name_description": "2층으로",
+    "Name": 2080010250,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010260,
+    "Name_description": "1층으로",
+    "Name": 2080010260,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010270,
+    "Name_description": "3층으로",
+    "Name": 2080010270,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010280,
+    "Name_description": "2층으로",
+    "Name": 2080010280,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010290,
+    "Name_description": "4층으로",
+    "Name": 2080010290,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010300,
+    "Name_description": "3층으로",
+    "Name": 2080010300,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010310,
+    "Name_description": "페이욘 숲으로",
+    "Name": 2080010310,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010320,
+    "Name_description": "결계 내부로",
+    "Name": 2080010320,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010330,
+    "Name_description": "페이욘 숲으로",
+    "Name": 2080010330,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010340,
+    "Name_description": "분노의 바나헤임으로",
+    "Name": 2080010340,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010350,
+    "Name_description": "메이플 숲으로",
+    "Name": 2080010350,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010360,
+    "Name_description": "2구역으로",
+    "Name": 2080010360,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010370,
+    "Name_description": "1구역으로",
+    "Name": 2080010370,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010380,
+    "Name_description": "3구역으로",
+    "Name": 2080010380,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010390,
+    "Name_description": "2구역으로",
+    "Name": 2080010390,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010400,
+    "Name_description": "메이플 숲으로",
+    "Name": 2080010400,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010410,
+    "Name_description": "페이욘 숲으로",
+    "Name": 2080010410,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010420,
+    "Name_description": "버려진 연구소로",
+    "Name": 2080010420,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010430,
+    "Name_description": "메이플 숲으로",
+    "Name": 2080010430,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010440,
+    "Name_description": "맹독의 나락으로",
+    "Name": 2080010440,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010450,
+    "Name_description": "갈라진 평원으로",
+    "Name": 2080010450,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010460,
+    "Name_description": "알베르타 동문으로",
+    "Name": 2080010460,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80060000,
+    "Name_description": "알베르타 서문으로",
+    "Name": 2080060000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010470,
+    "Name_description": "갈라진 평원 동쪽으로",
+    "Name": 2080010470,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010480,
+    "Name_description": "베르타 삼각주로",
+    "Name": 2080010480,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010490,
+    "Name_description": "갈라진 평원 남동쪽으로",
+    "Name": 2080010490,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80070000,
+    "Name_description": "갈라진 평원 남서쪽으로",
+    "Name": 2080070000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010500,
+    "Name_description": "모래 폭풍 요새로",
+    "Name": 2080010500,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010510,
+    "Name_description": "소그라트 사막으로",
+    "Name": 2080010510,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010520,
+    "Name_description": "산다르만 요새로",
+    "Name": 2080010520,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010530,
+    "Name_description": "축복의 길로",
+    "Name": 2080010530,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80010540,
+    "Name_description": "바포메트의 정원으로",
+    "Name": 2080010540,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_바포메트의 정원"
+  },
+  {
+    "NPC_ID": 80010550,
+    "Name_description": "묘르닐 산맥 동부로",
+    "Name": 2080010550,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_바포메트의 정원"
+  },
+  {
+    "NPC_ID": 80010560,
+    "Name_description": "절망의 무저갱으로",
+    "Name": 2080010560,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_절망의무저갱"
+  },
+  {
+    "NPC_ID": 80010570,
+    "Name_description": "갈라진 평원으로",
+    "Name": 2080010570,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_절망의무저갱"
+  },
+  {
+    "NPC_ID": 80020000,
+    "Name_description": "수수께끼의 동굴로",
+    "Name": 2080020000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80030000,
+    "Name_description": "묘르닐 산맥 서부로",
+    "Name": 2080030000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80040000,
+    "Name_description": "트라우마 속으로",
+    "Name": 2080040000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 80050000,
+    "Name_description": "되풀이 되는 트라우마로",
+    "Name": 2080050000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 25220000,
+    "Name_description": "뱃사공 - 해신의 신전으로",
+    "Name": 2025220000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 15000000,
+    "Name_description": "뱃사공 - 저주받은 유령선으로",
+    "Name": 2015000000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 22090000,
+    "Name_description": "카프라 세리나",
+    "Name": 2022090000,
+    "Icon_Number": 17,
+    "Chamgo": "원거리비행",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 22100000,
+    "Name_description": "카프라 세리나",
+    "Name": 2022100000,
+    "Icon_Number": 17,
+    "Chamgo": "원거리비행",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 91210000,
+    "Name_description": "카프라 메트",
+    "Name": 2091210000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 91220000,
+    "Name_description": "카프라 레나",
+    "Name": 2091220000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 22120000,
+    "Name_description": "피터 바스터즈",
+    "Name": 2022120000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 22130000,
+    "Name_description": "레이몬드 바스터즈",
+    "Name": 2022130000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 22140000,
+    "Name_description": "에곤 바스터즈",
+    "Name": 2022140000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 22150000,
+    "Name_description": "루이스 바스터즈",
+    "Name": 2022150000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 22160000,
+    "Name_description": "빌 바스터즈",
+    "Name": 2022160000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 22170000,
+    "Name_description": "댄 바스터즈",
+    "Name": 2022170000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 22180000,
+    "Name_description": "해롤드 바스터즈",
+    "Name": 2022180000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 22190000,
+    "Name_description": "릭 바스터즈",
+    "Name": 2022190000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 22200000,
+    "Name_description": "트윈 클로이드",
+    "Name": 2022200000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 91170000,
+    "Name_description": "워프 대원",
+    "Name": 2091170000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 91180000,
+    "Name_description": "워프 대원",
+    "Name": 2091180000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 91190000,
+    "Name_description": "워프 대원",
+    "Name": 2091190000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 91200000,
+    "Name_description": "워프 대원",
+    "Name": 2091200000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 91230000,
+    "Name_description": "워프 대원",
+    "Name": 2091230000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 91240000,
+    "Name_description": "워프 대원",
+    "Name": 2091240000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 25230000,
+    "Name_description": "뱃사공 - 베르타 삼각주로",
+    "Name": 2025230000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 25240000,
+    "Name_description": "탐험가 - 갈라진 평원으로",
+    "Name": 2025240000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 25540000,
+    "Name_description": "가브리엘의 수제자",
+    "Name": 2025540000,
+    "Icon_Number": 5,
+    "Chamgo": "토큰 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_바포메트의 정원"
+  },
+  {
+    "NPC_ID": 25390000,
+    "Name_description": "가브리엘",
+    "Name": 2025390000,
+    "Icon_Number": 5,
+    "Chamgo": "토큰 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_바포메트의 정원"
+  },
+  {
+    "NPC_ID": 25400000,
+    "Name_description": "스코라 프리서스",
+    "Name": 2025400000,
+    "Icon_Number": 5,
+    "Chamgo": "토큰 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_바포메트의 정원"
+  },
+  {
+    "NPC_ID": 25450000,
+    "Name_description": "킬리안",
+    "Name": 2025450000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 25460000,
+    "Name_description": "치코",
+    "Name": 2025460000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 25470000,
+    "Name_description": "필립파",
+    "Name": 2025470000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 25480000,
+    "Name_description": "카프라 베이지",
+    "Name": 2025480000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 25530000,
+    "Name_description": "슈샤",
+    "Name": 2025530000,
+    "Icon_Number": 8,
+    "Chamgo": "수리 전문가",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 25660000,
+    "Name_description": "게슈탈 로엔그린",
+    "Name": 2025660000,
+    "Icon_Number": 5,
+    "Chamgo": "토큰 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_심연의지하수로"
+  },
+  {
+    "NPC_ID": 25670000,
+    "Name_description": "엘레노아 베이커",
+    "Name": 2025670000,
+    "Icon_Number": 5,
+    "Chamgo": "토큰 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_심연의지하수로"
+  },
+  {
+    "NPC_ID": 25700000,
+    "Name_description": "필로메나 마르쉬",
+    "Name": 2025700000,
+    "Icon_Number": 5,
+    "Chamgo": "토큰 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_절망의무저갱"
+  },
+  {
+    "NPC_ID": 25710000,
+    "Name_description": "헌터 쿠니베르트",
+    "Name": 2025710000,
+    "Icon_Number": 5,
+    "Chamgo": "토큰 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_절망의무저갱"
+  },
+  {
+    "NPC_ID": 25720000,
+    "Name_description": "로스코 앨빈",
+    "Name": 2025720000,
+    "Icon_Number": 5,
+    "Chamgo": "토큰 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_심연의지하수로"
+  },
+  {
+    "NPC_ID": 25730000,
+    "Name_description": "헌터 모니카",
+    "Name": 2025730000,
+    "Icon_Number": 5,
+    "Chamgo": "토큰 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_절망의무저갱"
+  },
+  {
+    "NPC_ID": 25740000,
+    "Name_description": "카프라 네자비스",
+    "Name": 2025740000,
+    "Icon_Number": 5,
+    "Chamgo": "토큰 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 25760000,
+    "Name_description": "떡장수 한가휘",
+    "Name": 2025760000,
+    "Icon_Number": 5,
+    "Chamgo": "이벤트 상인",
+    "NationEnable": 0,
+    "UpdateCode": "제외"
+  },
+  {
+    "NPC_ID": 25880000,
+    "Name_description": "기사단 보상관",
+    "Name": 2025880000,
+    "Icon_Number": 5,
+    "Chamgo": "콜로세움 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_콜로세움"
+  },
+  {
+    "NPC_ID": 16180000,
+    "Name_description": "에이미",
+    "Name": 2016180000,
+    "Icon_Number": 3,
+    "Chamgo": "창고 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 16190000,
+    "Name_description": "엘리",
+    "Name": 2016190000,
+    "Icon_Number": 3,
+    "Chamgo": "창고 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 16200000,
+    "Name_description": "아만다",
+    "Name": 2016200000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 16210000,
+    "Name_description": "엠버",
+    "Name": 2016210000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 16220000,
+    "Name_description": "게리",
+    "Name": 2016220000,
+    "Icon_Number": 8,
+    "Chamgo": "수리 전문가",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 16230000,
+    "Name_description": "크라이",
+    "Name": 2016230000,
+    "Icon_Number": 8,
+    "Chamgo": "수리 전문가",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 16240000,
+    "Name_description": "마르코",
+    "Name": 2016240000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_함락요새_카드강화"
+  },
+  {
+    "NPC_ID": 16250000,
+    "Name_description": "데니스",
+    "Name": 2016250000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_함락요새_카드강화"
+  },
+  {
+    "NPC_ID": 16330000,
+    "Name_description": "테리",
+    "Name": 2016330000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_함락요새_카드강화"
+  },
+  {
+    "NPC_ID": 16340000,
+    "Name_description": "로이",
+    "Name": 2016340000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_함락요새_카드강화"
+  },
+  {
+    "NPC_ID": 81890000,
+    "Name_description": "함락요새로",
+    "Name": 2081890000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_카오스_씨드룬"
+  },
+  {
+    "NPC_ID": 81900000,
+    "Name_description": "2구역으로",
+    "Name": 2081900000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_카오스_씨드룬"
+  },
+  {
+    "NPC_ID": 81910000,
+    "Name_description": "1구역으로",
+    "Name": 2081910000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_카오스_씨드룬"
+  },
+  {
+    "NPC_ID": 81920000,
+    "Name_description": "3구역으로",
+    "Name": 2081920000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_카오스_씨드룬"
+  },
+  {
+    "NPC_ID": 81930000,
+    "Name_description": "2구역으로",
+    "Name": 2081930000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_카오스_씨드룬"
+  },
+  {
+    "NPC_ID": 81940000,
+    "Name_description": "4구역으로",
+    "Name": 2081940000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_카오스_씨드룬"
+  },
+  {
+    "NPC_ID": 81950000,
+    "Name_description": "3구역으로",
+    "Name": 2081950000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_카오스_씨드룬"
+  },
+  {
+    "NPC_ID": 81960000,
+    "Name_description": "5구역으로",
+    "Name": 2081960000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_카오스_씨드룬"
+  },
+  {
+    "NPC_ID": 81970000,
+    "Name_description": "4구역으로",
+    "Name": 2081970000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_카오스_씨드룬"
+  },
+  {
+    "NPC_ID": 81980000,
+    "Name_description": "6구역으로",
+    "Name": 2081980000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_카오스_씨드룬"
+  },
+  {
+    "NPC_ID": 81990000,
+    "Name_description": "5구역으로",
+    "Name": 2081990000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_카오스_씨드룬"
+  },
+  {
+    "NPC_ID": 82000000,
+    "Name_description": "7구역으로",
+    "Name": 2082000000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_카오스_씨드룬"
+  },
+  {
+    "NPC_ID": 82010000,
+    "Name_description": "6구역으로",
+    "Name": 2082010000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_카오스_씨드룬"
+  },
+  {
+    "NPC_ID": 82060000,
+    "Name_description": "카오스로",
+    "Name": 2082060000,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_카오스_씨드룬"
+  },
+  {
+    "NPC_ID": 16890000,
+    "Name_description": "네루얀",
+    "Name": 2016890000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 16900000,
+    "Name_description": "엔야",
+    "Name": 2016900000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 16910000,
+    "Name_description": "세냐레",
+    "Name": 2016910000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 16920000,
+    "Name_description": "니요란",
+    "Name": 2016920000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 16930000,
+    "Name_description": "다몬웨",
+    "Name": 2016930000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 16940000,
+    "Name_description": "닐바란",
+    "Name": 2016940000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 16950000,
+    "Name_description": "신디란",
+    "Name": 2016950000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 16960000,
+    "Name_description": "닐요르",
+    "Name": 2016960000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 16970000,
+    "Name_description": "칸도르",
+    "Name": 2016970000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 16980000,
+    "Name_description": "할",
+    "Name": 2016980000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 16990000,
+    "Name_description": "마르펜",
+    "Name": 2016990000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17000000,
+    "Name_description": "아웨",
+    "Name": 2017000000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17010000,
+    "Name_description": "에이듀알펜",
+    "Name": 2017010000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17020000,
+    "Name_description": "메인웨",
+    "Name": 2017020000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17030000,
+    "Name_description": "세루얀",
+    "Name": 2017030000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17040000,
+    "Name_description": "세레그",
+    "Name": 2017040000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17050000,
+    "Name_description": "에스텔미스트",
+    "Name": 2017050000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17060000,
+    "Name_description": "라우",
+    "Name": 2017060000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17070000,
+    "Name_description": "이볼펜",
+    "Name": 2017070000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17080000,
+    "Name_description": "레베쓰",
+    "Name": 2017080000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17090000,
+    "Name_description": "이아르",
+    "Name": 2017090000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17100000,
+    "Name_description": "메듀이",
+    "Name": 2017100000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17110000,
+    "Name_description": "에스가르펜",
+    "Name": 2017110000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17120000,
+    "Name_description": "리쓰",
+    "Name": 2017120000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17130000,
+    "Name_description": "나유르",
+    "Name": 2017130000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17140000,
+    "Name_description": "유룬드",
+    "Name": 2017140000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17150000,
+    "Name_description": "예레니아",
+    "Name": 2017150000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17160000,
+    "Name_description": "에린",
+    "Name": 2017160000,
+    "Icon_Number": 6,
+    "Chamgo": "경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17170000,
+    "Name_description": "그웬",
+    "Name": 2017170000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17180000,
+    "Name_description": "에스테넬",
+    "Name": 2017180000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17190000,
+    "Name_description": "알펜",
+    "Name": 2017190000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17200000,
+    "Name_description": "가루데아",
+    "Name": 2017200000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17210000,
+    "Name_description": "페네길",
+    "Name": 2017210000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17220000,
+    "Name_description": "이오레쓰",
+    "Name": 2017220000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17230000,
+    "Name_description": "오로돈",
+    "Name": 2017230000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17240000,
+    "Name_description": "글라볼론",
+    "Name": 2017240000,
+    "Icon_Number": 6,
+    "Chamgo": "천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 25900000,
+    "Name_description": "엘라나스 관문 전송관",
+    "Name": 2025900000,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 81810000,
+    "Name_description": "엘라나스 - 폐광 포탈",
+    "Name": 2081810000,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 81820000,
+    "Name_description": "폐광 - 엘라나스 포탈",
+    "Name": 2081820000,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 81880000,
+    "Name_description": "엘레나스 부케 포탈",
+    "Name": 2081880000,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 15730000,
+    "Name_description": "아힌델",
+    "Name": 2015730000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 15860000,
+    "Name_description": "카프라 키리아",
+    "Name": 2015860000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 15900000,
+    "Name_description": "잡화상 델리나 ",
+    "Name": 2015900000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 15910000,
+    "Name_description": "쉐프 전문가 레너티",
+    "Name": 2015910000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 쉐프",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 15920000,
+    "Name_description": "알케미스트 전문가 요한",
+    "Name": 2015920000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 알케미스트",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 15930000,
+    "Name_description": "블랙스미스 전문가 알렌",
+    "Name": 2015930000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 블랙스미스",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 15940000,
+    "Name_description": "아티잔 전문가 미쉘",
+    "Name": 2015940000,
+    "Icon_Number": 9,
+    "Chamgo": "상급 아티잔",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 15950000,
+    "Name_description": "수리 전문가 쵸리스",
+    "Name": 2015950000,
+    "Icon_Number": 8,
+    "Chamgo": "수리 전문가",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 15960000,
+    "Name_description": "카드 마스터 에른",
+    "Name": 2015960000,
+    "Icon_Number": 16,
+    "Chamgo": "카드 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 16060000,
+    "Name_description": "치료소장 엔야빈",
+    "Name": 2016060000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 16580000,
+    "Name_description": "초급 무기 상인 제퍼슨",
+    "Name": 2016580000,
+    "Icon_Number": 5,
+    "Chamgo": "무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 16590000,
+    "Name_description": "포션 상인 낸시",
+    "Name": 2016590000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 16600000,
+    "Name_description": "초급 방어구 상인 웨인",
+    "Name": 2016600000,
+    "Icon_Number": 6,
+    "Chamgo": "방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 16810000,
+    "Name_description": "카프라 루쎄",
+    "Name": 2016810000,
+    "Icon_Number": 2,
+    "Chamgo": "위치 저장 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_노엘"
+  },
+  {
+    "NPC_ID": 17260000,
+    "Name_description": "기사단장 루갈",
+    "Name": 2017260000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_프론 요새 공성전"
+  },
+  {
+    "NPC_ID": 14560000,
+    "Name_description": "소피",
+    "Name": 2014560000,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_프론 요새 공성전"
+  },
+  {
+    "NPC_ID": 14560001,
+    "Name_description": "캐피",
+    "Name": 2014560001,
+    "Icon_Number": 11,
+    "Chamgo": "워프 포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_프론 요새 공성전"
+  },
+  {
+    "NPC_ID": 25680000,
+    "Name_description": "기사 슈베르트",
+    "Name": 2025680000,
+    "Icon_Number": 25,
+    "Chamgo": "유니온 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 25680001,
+    "Name_description": "성자 라모트",
+    "Name": 2025680001,
+    "Icon_Number": 25,
+    "Chamgo": "유니온 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 25680002,
+    "Name_description": "암흑의 그란돌",
+    "Name": 2025680002,
+    "Icon_Number": 25,
+    "Chamgo": "유니온 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 25680003,
+    "Name_description": "헌터 테오도르",
+    "Name": 2025680003,
+    "Icon_Number": 25,
+    "Chamgo": "유니온 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 25680004,
+    "Name_description": "마법 연구학자 트로와",
+    "Name": 2025680004,
+    "Icon_Number": 25,
+    "Chamgo": "유니온 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 25680005,
+    "Name_description": "거상 뮤리아",
+    "Name": 2025680005,
+    "Icon_Number": 25,
+    "Chamgo": "유니온 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 27010000,
+    "Name_description": "하미드",
+    "Name": 2027010000,
+    "Icon_Number": 4,
+    "Chamgo": "모로크 포션상인(남)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27020000,
+    "Name_description": "쌀림",
+    "Name": 2027020000,
+    "Icon_Number": 15,
+    "Chamgo": "모로크 잡화상인(남)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27030000,
+    "Name_description": "아미라",
+    "Name": 2027030000,
+    "Icon_Number": 5,
+    "Chamgo": "모로크 무기상인(여)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27040000,
+    "Name_description": "넬렉시",
+    "Name": 2027040000,
+    "Icon_Number": 5,
+    "Chamgo": "모로크 노엘 무기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27050000,
+    "Name_description": "아흐마드",
+    "Name": 2027050000,
+    "Icon_Number": 6,
+    "Chamgo": "모로크 경갑 방어구 상인(남)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27060000,
+    "Name_description": "카말",
+    "Name": 2027060000,
+    "Icon_Number": 6,
+    "Chamgo": "모로크 천옷 방어구 상인(남)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27070000,
+    "Name_description": "라우카",
+    "Name": 2027070000,
+    "Icon_Number": 6,
+    "Chamgo": "모로크 노엘 천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27080000,
+    "Name_description": "알반",
+    "Name": 2027080000,
+    "Icon_Number": 14,
+    "Chamgo": "모로크 요리상인(남, 독일)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27090000,
+    "Name_description": "칼둔",
+    "Name": 2027090000,
+    "Icon_Number": 9,
+    "Chamgo": "모로크 쉐프 전문가(남)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27100000,
+    "Name_description": "싸미",
+    "Name": 2027100000,
+    "Icon_Number": 9,
+    "Chamgo": "모로크 알케미스트 전문가(남)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27110000,
+    "Name_description": "핫산",
+    "Name": 2027110000,
+    "Icon_Number": 9,
+    "Chamgo": "모로크 아티잔 전문가(남)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27120000,
+    "Name_description": "수아드",
+    "Name": 2027120000,
+    "Icon_Number": 9,
+    "Chamgo": "모로크 블랙스미스 전문가(여)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27130000,
+    "Name_description": "이졸데",
+    "Name": 2027130000,
+    "Icon_Number": 8,
+    "Chamgo": "모로크 수리 전문가(여, 독일)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27140000,
+    "Name_description": "카림",
+    "Name": 2027140000,
+    "Icon_Number": 18,
+    "Chamgo": "모로크 제련 전문가(남)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27150000,
+    "Name_description": "파티마",
+    "Name": 2027150000,
+    "Icon_Number": 16,
+    "Chamgo": "모로크 카드상인(여)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27160000,
+    "Name_description": "에르젤",
+    "Name": 2027160000,
+    "Icon_Number": 12,
+    "Chamgo": "모로크 길드관리인(남)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27180000,
+    "Name_description": "카프라 와르다",
+    "Name": 2027180000,
+    "Icon_Number": 2,
+    "Chamgo": "모로크 카프라(단거리)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27190000,
+    "Name_description": "카프라 우테",
+    "Name": 2027190000,
+    "Icon_Number": 17,
+    "Chamgo": "모로크 카프라(장거리)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27200000,
+    "Name_description": "카프라 아넬리에",
+    "Name": 2027200000,
+    "Icon_Number": 2,
+    "Chamgo": "모로크 카프라(창고 및 위치저장)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27210000,
+    "Name_description": "카프라 라일라",
+    "Name": 2027210000,
+    "Icon_Number": 13,
+    "Chamgo": "모로크 카프라(경매)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_경매장"
+  },
+  {
+    "NPC_ID": 27220000,
+    "Name_description": "지브릴",
+    "Name": 2027220000,
+    "Icon_Number": 6,
+    "Chamgo": "모로크 중갑방어구 상인(남, 아랍)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27230000,
+    "Name_description": "카멘",
+    "Name": 2027230000,
+    "Icon_Number": 6,
+    "Chamgo": "모로크 노엘 경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27240000,
+    "Name_description": "이볼프",
+    "Name": 2027240000,
+    "Icon_Number": 4,
+    "Chamgo": "모로크_포션상인(여)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27250000,
+    "Name_description": "사미드",
+    "Name": 2027250000,
+    "Icon_Number": 5,
+    "Chamgo": "모로크_잡화상인(남)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27260000,
+    "Name_description": "카프라 바닐린",
+    "Name": 2027260000,
+    "Icon_Number": 2,
+    "Chamgo": "모로크 카프라(창고 및 위치저장)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27270000,
+    "Name_description": "카프라 한센",
+    "Name": 2027270000,
+    "Icon_Number": 2,
+    "Chamgo": "모로크 카프라(창고 및 위치저장)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27280000,
+    "Name_description": "카프라 코넬리아",
+    "Name": 2027280000,
+    "Icon_Number": 2,
+    "Chamgo": "모로크 카프라(창고 및 위치저장)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27290000,
+    "Name_description": "카프라 오쿨루스",
+    "Name": 2027290000,
+    "Icon_Number": 2,
+    "Chamgo": "모로크 카프라(창고 및 위치저장)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 27300000,
+    "Name_description": "카프라 마한",
+    "Name": 2027300000,
+    "Icon_Number": 2,
+    "Chamgo": "모로크 카프라(창고 및 위치저장)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 80010640,
+    "Name_description": "모로크 도시->오시리스의 무덤",
+    "Name": 2080010640,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_오시리스의 무덤"
+  },
+  {
+    "NPC_ID": 80010650,
+    "Name_description": "오시리스의 무덤->모로크 도시",
+    "Name": 2080010650,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_오시리스의 무덤"
+  },
+  {
+    "NPC_ID": 82390000,
+    "Name_description": "다이르 제 1신전 워프(밖 ->안)",
+    "Name": 2082390000,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 82400000,
+    "Name_description": "다이르 제 1신전 워프(안 ->밖)",
+    "Name": 2082400000,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 82410000,
+    "Name_description": "다이르 제 2신전 워프(밖 ->안)",
+    "Name": 2082410000,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 82420000,
+    "Name_description": "다이르 제 2신전 워프(안 ->밖)",
+    "Name": 2082420000,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 82430000,
+    "Name_description": "다이르 제 3신전 워프(밖 ->안)",
+    "Name": 2082430000,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 82440000,
+    "Name_description": "다이르 제 3신전 워프(안 ->밖)",
+    "Name": 2082440000,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 80010580,
+    "Name_description": "축복의 길->모로크 도시",
+    "Name": 2080010580,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 80010590,
+    "Name_description": "모로크 도시 -> 축복의 길",
+    "Name": 2080010590,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 80010600,
+    "Name_description": "다이르 사막->모로크 도시",
+    "Name": 2080010600,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 80010610,
+    "Name_description": "모로크 도시->다이르 사막",
+    "Name": 2080010610,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28640000,
+    "Name_description": "알렉",
+    "Name": 2028640000,
+    "Icon_Number": 5,
+    "Chamgo": "모로크 2랭크 무기상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28650000,
+    "Name_description": "링컨",
+    "Name": 2028650000,
+    "Icon_Number": 6,
+    "Chamgo": "모로크 2랭크 경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28660000,
+    "Name_description": "크리스토퍼",
+    "Name": 2028660000,
+    "Icon_Number": 6,
+    "Chamgo": "모로크 2랭크 천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28670000,
+    "Name_description": "사무엘",
+    "Name": 2028670000,
+    "Icon_Number": 6,
+    "Chamgo": "모로크 2랭크 노엘 천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28680000,
+    "Name_description": "요단",
+    "Name": 2028680000,
+    "Icon_Number": 6,
+    "Chamgo": "모로크 2랭크 중갑방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28690000,
+    "Name_description": "나잘",
+    "Name": 2028690000,
+    "Icon_Number": 5,
+    "Chamgo": "모로크 3랭크 무기상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28700000,
+    "Name_description": "헤이커",
+    "Name": 2028700000,
+    "Icon_Number": 6,
+    "Chamgo": "모로크 3랭크 경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28710000,
+    "Name_description": "플렉",
+    "Name": 2028710000,
+    "Icon_Number": 6,
+    "Chamgo": "모로크 3랭크 천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28720000,
+    "Name_description": "샘",
+    "Name": 2028720000,
+    "Icon_Number": 6,
+    "Chamgo": "모로크 3랭크 노엘 천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28730000,
+    "Name_description": "요한",
+    "Name": 2028730000,
+    "Icon_Number": 6,
+    "Chamgo": "모로크 3랭크 중갑방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28740000,
+    "Name_description": "쥬드",
+    "Name": 2028740000,
+    "Icon_Number": 5,
+    "Chamgo": "다이르 5랭크 무기상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28750000,
+    "Name_description": "케이시",
+    "Name": 2028750000,
+    "Icon_Number": 6,
+    "Chamgo": "다이르 5랭크 경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28760000,
+    "Name_description": "힐링턴",
+    "Name": 2028760000,
+    "Icon_Number": 6,
+    "Chamgo": "다이르 5랭크 천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28770000,
+    "Name_description": "가덴",
+    "Name": 2028770000,
+    "Icon_Number": 6,
+    "Chamgo": "다이르 5랭크 중갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28780000,
+    "Name_description": "가드너",
+    "Name": 2028780000,
+    "Icon_Number": 6,
+    "Chamgo": "다이르 노엘 5랭크 천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28080000,
+    "Name_description": "우르스",
+    "Name": 2028080000,
+    "Icon_Number": 5,
+    "Chamgo": "다이르 4랭크 무기상인(남)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28090000,
+    "Name_description": "서케",
+    "Name": 2028090000,
+    "Icon_Number": 5,
+    "Chamgo": "다이르 노엘 4랭크 무기상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28100000,
+    "Name_description": "나디아",
+    "Name": 2028100000,
+    "Icon_Number": 6,
+    "Chamgo": "다이르 4랭크 경갑방어구 상인(여, 아랍)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28110000,
+    "Name_description": "오스만",
+    "Name": 2028110000,
+    "Icon_Number": 6,
+    "Chamgo": "다이르 4랭크 천옷방어구 상인(남, 아랍)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28120000,
+    "Name_description": "오으론",
+    "Name": 2028120000,
+    "Icon_Number": 6,
+    "Chamgo": "다이르 노엘 4랭크 천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28210000,
+    "Name_description": "카프라 나쓰르",
+    "Name": 2028210000,
+    "Icon_Number": 2,
+    "Chamgo": "모로크_카프라",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28220000,
+    "Name_description": "카프라 히얌",
+    "Name": 2028220000,
+    "Icon_Number": 2,
+    "Chamgo": "모로크_카프라",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28330000,
+    "Name_description": "카프라 안젤마",
+    "Name": 2028330000,
+    "Icon_Number": 2,
+    "Chamgo": "모로크_카프라",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28340000,
+    "Name_description": "카프라 안체",
+    "Name": 2028340000,
+    "Icon_Number": 2,
+    "Chamgo": "모로크_카프라",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28130000,
+    "Name_description": "카프라 자키야",
+    "Name": 2028130000,
+    "Icon_Number": 2,
+    "Chamgo": "모로크_카프라",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28070000,
+    "Name_description": "요킴",
+    "Name": 2028070000,
+    "Icon_Number": 16,
+    "Chamgo": "카드 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28010000,
+    "Name_description": "요르그",
+    "Name": 2028010000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28030000,
+    "Name_description": "앙겔",
+    "Name": 2028030000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28250000,
+    "Name_description": "테스티",
+    "Name": 2028250000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28290000,
+    "Name_description": "로즈비타",
+    "Name": 2028290000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28310000,
+    "Name_description": "에버하르트",
+    "Name": 2028310000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28260000,
+    "Name_description": "야미",
+    "Name": 2028260000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28270000,
+    "Name_description": "이사벨",
+    "Name": 2028270000,
+    "Icon_Number": 14,
+    "Chamgo": "요리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28300000,
+    "Name_description": "우르셀",
+    "Name": 2028300000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 28320000,
+    "Name_description": "그라티아",
+    "Name": 2028320000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 80010620,
+    "Name_description": "Santa's Cave -> South Plain",
+    "Name": 2080010620,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "이벤트_크리스마스_201412"
+  },
+  {
+    "NPC_ID": 80010630,
+    "Name_description": "South Plain -> Santa's Cave",
+    "Name": 2080010630,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "이벤트_크리스마스_201412"
+  },
+  {
+    "NPC_ID": 80011000,
+    "Name_description": "모로크 도시->다크 위스퍼 하층",
+    "Name": 2080011000,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다크위스퍼"
+  },
+  {
+    "NPC_ID": 80011010,
+    "Name_description": "다크 위스퍼 하층->모로크 도시",
+    "Name": 2080011010,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다크위스퍼"
+  },
+  {
+    "NPC_ID": 80011020,
+    "Name_description": "다크 위스퍼 하층->다크 위스퍼 상층 1구역",
+    "Name": 2080011020,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다크위스퍼"
+  },
+  {
+    "NPC_ID": 80011030,
+    "Name_description": "다크 위스퍼 상층 1구역->다크 위스퍼 하층",
+    "Name": 2080011030,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다크위스퍼"
+  },
+  {
+    "NPC_ID": 80011040,
+    "Name_description": "다크 위스퍼 상층 1구역->다크 위스퍼 상층 2구역",
+    "Name": 2080011040,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다크위스퍼"
+  },
+  {
+    "NPC_ID": 80011050,
+    "Name_description": "다크 위스퍼 상층 2구역->다크 위스퍼 상층 1구역",
+    "Name": 2080011050,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다크위스퍼"
+  },
+  {
+    "NPC_ID": 80011060,
+    "Name_description": "다크 위스퍼 상층 2구역->다크 위스퍼 상층 3구역",
+    "Name": 2080011060,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다크위스퍼"
+  },
+  {
+    "NPC_ID": 80011070,
+    "Name_description": "다크 위스퍼 상층 3구역->다크 위스퍼 상층 1구역",
+    "Name": 2080011070,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다크위스퍼"
+  },
+  {
+    "NPC_ID": 30570000,
+    "Name_description": "하치",
+    "Name": 2030570000,
+    "Icon_Number": 8,
+    "Chamgo": "수리 전문가",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 30580000,
+    "Name_description": "스튜어트",
+    "Name": 2030580000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 30590000,
+    "Name_description": "아론",
+    "Name": 2030590000,
+    "Icon_Number": 5,
+    "Chamgo": "모로크 2랭크 무기상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 30600000,
+    "Name_description": "미란다",
+    "Name": 2030600000,
+    "Icon_Number": 6,
+    "Chamgo": "모로크 2랭크 경갑 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 30610000,
+    "Name_description": "이본느",
+    "Name": 2030610000,
+    "Icon_Number": 6,
+    "Chamgo": "모로크 2랭크 천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 30620000,
+    "Name_description": "제이",
+    "Name": 2030620000,
+    "Icon_Number": 6,
+    "Chamgo": "모로크 2랭크 노엘 천옷 방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 30630000,
+    "Name_description": "루엘",
+    "Name": 2030630000,
+    "Icon_Number": 6,
+    "Chamgo": "모로크 2랭크 중갑방어구 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 30640000,
+    "Name_description": "카프라 제니퍼",
+    "Name": 2030640000,
+    "Icon_Number": 2,
+    "Chamgo": "모로크 카프라(창고 및 위치저장)",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 30970000,
+    "Name_description": "하우스 카프라 이브",
+    "Name": 2030970000,
+    "Icon_Number": 2,
+    "Chamgo": "프론테라_길드 하우스 카프라",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_아지트"
+  },
+  {
+    "NPC_ID": 30980000,
+    "Name_description": "관리인 애쉬",
+    "Name": 2030980000,
+    "Icon_Number": 4,
+    "Chamgo": "프론테라_길드 하우스 물약상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_아지트"
+  },
+  {
+    "NPC_ID": 30990000,
+    "Name_description": "관리인 다윗",
+    "Name": 2030990000,
+    "Icon_Number": 8,
+    "Chamgo": "프론테라_길드 하우스 수리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_아지트"
+  },
+  {
+    "NPC_ID": 31000000,
+    "Name_description": "하우스 카프라 스칼렛",
+    "Name": 2031000000,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_아지트"
+  },
+  {
+    "NPC_ID": 31010000,
+    "Name_description": "관리인 아만다",
+    "Name": 2031010000,
+    "Icon_Number": 12,
+    "Chamgo": "프론테라_길드 하우스 길드 관리인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_아지트"
+  },
+  {
+    "NPC_ID": 31030000,
+    "Name_description": "관리인 브릿",
+    "Name": 2031030000,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "제외"
+  },
+  {
+    "NPC_ID": 31330000,
+    "Name_description": "아지트 전용 경매 카프라",
+    "Name": 2031330000,
+    "Icon_Number": 13,
+    "Chamgo": "프론테라_경매",
+    "NationEnable": 0,
+    "UpdateCode": "제외"
+  },
+  {
+    "NPC_ID": 31340000,
+    "Name_description": "탈것 상인 세이지",
+    "Name": 2031340000,
+    "Icon_Number": 7,
+    "Chamgo": "탈것 관리인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_아지트"
+  },
+  {
+    "NPC_ID": 80011130,
+    "Name_description": "침묵의 회랑",
+    "Name": 2080011130,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_침묵의 회랑"
+  },
+  {
+    "NPC_ID": 80011140,
+    "Name_description": "어쌔신의 성지",
+    "Name": 2080011140,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_어쌔신의 성소"
+  },
+  {
+    "NPC_ID": 31590000,
+    "Name_description": "관리인 오스카",
+    "Name": 2031590000,
+    "Icon_Number": 11,
+    "Chamgo": "포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_모로코 요새 공성전"
+  },
+  {
+    "NPC_ID": 80011290,
+    "Name_description": "히멜메즈의 방",
+    "Name": 2080011290,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_히멜메즈"
+  },
+  {
+    "NPC_ID": 80011300,
+    "Name_description": "다크위스퍼 상층",
+    "Name": 2080011300,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_히멜메즈"
+  },
+  {
+    "NPC_ID": 31630000,
+    "Name_description": "카프라 첸",
+    "Name": 2031630000,
+    "Icon_Number": 13,
+    "Chamgo": "길드 하우스 응모",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_길드하우스"
+  },
+  {
+    "NPC_ID": 80011400,
+    "Name_description": "침묵의 회랑 -> 모로크",
+    "Name": 2080011400,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_침묵의 회랑"
+  },
+  {
+    "NPC_ID": 80011500,
+    "Name_description": "어쌔신의 성지 -> 모로크",
+    "Name": 2080011500,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_어쌔신의 성소"
+  },
+  {
+    "NPC_ID": 31120000,
+    "Name_description": "기사단장 슌",
+    "Name": 2031120000,
+    "Icon_Number": 11,
+    "Chamgo": "모로크 요새 입장 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_모로코 요새 공성전"
+  },
+  {
+    "NPC_ID": 31130000,
+    "Name_description": "부기사단장 자일",
+    "Name": 2031130000,
+    "Icon_Number": 11,
+    "Chamgo": "모로크 요새 입장 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_모로코 요새 공성전"
+  },
+  {
+    "NPC_ID": 31170000,
+    "Name_description": "안드레",
+    "Name": 2031170000,
+    "Icon_Number": 4,
+    "Chamgo": "모로크 요새 포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_모로코 요새 공성전"
+  },
+  {
+    "NPC_ID": 31180000,
+    "Name_description": "비타",
+    "Name": 2031180000,
+    "Icon_Number": 8,
+    "Chamgo": "모로크 요새 수리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_모로코 요새 공성전"
+  },
+  {
+    "NPC_ID": 31190000,
+    "Name_description": "기술병 용선",
+    "Name": 2031190000,
+    "Icon_Number": 15,
+    "Chamgo": "모로크 요새 병기 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_모로코 요새 공성전"
+  },
+  {
+    "NPC_ID": 31370000,
+    "Name_description": "모로크 요새 1지점 비행 카프라",
+    "Name": 2031270000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_모로코 요새 공성전"
+  },
+  {
+    "NPC_ID": 31360000,
+    "Name_description": "모로크 요새 2지점 비행 카프라",
+    "Name": 2031350000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_모로코 요새 공성전"
+  },
+  {
+    "NPC_ID": 31580000,
+    "Name_description": "모로크 요새 입구 관리인",
+    "Name": 2031580000,
+    "Icon_Number": 11,
+    "Chamgo": "모로크 도시 워프 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_모로코 요새 공성전"
+  },
+  {
+    "NPC_ID": 31600000,
+    "Name_description": "3 지점 비행 카프라",
+    "Name": 2031600000,
+    "Icon_Number": 1,
+    "Chamgo": "비행 이동 서비스",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_모로코 요새 공성전"
+  },
+  {
+    "NPC_ID": 31640000,
+    "Name_description": "켄 바스터즈",
+    "Name": 2031640000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_모로코 요새 공성전"
+  },
+  {
+    "NPC_ID": 31650000,
+    "Name_description": "레오 바스터즈",
+    "Name": 2031650000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_모로코 요새 공성전"
+  },
+  {
+    "NPC_ID": 31660000,
+    "Name_description": "카프라 러너 ",
+    "Name": 2031660000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_모로코 요새 공성전"
+  },
+  {
+    "NPC_ID": 31670000,
+    "Name_description": "보물 사냥꾼 레일리",
+    "Name": 2031670000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_모로코 요새 공성전"
+  },
+  {
+    "NPC_ID": 31680000,
+    "Name_description": "보물 사냥꾼 라비",
+    "Name": 2031680000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_모로코 요새 공성전"
+  },
+  {
+    "NPC_ID": 31690000,
+    "Name_description": "보물 사냥꾼 카이",
+    "Name": 2031690000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_모로코 요새 공성전"
+  },
+  {
+    "NPC_ID": 31620000,
+    "Name_description": "TOMA",
+    "Name": 2031620000,
+    "Icon_Number": 15,
+    "Chamgo": "8월 카라 교환 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "이벤트_8월카라_201408"
+  },
+  {
+    "NPC_ID": 31720000,
+    "Name_description": "아이벤티나",
+    "Name": 2031720000,
+    "Icon_Number": 15,
+    "Chamgo": "이벤트 전용 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "이벤트_태국_의상교환"
+  },
+  {
+    "NPC_ID": 80011710,
+    "Name_description": "잊혀진 페이욘",
+    "Name": 2080011710,
+    "Icon_Number": 11,
+    "Chamgo": "워프포탈",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_잊혀진 페이욘"
+  },
+  {
+    "NPC_ID": 30960001,
+    "Name_description": "관리인 다니엘",
+    "Name": 2030960001,
+    "Icon_Number": 15,
+    "Chamgo": "알베르타_길드 하우스 MP상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_길드하우스"
+  },
+  {
+    "NPC_ID": 30970001,
+    "Name_description": "하우스 카프라 엠마",
+    "Name": 2030970001,
+    "Icon_Number": 2,
+    "Chamgo": "알베르타_길드 하우스 카프라",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_길드하우스"
+  },
+  {
+    "NPC_ID": 30980001,
+    "Name_description": "관리인 조쉬",
+    "Name": 2030980001,
+    "Icon_Number": 4,
+    "Chamgo": "알베르타_길드 하우스 물약상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_길드하우스"
+  },
+  {
+    "NPC_ID": 30990001,
+    "Name_description": "관리인 듀크",
+    "Name": 2030990001,
+    "Icon_Number": 8,
+    "Chamgo": "알베르타_길드 하우스 수리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_길드하우스"
+  },
+  {
+    "NPC_ID": 31000001,
+    "Name_description": "관리인 쉴즈",
+    "Name": 2031000001,
+    "Icon_Number": 11,
+    "Chamgo": "알베르타_길드 하우스 마을 이동",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_길드하우스"
+  },
+  {
+    "NPC_ID": 31010001,
+    "Name_description": "관리인 엠버",
+    "Name": 2031010001,
+    "Icon_Number": 12,
+    "Chamgo": "알베르타_길드 하우스 길드 관리인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_길드하우스"
+  },
+  {
+    "NPC_ID": 31030001,
+    "Name_description": "관리인 에바",
+    "Name": 2031030001,
+    "Icon_Number": 11,
+    "Chamgo": "알베르타_길드 하우스 _사냥터 이동",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_길드하우스"
+  },
+  {
+    "NPC_ID": 30950000,
+    "Name_description": "관리인 사라",
+    "Name": 2030950000,
+    "Icon_Number": 15,
+    "Chamgo": "프론테라_길드 하우스 MP상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_길드하우스"
+  },
+  {
+    "NPC_ID": 31730000,
+    "Name_description": "마일리",
+    "Name": 2031730000,
+    "Icon_Number": 11,
+    "Chamgo": "길드 던전 _ 마을 이동",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_길드던전"
+  },
+  {
+    "NPC_ID": 31810000,
+    "Name_description": "아랑",
+    "Name": 2031810000,
+    "Icon_Number": 5,
+    "Chamgo": "잊혀진 페이욘 토큰 교환",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_잊혀진 페이욘"
+  },
+  {
+    "NPC_ID": 31800000,
+    "Name_description": "유근",
+    "Name": 2031800000,
+    "Icon_Number": 11,
+    "Chamgo": "잊혀진 페이욘 퇴장",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_잊혀진 페이욘"
+  },
+  {
+    "NPC_ID": 99360000,
+    "Name_description": "Ragnar",
+    "Name": 2099360000,
+    "Icon_Number": 15,
+    "Chamgo": "바이킹 이벤트 교환 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "이벤트_바이킹_201411"
+  },
+  {
+    "NPC_ID": 31820000,
+    "Name_description": "희수",
+    "Name": 2031820000,
+    "Icon_Number": 8,
+    "Chamgo": "잊혀진 페이욘 수리상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_잊혀진 페이욘"
+  },
+  {
+    "NPC_ID": 31830000,
+    "Name_description": "단이",
+    "Name": 2031830000,
+    "Icon_Number": 4,
+    "Chamgo": "잊혀진 페이욘 물약상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_잊혀진 페이욘"
+  },
+  {
+    "NPC_ID": 31840000,
+    "Name_description": "카프라 제이",
+    "Name": 2031840000,
+    "Icon_Number": 2,
+    "Chamgo": "잊혀진 페이욘 카프라",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_잊혀진 페이욘"
+  },
+  {
+    "NPC_ID": 31850000,
+    "Name_description": "한수",
+    "Name": 2031850000,
+    "Icon_Number": 5,
+    "Chamgo": "잊혀진 페이욘 BP교환",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_잊혀진 페이욘"
+  },
+  {
+    "NPC_ID": 31860000,
+    "Name_description": "자도",
+    "Name": 2031860000,
+    "Icon_Number": 5,
+    "Chamgo": "잊혀진 페이욘 MP교환",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_잊혀진 페이욘"
+  },
+  {
+    "NPC_ID": 32120000,
+    "Name_description": "수연",
+    "Name": 2032120000,
+    "Icon_Number": 5,
+    "Chamgo": "잊혀진 페이욘_룬 교환 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_일반룬_업그레이드"
+  },
+  {
+    "NPC_ID": 32130000,
+    "Name_description": "단아",
+    "Name": 2032130000,
+    "Icon_Number": 5,
+    "Chamgo": "잊혀진 페이욘_룬 교환 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_일반룬_업그레이드"
+  },
+  {
+    "NPC_ID": 32140000,
+    "Name_description": "아진",
+    "Name": 2032140000,
+    "Icon_Number": 5,
+    "Chamgo": "잊혀진 페이욘_룬 교환 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_일반룬_업그레이드"
+  },
+  {
+    "NPC_ID": 32150000,
+    "Name_description": "제아",
+    "Name": 2032150000,
+    "Icon_Number": 5,
+    "Chamgo": "잊혀진 페이욘_룬 교환 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_일반룬_업그레이드"
+  },
+  {
+    "NPC_ID": 32160000,
+    "Name_description": "북두선녀",
+    "Name": 2032160000,
+    "Icon_Number": 15,
+    "Chamgo": "에드가 이벤트_교환 상인",
+    "NationEnable": 0,
+    "UpdateCode": "이벤트_구정이벤트(에드가)"
+  },
+  {
+    "NPC_ID": 32350000,
+    "Name_description": "프롱",
+    "Name": 2032350000,
+    "Icon_Number": 15,
+    "Chamgo": "워프 스크롤 판매 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_스크롤_워프상인"
+  },
+  {
+    "NPC_ID": 32360000,
+    "Name_description": "알베리",
+    "Name": 2032360000,
+    "Icon_Number": 15,
+    "Chamgo": "워프 스크롤 판매 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_스크롤_워프상인"
+  },
+  {
+    "NPC_ID": 32370000,
+    "Name_description": "모롱",
+    "Name": 2032370000,
+    "Icon_Number": 15,
+    "Chamgo": "워프 스크롤 판매 NPC",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_스크롤_워프상인"
+  },
+  {
+    "NPC_ID": 28060000,
+    "Name_description": "압둘라",
+    "Name": 2028060000,
+    "Icon_Number": 8,
+    "Chamgo": "다이르 수리상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_다이르사막"
+  },
+  {
+    "NPC_ID": 32550000,
+    "Name_description": "플라토닉",
+    "Name": 2032550000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_자와이"
+  },
+  {
+    "NPC_ID": 32560000,
+    "Name_description": "스톨게",
+    "Name": 2032560000,
+    "Icon_Number": 6,
+    "Chamgo": "장비 상인_노엘",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_자와이"
+  },
+  {
+    "NPC_ID": 32570000,
+    "Name_description": "아가페",
+    "Name": 2032570000,
+    "Icon_Number": 4,
+    "Chamgo": "포션 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_자와이"
+  },
+  {
+    "NPC_ID": 32580000,
+    "Name_description": "필리아",
+    "Name": 2032580000,
+    "Icon_Number": 8,
+    "Chamgo": "제조 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_자와이"
+  },
+  {
+    "NPC_ID": 32590000,
+    "Name_description": "스토리지",
+    "Name": 2032590000,
+    "Icon_Number": 18,
+    "Chamgo": "제련 분해 전문가",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_자와이"
+  },
+  {
+    "NPC_ID": 32600000,
+    "Name_description": "루두스",
+    "Name": 2032600000,
+    "Icon_Number": 16,
+    "Chamgo": "카드 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_자와이"
+  },
+  {
+    "NPC_ID": 32610000,
+    "Name_description": "마니아",
+    "Name": 2032610000,
+    "Icon_Number": 8,
+    "Chamgo": "수리 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_자와이"
+  },
+  {
+    "NPC_ID": 32620000,
+    "Name_description": "카프라 프라그마",
+    "Name": 2032620000,
+    "Icon_Number": 2,
+    "Chamgo": "카프라",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_자와이"
+  },
+  {
+    "NPC_ID": 80012150,
+    "Name_description": "지하수로 -> 프론테라",
+    "Name": 2080012150,
+    "Icon_Number": 11,
+    "Chamgo": "지하수로 -> 프론테라",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_싱글_지하수로"
+  },
+  {
+    "NPC_ID": 25650000,
+    "Name_description": "리릭 하트만",
+    "Name": 2025650000,
+    "Icon_Number": 11,
+    "Chamgo": "절망의 무저갱 -> 갈라진 평원",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_절망의무저갱"
+  },
+  {
+    "NPC_ID": 80012230,
+    "Name_description": "늑대굴->남부평원",
+    "Name": 2080012230,
+    "Icon_Number": 11,
+    "Chamgo": "늑대굴->남부평원",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 33180000,
+    "Name_description": "체니",
+    "Name": 2033180000,
+    "Icon_Number": 28,
+    "Chamgo": "다이아몬드 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_비밀상점"
+  },
+  {
+    "NPC_ID": 33280000,
+    "Name_description": "발렌시아",
+    "Name": 2033280000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_비밀상점"
+  },
+  {
+    "NPC_ID": 33290000,
+    "Name_description": "로이드",
+    "Name": 2033290000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_비밀상점"
+  },
+  {
+    "NPC_ID": 33300000,
+    "Name_description": "빅토리아",
+    "Name": 2033300000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_비밀상점"
+  },
+  {
+    "NPC_ID": 33310000,
+    "Name_description": "이자크",
+    "Name": 2033310000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_비밀상점"
+  },
+  {
+    "NPC_ID": 33320000,
+    "Name_description": "율리아",
+    "Name": 2033320000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_비밀상점"
+  },
+  {
+    "NPC_ID": 33330000,
+    "Name_description": "장비 교환 상인",
+    "Name": 2033330000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_비밀상점"
+  },
+  {
+    "NPC_ID": 33340000,
+    "Name_description": "테마의상 교환 상인",
+    "Name": 2033340000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_비밀상점"
+  },
+  {
+    "NPC_ID": 33350000,
+    "Name_description": "아우라 교환상인",
+    "Name": 2033350000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_비밀상점"
+  },
+  {
+    "NPC_ID": 33360000,
+    "Name_description": "테마 악세사리 교환 상인",
+    "Name": 2033360000,
+    "Icon_Number": 15,
+    "Chamgo": "잡화 상인",
+    "NationEnable": 0,
+    "UpdateCode": "컨텐츠_비밀상점"
+  },
+  {
+    "NPC_ID": 29011000,
+    "Name_description": "Wingard MacFlappen",
+    "Name": 2029011000,
+    "Icon_Number": 15,
+    "Chamgo": "Wing Merchant",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  },
+  {
+    "NPC_ID": 29011010,
+    "Name_description": "Mehreen Yunil",
+    "Name": 2029011010,
+    "Icon_Number": 15,
+    "Chamgo": "MVP Gear Merchant",
+    "NationEnable": 0,
+    "UpdateCode": "기본"
+  }
+]

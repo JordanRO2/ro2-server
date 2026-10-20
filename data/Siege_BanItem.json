@@ -1,0 +1,37 @@
+[
+  {
+    "ItemIndex": 70000335,
+    "비고": "긴급폭탄 99호",
+    "TYPE": 0,
+    "NationEnable": 127,
+    "UpdateCode": "컨텐츠_프론 요새 공성전"
+  },
+  {
+    "ItemIndex": 70000362,
+    "비고": "긴급폭탄 99호",
+    "TYPE": 0,
+    "NationEnable": 127,
+    "UpdateCode": "컨텐츠_프론 요새 공성전"
+  },
+  {
+    "ItemIndex": 22270031,
+    "비고": "목책",
+    "TYPE": 0,
+    "NationEnable": 127,
+    "UpdateCode": "컨텐츠_프론 요새 공성전"
+  },
+  {
+    "ItemIndex": 70000001,
+    "비고": "스피넬",
+    "TYPE": 1,
+    "NationEnable": 127,
+    "UpdateCode": "컨텐츠_프론 요새 공성전_금지스킬기능추가"
+  },
+  {
+    "ItemIndex": 21330014,
+    "비고": "이그드라실의 나뭇잎",
+    "TYPE": 1,
+    "NationEnable": 127,
+    "UpdateCode": "컨텐츠_프론 요새 공성전_금지스킬기능추가"
+  }
+]

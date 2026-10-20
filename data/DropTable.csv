@@ -1,0 +1,3 @@
+﻿##META	magic=RO2!	timestamp=
+#DWORD,DWORD,DWORD,DWORD,DWORD,DWORD,BYTE,STRING
+Drop_ID,Slot,Item_ID,Min_Count,Max_Count,Drop_Rate,Broadcast,Comment

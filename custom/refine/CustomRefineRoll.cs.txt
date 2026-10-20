@@ -1,0 +1,71 @@
+// PRESERVED CUSTOM (non-retail) REFINE ROLL - verbatim copy, not compiled (.cs.txt).
+// Source: src/RO2.Server.Zone/Handlers/Rmi/RefineItemHandler.cs, HandleAsync, lines 170-229 at the commit
+// that preceded the faithful rework. The surrounding handler
+// (eligibility gate, TryDebit, catalyst consumption, 2997/3005/2894 pushes) is unchanged and still lives in
+// the handler; only the block below was replaced. Variables it expects from the handler:
+//   rate (REFINERATE row for INDEX=cur+1), matRow / protRow (REFINEITEM catalyst rows, protRow may be null),
+//   cur, MaxRefine (const 20), equip, inventory, rng-free state (outcome, outcomeCode, newLevel, record126).
+// See README.md in this folder.
+//
+// ------------------------------------------------------------------------------------------------
+
+        // ---- Roll the outcome (data-derived; all values ×100 = percent). NO destruction, ever. Two self-
+        // similar GAMBLE bands with safe checkpoints at +0 and +10: a fail never drops below the current
+        // band's baseline. Columns are repurposed for this model (and drive the client display 1:1):
+        //   Succ_Rate  = success chance (+ Blessing Succ_Rate; + Lucky 2_/3_GRADE_RATE jump).
+        //   Break_Rate = BASELINE protection = P(a fail does NOT knock you back to the band baseline).
+        //                Infinium's +10000 caps it at 100% -> never knocked back (worst case becomes -1).
+        //   Down_Rate  = P(a fail drops you at all); so MAINTAIN protection (P a fail stays put) = 10000-Down_Rate.
+        // The refine window shows Succ / Break(=baseline prot) / (10000-Down)(=maintain prot) through the
+        // display caves, so REFINE_RATE.json (server roll) and REFINE_RATE.ct in ASSET.VDK (client display)
+        // MUST carry the SAME numbers — change both together, never one alone. These are DESIGN values, tune
+        // freely; see [[refine-enforce-data-model]] for the sync procedure.
+        int pSucc  = protRow?.Succ_Rate ?? 0;
+        int pBreak = protRow?.Break_Rate ?? 0;
+        int pG2    = protRow?._2_GRADE_RATE ?? 0;
+        int pG3    = protRow?._3_GRADE_RATE ?? 0;
+        int succ         = Math.Min(10000, rate.Succ_Rate + matRow.Succ_Rate + pSucc);
+        int baselineProt = Math.Min(10000, rate.Break_Rate + matRow.Break_Rate + pBreak); // Infinium 10000 = never knocked to baseline
+        int maintainProt = Math.Clamp(10000 - rate.Down_Rate, 0, 10000);                   // P(a fail stays put)
+        int bandBaseline = cur < 10 ? 0 : 10;                                              // safe checkpoint of the current band
+        var rng = Random.Shared;
+        string outcome;
+        uint outcomeCode;
+        int newLevel = cur;
+        byte[] record126;            // embedded at 2997 blob+15 so the window shows the result + sets item+562
+        if (rng.Next(10000) < succ)
+        {
+            // LUCKY multi-jump: roll +3 first, then +2, else +1. Non-lucky catalysts have both grade rates 0
+            // → always +1. The client renders old(blob+14)→new(record+0x1D) verbatim, so +2/+3 show correctly.
+            int g3 = matRow._3_GRADE_RATE + pG3;
+            int g2 = matRow._2_GRADE_RATE + pG2;
+            int r = rng.Next(10000);
+            int jump = r < g3 ? 3 : r < g3 + g2 ? 2 : 1;
+            jump = Math.Min(jump, MaxRefine - cur);
+            newLevel = cur + jump;
+            equip.Refine = (byte)newLevel; outcome = jump > 1 ? $"success +{jump}" : "success"; outcomeCode = 0;
+            record126 = WorldEntryService.BuildItemRecord126(equip);
+            await inventory.UpdateItemAsync(equip);
+        }
+        else
+        {
+            // FAIL — never destroys. A single roll partitions into stay / -1 / reset-to-baseline. maintainProt
+            // <= baselineProt by construction (baseline >= maintain in the data), so the zones are ordered:
+            // [0,maintainProt) stay · [maintainProt,baselineProt) drop one · [baselineProt,10000) reset to the
+            // band baseline (+0 or +10). Position +0/+1 and +10/+11 are 100% success, so a checkpoint is never
+            // crossed downward and a -1 never lands below the baseline.
+            int r = rng.Next(10000);
+            if (r < maintainProt)
+            {
+                outcome = "fail-kept"; outcomeCode = 1;                       // stays put: level unchanged
+                record126 = WorldEntryService.BuildItemRecord126(equip);
+            }
+            else
+            {
+                newLevel = r < baselineProt ? Math.Max(bandBaseline, cur - 1) : bandBaseline;
+                equip.Refine = (byte)newLevel;
+                outcome = r < baselineProt ? "downgrade -1" : "reset to baseline"; outcomeCode = 3;
+                record126 = WorldEntryService.BuildItemRecord126(equip);
+                await inventory.UpdateItemAsync(equip);
+            }
+        }

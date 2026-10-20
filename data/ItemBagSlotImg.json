@@ -1,0 +1,266 @@
+[
+  {
+    "Index": 13,
+    "Name": "초소형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/318/204/358",
+    "OverUV": "206/318/246/358",
+    "PressUV": "248/318/288/358 "
+  },
+  {
+    "Index": 14,
+    "Name": "소형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/360/204/400",
+    "OverUV": "206/360/246/400",
+    "PressUV": "248/360/288/400"
+  },
+  {
+    "Index": 15,
+    "Name": "중형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/402/204/442",
+    "OverUV": "206/402/246/442",
+    "PressUV": "248/402/288/442"
+  },
+  {
+    "Index": 16,
+    "Name": "대형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/444/204/484",
+    "OverUV": "206/444/246/484",
+    "PressUV": "248/444/288/484"
+  },
+  {
+    "Index": 17,
+    "Name": "특대형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/486/204/526",
+    "OverUV": "206/486/246/526",
+    "PressUV": "248/486/288/526 "
+  },
+  {
+    "Index": 18,
+    "Name": "초대형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/527/204/567",
+    "OverUV": "206/527/246/567 ",
+    "PressUV": "248/527/288/567"
+  },
+  {
+    "Index": 19,
+    "Name": "초특대형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/569/204/609",
+    "OverUV": "206/569/246/609",
+    "PressUV": "248/569/288/609"
+  },
+  {
+    "Index": 22000000,
+    "Name": "기본 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/402/204/442",
+    "OverUV": "206/402/246/442",
+    "PressUV": "248/402/288/442"
+  },
+  {
+    "Index": 22000001,
+    "Name": "초소형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/318/204/358",
+    "OverUV": "206/318/246/358",
+    "PressUV": "248/318/288/358 "
+  },
+  {
+    "Index": 22000002,
+    "Name": "초소형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/318/204/358",
+    "OverUV": "206/318/246/358",
+    "PressUV": "248/318/288/358 "
+  },
+  {
+    "Index": 22000003,
+    "Name": "소형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/360/204/400",
+    "OverUV": "206/360/246/400",
+    "PressUV": "248/360/288/400"
+  },
+  {
+    "Index": 22000004,
+    "Name": "소형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/360/204/400",
+    "OverUV": "206/360/246/400",
+    "PressUV": "248/360/288/400"
+  },
+  {
+    "Index": 22000005,
+    "Name": "중형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/402/204/442",
+    "OverUV": "206/402/246/442",
+    "PressUV": "248/402/288/442"
+  },
+  {
+    "Index": 22000006,
+    "Name": "중형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/402/204/442",
+    "OverUV": "206/402/246/442",
+    "PressUV": "248/402/288/442"
+  },
+  {
+    "Index": 22000007,
+    "Name": "대형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/444/204/484",
+    "OverUV": "206/444/246/484",
+    "PressUV": "248/444/288/484"
+  },
+  {
+    "Index": 22000008,
+    "Name": "대형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/444/204/484",
+    "OverUV": "206/444/246/484",
+    "PressUV": "248/444/288/484"
+  },
+  {
+    "Index": 22000009,
+    "Name": "특대형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/486/204/526",
+    "OverUV": "206/486/246/526",
+    "PressUV": "248/486/288/526 "
+  },
+  {
+    "Index": 22000010,
+    "Name": "특대형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/486/204/526",
+    "OverUV": "206/486/246/526",
+    "PressUV": "248/486/288/526 "
+  },
+  {
+    "Index": 22000011,
+    "Name": "대형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/444/204/484",
+    "OverUV": "206/444/246/484",
+    "PressUV": "248/444/288/484"
+  },
+  {
+    "Index": 22000012,
+    "Name": "대형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/444/204/484",
+    "OverUV": "206/444/246/484",
+    "PressUV": "248/444/288/484"
+  },
+  {
+    "Index": 60000354,
+    "Name": "초소형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/318/204/358",
+    "OverUV": "206/318/246/358",
+    "PressUV": "248/318/288/358 "
+  },
+  {
+    "Index": 60000366,
+    "Name": "초대형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/569/204/609",
+    "OverUV": "206/569/246/609",
+    "PressUV": "248/569/288/609"
+  },
+  {
+    "Index": 60000386,
+    "Name": "초대형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/569/204/609",
+    "OverUV": "206/569/246/609",
+    "PressUV": "248/569/288/609"
+  },
+  {
+    "Index": 60000813,
+    "Name": "중형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/402/204/442",
+    "OverUV": "206/402/246/442",
+    "PressUV": "248/402/288/442"
+  },
+  {
+    "Index": 70000015,
+    "Name": "특대형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/527/204/567",
+    "OverUV": "206/527/246/567 ",
+    "PressUV": "248/527/288/567"
+  },
+  {
+    "Index": 70000031,
+    "Name": "초대형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/569/204/609",
+    "OverUV": "206/569/246/609",
+    "PressUV": "248/569/288/609"
+  },
+  {
+    "Index": 70000033,
+    "Name": "초대형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/569/204/609",
+    "OverUV": "206/569/246/609",
+    "PressUV": "248/569/288/609"
+  },
+  {
+    "Index": 70000143,
+    "Name": "초대형 가방 (무제한)",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/569/204/609",
+    "OverUV": "206/569/246/609",
+    "PressUV": "248/569/288/609"
+  },
+  {
+    "Index": 70000145,
+    "Name": "특대형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/527/204/567",
+    "OverUV": "206/527/246/567 ",
+    "PressUV": "248/527/288/567"
+  },
+  {
+    "Index": 70000207,
+    "Name": "초대형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/569/204/609",
+    "OverUV": "206/569/246/609",
+    "PressUV": "248/569/288/609"
+  },
+  {
+    "Index": 70000209,
+    "Name": "특대형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/527/204/567",
+    "OverUV": "206/527/246/567 ",
+    "PressUV": "248/527/288/567"
+  },
+  {
+    "Index": 70000626,
+    "Name": "초대형 가방",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/569/204/609",
+    "OverUV": "206/569/246/609",
+    "PressUV": "248/569/288/609"
+  },
+  {
+    "Index": 70000686,
+    "Name": "초대형 가방 (무제한)",
+    "TexFileName": "UI/Texture/Rag2_Icon_001.tga",
+    "NormalUV": "164/569/204/609",
+    "OverUV": "206/569/246/609",
+    "PressUV": "248/569/288/609"
+  }
+]

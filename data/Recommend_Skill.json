@@ -1,0 +1,260 @@
+[
+  {
+    "Buff_ID": 21011,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 2108,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 13031,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 1323,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 13031,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 1108,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 1303,
+    "Buff_Stack": 3,
+    "SkillGroup_ID": 1323,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 1303,
+    "Buff_Stack": 3,
+    "SkillGroup_ID": 1108,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 1305,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 1305,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 2246,
+    "Buff_Stack": 100,
+    "SkillGroup_ID": 2232,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 2307,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 2308,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 4308,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 4313,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 4308,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 4103,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 3233,
+    "Buff_Stack": 5,
+    "SkillGroup_ID": 3112,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 3220,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 3103,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 1201,
+    "Buff_Stack": 50,
+    "SkillGroup_ID": 1206,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 1201,
+    "Buff_Stack": 30,
+    "SkillGroup_ID": 1108,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 5304,
+    "Buff_Stack": 3,
+    "SkillGroup_ID": 5308,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 3304,
+    "Buff_Stack": 50,
+    "SkillGroup_ID": 3315,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 6110,
+    "Buff_Stack": 5,
+    "SkillGroup_ID": 6101,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 6110,
+    "Buff_Stack": 5,
+    "SkillGroup_ID": 6201,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 6110,
+    "Buff_Stack": 5,
+    "SkillGroup_ID": 6202,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 60038,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 50523,
+    "UI_Slot": 2
+  },
+  {
+    "Buff_ID": 60039,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 50522,
+    "UI_Slot": 2
+  },
+  {
+    "Buff_ID": 60040,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 50524,
+    "UI_Slot": 2
+  },
+  {
+    "Buff_ID": 4208,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 4207,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 4302,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 4103,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 4302,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 4313,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 21061,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 2108,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 21061,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 2100,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 5301,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 5313,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 5203,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 5104,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 105061,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 75213,
+    "UI_Slot": 2
+  },
+  {
+    "Buff_ID": 105061,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 75214,
+    "UI_Slot": 2
+  },
+  {
+    "Buff_ID": 105062,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 75227,
+    "UI_Slot": 2
+  },
+  {
+    "Buff_ID": 105062,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 75228,
+    "UI_Slot": 2
+  },
+  {
+    "Buff_ID": 105063,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 75229,
+    "UI_Slot": 2
+  },
+  {
+    "Buff_ID": 105064,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 75230,
+    "UI_Slot": 2
+  },
+  {
+    "Buff_ID": 105065,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 75231,
+    "UI_Slot": 2
+  },
+  {
+    "Buff_ID": 105070,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 75505,
+    "UI_Slot": 2
+  },
+  {
+    "Buff_ID": 105070,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 75506,
+    "UI_Slot": 2
+  },
+  {
+    "Buff_ID": 105070,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 75503,
+    "UI_Slot": 2
+  },
+  {
+    "Buff_ID": 105070,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 75504,
+    "UI_Slot": 2
+  },
+  {
+    "Buff_ID": 21091,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 2311,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 21091,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 2308,
+    "UI_Slot": 1
+  },
+  {
+    "Buff_ID": 21091,
+    "Buff_Stack": 1,
+    "SkillGroup_ID": 2102,
+    "UI_Slot": 1
+  }
+]

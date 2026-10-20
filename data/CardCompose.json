@@ -1,0 +1,37 @@
+[
+  {
+    "ItemID": 22300101,
+    "ItemID_설명": "Card Synthesis Stones",
+    "Card_Grade": 2,
+    "Compose_Ratio": 5000,
+    "Special_Compose_Ratio": 500
+  },
+  {
+    "ItemID": 22300102,
+    "ItemID_설명": "Premium Card Synthesis Stones",
+    "Card_Grade": 3,
+    "Compose_Ratio": 5000,
+    "Special_Compose_Ratio": 500
+  },
+  {
+    "ItemID": 22300401,
+    "ItemID_설명": "Cash Synthesis Stones",
+    "Card_Grade": 0,
+    "Compose_Ratio": 6000,
+    "Special_Compose_Ratio": 500
+  },
+  {
+    "ItemID": 22300103,
+    "ItemID_설명": "Rare Card Synthesis Stones",
+    "Card_Grade": 4,
+    "Compose_Ratio": 5000,
+    "Special_Compose_Ratio": 500
+  },
+  {
+    "ItemID": 22300104,
+    "ItemID_설명": "Legendary Card Synthesis Stones",
+    "Card_Grade": 5,
+    "Compose_Ratio": 5000,
+    "Special_Compose_Ratio": 500
+  }
+]

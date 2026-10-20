@@ -1,0 +1,42 @@
+[
+  {
+    "INDEX": 1,
+    "Range_Rate": -1000,
+    "DESC": "1성탬",
+    "Star_Val": 1,
+    "Need_Gold": 10000,
+    "Reset_Gold": 50
+  },
+  {
+    "INDEX": 2,
+    "Range_Rate": 0,
+    "DESC": "2성탬",
+    "Star_Val": 2,
+    "Need_Gold": 10000,
+    "Reset_Gold": 100
+  },
+  {
+    "INDEX": 3,
+    "Range_Rate": 1000,
+    "DESC": "3성탬",
+    "Star_Val": 3,
+    "Need_Gold": 20000,
+    "Reset_Gold": 150
+  },
+  {
+    "INDEX": 4,
+    "Range_Rate": 2000,
+    "DESC": "4성탬",
+    "Star_Val": 4,
+    "Need_Gold": 30000,
+    "Reset_Gold": 200
+  },
+  {
+    "INDEX": 5,
+    "Range_Rate": 3000,
+    "DESC": "5성탬",
+    "Star_Val": 5,
+    "Need_Gold": 40000,
+    "Reset_Gold": 250
+  }
+]

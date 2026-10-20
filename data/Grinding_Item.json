@@ -1,0 +1,962 @@
+[
+  {
+    "Item_ID": 34000306,
+    "DESC": "최대 HP 연마 보조제 (10%)",
+    "TraitID": 21,
+    "Grinding_Rate": 1000
+  },
+  {
+    "Item_ID": 34000307,
+    "DESC": "최대 SP 연마 보조제 (10%)",
+    "TraitID": 22,
+    "Grinding_Rate": 1000
+  },
+  {
+    "Item_ID": 34000308,
+    "DESC": "물리 공격력 연마 보조제 (10%)",
+    "TraitID": 23,
+    "Grinding_Rate": 1000
+  },
+  {
+    "Item_ID": 34000309,
+    "DESC": "마법 공격력 연마 보조제 (10%)",
+    "TraitID": 25,
+    "Grinding_Rate": 1000
+  },
+  {
+    "Item_ID": 34000310,
+    "DESC": "물리 방어력 연마 보조제 (10%)",
+    "TraitID": 26,
+    "Grinding_Rate": 1000
+  },
+  {
+    "Item_ID": 34000311,
+    "DESC": "피해 증가 감소 연마 보조제 (10%)",
+    "TraitID": 51,
+    "Grinding_Rate": 1000
+  },
+  {
+    "Item_ID": 34000312,
+    "DESC": "명중도 연마 보조제 (10%)",
+    "TraitID": 58,
+    "Grinding_Rate": 1000
+  },
+  {
+    "Item_ID": 34000313,
+    "DESC": "회피도 연마 보조제 (10%)",
+    "TraitID": 59,
+    "Grinding_Rate": 1000
+  },
+  {
+    "Item_ID": 34000314,
+    "DESC": "치명도 연마 보조제 (10%)",
+    "TraitID": 60,
+    "Grinding_Rate": 1000
+  },
+  {
+    "Item_ID": 34000315,
+    "DESC": "방패방어도 연마 보조제 (10%)",
+    "TraitID": 61,
+    "Grinding_Rate": 1000
+  },
+  {
+    "Item_ID": 34000316,
+    "DESC": "활력도 연마 보조제 (10%)",
+    "TraitID": 62,
+    "Grinding_Rate": 1000
+  },
+  {
+    "Item_ID": 34000317,
+    "DESC": "가속도 연마 보조제 (10%)",
+    "TraitID": 63,
+    "Grinding_Rate": 1000
+  },
+  {
+    "Item_ID": 34000318,
+    "DESC": "PVP 피해율 연마 보조제 (10%)",
+    "TraitID": 71,
+    "Grinding_Rate": 1000
+  },
+  {
+    "Item_ID": 34000319,
+    "DESC": "PVP 방어율 연마 보조제 (10%)",
+    "TraitID": 72,
+    "Grinding_Rate": 1000
+  },
+  {
+    "Item_ID": 34000320,
+    "DESC": "MP 손실 감소율 연마 보조제 (10%)",
+    "TraitID": 99,
+    "Grinding_Rate": 1000
+  },
+  {
+    "Item_ID": 34000321,
+    "DESC": "아이템 등급 증가 연마 보조제 (10%)",
+    "TraitID": 100,
+    "Grinding_Rate": 1000
+  },
+  {
+    "Item_ID": 34000322,
+    "DESC": "최대 HP 연마 보조제 (20%)",
+    "TraitID": 21,
+    "Grinding_Rate": 2000
+  },
+  {
+    "Item_ID": 34000323,
+    "DESC": "최대 SP 연마 보조제 (20%)",
+    "TraitID": 22,
+    "Grinding_Rate": 2000
+  },
+  {
+    "Item_ID": 34000324,
+    "DESC": "물리 공격력 연마 보조제 (20%)",
+    "TraitID": 23,
+    "Grinding_Rate": 2000
+  },
+  {
+    "Item_ID": 34000325,
+    "DESC": "마법 공격력 연마 보조제 (20%)",
+    "TraitID": 25,
+    "Grinding_Rate": 2000
+  },
+  {
+    "Item_ID": 34000326,
+    "DESC": "물리 방어력 연마 보조제 (20%)",
+    "TraitID": 26,
+    "Grinding_Rate": 2000
+  },
+  {
+    "Item_ID": 34000327,
+    "DESC": "피해 증가 감소 연마 보조제 (20%)",
+    "TraitID": 51,
+    "Grinding_Rate": 2000
+  },
+  {
+    "Item_ID": 34000328,
+    "DESC": "명중도 연마 보조제 (20%)",
+    "TraitID": 58,
+    "Grinding_Rate": 2000
+  },
+  {
+    "Item_ID": 34000329,
+    "DESC": "회피도 연마 보조제 (20%)",
+    "TraitID": 59,
+    "Grinding_Rate": 2000
+  },
+  {
+    "Item_ID": 34000330,
+    "DESC": "치명도 연마 보조제 (20%)",
+    "TraitID": 60,
+    "Grinding_Rate": 2000
+  },
+  {
+    "Item_ID": 34000331,
+    "DESC": "방패방어도 연마 보조제 (20%)",
+    "TraitID": 61,
+    "Grinding_Rate": 2000
+  },
+  {
+    "Item_ID": 34000332,
+    "DESC": "활력도 연마 보조제 (20%)",
+    "TraitID": 62,
+    "Grinding_Rate": 2000
+  },
+  {
+    "Item_ID": 34000333,
+    "DESC": "가속도 연마 보조제 (20%)",
+    "TraitID": 63,
+    "Grinding_Rate": 2000
+  },
+  {
+    "Item_ID": 34000334,
+    "DESC": "PVP 피해율 연마 보조제 (20%)",
+    "TraitID": 71,
+    "Grinding_Rate": 2000
+  },
+  {
+    "Item_ID": 34000335,
+    "DESC": "PVP 방어율 연마 보조제 (20%)",
+    "TraitID": 72,
+    "Grinding_Rate": 2000
+  },
+  {
+    "Item_ID": 34000336,
+    "DESC": "MP 손실 감소율 연마 보조제 (20%)",
+    "TraitID": 99,
+    "Grinding_Rate": 2000
+  },
+  {
+    "Item_ID": 34000337,
+    "DESC": "아이템 등급 증가 연마 보조제 (20%)",
+    "TraitID": 100,
+    "Grinding_Rate": 2000
+  },
+  {
+    "Item_ID": 34000338,
+    "DESC": "최대 HP 연마 보조제 (30%)",
+    "TraitID": 21,
+    "Grinding_Rate": 3000
+  },
+  {
+    "Item_ID": 34000339,
+    "DESC": "최대 SP 연마 보조제 (30%)",
+    "TraitID": 22,
+    "Grinding_Rate": 3000
+  },
+  {
+    "Item_ID": 34000340,
+    "DESC": "물리 공격력 연마 보조제 (30%)",
+    "TraitID": 23,
+    "Grinding_Rate": 3000
+  },
+  {
+    "Item_ID": 34000341,
+    "DESC": "마법 공격력 연마 보조제 (30%)",
+    "TraitID": 25,
+    "Grinding_Rate": 3000
+  },
+  {
+    "Item_ID": 34000342,
+    "DESC": "물리 방어력 연마 보조제 (30%)",
+    "TraitID": 26,
+    "Grinding_Rate": 3000
+  },
+  {
+    "Item_ID": 34000343,
+    "DESC": "피해 증가 감소 연마 보조제 (30%)",
+    "TraitID": 51,
+    "Grinding_Rate": 3000
+  },
+  {
+    "Item_ID": 34000344,
+    "DESC": "명중도 연마 보조제 (30%)",
+    "TraitID": 58,
+    "Grinding_Rate": 3000
+  },
+  {
+    "Item_ID": 34000345,
+    "DESC": "회피도 연마 보조제 (30%)",
+    "TraitID": 59,
+    "Grinding_Rate": 3000
+  },
+  {
+    "Item_ID": 34000346,
+    "DESC": "치명도 연마 보조제 (30%)",
+    "TraitID": 60,
+    "Grinding_Rate": 3000
+  },
+  {
+    "Item_ID": 34000347,
+    "DESC": "방패방어도 연마 보조제 (30%)",
+    "TraitID": 61,
+    "Grinding_Rate": 3000
+  },
+  {
+    "Item_ID": 34000348,
+    "DESC": "활력도 연마 보조제 (30%)",
+    "TraitID": 62,
+    "Grinding_Rate": 3000
+  },
+  {
+    "Item_ID": 34000349,
+    "DESC": "가속도 연마 보조제 (30%)",
+    "TraitID": 63,
+    "Grinding_Rate": 3000
+  },
+  {
+    "Item_ID": 34000350,
+    "DESC": "PVP 피해율 연마 보조제 (30%)",
+    "TraitID": 71,
+    "Grinding_Rate": 3000
+  },
+  {
+    "Item_ID": 34000351,
+    "DESC": "PVP 방어율 연마 보조제 (30%)",
+    "TraitID": 72,
+    "Grinding_Rate": 3000
+  },
+  {
+    "Item_ID": 34000352,
+    "DESC": "MP 손실 감소율 연마 보조제 (30%)",
+    "TraitID": 99,
+    "Grinding_Rate": 3000
+  },
+  {
+    "Item_ID": 34000353,
+    "DESC": "아이템 등급 증가 연마 보조제 (30%)",
+    "TraitID": 100,
+    "Grinding_Rate": 3000
+  },
+  {
+    "Item_ID": 34000354,
+    "DESC": "최대 HP 연마 보조제 (40%)",
+    "TraitID": 21,
+    "Grinding_Rate": 4000
+  },
+  {
+    "Item_ID": 34000355,
+    "DESC": "최대 SP 연마 보조제 (40%)",
+    "TraitID": 22,
+    "Grinding_Rate": 4000
+  },
+  {
+    "Item_ID": 34000356,
+    "DESC": "물리 공격력 연마 보조제 (40%)",
+    "TraitID": 23,
+    "Grinding_Rate": 4000
+  },
+  {
+    "Item_ID": 34000357,
+    "DESC": "마법 공격력 연마 보조제 (40%)",
+    "TraitID": 25,
+    "Grinding_Rate": 4000
+  },
+  {
+    "Item_ID": 34000358,
+    "DESC": "물리 방어력 연마 보조제 (40%)",
+    "TraitID": 26,
+    "Grinding_Rate": 4000
+  },
+  {
+    "Item_ID": 34000359,
+    "DESC": "피해 증가 감소 연마 보조제 (40%)",
+    "TraitID": 51,
+    "Grinding_Rate": 4000
+  },
+  {
+    "Item_ID": 34000360,
+    "DESC": "명중도 연마 보조제 (40%)",
+    "TraitID": 58,
+    "Grinding_Rate": 4000
+  },
+  {
+    "Item_ID": 34000361,
+    "DESC": "회피도 연마 보조제 (40%)",
+    "TraitID": 59,
+    "Grinding_Rate": 4000
+  },
+  {
+    "Item_ID": 34000362,
+    "DESC": "치명도 연마 보조제 (40%)",
+    "TraitID": 60,
+    "Grinding_Rate": 4000
+  },
+  {
+    "Item_ID": 34000363,
+    "DESC": "방패방어도 연마 보조제 (40%)",
+    "TraitID": 61,
+    "Grinding_Rate": 4000
+  },
+  {
+    "Item_ID": 34000364,
+    "DESC": "활력도 연마 보조제 (40%)",
+    "TraitID": 62,
+    "Grinding_Rate": 4000
+  },
+  {
+    "Item_ID": 34000365,
+    "DESC": "가속도 연마 보조제 (40%)",
+    "TraitID": 63,
+    "Grinding_Rate": 4000
+  },
+  {
+    "Item_ID": 34000366,
+    "DESC": "PVP 피해율 연마 보조제 (40%)",
+    "TraitID": 71,
+    "Grinding_Rate": 4000
+  },
+  {
+    "Item_ID": 34000367,
+    "DESC": "PVP 방어율 연마 보조제 (40%)",
+    "TraitID": 72,
+    "Grinding_Rate": 4000
+  },
+  {
+    "Item_ID": 34000368,
+    "DESC": "MP 손실 감소율 연마 보조제 (40%)",
+    "TraitID": 99,
+    "Grinding_Rate": 4000
+  },
+  {
+    "Item_ID": 34000369,
+    "DESC": "아이템 등급 증가 연마 보조제 (40%)",
+    "TraitID": 100,
+    "Grinding_Rate": 4000
+  },
+  {
+    "Item_ID": 34000370,
+    "DESC": "최대 HP 연마 보조제 (50%)",
+    "TraitID": 21,
+    "Grinding_Rate": 5000
+  },
+  {
+    "Item_ID": 34000371,
+    "DESC": "최대 SP 연마 보조제 (50%)",
+    "TraitID": 22,
+    "Grinding_Rate": 5000
+  },
+  {
+    "Item_ID": 34000372,
+    "DESC": "물리 공격력 연마 보조제 (50%)",
+    "TraitID": 23,
+    "Grinding_Rate": 5000
+  },
+  {
+    "Item_ID": 34000373,
+    "DESC": "마법 공격력 연마 보조제 (50%)",
+    "TraitID": 25,
+    "Grinding_Rate": 5000
+  },
+  {
+    "Item_ID": 34000374,
+    "DESC": "물리 방어력 연마 보조제 (50%)",
+    "TraitID": 26,
+    "Grinding_Rate": 5000
+  },
+  {
+    "Item_ID": 34000375,
+    "DESC": "피해 증가 감소 연마 보조제 (50%)",
+    "TraitID": 51,
+    "Grinding_Rate": 5000
+  },
+  {
+    "Item_ID": 34000376,
+    "DESC": "명중도 연마 보조제 (50%)",
+    "TraitID": 58,
+    "Grinding_Rate": 5000
+  },
+  {
+    "Item_ID": 34000377,
+    "DESC": "회피도 연마 보조제 (50%)",
+    "TraitID": 59,
+    "Grinding_Rate": 5000
+  },
+  {
+    "Item_ID": 34000378,
+    "DESC": "치명도 연마 보조제 (50%)",
+    "TraitID": 60,
+    "Grinding_Rate": 5000
+  },
+  {
+    "Item_ID": 34000379,
+    "DESC": "방패방어도 연마 보조제 (50%)",
+    "TraitID": 61,
+    "Grinding_Rate": 5000
+  },
+  {
+    "Item_ID": 34000380,
+    "DESC": "활력도 연마 보조제 (50%)",
+    "TraitID": 62,
+    "Grinding_Rate": 5000
+  },
+  {
+    "Item_ID": 34000381,
+    "DESC": "가속도 연마 보조제 (50%)",
+    "TraitID": 63,
+    "Grinding_Rate": 5000
+  },
+  {
+    "Item_ID": 34000382,
+    "DESC": "PVP 피해율 연마 보조제 (50%)",
+    "TraitID": 71,
+    "Grinding_Rate": 5000
+  },
+  {
+    "Item_ID": 34000383,
+    "DESC": "PVP 방어율 연마 보조제 (50%)",
+    "TraitID": 72,
+    "Grinding_Rate": 5000
+  },
+  {
+    "Item_ID": 34000384,
+    "DESC": "MP 손실 감소율 연마 보조제 (50%)",
+    "TraitID": 99,
+    "Grinding_Rate": 5000
+  },
+  {
+    "Item_ID": 34000385,
+    "DESC": "아이템 등급 증가 연마 보조제 (50%)",
+    "TraitID": 100,
+    "Grinding_Rate": 5000
+  },
+  {
+    "Item_ID": 34000386,
+    "DESC": "최대 HP 연마 보조제 (60%)",
+    "TraitID": 21,
+    "Grinding_Rate": 6000
+  },
+  {
+    "Item_ID": 34000387,
+    "DESC": "최대 SP 연마 보조제 (60%)",
+    "TraitID": 22,
+    "Grinding_Rate": 6000
+  },
+  {
+    "Item_ID": 34000388,
+    "DESC": "물리 공격력 연마 보조제 (60%)",
+    "TraitID": 23,
+    "Grinding_Rate": 6000
+  },
+  {
+    "Item_ID": 34000389,
+    "DESC": "마법 공격력 연마 보조제 (60%)",
+    "TraitID": 25,
+    "Grinding_Rate": 6000
+  },
+  {
+    "Item_ID": 34000390,
+    "DESC": "물리 방어력 연마 보조제 (60%)",
+    "TraitID": 26,
+    "Grinding_Rate": 6000
+  },
+  {
+    "Item_ID": 34000391,
+    "DESC": "피해 증가 감소 연마 보조제 (60%)",
+    "TraitID": 51,
+    "Grinding_Rate": 6000
+  },
+  {
+    "Item_ID": 34000392,
+    "DESC": "명중도 연마 보조제 (60%)",
+    "TraitID": 58,
+    "Grinding_Rate": 6000
+  },
+  {
+    "Item_ID": 34000393,
+    "DESC": "회피도 연마 보조제 (60%)",
+    "TraitID": 59,
+    "Grinding_Rate": 6000
+  },
+  {
+    "Item_ID": 34000394,
+    "DESC": "치명도 연마 보조제 (60%)",
+    "TraitID": 60,
+    "Grinding_Rate": 6000
+  },
+  {
+    "Item_ID": 34000395,
+    "DESC": "방패방어도 연마 보조제 (60%)",
+    "TraitID": 61,
+    "Grinding_Rate": 6000
+  },
+  {
+    "Item_ID": 34000396,
+    "DESC": "활력도 연마 보조제 (60%)",
+    "TraitID": 62,
+    "Grinding_Rate": 6000
+  },
+  {
+    "Item_ID": 34000397,
+    "DESC": "가속도 연마 보조제 (60%)",
+    "TraitID": 63,
+    "Grinding_Rate": 6000
+  },
+  {
+    "Item_ID": 34000398,
+    "DESC": "PVP 피해율 연마 보조제 (60%)",
+    "TraitID": 71,
+    "Grinding_Rate": 6000
+  },
+  {
+    "Item_ID": 34000399,
+    "DESC": "PVP 방어율 연마 보조제 (60%)",
+    "TraitID": 72,
+    "Grinding_Rate": 6000
+  },
+  {
+    "Item_ID": 34000400,
+    "DESC": "MP 손실 감소율 연마 보조제 (60%)",
+    "TraitID": 99,
+    "Grinding_Rate": 6000
+  },
+  {
+    "Item_ID": 34000401,
+    "DESC": "아이템 등급 증가 연마 보조제 (60%)",
+    "TraitID": 100,
+    "Grinding_Rate": 6000
+  },
+  {
+    "Item_ID": 34000402,
+    "DESC": "최대 HP 연마 보조제 (70%)",
+    "TraitID": 21,
+    "Grinding_Rate": 7000
+  },
+  {
+    "Item_ID": 34000403,
+    "DESC": "최대 SP 연마 보조제 (70%)",
+    "TraitID": 22,
+    "Grinding_Rate": 7000
+  },
+  {
+    "Item_ID": 34000404,
+    "DESC": "물리 공격력 연마 보조제 (70%)",
+    "TraitID": 23,
+    "Grinding_Rate": 7000
+  },
+  {
+    "Item_ID": 34000405,
+    "DESC": "마법 공격력 연마 보조제 (70%)",
+    "TraitID": 25,
+    "Grinding_Rate": 7000
+  },
+  {
+    "Item_ID": 34000406,
+    "DESC": "물리 방어력 연마 보조제 (70%)",
+    "TraitID": 26,
+    "Grinding_Rate": 7000
+  },
+  {
+    "Item_ID": 34000407,
+    "DESC": "피해 증가 감소 연마 보조제 (70%)",
+    "TraitID": 51,
+    "Grinding_Rate": 7000
+  },
+  {
+    "Item_ID": 34000408,
+    "DESC": "명중도 연마 보조제 (70%)",
+    "TraitID": 58,
+    "Grinding_Rate": 7000
+  },
+  {
+    "Item_ID": 34000409,
+    "DESC": "회피도 연마 보조제 (70%)",
+    "TraitID": 59,
+    "Grinding_Rate": 7000
+  },
+  {
+    "Item_ID": 34000410,
+    "DESC": "치명도 연마 보조제 (70%)",
+    "TraitID": 60,
+    "Grinding_Rate": 7000
+  },
+  {
+    "Item_ID": 34000411,
+    "DESC": "방패방어도 연마 보조제 (70%)",
+    "TraitID": 61,
+    "Grinding_Rate": 7000
+  },
+  {
+    "Item_ID": 34000412,
+    "DESC": "활력도 연마 보조제 (70%)",
+    "TraitID": 62,
+    "Grinding_Rate": 7000
+  },
+  {
+    "Item_ID": 34000413,
+    "DESC": "가속도 연마 보조제 (70%)",
+    "TraitID": 63,
+    "Grinding_Rate": 7000
+  },
+  {
+    "Item_ID": 34000414,
+    "DESC": "PVP 피해율 연마 보조제 (70%)",
+    "TraitID": 71,
+    "Grinding_Rate": 7000
+  },
+  {
+    "Item_ID": 34000415,
+    "DESC": "PVP 방어율 연마 보조제 (70%)",
+    "TraitID": 72,
+    "Grinding_Rate": 7000
+  },
+  {
+    "Item_ID": 34000416,
+    "DESC": "MP 손실 감소율 연마 보조제 (70%)",
+    "TraitID": 99,
+    "Grinding_Rate": 7000
+  },
+  {
+    "Item_ID": 34000417,
+    "DESC": "아이템 등급 증가 연마 보조제 (70%)",
+    "TraitID": 100,
+    "Grinding_Rate": 7000
+  },
+  {
+    "Item_ID": 34000418,
+    "DESC": "최대 HP 연마 보조제 (80%)",
+    "TraitID": 21,
+    "Grinding_Rate": 8000
+  },
+  {
+    "Item_ID": 34000419,
+    "DESC": "최대 SP 연마 보조제 (80%)",
+    "TraitID": 22,
+    "Grinding_Rate": 8000
+  },
+  {
+    "Item_ID": 34000420,
+    "DESC": "물리 공격력 연마 보조제 (80%)",
+    "TraitID": 23,
+    "Grinding_Rate": 8000
+  },
+  {
+    "Item_ID": 34000421,
+    "DESC": "마법 공격력 연마 보조제 (80%)",
+    "TraitID": 25,
+    "Grinding_Rate": 8000
+  },
+  {
+    "Item_ID": 34000422,
+    "DESC": "물리 방어력 연마 보조제 (80%)",
+    "TraitID": 26,
+    "Grinding_Rate": 8000
+  },
+  {
+    "Item_ID": 34000423,
+    "DESC": "피해 증가 감소 연마 보조제 (80%)",
+    "TraitID": 51,
+    "Grinding_Rate": 8000
+  },
+  {
+    "Item_ID": 34000424,
+    "DESC": "명중도 연마 보조제 (80%)",
+    "TraitID": 58,
+    "Grinding_Rate": 8000
+  },
+  {
+    "Item_ID": 34000425,
+    "DESC": "회피도 연마 보조제 (80%)",
+    "TraitID": 59,
+    "Grinding_Rate": 8000
+  },
+  {
+    "Item_ID": 34000426,
+    "DESC": "치명도 연마 보조제 (80%)",
+    "TraitID": 60,
+    "Grinding_Rate": 8000
+  },
+  {
+    "Item_ID": 34000427,
+    "DESC": "방패방어도 연마 보조제 (80%)",
+    "TraitID": 61,
+    "Grinding_Rate": 8000
+  },
+  {
+    "Item_ID": 34000428,
+    "DESC": "활력도 연마 보조제 (80%)",
+    "TraitID": 62,
+    "Grinding_Rate": 8000
+  },
+  {
+    "Item_ID": 34000429,
+    "DESC": "가속도 연마 보조제 (80%)",
+    "TraitID": 63,
+    "Grinding_Rate": 8000
+  },
+  {
+    "Item_ID": 34000430,
+    "DESC": "PVP 피해율 연마 보조제 (80%)",
+    "TraitID": 71,
+    "Grinding_Rate": 8000
+  },
+  {
+    "Item_ID": 34000431,
+    "DESC": "PVP 방어율 연마 보조제 (80%)",
+    "TraitID": 72,
+    "Grinding_Rate": 8000
+  },
+  {
+    "Item_ID": 34000432,
+    "DESC": "MP 손실 감소율 연마 보조제 (80%)",
+    "TraitID": 99,
+    "Grinding_Rate": 8000
+  },
+  {
+    "Item_ID": 34000433,
+    "DESC": "아이템 등급 증가 연마 보조제 (80%)",
+    "TraitID": 100,
+    "Grinding_Rate": 8000
+  },
+  {
+    "Item_ID": 34000434,
+    "DESC": "최대 HP 연마 보조제 (90%)",
+    "TraitID": 21,
+    "Grinding_Rate": 9000
+  },
+  {
+    "Item_ID": 34000435,
+    "DESC": "최대 SP 연마 보조제 (90%)",
+    "TraitID": 22,
+    "Grinding_Rate": 9000
+  },
+  {
+    "Item_ID": 34000436,
+    "DESC": "물리 공격력 연마 보조제 (90%)",
+    "TraitID": 23,
+    "Grinding_Rate": 9000
+  },
+  {
+    "Item_ID": 34000437,
+    "DESC": "마법 공격력 연마 보조제 (90%)",
+    "TraitID": 25,
+    "Grinding_Rate": 9000
+  },
+  {
+    "Item_ID": 34000438,
+    "DESC": "물리 방어력 연마 보조제 (90%)",
+    "TraitID": 26,
+    "Grinding_Rate": 9000
+  },
+  {
+    "Item_ID": 34000439,
+    "DESC": "피해 증가 감소 연마 보조제 (90%)",
+    "TraitID": 51,
+    "Grinding_Rate": 9000
+  },
+  {
+    "Item_ID": 34000440,
+    "DESC": "명중도 연마 보조제 (90%)",
+    "TraitID": 58,
+    "Grinding_Rate": 9000
+  },
+  {
+    "Item_ID": 34000441,
+    "DESC": "회피도 연마 보조제 (90%)",
+    "TraitID": 59,
+    "Grinding_Rate": 9000
+  },
+  {
+    "Item_ID": 34000442,
+    "DESC": "치명도 연마 보조제 (90%)",
+    "TraitID": 60,
+    "Grinding_Rate": 9000
+  },
+  {
+    "Item_ID": 34000443,
+    "DESC": "방패방어도 연마 보조제 (90%)",
+    "TraitID": 61,
+    "Grinding_Rate": 9000
+  },
+  {
+    "Item_ID": 34000444,
+    "DESC": "활력도 연마 보조제 (90%)",
+    "TraitID": 62,
+    "Grinding_Rate": 9000
+  },
+  {
+    "Item_ID": 34000445,
+    "DESC": "가속도 연마 보조제 (90%)",
+    "TraitID": 63,
+    "Grinding_Rate": 9000
+  },
+  {
+    "Item_ID": 34000446,
+    "DESC": "PVP 피해율 연마 보조제 (90%)",
+    "TraitID": 71,
+    "Grinding_Rate": 9000
+  },
+  {
+    "Item_ID": 34000447,
+    "DESC": "PVP 방어율 연마 보조제 (90%)",
+    "TraitID": 72,
+    "Grinding_Rate": 9000
+  },
+  {
+    "Item_ID": 34000448,
+    "DESC": "MP 손실 감소율 연마 보조제 (90%)",
+    "TraitID": 99,
+    "Grinding_Rate": 9000
+  },
+  {
+    "Item_ID": 34000449,
+    "DESC": "아이템 등급 증가 연마 보조제 (90%)",
+    "TraitID": 100,
+    "Grinding_Rate": 9000
+  },
+  {
+    "Item_ID": 34000450,
+    "DESC": "최대 HP 연마 보조제 (100%)",
+    "TraitID": 21,
+    "Grinding_Rate": 10000
+  },
+  {
+    "Item_ID": 34000451,
+    "DESC": "최대 SP 연마 보조제 (100%)",
+    "TraitID": 22,
+    "Grinding_Rate": 10000
+  },
+  {
+    "Item_ID": 34000452,
+    "DESC": "물리 공격력 연마 보조제 (100%)",
+    "TraitID": 23,
+    "Grinding_Rate": 10000
+  },
+  {
+    "Item_ID": 34000453,
+    "DESC": "마법 공격력 연마 보조제 (100%)",
+    "TraitID": 25,
+    "Grinding_Rate": 10000
+  },
+  {
+    "Item_ID": 34000454,
+    "DESC": "물리 방어력 연마 보조제 (100%)",
+    "TraitID": 26,
+    "Grinding_Rate": 10000
+  },
+  {
+    "Item_ID": 34000455,
+    "DESC": "피해 증가 감소 연마 보조제 (100%)",
+    "TraitID": 51,
+    "Grinding_Rate": 10000
+  },
+  {
+    "Item_ID": 34000456,
+    "DESC": "명중도 연마 보조제 (100%)",
+    "TraitID": 58,
+    "Grinding_Rate": 10000
+  },
+  {
+    "Item_ID": 34000457,
+    "DESC": "회피도 연마 보조제 (100%)",
+    "TraitID": 59,
+    "Grinding_Rate": 10000
+  },
+  {
+    "Item_ID": 34000458,
+    "DESC": "치명도 연마 보조제 (100%)",
+    "TraitID": 60,
+    "Grinding_Rate": 10000
+  },
+  {
+    "Item_ID": 34000459,
+    "DESC": "방패방어도 연마 보조제 (100%)",
+    "TraitID": 61,
+    "Grinding_Rate": 10000
+  },
+  {
+    "Item_ID": 34000460,
+    "DESC": "활력도 연마 보조제 (100%)",
+    "TraitID": 62,
+    "Grinding_Rate": 10000
+  },
+  {
+    "Item_ID": 34000461,
+    "DESC": "가속도 연마 보조제 (100%)",
+    "TraitID": 63,
+    "Grinding_Rate": 10000
+  },
+  {
+    "Item_ID": 34000462,
+    "DESC": "PVP 피해율 연마 보조제 (100%)",
+    "TraitID": 71,
+    "Grinding_Rate": 10000
+  },
+  {
+    "Item_ID": 34000463,
+    "DESC": "PVP 방어율 연마 보조제 (100%)",
+    "TraitID": 72,
+    "Grinding_Rate": 10000
+  },
+  {
+    "Item_ID": 34000464,
+    "DESC": "MP 손실 감소율 연마 보조제 (100%)",
+    "TraitID": 99,
+    "Grinding_Rate": 10000
+  },
+  {
+    "Item_ID": 34000465,
+    "DESC": "아이템 등급 증가 연마 보조제 (100%)",
+    "TraitID": 100,
+    "Grinding_Rate": 10000
+  }
+]

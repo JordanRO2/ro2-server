@@ -1,0 +1,894 @@
+[
+  {
+    "Item_ID": 22250002,
+    "RidingDuration_ID": 1
+  },
+  {
+    "Item_ID": 22250003,
+    "RidingDuration_ID": 2
+  },
+  {
+    "Item_ID": 22250017,
+    "RidingDuration_ID": 2
+  },
+  {
+    "Item_ID": 22250043,
+    "RidingDuration_ID": 2
+  },
+  {
+    "Item_ID": 60002428,
+    "RidingDuration_ID": 2
+  },
+  {
+    "Item_ID": 22250004,
+    "RidingDuration_ID": 3
+  },
+  {
+    "Item_ID": 22250039,
+    "RidingDuration_ID": 3
+  },
+  {
+    "Item_ID": 70000355,
+    "RidingDuration_ID": 3
+  },
+  {
+    "Item_ID": 70000356,
+    "RidingDuration_ID": 3
+  },
+  {
+    "Item_ID": 70001701,
+    "RidingDuration_ID": 3
+  },
+  {
+    "Item_ID": 60002314,
+    "RidingDuration_ID": 3
+  },
+  {
+    "Item_ID": 60002315,
+    "RidingDuration_ID": 3
+  },
+  {
+    "Item_ID": 22250006,
+    "RidingDuration_ID": 4
+  },
+  {
+    "Item_ID": 22250018,
+    "RidingDuration_ID": 4
+  },
+  {
+    "Item_ID": 22250023,
+    "RidingDuration_ID": 4
+  },
+  {
+    "Item_ID": 60002429,
+    "RidingDuration_ID": 4
+  },
+  {
+    "Item_ID": 22250007,
+    "RidingDuration_ID": 5
+  },
+  {
+    "Item_ID": 22250019,
+    "RidingDuration_ID": 5
+  },
+  {
+    "Item_ID": 22250024,
+    "RidingDuration_ID": 5
+  },
+  {
+    "Item_ID": 60000622,
+    "RidingDuration_ID": 5
+  },
+  {
+    "Item_ID": 60002430,
+    "RidingDuration_ID": 5
+  },
+  {
+    "Item_ID": 22250008,
+    "RidingDuration_ID": 6
+  },
+  {
+    "Item_ID": 22250020,
+    "RidingDuration_ID": 6
+  },
+  {
+    "Item_ID": 22250025,
+    "RidingDuration_ID": 6
+  },
+  {
+    "Item_ID": 22250083,
+    "RidingDuration_ID": 6
+  },
+  {
+    "Item_ID": 60002431,
+    "RidingDuration_ID": 6
+  },
+  {
+    "Item_ID": 22250009,
+    "RidingDuration_ID": 7
+  },
+  {
+    "Item_ID": 22250021,
+    "RidingDuration_ID": 7
+  },
+  {
+    "Item_ID": 60000853,
+    "RidingDuration_ID": 7
+  },
+  {
+    "Item_ID": 60002432,
+    "RidingDuration_ID": 7
+  },
+  {
+    "Item_ID": 22250005,
+    "RidingDuration_ID": 8
+  },
+  {
+    "Item_ID": 12721020,
+    "RidingDuration_ID": 8
+  },
+  {
+    "Item_ID": 70000140,
+    "RidingDuration_ID": 8
+  },
+  {
+    "Item_ID": 22250022,
+    "RidingDuration_ID": 8
+  },
+  {
+    "Item_ID": 70000204,
+    "RidingDuration_ID": 8
+  },
+  {
+    "Item_ID": 60000332,
+    "RidingDuration_ID": 8
+  },
+  {
+    "Item_ID": 70000322,
+    "RidingDuration_ID": 8
+  },
+  {
+    "Item_ID": 70000323,
+    "RidingDuration_ID": 8
+  },
+  {
+    "Item_ID": 70000326,
+    "RidingDuration_ID": 8
+  },
+  {
+    "Item_ID": 70000028,
+    "RidingDuration_ID": 9
+  },
+  {
+    "Item_ID": 70000029,
+    "RidingDuration_ID": 9
+  },
+  {
+    "Item_ID": 60000072,
+    "RidingDuration_ID": 9
+  },
+  {
+    "Item_ID": 70000141,
+    "RidingDuration_ID": 9
+  },
+  {
+    "Item_ID": 70000205,
+    "RidingDuration_ID": 9
+  },
+  {
+    "Item_ID": 60000215,
+    "RidingDuration_ID": 9
+  },
+  {
+    "Item_ID": 70000257,
+    "RidingDuration_ID": 9
+  },
+  {
+    "Item_ID": 70000382,
+    "RidingDuration_ID": 9
+  },
+  {
+    "Item_ID": 22250046,
+    "RidingDuration_ID": 9
+  },
+  {
+    "Item_ID": 22250047,
+    "RidingDuration_ID": 9
+  },
+  {
+    "Item_ID": 70000250,
+    "RidingDuration_ID": 9
+  },
+  {
+    "Item_ID": 70001708,
+    "RidingDuration_ID": 9
+  },
+  {
+    "Item_ID": 60002328,
+    "RidingDuration_ID": 9
+  },
+  {
+    "Item_ID": 60002329,
+    "RidingDuration_ID": 9
+  },
+  {
+    "Item_ID": 70000038,
+    "RidingDuration_ID": 10
+  },
+  {
+    "Item_ID": 70000039,
+    "RidingDuration_ID": 10
+  },
+  {
+    "Item_ID": 60000134,
+    "RidingDuration_ID": 10
+  },
+  {
+    "Item_ID": 70000139,
+    "RidingDuration_ID": 10
+  },
+  {
+    "Item_ID": 70000203,
+    "RidingDuration_ID": 10
+  },
+  {
+    "Item_ID": 70000264,
+    "RidingDuration_ID": 10
+  },
+  {
+    "Item_ID": 70000265,
+    "RidingDuration_ID": 10
+  },
+  {
+    "Item_ID": 60000652,
+    "RidingDuration_ID": 10
+  },
+  {
+    "Item_ID": 60000280,
+    "RidingDuration_ID": 10
+  },
+  {
+    "Item_ID": 70000346,
+    "RidingDuration_ID": 10
+  },
+  {
+    "Item_ID": 60000854,
+    "RidingDuration_ID": 10
+  },
+  {
+    "Item_ID": 70001635,
+    "RidingDuration_ID": 10
+  },
+  {
+    "Item_ID": 60002242,
+    "RidingDuration_ID": 10
+  },
+  {
+    "Item_ID": 60002243,
+    "RidingDuration_ID": 10
+  },
+  {
+    "Item_ID": 70000132,
+    "RidingDuration_ID": 11
+  },
+  {
+    "Item_ID": 70000133,
+    "RidingDuration_ID": 11
+  },
+  {
+    "Item_ID": 70000142,
+    "RidingDuration_ID": 11
+  },
+  {
+    "Item_ID": 60000144,
+    "RidingDuration_ID": 11
+  },
+  {
+    "Item_ID": 60000365,
+    "RidingDuration_ID": 11
+  },
+  {
+    "Item_ID": 70000307,
+    "RidingDuration_ID": 11
+  },
+  {
+    "Item_ID": 70000308,
+    "RidingDuration_ID": 11
+  },
+  {
+    "Item_ID": 60000357,
+    "RidingDuration_ID": 11
+  },
+  {
+    "Item_ID": 70000395,
+    "RidingDuration_ID": 11
+  },
+  {
+    "Item_ID": 22250050,
+    "RidingDuration_ID": 11
+  },
+  {
+    "Item_ID": 22250051,
+    "RidingDuration_ID": 11
+  },
+  {
+    "Item_ID": 70001710,
+    "RidingDuration_ID": 11
+  },
+  {
+    "Item_ID": 60002332,
+    "RidingDuration_ID": 11
+  },
+  {
+    "Item_ID": 60002333,
+    "RidingDuration_ID": 11
+  },
+  {
+    "Item_ID": 22250026,
+    "RidingDuration_ID": 12
+  },
+  {
+    "Item_ID": 22250032,
+    "RidingDuration_ID": 12
+  },
+  {
+    "Item_ID": 60000651,
+    "RidingDuration_ID": 12
+  },
+  {
+    "Item_ID": 22250044,
+    "RidingDuration_ID": 12
+  },
+  {
+    "Item_ID": 70000374,
+    "RidingDuration_ID": 12
+  },
+  {
+    "Item_ID": 22250045,
+    "RidingDuration_ID": 12
+  },
+  {
+    "Item_ID": 70001706,
+    "RidingDuration_ID": 12
+  },
+  {
+    "Item_ID": 60002324,
+    "RidingDuration_ID": 12
+  },
+  {
+    "Item_ID": 60002325,
+    "RidingDuration_ID": 12
+  },
+  {
+    "Item_ID": 22250027,
+    "RidingDuration_ID": 13
+  },
+  {
+    "Item_ID": 60000814,
+    "RidingDuration_ID": 13
+  },
+  {
+    "Item_ID": 70000343,
+    "RidingDuration_ID": 13
+  },
+  {
+    "Item_ID": 60000653,
+    "RidingDuration_ID": 13
+  },
+  {
+    "Item_ID": 22250053,
+    "RidingDuration_ID": 13
+  },
+  {
+    "Item_ID": 70001712,
+    "RidingDuration_ID": 13
+  },
+  {
+    "Item_ID": 22250028,
+    "RidingDuration_ID": 14
+  },
+  {
+    "Item_ID": 70000367,
+    "RidingDuration_ID": 14
+  },
+  {
+    "Item_ID": 70000368,
+    "RidingDuration_ID": 14
+  },
+  {
+    "Item_ID": 60000620,
+    "RidingDuration_ID": 14
+  },
+  {
+    "Item_ID": 70001714,
+    "RidingDuration_ID": 14
+  },
+  {
+    "Item_ID": 22250029,
+    "RidingDuration_ID": 15
+  },
+  {
+    "Item_ID": 22250033,
+    "RidingDuration_ID": 15
+  },
+  {
+    "Item_ID": 70000366,
+    "RidingDuration_ID": 15
+  },
+  {
+    "Item_ID": 22250041,
+    "RidingDuration_ID": 15
+  },
+  {
+    "Item_ID": 22250042,
+    "RidingDuration_ID": 15
+  },
+  {
+    "Item_ID": 70001703,
+    "RidingDuration_ID": 15
+  },
+  {
+    "Item_ID": 60002318,
+    "RidingDuration_ID": 15
+  },
+  {
+    "Item_ID": 60002319,
+    "RidingDuration_ID": 15
+  },
+  {
+    "Item_ID": 22250030,
+    "RidingDuration_ID": 16
+  },
+  {
+    "Item_ID": 70000304,
+    "RidingDuration_ID": 16
+  },
+  {
+    "Item_ID": 22250081,
+    "RidingDuration_ID": 16
+  },
+  {
+    "Item_ID": 22250082,
+    "RidingDuration_ID": 16
+  },
+  {
+    "Item_ID": 70001722,
+    "RidingDuration_ID": 16
+  },
+  {
+    "Item_ID": 22250031,
+    "RidingDuration_ID": 17
+  },
+  {
+    "Item_ID": 70000646,
+    "RidingDuration_ID": 17
+  },
+  {
+    "Item_ID": 22250059,
+    "RidingDuration_ID": 17
+  },
+  {
+    "Item_ID": 22250060,
+    "RidingDuration_ID": 17
+  },
+  {
+    "Item_ID": 70001720,
+    "RidingDuration_ID": 17
+  },
+  {
+    "Item_ID": 22250011,
+    "RidingDuration_ID": 18
+  },
+  {
+    "Item_ID": 22250034,
+    "RidingDuration_ID": 18
+  },
+  {
+    "Item_ID": 22250036,
+    "RidingDuration_ID": 18
+  },
+  {
+    "Item_ID": 22402004,
+    "RidingDuration_ID": 18
+  },
+  {
+    "Item_ID": 22250015,
+    "RidingDuration_ID": 19
+  },
+  {
+    "Item_ID": 22250035,
+    "RidingDuration_ID": 19
+  },
+  {
+    "Item_ID": 22250037,
+    "RidingDuration_ID": 19
+  },
+  {
+    "Item_ID": 22402005,
+    "RidingDuration_ID": 19
+  },
+  {
+    "Item_ID": 60000277,
+    "RidingDuration_ID": 21
+  },
+  {
+    "Item_ID": 70000279,
+    "RidingDuration_ID": 21
+  },
+  {
+    "Item_ID": 60000329,
+    "RidingDuration_ID": 21
+  },
+  {
+    "Item_ID": 70000296,
+    "RidingDuration_ID": 21
+  },
+  {
+    "Item_ID": 70000295,
+    "RidingDuration_ID": 21
+  },
+  {
+    "Item_ID": 70000294,
+    "RidingDuration_ID": 21
+  },
+  {
+    "Item_ID": 60000378,
+    "RidingDuration_ID": 21
+  },
+  {
+    "Item_ID": 60000483,
+    "RidingDuration_ID": 21
+  },
+  {
+    "Item_ID": 22250013,
+    "RidingDuration_ID": 22
+  },
+  {
+    "Item_ID": 22250048,
+    "RidingDuration_ID": 22
+  },
+  {
+    "Item_ID": 70000390,
+    "RidingDuration_ID": 22
+  },
+  {
+    "Item_ID": 22250049,
+    "RidingDuration_ID": 22
+  },
+  {
+    "Item_ID": 60000654,
+    "RidingDuration_ID": 22
+  },
+  {
+    "Item_ID": 60000722,
+    "RidingDuration_ID": 22
+  },
+  {
+    "Item_ID": 22250038,
+    "RidingDuration_ID": 23
+  },
+  {
+    "Item_ID": 60000723,
+    "RidingDuration_ID": 23
+  },
+  {
+    "Item_ID": 70001944,
+    "RidingDuration_ID": 23
+  },
+  {
+    "Item_ID": 70001945,
+    "RidingDuration_ID": 23
+  },
+  {
+    "Item_ID": 22250012,
+    "RidingDuration_ID": 24
+  },
+  {
+    "Item_ID": 70000429,
+    "RidingDuration_ID": 24
+  },
+  {
+    "Item_ID": 22250052,
+    "RidingDuration_ID": 24
+  },
+  {
+    "Item_ID": 22250056,
+    "RidingDuration_ID": 24
+  },
+  {
+    "Item_ID": 60000788,
+    "RidingDuration_ID": 24
+  },
+  {
+    "Item_ID": 70001718,
+    "RidingDuration_ID": 24
+  },
+  {
+    "Item_ID": 22260007,
+    "RidingDuration_ID": 24
+  },
+  {
+    "Item_ID": 22260008,
+    "RidingDuration_ID": 24
+  },
+  {
+    "Item_ID": 22260009,
+    "RidingDuration_ID": 24
+  },
+  {
+    "Item_ID": 70000464,
+    "RidingDuration_ID": 25
+  },
+  {
+    "Item_ID": 22250054,
+    "RidingDuration_ID": 25
+  },
+  {
+    "Item_ID": 22250055,
+    "RidingDuration_ID": 25
+  },
+  {
+    "Item_ID": 70001716,
+    "RidingDuration_ID": 25
+  },
+  {
+    "Item_ID": 60002336,
+    "RidingDuration_ID": 25
+  },
+  {
+    "Item_ID": 60002337,
+    "RidingDuration_ID": 25
+  },
+  {
+    "Item_ID": 70000539,
+    "RidingDuration_ID": 26
+  },
+  {
+    "Item_ID": 22250057,
+    "RidingDuration_ID": 26
+  },
+  {
+    "Item_ID": 60000871,
+    "RidingDuration_ID": 26
+  },
+  {
+    "Item_ID": 22250058,
+    "RidingDuration_ID": 26
+  },
+  {
+    "Item_ID": 70001724,
+    "RidingDuration_ID": 26
+  },
+  {
+    "Item_ID": 70000553,
+    "RidingDuration_ID": 27
+  },
+  {
+    "Item_ID": 70000554,
+    "RidingDuration_ID": 27
+  },
+  {
+    "Item_ID": 70000555,
+    "RidingDuration_ID": 27
+  },
+  {
+    "Item_ID": 60000995,
+    "RidingDuration_ID": 27
+  },
+  {
+    "Item_ID": 70001726,
+    "RidingDuration_ID": 27
+  },
+  {
+    "Item_ID": 70000557,
+    "RidingDuration_ID": 28
+  },
+  {
+    "Item_ID": 70000558,
+    "RidingDuration_ID": 28
+  },
+  {
+    "Item_ID": 70000559,
+    "RidingDuration_ID": 28
+  },
+  {
+    "Item_ID": 70000651,
+    "RidingDuration_ID": 29
+  },
+  {
+    "Item_ID": 22250061,
+    "RidingDuration_ID": 29
+  },
+  {
+    "Item_ID": 22250062,
+    "RidingDuration_ID": 29
+  },
+  {
+    "Item_ID": 70000814,
+    "RidingDuration_ID": 30
+  },
+  {
+    "Item_ID": 22250069,
+    "RidingDuration_ID": 30
+  },
+  {
+    "Item_ID": 22250070,
+    "RidingDuration_ID": 30
+  },
+  {
+    "Item_ID": 22260035,
+    "RidingDuration_ID": 30
+  },
+  {
+    "Item_ID": 22260036,
+    "RidingDuration_ID": 30
+  },
+  {
+    "Item_ID": 70000818,
+    "RidingDuration_ID": 31
+  },
+  {
+    "Item_ID": 22250077,
+    "RidingDuration_ID": 31
+  },
+  {
+    "Item_ID": 22250078,
+    "RidingDuration_ID": 31
+  },
+  {
+    "Item_ID": 70000817,
+    "RidingDuration_ID": 32
+  },
+  {
+    "Item_ID": 22250075,
+    "RidingDuration_ID": 32
+  },
+  {
+    "Item_ID": 22250076,
+    "RidingDuration_ID": 32
+  },
+  {
+    "Item_ID": 70000811,
+    "RidingDuration_ID": 33
+  },
+  {
+    "Item_ID": 22250063,
+    "RidingDuration_ID": 33
+  },
+  {
+    "Item_ID": 22250064,
+    "RidingDuration_ID": 33
+  },
+  {
+    "Item_ID": 70001580,
+    "RidingDuration_ID": 33
+  },
+  {
+    "Item_ID": 60002226,
+    "RidingDuration_ID": 33
+  },
+  {
+    "Item_ID": 60002227,
+    "RidingDuration_ID": 33
+  },
+  {
+    "Item_ID": 70000815,
+    "RidingDuration_ID": 34
+  },
+  {
+    "Item_ID": 22250071,
+    "RidingDuration_ID": 34
+  },
+  {
+    "Item_ID": 22250072,
+    "RidingDuration_ID": 34
+  },
+  {
+    "Item_ID": 70000816,
+    "RidingDuration_ID": 35
+  },
+  {
+    "Item_ID": 22250073,
+    "RidingDuration_ID": 35
+  },
+  {
+    "Item_ID": 22250074,
+    "RidingDuration_ID": 35
+  },
+  {
+    "Item_ID": 70000813,
+    "RidingDuration_ID": 36
+  },
+  {
+    "Item_ID": 22250067,
+    "RidingDuration_ID": 36
+  },
+  {
+    "Item_ID": 22250068,
+    "RidingDuration_ID": 36
+  },
+  {
+    "Item_ID": 70000819,
+    "RidingDuration_ID": 37
+  },
+  {
+    "Item_ID": 22250079,
+    "RidingDuration_ID": 37
+  },
+  {
+    "Item_ID": 22250080,
+    "RidingDuration_ID": 37
+  },
+  {
+    "Item_ID": 22260012,
+    "RidingDuration_ID": 37
+  },
+  {
+    "Item_ID": 22260013,
+    "RidingDuration_ID": 37
+  },
+  {
+    "Item_ID": 22260014,
+    "RidingDuration_ID": 37
+  },
+  {
+    "Item_ID": 22260033,
+    "RidingDuration_ID": 37
+  },
+  {
+    "Item_ID": 22260034,
+    "RidingDuration_ID": 37
+  },
+  {
+    "Item_ID": 70000812,
+    "RidingDuration_ID": 38
+  },
+  {
+    "Item_ID": 22250065,
+    "RidingDuration_ID": 38
+  },
+  {
+    "Item_ID": 22250066,
+    "RidingDuration_ID": 38
+  },
+  {
+    "Item_ID": 70001104,
+    "RidingDuration_ID": 39
+  },
+  {
+    "Item_ID": 70001105,
+    "RidingDuration_ID": 39
+  },
+  {
+    "Item_ID": 70001106,
+    "RidingDuration_ID": 39
+  },
+  {
+    "Item_ID": 60001010,
+    "RidingDuration_ID": 39
+  },
+  {
+    "Item_ID": 70001820,
+    "RidingDuration_ID": 40
+  },
+  {
+    "Item_ID": 70001821,
+    "RidingDuration_ID": 40
+  },
+  {
+    "Item_ID": 70001822,
+    "RidingDuration_ID": 40
+  },
+  {
+    "Item_ID": 70001824,
+    "RidingDuration_ID": 40
+  },
+  {
+    "Item_ID": 60002374,
+    "RidingDuration_ID": 40
+  },
+  {
+    "Item_ID": 60002375,
+    "RidingDuration_ID": 40
+  }
+]

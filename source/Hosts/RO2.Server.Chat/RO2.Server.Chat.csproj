@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+    <PackageReference Include="Serilog.Extensions.Hosting" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Expose the internal 23001 auth seams (ChatAuthHandler.TryReadMessengerToken / AuthenticateAsync)
+         to the test project for the messenger-impersonation (P0-2) tests. -->
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Game\RO2.Domain\RO2.Domain.csproj" />
+    <ProjectReference Include="..\..\Game\RO2.Application\RO2.Application.csproj" />
+    <ProjectReference Include="..\..\Platform\RO2.Infrastructure\RO2.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Platform\RO2.Persistence.Mongo\RO2.Persistence.Mongo.csproj" />
+    <ProjectReference Include="..\..\Platform\RO2.Network\RO2.Network.csproj" />
+  </ItemGroup>
+
+</Project>

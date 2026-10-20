@@ -1,0 +1,32 @@
+[
+  {
+    "Index": 1,
+    "MallCategory": 31,
+    "String_Mall_Category": "전체"
+  },
+  {
+    "Index": 2,
+    "MallCategory": 1,
+    "String_Mall_Category": "꾸미기"
+  },
+  {
+    "Index": 3,
+    "MallCategory": 2,
+    "String_Mall_Category": "편의 기능"
+  },
+  {
+    "Index": 4,
+    "MallCategory": 4,
+    "String_Mall_Category": "보조 기능"
+  },
+  {
+    "Index": 5,
+    "MallCategory": 8,
+    "String_Mall_Category": "스페셜"
+  },
+  {
+    "Index": 6,
+    "MallCategory": 16,
+    "String_Mall_Category": "PC방"
+  }
+]

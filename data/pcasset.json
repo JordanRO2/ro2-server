@@ -1,0 +1,30 @@
+[
+  {
+    "Index": 1,
+    "Race": "Rag2Sample",
+    "Sex": "man",
+    "Rsc_Index": 11001001,
+    "Scale_rate": 100.0
+  },
+  {
+    "Index": 2,
+    "Race": "Rag2Sample",
+    "Sex": "woman",
+    "Rsc_Index": 11001002,
+    "Scale_rate": 100.0
+  },
+  {
+    "Index": 3,
+    "Race": "NoelMan",
+    "Sex": "man",
+    "Rsc_Index": 11001003,
+    "Scale_rate": 100.0
+  },
+  {
+    "Index": 4,
+    "Race": "NoelWoman",
+    "Sex": "woman",
+    "Rsc_Index": 11001004,
+    "Scale_rate": 100.0
+  }
+]

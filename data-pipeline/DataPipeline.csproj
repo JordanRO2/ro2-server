@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Standalone maintainer tool: regenerates the client-derived data/*.json tables from a user's own
+    client (VDK archive -> CT tables -> JSON). It is deliberately NOT part of RO2_Server.sln.
+    No NuGet packages: EUC-KR/CP949 comes from CodePagesEncodingProvider, which ships in the shared
+    framework. Shared settings (net11.0, nullable, warnings as errors) come from Directory.Build.props.
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>data-pipeline</AssemblyName>
+    <RootNamespace>Ro2.DataPipeline</RootNamespace>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,1532 @@
+[
+  {
+    "Color_Index": 1,
+    "RGB_Color": 0,
+    "Color_Name_E": "no_color",
+    "Color_Name_H": "색상없음"
+  },
+  {
+    "Color_Index": 2,
+    "RGB_Color": 0,
+    "Color_Name_E": "darkslategray ",
+    "Color_Name_H": "암청회색"
+  },
+  {
+    "Color_Index": 3,
+    "RGB_Color": 0,
+    "Color_Name_E": "slategray ",
+    "Color_Name_H": "청회색"
+  },
+  {
+    "Color_Index": 4,
+    "RGB_Color": 0,
+    "Color_Name_E": "lightslategray ",
+    "Color_Name_H": "희푸른회색"
+  },
+  {
+    "Color_Index": 5,
+    "RGB_Color": 0,
+    "Color_Name_E": "dimgray ",
+    "Color_Name_H": "칙칙한회색"
+  },
+  {
+    "Color_Index": 6,
+    "RGB_Color": 0,
+    "Color_Name_E": "gray ",
+    "Color_Name_H": "회색"
+  },
+  {
+    "Color_Index": 7,
+    "RGB_Color": 0,
+    "Color_Name_E": "darkgray ",
+    "Color_Name_H": "검회색"
+  },
+  {
+    "Color_Index": 8,
+    "RGB_Color": 0,
+    "Color_Name_E": "silver ",
+    "Color_Name_H": "은색"
+  },
+  {
+    "Color_Index": 9,
+    "RGB_Color": 0,
+    "Color_Name_E": "lightgrey ",
+    "Color_Name_H": "밝은회색"
+  },
+  {
+    "Color_Index": 10,
+    "RGB_Color": 0,
+    "Color_Name_E": "gainsboro",
+    "Color_Name_H": "연회색"
+  },
+  {
+    "Color_Index": 11,
+    "RGB_Color": 0,
+    "Color_Name_E": "black",
+    "Color_Name_H": "검은색"
+  },
+  {
+    "Color_Index": 12,
+    "RGB_Color": 0,
+    "Color_Name_E": "seashell ",
+    "Color_Name_H": "조가비색"
+  },
+  {
+    "Color_Index": 13,
+    "RGB_Color": 0,
+    "Color_Name_E": "snow ",
+    "Color_Name_H": "눈하얀색"
+  },
+  {
+    "Color_Index": 14,
+    "RGB_Color": 0,
+    "Color_Name_E": "ghostwhite ",
+    "Color_Name_H": "유령흰색"
+  },
+  {
+    "Color_Index": 15,
+    "RGB_Color": 0,
+    "Color_Name_E": "floralwhite ",
+    "Color_Name_H": "흰꽃색"
+  },
+  {
+    "Color_Index": 16,
+    "RGB_Color": 0,
+    "Color_Name_E": "whitesmoke ",
+    "Color_Name_H": "흰연기색"
+  },
+  {
+    "Color_Index": 17,
+    "RGB_Color": 0,
+    "Color_Name_E": "aliceblue ",
+    "Color_Name_H": "연두빛청색"
+  },
+  {
+    "Color_Index": 18,
+    "RGB_Color": 0,
+    "Color_Name_E": "azure ",
+    "Color_Name_H": "하늘색"
+  },
+  {
+    "Color_Index": 19,
+    "RGB_Color": 0,
+    "Color_Name_E": "oldlace ",
+    "Color_Name_H": "낡은레이스"
+  },
+  {
+    "Color_Index": 20,
+    "RGB_Color": 0,
+    "Color_Name_E": "mintcream ",
+    "Color_Name_H": "박하크림"
+  },
+  {
+    "Color_Index": 21,
+    "RGB_Color": 0,
+    "Color_Name_E": "papayawhip ",
+    "Color_Name_H": "파파야색"
+  },
+  {
+    "Color_Index": 22,
+    "RGB_Color": 0,
+    "Color_Name_E": "peachpuff ",
+    "Color_Name_H": "복숭아빛"
+  },
+  {
+    "Color_Index": 23,
+    "RGB_Color": 0,
+    "Color_Name_E": "linen ",
+    "Color_Name_H": "리넨색"
+  },
+  {
+    "Color_Index": 24,
+    "RGB_Color": 0,
+    "Color_Name_E": "palegoldenrod ",
+    "Color_Name_H": "연황색"
+  },
+  {
+    "Color_Index": 25,
+    "RGB_Color": 0,
+    "Color_Name_E": "mistyrose ",
+    "Color_Name_H": "안개장미색"
+  },
+  {
+    "Color_Index": 26,
+    "RGB_Color": 0,
+    "Color_Name_E": "moccasin ",
+    "Color_Name_H": "노루가죽색"
+  },
+  {
+    "Color_Index": 27,
+    "RGB_Color": 0,
+    "Color_Name_E": "navajowhite ",
+    "Color_Name_H": "나바호백색"
+  },
+  {
+    "Color_Index": 28,
+    "RGB_Color": 0,
+    "Color_Name_E": "tan ",
+    "Color_Name_H": "탄피부색"
+  },
+  {
+    "Color_Index": 29,
+    "RGB_Color": 0,
+    "Color_Name_E": "wheat ",
+    "Color_Name_H": "밀색"
+  },
+  {
+    "Color_Index": 30,
+    "RGB_Color": 0,
+    "Color_Name_E": "lightgoldenrodyellow ",
+    "Color_Name_H": "밝은연황색"
+  },
+  {
+    "Color_Index": 31,
+    "RGB_Color": 0,
+    "Color_Name_E": "lightyellow ",
+    "Color_Name_H": "밝은노랑"
+  },
+  {
+    "Color_Index": 32,
+    "RGB_Color": 0,
+    "Color_Name_E": "cornsilk ",
+    "Color_Name_H": "옥수수실색"
+  },
+  {
+    "Color_Index": 33,
+    "RGB_Color": 0,
+    "Color_Name_E": "antiquewhite ",
+    "Color_Name_H": "골동흰색"
+  },
+  {
+    "Color_Index": 34,
+    "RGB_Color": 0,
+    "Color_Name_E": "beige ",
+    "Color_Name_H": "베이지색"
+  },
+  {
+    "Color_Index": 35,
+    "RGB_Color": 0,
+    "Color_Name_E": "lemonchiffon ",
+    "Color_Name_H": "레몬시폰색"
+  },
+  {
+    "Color_Index": 36,
+    "RGB_Color": 0,
+    "Color_Name_E": "ivory ",
+    "Color_Name_H": "상앗빛"
+  },
+  {
+    "Color_Index": 37,
+    "RGB_Color": 0,
+    "Color_Name_E": "khaki ",
+    "Color_Name_H": "카키색"
+  },
+  {
+    "Color_Index": 38,
+    "RGB_Color": 0,
+    "Color_Name_E": "lavender ",
+    "Color_Name_H": "라벤더색"
+  },
+  {
+    "Color_Index": 39,
+    "RGB_Color": 0,
+    "Color_Name_E": "lavenderblush ",
+    "Color_Name_H": "라벤더황색"
+  },
+  {
+    "Color_Index": 40,
+    "RGB_Color": 0,
+    "Color_Name_E": "bisque ",
+    "Color_Name_H": "비스큐색"
+  },
+  {
+    "Color_Index": 41,
+    "RGB_Color": 0,
+    "Color_Name_E": "blanchedalmond ",
+    "Color_Name_H": "연아몬드색"
+  },
+  {
+    "Color_Index": 42,
+    "RGB_Color": 0,
+    "Color_Name_E": "burlywood ",
+    "Color_Name_H": "목재색"
+  },
+  {
+    "Color_Index": 43,
+    "RGB_Color": 0,
+    "Color_Name_E": "peru ",
+    "Color_Name_H": "페루색"
+  },
+  {
+    "Color_Index": 44,
+    "RGB_Color": 0,
+    "Color_Name_E": "darkturquoise ",
+    "Color_Name_H": "터키암옥색"
+  },
+  {
+    "Color_Index": 45,
+    "RGB_Color": 0,
+    "Color_Name_E": "deepskyblue ",
+    "Color_Name_H": "깊은하늘색"
+  },
+  {
+    "Color_Index": 46,
+    "RGB_Color": 0,
+    "Color_Name_E": "aquamarine ",
+    "Color_Name_H": "담청록색"
+  },
+  {
+    "Color_Index": 47,
+    "RGB_Color": 0,
+    "Color_Name_E": "dodgerblue",
+    "Color_Name_H": "다저스청색"
+  },
+  {
+    "Color_Index": 48,
+    "RGB_Color": 0,
+    "Color_Name_E": "cyan ",
+    "Color_Name_H": "청록색"
+  },
+  {
+    "Color_Index": 49,
+    "RGB_Color": 0,
+    "Color_Name_E": "honeydew ",
+    "Color_Name_H": "수액색"
+  },
+  {
+    "Color_Index": 50,
+    "RGB_Color": 0,
+    "Color_Name_E": "lightskyblue ",
+    "Color_Name_H": "밝은하늘색"
+  },
+  {
+    "Color_Index": 51,
+    "RGB_Color": 0,
+    "Color_Name_E": "paleturquoise ",
+    "Color_Name_H": "터키연옥색"
+  },
+  {
+    "Color_Index": 52,
+    "RGB_Color": 0,
+    "Color_Name_E": "lightcyan ",
+    "Color_Name_H": "밝은청록색"
+  },
+  {
+    "Color_Index": 53,
+    "RGB_Color": 0,
+    "Color_Name_E": "lightblue ",
+    "Color_Name_H": "밝은파랑색"
+  },
+  {
+    "Color_Index": 54,
+    "RGB_Color": 0,
+    "Color_Name_E": "lightsteelblue ",
+    "Color_Name_H": "밝은쇠청색"
+  },
+  {
+    "Color_Index": 55,
+    "RGB_Color": 0,
+    "Color_Name_E": "turquoise ",
+    "Color_Name_H": "터키옥색"
+  },
+  {
+    "Color_Index": 56,
+    "RGB_Color": 0,
+    "Color_Name_E": "mediumturquoise ",
+    "Color_Name_H": "중터키옥색"
+  },
+  {
+    "Color_Index": 57,
+    "RGB_Color": 0,
+    "Color_Name_E": "aqua ",
+    "Color_Name_H": "옥색"
+  },
+  {
+    "Color_Index": 58,
+    "RGB_Color": 0,
+    "Color_Name_E": "mediumslateblue ",
+    "Color_Name_H": "중석판청색"
+  },
+  {
+    "Color_Index": 59,
+    "RGB_Color": 0,
+    "Color_Name_E": "midnightblue ",
+    "Color_Name_H": "암청색"
+  },
+  {
+    "Color_Index": 60,
+    "RGB_Color": 0,
+    "Color_Name_E": "cornflowerblue ",
+    "Color_Name_H": "수레국화색"
+  },
+  {
+    "Color_Index": 61,
+    "RGB_Color": 0,
+    "Color_Name_E": "mediumblue ",
+    "Color_Name_H": "중간파랑"
+  },
+  {
+    "Color_Index": 62,
+    "RGB_Color": 0,
+    "Color_Name_E": "slateblue ",
+    "Color_Name_H": "석판청색"
+  },
+  {
+    "Color_Index": 63,
+    "RGB_Color": 0,
+    "Color_Name_E": "steelblue ",
+    "Color_Name_H": "금속청색"
+  },
+  {
+    "Color_Index": 64,
+    "RGB_Color": 0,
+    "Color_Name_E": "blue ",
+    "Color_Name_H": "파랑"
+  },
+  {
+    "Color_Index": 65,
+    "RGB_Color": 0,
+    "Color_Name_E": "darkslateblue ",
+    "Color_Name_H": "암석판청색"
+  },
+  {
+    "Color_Index": 66,
+    "RGB_Color": 0,
+    "Color_Name_E": "cadetblue ",
+    "Color_Name_H": "회청색"
+  },
+  {
+    "Color_Index": 67,
+    "RGB_Color": 0,
+    "Color_Name_E": "skyblue ",
+    "Color_Name_H": "하늘파랑"
+  },
+  {
+    "Color_Index": 68,
+    "RGB_Color": 0,
+    "Color_Name_E": "royalblue ",
+    "Color_Name_H": "청색"
+  },
+  {
+    "Color_Index": 69,
+    "RGB_Color": 0,
+    "Color_Name_E": "powderblue ",
+    "Color_Name_H": "담청색"
+  },
+  {
+    "Color_Index": 70,
+    "RGB_Color": 0,
+    "Color_Name_E": "navy ",
+    "Color_Name_H": "짙은남색"
+  },
+  {
+    "Color_Index": 71,
+    "RGB_Color": 0,
+    "Color_Name_E": "darkblue ",
+    "Color_Name_H": "짙은청색"
+  },
+  {
+    "Color_Index": 72,
+    "RGB_Color": 0,
+    "Color_Name_E": "blueviolet ",
+    "Color_Name_H": "제비꽃청색"
+  },
+  {
+    "Color_Index": 73,
+    "RGB_Color": 0,
+    "Color_Name_E": "darkmagenta ",
+    "Color_Name_H": "암마젠타색"
+  },
+  {
+    "Color_Index": 74,
+    "RGB_Color": 0,
+    "Color_Name_E": "darkorchid ",
+    "Color_Name_H": "암오키드색"
+  },
+  {
+    "Color_Index": 75,
+    "RGB_Color": 0,
+    "Color_Name_E": "darkviolet ",
+    "Color_Name_H": "짙은보라색"
+  },
+  {
+    "Color_Index": 76,
+    "RGB_Color": 0,
+    "Color_Name_E": "magenta ",
+    "Color_Name_H": "마젠타색"
+  },
+  {
+    "Color_Index": 77,
+    "RGB_Color": 0,
+    "Color_Name_E": "fuchsia ",
+    "Color_Name_H": "수령초색"
+  },
+  {
+    "Color_Index": 78,
+    "RGB_Color": 0,
+    "Color_Name_E": "mediumvioletred ",
+    "Color_Name_H": "중간자홍색"
+  },
+  {
+    "Color_Index": 79,
+    "RGB_Color": 0,
+    "Color_Name_E": "mediumorchid ",
+    "Color_Name_H": "중연보라색"
+  },
+  {
+    "Color_Index": 80,
+    "RGB_Color": 0,
+    "Color_Name_E": "mediumpurple ",
+    "Color_Name_H": "중간자주색"
+  },
+  {
+    "Color_Index": 81,
+    "RGB_Color": 0,
+    "Color_Name_E": "crimson ",
+    "Color_Name_H": "진홍색"
+  },
+  {
+    "Color_Index": 82,
+    "RGB_Color": 0,
+    "Color_Name_E": "deeppink ",
+    "Color_Name_H": "진분홍색"
+  },
+  {
+    "Color_Index": 83,
+    "RGB_Color": 0,
+    "Color_Name_E": "lightpink ",
+    "Color_Name_H": "연분홍색"
+  },
+  {
+    "Color_Index": 84,
+    "RGB_Color": 0,
+    "Color_Name_E": "hotpink ",
+    "Color_Name_H": "강분홍색"
+  },
+  {
+    "Color_Index": 85,
+    "RGB_Color": 0,
+    "Color_Name_E": "pink ",
+    "Color_Name_H": "분홍색"
+  },
+  {
+    "Color_Index": 86,
+    "RGB_Color": 0,
+    "Color_Name_E": "plum ",
+    "Color_Name_H": "자두색"
+  },
+  {
+    "Color_Index": 87,
+    "RGB_Color": 0,
+    "Color_Name_E": "purple ",
+    "Color_Name_H": "자주색"
+  },
+  {
+    "Color_Index": 88,
+    "RGB_Color": 0,
+    "Color_Name_E": "violet ",
+    "Color_Name_H": "보라색"
+  },
+  {
+    "Color_Index": 89,
+    "RGB_Color": 0,
+    "Color_Name_E": "thistle ",
+    "Color_Name_H": "엉겅퀴색"
+  },
+  {
+    "Color_Index": 90,
+    "RGB_Color": 0,
+    "Color_Name_E": "orchid ",
+    "Color_Name_H": "연보라색"
+  },
+  {
+    "Color_Index": 91,
+    "RGB_Color": 0,
+    "Color_Name_E": "indigo ",
+    "Color_Name_H": "남색"
+  },
+  {
+    "Color_Index": 92,
+    "RGB_Color": 0,
+    "Color_Name_E": "brown ",
+    "Color_Name_H": "갈색"
+  },
+  {
+    "Color_Index": 93,
+    "RGB_Color": 0,
+    "Color_Name_E": "darksalmon ",
+    "Color_Name_H": "짙은주황색"
+  },
+  {
+    "Color_Index": 94,
+    "RGB_Color": 0,
+    "Color_Name_E": "lightcoral ",
+    "Color_Name_H": "밝은산호빛"
+  },
+  {
+    "Color_Index": 95,
+    "RGB_Color": 0,
+    "Color_Name_E": "indianred ",
+    "Color_Name_H": "인디언홍색"
+  },
+  {
+    "Color_Index": 96,
+    "RGB_Color": 0,
+    "Color_Name_E": "lightsalmon ",
+    "Color_Name_H": "밝은주황색"
+  },
+  {
+    "Color_Index": 97,
+    "RGB_Color": 0,
+    "Color_Name_E": "palevioletred ",
+    "Color_Name_H": "옅은자홍색"
+  },
+  {
+    "Color_Index": 98,
+    "RGB_Color": 0,
+    "Color_Name_E": "sandybrown ",
+    "Color_Name_H": "엷은갈색"
+  },
+  {
+    "Color_Index": 99,
+    "RGB_Color": 0,
+    "Color_Name_E": "salmon ",
+    "Color_Name_H": "주황색"
+  },
+  {
+    "Color_Index": 100,
+    "RGB_Color": 0,
+    "Color_Name_E": "tomato ",
+    "Color_Name_H": "토마토색"
+  },
+  {
+    "Color_Index": 101,
+    "RGB_Color": 0,
+    "Color_Name_E": "orangered",
+    "Color_Name_H": "오렌지빨강"
+  },
+  {
+    "Color_Index": 102,
+    "RGB_Color": 0,
+    "Color_Name_E": "red ",
+    "Color_Name_H": "빨강"
+  },
+  {
+    "Color_Index": 103,
+    "RGB_Color": 0,
+    "Color_Name_E": "maroon ",
+    "Color_Name_H": "적갈색"
+  },
+  {
+    "Color_Index": 104,
+    "RGB_Color": 0,
+    "Color_Name_E": "darkred ",
+    "Color_Name_H": "짙은적색"
+  },
+  {
+    "Color_Index": 105,
+    "RGB_Color": 0,
+    "Color_Name_E": "firebrick ",
+    "Color_Name_H": "내화벽돌색"
+  },
+  {
+    "Color_Index": 106,
+    "RGB_Color": 0,
+    "Color_Name_E": "chocolate ",
+    "Color_Name_H": "갈색"
+  },
+  {
+    "Color_Index": 107,
+    "RGB_Color": 0,
+    "Color_Name_E": "saddlebrown ",
+    "Color_Name_H": "안장갈색"
+  },
+  {
+    "Color_Index": 108,
+    "RGB_Color": 0,
+    "Color_Name_E": "sienna ",
+    "Color_Name_H": "황갈색"
+  },
+  {
+    "Color_Index": 109,
+    "RGB_Color": 0,
+    "Color_Name_E": "rosybrown ",
+    "Color_Name_H": "장미갈색"
+  },
+  {
+    "Color_Index": 110,
+    "RGB_Color": 0,
+    "Color_Name_E": "coral ",
+    "Color_Name_H": "산호색"
+  },
+  {
+    "Color_Index": 111,
+    "RGB_Color": 0,
+    "Color_Name_E": "darkorange ",
+    "Color_Name_H": "암오랜지색"
+  },
+  {
+    "Color_Index": 112,
+    "RGB_Color": 0,
+    "Color_Name_E": "orange ",
+    "Color_Name_H": "오랜지색"
+  },
+  {
+    "Color_Index": 113,
+    "RGB_Color": 0,
+    "Color_Name_E": "darkgoldenrod ",
+    "Color_Name_H": "암갈황색"
+  },
+  {
+    "Color_Index": 114,
+    "RGB_Color": 0,
+    "Color_Name_E": "gold ",
+    "Color_Name_H": "금색"
+  },
+  {
+    "Color_Index": 115,
+    "RGB_Color": 0,
+    "Color_Name_E": "yellow ",
+    "Color_Name_H": "노랑색"
+  },
+  {
+    "Color_Index": 116,
+    "RGB_Color": 0,
+    "Color_Name_E": "chartreuse ",
+    "Color_Name_H": "연두색"
+  },
+  {
+    "Color_Index": 117,
+    "RGB_Color": 0,
+    "Color_Name_E": "lawngreen ",
+    "Color_Name_H": "잔디녹색"
+  },
+  {
+    "Color_Index": 118,
+    "RGB_Color": 0,
+    "Color_Name_E": "lime ",
+    "Color_Name_H": "라임색"
+  },
+  {
+    "Color_Index": 119,
+    "RGB_Color": 0,
+    "Color_Name_E": "limegreen ",
+    "Color_Name_H": "라임녹색"
+  },
+  {
+    "Color_Index": 120,
+    "RGB_Color": 0,
+    "Color_Name_E": "springgreen ",
+    "Color_Name_H": "춘녹색"
+  },
+  {
+    "Color_Index": 121,
+    "RGB_Color": 0,
+    "Color_Name_E": "mediumseagreen ",
+    "Color_Name_H": "중간해녹색"
+  },
+  {
+    "Color_Index": 122,
+    "RGB_Color": 0,
+    "Color_Name_E": "greenyellow ",
+    "Color_Name_H": "녹황색"
+  },
+  {
+    "Color_Index": 123,
+    "RGB_Color": 0,
+    "Color_Name_E": "darkseagreen ",
+    "Color_Name_H": "짙은해녹색"
+  },
+  {
+    "Color_Index": 124,
+    "RGB_Color": 0,
+    "Color_Name_E": "lightgreen ",
+    "Color_Name_H": "밝은녹색"
+  },
+  {
+    "Color_Index": 125,
+    "RGB_Color": 0,
+    "Color_Name_E": "palegreen ",
+    "Color_Name_H": "옅은녹색"
+  },
+  {
+    "Color_Index": 126,
+    "RGB_Color": 0,
+    "Color_Name_E": "seagreen ",
+    "Color_Name_H": "해녹색"
+  },
+  {
+    "Color_Index": 127,
+    "RGB_Color": 0,
+    "Color_Name_E": "mediumspringgreen ",
+    "Color_Name_H": "중간춘녹색"
+  },
+  {
+    "Color_Index": 128,
+    "RGB_Color": 0,
+    "Color_Name_E": "lightseagreen ",
+    "Color_Name_H": "밝은해녹색"
+  },
+  {
+    "Color_Index": 129,
+    "RGB_Color": 0,
+    "Color_Name_E": "mediumaquamarine ",
+    "Color_Name_H": "중담청록색"
+  },
+  {
+    "Color_Index": 130,
+    "RGB_Color": 0,
+    "Color_Name_E": "forestgreen ",
+    "Color_Name_H": "숲녹색"
+  },
+  {
+    "Color_Index": 131,
+    "RGB_Color": 0,
+    "Color_Name_E": "darkcyan ",
+    "Color_Name_H": "짙은청록색"
+  },
+  {
+    "Color_Index": 132,
+    "RGB_Color": 0,
+    "Color_Name_E": "teal ",
+    "Color_Name_H": "암회녹색"
+  },
+  {
+    "Color_Index": 133,
+    "RGB_Color": 0,
+    "Color_Name_E": "darkgreen ",
+    "Color_Name_H": "짙은녹색"
+  },
+  {
+    "Color_Index": 134,
+    "RGB_Color": 0,
+    "Color_Name_E": "darkolivegreen ",
+    "Color_Name_H": "암올리브색"
+  },
+  {
+    "Color_Index": 135,
+    "RGB_Color": 0,
+    "Color_Name_E": "green ",
+    "Color_Name_H": "녹색"
+  },
+  {
+    "Color_Index": 136,
+    "RGB_Color": 0,
+    "Color_Name_E": "olive ",
+    "Color_Name_H": "올리브색"
+  },
+  {
+    "Color_Index": 137,
+    "RGB_Color": 0,
+    "Color_Name_E": "olivedrab ",
+    "Color_Name_H": "짙은황록색"
+  },
+  {
+    "Color_Index": 138,
+    "RGB_Color": 0,
+    "Color_Name_E": "darkkhaki ",
+    "Color_Name_H": "짙은카키색"
+  },
+  {
+    "Color_Index": 139,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 140,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 141,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 142,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 143,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 144,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 145,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 146,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 147,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 148,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 149,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 150,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 151,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 152,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 153,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 154,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 155,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 156,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 157,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 158,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 159,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 160,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 161,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 162,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 163,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 164,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 165,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 166,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 167,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 168,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 169,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 170,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 171,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 172,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 173,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 174,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 175,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 176,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 177,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 178,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 179,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 180,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 181,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 182,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 183,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 184,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 185,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 186,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 187,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 188,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 189,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 190,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 191,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 192,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 193,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 194,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 195,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 196,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 197,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 198,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 199,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 200,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 201,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 202,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 203,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 204,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 205,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 206,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 207,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 208,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 209,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 210,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 211,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 212,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 213,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 214,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 215,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 216,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 217,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 218,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 219,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 220,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 221,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 222,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 223,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 224,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 225,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 226,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 227,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 228,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 229,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 230,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 231,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 232,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 233,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 234,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 235,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 236,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 237,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 238,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 239,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 240,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 241,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 242,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 243,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 244,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 245,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 246,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 247,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 248,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 249,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 250,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 251,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 252,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 253,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 254,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  },
+  {
+    "Color_Index": 255,
+    "RGB_Color": 0,
+    "Color_Name_E": "goldenrod ",
+    "Color_Name_H": "골든로드색"
+  }
+]

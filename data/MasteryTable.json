@@ -1,0 +1,1002 @@
+[
+  {
+    "Mastery_Level": 1,
+    "등급": "D 랭크",
+    "Mastery_Point_Next": 1000,
+    "NeedCoin": 500,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 10000
+  },
+  {
+    "Mastery_Level": 2,
+    "등급": "D 랭크",
+    "Mastery_Point_Next": 1000,
+    "NeedCoin": 500,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 10000
+  },
+  {
+    "Mastery_Level": 3,
+    "등급": "D 랭크",
+    "Mastery_Point_Next": 1600,
+    "NeedCoin": 700,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 10000
+  },
+  {
+    "Mastery_Level": 4,
+    "등급": "D 랭크",
+    "Mastery_Point_Next": 2200,
+    "NeedCoin": 900,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 10000
+  },
+  {
+    "Mastery_Level": 5,
+    "등급": "D 랭크",
+    "Mastery_Point_Next": 2800,
+    "NeedCoin": 1200,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 10000
+  },
+  {
+    "Mastery_Level": 6,
+    "등급": "D 랭크",
+    "Mastery_Point_Next": 3600,
+    "NeedCoin": 1400,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 10000
+  },
+  {
+    "Mastery_Level": 7,
+    "등급": "D 랭크",
+    "Mastery_Point_Next": 4200,
+    "NeedCoin": 1700,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 10000
+  },
+  {
+    "Mastery_Level": 8,
+    "등급": "D 랭크",
+    "Mastery_Point_Next": 5000,
+    "NeedCoin": 2000,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 10000
+  },
+  {
+    "Mastery_Level": 9,
+    "등급": "D 랭크",
+    "Mastery_Point_Next": 6000,
+    "NeedCoin": 2300,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 10000
+  },
+  {
+    "Mastery_Level": 10,
+    "등급": "D 랭크",
+    "Mastery_Point_Next": 7000,
+    "NeedCoin": 2600,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 30000
+  },
+  {
+    "Mastery_Level": 11,
+    "등급": "C 랭크",
+    "Mastery_Point_Next": 8000,
+    "NeedCoin": 2900,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 30000
+  },
+  {
+    "Mastery_Level": 12,
+    "등급": "C 랭크",
+    "Mastery_Point_Next": 9200,
+    "NeedCoin": 4000,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 30000
+  },
+  {
+    "Mastery_Level": 13,
+    "등급": "C 랭크",
+    "Mastery_Point_Next": 10400,
+    "NeedCoin": 4400,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 30000
+  },
+  {
+    "Mastery_Level": 14,
+    "등급": "C 랭크",
+    "Mastery_Point_Next": 11600,
+    "NeedCoin": 4900,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 30000
+  },
+  {
+    "Mastery_Level": 15,
+    "등급": "C 랭크",
+    "Mastery_Point_Next": 13000,
+    "NeedCoin": 5300,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 30000
+  },
+  {
+    "Mastery_Level": 16,
+    "등급": "C 랭크",
+    "Mastery_Point_Next": 14400,
+    "NeedCoin": 5800,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 30000
+  },
+  {
+    "Mastery_Level": 17,
+    "등급": "C 랭크",
+    "Mastery_Point_Next": 15800,
+    "NeedCoin": 6300,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 30000
+  },
+  {
+    "Mastery_Level": 18,
+    "등급": "C 랭크",
+    "Mastery_Point_Next": 17400,
+    "NeedCoin": 6800,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 30000
+  },
+  {
+    "Mastery_Level": 19,
+    "등급": "C 랭크",
+    "Mastery_Point_Next": 19000,
+    "NeedCoin": 7300,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 30000
+  },
+  {
+    "Mastery_Level": 20,
+    "등급": "C 랭크",
+    "Mastery_Point_Next": 20600,
+    "NeedCoin": 7900,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 50000
+  },
+  {
+    "Mastery_Level": 21,
+    "등급": "B 랭크",
+    "Mastery_Point_Next": 22400,
+    "NeedCoin": 8400,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 50000
+  },
+  {
+    "Mastery_Level": 22,
+    "등급": "B 랭크",
+    "Mastery_Point_Next": 24200,
+    "NeedCoin": 19200,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 50000
+  },
+  {
+    "Mastery_Level": 23,
+    "등급": "B 랭크",
+    "Mastery_Point_Next": 26000,
+    "NeedCoin": 20400,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 50000
+  },
+  {
+    "Mastery_Level": 24,
+    "등급": "B 랭크",
+    "Mastery_Point_Next": 28000,
+    "NeedCoin": 21600,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 50000
+  },
+  {
+    "Mastery_Level": 25,
+    "등급": "B 랭크",
+    "Mastery_Point_Next": 30000,
+    "NeedCoin": 22800,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 50000
+  },
+  {
+    "Mastery_Level": 26,
+    "등급": "B 랭크",
+    "Mastery_Point_Next": 32000,
+    "NeedCoin": 24100,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 50000
+  },
+  {
+    "Mastery_Level": 27,
+    "등급": "B 랭크",
+    "Mastery_Point_Next": 34200,
+    "NeedCoin": 25500,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 50000
+  },
+  {
+    "Mastery_Level": 28,
+    "등급": "B 랭크",
+    "Mastery_Point_Next": 36400,
+    "NeedCoin": 26800,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 50000
+  },
+  {
+    "Mastery_Level": 29,
+    "등급": "B 랭크",
+    "Mastery_Point_Next": 38600,
+    "NeedCoin": 28200,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 50000
+  },
+  {
+    "Mastery_Level": 30,
+    "등급": "B 랭크",
+    "Mastery_Point_Next": 41000,
+    "NeedCoin": 29600,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 70000
+  },
+  {
+    "Mastery_Level": 31,
+    "등급": "A 랭크 (잊.폐)",
+    "Mastery_Point_Next": 43400,
+    "NeedCoin": 31100,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 70000
+  },
+  {
+    "Mastery_Level": 32,
+    "등급": "A 랭크 (잊.폐)",
+    "Mastery_Point_Next": 45800,
+    "NeedCoin": 65100,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 70000
+  },
+  {
+    "Mastery_Level": 33,
+    "등급": "A 랭크 (잊.폐)",
+    "Mastery_Point_Next": 48400,
+    "NeedCoin": 68100,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 70000
+  },
+  {
+    "Mastery_Level": 34,
+    "등급": "A 랭크 (잊.폐)",
+    "Mastery_Point_Next": 51000,
+    "NeedCoin": 71200,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 70000
+  },
+  {
+    "Mastery_Level": 35,
+    "등급": "A 랭크 (잊.폐)",
+    "Mastery_Point_Next": 53600,
+    "NeedCoin": 74300,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 70000
+  },
+  {
+    "Mastery_Level": 36,
+    "등급": "A 랭크 (자와이)",
+    "Mastery_Point_Next": 56400,
+    "NeedCoin": 77500,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 70000
+  },
+  {
+    "Mastery_Level": 37,
+    "등급": "A 랭크 (자와이)",
+    "Mastery_Point_Next": 59200,
+    "NeedCoin": 80800,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 70000
+  },
+  {
+    "Mastery_Level": 38,
+    "등급": "A 랭크 (자와이)",
+    "Mastery_Point_Next": 62000,
+    "NeedCoin": 84100,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 70000
+  },
+  {
+    "Mastery_Level": 39,
+    "등급": "A 랭크 (자와이)",
+    "Mastery_Point_Next": 65000,
+    "NeedCoin": 87500,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 70000
+  },
+  {
+    "Mastery_Level": 40,
+    "등급": "A 랭크 (자와이)",
+    "Mastery_Point_Next": 68000,
+    "NeedCoin": 91000,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 90000
+  },
+  {
+    "Mastery_Level": 41,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 9999999,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 1
+  },
+  {
+    "Mastery_Level": 42,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 9999999,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 1
+  },
+  {
+    "Mastery_Level": 43,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 9999999,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 1
+  },
+  {
+    "Mastery_Level": 44,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 9999999,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 1
+  },
+  {
+    "Mastery_Level": 45,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 9999999,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 1
+  },
+  {
+    "Mastery_Level": 46,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 9999999,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 1
+  },
+  {
+    "Mastery_Level": 47,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 9999999,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 1
+  },
+  {
+    "Mastery_Level": 48,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 9999999,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 1
+  },
+  {
+    "Mastery_Level": 49,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 9999999,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 1
+  },
+  {
+    "Mastery_Level": 50,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 9999999,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 1
+  },
+  {
+    "Mastery_Level": 51,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 52,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 53,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 54,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 55,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 56,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 57,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 58,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 59,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 60,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 61,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 62,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 63,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 64,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 65,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 66,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 67,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 68,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 69,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 70,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 71,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 72,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 73,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 74,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 75,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 76,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 77,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 78,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 79,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 80,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 81,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 82,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 83,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 84,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 85,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 86,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 87,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 88,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 89,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 90,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 91,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 92,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 93,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 94,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 95,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 96,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 97,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 98,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 99,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  },
+  {
+    "Mastery_Level": 100,
+    "등급": "S 랭크",
+    "Mastery_Point_Next": 500000,
+    "NeedCoin": 9999999,
+    "Bonus_Stat_Point": 5,
+    "Bonus_Stat_Rate": 0,
+    "Max_Status": 999,
+    "Max_Point": 300000
+  }
+]

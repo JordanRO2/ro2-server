@@ -1,0 +1,80 @@
+[
+  {
+    "Start_Time_1": 20,
+    "Start_Time_2": 23,
+    "Start_Time_3": 99,
+    "Play_Time": 60,
+    "Need_Level": 10,
+    "Min_Need_PC": 2,
+    "Max_Need_PC": 2,
+    "Wait_Time": 15,
+    "Round_End_Time": 15,
+    "PC_Revival_Time": 7,
+    "NationEnable": 1
+  },
+  {
+    "Start_Time_1": 20,
+    "Start_Time_2": 21,
+    "Start_Time_3": 23,
+    "Play_Time": 3600,
+    "Need_Level": 10,
+    "Min_Need_PC": 30,
+    "Max_Need_PC": 30,
+    "Wait_Time": 60,
+    "Round_End_Time": 15,
+    "PC_Revival_Time": 7,
+    "NationEnable": 2
+  },
+  {
+    "Start_Time_1": 1,
+    "Start_Time_2": 13,
+    "Start_Time_3": 18,
+    "Play_Time": 3600,
+    "Need_Level": 10,
+    "Min_Need_PC": 30,
+    "Max_Need_PC": 30,
+    "Wait_Time": 60,
+    "Round_End_Time": 15,
+    "PC_Revival_Time": 7,
+    "NationEnable": 68
+  },
+  {
+    "Start_Time_1": 14,
+    "Start_Time_2": 18,
+    "Start_Time_3": 22,
+    "Play_Time": 3600,
+    "Need_Level": 10,
+    "Min_Need_PC": 10,
+    "Max_Need_PC": 10,
+    "Wait_Time": 60,
+    "Round_End_Time": 15,
+    "PC_Revival_Time": 7,
+    "NationEnable": 8
+  },
+  {
+    "Start_Time_1": 19,
+    "Start_Time_2": 21,
+    "Start_Time_3": 99,
+    "Play_Time": 3600,
+    "Need_Level": 10,
+    "Min_Need_PC": 10,
+    "Max_Need_PC": 10,
+    "Wait_Time": 60,
+    "Round_End_Time": 15,
+    "PC_Revival_Time": 7,
+    "NationEnable": 16
+  },
+  {
+    "Start_Time_1": 1,
+    "Start_Time_2": 13,
+    "Start_Time_3": 18,
+    "Play_Time": 3600,
+    "Need_Level": 10,
+    "Min_Need_PC": 10,
+    "Max_Need_PC": 10,
+    "Wait_Time": 60,
+    "Round_End_Time": 15,
+    "PC_Revival_Time": 7,
+    "NationEnable": 32
+  }
+]

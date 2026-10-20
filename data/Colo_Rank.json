@@ -1,0 +1,92 @@
+[
+  {
+    "Index": 1,
+    "S_Rank_Need_point": 1350,
+    "A_Rank_Need_point": 1280,
+    "B_Rank_Need_point": 1210,
+    "C_Rank_Need_point": 1140,
+    "D_Rank_Need_point": 1070,
+    "NationEnable": 1
+  },
+  {
+    "Index": 2,
+    "S_Rank_Need_point": 2009,
+    "A_Rank_Need_point": 1907,
+    "B_Rank_Need_point": 1805,
+    "C_Rank_Need_point": 1703,
+    "D_Rank_Need_point": 1601,
+    "NationEnable": 1
+  },
+  {
+    "Index": 3,
+    "S_Rank_Need_point": 3002,
+    "A_Rank_Need_point": 2851,
+    "B_Rank_Need_point": 2700,
+    "C_Rank_Need_point": 2549,
+    "D_Rank_Need_point": 2398,
+    "NationEnable": 1
+  },
+  {
+    "Index": 4,
+    "S_Rank_Need_point": 4495,
+    "A_Rank_Need_point": 4270,
+    "B_Rank_Need_point": 4045,
+    "C_Rank_Need_point": 3820,
+    "D_Rank_Need_point": 3595,
+    "NationEnable": 1
+  },
+  {
+    "Index": 5,
+    "S_Rank_Need_point": 6729,
+    "A_Rank_Need_point": 6394,
+    "B_Rank_Need_point": 6059,
+    "C_Rank_Need_point": 5724,
+    "D_Rank_Need_point": 5389,
+    "NationEnable": 1
+  },
+  {
+    "Index": 1,
+    "S_Rank_Need_point": 3640,
+    "A_Rank_Need_point": 3570,
+    "B_Rank_Need_point": 3500,
+    "C_Rank_Need_point": 3430,
+    "D_Rank_Need_point": 3360,
+    "NationEnable": 126
+  },
+  {
+    "Index": 2,
+    "S_Rank_Need_point": 8230,
+    "A_Rank_Need_point": 8128,
+    "B_Rank_Need_point": 8026,
+    "C_Rank_Need_point": 7924,
+    "D_Rank_Need_point": 7822,
+    "NationEnable": 126
+  },
+  {
+    "Index": 3,
+    "S_Rank_Need_point": 11020,
+    "A_Rank_Need_point": 10869,
+    "B_Rank_Need_point": 10718,
+    "C_Rank_Need_point": 10567,
+    "D_Rank_Need_point": 10416,
+    "NationEnable": 126
+  },
+  {
+    "Index": 4,
+    "S_Rank_Need_point": 13935,
+    "A_Rank_Need_point": 13710,
+    "B_Rank_Need_point": 13485,
+    "C_Rank_Need_point": 13260,
+    "D_Rank_Need_point": 13035,
+    "NationEnable": 126
+  },
+  {
+    "Index": 5,
+    "S_Rank_Need_point": 17030,
+    "A_Rank_Need_point": 16695,
+    "B_Rank_Need_point": 16360,
+    "C_Rank_Need_point": 16025,
+    "D_Rank_Need_point": 15690,
+    "NationEnable": 126
+  }
+]

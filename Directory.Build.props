@@ -1,0 +1,60 @@
+<Project>
+
+  <!--
+    Shared build settings for every project in the solution.
+    Called for by docs/architecture/TARGET_ARCHITECTURE.md section 7, alongside
+    Directory.Packages.props (which owns NuGet versions).
+
+    These five properties were previously copy-pasted into all 13 .csproj files, which is how
+    they drifted: TreatWarningsAsErrors was set in 12 of 13 — the test project silently built
+    with warnings allowed. Declaring them once removes that whole class of drift.
+
+    Project-specific settings stay in their own .csproj: OutputType (the three server hosts),
+    GenerateDocumentationFile, IsPackable and IsTestProject.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net11.0</TargetFramework>
+    <LangVersion>15</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!--
+      Warnings fail the build, deliberately and everywhere including tests. This is what makes
+      NuGet audit findings (NU1902/NU1903) block a release rather than scroll past: the SharpCompress
+      and Snappier advisories that came in transitively through MongoDB.Driver 3.1.0 surfaced exactly
+      because of this setting. Fix the warning; do not add a NoWarn to get around it.
+    -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <NoWarn />
+
+    <!--
+      The same rule applied to the SDK itself: an SDK with known CVEs or out of support must block
+      the build, as a vulnerable package does. The check is opt-in (the SDK 11 default is false).
+      Restore refreshes the SDK release metadata into ~/.dotnet/sdk-vulnerability-cache/ in the
+      background, and the build task only reads that cache: it never goes to the network, and with
+      no cache it reports nothing.
+
+      TreatWarningsAsErrors does NOT cover these codes. They are MSBuild task warnings, not
+      compiler warnings, so on their own they print and the build still succeeds (verified on
+      11.0.100-rc.1 with a forged cache). That is why the two that must block are listed here:
+        NETSDK1238  the SDK has known vulnerabilities (CVEs fixed in a later release of its channel)
+        NETSDK1239  the SDK is end of life
+      Setting MSBuildWarningsAsErrors stops Common.targets from defaulting it to WarningsAsErrors,
+      which is harmless because that list is kept empty above. The fix is to update the SDK (CI
+      installs the latest 11.0.x). Do not NoWarn these.
+
+      NETSDK1240 ("no newer release in its feature band") stays a plain warning on purpose. It does
+      not mean the band is dead. The SDK raises it whenever its own feature band has no newer SDK AND
+      the channel's latest SDK is higher (SdkVulnerabilityChecker.Check in the RC1 dotnet.dll). That
+      is true of the newest, fully patched 11.0.1xx as soon as 11.0.2xx ships, although 1xx is
+      serviced for the whole release, and of the newest SDK in any other lower band, such as one a
+      Visual Studio version pins. As an error it would stop
+      a correct, supported build with "Update to version 11.0.2xx". As a warning it is still seen.
+    -->
+    <CheckSdkVulnerabilities>true</CheckSdkVulnerabilities>
+    <MSBuildWarningsAsErrors>$(MSBuildWarningsAsErrors);NETSDK1238;NETSDK1239</MSBuildWarningsAsErrors>
+  </PropertyGroup>
+
+</Project>

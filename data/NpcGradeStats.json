@@ -1,0 +1,74 @@
+[
+  {
+    "Grade": 10,
+    "Name": "Minion",
+    "HP_Multiplier": 0.3,
+    "ATK_Multiplier": 0.3,
+    "DEF_Multiplier": 0.3,
+    "EXP_Multiplier": 0.2,
+    "Drop_Multiplier": 0.5
+  },
+  {
+    "Grade": 11,
+    "Name": "Normal",
+    "HP_Multiplier": 1.0,
+    "ATK_Multiplier": 1.0,
+    "DEF_Multiplier": 1.0,
+    "EXP_Multiplier": 1.0,
+    "Drop_Multiplier": 1.0
+  },
+  {
+    "Grade": 12,
+    "Name": "Elite",
+    "HP_Multiplier": 3.0,
+    "ATK_Multiplier": 1.5,
+    "DEF_Multiplier": 1.5,
+    "EXP_Multiplier": 2.0,
+    "Drop_Multiplier": 2.0
+  },
+  {
+    "Grade": 13,
+    "Name": "Champion",
+    "HP_Multiplier": 8.0,
+    "ATK_Multiplier": 2.5,
+    "DEF_Multiplier": 2.0,
+    "EXP_Multiplier": 4.0,
+    "Drop_Multiplier": 3.0
+  },
+  {
+    "Grade": 14,
+    "Name": "Hero",
+    "HP_Multiplier": 20.0,
+    "ATK_Multiplier": 5.0,
+    "DEF_Multiplier": 3.0,
+    "EXP_Multiplier": 8.0,
+    "Drop_Multiplier": 5.0
+  },
+  {
+    "Grade": 15,
+    "Name": "Boss",
+    "HP_Multiplier": 80.0,
+    "ATK_Multiplier": 10.0,
+    "DEF_Multiplier": 5.0,
+    "EXP_Multiplier": 20.0,
+    "Drop_Multiplier": 10.0
+  },
+  {
+    "Grade": 16,
+    "Name": "World Boss",
+    "HP_Multiplier": 300.0,
+    "ATK_Multiplier": 20.0,
+    "DEF_Multiplier": 8.0,
+    "EXP_Multiplier": 50.0,
+    "Drop_Multiplier": 20.0
+  },
+  {
+    "Grade": 17,
+    "Name": "Raid Boss",
+    "HP_Multiplier": 1000.0,
+    "ATK_Multiplier": 50.0,
+    "DEF_Multiplier": 15.0,
+    "EXP_Multiplier": 100.0,
+    "Drop_Multiplier": 50.0
+  }
+]

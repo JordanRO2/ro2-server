@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Redis persistence provider (Phase 3). Owns the non-durable, cross-process concerns the roadmap routes to
+    Redis; the first is the Zone<->Chat close-range room signal bus (Redis Streams), the Mongo capped-collection
+    + tailable-cursor bus's replacement. Behind the same RO2.Application interfaces, selected in AddPersistence.
+  -->
+  <ItemGroup>
+    <PackageReference Include="StackExchange.Redis" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Game\RO2.Domain\RO2.Domain.csproj" />
+    <ProjectReference Include="..\..\Game\RO2.Application\RO2.Application.csproj" />
+  </ItemGroup>
+
+</Project>

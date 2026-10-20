@@ -1,0 +1,19 @@
+# Analyzer severities for the whole repository. Deliberately minimal: it raises exactly two .NET analyzer
+# rules to error and sets nothing else (no style or formatting keys, no AnalysisLevel change). Turning on
+# the whole latest-recommended preset would add about 3,400 warnings, which TreatWarningsAsErrors
+# (Directory.Build.props) would turn into a failed build. So rules are promoted one at a time, once their
+# existing sites are fixed.
+#
+# root = true stops the lookup from continuing above this folder. No .editorconfig exists above it today,
+# so this changes nothing now. It keeps a local build, where the repo sits inside a larger workspace, on
+# the same rules as CI's standalone checkout.
+root = true
+
+[*.cs]
+# Task.WhenAny(x, Task.Delay(t)) with a non-cancelable delay leaves the timer running after x wins. Use
+# x.WaitAsync(t), or pass Task.Delay a token and cancel it once WhenAny returns.
+dotnet_diagnostic.CA2027.severity = error
+
+# A new JsonSerializerOptions per call discards its per-type metadata cache and rebuilds it each time.
+# Keep one static readonly instance per distinct set of options.
+dotnet_diagnostic.CA1869.severity = error

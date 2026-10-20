@@ -1,0 +1,32 @@
+[
+  {
+    "Slot_ID": 1,
+    "Item_Type": 3,
+    "Equip_Type": 24,
+    "Seal_Type": 0
+  },
+  {
+    "Slot_ID": 1,
+    "Item_Type": 3,
+    "Equip_Type": 25,
+    "Seal_Type": 0
+  },
+  {
+    "Slot_ID": 1,
+    "Item_Type": 3,
+    "Equip_Type": 26,
+    "Seal_Type": 0
+  },
+  {
+    "Slot_ID": 1,
+    "Item_Type": 3,
+    "Equip_Type": 27,
+    "Seal_Type": 0
+  },
+  {
+    "Slot_ID": 2,
+    "Item_Type": 127,
+    "Equip_Type": 0,
+    "Seal_Type": 1
+  }
+]

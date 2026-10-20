@@ -1,0 +1,14 @@
+[
+  {
+    "ID": 1,
+    "EffectCategory": "BASE_LEVEL_UP"
+  },
+  {
+    "ID": 2,
+    "EffectCategory": "LOOTING_INFORMATION"
+  },
+  {
+    "ID": 3,
+    "EffectCategory": "LICENSE_LEVEL_UP"
+  }
+]

@@ -1,0 +1,427 @@
+[
+  {
+    "St_Number": 1,
+    "St_ID": 9660,
+    "Dn_String(기획참고용)": "프론테라 지하수로"
+  },
+  {
+    "St_Number": 2,
+    "St_ID": 9661,
+    "Dn_String(기획참고용)": "늑대굴"
+  },
+  {
+    "St_Number": 3,
+    "St_ID": 9662,
+    "Dn_String(기획참고용)": "해신의 신전"
+  },
+  {
+    "St_Number": 4,
+    "St_ID": 9663,
+    "Dn_String(기획참고용)": "비림총"
+  },
+  {
+    "St_Number": 5,
+    "St_ID": 9664,
+    "Dn_String(기획참고용)": "버려진 연구소"
+  },
+  {
+    "St_Number": 6,
+    "St_ID": 9665,
+    "Dn_String(기획참고용)": "맹독의 나락"
+  },
+  {
+    "St_Number": 7,
+    "St_ID": 9666,
+    "Dn_String(기획참고용)": "저주받은 유령선"
+  },
+  {
+    "St_Number": 8,
+    "St_ID": 9667,
+    "Dn_String(기획참고용)": "모래폭풍 요새"
+  },
+  {
+    "St_Number": 9,
+    "St_ID": 9668,
+    "Dn_String(기획참고용)": "산다르만 요새"
+  },
+  {
+    "St_Number": 10,
+    "St_ID": 9669,
+    "Dn_String(기획참고용)": "오시리스의 무덤"
+  },
+  {
+    "St_Number": 11,
+    "St_ID": 9670,
+    "Dn_String(기획참고용)": "필라늄 폐광"
+  },
+  {
+    "St_Number": 12,
+    "St_ID": 9671,
+    "Dn_String(기획참고용)": "아레나"
+  },
+  {
+    "St_Number": 13,
+    "St_ID": 9672,
+    "Dn_String(기획참고용)": "바포메트의 정원"
+  },
+  {
+    "St_Number": 14,
+    "St_ID": 9673,
+    "Dn_String(기획참고용)": "심연의 지하수로"
+  },
+  {
+    "St_Number": 15,
+    "St_ID": 9674,
+    "Dn_String(기획참고용)": "절망의 무저갱"
+  },
+  {
+    "St_Number": 16,
+    "St_ID": 9675,
+    "Dn_String(기획참고용)": "부유요새 다크위스퍼"
+  },
+  {
+    "St_Number": 17,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 18,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 19,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 20,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 100,
+    "St_ID": 9676,
+    "Dn_String(기획참고용)": "16~18레벨"
+  },
+  {
+    "St_Number": 101,
+    "St_ID": 9677,
+    "Dn_String(기획참고용)": "25~27레벨"
+  },
+  {
+    "St_Number": 102,
+    "St_ID": 9678,
+    "Dn_String(기획참고용)": "30~32레벨"
+  },
+  {
+    "St_Number": 103,
+    "St_ID": 9679,
+    "Dn_String(기획참고용)": "35~37레벨"
+  },
+  {
+    "St_Number": 104,
+    "St_ID": 9680,
+    "Dn_String(기획참고용)": "40~42레벨"
+  },
+  {
+    "St_Number": 105,
+    "St_ID": 9681,
+    "Dn_String(기획참고용)": "43~45레벨"
+  },
+  {
+    "St_Number": 106,
+    "St_ID": 9682,
+    "Dn_String(기획참고용)": "47~49레벨"
+  },
+  {
+    "St_Number": 107,
+    "St_ID": 9683,
+    "Dn_String(기획참고용)": "50레벨"
+  },
+  {
+    "St_Number": 108,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 109,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 110,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 111,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 112,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 113,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 114,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 115,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 116,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 117,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 118,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 119,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 120,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 200,
+    "St_ID": 9684,
+    "Dn_String(기획참고용)": "적정인원 1인(2~3인 권장)"
+  },
+  {
+    "St_Number": 201,
+    "St_ID": 9685,
+    "Dn_String(기획참고용)": "적정인원 5인"
+  },
+  {
+    "St_Number": 202,
+    "St_ID": 9686,
+    "Dn_String(기획참고용)": "적정인원 10~15인"
+  },
+  {
+    "St_Number": 203,
+    "St_ID": 9687,
+    "Dn_String(기획참고용)": "적정인원 20인"
+  },
+  {
+    "St_Number": 204,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 205,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 206,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 207,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 208,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 209,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 210,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 211,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 212,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 213,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 214,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 215,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 216,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 217,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 218,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 219,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 220,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 300,
+    "St_ID": 1,
+    "Dn_String(기획참고용)": "늑대굴 던전 이미지 넘버"
+  },
+  {
+    "St_Number": 301,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 302,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 303,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 304,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 305,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 306,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 307,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 308,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 309,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 310,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 311,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 312,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 313,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 314,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 315,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 316,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 317,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 318,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 319,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 320,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "NULL"
+  },
+  {
+    "St_Number": 401,
+    "St_ID": 0,
+    "Dn_String(기획참고용)": "50레벨 제한 미출력"
+  },
+  {
+    "St_Number": 402,
+    "St_ID": 1,
+    "Dn_String(기획참고용)": "50레벨 제한 출력"
+  }
+]

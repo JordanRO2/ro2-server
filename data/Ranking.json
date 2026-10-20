@@ -1,0 +1,112 @@
+[
+  {
+    "Index": 1,
+    "Ranking_Type": 2,
+    "desc": "랭킹 갱신 시점의 PvP 포인트 보유량",
+    "Ranking_NameID": 2,
+    "Ranking_DescID": 1002,
+    "Filter_Type": 1,
+    "Reset_Type": 1,
+    "UpdateCode": "기본"
+  },
+  {
+    "Index": 2,
+    "Ranking_Type": 3,
+    "desc": "일간 경험치를 주는 몹 사냥 횟수",
+    "Ranking_NameID": 3,
+    "Ranking_DescID": 1003,
+    "Filter_Type": 1,
+    "Reset_Type": 1,
+    "UpdateCode": "기본"
+  },
+  {
+    "Index": 3,
+    "Ranking_Type": 4,
+    "desc": "랭킹 갱신 시점의 카드 소지 수량",
+    "Ranking_NameID": 4,
+    "Ranking_DescID": 1004,
+    "Filter_Type": 0,
+    "Reset_Type": 1,
+    "UpdateCode": "기본"
+  },
+  {
+    "Index": 4,
+    "Ranking_Type": 11,
+    "desc": "콜로세움 우승시",
+    "Ranking_NameID": 11,
+    "Ranking_DescID": 1011,
+    "Filter_Type": 1,
+    "Reset_Type": 2,
+    "UpdateCode": "컨텐츠_콜로세움"
+  },
+  {
+    "Index": 5,
+    "Ranking_Type": 12,
+    "desc": "대사부의 수련장 우승시",
+    "Ranking_NameID": 12,
+    "Ranking_DescID": 1012,
+    "Filter_Type": 1,
+    "Reset_Type": 2,
+    "UpdateCode": "컨텐츠_대사부제훈"
+  },
+  {
+    "Index": 6,
+    "Ranking_Type": 8,
+    "desc": "제작 장인 선출용 (누적점수 1위)",
+    "Ranking_NameID": 8,
+    "Ranking_DescID": 1008,
+    "Filter_Type": 2,
+    "Reset_Type": 2,
+    "UpdateCode": "기본"
+  },
+  {
+    "Index": 7,
+    "Ranking_Type": 9,
+    "desc": "제련 장인 선출용 (누적점수 1위)",
+    "Ranking_NameID": 9,
+    "Ranking_DescID": 1009,
+    "Filter_Type": 0,
+    "Reset_Type": 2,
+    "UpdateCode": "기본"
+  },
+  {
+    "Index": 8,
+    "Ranking_Type": 10,
+    "desc": "연마 장인 선출용 (누적점수 1위)",
+    "Ranking_NameID": 10,
+    "Ranking_DescID": 1010,
+    "Filter_Type": 0,
+    "Reset_Type": 2,
+    "UpdateCode": "컨텐츠_연마"
+  },
+  {
+    "Index": 9,
+    "Ranking_Type": 108,
+    "desc": "제작 장인 선출용 (성장율 1위)",
+    "Ranking_NameID": 108,
+    "Ranking_DescID": 1108,
+    "Filter_Type": 2,
+    "Reset_Type": 2,
+    "UpdateCode": "컨텐츠_랭킹-노력상"
+  },
+  {
+    "Index": 10,
+    "Ranking_Type": 109,
+    "desc": "제련 장인 선출용 (성장율 1위)",
+    "Ranking_NameID": 109,
+    "Ranking_DescID": 1109,
+    "Filter_Type": 0,
+    "Reset_Type": 2,
+    "UpdateCode": "컨텐츠_랭킹-노력상"
+  },
+  {
+    "Index": 11,
+    "Ranking_Type": 110,
+    "desc": "연마 장인 선출용 (성장율 1위)",
+    "Ranking_NameID": 110,
+    "Ranking_DescID": 1110,
+    "Filter_Type": 0,
+    "Reset_Type": 2,
+    "UpdateCode": "컨텐츠_랭킹-노력상"
+  }
+]

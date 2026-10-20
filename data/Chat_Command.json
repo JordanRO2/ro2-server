@@ -1,0 +1,62 @@
+[
+  {
+    "ID": 1,
+    "String_ID": 10265,
+    "Chat_Command": "귓속말"
+  },
+  {
+    "ID": 2,
+    "String_ID": 10266,
+    "Chat_Command": "지역"
+  },
+  {
+    "ID": 3,
+    "String_ID": 10267,
+    "Chat_Command": "일반"
+  },
+  {
+    "ID": 4,
+    "String_ID": 10268,
+    "Chat_Command": "파티"
+  },
+  {
+    "ID": 5,
+    "String_ID": 10269,
+    "Chat_Command": "길드"
+  },
+  {
+    "ID": 6,
+    "String_ID": 10270,
+    "Chat_Command": "공격대"
+  },
+  {
+    "ID": 7,
+    "String_ID": 10271,
+    "Chat_Command": "입장"
+  },
+  {
+    "ID": 8,
+    "String_ID": 10272,
+    "Chat_Command": "나가기"
+  },
+  {
+    "ID": 9,
+    "String_ID": 10273,
+    "Chat_Command": "채널초대"
+  },
+  {
+    "ID": 10,
+    "String_ID": 10274,
+    "Chat_Command": "채널추방"
+  },
+  {
+    "ID": 11,
+    "String_ID": 10275,
+    "Chat_Command": "채널제한"
+  },
+  {
+    "ID": 12,
+    "String_ID": 10276,
+    "Chat_Command": "채널비번"
+  }
+]

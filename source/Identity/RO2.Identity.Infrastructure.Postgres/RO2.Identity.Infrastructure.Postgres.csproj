@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <!-- PostgreSQL persistence for the Identity bounded context, sibling of RO2.Identity.Infrastructure.Mongo,
+       behind IAccountRepository. Mirrors the app's RO2.Persistence.Postgres. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Identity.Domain\RO2.Identity.Domain.csproj" />
+    <ProjectReference Include="..\RO2.Identity.Application\RO2.Identity.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+</Project>

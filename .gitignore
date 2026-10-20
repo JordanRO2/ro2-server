@@ -1,0 +1,35 @@
+# Build outputs
+bin/
+obj/
+out/
+
+# IDE
+.vs/
+.vscode/
+*.user
+*.suo
+
+# Logs
+logs/
+*.log
+
+# Database
+*.db
+
+# Config (contains local settings)
+config.json
+src/*/config.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local NuGet restore cache (regenerate with: dotnet restore --packages .packages)
+.packages/
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Windows reserved-device artifact from a stray "> NUL" redirect
+NUL

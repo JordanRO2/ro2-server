@@ -1,0 +1,62 @@
+[
+  {
+    "Action": 1,
+    "Desc": "Idle / Random"
+  },
+  {
+    "Action": 2,
+    "Desc": "Selecting the Character Tab"
+  },
+  {
+    "Action": 3,
+    "Desc": "Selecting the Cosmetic Tab"
+  },
+  {
+    "Action": 4,
+    "Desc": "Selecting the Consumables Tab"
+  },
+  {
+    "Action": 5,
+    "Desc": "Selecting the Summons/Pets Tab"
+  },
+  {
+    "Action": 6,
+    "Desc": "Selecting the Mounts tab"
+  },
+  {
+    "Action": 7,
+    "Desc": "Selecting the Refining Tab"
+  },
+  {
+    "Action": 8,
+    "Desc": "Selecting the Lucky Tab"
+  },
+  {
+    "Action": 9,
+    "Desc": "Selecting the All Tab"
+  },
+  {
+    "Action": 10,
+    "Desc": "Selecting the Sale Tab"
+  },
+  {
+    "Action": 11,
+    "Desc": "Selecting the Event Tab"
+  },
+  {
+    "Action": 12,
+    "Desc": "After Purchasing Items"
+  },
+  {
+    "Action": 13,
+    "Desc": "When Purchasing a specific item (one string per)"
+  },
+  {
+    "Action": 14,
+    "Desc": "Selecting the Assistant Tab"
+  },
+  {
+    "Action": 15,
+    "Desc": "Purchasing from an Internet Café"
+  }
+]

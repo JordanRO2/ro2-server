@@ -1,0 +1,6 @@
+{
+  "_comment": "Custom monster aggression (server-side AI data; the client ships no aggression flag). Default is PASSIVE: a monster with no row here only retaliates when it is hit. mode is 'none' | 'always' | 'byLevel'. levelGap applies to byLevel only: the monster acquires a player while (playerLevel - npcLevel) <= levelGap. The acquisition radius is the shipped NPCInfo.Reaction_Bound, not set here. The sample row below names a non-existent asset (999999999), so it is inert; add real NPCInfo.ID rows to make monsters aggressive.",
+  "rows": [
+    { "asset": 999999999, "mode": "byLevel", "levelGap": 10 }
+  ]
+}

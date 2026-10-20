@@ -1,0 +1,127 @@
+[
+  {
+    "ID": 50090000,
+    "Related_CutScene_ID": 43370000,
+    "BGM_PATH": "BGM\\GoldenThief.mp3"
+  },
+  {
+    "ID": 50130000,
+    "Related_CutScene_ID": 50130000,
+    "BGM_PATH": "BGM\\Wolyahwa.mp3"
+  },
+  {
+    "ID": 50070000,
+    "Related_CutScene_ID": 50070000,
+    "BGM_PATH": "BGM\\Red Scar.mp3"
+  },
+  {
+    "ID": 50880000,
+    "Related_CutScene_ID": 50880000,
+    "BGM_PATH": "BGM\\Gedenhart.mp3"
+  },
+  {
+    "ID": 50780000,
+    "Related_CutScene_ID": 50780000,
+    "BGM_PATH": "BGM\\Leviathan.mp3"
+  },
+  {
+    "ID": 51100000,
+    "Related_CutScene_ID": 51100000,
+    "BGM_PATH": "BGM\\Baphomet.mp3"
+  },
+  {
+    "ID": 50260000,
+    "Related_CutScene_ID": 50260000,
+    "BGM_PATH": "BGM\\Ungoliant.mp3"
+  },
+  {
+    "ID": 51090000,
+    "Related_CutScene_ID": 51090000,
+    "BGM_PATH": "BGM\\Lucille.mp3"
+  },
+  {
+    "ID": 51000000,
+    "Related_CutScene_ID": 51000000,
+    "BGM_PATH": "BGM\\Drake.mp3"
+  },
+  {
+    "ID": 50110000,
+    "Related_CutScene_ID": 50110000,
+    "BGM_PATH": "BGM\\Laina.mp3"
+  },
+  {
+    "ID": 51340000,
+    "Related_CutScene_ID": 51340000,
+    "BGM_PATH": "BGM\\TheEnd.mp3"
+  },
+  {
+    "ID": 45180000,
+    "Related_CutScene_ID": 45180000,
+    "BGM_PATH": "BGM\\Lucille.mp3"
+  },
+  {
+    "ID": 51620000,
+    "Related_CutScene_ID": 51620000,
+    "BGM_PATH": "BGM\\GoldenThief.mp3"
+  },
+  {
+    "ID": 70090000,
+    "Related_CutScene_ID": 70090000,
+    "BGM_PATH": "BGM\\GoldenThief.mp3"
+  },
+  {
+    "ID": 70130000,
+    "Related_CutScene_ID": 70130000,
+    "BGM_PATH": "BGM\\Wolyahwa.mp3"
+  },
+  {
+    "ID": 70070000,
+    "Related_CutScene_ID": 70070000,
+    "BGM_PATH": "BGM\\Red Scar.mp3"
+  },
+  {
+    "ID": 70880000,
+    "Related_CutScene_ID": 70880000,
+    "BGM_PATH": "BGM\\Gedenhart.mp3"
+  },
+  {
+    "ID": 70780000,
+    "Related_CutScene_ID": 70780000,
+    "BGM_PATH": "BGM\\Leviathan.mp3"
+  },
+  {
+    "ID": 71100000,
+    "Related_CutScene_ID": 71100000,
+    "BGM_PATH": "BGM\\Baphomet.mp3"
+  },
+  {
+    "ID": 70260000,
+    "Related_CutScene_ID": 70260000,
+    "BGM_PATH": "BGM\\Ungoliant.mp3"
+  },
+  {
+    "ID": 71090000,
+    "Related_CutScene_ID": 71090000,
+    "BGM_PATH": "BGM\\Lucille.mp3"
+  },
+  {
+    "ID": 71000000,
+    "Related_CutScene_ID": 71000000,
+    "BGM_PATH": "BGM\\Drake.mp3"
+  },
+  {
+    "ID": 70110000,
+    "Related_CutScene_ID": 70110000,
+    "BGM_PATH": "BGM\\Laina.mp3"
+  },
+  {
+    "ID": 71340000,
+    "Related_CutScene_ID": 71340000,
+    "BGM_PATH": "BGM\\TheEnd.mp3"
+  },
+  {
+    "ID": 71620000,
+    "Related_CutScene_ID": 71620000,
+    "BGM_PATH": "BGM\\GoldenThief.mp3"
+  }
+]

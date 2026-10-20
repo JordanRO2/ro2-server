@@ -1,0 +1,6596 @@
+[
+  {
+    "Item_ID": 22310001,
+    "Item_ID_설명": "포링 카드",
+    "ItemNameID": 1022310001,
+    "EnforceID": 201,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310002,
+    "Item_ID_설명": "마스터링 카드",
+    "ItemNameID": 1022310002,
+    "EnforceID": 201,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310003,
+    "Item_ID_설명": "플립 카드",
+    "ItemNameID": 1022310003,
+    "EnforceID": 202,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310004,
+    "Item_ID_설명": "루나틱 카드",
+    "ItemNameID": 1022310004,
+    "EnforceID": 203,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310005,
+    "Item_ID_설명": "이클립스 카드",
+    "ItemNameID": 1022310005,
+    "EnforceID": 203,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310006,
+    "Item_ID_설명": "일꾼 호넷 카드",
+    "ItemNameID": 1022310006,
+    "EnforceID": 204,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310007,
+    "Item_ID_설명": "호넷 카드",
+    "ItemNameID": 1022310007,
+    "EnforceID": 204,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310008,
+    "Item_ID_설명": "작업반장 호넷 카드",
+    "ItemNameID": 1022310008,
+    "EnforceID": 205,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310009,
+    "Item_ID_설명": "촌촌 카드",
+    "ItemNameID": 1022310009,
+    "EnforceID": 205,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310010,
+    "Item_ID_설명": "파브르 카드",
+    "ItemNameID": 1022310010,
+    "EnforceID": 205,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310011,
+    "Item_ID_설명": "드래곤 플라이 카드",
+    "ItemNameID": 1022310011,
+    "EnforceID": 206,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310012,
+    "Item_ID_설명": "로커 카드",
+    "ItemNameID": 1022310012,
+    "EnforceID": 206,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310013,
+    "Item_ID_설명": "보컬 카드",
+    "ItemNameID": 1022310013,
+    "EnforceID": 206,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310014,
+    "Item_ID_설명": "느림보 카드",
+    "ItemNameID": 1022310014,
+    "EnforceID": 207,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310015,
+    "Item_ID_설명": "방울날개 카드",
+    "ItemNameID": 1022310015,
+    "EnforceID": 207,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310016,
+    "Item_ID_설명": "크리미 카드",
+    "ItemNameID": 1022310016,
+    "EnforceID": 207,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310017,
+    "Item_ID_설명": "브라우니 카드",
+    "ItemNameID": 1022310017,
+    "EnforceID": 208,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310018,
+    "Item_ID_설명": "자연의 파수꾼 카드",
+    "ItemNameID": 1022310018,
+    "EnforceID": 208,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310019,
+    "Item_ID_설명": "자이언트 플립 카드",
+    "ItemNameID": 1022310019,
+    "EnforceID": 208,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310020,
+    "Item_ID_설명": "파르세 세쳐 카드",
+    "ItemNameID": 1022310020,
+    "EnforceID": 208,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310021,
+    "Item_ID_설명": "플립킹  카드",
+    "ItemNameID": 1022310021,
+    "EnforceID": 208,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310022,
+    "Item_ID_설명": "다크 어콜라이트 카드",
+    "ItemNameID": 1022310022,
+    "EnforceID": 209,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310023,
+    "Item_ID_설명": "다크 프리스트 카드",
+    "ItemNameID": 1022310023,
+    "EnforceID": 209,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310027,
+    "Item_ID_설명": "페이건 카드",
+    "ItemNameID": 1022310027,
+    "EnforceID": 209,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310028,
+    "Item_ID_설명": "하급 질럿 카드",
+    "ItemNameID": 1022310028,
+    "EnforceID": 209,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310030,
+    "Item_ID_설명": "습지 도둑벌레 카드",
+    "ItemNameID": 1022310030,
+    "EnforceID": 210,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310031,
+    "Item_ID_설명": "안다노라 카드",
+    "ItemNameID": 1022310031,
+    "EnforceID": 210,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310032,
+    "Item_ID_설명": "안다노라 킹 카드",
+    "ItemNameID": 1022310032,
+    "EnforceID": 210,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310024,
+    "Item_ID_설명": "도둑벌레 카드",
+    "ItemNameID": 1022310024,
+    "EnforceID": 209,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310025,
+    "Item_ID_설명": "타로우 카드",
+    "ItemNameID": 1022310025,
+    "EnforceID": 209,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310026,
+    "Item_ID_설명": "퍼밀리어 카드",
+    "ItemNameID": 1022310026,
+    "EnforceID": 209,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310029,
+    "Item_ID_설명": "수컷 도둑벌레 카드",
+    "ItemNameID": 1022310029,
+    "EnforceID": 210,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310033,
+    "Item_ID_설명": "암컷 도둑벌레 카드",
+    "ItemNameID": 1022310033,
+    "EnforceID": 210,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310034,
+    "Item_ID_설명": "지하수로 마우 카드",
+    "ItemNameID": 1022310034,
+    "EnforceID": 210,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310035,
+    "Item_ID_설명": "지하수로 토드 카드",
+    "ItemNameID": 1022310035,
+    "EnforceID": 210,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310038,
+    "Item_ID_설명": "황금 도둑벌레 카드",
+    "ItemNameID": 1022310038,
+    "EnforceID": 211,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310036,
+    "Item_ID_설명": "포포링 카드",
+    "ItemNameID": 1022310036,
+    "EnforceID": 211,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310037,
+    "Item_ID_설명": "포포포포링 카드",
+    "ItemNameID": 1022310037,
+    "EnforceID": 211,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310039,
+    "Item_ID_설명": "평원 플립 카드",
+    "ItemNameID": 1022310039,
+    "EnforceID": 212,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310040,
+    "Item_ID_설명": "푸른 유성 카드",
+    "ItemNameID": 1022310040,
+    "EnforceID": 213,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310041,
+    "Item_ID_설명": "라모스 카드",
+    "ItemNameID": 1022310041,
+    "EnforceID": 214,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310042,
+    "Item_ID_설명": "라봉 카드",
+    "ItemNameID": 1022310042,
+    "EnforceID": 214,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310043,
+    "Item_ID_설명": "아방크 카드",
+    "ItemNameID": 1022310043,
+    "EnforceID": 215,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310044,
+    "Item_ID_설명": "그린 페코페코 카드",
+    "ItemNameID": 1022310044,
+    "EnforceID": 216,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310045,
+    "Item_ID_설명": "날쌘돌이 카드",
+    "ItemNameID": 1022310045,
+    "EnforceID": 216,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310048,
+    "Item_ID_설명": "페코레이서 카드",
+    "ItemNameID": 1022310048,
+    "EnforceID": 216,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310049,
+    "Item_ID_설명": "페코페코 카드",
+    "ItemNameID": 1022310049,
+    "EnforceID": 216,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310050,
+    "Item_ID_설명": "로다프로그 카드",
+    "ItemNameID": 1022310050,
+    "EnforceID": 217,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310051,
+    "Item_ID_설명": "메이스템 카드",
+    "ItemNameID": 1022310051,
+    "EnforceID": 217,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310052,
+    "Item_ID_설명": "왕눈이 카드",
+    "ItemNameID": 1022310052,
+    "EnforceID": 217,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310053,
+    "Item_ID_설명": "웜테일 카드",
+    "ItemNameID": 1022310053,
+    "EnforceID": 217,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310054,
+    "Item_ID_설명": "전설의 페코레이서 카드",
+    "ItemNameID": 1022310054,
+    "EnforceID": 217,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310055,
+    "Item_ID_설명": "금빛 거성 카드",
+    "ItemNameID": 1022310055,
+    "EnforceID": 218,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310046,
+    "Item_ID_설명": "동굴 스파이더 카드",
+    "ItemNameID": 1022310046,
+    "EnforceID": 216,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310047,
+    "Item_ID_설명": "동굴 퍼밀리어 카드",
+    "ItemNameID": 1022310047,
+    "EnforceID": 216,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310056,
+    "Item_ID_설명": "범블비 카드",
+    "ItemNameID": 1022310056,
+    "EnforceID": 220,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310057,
+    "Item_ID_설명": "스톤 스파이더 카드",
+    "ItemNameID": 1022310057,
+    "EnforceID": 220,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310058,
+    "Item_ID_설명": "루드베키아 카드",
+    "ItemNameID": 1022310058,
+    "EnforceID": 221,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310059,
+    "Item_ID_설명": "빨강이 카드",
+    "ItemNameID": 1022310059,
+    "EnforceID": 221,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310060,
+    "Item_ID_설명": "샌디스타 카드",
+    "ItemNameID": 1022310060,
+    "EnforceID": 221,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310061,
+    "Item_ID_설명": "와일드로즈 카드",
+    "ItemNameID": 1022310061,
+    "EnforceID": 221,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310062,
+    "Item_ID_설명": "코랄투스 카드",
+    "ItemNameID": 1022310062,
+    "EnforceID": 221,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310063,
+    "Item_ID_설명": "머맨 전사 카드",
+    "ItemNameID": 1022310063,
+    "EnforceID": 222,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310064,
+    "Item_ID_설명": "머메이드 전사 카드",
+    "ItemNameID": 1022310064,
+    "EnforceID": 222,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310065,
+    "Item_ID_설명": "누카루카 카드",
+    "ItemNameID": 1022310065,
+    "EnforceID": 223,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310068,
+    "Item_ID_설명": "트랜서 카드",
+    "ItemNameID": 1022310068,
+    "EnforceID": 224,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310074,
+    "Item_ID_설명": "바위 포식자 카드",
+    "ItemNameID": 1022310074,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310075,
+    "Item_ID_설명": "스톤 타란툴라 카드",
+    "ItemNameID": 1022310075,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310066,
+    "Item_ID_설명": "바돈 베베 카드",
+    "ItemNameID": 1022310066,
+    "EnforceID": 224,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310067,
+    "Item_ID_설명": "에라프로그 카드",
+    "ItemNameID": 1022310067,
+    "EnforceID": 224,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310069,
+    "Item_ID_설명": "머맨 추종자 카드",
+    "ItemNameID": 1022310069,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310070,
+    "Item_ID_설명": "머메이드 추종자 카드",
+    "ItemNameID": 1022310070,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310071,
+    "Item_ID_설명": "바다뱀 카드",
+    "ItemNameID": 1022310071,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310072,
+    "Item_ID_설명": "바돈 카드",
+    "ItemNameID": 1022310072,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310073,
+    "Item_ID_설명": "바돈 패밀리 카드",
+    "ItemNameID": 1022310073,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310077,
+    "Item_ID_설명": "커너투스 카드",
+    "ItemNameID": 1022310077,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310078,
+    "Item_ID_설명": "휀 카드",
+    "ItemNameID": 1022310078,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310079,
+    "Item_ID_설명": "히드라 카드",
+    "ItemNameID": 1022310079,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310076,
+    "Item_ID_설명": "오본느 카드",
+    "ItemNameID": 1022310076,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310080,
+    "Item_ID_설명": "마린스피어 카드",
+    "ItemNameID": 1022310080,
+    "EnforceID": 226,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310081,
+    "Item_ID_설명": "머맨 광신도 카드",
+    "ItemNameID": 1022310081,
+    "EnforceID": 226,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310082,
+    "Item_ID_설명": "머메이드 광신도 카드",
+    "ItemNameID": 1022310082,
+    "EnforceID": 226,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310084,
+    "Item_ID_설명": "소드피쉬 카드",
+    "ItemNameID": 1022310084,
+    "EnforceID": 226,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310085,
+    "Item_ID_설명": "스트라우프 카드",
+    "ItemNameID": 1022310085,
+    "EnforceID": 226,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310089,
+    "Item_ID_설명": "바누아투 카드",
+    "ItemNameID": 1022310089,
+    "EnforceID": 227,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310092,
+    "Item_ID_설명": "레비아탄 카드",
+    "ItemNameID": 1022310092,
+    "EnforceID": 228,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310083,
+    "Item_ID_설명": "밀듀 카드",
+    "ItemNameID": 1022310083,
+    "EnforceID": 226,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310086,
+    "Item_ID_설명": "스포아 카드",
+    "ItemNameID": 1022310086,
+    "EnforceID": 226,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310087,
+    "Item_ID_설명": "도스포아 카드",
+    "ItemNameID": 1022310087,
+    "EnforceID": 227,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310088,
+    "Item_ID_설명": "마시포아 카드",
+    "ItemNameID": 1022310088,
+    "EnforceID": 227,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310090,
+    "Item_ID_설명": "베놈 스포아 카드",
+    "ItemNameID": 1022310090,
+    "EnforceID": 227,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310091,
+    "Item_ID_설명": "포이즌 스포아 카드",
+    "ItemNameID": 1022310091,
+    "EnforceID": 227,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310093,
+    "Item_ID_설명": "빅풋 카드",
+    "ItemNameID": 1022310093,
+    "EnforceID": 228,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310094,
+    "Item_ID_설명": "오비 베어 카드",
+    "ItemNameID": 1022310094,
+    "EnforceID": 228,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310095,
+    "Item_ID_설명": "토드 카드",
+    "ItemNameID": 1022310095,
+    "EnforceID": 228,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310098,
+    "Item_ID_설명": "보아 카드",
+    "ItemNameID": 1022310098,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310099,
+    "Item_ID_설명": "숲의 영도자 카드",
+    "ItemNameID": 1022310099,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310100,
+    "Item_ID_설명": "아난티아 카드",
+    "ItemNameID": 1022310100,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310102,
+    "Item_ID_설명": "토드 킹 카드",
+    "ItemNameID": 1022310102,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310103,
+    "Item_ID_설명": "트러플 카드",
+    "ItemNameID": 1022310103,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310104,
+    "Item_ID_설명": "트러플 오브 트러플 카드",
+    "ItemNameID": 1022310104,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310105,
+    "Item_ID_설명": "페이욘 호랑이 카드",
+    "ItemNameID": 1022310105,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310108,
+    "Item_ID_설명": "미호족 카드",
+    "ItemNameID": 1022310108,
+    "EnforceID": 230,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310109,
+    "Item_ID_설명": "휘림주 카드",
+    "ItemNameID": 1022310109,
+    "EnforceID": 230,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310119,
+    "Item_ID_설명": "크래빗 카드",
+    "ItemNameID": 1022310119,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310121,
+    "Item_ID_설명": "가조마르트 카드",
+    "ItemNameID": 1022310121,
+    "EnforceID": 232,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310096,
+    "Item_ID_설명": "무덤 박쥐 카드",
+    "ItemNameID": 1022310096,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310097,
+    "Item_ID_설명": "무덤 쥐 카드",
+    "ItemNameID": 1022310097,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310101,
+    "Item_ID_설명": "유령 거미 카드",
+    "ItemNameID": 1022310101,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310106,
+    "Item_ID_설명": "흑호 카드",
+    "ItemNameID": 1022310106,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310107,
+    "Item_ID_설명": "마우 도굴꾼 카드",
+    "ItemNameID": 1022310107,
+    "EnforceID": 230,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310110,
+    "Item_ID_설명": "구미호 카드",
+    "ItemNameID": 1022310110,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310111,
+    "Item_ID_설명": "묘화 카드",
+    "ItemNameID": 1022310111,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310112,
+    "Item_ID_설명": "무덤 나방 카드",
+    "ItemNameID": 1022310112,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310113,
+    "Item_ID_설명": "불여우 카드",
+    "ItemNameID": 1022310113,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310114,
+    "Item_ID_설명": "비림총 수호 카드",
+    "ItemNameID": 1022310114,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310115,
+    "Item_ID_설명": "소희 카드",
+    "ItemNameID": 1022310115,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310116,
+    "Item_ID_설명": "수컷 무덤벌레 카드",
+    "ItemNameID": 1022310116,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310117,
+    "Item_ID_설명": "암컷 무덤벌레 카드",
+    "ItemNameID": 1022310117,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310118,
+    "Item_ID_설명": "지하 버섯 카드",
+    "ItemNameID": 1022310118,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310120,
+    "Item_ID_설명": "호롱 카드",
+    "ItemNameID": 1022310120,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310122,
+    "Item_ID_설명": "귀화 카드",
+    "ItemNameID": 1022310122,
+    "EnforceID": 232,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310123,
+    "Item_ID_설명": "마녀 레이라 카드",
+    "ItemNameID": 1022310123,
+    "EnforceID": 232,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310124,
+    "Item_ID_설명": "임프 카드",
+    "ItemNameID": 1022310124,
+    "EnforceID": 232,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310125,
+    "Item_ID_설명": "그리즐리 카드",
+    "ItemNameID": 1022310125,
+    "EnforceID": 233,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310126,
+    "Item_ID_설명": "리서처 카드",
+    "ItemNameID": 1022310126,
+    "EnforceID": 233,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310127,
+    "Item_ID_설명": "만드라고라 카드",
+    "ItemNameID": 1022310127,
+    "EnforceID": 233,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310128,
+    "Item_ID_설명": "비상식량 카드",
+    "ItemNameID": 1022310128,
+    "EnforceID": 233,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310129,
+    "Item_ID_설명": "시골쥐 카드",
+    "ItemNameID": 1022310129,
+    "EnforceID": 233,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310130,
+    "Item_ID_설명": "암브로시아 카드",
+    "ItemNameID": 1022310130,
+    "EnforceID": 233,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310131,
+    "Item_ID_설명": "파이 카드",
+    "ItemNameID": 1022310131,
+    "EnforceID": 233,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310132,
+    "Item_ID_설명": "맨티스 카드",
+    "ItemNameID": 1022310132,
+    "EnforceID": 234,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310133,
+    "Item_ID_설명": "카를로스 카드",
+    "ItemNameID": 1022310133,
+    "EnforceID": 234,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310134,
+    "Item_ID_설명": "킬러 맨티스 카드",
+    "ItemNameID": 1022310134,
+    "EnforceID": 234,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310135,
+    "Item_ID_설명": "피톤 카드",
+    "ItemNameID": 1022310135,
+    "EnforceID": 234,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310136,
+    "Item_ID_설명": "그렘린 카드",
+    "ItemNameID": 1022310136,
+    "EnforceID": 235,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310137,
+    "Item_ID_설명": "그렘린 피어 카드",
+    "ItemNameID": 1022310137,
+    "EnforceID": 235,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310138,
+    "Item_ID_설명": "상급 페이건 카드",
+    "ItemNameID": 1022310138,
+    "EnforceID": 235,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310140,
+    "Item_ID_설명": "바실로카 카드",
+    "ItemNameID": 1022310140,
+    "EnforceID": 236,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310141,
+    "Item_ID_설명": "코카트리스 카드",
+    "ItemNameID": 1022310141,
+    "EnforceID": 236,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310142,
+    "Item_ID_설명": "강화 라쿠프 카드",
+    "ItemNameID": 1022310142,
+    "EnforceID": 237,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310139,
+    "Item_ID_설명": "강화 고블린 카드",
+    "ItemNameID": 1022310139,
+    "EnforceID": 236,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310143,
+    "Item_ID_설명": "그루밍 스크래치 카드",
+    "ItemNameID": 1022310143,
+    "EnforceID": 238,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310144,
+    "Item_ID_설명": "리프캣 카드",
+    "ItemNameID": 1022310144,
+    "EnforceID": 238,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310145,
+    "Item_ID_설명": "외로운 여행자 카드",
+    "ItemNameID": 1022310145,
+    "EnforceID": 238,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310146,
+    "Item_ID_설명": "포템킨 카드",
+    "ItemNameID": 1022310146,
+    "EnforceID": 238,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310148,
+    "Item_ID_설명": "세비지 카드",
+    "ItemNameID": 1022310148,
+    "EnforceID": 239,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310149,
+    "Item_ID_설명": "세비지 베베 카드",
+    "ItemNameID": 1022310149,
+    "EnforceID": 239,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310150,
+    "Item_ID_설명": "스네일러 카드",
+    "ItemNameID": 1022310150,
+    "EnforceID": 239,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310151,
+    "Item_ID_설명": "와일드 세비지 카드",
+    "ItemNameID": 1022310151,
+    "EnforceID": 239,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310152,
+    "Item_ID_설명": "와일드 세비지 베베 카드",
+    "ItemNameID": 1022310152,
+    "EnforceID": 239,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310153,
+    "Item_ID_설명": "폭군 돌격전차 카드",
+    "ItemNameID": 1022310153,
+    "EnforceID": 239,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310154,
+    "Item_ID_설명": "데스 페레이즈 카드",
+    "ItemNameID": 1022310154,
+    "EnforceID": 240,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310155,
+    "Item_ID_설명": "수마니 카드",
+    "ItemNameID": 1022310155,
+    "EnforceID": 240,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310156,
+    "Item_ID_설명": "수컷 플라워디어 카드",
+    "ItemNameID": 1022310156,
+    "EnforceID": 240,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310157,
+    "Item_ID_설명": "암컷 플라워디어 카드",
+    "ItemNameID": 1022310157,
+    "EnforceID": 240,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310158,
+    "Item_ID_설명": "와일드디어 카드",
+    "ItemNameID": 1022310158,
+    "EnforceID": 240,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310159,
+    "Item_ID_설명": "페레이즈 카드",
+    "ItemNameID": 1022310159,
+    "EnforceID": 240,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310147,
+    "Item_ID_설명": "라바 카드",
+    "ItemNameID": 1022310147,
+    "EnforceID": 239,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310160,
+    "Item_ID_설명": "네루파 카드",
+    "ItemNameID": 1022310160,
+    "EnforceID": 242,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310161,
+    "Item_ID_설명": "네펜데스 카드",
+    "ItemNameID": 1022310161,
+    "EnforceID": 242,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310162,
+    "Item_ID_설명": "다그다 카드",
+    "ItemNameID": 1022310162,
+    "EnforceID": 242,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310163,
+    "Item_ID_설명": "바이칼 카드",
+    "ItemNameID": 1022310163,
+    "EnforceID": 242,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310167,
+    "Item_ID_설명": "캡틴 다그다 카드",
+    "ItemNameID": 1022310167,
+    "EnforceID": 242,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310168,
+    "Item_ID_설명": "타이탄 아룸 카드",
+    "ItemNameID": 1022310168,
+    "EnforceID": 242,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310170,
+    "Item_ID_설명": "만데루 카드",
+    "ItemNameID": 1022310170,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310171,
+    "Item_ID_설명": "만만데루 카드",
+    "ItemNameID": 1022310171,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310176,
+    "Item_ID_설명": "알루스 카드",
+    "ItemNameID": 1022310176,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310179,
+    "Item_ID_설명": "퍼씰 카드",
+    "ItemNameID": 1022310179,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310180,
+    "Item_ID_설명": "프랑쿠 카드",
+    "ItemNameID": 1022310180,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310181,
+    "Item_ID_설명": "피쿠링 카드",
+    "ItemNameID": 1022310181,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310182,
+    "Item_ID_설명": "해변의 무법자 카드",
+    "ItemNameID": 1022310182,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310183,
+    "Item_ID_설명": "랍스탕 카드",
+    "ItemNameID": 1022310183,
+    "EnforceID": 244,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310184,
+    "Item_ID_설명": "시아톤 카드",
+    "ItemNameID": 1022310184,
+    "EnforceID": 244,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310185,
+    "Item_ID_설명": "파우더 카드",
+    "ItemNameID": 1022310185,
+    "EnforceID": 244,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310186,
+    "Item_ID_설명": "펄투스 카드",
+    "ItemNameID": 1022310186,
+    "EnforceID": 244,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310187,
+    "Item_ID_설명": "펜저 카드",
+    "ItemNameID": 1022310187,
+    "EnforceID": 244,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310188,
+    "Item_ID_설명": "피어투스 카드",
+    "ItemNameID": 1022310188,
+    "EnforceID": 244,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310189,
+    "Item_ID_설명": "허밋투스 카드",
+    "ItemNameID": 1022310189,
+    "EnforceID": 244,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310164,
+    "Item_ID_설명": "솔저 스켈레톤 카드",
+    "ItemNameID": 1022310164,
+    "EnforceID": 242,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310165,
+    "Item_ID_설명": "스켈레톤 카드",
+    "ItemNameID": 1022310165,
+    "EnforceID": 242,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310166,
+    "Item_ID_설명": "캐논 슈터 카드",
+    "ItemNameID": 1022310166,
+    "EnforceID": 242,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310169,
+    "Item_ID_설명": "퓨리 스켈레톤 카드",
+    "ItemNameID": 1022310169,
+    "EnforceID": 242,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310172,
+    "Item_ID_설명": "미믹 카드",
+    "ItemNameID": 1022310172,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310173,
+    "Item_ID_설명": "봄버링 카드",
+    "ItemNameID": 1022310173,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310174,
+    "Item_ID_설명": "쉐프 스켈레톤 카드",
+    "ItemNameID": 1022310174,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310175,
+    "Item_ID_설명": "아처 스켈레톤 카드",
+    "ItemNameID": 1022310175,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310177,
+    "Item_ID_설명": "캐논 레이디 카드",
+    "ItemNameID": 1022310177,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310178,
+    "Item_ID_설명": "파이럿 스컬 카드",
+    "ItemNameID": 1022310178,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310197,
+    "Item_ID_설명": "프란시스 엑셀 카드",
+    "ItemNameID": 1022310197,
+    "EnforceID": 245,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310190,
+    "Item_ID_설명": "디아나틱 카드",
+    "ItemNameID": 1022310190,
+    "EnforceID": 245,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310191,
+    "Item_ID_설명": "메틀러 카드",
+    "ItemNameID": 1022310191,
+    "EnforceID": 245,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310192,
+    "Item_ID_설명": "모래 왕눈이 카드",
+    "ItemNameID": 1022310192,
+    "EnforceID": 245,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310193,
+    "Item_ID_설명": "사막의 시인 카드",
+    "ItemNameID": 1022310193,
+    "EnforceID": 245,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310194,
+    "Item_ID_설명": "사막의 여행자 카드",
+    "ItemNameID": 1022310194,
+    "EnforceID": 245,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310195,
+    "Item_ID_설명": "샌드프로그 카드",
+    "ItemNameID": 1022310195,
+    "EnforceID": 245,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310196,
+    "Item_ID_설명": "샌디 카드",
+    "ItemNameID": 1022310196,
+    "EnforceID": 245,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310198,
+    "Item_ID_설명": "피닉스 카드",
+    "ItemNameID": 1022310198,
+    "EnforceID": 245,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310199,
+    "Item_ID_설명": "굿펠로 카드",
+    "ItemNameID": 1022310199,
+    "EnforceID": 246,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310200,
+    "Item_ID_설명": "그루밍 도적단 카드",
+    "ItemNameID": 1022310200,
+    "EnforceID": 246,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310202,
+    "Item_ID_설명": "데저트 몰 카드",
+    "ItemNameID": 1022310202,
+    "EnforceID": 246,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310203,
+    "Item_ID_설명": "레프리컨 카드",
+    "ItemNameID": 1022310203,
+    "EnforceID": 246,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310204,
+    "Item_ID_설명": "에드제 카드",
+    "ItemNameID": 1022310204,
+    "EnforceID": 246,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310205,
+    "Item_ID_설명": "태양바라기 카드",
+    "ItemNameID": 1022310205,
+    "EnforceID": 246,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310206,
+    "Item_ID_설명": "파이라딜로 카드",
+    "ItemNameID": 1022310206,
+    "EnforceID": 246,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310207,
+    "Item_ID_설명": "페넷 카드",
+    "ItemNameID": 1022310207,
+    "EnforceID": 246,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310208,
+    "Item_ID_설명": "게르빌 카드",
+    "ItemNameID": 1022310208,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310209,
+    "Item_ID_설명": "고대 어쌔신 카드",
+    "ItemNameID": 1022310209,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310210,
+    "Item_ID_설명": "데저트 울프 카드",
+    "ItemNameID": 1022310210,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310211,
+    "Item_ID_설명": "모래 태풍 카드",
+    "ItemNameID": 1022310211,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310212,
+    "Item_ID_설명": "모래지옥 카드",
+    "ItemNameID": 1022310212,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310214,
+    "Item_ID_설명": "샌드 스파이더 카드",
+    "ItemNameID": 1022310214,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310218,
+    "Item_ID_설명": "하얀 그림자 카드",
+    "ItemNameID": 1022310218,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310201,
+    "Item_ID_설명": "다크 어쌔신 카드",
+    "ItemNameID": 1022310201,
+    "EnforceID": 246,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310213,
+    "Item_ID_설명": "본 어쌔신 카드",
+    "ItemNameID": 1022310213,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310215,
+    "Item_ID_설명": "아나콘다크 카드",
+    "ItemNameID": 1022310215,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310216,
+    "Item_ID_설명": "암살자의 포포링 카드",
+    "ItemNameID": 1022310216,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310217,
+    "Item_ID_설명": "어쌔신 죄수 카드",
+    "ItemNameID": 1022310217,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310225,
+    "Item_ID_설명": "제이와치 카드",
+    "ItemNameID": 1022310225,
+    "EnforceID": 249,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310239,
+    "Item_ID_설명": "에레메스 가일 카드",
+    "ItemNameID": 1022310239,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310219,
+    "Item_ID_설명": "데저트 푸구 카드",
+    "ItemNameID": 1022310219,
+    "EnforceID": 248,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310220,
+    "Item_ID_설명": "헤이즐 카드",
+    "ItemNameID": 1022310220,
+    "EnforceID": 248,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310221,
+    "Item_ID_설명": "골드 크리미 카드",
+    "ItemNameID": 1022310221,
+    "EnforceID": 249,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310222,
+    "Item_ID_설명": "데저트 페코 카드",
+    "ItemNameID": 1022310222,
+    "EnforceID": 249,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310223,
+    "Item_ID_설명": "샌드 스토커 카드",
+    "ItemNameID": 1022310223,
+    "EnforceID": 249,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310224,
+    "Item_ID_설명": "원더러 이터 카드",
+    "ItemNameID": 1022310224,
+    "EnforceID": 249,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310226,
+    "Item_ID_설명": "가르봉 카드",
+    "ItemNameID": 1022310226,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310228,
+    "Item_ID_설명": "데미앙 카드",
+    "ItemNameID": 1022310228,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310230,
+    "Item_ID_설명": "데저트 고블린 카드",
+    "ItemNameID": 1022310230,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310233,
+    "Item_ID_설명": "미야옹 카드",
+    "ItemNameID": 1022310233,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310238,
+    "Item_ID_설명": "스크래치 도적단 카드",
+    "ItemNameID": 1022310238,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310241,
+    "Item_ID_설명": "여신교 사도 카드",
+    "ItemNameID": 1022310241,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310242,
+    "Item_ID_설명": "여신교 투사 카드",
+    "ItemNameID": 1022310242,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310243,
+    "Item_ID_설명": "여신교 환영술사 카드",
+    "ItemNameID": 1022310243,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310247,
+    "Item_ID_설명": "포이즈나 카드",
+    "ItemNameID": 1022310247,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310248,
+    "Item_ID_설명": "헌터플라이 카드",
+    "ItemNameID": 1022310248,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310557,
+    "Item_ID_설명": "이그제큐터 전투대원 카드",
+    "ItemNameID": 1022310557,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310558,
+    "Item_ID_설명": "이그제큐터 마법대원 카드",
+    "ItemNameID": 1022310558,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310559,
+    "Item_ID_설명": "검광의 사도 카드",
+    "ItemNameID": 1022310559,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310560,
+    "Item_ID_설명": "켈베로프 카드",
+    "ItemNameID": 1022310560,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310561,
+    "Item_ID_설명": "파안의 사도 카드",
+    "ItemNameID": 1022310561,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310562,
+    "Item_ID_설명": "천명의 사도 카드",
+    "ItemNameID": 1022310562,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310563,
+    "Item_ID_설명": "맹독의 사도 카드",
+    "ItemNameID": 1022310563,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310564,
+    "Item_ID_설명": "파괴의 사도 카드",
+    "ItemNameID": 1022310564,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310565,
+    "Item_ID_설명": "붕괴의 사도 카드",
+    "ItemNameID": 1022310565,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310566,
+    "Item_ID_설명": "철벽의 사도 카드",
+    "ItemNameID": 1022310566,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310567,
+    "Item_ID_설명": "라클렘 카드",
+    "ItemNameID": 1022310567,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310568,
+    "Item_ID_설명": "언데드 이그제큐터 카드",
+    "ItemNameID": 1022310568,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310569,
+    "Item_ID_설명": "데몬 이그제큐터 카드",
+    "ItemNameID": 1022310569,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310570,
+    "Item_ID_설명": "칠흑의 사도 카드",
+    "ItemNameID": 1022310570,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310571,
+    "Item_ID_설명": "붉은귀 캣 레이디 카드",
+    "ItemNameID": 1022310571,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310572,
+    "Item_ID_설명": "캣 레이디 카드",
+    "ItemNameID": 1022310572,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310573,
+    "Item_ID_설명": "붉은털 울프가이 카드",
+    "ItemNameID": 1022310573,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310574,
+    "Item_ID_설명": "울프가이 카드",
+    "ItemNameID": 1022310574,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310575,
+    "Item_ID_설명": "라이거 카드",
+    "ItemNameID": 1022310575,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310229,
+    "Item_ID_설명": "데비루치 카드",
+    "ItemNameID": 1022310229,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310237,
+    "Item_ID_설명": "바포메트 주니어 카드",
+    "ItemNameID": 1022310237,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310231,
+    "Item_ID_설명": "미노타우르스 청이 카드",
+    "ItemNameID": 1022310231,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310232,
+    "Item_ID_설명": "미노타우르스 홍이 카드",
+    "ItemNameID": 1022310232,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310249,
+    "Item_ID_설명": "훔바바 카드",
+    "ItemNameID": 1022310249,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310236,
+    "Item_ID_설명": "바포메트 카드",
+    "ItemNameID": 1022310236,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310227,
+    "Item_ID_설명": "기어바즈 카드",
+    "ItemNameID": 1022310227,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310234,
+    "Item_ID_설명": "바돈 X 카드",
+    "ItemNameID": 1022310234,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310235,
+    "Item_ID_설명": "바돈 Z 카드",
+    "ItemNameID": 1022310235,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310240,
+    "Item_ID_설명": "엔트라이온 카드",
+    "ItemNameID": 1022310240,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310244,
+    "Item_ID_설명": "자이언트 드릴러 카드",
+    "ItemNameID": 1022310244,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310245,
+    "Item_ID_설명": "제노 스파이더 카드",
+    "ItemNameID": 1022310245,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310246,
+    "Item_ID_설명": "페르투스 카드",
+    "ItemNameID": 1022310246,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310598,
+    "Item_ID_설명": "건달마우 카드",
+    "ItemNameID": 1022310598,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310599,
+    "Item_ID_설명": "구리 카드",
+    "ItemNameID": 1022310599,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310600,
+    "Item_ID_설명": "꺼비 카드",
+    "ItemNameID": 1022310600,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310601,
+    "Item_ID_설명": "꼬부기 카드",
+    "ItemNameID": 1022310601,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310602,
+    "Item_ID_설명": "쿠로링 카드",
+    "ItemNameID": 1022310602,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310603,
+    "Item_ID_설명": "거대 강도벌레 카드",
+    "ItemNameID": 1022310603,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310604,
+    "Item_ID_설명": "황금 퍼밀리어 카드",
+    "ItemNameID": 1022310604,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310605,
+    "Item_ID_설명": "강도벌레 알 카드",
+    "ItemNameID": 1022310605,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310606,
+    "Item_ID_설명": "황금 강도벌레 카드",
+    "ItemNameID": 1022310606,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310607,
+    "Item_ID_설명": "록스타 히어로즈 카드",
+    "ItemNameID": 1022310607,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310608,
+    "Item_ID_설명": "민이와 몽이 카드",
+    "ItemNameID": 1022310608,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310609,
+    "Item_ID_설명": "아로미네 카드",
+    "ItemNameID": 1022310609,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310610,
+    "Item_ID_설명": "거북 암살전대 카드",
+    "ItemNameID": 1022310610,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310611,
+    "Item_ID_설명": "쥐사부 크램프 카드",
+    "ItemNameID": 1022310611,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310632,
+    "Item_ID_설명": "단단한 케프리 카드",
+    "ItemNameID": 1022310632,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310633,
+    "Item_ID_설명": "악취벌레 카드",
+    "ItemNameID": 1022310633,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310634,
+    "Item_ID_설명": "지옥 전갈 카드",
+    "ItemNameID": 1022310634,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310635,
+    "Item_ID_설명": "지옥충 버서커 카드",
+    "ItemNameID": 1022310635,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310636,
+    "Item_ID_설명": "어스 웜 카드",
+    "ItemNameID": 1022310636,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310637,
+    "Item_ID_설명": "에인션트 웜 카드",
+    "ItemNameID": 1022310637,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310638,
+    "Item_ID_설명": "자이언트 웜 카드",
+    "ItemNameID": 1022310638,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310639,
+    "Item_ID_설명": "앙드레 데니로 피에르 카드",
+    "ItemNameID": 1022310639,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310640,
+    "Item_ID_설명": "마야퍼플 카드",
+    "ItemNameID": 1022310640,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310641,
+    "Item_ID_설명": "마야 카드",
+    "ItemNameID": 1022310641,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310642,
+    "Item_ID_설명": "셀로브 카드",
+    "ItemNameID": 1022310642,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310643,
+    "Item_ID_설명": "절망의 운골리안트 카드",
+    "ItemNameID": 1022310643,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310644,
+    "Item_ID_설명": "사기 도둑벌레 카드",
+    "ItemNameID": 1022310644,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310645,
+    "Item_ID_설명": "매혹의 라모트 카드",
+    "ItemNameID": 1022310645,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310646,
+    "Item_ID_설명": "지옥의 맹독충 카드",
+    "ItemNameID": 1022310646,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310647,
+    "Item_ID_설명": "야만스런 바르바로 카드",
+    "ItemNameID": 1022310647,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310250,
+    "Item_ID_설명": "블루 라쿠프 카드",
+    "ItemNameID": 1022310250,
+    "EnforceID": 313,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310251,
+    "Item_ID_설명": "브라운 라쿠프 카드",
+    "ItemNameID": 1022310251,
+    "EnforceID": 318,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310252,
+    "Item_ID_설명": "모험가 포포링 카드",
+    "ItemNameID": 1022310252,
+    "EnforceID": 316,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310253,
+    "Item_ID_설명": "모험왕 포포링 카드",
+    "ItemNameID": 1022310253,
+    "EnforceID": 318,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310254,
+    "Item_ID_설명": "아라크노아 카드",
+    "ItemNameID": 1022310254,
+    "EnforceID": 318,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310255,
+    "Item_ID_설명": "붉은 흉터 카드",
+    "ItemNameID": 1022310255,
+    "EnforceID": 319,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310256,
+    "Item_ID_설명": "바돈바돈 카드",
+    "ItemNameID": 1022310256,
+    "EnforceID": 327,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310257,
+    "Item_ID_설명": "페노메나 카드",
+    "ItemNameID": 1022310257,
+    "EnforceID": 327,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310258,
+    "Item_ID_설명": "거대 메드라 카드",
+    "ItemNameID": 1022310258,
+    "EnforceID": 327,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310259,
+    "Item_ID_설명": "족장 바누아투 카드",
+    "ItemNameID": 1022310259,
+    "EnforceID": 327,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310260,
+    "Item_ID_설명": "필사의 누카루카 카드",
+    "ItemNameID": 1022310260,
+    "EnforceID": 327,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310261,
+    "Item_ID_설명": "해신 레비아탄 카드",
+    "ItemNameID": 1022310261,
+    "EnforceID": 328,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310262,
+    "Item_ID_설명": "마우 도굴대장 카드",
+    "ItemNameID": 1022310262,
+    "EnforceID": 332,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310263,
+    "Item_ID_설명": "홀랑 버섯 카드",
+    "ItemNameID": 1022310263,
+    "EnforceID": 332,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310264,
+    "Item_ID_설명": "저주받은 묘화 카드",
+    "ItemNameID": 1022310264,
+    "EnforceID": 332,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310265,
+    "Item_ID_설명": "사악한 귀화 카드",
+    "ItemNameID": 1022310265,
+    "EnforceID": 333,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310266,
+    "Item_ID_설명": "세희 카드",
+    "ItemNameID": 1022310266,
+    "EnforceID": 333,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310267,
+    "Item_ID_설명": "월야화 카드",
+    "ItemNameID": 1022310267,
+    "EnforceID": 334,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310268,
+    "Item_ID_설명": "상급 리서처 카드",
+    "ItemNameID": 1022310268,
+    "EnforceID": 335,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310269,
+    "Item_ID_설명": "질럿 카드",
+    "ItemNameID": 1022310269,
+    "EnforceID": 335,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310270,
+    "Item_ID_설명": "페이스풀 카드",
+    "ItemNameID": 1022310270,
+    "EnforceID": 336,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310271,
+    "Item_ID_설명": "키엘 MK-Ⅱ 카드",
+    "ItemNameID": 1022310271,
+    "EnforceID": 337,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310272,
+    "Item_ID_설명": "베놈 카드",
+    "ItemNameID": 1022310272,
+    "EnforceID": 337,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310273,
+    "Item_ID_설명": "게덴하르트 카드",
+    "ItemNameID": 1022310273,
+    "EnforceID": 338,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310274,
+    "Item_ID_설명": "발라티에 제프 카드",
+    "ItemNameID": 1022310274,
+    "EnforceID": 345,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310275,
+    "Item_ID_설명": "레파르 코스타스 카드",
+    "ItemNameID": 1022310275,
+    "EnforceID": 345,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310276,
+    "Item_ID_설명": "레파드 프렌치 카드",
+    "ItemNameID": 1022310276,
+    "EnforceID": 345,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310277,
+    "Item_ID_설명": "딜리셔스 피노누아 카드",
+    "ItemNameID": 1022310277,
+    "EnforceID": 345,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310278,
+    "Item_ID_설명": "이디스 슈바이츠 카드",
+    "ItemNameID": 1022310278,
+    "EnforceID": 345,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310279,
+    "Item_ID_설명": "드레이크 카드",
+    "ItemNameID": 1022310279,
+    "EnforceID": 346,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310280,
+    "Item_ID_설명": "지옥충 일꾼 카드",
+    "ItemNameID": 1022310280,
+    "EnforceID": 339,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310281,
+    "Item_ID_설명": "지옥충 전사 카드",
+    "ItemNameID": 1022310281,
+    "EnforceID": 340,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310282,
+    "Item_ID_설명": "팬토마 카드",
+    "ItemNameID": 1022310282,
+    "EnforceID": 340,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310283,
+    "Item_ID_설명": "베노머 카드",
+    "ItemNameID": 1022310283,
+    "EnforceID": 342,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310284,
+    "Item_ID_설명": "거대 지네 카드",
+    "ItemNameID": 1022310284,
+    "EnforceID": 342,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310285,
+    "Item_ID_설명": "운골리안트 카드",
+    "ItemNameID": 1022310285,
+    "EnforceID": 342,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310286,
+    "Item_ID_설명": "아브라힘 카드",
+    "ItemNameID": 1022310286,
+    "EnforceID": 349,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310287,
+    "Item_ID_설명": "타우 린 카드",
+    "ItemNameID": 1022310287,
+    "EnforceID": 349,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310288,
+    "Item_ID_설명": "무스타파 카드",
+    "ItemNameID": 1022310288,
+    "EnforceID": 349,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310289,
+    "Item_ID_설명": "하자드 카드",
+    "ItemNameID": 1022310289,
+    "EnforceID": 349,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310290,
+    "Item_ID_설명": "어쌔신 대장로 카드",
+    "ItemNameID": 1022310290,
+    "EnforceID": 349,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310291,
+    "Item_ID_설명": "쥴리아나 루씰 카드",
+    "ItemNameID": 1022310291,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310595,
+    "Item_ID_설명": "알로이 수페르 카드",
+    "ItemNameID": 1022310595,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310596,
+    "Item_ID_설명": "허드슨 제롬 카드",
+    "ItemNameID": 1022310596,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310597,
+    "Item_ID_설명": "고르곤졸라 카드",
+    "ItemNameID": 1022310597,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310292,
+    "Item_ID_설명": "섬광의 게이로그 카드",
+    "ItemNameID": 1022310292,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310293,
+    "Item_ID_설명": "도스토예프 카드",
+    "ItemNameID": 1022310293,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310294,
+    "Item_ID_설명": "라빠르망 폰 체르바 카드",
+    "ItemNameID": 1022310294,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310295,
+    "Item_ID_설명": "솔로미안 라 크리스트 카드",
+    "ItemNameID": 1022310295,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310296,
+    "Item_ID_설명": "키엘 MK-Ⅲ 카드",
+    "ItemNameID": 1022310296,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310297,
+    "Item_ID_설명": "이그제큐터 마이스터 카드",
+    "ItemNameID": 1022310297,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310626,
+    "Item_ID_설명": "심연의 황금 강도벌레 카드",
+    "ItemNameID": 1022310626,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310627,
+    "Item_ID_설명": "심연의 록스타 히어로즈 카드",
+    "ItemNameID": 1022310627,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310628,
+    "Item_ID_설명": "심연의 민이와 몽이 카드",
+    "ItemNameID": 1022310628,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310629,
+    "Item_ID_설명": "심연의 아로미네 카드",
+    "ItemNameID": 1022310629,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310630,
+    "Item_ID_설명": "심연의 거북 암살전대 카드",
+    "ItemNameID": 1022310630,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310631,
+    "Item_ID_설명": "심연의 쥐사부 크램프 카드",
+    "ItemNameID": 1022310631,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310664,
+    "Item_ID_설명": "지옥의 자이언트 웜 카드",
+    "ItemNameID": 1022310664,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310665,
+    "Item_ID_설명": "악몽의 마야퍼플 카드",
+    "ItemNameID": 1022310665,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310666,
+    "Item_ID_설명": "악몽의 마야 카드",
+    "ItemNameID": 1022310666,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310667,
+    "Item_ID_설명": "끝없는 절망의 운골리안트 카드",
+    "ItemNameID": 1022310667,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310668,
+    "Item_ID_설명": "치명적인 매혹의 라모트 카드",
+    "ItemNameID": 1022310668,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310669,
+    "Item_ID_설명": "지독히 야만스런 바르바로 카드",
+    "ItemNameID": 1022310669,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310298,
+    "Item_ID_설명": "미치광이 과학자 제이콥",
+    "ItemNameID": 1022310298,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310299,
+    "Item_ID_설명": "머맨족의 용사 푸타루타",
+    "ItemNameID": 1022310299,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310300,
+    "Item_ID_설명": "두 개의 성스러운 별",
+    "ItemNameID": 1022310300,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310301,
+    "Item_ID_설명": "기억을 되찾은 에레메스 가일",
+    "ItemNameID": 1022310301,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310302,
+    "Item_ID_설명": "청해의 무역왕 오나시스",
+    "ItemNameID": 1022310302,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310303,
+    "Item_ID_설명": "황야의 레이딘 커스",
+    "ItemNameID": 1022310303,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310304,
+    "Item_ID_설명": "밤 고양이 루티",
+    "ItemNameID": 1022310304,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310305,
+    "Item_ID_설명": "트레저 헌터 뮤닐",
+    "ItemNameID": 1022310305,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310306,
+    "Item_ID_설명": "포링 카드 [일반+]",
+    "ItemNameID": 1022310306,
+    "EnforceID": 201,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310307,
+    "Item_ID_설명": "마스터링 카드 [일반+]",
+    "ItemNameID": 1022310307,
+    "EnforceID": 201,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310308,
+    "Item_ID_설명": "플립 카드 [일반+]",
+    "ItemNameID": 1022310308,
+    "EnforceID": 202,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310309,
+    "Item_ID_설명": "루나틱 카드 [일반+]",
+    "ItemNameID": 1022310309,
+    "EnforceID": 203,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310310,
+    "Item_ID_설명": "이클립스 카드 [일반+]",
+    "ItemNameID": 1022310310,
+    "EnforceID": 203,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310311,
+    "Item_ID_설명": "일꾼 호넷 카드 [일반+]",
+    "ItemNameID": 1022310311,
+    "EnforceID": 204,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310312,
+    "Item_ID_설명": "호넷 카드 [일반+]",
+    "ItemNameID": 1022310312,
+    "EnforceID": 204,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310313,
+    "Item_ID_설명": "작업반장 호넷 카드 [일반+]",
+    "ItemNameID": 1022310313,
+    "EnforceID": 205,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310314,
+    "Item_ID_설명": "촌촌 카드 [일반+]",
+    "ItemNameID": 1022310314,
+    "EnforceID": 205,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310315,
+    "Item_ID_설명": "파브르 카드 [일반+]",
+    "ItemNameID": 1022310315,
+    "EnforceID": 205,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310316,
+    "Item_ID_설명": "드래곤 플라이 카드 [일반+]",
+    "ItemNameID": 1022310316,
+    "EnforceID": 206,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310317,
+    "Item_ID_설명": "로커 카드 [일반+]",
+    "ItemNameID": 1022310317,
+    "EnforceID": 206,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310318,
+    "Item_ID_설명": "보컬 카드 [일반+]",
+    "ItemNameID": 1022310318,
+    "EnforceID": 206,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310319,
+    "Item_ID_설명": "느림보 카드 [일반+]",
+    "ItemNameID": 1022310319,
+    "EnforceID": 207,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310320,
+    "Item_ID_설명": "방울날개 카드 [일반+]",
+    "ItemNameID": 1022310320,
+    "EnforceID": 207,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310321,
+    "Item_ID_설명": "크리미 카드 [일반+]",
+    "ItemNameID": 1022310321,
+    "EnforceID": 207,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310322,
+    "Item_ID_설명": "브라우니 카드 [일반+]",
+    "ItemNameID": 1022310322,
+    "EnforceID": 208,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310323,
+    "Item_ID_설명": "자연의 파수꾼 카드 [일반+]",
+    "ItemNameID": 1022310323,
+    "EnforceID": 208,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310324,
+    "Item_ID_설명": "자이언트 플립 카드 [일반+]",
+    "ItemNameID": 1022310324,
+    "EnforceID": 208,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310325,
+    "Item_ID_설명": "파르세 세쳐 카드 [일반+]",
+    "ItemNameID": 1022310325,
+    "EnforceID": 208,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310326,
+    "Item_ID_설명": "플립킹  카드 [일반+]",
+    "ItemNameID": 1022310326,
+    "EnforceID": 208,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310327,
+    "Item_ID_설명": "다크 어콜라이트 카드 [일반+]",
+    "ItemNameID": 1022310327,
+    "EnforceID": 209,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310328,
+    "Item_ID_설명": "다크 프리스트 카드 [일반+]",
+    "ItemNameID": 1022310328,
+    "EnforceID": 209,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310332,
+    "Item_ID_설명": "페이건 카드 [일반+]",
+    "ItemNameID": 1022310332,
+    "EnforceID": 209,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310333,
+    "Item_ID_설명": "하급 질럿 카드 [일반+]",
+    "ItemNameID": 1022310333,
+    "EnforceID": 209,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310335,
+    "Item_ID_설명": "습지 도둑벌레 카드 [일반+]",
+    "ItemNameID": 1022310335,
+    "EnforceID": 210,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310336,
+    "Item_ID_설명": "안다노라 카드 [일반+]",
+    "ItemNameID": 1022310336,
+    "EnforceID": 210,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310337,
+    "Item_ID_설명": "안다노라 킹 카드 [일반+]",
+    "ItemNameID": 1022310337,
+    "EnforceID": 210,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310329,
+    "Item_ID_설명": "도둑벌레 카드 [일반+]",
+    "ItemNameID": 1022310329,
+    "EnforceID": 209,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310330,
+    "Item_ID_설명": "타로우 카드 [일반+]",
+    "ItemNameID": 1022310330,
+    "EnforceID": 209,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310331,
+    "Item_ID_설명": "퍼밀리어 카드 [일반+]",
+    "ItemNameID": 1022310331,
+    "EnforceID": 209,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310334,
+    "Item_ID_설명": "수컷 도둑벌레 카드 [일반+]",
+    "ItemNameID": 1022310334,
+    "EnforceID": 210,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310338,
+    "Item_ID_설명": "암컷 도둑벌레 카드 [일반+]",
+    "ItemNameID": 1022310338,
+    "EnforceID": 210,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310339,
+    "Item_ID_설명": "지하수로 마우 카드 [일반+]",
+    "ItemNameID": 1022310339,
+    "EnforceID": 210,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310340,
+    "Item_ID_설명": "지하수로 토드 카드 [일반+]",
+    "ItemNameID": 1022310340,
+    "EnforceID": 210,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310343,
+    "Item_ID_설명": "황금 도둑벌레 카드 [일반+]",
+    "ItemNameID": 1022310343,
+    "EnforceID": 211,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310341,
+    "Item_ID_설명": "포포링 카드 [일반+]",
+    "ItemNameID": 1022310341,
+    "EnforceID": 211,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310342,
+    "Item_ID_설명": "포포포포링 카드 [일반+]",
+    "ItemNameID": 1022310342,
+    "EnforceID": 211,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310344,
+    "Item_ID_설명": "평원 플립 카드 [일반+]",
+    "ItemNameID": 1022310344,
+    "EnforceID": 212,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310345,
+    "Item_ID_설명": "푸른 유성 카드 [일반+]",
+    "ItemNameID": 1022310345,
+    "EnforceID": 213,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310346,
+    "Item_ID_설명": "라모스 카드 [일반+]",
+    "ItemNameID": 1022310346,
+    "EnforceID": 214,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310347,
+    "Item_ID_설명": "라봉 카드 [일반+]",
+    "ItemNameID": 1022310347,
+    "EnforceID": 214,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310348,
+    "Item_ID_설명": "아방크 카드 [일반+]",
+    "ItemNameID": 1022310348,
+    "EnforceID": 215,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310349,
+    "Item_ID_설명": "그린 페코페코 카드 [일반+]",
+    "ItemNameID": 1022310349,
+    "EnforceID": 216,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310350,
+    "Item_ID_설명": "날쌘돌이 카드 [일반+]",
+    "ItemNameID": 1022310350,
+    "EnforceID": 216,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310353,
+    "Item_ID_설명": "페코레이서 카드 [일반+]",
+    "ItemNameID": 1022310353,
+    "EnforceID": 216,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310354,
+    "Item_ID_설명": "페코페코 카드 [일반+]",
+    "ItemNameID": 1022310354,
+    "EnforceID": 216,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310355,
+    "Item_ID_설명": "로다프로그 카드 [일반+]",
+    "ItemNameID": 1022310355,
+    "EnforceID": 217,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310356,
+    "Item_ID_설명": "메이스템 카드 [일반+]",
+    "ItemNameID": 1022310356,
+    "EnforceID": 217,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310357,
+    "Item_ID_설명": "왕눈이 카드 [일반+]",
+    "ItemNameID": 1022310357,
+    "EnforceID": 217,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310358,
+    "Item_ID_설명": "웜테일 카드 [일반+]",
+    "ItemNameID": 1022310358,
+    "EnforceID": 217,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310359,
+    "Item_ID_설명": "전설의 페코레이서 카드 [일반+]",
+    "ItemNameID": 1022310359,
+    "EnforceID": 217,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310360,
+    "Item_ID_설명": "금빛 거성 카드 [일반+]",
+    "ItemNameID": 1022310360,
+    "EnforceID": 218,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310351,
+    "Item_ID_설명": "동굴 스파이더 카드 [일반+]",
+    "ItemNameID": 1022310351,
+    "EnforceID": 216,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310352,
+    "Item_ID_설명": "동굴 퍼밀리어 카드 [일반+]",
+    "ItemNameID": 1022310352,
+    "EnforceID": 216,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310361,
+    "Item_ID_설명": "범블비 카드 [일반+]",
+    "ItemNameID": 1022310361,
+    "EnforceID": 220,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310362,
+    "Item_ID_설명": "스톤 스파이더 카드 [일반+]",
+    "ItemNameID": 1022310362,
+    "EnforceID": 220,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310363,
+    "Item_ID_설명": "루드베키아 카드 [일반+]",
+    "ItemNameID": 1022310363,
+    "EnforceID": 221,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310364,
+    "Item_ID_설명": "빨강이 카드 [일반+]",
+    "ItemNameID": 1022310364,
+    "EnforceID": 221,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310365,
+    "Item_ID_설명": "샌디스타 카드 [일반+]",
+    "ItemNameID": 1022310365,
+    "EnforceID": 221,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310366,
+    "Item_ID_설명": "와일드로즈 카드 [일반+]",
+    "ItemNameID": 1022310366,
+    "EnforceID": 221,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310367,
+    "Item_ID_설명": "코랄투스 카드 [일반+]",
+    "ItemNameID": 1022310367,
+    "EnforceID": 221,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310368,
+    "Item_ID_설명": "머맨 전사 카드 [일반+]",
+    "ItemNameID": 1022310368,
+    "EnforceID": 222,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310369,
+    "Item_ID_설명": "머메이드 전사 카드 [일반+]",
+    "ItemNameID": 1022310369,
+    "EnforceID": 222,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310370,
+    "Item_ID_설명": "누카루카 카드 [일반+]",
+    "ItemNameID": 1022310370,
+    "EnforceID": 223,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310373,
+    "Item_ID_설명": "트랜서 카드 [일반+]",
+    "ItemNameID": 1022310373,
+    "EnforceID": 224,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310379,
+    "Item_ID_설명": "바위 포식자 카드 [일반+]",
+    "ItemNameID": 1022310379,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310380,
+    "Item_ID_설명": "스톤 타란툴라 카드 [일반+]",
+    "ItemNameID": 1022310380,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310371,
+    "Item_ID_설명": "바돈 베베 카드 [일반+]",
+    "ItemNameID": 1022310371,
+    "EnforceID": 224,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310372,
+    "Item_ID_설명": "에라프로그 카드 [일반+]",
+    "ItemNameID": 1022310372,
+    "EnforceID": 224,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310374,
+    "Item_ID_설명": "머맨 추종자 카드 [일반+]",
+    "ItemNameID": 1022310374,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310375,
+    "Item_ID_설명": "머메이드 추종자 카드 [일반+]",
+    "ItemNameID": 1022310375,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310376,
+    "Item_ID_설명": "바다뱀 카드 [일반+]",
+    "ItemNameID": 1022310376,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310377,
+    "Item_ID_설명": "바돈 카드 [일반+]",
+    "ItemNameID": 1022310377,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310378,
+    "Item_ID_설명": "바돈 패밀리 카드 [일반+]",
+    "ItemNameID": 1022310378,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310382,
+    "Item_ID_설명": "커너투스 카드 [일반+]",
+    "ItemNameID": 1022310382,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310383,
+    "Item_ID_설명": "휀 카드 [일반+]",
+    "ItemNameID": 1022310383,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310384,
+    "Item_ID_설명": "히드라 카드 [일반+]",
+    "ItemNameID": 1022310384,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310381,
+    "Item_ID_설명": "오본느 카드 [일반+]",
+    "ItemNameID": 1022310381,
+    "EnforceID": 225,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310385,
+    "Item_ID_설명": "마린스피어 카드 [일반+]",
+    "ItemNameID": 1022310385,
+    "EnforceID": 226,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310386,
+    "Item_ID_설명": "머맨 광신도 카드 [일반+]",
+    "ItemNameID": 1022310386,
+    "EnforceID": 226,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310387,
+    "Item_ID_설명": "머메이드 광신도 카드 [일반+]",
+    "ItemNameID": 1022310387,
+    "EnforceID": 226,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310389,
+    "Item_ID_설명": "소드피쉬 카드 [일반+]",
+    "ItemNameID": 1022310389,
+    "EnforceID": 226,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310390,
+    "Item_ID_설명": "스트라우프 카드 [일반+]",
+    "ItemNameID": 1022310390,
+    "EnforceID": 226,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310394,
+    "Item_ID_설명": "바누아투 카드 [일반+]",
+    "ItemNameID": 1022310394,
+    "EnforceID": 227,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310397,
+    "Item_ID_설명": "레비아탄 카드 [일반+]",
+    "ItemNameID": 1022310397,
+    "EnforceID": 228,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310388,
+    "Item_ID_설명": "밀듀 카드 [일반+]",
+    "ItemNameID": 1022310388,
+    "EnforceID": 226,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310391,
+    "Item_ID_설명": "스포아 카드 [일반+]",
+    "ItemNameID": 1022310391,
+    "EnforceID": 226,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310392,
+    "Item_ID_설명": "도스포아 카드 [일반+]",
+    "ItemNameID": 1022310392,
+    "EnforceID": 227,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310393,
+    "Item_ID_설명": "마시포아 카드 [일반+]",
+    "ItemNameID": 1022310393,
+    "EnforceID": 227,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310395,
+    "Item_ID_설명": "베놈 스포아 카드 [일반+]",
+    "ItemNameID": 1022310395,
+    "EnforceID": 227,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310396,
+    "Item_ID_설명": "포이즌 스포아 카드 [일반+]",
+    "ItemNameID": 1022310396,
+    "EnforceID": 227,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310398,
+    "Item_ID_설명": "빅풋 카드 [일반+]",
+    "ItemNameID": 1022310398,
+    "EnforceID": 228,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310399,
+    "Item_ID_설명": "오비 베어 카드 [일반+]",
+    "ItemNameID": 1022310399,
+    "EnforceID": 228,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310400,
+    "Item_ID_설명": "토드 카드 [일반+]",
+    "ItemNameID": 1022310400,
+    "EnforceID": 228,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310403,
+    "Item_ID_설명": "보아 카드 [일반+]",
+    "ItemNameID": 1022310403,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310404,
+    "Item_ID_설명": "숲의 영도자 카드 [일반+]",
+    "ItemNameID": 1022310404,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310405,
+    "Item_ID_설명": "아난티아 카드 [일반+]",
+    "ItemNameID": 1022310405,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310407,
+    "Item_ID_설명": "토드 킹 카드 [일반+]",
+    "ItemNameID": 1022310407,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310408,
+    "Item_ID_설명": "트러플 카드 [일반+]",
+    "ItemNameID": 1022310408,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310409,
+    "Item_ID_설명": "트러플 오브 트러플 카드 [일반+]",
+    "ItemNameID": 1022310409,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310410,
+    "Item_ID_설명": "페이욘 호랑이 카드 [일반+]",
+    "ItemNameID": 1022310410,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310413,
+    "Item_ID_설명": "미호족 카드 [일반+]",
+    "ItemNameID": 1022310413,
+    "EnforceID": 230,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310414,
+    "Item_ID_설명": "휘림주 카드 [일반+]",
+    "ItemNameID": 1022310414,
+    "EnforceID": 230,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310424,
+    "Item_ID_설명": "크래빗 카드 [일반+]",
+    "ItemNameID": 1022310424,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310426,
+    "Item_ID_설명": "가조마르트 카드 [일반+]",
+    "ItemNameID": 1022310426,
+    "EnforceID": 232,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310401,
+    "Item_ID_설명": "무덤 박쥐 카드 [일반+]",
+    "ItemNameID": 1022310401,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310402,
+    "Item_ID_설명": "무덤 쥐 카드 [일반+]",
+    "ItemNameID": 1022310402,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310406,
+    "Item_ID_설명": "유령 거미 카드 [일반+]",
+    "ItemNameID": 1022310406,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310411,
+    "Item_ID_설명": "흑호 카드 [일반+]",
+    "ItemNameID": 1022310411,
+    "EnforceID": 229,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310412,
+    "Item_ID_설명": "마우 도굴꾼 카드 [일반+]",
+    "ItemNameID": 1022310412,
+    "EnforceID": 230,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310415,
+    "Item_ID_설명": "구미호 카드 [일반+]",
+    "ItemNameID": 1022310415,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310416,
+    "Item_ID_설명": "묘화 카드 [일반+]",
+    "ItemNameID": 1022310416,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310417,
+    "Item_ID_설명": "무덤 나방 카드 [일반+]",
+    "ItemNameID": 1022310417,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310418,
+    "Item_ID_설명": "불여우 카드 [일반+]",
+    "ItemNameID": 1022310418,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310419,
+    "Item_ID_설명": "비림총 수호 카드 [일반+]",
+    "ItemNameID": 1022310419,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310420,
+    "Item_ID_설명": "소희 카드 [일반+]",
+    "ItemNameID": 1022310420,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310421,
+    "Item_ID_설명": "수컷 무덤벌레 카드 [일반+]",
+    "ItemNameID": 1022310421,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310422,
+    "Item_ID_설명": "암컷 무덤벌레 카드 [일반+]",
+    "ItemNameID": 1022310422,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310423,
+    "Item_ID_설명": "지하 버섯 카드 [일반+]",
+    "ItemNameID": 1022310423,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310425,
+    "Item_ID_설명": "호롱 카드 [일반+]",
+    "ItemNameID": 1022310425,
+    "EnforceID": 231,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310427,
+    "Item_ID_설명": "귀화 카드 [일반+]",
+    "ItemNameID": 1022310427,
+    "EnforceID": 232,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310428,
+    "Item_ID_설명": "마녀 레이라 카드 [일반+]",
+    "ItemNameID": 1022310428,
+    "EnforceID": 232,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310429,
+    "Item_ID_설명": "임프 카드 [일반+]",
+    "ItemNameID": 1022310429,
+    "EnforceID": 232,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310430,
+    "Item_ID_설명": "그리즐리 카드 [일반+]",
+    "ItemNameID": 1022310430,
+    "EnforceID": 233,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310431,
+    "Item_ID_설명": "리서처 카드 [일반+]",
+    "ItemNameID": 1022310431,
+    "EnforceID": 233,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310432,
+    "Item_ID_설명": "만드라고라 카드 [일반+]",
+    "ItemNameID": 1022310432,
+    "EnforceID": 233,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310433,
+    "Item_ID_설명": "비상식량 카드 [일반+]",
+    "ItemNameID": 1022310433,
+    "EnforceID": 233,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310434,
+    "Item_ID_설명": "시골쥐 카드 [일반+]",
+    "ItemNameID": 1022310434,
+    "EnforceID": 233,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310435,
+    "Item_ID_설명": "암브로시아 카드 [일반+]",
+    "ItemNameID": 1022310435,
+    "EnforceID": 233,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310436,
+    "Item_ID_설명": "파이 카드 [일반+]",
+    "ItemNameID": 1022310436,
+    "EnforceID": 233,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310437,
+    "Item_ID_설명": "맨티스 카드 [일반+]",
+    "ItemNameID": 1022310437,
+    "EnforceID": 234,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310438,
+    "Item_ID_설명": "카를로스 카드 [일반+]",
+    "ItemNameID": 1022310438,
+    "EnforceID": 234,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310439,
+    "Item_ID_설명": "킬러 맨티스 카드 [일반+]",
+    "ItemNameID": 1022310439,
+    "EnforceID": 234,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310440,
+    "Item_ID_설명": "피톤 카드 [일반+]",
+    "ItemNameID": 1022310440,
+    "EnforceID": 234,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310441,
+    "Item_ID_설명": "그렘린 카드 [일반+]",
+    "ItemNameID": 1022310441,
+    "EnforceID": 235,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310442,
+    "Item_ID_설명": "그렘린 피어 카드 [일반+]",
+    "ItemNameID": 1022310442,
+    "EnforceID": 235,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310443,
+    "Item_ID_설명": "상급 페이건 카드 [일반+]",
+    "ItemNameID": 1022310443,
+    "EnforceID": 235,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310445,
+    "Item_ID_설명": "바실로카 카드 [일반+]",
+    "ItemNameID": 1022310445,
+    "EnforceID": 236,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310446,
+    "Item_ID_설명": "코카트리스 카드 [일반+]",
+    "ItemNameID": 1022310446,
+    "EnforceID": 236,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310447,
+    "Item_ID_설명": "강화 라쿠프 카드 [일반+]",
+    "ItemNameID": 1022310447,
+    "EnforceID": 237,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310444,
+    "Item_ID_설명": "강화 고블린 카드 [일반+]",
+    "ItemNameID": 1022310444,
+    "EnforceID": 236,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310448,
+    "Item_ID_설명": "그루밍 스크래치 카드 [일반+]",
+    "ItemNameID": 1022310448,
+    "EnforceID": 238,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310449,
+    "Item_ID_설명": "리프캣 카드 [일반+]",
+    "ItemNameID": 1022310449,
+    "EnforceID": 238,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310450,
+    "Item_ID_설명": "외로운 여행자 카드 [일반+]",
+    "ItemNameID": 1022310450,
+    "EnforceID": 238,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310451,
+    "Item_ID_설명": "포템킨 카드 [일반+]",
+    "ItemNameID": 1022310451,
+    "EnforceID": 238,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310453,
+    "Item_ID_설명": "세비지 카드 [일반+]",
+    "ItemNameID": 1022310453,
+    "EnforceID": 239,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310454,
+    "Item_ID_설명": "세비지 베베 카드 [일반+]",
+    "ItemNameID": 1022310454,
+    "EnforceID": 239,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310455,
+    "Item_ID_설명": "스네일러 카드 [일반+]",
+    "ItemNameID": 1022310455,
+    "EnforceID": 239,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310456,
+    "Item_ID_설명": "와일드 세비지 카드 [일반+]",
+    "ItemNameID": 1022310456,
+    "EnforceID": 239,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310457,
+    "Item_ID_설명": "와일드 세비지 베베 카드 [일반+]",
+    "ItemNameID": 1022310457,
+    "EnforceID": 239,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310458,
+    "Item_ID_설명": "폭군 돌격전차 카드 [일반+]",
+    "ItemNameID": 1022310458,
+    "EnforceID": 239,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310459,
+    "Item_ID_설명": "데스 페레이즈 카드 [일반+]",
+    "ItemNameID": 1022310459,
+    "EnforceID": 240,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310460,
+    "Item_ID_설명": "수마니 카드 [일반+]",
+    "ItemNameID": 1022310460,
+    "EnforceID": 240,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310461,
+    "Item_ID_설명": "수컷 플라워디어 카드 [일반+]",
+    "ItemNameID": 1022310461,
+    "EnforceID": 240,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310462,
+    "Item_ID_설명": "암컷 플라워디어 카드 [일반+]",
+    "ItemNameID": 1022310462,
+    "EnforceID": 240,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310463,
+    "Item_ID_설명": "와일드디어 카드 [일반+]",
+    "ItemNameID": 1022310463,
+    "EnforceID": 240,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310464,
+    "Item_ID_설명": "페레이즈 카드 [일반+]",
+    "ItemNameID": 1022310464,
+    "EnforceID": 240,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310452,
+    "Item_ID_설명": "라바 카드 [일반+]",
+    "ItemNameID": 1022310452,
+    "EnforceID": 239,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310465,
+    "Item_ID_설명": "네루파 카드 [일반+]",
+    "ItemNameID": 1022310465,
+    "EnforceID": 242,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310466,
+    "Item_ID_설명": "네펜데스 카드 [일반+]",
+    "ItemNameID": 1022310466,
+    "EnforceID": 242,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310467,
+    "Item_ID_설명": "다그다 카드 [일반+]",
+    "ItemNameID": 1022310467,
+    "EnforceID": 242,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310468,
+    "Item_ID_설명": "바이칼 카드 [일반+]",
+    "ItemNameID": 1022310468,
+    "EnforceID": 242,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310472,
+    "Item_ID_설명": "캡틴 다그다 카드 [일반+]",
+    "ItemNameID": 1022310472,
+    "EnforceID": 242,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310473,
+    "Item_ID_설명": "타이탄 아룸 카드 [일반+]",
+    "ItemNameID": 1022310473,
+    "EnforceID": 242,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310475,
+    "Item_ID_설명": "만데루 카드 [일반+]",
+    "ItemNameID": 1022310475,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310476,
+    "Item_ID_설명": "만만데루 카드 [일반+]",
+    "ItemNameID": 1022310476,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310481,
+    "Item_ID_설명": "알루스 카드 [일반+]",
+    "ItemNameID": 1022310481,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310484,
+    "Item_ID_설명": "퍼씰 카드 [일반+]",
+    "ItemNameID": 1022310484,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310485,
+    "Item_ID_설명": "프랑쿠 카드 [일반+]",
+    "ItemNameID": 1022310485,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310486,
+    "Item_ID_설명": "피쿠링 카드 [일반+]",
+    "ItemNameID": 1022310486,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310487,
+    "Item_ID_설명": "해변의 무법자 카드 [일반+]",
+    "ItemNameID": 1022310487,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310488,
+    "Item_ID_설명": "랍스탕 카드 [일반+]",
+    "ItemNameID": 1022310488,
+    "EnforceID": 244,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310489,
+    "Item_ID_설명": "시아톤 카드 [일반+]",
+    "ItemNameID": 1022310489,
+    "EnforceID": 244,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310490,
+    "Item_ID_설명": "파우더 카드 [일반+]",
+    "ItemNameID": 1022310490,
+    "EnforceID": 244,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310491,
+    "Item_ID_설명": "펄투스 카드 [일반+]",
+    "ItemNameID": 1022310491,
+    "EnforceID": 244,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310492,
+    "Item_ID_설명": "펜저 카드 [일반+]",
+    "ItemNameID": 1022310492,
+    "EnforceID": 244,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310493,
+    "Item_ID_설명": "피어투스 카드 [일반+]",
+    "ItemNameID": 1022310493,
+    "EnforceID": 244,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310494,
+    "Item_ID_설명": "허밋투스 카드 [일반+]",
+    "ItemNameID": 1022310494,
+    "EnforceID": 244,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310469,
+    "Item_ID_설명": "솔저 스켈레톤 카드 [일반+]",
+    "ItemNameID": 1022310469,
+    "EnforceID": 242,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310470,
+    "Item_ID_설명": "스켈레톤 카드 [일반+]",
+    "ItemNameID": 1022310470,
+    "EnforceID": 242,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310471,
+    "Item_ID_설명": "캐논 슈터 카드 [일반+]",
+    "ItemNameID": 1022310471,
+    "EnforceID": 242,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310474,
+    "Item_ID_설명": "퓨리 스켈레톤 카드 [일반+]",
+    "ItemNameID": 1022310474,
+    "EnforceID": 242,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310477,
+    "Item_ID_설명": "미믹 카드 [일반+]",
+    "ItemNameID": 1022310477,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310478,
+    "Item_ID_설명": "봄버링 카드 [일반+]",
+    "ItemNameID": 1022310478,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310479,
+    "Item_ID_설명": "쉐프 스켈레톤 카드 [일반+]",
+    "ItemNameID": 1022310479,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310480,
+    "Item_ID_설명": "아처 스켈레톤 카드 [일반+]",
+    "ItemNameID": 1022310480,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310482,
+    "Item_ID_설명": "캐논 레이디 카드 [일반+]",
+    "ItemNameID": 1022310482,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310483,
+    "Item_ID_설명": "파이럿 스컬 카드 [일반+]",
+    "ItemNameID": 1022310483,
+    "EnforceID": 243,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310502,
+    "Item_ID_설명": "프란시스 엑셀 카드 [일반+]",
+    "ItemNameID": 1022310502,
+    "EnforceID": 245,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310495,
+    "Item_ID_설명": "디아나틱 카드 [일반+]",
+    "ItemNameID": 1022310495,
+    "EnforceID": 245,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310496,
+    "Item_ID_설명": "메틀러 카드 [일반+]",
+    "ItemNameID": 1022310496,
+    "EnforceID": 245,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310497,
+    "Item_ID_설명": "모래 왕눈이 카드 [일반+]",
+    "ItemNameID": 1022310497,
+    "EnforceID": 245,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310498,
+    "Item_ID_설명": "사막의 시인 카드 [일반+]",
+    "ItemNameID": 1022310498,
+    "EnforceID": 245,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310499,
+    "Item_ID_설명": "사막의 여행자 카드 [일반+]",
+    "ItemNameID": 1022310499,
+    "EnforceID": 245,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310500,
+    "Item_ID_설명": "샌드프로그 카드 [일반+]",
+    "ItemNameID": 1022310500,
+    "EnforceID": 245,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310501,
+    "Item_ID_설명": "샌디 카드 [일반+]",
+    "ItemNameID": 1022310501,
+    "EnforceID": 245,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310503,
+    "Item_ID_설명": "피닉스 카드 [일반+]",
+    "ItemNameID": 1022310503,
+    "EnforceID": 245,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310504,
+    "Item_ID_설명": "굿펠로 카드 [일반+]",
+    "ItemNameID": 1022310504,
+    "EnforceID": 246,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310505,
+    "Item_ID_설명": "그루밍 도적단 카드 [일반+]",
+    "ItemNameID": 1022310505,
+    "EnforceID": 246,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310507,
+    "Item_ID_설명": "데저트 몰 카드 [일반+]",
+    "ItemNameID": 1022310507,
+    "EnforceID": 246,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310508,
+    "Item_ID_설명": "레프리컨 카드 [일반+]",
+    "ItemNameID": 1022310508,
+    "EnforceID": 246,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310509,
+    "Item_ID_설명": "에드제 카드 [일반+]",
+    "ItemNameID": 1022310509,
+    "EnforceID": 246,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310510,
+    "Item_ID_설명": "태양바라기 카드 [일반+]",
+    "ItemNameID": 1022310510,
+    "EnforceID": 246,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310511,
+    "Item_ID_설명": "파이라딜로 카드 [일반+]",
+    "ItemNameID": 1022310511,
+    "EnforceID": 246,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310512,
+    "Item_ID_설명": "페넷 카드 [일반+]",
+    "ItemNameID": 1022310512,
+    "EnforceID": 246,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310513,
+    "Item_ID_설명": "게르빌 카드 [일반+]",
+    "ItemNameID": 1022310513,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310514,
+    "Item_ID_설명": "고대 어쌔신 카드 [일반+]",
+    "ItemNameID": 1022310514,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310515,
+    "Item_ID_설명": "데저트 울프 카드 [일반+]",
+    "ItemNameID": 1022310515,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310516,
+    "Item_ID_설명": "모래 태풍 카드 [일반+]",
+    "ItemNameID": 1022310516,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310517,
+    "Item_ID_설명": "모래지옥 카드 [일반+]",
+    "ItemNameID": 1022310517,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310519,
+    "Item_ID_설명": "샌드 스파이더 카드 [일반+]",
+    "ItemNameID": 1022310519,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310523,
+    "Item_ID_설명": "하얀 그림자 카드 [일반+]",
+    "ItemNameID": 1022310523,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310506,
+    "Item_ID_설명": "다크 어쌔신 카드 [일반+]",
+    "ItemNameID": 1022310506,
+    "EnforceID": 246,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310518,
+    "Item_ID_설명": "본 어쌔신 카드 [일반+]",
+    "ItemNameID": 1022310518,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310520,
+    "Item_ID_설명": "아나콘다크 카드 [일반+]",
+    "ItemNameID": 1022310520,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310521,
+    "Item_ID_설명": "암살자의 포포링 카드 [일반+]",
+    "ItemNameID": 1022310521,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310522,
+    "Item_ID_설명": "어쌔신 죄수 카드 [일반+]",
+    "ItemNameID": 1022310522,
+    "EnforceID": 247,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310530,
+    "Item_ID_설명": "제이와치 카드 [일반+]",
+    "ItemNameID": 1022310530,
+    "EnforceID": 249,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310544,
+    "Item_ID_설명": "에레메스 가일 카드 [일반+]",
+    "ItemNameID": 1022310544,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310524,
+    "Item_ID_설명": "데저트 푸구 카드 [일반+]",
+    "ItemNameID": 1022310524,
+    "EnforceID": 248,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310525,
+    "Item_ID_설명": "헤이즐 카드 [일반+]",
+    "ItemNameID": 1022310525,
+    "EnforceID": 248,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310526,
+    "Item_ID_설명": "골드 크리미 카드 [일반+]",
+    "ItemNameID": 1022310526,
+    "EnforceID": 249,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310527,
+    "Item_ID_설명": "데저트 페코 카드 [일반+]",
+    "ItemNameID": 1022310527,
+    "EnforceID": 249,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310528,
+    "Item_ID_설명": "샌드 스토커 카드 [일반+]",
+    "ItemNameID": 1022310528,
+    "EnforceID": 249,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310529,
+    "Item_ID_설명": "원더러 이터 카드 [일반+]",
+    "ItemNameID": 1022310529,
+    "EnforceID": 249,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310531,
+    "Item_ID_설명": "가르봉 카드 [일반+]",
+    "ItemNameID": 1022310531,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310533,
+    "Item_ID_설명": "데미앙 카드 [일반+]",
+    "ItemNameID": 1022310533,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310535,
+    "Item_ID_설명": "데저트 고블린 카드 [일반+]",
+    "ItemNameID": 1022310535,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310538,
+    "Item_ID_설명": "미야옹 카드 [일반+]",
+    "ItemNameID": 1022310538,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310543,
+    "Item_ID_설명": "스크래치 도적단 카드 [일반+]",
+    "ItemNameID": 1022310543,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310546,
+    "Item_ID_설명": "여신교 사도 카드 [일반+]",
+    "ItemNameID": 1022310546,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310547,
+    "Item_ID_설명": "여신교 투사 카드 [일반+]",
+    "ItemNameID": 1022310547,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310548,
+    "Item_ID_설명": "여신교 환영술사 카드 [일반+]",
+    "ItemNameID": 1022310548,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310552,
+    "Item_ID_설명": "포이즈나 카드 [일반+]",
+    "ItemNameID": 1022310552,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310553,
+    "Item_ID_설명": "헌터플라이 카드 [일반+]",
+    "ItemNameID": 1022310553,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310576,
+    "Item_ID_설명": "이그제큐터 전투대원 카드 [일반+]",
+    "ItemNameID": 1022310576,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310577,
+    "Item_ID_설명": "이그제큐터 마법대원 카드 [일반+]",
+    "ItemNameID": 1022310577,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310578,
+    "Item_ID_설명": "검광의 사도 카드 [일반+]",
+    "ItemNameID": 1022310578,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310579,
+    "Item_ID_설명": "켈베로프 카드 [일반+]",
+    "ItemNameID": 1022310579,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310580,
+    "Item_ID_설명": "파안의 사도 카드 [일반+]",
+    "ItemNameID": 1022310580,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310581,
+    "Item_ID_설명": "천명의 사도 카드 [일반+]",
+    "ItemNameID": 1022310581,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310582,
+    "Item_ID_설명": "맹독의 사도 카드 [일반+]",
+    "ItemNameID": 1022310582,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310583,
+    "Item_ID_설명": "파괴의 사도 카드 [일반+]",
+    "ItemNameID": 1022310583,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310584,
+    "Item_ID_설명": "붕괴의 사도 카드 [일반+]",
+    "ItemNameID": 1022310584,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310585,
+    "Item_ID_설명": "철벽의 사도 카드 [일반+]",
+    "ItemNameID": 1022310585,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310586,
+    "Item_ID_설명": "라클렘 카드 [일반+]",
+    "ItemNameID": 1022310586,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310587,
+    "Item_ID_설명": "언데드 이그제큐터 카드 [일반+]",
+    "ItemNameID": 1022310587,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310588,
+    "Item_ID_설명": "데몬 이그제큐터 카드 [일반+]",
+    "ItemNameID": 1022310588,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310589,
+    "Item_ID_설명": "칠흑의 사도 카드 [일반+]",
+    "ItemNameID": 1022310589,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310590,
+    "Item_ID_설명": "붉은귀 캣 레이디 카드 [일반+]",
+    "ItemNameID": 1022310590,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310591,
+    "Item_ID_설명": "캣 레이디 카드 [일반+]",
+    "ItemNameID": 1022310591,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310592,
+    "Item_ID_설명": "붉은털 울프가이 카드 [일반+]",
+    "ItemNameID": 1022310592,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310593,
+    "Item_ID_설명": "울프가이 카드 [일반+]",
+    "ItemNameID": 1022310593,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310594,
+    "Item_ID_설명": "라이거 카드 [일반+]",
+    "ItemNameID": 1022310594,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310534,
+    "Item_ID_설명": "데비루치 카드 [일반+]",
+    "ItemNameID": 1022310534,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310542,
+    "Item_ID_설명": "바포메트 주니어 카드 [일반+]",
+    "ItemNameID": 1022310542,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310536,
+    "Item_ID_설명": "미노타우르스 청이 카드 [일반+]",
+    "ItemNameID": 1022310536,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310537,
+    "Item_ID_설명": "미노타우르스 홍이 카드 [일반+]",
+    "ItemNameID": 1022310537,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310554,
+    "Item_ID_설명": "훔바바 카드 [일반+]",
+    "ItemNameID": 1022310554,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310541,
+    "Item_ID_설명": "바포메트 카드 [일반+]",
+    "ItemNameID": 1022310541,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310532,
+    "Item_ID_설명": "기어바즈 카드 [일반+]",
+    "ItemNameID": 1022310532,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310539,
+    "Item_ID_설명": "바돈 X 카드 [일반+]",
+    "ItemNameID": 1022310539,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310540,
+    "Item_ID_설명": "바돈 Z 카드 [일반+]",
+    "ItemNameID": 1022310540,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310545,
+    "Item_ID_설명": "엔트라이온 카드 [일반+]",
+    "ItemNameID": 1022310545,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310549,
+    "Item_ID_설명": "자이언트 드릴러 카드 [일반+]",
+    "ItemNameID": 1022310549,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310550,
+    "Item_ID_설명": "제노 스파이더 카드 [일반+]",
+    "ItemNameID": 1022310550,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310551,
+    "Item_ID_설명": "페르투스 카드 [일반+]",
+    "ItemNameID": 1022310551,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310612,
+    "Item_ID_설명": "건달마우 카드 [일반+]",
+    "ItemNameID": 1022310612,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310613,
+    "Item_ID_설명": "구리 카드 [일반+]",
+    "ItemNameID": 1022310613,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310614,
+    "Item_ID_설명": "꺼비 카드 [일반+]",
+    "ItemNameID": 1022310614,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310615,
+    "Item_ID_설명": "꼬부기 카드 [일반+]",
+    "ItemNameID": 1022310615,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310616,
+    "Item_ID_설명": "쿠로링 카드 [일반+]",
+    "ItemNameID": 1022310616,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310617,
+    "Item_ID_설명": "거대 강도벌레 카드 [일반+]",
+    "ItemNameID": 1022310617,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310618,
+    "Item_ID_설명": "황금 퍼밀리어 카드 [일반+]",
+    "ItemNameID": 1022310618,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310619,
+    "Item_ID_설명": "강도벌레 알 카드 [일반+]",
+    "ItemNameID": 1022310619,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310620,
+    "Item_ID_설명": "황금 강도벌레 카드 [일반+]",
+    "ItemNameID": 1022310620,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310621,
+    "Item_ID_설명": "록스타 히어로즈 카드 [일반+]",
+    "ItemNameID": 1022310621,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310622,
+    "Item_ID_설명": "민이와 몽이 카드 [일반+]",
+    "ItemNameID": 1022310622,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310623,
+    "Item_ID_설명": "아로미네 카드 [일반+]",
+    "ItemNameID": 1022310623,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310624,
+    "Item_ID_설명": "거북 암살전대 카드 [일반+]",
+    "ItemNameID": 1022310624,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310625,
+    "Item_ID_설명": "쥐사부 크램프 카드 [일반+]",
+    "ItemNameID": 1022310625,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310648,
+    "Item_ID_설명": "단단한 케프리 카드 [일반+]",
+    "ItemNameID": 1022310648,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310649,
+    "Item_ID_설명": "악취벌레 카드 [일반+]",
+    "ItemNameID": 1022310649,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310650,
+    "Item_ID_설명": "지옥 전갈 카드 [일반+]",
+    "ItemNameID": 1022310650,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310651,
+    "Item_ID_설명": "지옥충 버서커 카드 [일반+]",
+    "ItemNameID": 1022310651,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310652,
+    "Item_ID_설명": "어스 웜 카드 [일반+]",
+    "ItemNameID": 1022310652,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310653,
+    "Item_ID_설명": "에인션트 웜 카드 [일반+]",
+    "ItemNameID": 1022310653,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310654,
+    "Item_ID_설명": "자이언트 웜 카드 [일반+]",
+    "ItemNameID": 1022310654,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310655,
+    "Item_ID_설명": "앙드레 데니로 피에르 카드 [일반+]",
+    "ItemNameID": 1022310655,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310656,
+    "Item_ID_설명": "마야퍼플 카드 [일반+]",
+    "ItemNameID": 1022310656,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310657,
+    "Item_ID_설명": "마야 카드 [일반+]",
+    "ItemNameID": 1022310657,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310658,
+    "Item_ID_설명": "셀로브 카드 [일반+]",
+    "ItemNameID": 1022310658,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310659,
+    "Item_ID_설명": "절망의 운골리안트 카드 [일반+]",
+    "ItemNameID": 1022310659,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310660,
+    "Item_ID_설명": "사기 도둑벌레 카드 [일반+]",
+    "ItemNameID": 1022310660,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310661,
+    "Item_ID_설명": "매혹의 라모트 카드 [일반+]",
+    "ItemNameID": 1022310661,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310662,
+    "Item_ID_설명": "지옥의 맹독충 카드 [일반+]",
+    "ItemNameID": 1022310662,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310663,
+    "Item_ID_설명": "야만스런 바르바로 카드 [일반+]",
+    "ItemNameID": 1022310663,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310555,
+    "Item_ID_설명": "초심자의 카드",
+    "ItemNameID": 1022310555,
+    "EnforceID": 201,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310556,
+    "Item_ID_설명": "초심자의 카드 [일반+]",
+    "ItemNameID": 1022310556,
+    "EnforceID": 201,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310670,
+    "Item_ID_설명": "블루 라쿠프 카드 [고급+]",
+    "ItemNameID": 1022310670,
+    "EnforceID": 313,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310671,
+    "Item_ID_설명": "브라운 라쿠프 카드 [고급+]",
+    "ItemNameID": 1022310671,
+    "EnforceID": 318,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310672,
+    "Item_ID_설명": "모험가 포포링 카드 [고급+]",
+    "ItemNameID": 1022310672,
+    "EnforceID": 316,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310673,
+    "Item_ID_설명": "모험왕 포포링 카드 [고급+]",
+    "ItemNameID": 1022310673,
+    "EnforceID": 318,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310674,
+    "Item_ID_설명": "아라크노아 카드 [고급+]",
+    "ItemNameID": 1022310674,
+    "EnforceID": 318,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310675,
+    "Item_ID_설명": "붉은 흉터 카드 [고급+]",
+    "ItemNameID": 1022310675,
+    "EnforceID": 319,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310676,
+    "Item_ID_설명": "바돈바돈 카드 [고급+]",
+    "ItemNameID": 1022310676,
+    "EnforceID": 327,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310677,
+    "Item_ID_설명": "페노메나 카드 [고급+]",
+    "ItemNameID": 1022310677,
+    "EnforceID": 327,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310678,
+    "Item_ID_설명": "거대 메드라 카드 [고급+]",
+    "ItemNameID": 1022310678,
+    "EnforceID": 327,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310679,
+    "Item_ID_설명": "족장 바누아투 카드 [고급+]",
+    "ItemNameID": 1022310679,
+    "EnforceID": 327,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310680,
+    "Item_ID_설명": "필사의 누카루카 카드 [고급+]",
+    "ItemNameID": 1022310680,
+    "EnforceID": 327,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310681,
+    "Item_ID_설명": "해신 레비아탄 카드 [고급+]",
+    "ItemNameID": 1022310681,
+    "EnforceID": 328,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310682,
+    "Item_ID_설명": "마우 도굴대장 카드 [고급+]",
+    "ItemNameID": 1022310682,
+    "EnforceID": 332,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310683,
+    "Item_ID_설명": "홀랑 버섯 카드 [고급+]",
+    "ItemNameID": 1022310683,
+    "EnforceID": 332,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310684,
+    "Item_ID_설명": "저주받은 묘화 카드 [고급+]",
+    "ItemNameID": 1022310684,
+    "EnforceID": 332,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310685,
+    "Item_ID_설명": "사악한 귀화 카드 [고급+]",
+    "ItemNameID": 1022310685,
+    "EnforceID": 333,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310686,
+    "Item_ID_설명": "세희 카드 [고급+]",
+    "ItemNameID": 1022310686,
+    "EnforceID": 333,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310687,
+    "Item_ID_설명": "월야화 카드 [고급+]",
+    "ItemNameID": 1022310687,
+    "EnforceID": 334,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310688,
+    "Item_ID_설명": "상급 리서처 카드 [고급+]",
+    "ItemNameID": 1022310688,
+    "EnforceID": 335,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310689,
+    "Item_ID_설명": "질럿 카드 [고급+]",
+    "ItemNameID": 1022310689,
+    "EnforceID": 335,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310690,
+    "Item_ID_설명": "페이스풀 카드 [고급+]",
+    "ItemNameID": 1022310690,
+    "EnforceID": 336,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310691,
+    "Item_ID_설명": "키엘 MK-Ⅱ 카드 [고급+]",
+    "ItemNameID": 1022310691,
+    "EnforceID": 337,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310692,
+    "Item_ID_설명": "베놈 카드 [고급+]",
+    "ItemNameID": 1022310692,
+    "EnforceID": 337,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310693,
+    "Item_ID_설명": "게덴하르트 카드 [고급+]",
+    "ItemNameID": 1022310693,
+    "EnforceID": 338,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310694,
+    "Item_ID_설명": "발라티에 제프 카드 [고급+]",
+    "ItemNameID": 1022310694,
+    "EnforceID": 345,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310695,
+    "Item_ID_설명": "레파르 코스타스 카드 [고급+]",
+    "ItemNameID": 1022310695,
+    "EnforceID": 345,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310696,
+    "Item_ID_설명": "레파드 프렌치 카드 [고급+]",
+    "ItemNameID": 1022310696,
+    "EnforceID": 345,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310697,
+    "Item_ID_설명": "딜리셔스 피노누아 카드 [고급+]",
+    "ItemNameID": 1022310697,
+    "EnforceID": 345,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310698,
+    "Item_ID_설명": "이디스 슈바이츠 카드 [고급+]",
+    "ItemNameID": 1022310698,
+    "EnforceID": 345,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310699,
+    "Item_ID_설명": "드레이크 카드 [고급+]",
+    "ItemNameID": 1022310699,
+    "EnforceID": 346,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310700,
+    "Item_ID_설명": "지옥충 일꾼 카드 [고급+]",
+    "ItemNameID": 1022310700,
+    "EnforceID": 339,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310701,
+    "Item_ID_설명": "지옥충 전사 카드 [고급+]",
+    "ItemNameID": 1022310701,
+    "EnforceID": 340,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310702,
+    "Item_ID_설명": "팬토마 카드 [고급+]",
+    "ItemNameID": 1022310702,
+    "EnforceID": 340,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310703,
+    "Item_ID_설명": "베노머 카드 [고급+]",
+    "ItemNameID": 1022310703,
+    "EnforceID": 342,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310704,
+    "Item_ID_설명": "거대 지네 카드 [고급+]",
+    "ItemNameID": 1022310704,
+    "EnforceID": 342,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310705,
+    "Item_ID_설명": "운골리안트 카드 [고급+]",
+    "ItemNameID": 1022310705,
+    "EnforceID": 342,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310706,
+    "Item_ID_설명": "아브라힘 카드 [고급+]",
+    "ItemNameID": 1022310706,
+    "EnforceID": 349,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310707,
+    "Item_ID_설명": "타우 린 카드 [고급+]",
+    "ItemNameID": 1022310707,
+    "EnforceID": 349,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310708,
+    "Item_ID_설명": "무스타파 카드 [고급+]",
+    "ItemNameID": 1022310708,
+    "EnforceID": 349,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310709,
+    "Item_ID_설명": "하자드 카드 [고급+]",
+    "ItemNameID": 1022310709,
+    "EnforceID": 349,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310710,
+    "Item_ID_설명": "어쌔신 대장로 카드 [고급+]",
+    "ItemNameID": 1022310710,
+    "EnforceID": 349,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310711,
+    "Item_ID_설명": "쥴리아나 루씰 카드 [고급+]",
+    "ItemNameID": 1022310711,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310718,
+    "Item_ID_설명": "알로이 수페르 카드 [고급+]",
+    "ItemNameID": 1022310718,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310719,
+    "Item_ID_설명": "허드슨 제롬 카드 [고급+]",
+    "ItemNameID": 1022310719,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310720,
+    "Item_ID_설명": "고르곤졸라 카드 [고급+]",
+    "ItemNameID": 1022310720,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310712,
+    "Item_ID_설명": "섬광의 게이로그 카드 [고급+]",
+    "ItemNameID": 1022310712,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310713,
+    "Item_ID_설명": "도스토예프 카드 [고급+]",
+    "ItemNameID": 1022310713,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310714,
+    "Item_ID_설명": "라빠르망 폰 체르바 카드 [고급+]",
+    "ItemNameID": 1022310714,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310715,
+    "Item_ID_설명": "솔로미안 라 크리스트 카드 [고급+]",
+    "ItemNameID": 1022310715,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310716,
+    "Item_ID_설명": "키엘 MK-Ⅲ 카드 [고급+]",
+    "ItemNameID": 1022310716,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310717,
+    "Item_ID_설명": "이그제큐터 마이스터 카드 [고급+]",
+    "ItemNameID": 1022310717,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310721,
+    "Item_ID_설명": "심연의 황금 강도벌레 카드 [고급+]",
+    "ItemNameID": 1022310721,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310722,
+    "Item_ID_설명": "심연의 록스타 히어로즈 카드 [고급+]",
+    "ItemNameID": 1022310722,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310723,
+    "Item_ID_설명": "심연의 민이와 몽이 카드 [고급+]",
+    "ItemNameID": 1022310723,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310724,
+    "Item_ID_설명": "심연의 아로미네 카드 [고급+]",
+    "ItemNameID": 1022310724,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310725,
+    "Item_ID_설명": "심연의 거북 암살전대 카드 [고급+]",
+    "ItemNameID": 1022310725,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310726,
+    "Item_ID_설명": "심연의 쥐사부 크램프 카드 [고급+]",
+    "ItemNameID": 1022310726,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310727,
+    "Item_ID_설명": "지옥의 자이언트 웜 카드 [고급+]",
+    "ItemNameID": 1022310727,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310728,
+    "Item_ID_설명": "악몽의 마야퍼플 카드 [고급+]",
+    "ItemNameID": 1022310728,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310729,
+    "Item_ID_설명": "악몽의 마야 카드 [고급+]",
+    "ItemNameID": 1022310729,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310730,
+    "Item_ID_설명": "끝없는 절망의 운골리안트 카드 [고급+]",
+    "ItemNameID": 1022310730,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310731,
+    "Item_ID_설명": "치명적인 매혹의 라모트 카드 [고급+]",
+    "ItemNameID": 1022310731,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310732,
+    "Item_ID_설명": "지독히 야만스런 바르바로 카드 [고급+]",
+    "ItemNameID": 1022310732,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310733,
+    "Item_ID_설명": "다크 사이더 카드",
+    "ItemNameID": 1022310733,
+    "EnforceID": 207,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310734,
+    "Item_ID_설명": "럭키 호코호코 카드",
+    "ItemNameID": 1022310734,
+    "EnforceID": 205,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310735,
+    "Item_ID_설명": "원주민 루나틱 카드",
+    "ItemNameID": 1022310735,
+    "EnforceID": 204,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310736,
+    "Item_ID_설명": "고져스한 엘포링 카드",
+    "ItemNameID": 1022310736,
+    "EnforceID": 201,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310737,
+    "Item_ID_설명": "네온 플립 카드",
+    "ItemNameID": 1022310737,
+    "EnforceID": 202,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310738,
+    "Item_ID_설명": "레드 블로썸 피쉬 카드",
+    "ItemNameID": 1022310738,
+    "EnforceID": 205,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310739,
+    "Item_ID_설명": "블루 블로썸 피쉬 카드",
+    "ItemNameID": 1022310739,
+    "EnforceID": 205,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310740,
+    "Item_ID_설명": "수상한 여신교도 카드",
+    "ItemNameID": 1022310740,
+    "EnforceID": 204,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310741,
+    "Item_ID_설명": "카우링 카드",
+    "ItemNameID": 1022310741,
+    "EnforceID": 206,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310742,
+    "Item_ID_설명": "카우링 마마 카드",
+    "ItemNameID": 1022310742,
+    "EnforceID": 206,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310743,
+    "Item_ID_설명": "쿰쿰 베베 카드",
+    "ItemNameID": 1022310743,
+    "EnforceID": 206,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310744,
+    "Item_ID_설명": "티니 히포 카드",
+    "ItemNameID": 1022310744,
+    "EnforceID": 201,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310745,
+    "Item_ID_설명": "쿰쿰 마마 카드",
+    "ItemNameID": 1022310745,
+    "EnforceID": 206,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310746,
+    "Item_ID_설명": "쿰쿰 파파 카드",
+    "ItemNameID": 1022310746,
+    "EnforceID": 206,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310747,
+    "Item_ID_설명": "포니 디어 왕자님 카드",
+    "ItemNameID": 1022310747,
+    "EnforceID": 203,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310748,
+    "Item_ID_설명": "포니 디어 카드",
+    "ItemNameID": 1022310748,
+    "EnforceID": 203,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310749,
+    "Item_ID_설명": "호코호코 카드",
+    "ItemNameID": 1022310749,
+    "EnforceID": 205,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310750,
+    "Item_ID_설명": "다크 사이더 카드 [일반+]",
+    "ItemNameID": 1022310750,
+    "EnforceID": 207,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310751,
+    "Item_ID_설명": "럭키 호코호코 카드 [일반+]",
+    "ItemNameID": 1022310751,
+    "EnforceID": 205,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310752,
+    "Item_ID_설명": "원주민 루나틱 카드 [일반+]",
+    "ItemNameID": 1022310752,
+    "EnforceID": 204,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310753,
+    "Item_ID_설명": "고져스한 엘포링 카드 [일반+]",
+    "ItemNameID": 1022310753,
+    "EnforceID": 201,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310754,
+    "Item_ID_설명": "네온 플립 카드 [일반+]",
+    "ItemNameID": 1022310754,
+    "EnforceID": 202,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310755,
+    "Item_ID_설명": "레드 블로썸 피쉬 카드 [일반+]",
+    "ItemNameID": 1022310755,
+    "EnforceID": 205,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310756,
+    "Item_ID_설명": "블루 블로썸 피쉬 카드 [일반+]",
+    "ItemNameID": 1022310756,
+    "EnforceID": 205,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310757,
+    "Item_ID_설명": "수상한 여신교도 카드 [일반+]",
+    "ItemNameID": 1022310757,
+    "EnforceID": 204,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310758,
+    "Item_ID_설명": "카우링 카드 [일반+]",
+    "ItemNameID": 1022310758,
+    "EnforceID": 206,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310759,
+    "Item_ID_설명": "카우링 마마 카드 [일반+]",
+    "ItemNameID": 1022310759,
+    "EnforceID": 206,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310760,
+    "Item_ID_설명": "쿰쿰 베베 카드 [일반+]",
+    "ItemNameID": 1022310760,
+    "EnforceID": 206,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310761,
+    "Item_ID_설명": "티니 히포 카드 [일반+]",
+    "ItemNameID": 1022310761,
+    "EnforceID": 201,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310762,
+    "Item_ID_설명": "쿰쿰 마마 카드 [일반+]",
+    "ItemNameID": 1022310762,
+    "EnforceID": 206,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310763,
+    "Item_ID_설명": "쿰쿰 파파 카드 [일반+]",
+    "ItemNameID": 1022310763,
+    "EnforceID": 206,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310764,
+    "Item_ID_설명": "포니 디어 왕자님 카드 [일반+]",
+    "ItemNameID": 1022310764,
+    "EnforceID": 203,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310765,
+    "Item_ID_설명": "포니 디어 카드 [일반+]",
+    "ItemNameID": 1022310765,
+    "EnforceID": 203,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310766,
+    "Item_ID_설명": "호코호코 카드 [일반+]",
+    "ItemNameID": 1022310766,
+    "EnforceID": 205,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310767,
+    "Item_ID_설명": "미치광이 과학자 제이콥 [희귀+]",
+    "ItemNameID": 1022310767,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310768,
+    "Item_ID_설명": "머맨족의 용사 푸타루타 [희귀+]",
+    "ItemNameID": 1022310768,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310769,
+    "Item_ID_설명": "두 개의 성스러운 별 [희귀+]",
+    "ItemNameID": 1022310769,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310770,
+    "Item_ID_설명": "기억을 되찾은 에레메스 가일 [희귀+]",
+    "ItemNameID": 1022310770,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310771,
+    "Item_ID_설명": "청해의 무역왕 오나시스 [희귀+]",
+    "ItemNameID": 1022310771,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310772,
+    "Item_ID_설명": "황야의 레이딘 커스 [희귀+]",
+    "ItemNameID": 1022310772,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310773,
+    "Item_ID_설명": "밤 고양이 루티 [희귀+]",
+    "ItemNameID": 1022310773,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310774,
+    "Item_ID_설명": "트레저 헌터 뮤닐 [희귀+]",
+    "ItemNameID": 1022310774,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310775,
+    "Item_ID_설명": "성녀 호위대 한스 라파드",
+    "ItemNameID": 1022310775,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310776,
+    "Item_ID_설명": "클라인디아 렉싱턴",
+    "ItemNameID": 1022310776,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310777,
+    "Item_ID_설명": "이비아 실로인",
+    "ItemNameID": 1022310777,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310778,
+    "Item_ID_설명": "발레인 로리슈",
+    "ItemNameID": 1022310778,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310779,
+    "Item_ID_설명": "순백의 성녀 아이오네",
+    "ItemNameID": 1022310779,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310780,
+    "Item_ID_설명": "성녀 호위대 한스 파라드 [희귀+]",
+    "ItemNameID": 1022310780,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310781,
+    "Item_ID_설명": "클라인디아 렉싱턴 [희귀+]",
+    "ItemNameID": 1022310781,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310782,
+    "Item_ID_설명": "이비아 실로인 [희귀+]",
+    "ItemNameID": 1022310782,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310783,
+    "Item_ID_설명": "발레인 로리슈 [희귀+]",
+    "ItemNameID": 1022310783,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310784,
+    "Item_ID_설명": "순백의 성녀 아이오네 [희귀+]",
+    "ItemNameID": 1022310784,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310785,
+    "Item_ID_설명": "다이르 콘도르 카드",
+    "ItemNameID": 1022310785,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310786,
+    "Item_ID_설명": "고렘 카드",
+    "ItemNameID": 1022310786,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310787,
+    "Item_ID_설명": "샌드맨 카드",
+    "ItemNameID": 1022310787,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310788,
+    "Item_ID_설명": "붉은 이빨 부족 리더 카드",
+    "ItemNameID": 1022310788,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310789,
+    "Item_ID_설명": "모래 갈기 부족 리더 카드",
+    "ItemNameID": 1022310789,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310790,
+    "Item_ID_설명": "무카 카드",
+    "ItemNameID": 1022310790,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310791,
+    "Item_ID_설명": "모래 그림자 카드",
+    "ItemNameID": 1022310791,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310792,
+    "Item_ID_설명": "미이라 카드",
+    "ItemNameID": 1022310792,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310793,
+    "Item_ID_설명": "좀비 마스터 카드",
+    "ItemNameID": 1022310793,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310794,
+    "Item_ID_설명": "레퀴엠 카드",
+    "ItemNameID": 1022310794,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310795,
+    "Item_ID_설명": "이시스 카드",
+    "ItemNameID": 1022310795,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310796,
+    "Item_ID_설명": "세트 카드",
+    "ItemNameID": 1022310796,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310797,
+    "Item_ID_설명": "오시리스 카드",
+    "ItemNameID": 1022310797,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310798,
+    "Item_ID_설명": "아누비스 카드",
+    "ItemNameID": 1022310798,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310799,
+    "Item_ID_설명": "다이르 콘도르 카드 [일반 +]",
+    "ItemNameID": 1022310799,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310800,
+    "Item_ID_설명": "고렘 카드 [일반 +]",
+    "ItemNameID": 1022310800,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310801,
+    "Item_ID_설명": "샌드맨 카드 [일반 +]",
+    "ItemNameID": 1022310801,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310802,
+    "Item_ID_설명": "붉은 이빨 부족 리더 카드 [일반 +]",
+    "ItemNameID": 1022310802,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310803,
+    "Item_ID_설명": "모래 갈기 부족 리더 카드 [일반 +]",
+    "ItemNameID": 1022310803,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310804,
+    "Item_ID_설명": "무카 카드 [일반 +]",
+    "ItemNameID": 1022310804,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310805,
+    "Item_ID_설명": "모래 그림자 카드 [일반 +]",
+    "ItemNameID": 1022310805,
+    "EnforceID": 250,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310806,
+    "Item_ID_설명": "미이라 카드 [고급 +]",
+    "ItemNameID": 1022310806,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310807,
+    "Item_ID_설명": "좀비 마스터 카드 [고급 +]",
+    "ItemNameID": 1022310807,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310808,
+    "Item_ID_설명": "레퀴엠 카드 [고급 +]",
+    "ItemNameID": 1022310808,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310809,
+    "Item_ID_설명": "이시스 카드 [고급 +]",
+    "ItemNameID": 1022310809,
+    "EnforceID": 350,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310810,
+    "Item_ID_설명": "세트 카드 [희귀 +]",
+    "ItemNameID": 1022310810,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310811,
+    "Item_ID_설명": "오시리스 카드 [희귀 +]",
+    "ItemNameID": 1022310811,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310812,
+    "Item_ID_설명": "아누비스 카드 [희귀 +]",
+    "ItemNameID": 1022310812,
+    "EnforceID": 450,
+    "UpdateCode": "기본"
+  },
+  {
+    "Item_ID": 22310813,
+    "Item_ID_설명": "푸쿠이 카드",
+    "ItemNameID": 1022310813,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310814,
+    "Item_ID_설명": "푸쿠푸쿠 카드",
+    "ItemNameID": 1022310814,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310815,
+    "Item_ID_설명": "푸이푸이 카드",
+    "ItemNameID": 1022310815,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310816,
+    "Item_ID_설명": "축축한 메조노라 카드",
+    "ItemNameID": 1022310816,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310817,
+    "Item_ID_설명": "탱탱한 메조노라 카드",
+    "ItemNameID": 1022310817,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310818,
+    "Item_ID_설명": "목마른 메조노라 카드",
+    "ItemNameID": 1022310818,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310819,
+    "Item_ID_설명": "불타는 메조노라 카드",
+    "ItemNameID": 1022310819,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310820,
+    "Item_ID_설명": "프릴도라 카드",
+    "ItemNameID": 1022310820,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310821,
+    "Item_ID_설명": "쉬폰도라 카드",
+    "ItemNameID": 1022310821,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310822,
+    "Item_ID_설명": "프린스 타이니디어 카드",
+    "ItemNameID": 1022310822,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310823,
+    "Item_ID_설명": "레이스도라 카드",
+    "ItemNameID": 1022310823,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310824,
+    "Item_ID_설명": "도깨비 불 카드",
+    "ItemNameID": 1022310824,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310825,
+    "Item_ID_설명": "바돈 행동대장 카드",
+    "ItemNameID": 1022310825,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310826,
+    "Item_ID_설명": "장난스런 도깨비불 카드",
+    "ItemNameID": 1022310826,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310827,
+    "Item_ID_설명": "젤리 발바닥 도적단장 카드",
+    "ItemNameID": 1022310827,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310828,
+    "Item_ID_설명": "우파루스 마법사 카드",
+    "ItemNameID": 1022310828,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310829,
+    "Item_ID_설명": "우파루스 사제 카드",
+    "ItemNameID": 1022310829,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310830,
+    "Item_ID_설명": "늪지의 망령 카드",
+    "ItemNameID": 1022310830,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310831,
+    "Item_ID_설명": "우파루스 검투병 카드",
+    "ItemNameID": 1022310831,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310832,
+    "Item_ID_설명": "캡틴 바돈 카드",
+    "ItemNameID": 1022310832,
+    "EnforceID": 450,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310833,
+    "Item_ID_설명": "나이아드 카드",
+    "ItemNameID": 1022310833,
+    "EnforceID": 450,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310834,
+    "Item_ID_설명": "늪지 사냥꾼 카드",
+    "ItemNameID": 1022310834,
+    "EnforceID": 450,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310835,
+    "Item_ID_설명": "블랍 카드",
+    "ItemNameID": 1022310835,
+    "EnforceID": 450,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310836,
+    "Item_ID_설명": "거인 숲의 쿠쿠리 카드",
+    "ItemNameID": 1022310836,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310837,
+    "Item_ID_설명": "거인 숲의 무쿠리 카드",
+    "ItemNameID": 1022310837,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310838,
+    "Item_ID_설명": "거인 숲의 두쿠리 카드",
+    "ItemNameID": 1022310838,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310839,
+    "Item_ID_설명": "거인숲의 붉은 맹독 벌레 카드",
+    "ItemNameID": 1022310839,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310840,
+    "Item_ID_설명": "거인숲의 하얀 맹독 벌레 카드",
+    "ItemNameID": 1022310840,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310841,
+    "Item_ID_설명": "수줍은 타니 아가씨 카드",
+    "ItemNameID": 1022310841,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310842,
+    "Item_ID_설명": "희귀한 변종 스포아 카드",
+    "ItemNameID": 1022310842,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310843,
+    "Item_ID_설명": "숨겨진 해변의 헬리스타 카드",
+    "ItemNameID": 1022310843,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310844,
+    "Item_ID_설명": "변종 늪지 스포아 카드",
+    "ItemNameID": 1022310844,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310845,
+    "Item_ID_설명": "변종 끈적한 스포아 카드",
+    "ItemNameID": 1022310845,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310846,
+    "Item_ID_설명": "변종 축축한 스포아 카드",
+    "ItemNameID": 1022310846,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310847,
+    "Item_ID_설명": "공터의 지배자 또키 카드",
+    "ItemNameID": 1022310847,
+    "EnforceID": 450,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310848,
+    "Item_ID_설명": "또키의 수하 I 카드",
+    "ItemNameID": 1022310848,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310849,
+    "Item_ID_설명": "또키의 수하 II 카드",
+    "ItemNameID": 1022310849,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310850,
+    "Item_ID_설명": "숨겨진 해변의 오르메스 카드",
+    "ItemNameID": 1022310850,
+    "EnforceID": 450,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310851,
+    "Item_ID_설명": "정원의 수호자 아르네아 카드",
+    "ItemNameID": 1022310851,
+    "EnforceID": 450,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310852,
+    "Item_ID_설명": "퀸 세레니아 카드",
+    "ItemNameID": 1022310852,
+    "EnforceID": 450,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310853,
+    "Item_ID_설명": "푸쿠이 카드 [ 일반 + ]",
+    "ItemNameID": 1022310853,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310854,
+    "Item_ID_설명": "푸쿠푸쿠 카드 [ 일반 + ]",
+    "ItemNameID": 1022310854,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310855,
+    "Item_ID_설명": "푸이푸이 카드 [ 일반 + ]",
+    "ItemNameID": 1022310855,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310856,
+    "Item_ID_설명": "축축한 메조노라 카드 [ 일반 + ]",
+    "ItemNameID": 1022310856,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310857,
+    "Item_ID_설명": "탱탱한 메조노라 카드 [ 일반 + ]",
+    "ItemNameID": 1022310857,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310858,
+    "Item_ID_설명": "목마른 메조노라 카드 [ 일반 + ]",
+    "ItemNameID": 1022310858,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310859,
+    "Item_ID_설명": "불타는 메조노라 카드 [ 일반 + ]",
+    "ItemNameID": 1022310859,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310860,
+    "Item_ID_설명": "프릴도라 카드 [ 일반 + ]",
+    "ItemNameID": 1022310860,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310861,
+    "Item_ID_설명": "쉬폰도라 카드 [ 일반 + ]",
+    "ItemNameID": 1022310861,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310862,
+    "Item_ID_설명": "프린스 타이니디어 카드 [ 일반 + ]",
+    "ItemNameID": 1022310862,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310863,
+    "Item_ID_설명": "레이스도라 카드 [ 일반 + ]",
+    "ItemNameID": 1022310863,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310864,
+    "Item_ID_설명": "도깨비 불 카드 [ 일반 + ]",
+    "ItemNameID": 1022310864,
+    "EnforceID": 250,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310865,
+    "Item_ID_설명": "바돈 행동대장 카드 [ 고급 + ]",
+    "ItemNameID": 1022310865,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310866,
+    "Item_ID_설명": "장난스런 도깨비불 카드 [ 고급 + ]",
+    "ItemNameID": 1022310866,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310867,
+    "Item_ID_설명": "젤리 발바닥 도적단장 카드 [ 고급 + ]",
+    "ItemNameID": 1022310867,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310868,
+    "Item_ID_설명": "우파루스 마법사 카드 [ 고급 + ]",
+    "ItemNameID": 1022310868,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310869,
+    "Item_ID_설명": "우파루스 사제 카드 [ 고급 + ]",
+    "ItemNameID": 1022310869,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310870,
+    "Item_ID_설명": "늪지의 망령 카드 [ 고급 + ]",
+    "ItemNameID": 1022310870,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310871,
+    "Item_ID_설명": "우파루스 검투병 카드 [ 고급 + ]",
+    "ItemNameID": 1022310871,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310872,
+    "Item_ID_설명": "캡틴 바돈 카드 [ 희귀 + ]",
+    "ItemNameID": 1022310872,
+    "EnforceID": 450,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310873,
+    "Item_ID_설명": "나이아드 카드 [ 희귀 + ]",
+    "ItemNameID": 1022310873,
+    "EnforceID": 450,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310874,
+    "Item_ID_설명": "늪지 사냥꾼 카드 [ 희귀 + ]",
+    "ItemNameID": 1022310874,
+    "EnforceID": 450,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310875,
+    "Item_ID_설명": "블랍 카드 [ 희귀 + ]",
+    "ItemNameID": 1022310875,
+    "EnforceID": 450,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310876,
+    "Item_ID_설명": "거인 숲의 쿠쿠리 카드 [ 고급 + ]",
+    "ItemNameID": 1022310876,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310877,
+    "Item_ID_설명": "거인 숲의 무쿠리 카드 [ 고급 + ]",
+    "ItemNameID": 1022310877,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310878,
+    "Item_ID_설명": "거인 숲의 두쿠리 카드 [ 고급 + ]",
+    "ItemNameID": 1022310878,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310879,
+    "Item_ID_설명": "거인숲의 붉은 맹독 벌래 카드 [ 고급 + ]",
+    "ItemNameID": 1022310879,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310880,
+    "Item_ID_설명": "거인숲의 하얀 맹독 벌래 카드 [ 고급 + ]",
+    "ItemNameID": 1022310880,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310881,
+    "Item_ID_설명": "수줍은 타니 아가씨 카드 [ 고급 + ]",
+    "ItemNameID": 1022310881,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310882,
+    "Item_ID_설명": "희귀한 변종 스포아 카드 [ 고급 + ]",
+    "ItemNameID": 1022310882,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310883,
+    "Item_ID_설명": "숨겨진 해변의 헬리스타 카드 [ 고급 + ]",
+    "ItemNameID": 1022310883,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310884,
+    "Item_ID_설명": "변종 늪지 스포아 카드 [ 고급 + ]",
+    "ItemNameID": 1022310884,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310885,
+    "Item_ID_설명": "변종 끈적한 스포아 카드 [ 고급 + ]",
+    "ItemNameID": 1022310885,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310886,
+    "Item_ID_설명": "변종 축축한 스포아 카드 [ 고급 + ]",
+    "ItemNameID": 1022310886,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310887,
+    "Item_ID_설명": "공터의 지배자 또키 카드 [ 희귀 + ]",
+    "ItemNameID": 1022310887,
+    "EnforceID": 450,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310888,
+    "Item_ID_설명": "또키의 수하 I 카드 [ 고급 + ]",
+    "ItemNameID": 1022310888,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310889,
+    "Item_ID_설명": "또키의 수하 II 카드 [ 고급 + ]",
+    "ItemNameID": 1022310889,
+    "EnforceID": 350,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310890,
+    "Item_ID_설명": "숨겨진 해변의 오르메스 카드 [ 희귀 + ]",
+    "ItemNameID": 1022310890,
+    "EnforceID": 450,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310891,
+    "Item_ID_설명": "정원의 수호자 아르네아 카드 [ 희귀 + ]",
+    "ItemNameID": 1022310891,
+    "EnforceID": 450,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22310892,
+    "Item_ID_설명": "퀸 세레니아 카드 [ 희귀 + ]",
+    "ItemNameID": 1022310892,
+    "EnforceID": 450,
+    "UpdateCode": "컨텐츠_자와이_카드"
+  },
+  {
+    "Item_ID": 22320010,
+    "Item_ID_설명": "Baphomet MVP Card - L1",
+    "ItemNameID": 1022320010,
+    "EnforceID": 550,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320011,
+    "Item_ID_설명": "Baphomet MVP Card - L2",
+    "ItemNameID": 1022320011,
+    "EnforceID": 551,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320012,
+    "Item_ID_설명": "Baphomet MVP Card - L3",
+    "ItemNameID": 1022320012,
+    "EnforceID": 552,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320013,
+    "Item_ID_설명": "Baphomet MVP Card - L4",
+    "ItemNameID": 1022320013,
+    "EnforceID": 553,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320014,
+    "Item_ID_설명": "Baphomet MVP Card - L5",
+    "ItemNameID": 1022320014,
+    "EnforceID": 554,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320015,
+    "Item_ID_설명": "Baphomet MVP Card - L6",
+    "ItemNameID": 1022320015,
+    "EnforceID": 555,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320016,
+    "Item_ID_설명": "Baphomet MVP Card - L7",
+    "ItemNameID": 1022320016,
+    "EnforceID": 556,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320017,
+    "Item_ID_설명": "Baphomet MVP Card - L8",
+    "ItemNameID": 1022320017,
+    "EnforceID": 557,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320018,
+    "Item_ID_설명": "Baphomet MVP Card - L9",
+    "ItemNameID": 1022320018,
+    "EnforceID": 558,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320019,
+    "Item_ID_설명": "Baphomet MVP Card - L10",
+    "ItemNameID": 1022320019,
+    "EnforceID": 559,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320020,
+    "Item_ID_설명": "Eddga MVP Card - L1",
+    "ItemNameID": 1022320020,
+    "EnforceID": 550,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320021,
+    "Item_ID_설명": "Eddga MVP Card - L2",
+    "ItemNameID": 1022320021,
+    "EnforceID": 551,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320022,
+    "Item_ID_설명": "Eddga MVP Card - L3",
+    "ItemNameID": 1022320022,
+    "EnforceID": 552,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320023,
+    "Item_ID_설명": "Eddga MVP Card - L4",
+    "ItemNameID": 1022320023,
+    "EnforceID": 553,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320024,
+    "Item_ID_설명": "Eddga MVP Card - L5",
+    "ItemNameID": 1022320024,
+    "EnforceID": 554,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320025,
+    "Item_ID_설명": "Eddga MVP Card - L6",
+    "ItemNameID": 1022320025,
+    "EnforceID": 555,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320026,
+    "Item_ID_설명": "Eddga MVP Card - L7",
+    "ItemNameID": 1022320026,
+    "EnforceID": 556,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320027,
+    "Item_ID_설명": "Eddga MVP Card - L8",
+    "ItemNameID": 1022320027,
+    "EnforceID": 557,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320028,
+    "Item_ID_설명": "Eddga MVP Card - L9",
+    "ItemNameID": 1022320028,
+    "EnforceID": 558,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320029,
+    "Item_ID_설명": "Eddga MVP Card - L10",
+    "ItemNameID": 1022320029,
+    "EnforceID": 559,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320030,
+    "Item_ID_설명": "Stormy Knight MVP Card - L1",
+    "ItemNameID": 1022320030,
+    "EnforceID": 550,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320031,
+    "Item_ID_설명": "Stormy Knight MVP Card - L2",
+    "ItemNameID": 1022320031,
+    "EnforceID": 551,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320032,
+    "Item_ID_설명": "Stormy Knight MVP Card - L3",
+    "ItemNameID": 1022320032,
+    "EnforceID": 552,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320033,
+    "Item_ID_설명": "Stormy Knight MVP Card - L4",
+    "ItemNameID": 1022320033,
+    "EnforceID": 553,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320034,
+    "Item_ID_설명": "Stormy Knight MVP Card - L5",
+    "ItemNameID": 1022320034,
+    "EnforceID": 554,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320035,
+    "Item_ID_설명": "Stormy Knight MVP Card - L6",
+    "ItemNameID": 1022320035,
+    "EnforceID": 555,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320036,
+    "Item_ID_설명": "Stormy Knight MVP Card - L7",
+    "ItemNameID": 1022320036,
+    "EnforceID": 556,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320037,
+    "Item_ID_설명": "Stormy Knight MVP Card - L8",
+    "ItemNameID": 1022320037,
+    "EnforceID": 557,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320038,
+    "Item_ID_설명": "Stormy Knight MVP Card - L9",
+    "ItemNameID": 1022320038,
+    "EnforceID": 558,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320039,
+    "Item_ID_설명": "Stormy Knight MVP Card - L10",
+    "ItemNameID": 1022320039,
+    "EnforceID": 559,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320040,
+    "Item_ID_설명": "Osiris MVP Card - L1",
+    "ItemNameID": 1022320040,
+    "EnforceID": 550,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320041,
+    "Item_ID_설명": "Osiris MVP Card - L2",
+    "ItemNameID": 1022320041,
+    "EnforceID": 551,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320042,
+    "Item_ID_설명": "Osiris MVP Card - L3",
+    "ItemNameID": 1022320042,
+    "EnforceID": 552,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320043,
+    "Item_ID_설명": "Osiris MVP Card - L4",
+    "ItemNameID": 1022320043,
+    "EnforceID": 553,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320044,
+    "Item_ID_설명": "Osiris MVP Card - L5",
+    "ItemNameID": 1022320044,
+    "EnforceID": 554,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320045,
+    "Item_ID_설명": "Osiris MVP Card - L6",
+    "ItemNameID": 1022320045,
+    "EnforceID": 555,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320046,
+    "Item_ID_설명": "Osiris MVP Card - L7",
+    "ItemNameID": 1022320046,
+    "EnforceID": 556,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320047,
+    "Item_ID_설명": "Osiris MVP Card - L8",
+    "ItemNameID": 1022320047,
+    "EnforceID": 557,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320048,
+    "Item_ID_설명": "Osiris MVP Card - L9",
+    "ItemNameID": 1022320048,
+    "EnforceID": 558,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320049,
+    "Item_ID_설명": "Osiris MVP Card - L10",
+    "ItemNameID": 1022320049,
+    "EnforceID": 559,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320050,
+    "Item_ID_설명": "Maya MVP Card - L1",
+    "ItemNameID": 1022320050,
+    "EnforceID": 550,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320051,
+    "Item_ID_설명": "Maya MVP Card - L2",
+    "ItemNameID": 1022320051,
+    "EnforceID": 551,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320052,
+    "Item_ID_설명": "Maya MVP Card - L3",
+    "ItemNameID": 1022320052,
+    "EnforceID": 552,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320053,
+    "Item_ID_설명": "Maya MVP Card - L4",
+    "ItemNameID": 1022320053,
+    "EnforceID": 553,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320054,
+    "Item_ID_설명": "Maya MVP Card - L5",
+    "ItemNameID": 1022320054,
+    "EnforceID": 554,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320055,
+    "Item_ID_설명": "Maya MVP Card - L6",
+    "ItemNameID": 1022320055,
+    "EnforceID": 555,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320056,
+    "Item_ID_설명": "Maya MVP Card - L7",
+    "ItemNameID": 1022320056,
+    "EnforceID": 556,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320057,
+    "Item_ID_설명": "Maya MVP Card - L8",
+    "ItemNameID": 1022320057,
+    "EnforceID": 557,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320058,
+    "Item_ID_설명": "Maya MVP Card - L9",
+    "ItemNameID": 1022320058,
+    "EnforceID": 558,
+    "UpdateCode": "MVP_1stBlock"
+  },
+  {
+    "Item_ID": 22320059,
+    "Item_ID_설명": "Maya MVP Card - L10",
+    "ItemNameID": 1022320059,
+    "EnforceID": 559,
+    "UpdateCode": "MVP_1stBlock"
+  }
+]

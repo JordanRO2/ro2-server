@@ -1,0 +1,1170 @@
+[
+  {
+    "MapId": 1104,
+    "AreaName": "1104_MagicCave",
+    "Color": 8000,
+    "CelestialSequence": "1104_MAGICCAVE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 1105,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "1105_CHEF",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 1106,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "1106_ALCHEMIST",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 1107,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "1107_BLACKSMITH",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 1108,
+    "AreaName": "Default Area Info\tNewArea2",
+    "Color": 0,
+    "CelestialSequence": "\t1108_ARTISAN",
+    "BGM_Path": "",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 1109,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "1109_ vocation sky_hj1",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 1113,
+    "AreaName": "Default Area Info\t1113_warfare",
+    "Color": 0,
+    "CelestialSequence": "1111_CARROT\t1113_WARFARE",
+    "BGM_Path": "BGM\\Take The Fortress.mp3\tBGM\\Take The Fortress.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 1114,
+    "AreaName": "1114_christmasevent",
+    "Color": 0,
+    "CelestialSequence": "1114_CHRISTMASEVENT",
+    "BGM_Path": "BGM\\SantaClaus  Dungeon.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 1115,
+    "AreaName": "Default Area Info\tSwamp\tjawaii_Dark",
+    "Color": 0,
+    "CelestialSequence": "1115_Jawaiisland_Field\t1115_SWAMP\t1115_jawaiiDark",
+    "BGM_Path": "BGM_F\\1115001.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 1121,
+    "AreaName": "yggdrasil\tyggdrasil_zone1\tyggdrasil_mushroom\tyggdrasil_roam",
+    "Color": 0,
+    "CelestialSequence": "1121_YGGDRASIL\t1121_YGGDRASIL_ZONE1\t1121_YGGDRASIL_MUSHROOM\t1121_YGGDRASIL",
+    "BGM_Path": "BGM\\Yggdrasil Garden.mp3\tBGM\\Yggdrasil Garden.mp3\tBGM\\Yggdrasil Garden.mp3\tBGM\\Yggdrasil Garden.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 1122,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "1122_YGGDRASIL_NAME",
+    "BGM_Path": "BGM\\Nameless Cave.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 1221,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "1221_Jawaiisland",
+    "BGM_Path": "BGM_F\\1221001.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 1302,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "1302_DAIR_DUENJEN",
+    "BGM_Path": "BGM/Dungeon of Dayr Part1.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 1303,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "1303_dair_dungeon",
+    "BGM_Path": "Dungeon of Dayr Part2.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 1304,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "1304_DUENJEN",
+    "BGM_Path": "Dungeon of Dayr Part3.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 1305,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "1305_LAVAAREA",
+    "BGM_Path": "BGM\\Lava Area Part.1.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 1411,
+    "AreaName": "icarus_main\t���̸���ȣ��\t��������\t�����ǳ�����\t�����ǳ�����������\t��ī�罺������������",
+    "Color": 0,
+    "CelestialSequence": "1411_ICARUS\t1411_IRIS\t1411_CLIFF_DUN\t1411_SPIRIT_TREE\t1411_SPIRIT_TREE_BEFORE\t1411_ICARUS_START",
+    "BGM_Path": "",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 3101,
+    "AreaName": "fron\tfron Area1",
+    "Color": 0,
+    "CelestialSequence": "PF_PRON\tPF_PRON_zone1",
+    "BGM_Path": "",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 3201,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "3201_ABWARFARE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 410101,
+    "AreaName": "NewArea1",
+    "Color": 0,
+    "CelestialSequence": "PRONTERA_SEWER",
+    "BGM_Path": "BGM\\Culvert.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 410102,
+    "AreaName": "NewArea1",
+    "Color": 0,
+    "CelestialSequence": "PRONTERA_SEWER",
+    "BGM_Path": "BGM\\Culvert.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 410103,
+    "AreaName": "NewArea1",
+    "Color": 0,
+    "CelestialSequence": "PRONTERA_SEWER",
+    "BGM_Path": "BGM\\Culvert.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 410104,
+    "AreaName": "NewArea1",
+    "Color": 0,
+    "CelestialSequence": "PRONTERA_SEWER",
+    "BGM_Path": "BGM\\Culvert.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 410201,
+    "AreaName": "GardenOfBaphomet\tGardenBoss\tGardenDINOSAUR\tGardenBlue",
+    "Color": 0,
+    "CelestialSequence": "4102_GARDEN_OF_BAPHOMET\t4102_GARDEN_BOSS\t4102_GARDEN_DINOSAUR\t4102_GARDEN_BLUE",
+    "BGM_Path": "BGM\\Baphomet Garden.mp3\tBGM\\Baphomet Garden.mp3\tBGM\\Baphomet Garden.mp3\tBGM\\Baphomet Garden.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 410202,
+    "AreaName": "GardenOfBaphomet\tGardenBoss\tGardenDINOSAUR\tGardenBlue",
+    "Color": 0,
+    "CelestialSequence": "4102_GARDEN_OF_BAPHOMET\t4102_GARDEN_BOSS\t4102_GARDEN_DINOSAUR\t4102_GARDEN_BLUE",
+    "BGM_Path": "BGM\\Baphomet Garden.mp3\tBGM\\Baphomet Garden.mp3\tBGM\\Baphomet Garden.mp3\tBGM\\Baphomet Garden.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 410203,
+    "AreaName": "GardenOfBaphomet\tGardenBoss\tGardenDINOSAUR\tGardenBlue",
+    "Color": 0,
+    "CelestialSequence": "4102_GARDEN_OF_BAPHOMET\t4102_GARDEN_BOSS\t4102_GARDEN_DINOSAUR\t4102_GARDEN_BLUE",
+    "BGM_Path": "BGM\\Baphomet Garden.mp3\tBGM\\Baphomet Garden.mp3\tBGM\\Baphomet Garden.mp3\tBGM\\Baphomet Garden.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 410301,
+    "AreaName": "Arena",
+    "Color": 0,
+    "CelestialSequence": "4103_ARENA",
+    "BGM_Path": "BGM\\Arena.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 410302,
+    "AreaName": "Arena",
+    "Color": 0,
+    "CelestialSequence": "4103_ARENA",
+    "BGM_Path": "BGM\\Arena.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 410303,
+    "AreaName": "Arena",
+    "Color": 0,
+    "CelestialSequence": "4103_ARENA",
+    "BGM_Path": "BGM\\Arena.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 4104,
+    "AreaName": "Arena",
+    "Color": 0,
+    "CelestialSequence": "4104",
+    "BGM_Path": "BGM\\Arena.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 4105,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "TUTORIAL",
+    "BGM_Path": "BGM\\Abandoned Lab.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 4106,
+    "AreaName": "Niflheim_A_4106\tNiflheim_A_4106_01",
+    "Color": 0,
+    "CelestialSequence": "NIFLHEIM_A_4106\tNIFLHEIM_A_4106_01",
+    "BGM_Path": "BGM_F\\Bloodymurderer.mp3\tBGM_F\\Bloodymurderer.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 4107,
+    "AreaName": "Niflheim_B_4107",
+    "Color": 0,
+    "CelestialSequence": "NIFLHEIM_B_4107",
+    "BGM_Path": "BGM_F\\Bloodymurderer.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 4109,
+    "AreaName": "pvp_colosseum_80m\troom\tpvp_colosseum_60m\tpvp_colosseum_35m",
+    "Color": 0,
+    "CelestialSequence": "pvp_colosseum\tpvp_colosseum_room\tpvp_colosseum\tpvp_colosseum_35m",
+    "BGM_Path": "",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 4110,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "4110_ARENA",
+    "BGM_Path": "BGM\\Master Jeahoon's Training Ground.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 411101,
+    "AreaName": "Ro2_DUN_Payon_F1\tRo2_DUN_Payon_F2",
+    "Color": 0,
+    "CelestialSequence": "DUN_PAYON_F1\tDUN_PAYON_F2",
+    "BGM_Path": "BGM\\Payon Tome.mp3\tBGM\\Payon Tome.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 411102,
+    "AreaName": "Ro2_DUN_Payon_F1\tRo2_DUN_Payon_F2",
+    "Color": 0,
+    "CelestialSequence": "DUN_PAYON_F1\tDUN_PAYON_F2",
+    "BGM_Path": "BGM\\Payon Tome.mp3\tBGM\\Payon Tome.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 411103,
+    "AreaName": "Ro2_DUN_Payon_F1\tRo2_DUN_Payon_F2",
+    "Color": 0,
+    "CelestialSequence": "DUN_PAYON_F1\tDUN_PAYON_F2",
+    "BGM_Path": "BGM\\Payon Tome.mp3\tBGM\\Payon Tome.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 4112,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "CHAOS_SKY",
+    "BGM_Path": "BGM\\Chaos.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 4113,
+    "AreaName": "Ro2_DUN_Payon_F3",
+    "Color": 0,
+    "CelestialSequence": "DUN_PAYON_F1",
+    "BGM_Path": "BGM\\Payon Tome.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 4114,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "pvp_colosseum_35m",
+    "BGM_Path": "BGM\\Payon Tome.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 4116,
+    "AreaName": "pvp_colosseum_80m\troom\tpvp_colosseum_60m\tpvp_colosseum_35m",
+    "Color": 0,
+    "CelestialSequence": "pvp_colosseum\tpvp_colosseum_room\tpvp_colosseum\tpvp_colosseum_35m",
+    "BGM_Path": "",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 412101,
+    "AreaName": "Ro2_Common_Cave",
+    "Color": 0,
+    "CelestialSequence": "COMMON_CAVE",
+    "BGM_Path": "BGM\\Wolf Cave.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 412102,
+    "AreaName": "Ro2_Common_Cave",
+    "Color": 0,
+    "CelestialSequence": "COMMON_CAVE",
+    "BGM_Path": "BGM\\Wolf Cave.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 412103,
+    "AreaName": "Ro2_Common_Cave",
+    "Color": 0,
+    "CelestialSequence": "COMMON_CAVE",
+    "BGM_Path": "BGM\\Wolf Cave.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 412104,
+    "AreaName": "Ro2_Common_Cave",
+    "Color": 0,
+    "CelestialSequence": "COMMON_CAVE",
+    "BGM_Path": "BGM\\Wolf Cave.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 413101,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "DUN_TEMPLEOFSEAGOD_B1",
+    "BGM_Path": "BGM\\Temple of Sea God_01.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 413102,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "DUN_TEMPLEOFSEAGOD_B1",
+    "BGM_Path": "BGM\\Temple of Sea God_01.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 413103,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "DUN_TEMPLEOFSEAGOD_B1",
+    "BGM_Path": "BGM\\Temple of Sea God_01.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 413201,
+    "AreaName": "Temple of sea god",
+    "Color": 0,
+    "CelestialSequence": "DUN_TEMPLE_OF_SEA_GOD",
+    "BGM_Path": "BGM\\Temple of Sea God_02.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 413202,
+    "AreaName": "Temple of sea god",
+    "Color": 0,
+    "CelestialSequence": "DUN_TEMPLE_OF_SEA_GOD",
+    "BGM_Path": "BGM\\Temple of Sea God_02.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 413203,
+    "AreaName": "Temple of sea god",
+    "Color": 0,
+    "CelestialSequence": "DUN_TEMPLE_OF_SEA_GOD",
+    "BGM_Path": "BGM\\Temple of Sea God_02.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 4141,
+    "AreaName": "banahaim",
+    "Color": 0,
+    "CelestialSequence": "BANA_SPACE",
+    "BGM_Path": "BGM\\Banaheim.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 4142,
+    "AreaName": "banahaim",
+    "Color": 0,
+    "CelestialSequence": "BANA_SPACE",
+    "BGM_Path": "BGM\\Banaheim.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 4151,
+    "AreaName": "Default Area Info\tArea4",
+    "Color": 0,
+    "CelestialSequence": "4151_forgotten_py\t4151_forgotten_py_4",
+    "BGM_Path": "BGM_F\\Forgotten Payon.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 415101,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "4151_forgotten_py",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 415102,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "4151_forgotten_py",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 415103,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "4151_forgotten_py",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 420101,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "TUTORIAL",
+    "BGM_Path": "BGM\\Abandoned Lab.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 420102,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "TUTORIAL",
+    "BGM_Path": "BGM\\Abandoned Lab.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 420103,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "TUTORIAL",
+    "BGM_Path": "BGM\\Abandoned Lab.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 421101,
+    "AreaName": "despair_cave",
+    "Color": 0,
+    "CelestialSequence": "DESPAIR_CAVE",
+    "BGM_Path": "BGM\\Hell of Deadly.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 421102,
+    "AreaName": "despair_cave",
+    "Color": 0,
+    "CelestialSequence": "DESPAIR_CAVE",
+    "BGM_Path": "BGM\\Hell of Deadly.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 421103,
+    "AreaName": "despair_cave",
+    "Color": 0,
+    "CelestialSequence": "DESPAIR_CAVE",
+    "BGM_Path": "BGM\\Hell of Deadly.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 421104,
+    "AreaName": "despair_cave",
+    "Color": 0,
+    "CelestialSequence": "DESPAIR_CAVE",
+    "BGM_Path": "BGM\\Hell of Deadly.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 4212,
+    "AreaName": "despair_cave",
+    "Color": 0,
+    "CelestialSequence": "DESPAIR_CAVE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 421201,
+    "AreaName": "despair_cave",
+    "Color": 0,
+    "CelestialSequence": "DESPAIR_CAVE",
+    "BGM_Path": "BGM\\Hell of Deadly.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 421202,
+    "AreaName": "despair_cave",
+    "Color": 0,
+    "CelestialSequence": "DESPAIR_CAVE",
+    "BGM_Path": "BGM\\Hell of Deadly.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 421203,
+    "AreaName": "despair_cave",
+    "Color": 0,
+    "CelestialSequence": "DESPAIR_CAVE",
+    "BGM_Path": "BGM\\Hell of Deadly.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 422101,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "4221_GHOSTSHIP",
+    "BGM_Path": "BGM\\Ghost Ship.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 422102,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "4221_GHOSTSHIP",
+    "BGM_Path": "BGM\\Ghost Ship.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 422103,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "4221_GHOSTSHIP",
+    "BGM_Path": "BGM\\Ghost Ship.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 423101,
+    "AreaName": "sandstorm\tsandstorm_book\tsandstorm_room",
+    "Color": 0,
+    "CelestialSequence": "4231_SANDSTORM_BOOK\t4231_SANDSTORM_BOOK\t4231_SANDSTORM_ROOM",
+    "BGM_Path": "BGM\\Sandstorm.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 423102,
+    "AreaName": "sandstorm\tsandstorm_book\tsandstorm_room",
+    "Color": 0,
+    "CelestialSequence": "4231_SANDSTORM_BOOK\t4231_SANDSTORM_BOOK\t4231_SANDSTORM_ROOM",
+    "BGM_Path": "BGM\\Sandstorm.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 423103,
+    "AreaName": "sandstorm\tsandstorm_book\tsandstorm_room",
+    "Color": 0,
+    "CelestialSequence": "4231_SANDSTORM_BOOK\t4231_SANDSTORM_BOOK\t4231_SANDSTORM_ROOM",
+    "BGM_Path": "BGM\\Sandstorm.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 424101,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "1200_ALBERTACITY",
+    "BGM_Path": "BGM\\Sandarman.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 424102,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "1200_ALBERTACITY",
+    "BGM_Path": "BGM\\Sandarman.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 424103,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "1200_ALBERTACITY",
+    "BGM_Path": "BGM\\Sandarman.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 425101,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "PRONTERA_SEWER",
+    "BGM_Path": "BGM\\Culvert.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 425102,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "PRONTERA_SEWER",
+    "BGM_Path": "BGM\\Culvert.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 425103,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "PRONTERA_SEWER",
+    "BGM_Path": "BGM\\Culvert.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 426101,
+    "AreaName": "4261_JawaiCave\t4261_JawaiCave_seashore",
+    "Color": 0,
+    "CelestialSequence": "4261_JawaiCave\t4261_JawaiCave",
+    "BGM_Path": "BGM_F\\4261001.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 426102,
+    "AreaName": "4261_JawaiCave\t4261_JawaiCave_seashore",
+    "Color": 0,
+    "CelestialSequence": "4261_JawaiCave\t4261_JawaiCave",
+    "BGM_Path": "BGM_F\\4261001.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 426103,
+    "AreaName": "4261_JawaiCave\t4261_JawaiCave_seashore",
+    "Color": 0,
+    "CelestialSequence": "4261_JawaiCave\t4261_JawaiCave",
+    "BGM_Path": "BGM_F\\4261001.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 4301,
+    "AreaName": "4301_osiristomb",
+    "Color": 0,
+    "CelestialSequence": "4301_OSIRISTOMB",
+    "BGM_Path": "BGM\\Tomb of Osiris.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 4302,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "DARKWHISPER1-5A",
+    "BGM_Path": "BGM\\DarkWhisper Part.1.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 4303,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "DARKWHISPSR7-10A",
+    "BGM_Path": "BGM\\DarkWhisper Part.2.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 4304,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "DARKWHISPSR11A",
+    "BGM_Path": "BGM\\DarkWhisper Boss Theme.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 4305,
+    "AreaName": "MinePilranyum\tMinePilranyum_ice",
+    "Color": 0,
+    "CelestialSequence": "4305_MINEPILRANYUM\t4305_MINEPILRANYUM_ICE",
+    "BGM_Path": "",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 4307,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "4307_SURTHEART_SKY",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 4308,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "PRONTERA_SEWER",
+    "BGM_Path": "BGM\\Cloister of Silence.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 4309,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "4231_SANDSTORM",
+    "BGM_Path": "BGM\\The Holy Land of Assassins.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 4310,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "4310_ARENA",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5101,
+    "AreaName": "5201_AbGuildHouse_hj",
+    "Color": 0,
+    "CelestialSequence": "5201_ABGUILDHOUSE_HJ",
+    "BGM_Path": "BGM\\Guild House_Alberta.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5102,
+    "AreaName": "5201_AbGuildHouse_hj",
+    "Color": 0,
+    "CelestialSequence": "5201_ABGUILDHOUSE_HJ",
+    "BGM_Path": "BGM\\Guild House_Alberta.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5103,
+    "AreaName": "5201_AbGuildHouse_hj",
+    "Color": 0,
+    "CelestialSequence": "5201_ABGUILDHOUSE_HJ",
+    "BGM_Path": "BGM\\Guild House_Alberta.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5104,
+    "AreaName": "5201_AbGuildHouse_hj",
+    "Color": 0,
+    "CelestialSequence": "5201_ABGUILDHOUSE_HJ",
+    "BGM_Path": "BGM\\Guild House_Alberta.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5201,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5202,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5203,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5204,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5205,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5206,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5207,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5208,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5209,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5210,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5211,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5212,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5213,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5214,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5215,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5216,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5301,
+    "AreaName": "5201_AbGuildHouse_hj",
+    "Color": 0,
+    "CelestialSequence": "5201_ABGUILDHOUSE_HJ",
+    "BGM_Path": "BGM\\Guild House_Alberta.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5302,
+    "AreaName": "5201_AbGuildHouse_hj",
+    "Color": 0,
+    "CelestialSequence": "5201_ABGUILDHOUSE_HJ",
+    "BGM_Path": "BGM\\Guild House_Alberta.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5303,
+    "AreaName": "5201_AbGuildHouse_hj",
+    "Color": 0,
+    "CelestialSequence": "5201_ABGUILDHOUSE_HJ",
+    "BGM_Path": "BGM\\Guild House_Alberta.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5401,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5402,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5403,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5404,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5405,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5406,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5407,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5408,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5409,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5410,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5411,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5412,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5413,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5414,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5415,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 5416,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "5101_PRGUILDHOUSE",
+    "BGM_Path": "",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 9100,
+    "AreaName": "armin_east\tStart_point\tbridge\tandanora\tfairy tree\tstrange cave\tmetz\tarmin_west\twest tunnel",
+    "Color": 0,
+    "CelestialSequence": "ARMIN_EAST\tSTART_POINT\tBRIDGE\tANDANORA\tFAIRY_TREE\tSTRANGE_CAVE\tMETZ\tARMIN_WEST\tWEST_TUNNEL",
+    "BGM_Path": "",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 9102,
+    "AreaName": "GardenOfBaphomet\tGardenBoss\tGardenDINOSAUR\tGardenBlue",
+    "Color": 0,
+    "CelestialSequence": "4102_GARDEN_OF_BAPHOMET\t4102_GARDEN_BOSS\t4102_GARDEN_DINOSAUR\t4102_GARDEN_BLUE",
+    "BGM_Path": "BGM\\Baphomet Garden.mp3\tBGM\\Baphomet Garden.mp3\tBGM\\Baphomet Garden.mp3\tBGM\\Baphomet Garden.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 9103,
+    "AreaName": "despair_cave",
+    "Color": 0,
+    "CelestialSequence": "DESPAIR_CAVE",
+    "BGM_Path": "BGM\\Hell of Deadly.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 9104,
+    "AreaName": "Default Area Info",
+    "Color": 0,
+    "CelestialSequence": "9104_CHRISTMAS_EVENT",
+    "BGM_Path": "Christmas_Event_Jinglebell1.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 1100,
+    "AreaName": "Prontera Default \tNewArea2\t�����׶� �ռ�\t�����׶� ����\t�����׶� ����\tsquare\tshop\tChristmas_Zone",
+    "Color": 0,
+    "CelestialSequence": "PRONTERA_CITY_CASTLE\tPRONTERA_CITY_NEWAREA\tPRONTERA_CITY_CASTLE\tPRONTERA_CITY_CHURCH\tPRONTERA_CITY_KNIGHTS\tPRONTERA_CITY_SQUARE\tPRONTERA_CITY_SHOP\tPRONTERA_CITY_NEWAREA",
+    "BGM_Path": "BGM\\Prontera Theme.mp3\tBGM\\Prontera Theme.mp3\tBGM\\Prontera Castle.mp3\tBGM\\Prontera Cathedral.mp3\tBGM\\Prontera Knights.mp3\tBGM\\Prontera Knights.mp3\tBGM\\Prontera Knights.mp3\tBGM\\JINGLE_BELL.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 1101,
+    "AreaName": "armin_east\tStart_point\tbridge\tandanora\tfairy tree\tstrange cave\tmetz\tarmin_west\twest tunnel",
+    "Color": 0,
+    "CelestialSequence": "ARMIN_EAST\tSTART_POINT\tBRIDGE\tANDANORA\tFAIRY_TREE\tSTRANGE_CAVE\tMETZ\tARMIN_WEST\tWEST_TUNNEL",
+    "BGM_Path": "BGM\\Mjollnir Mountain.mp3\tBGM\\Mjollnir Mountain.mp3\tBGM\\Mjollnir Mountain.mp3\tBGM\\Polluted Mjollnir Mountain.mp3\tBGM\\Polluted Mjollnir Mountain.mp3\tBGM\\Polluted Mjollnir Mountain.mp3\tBGM\\Polluted Mjollnir Mountain.mp3\tBGM\\Polluted Mjollnir Mountain.mp3\tBGM\\Polluted Mjollnir Mountain.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 1102,
+    "AreaName": "1102_cave",
+    "Color": 0,
+    "CelestialSequence": "1102_CAVE",
+    "BGM_Path": "BGM\\Strange Cave.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 1103,
+    "AreaName": "strange cave",
+    "Color": 0,
+    "CelestialSequence": "STRANGE_CAVE_MAIN",
+    "BGM_Path": "BGM\\Strange Cave.mp3",
+    "Wind": 0.15
+  },
+  {
+    "MapId": 1111,
+    "AreaName": "Default Area Info\t�������\tĳ������\t�õ�ĳ������\t��ĳ������\t�����׶� ����\t�����׶� ������\t�δ�ȣ��\t�δٺ���\t�ܵ� ���θ�\t���� ������\t������ ���\t������ ����\t������ ����\t�Ӹ� ������\t������\t������ ��ž\t�������� ��\t//���������������߰�\t���̿� ����\t������ ƴ��\t��ɲ� ���θ�\t������ ����\t���� ����\t�ǳ��� ����\t���̿� ����\t�������� �ζ�\tũ�缼�̴� �ֵ���\t���� �ֵ���\t��ũ ���\t�ӸǼ������ֺ�",
+    "Color": 0,
+    "CelestialSequence": "\t1111_SOUTHFIELD\t1111_CARROT\t1111_OLDCARROT\t1111_OLDCARROT\t1111_SOUTHFIELD\t1111_SOUTHFIELD\t1111_SOUTHFIELD\t1111_SOUTHFIELD\t1111_SOUTHFIELD\t1111_OLDCARROT\t1111_IZRUD\t1111_IZRUD\t1111_IZRUD\tPF_IZRUD_MUMMEN\t1111_IZRUD\tPF_FORGOTTENTOWER\tPF_MUSHROOM\tPF_MUSHROOMFRONT\tPF_PAYON\tPF_MOONWATERFALL\tPF_MOONWATERFALL\tPF_MOONWATERFALL\tPF_IZRUD\tPF_BARRACKS\tPF_PAYON_RUINTOWN\tPF_MOONWATERFALL\tPF_MOONWATERFALL\tPF_MOONWATERFALL\tPF_MOONWATERFALL\tPF_MOONWATERFALL",
+    "BGM_Path": "BGM\\South Plain_01.mp3\tBGM\\South Plain_01.mp3\tBGM\\South Plain_01.mp3\tBGM\\South Plain_Darkside_01.mp3\tBGM\\South Plain_Darkside_01.mp3\tBGM\\South Plain_01.mp3\tBGM\\South Plain_01.mp3\tBGM\\South Plain_01.mp3\tBGM\\South Plain_01.mp3\tBGM\\South Plain_01.mp3\tBGM\\South Plain_Darkside_01.mp3\tBGM\\Izrud Hill.mp3\tBGM\\Izrud Hill.mp3\tBGM\\Izrud Hill.mp3\tBGM\\Izrud Hill.mp3\tBGM\\Izrud Hill.mp3\tBGM\\Izrud Hill.mp3\tBGM\\Izrud Hill_02.mp3\tBGM\\Izrud Hill_02.mp3\tBGM\\Payon Forest.mp3\tBGM\\Payon_Fire_01.mp3\tBGM\\Payon Forest.mp3\tBGM\\Payon Forest.mp3\tBGM\\Payon Forest.mp3\tBGM\\Payon Forest.mp3\tBGM\\Payon BrokenTown_01.mp3\tBGM\\Miho town.mp3\tBGM\\Payon Forest.mp3\tBGM\\Payon Forest.mp3\tBGM\\Payon Forest.mp3\tBGM\\Izrud Hill.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 1200,
+    "AreaName": "Default Area Info\t�˺���Ÿ����\t�˺���Ÿ���ÿܰ�\tcityhall\tmerchant",
+    "Color": 0,
+    "CelestialSequence": "1200_ALBERTACITY\t1200_ALBERTACITY\t1200_ALBERTACITY_HALL\t1200_ALBERTACITY",
+    "BGM_Path": "BGM_F\\Alberta City.mp3\tBGM_F\\Alberta City.mp3\tBGM_F\\Alberta City.mp3\tBGM_F\\Alberta City.mp3\tBGM_F\\Alberta City.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 1201,
+    "AreaName": "Default Area Info\t������������\t������������\t�����ÿ��ϵ����\t�����úϺ��ʼ�\t������������ ƴ��\t���������Ǽ���\t�����ù̶�����\t�������̼��Ǽ���\t�����ù̳��̺�����\t�����������Ǽ���\t�����þ��ʶ�����\t�����ø���\t������ȣ�ڹ�\t������Űư�Ǿ߿���\t�����ó����ʼ�\t����������\t��������������������\t�������������Ƽұ�\t���������������ϼұ�\t������������ɲ۽���\t���������������Ǿ߿���\t�����������������ǽ�\t��������������\t����������û���ǻ�\t������������ݴ�����\t�����������ڽ��Ǿ߿���\t���������������Ǻ��츮\t������������Ʈ�Ǿ߿���",
+    "Color": 0,
+    "CelestialSequence": "\t1201_MAPLE_STONG\t1201_MAPLE_STONG\t1201_MAPLE_STONG\t1201_MAPLE_CHECKPOINT\t1201_MAPLE_CRACK\t1201_MAPLE_STONG\t1201_MAPLE_STONG\t1201_MAPLE_POREST\t1201_MAPLE_POREST\t1201_MAPLE_STONG\t1201_MAPLE_STONG\t1201_MAPLE_POREST\t1201_MAPLE_POREST\t1201_MAPLE_POREST\t1201_MAPLE_POREST\t1201_CRACKED\t1201_CRACKED_SCAR\t1201_CRACKED_BOA\t1201_CRACKED_WORMTAIL\t1201_CRACKED\t1201_CRACKED\t1201_CRACKED_TOWN\t1201_CRACKED_TOWN\t1201_CRACKED_TOWN\t1201_CRACKED_TOWN\t1201_CRACKED\t1201_CRACKED_DAWN\t1201_CRACKED",
+    "BGM_Path": "BGM\\Divided Plain.mp3\tBGM\\Maple Forest.mp3\tBGM\\Maple Forest.mp3\tBGM\\Maple Forest.mp3\tBGM\\Maple Forest.mp3\tBGM\\Maple_Fire_01.mp3\tBGM\\Maple Forest.mp3\tBGM\\Maple Forest.mp3\tBGM\\Maple Forest.mp3\tBGM\\Maple Forest.mp3\tBGM\\Maple Forest.mp3\tBGM\\Maple Forest.mp3\tBGM\\Maple Forest.mp3\tBGM\\Maple Forest.mp3\tBGM\\Maple Forest.mp3\tBGM\\Maple Forest.mp3\tBGM\\Divided Plain.mp3\tBGM\\Divided Plain.mp3\tBGM\\Divided Plain.mp3\tBGM\\Divided Plain.mp3\tBGM\\Divided Plain.mp3\tBGM\\Divided Plain.mp3\tBGM\\Divided Plain.mp3\tBGM\\Divided Plain.mp3\tBGM\\Divided Plain.mp3\tBGM\\Divided Plain.mp3\tBGM\\Divided Plain.mp3\tBGM\\Divided Plain.mp3\tBGM\\Divided Plain.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 1211,
+    "AreaName": "Default Area Info\t����Ÿ�ﰢ��\t�ұ׶�Ʈ�縷\t�ູ�Ǳ�\t�ູ�Ǳ�_��������\t�ູ�Ǳ�_����\t�ູ�Ǳ�_�Ǿ����\t�ູ�Ǳ�_����\t�ູ�Ǳ�_�����ǻ縷\t�ູ�Ǳ�_����ν���\t�ұ׶�Ʈ_����������\t�ұ׶�Ʈ_�κ�ķ��\t�ұ׶�Ʈ_�߱�����\t�ұ׶�Ʈ_�ұ׶�Ʈ����\t�ұ׶�Ʈ_�ϼ�Ʈ����\t�ұ׶�Ʈ_��������\t����Ÿ_��Ÿ����\t����Ÿ_��ɲ���Ʈ\t����Ÿ_��Ÿ������\t����Ÿ_���ļ�\t�ູ�Ǳ�_���ũä����\t�ູ�Ǳ�_�������ζ�",
+    "Color": 0,
+    "CelestialSequence": "\t1211_BERTA\t1211_SOGRAT\t1211_BLESSING\t1211_BLESSING\t1211_BLESSING\t1211_BLESSING_CROCODILE\t1211_BLESSING_EAST\t1211_BLESSING_HOT\t1211_BLESSING_NOMAD\t1211_SOGRAT_ANCIENT\t1211_SOGRAT_CAMP\t1211_SOGRAT_DIGS\t1211_SOGRAT_GORGE\t1211_SOGRAT_HASUT\t1211_SOGRAT_MUSHROOM\t1211_BERTA_DELTA\t1211_BERTA_HUNTER\t1211_BERTA_WETLAND\t1211_BERTA_WRECK\t1211_BLESSING_QUARRY\t1211_BLESSING",
+    "BGM_Path": "BGM\\Verta Delta.mp3\tBGM\\Verta Delta.mp3\tBGM\\Sogratt Desert.mp3\tBGM\\Blessing Road.mp3\tBGM\\Blessing Road.mp3\tBGM\\Blessing Road.mp3\tBGM\\Blessing Road.mp3\tBGM\\Blessing Road.mp3\tBGM\\Blessing Road.mp3\tBGM\\Blessing Road.mp3\tBGM\\Sogratt Desert.mp3\tBGM\\Sogratt Desert.mp3\tBGM\\Sogratt Desert.mp3\tBGM\\Sogratt Desert.mp3\tBGM\\Sogratt Desert.mp3\tBGM\\Sogratt Desert.mp3\tBGM\\Verta Delta.mp3\tBGM\\Verta Delta.mp3\tBGM\\Verta Delta.mp3\tBGM\\Verta Delta.mp3\tBGM\\Blessing Road.mp3\tBGM\\Blessing Road.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 1300,
+    "AreaName": "Default Area Info\tMorocc_Temple\tMorocc_Palace",
+    "Color": 0,
+    "CelestialSequence": "1300_MOROCCCITY\t1300_MOROCCCITY\t1300_MOROCCCITY",
+    "BGM_Path": "BGM\\Morocc City.mp3\tBGM\\Morocc Temple.mp3\tBGM\\The Morocc.mp3",
+    "Wind": 0.0
+  },
+  {
+    "MapId": 1301,
+    "AreaName": "Default Area Info\tdair\tdair_mine\tdair_sunset\tdair_icarus\tdair_woif\tdair_surt_altar\tdair_cemetery\tdair_surt_heart\tdair_forgotten",
+    "Color": 0,
+    "CelestialSequence": "1211_SOGRAT\t1301_DAIR\t1301_DAIR_MINE\t1301_DAIR_SUNSET\t1301_DAIR_ICARUS\t1301_DAIR_WOOLF\t1301_DAIR\t1301_DAIR\t1301_DAIR_SURT_HEART\t1301_DAIR_FORGOTTEN",
+    "BGM_Path": "BGM\\DYR Desert.mp3\tBGM\\DYR Desert.mp3\tBGM\\DYR Desert.mp3\tBGM\\DYR Desert.mp3\tBGM\\DYR Desert.mp3\tBGM\\DYR Desert.mp3\tBGM\\DYR Desert.mp3\tBGM\\DYR Desert.mp3\tBGM\\Surt Heart.mp3\tBGM\\DYR Desert.mp3",
+    "Wind": 0.0
+  }
+]

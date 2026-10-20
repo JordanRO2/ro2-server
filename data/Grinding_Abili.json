@@ -1,0 +1,4448 @@
+[
+  {
+    "Abili_ID": 1,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 0,
+    "Normal_Val": 1,
+    "Range_Rate": 0,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 150,
+    "Normal_Val": 1,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 500,
+    "Normal_Val": 3,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 1000,
+    "Normal_Val": 6,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 1500,
+    "Normal_Val": 10,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 2000,
+    "Normal_Val": 14,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 2500,
+    "Normal_Val": 18,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 5000,
+    "Normal_Val": 38,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 7500,
+    "Normal_Val": 60,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 10000,
+    "Normal_Val": 80,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 12500,
+    "Normal_Val": 100,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 15000,
+    "Normal_Val": 120,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 17500,
+    "Normal_Val": 140,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 20000,
+    "Normal_Val": 160,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 22500,
+    "Normal_Val": 180,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 16,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 25000,
+    "Normal_Val": 200,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 17,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 27500,
+    "Normal_Val": 220,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 18,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 30000,
+    "Normal_Val": 240,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 19,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 32500,
+    "Normal_Val": 260,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 35000,
+    "Normal_Val": 280,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 21,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 37500,
+    "Normal_Val": 300,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 22,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 40000,
+    "Normal_Val": 320,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 23,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 42500,
+    "Normal_Val": 340,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 24,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 45000,
+    "Normal_Val": 360,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 25,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 47500,
+    "Normal_Val": 380,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 26,
+    "Desc": "힘",
+    "Trait_ID": 0,
+    "Abili_Val": 50000,
+    "Normal_Val": 400,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1001,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 0,
+    "Normal_Val": 1,
+    "Range_Rate": 0,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1002,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 150,
+    "Normal_Val": 1,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1003,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 500,
+    "Normal_Val": 2,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1004,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 1000,
+    "Normal_Val": 4,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1005,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 1500,
+    "Normal_Val": 7,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1006,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 2000,
+    "Normal_Val": 10,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1007,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 2500,
+    "Normal_Val": 13,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1008,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 5000,
+    "Normal_Val": 27,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1009,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 7500,
+    "Normal_Val": 42,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1010,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 10000,
+    "Normal_Val": 56,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1011,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 12500,
+    "Normal_Val": 69,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1012,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 15000,
+    "Normal_Val": 83,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1013,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 17500,
+    "Normal_Val": 97,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1014,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 20000,
+    "Normal_Val": 111,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1015,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 22500,
+    "Normal_Val": 125,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1016,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 25000,
+    "Normal_Val": 139,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1017,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 27500,
+    "Normal_Val": 153,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1018,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 30000,
+    "Normal_Val": 167,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1019,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 32500,
+    "Normal_Val": 181,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1020,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 35000,
+    "Normal_Val": 194,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1021,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 37500,
+    "Normal_Val": 208,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1022,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 40000,
+    "Normal_Val": 222,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1023,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 42500,
+    "Normal_Val": 236,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1024,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 45000,
+    "Normal_Val": 250,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1025,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 47500,
+    "Normal_Val": 264,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 1026,
+    "Desc": "민첩",
+    "Trait_ID": 1,
+    "Abili_Val": 50000,
+    "Normal_Val": 278,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2001,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 0,
+    "Normal_Val": 1,
+    "Range_Rate": 0,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2002,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 150,
+    "Normal_Val": 1,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2003,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 500,
+    "Normal_Val": 3,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2004,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 1000,
+    "Normal_Val": 5,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2005,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 1500,
+    "Normal_Val": 9,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2006,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 2000,
+    "Normal_Val": 12,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2007,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 2500,
+    "Normal_Val": 16,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2008,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 5000,
+    "Normal_Val": 33,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2009,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 7500,
+    "Normal_Val": 52,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2010,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 10000,
+    "Normal_Val": 69,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2011,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 12500,
+    "Normal_Val": 86,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2012,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 15000,
+    "Normal_Val": 103,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2013,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 17500,
+    "Normal_Val": 121,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2014,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 20000,
+    "Normal_Val": 138,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2015,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 22500,
+    "Normal_Val": 155,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2016,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 25000,
+    "Normal_Val": 172,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2017,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 27500,
+    "Normal_Val": 190,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2018,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 30000,
+    "Normal_Val": 207,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2019,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 32500,
+    "Normal_Val": 224,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2020,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 35000,
+    "Normal_Val": 241,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2021,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 37500,
+    "Normal_Val": 259,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2022,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 40000,
+    "Normal_Val": 276,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2023,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 42500,
+    "Normal_Val": 293,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2024,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 45000,
+    "Normal_Val": 310,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2025,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 47500,
+    "Normal_Val": 328,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 2026,
+    "Desc": "지능",
+    "Trait_ID": 2,
+    "Abili_Val": 50000,
+    "Normal_Val": 345,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3001,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 0,
+    "Normal_Val": 1,
+    "Range_Rate": 0,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3002,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 150,
+    "Normal_Val": 1,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3003,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 500,
+    "Normal_Val": 2,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3004,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 1000,
+    "Normal_Val": 4,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3005,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 1500,
+    "Normal_Val": 7,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3006,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 2000,
+    "Normal_Val": 9,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3007,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 2500,
+    "Normal_Val": 12,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3008,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 5000,
+    "Normal_Val": 25,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3009,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 7500,
+    "Normal_Val": 39,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3010,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 10000,
+    "Normal_Val": 53,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3011,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 12500,
+    "Normal_Val": 66,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3012,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 15000,
+    "Normal_Val": 79,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3013,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 17500,
+    "Normal_Val": 92,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3014,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 20000,
+    "Normal_Val": 105,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3015,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 22500,
+    "Normal_Val": 118,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3016,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 25000,
+    "Normal_Val": 132,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3017,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 27500,
+    "Normal_Val": 145,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3018,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 30000,
+    "Normal_Val": 158,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3019,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 32500,
+    "Normal_Val": 171,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3020,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 35000,
+    "Normal_Val": 184,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3021,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 37500,
+    "Normal_Val": 197,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3022,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 40000,
+    "Normal_Val": 211,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3023,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 42500,
+    "Normal_Val": 224,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3024,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 45000,
+    "Normal_Val": 237,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3025,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 47500,
+    "Normal_Val": 250,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 3026,
+    "Desc": "의지",
+    "Trait_ID": 3,
+    "Abili_Val": 50000,
+    "Normal_Val": 263,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4001,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 0,
+    "Normal_Val": 1,
+    "Range_Rate": 0,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4002,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 150,
+    "Normal_Val": 1,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4003,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 500,
+    "Normal_Val": 2,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4004,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 1000,
+    "Normal_Val": 4,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4005,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 1500,
+    "Normal_Val": 7,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4006,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 2000,
+    "Normal_Val": 10,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4007,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 2500,
+    "Normal_Val": 13,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4008,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 5000,
+    "Normal_Val": 27,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4009,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 7500,
+    "Normal_Val": 42,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4010,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 10000,
+    "Normal_Val": 56,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4011,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 12500,
+    "Normal_Val": 69,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4012,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 15000,
+    "Normal_Val": 83,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4013,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 17500,
+    "Normal_Val": 97,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4014,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 20000,
+    "Normal_Val": 111,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4015,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 22500,
+    "Normal_Val": 125,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4016,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 25000,
+    "Normal_Val": 139,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4017,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 27500,
+    "Normal_Val": 153,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4018,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 30000,
+    "Normal_Val": 167,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4019,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 32500,
+    "Normal_Val": 181,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4020,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 35000,
+    "Normal_Val": 194,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4021,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 37500,
+    "Normal_Val": 208,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4022,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 40000,
+    "Normal_Val": 222,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4023,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 42500,
+    "Normal_Val": 236,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4024,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 45000,
+    "Normal_Val": 250,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4025,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 47500,
+    "Normal_Val": 264,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 4026,
+    "Desc": "건강",
+    "Trait_ID": 4,
+    "Abili_Val": 50000,
+    "Normal_Val": 278,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5001,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 0,
+    "Normal_Val": 1,
+    "Range_Rate": 0,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5002,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 150,
+    "Normal_Val": 4,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5003,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 500,
+    "Normal_Val": 15,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5004,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 1000,
+    "Normal_Val": 32,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5005,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 1500,
+    "Normal_Val": 50,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5006,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 2000,
+    "Normal_Val": 70,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5007,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 2500,
+    "Normal_Val": 92,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5008,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 5000,
+    "Normal_Val": 192,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5009,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 7500,
+    "Normal_Val": 300,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5010,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 10000,
+    "Normal_Val": 400,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5011,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 12500,
+    "Normal_Val": 500,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5012,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 15000,
+    "Normal_Val": 600,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5013,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 17500,
+    "Normal_Val": 700,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5014,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 20000,
+    "Normal_Val": 800,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5015,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 22500,
+    "Normal_Val": 900,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5016,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 25000,
+    "Normal_Val": 1000,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5017,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 27500,
+    "Normal_Val": 1100,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5018,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 30000,
+    "Normal_Val": 1200,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5019,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 32500,
+    "Normal_Val": 1300,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5020,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 35000,
+    "Normal_Val": 1400,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5021,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 37500,
+    "Normal_Val": 1500,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5022,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 40000,
+    "Normal_Val": 1600,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5023,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 42500,
+    "Normal_Val": 1700,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5024,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 45000,
+    "Normal_Val": 1800,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5025,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 47500,
+    "Normal_Val": 1900,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 5026,
+    "Desc": "최대 HP",
+    "Trait_ID": 21,
+    "Abili_Val": 50000,
+    "Normal_Val": 2000,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6001,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 0,
+    "Normal_Val": 1,
+    "Range_Rate": 0,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6002,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 150,
+    "Normal_Val": 5,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6003,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 500,
+    "Normal_Val": 19,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6004,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 1000,
+    "Normal_Val": 40,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6005,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 1500,
+    "Normal_Val": 63,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6006,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 2000,
+    "Normal_Val": 88,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6007,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 2500,
+    "Normal_Val": 115,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6008,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 5000,
+    "Normal_Val": 240,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6009,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 7500,
+    "Normal_Val": 375,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6010,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 10000,
+    "Normal_Val": 500,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6011,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 12500,
+    "Normal_Val": 625,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6012,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 15000,
+    "Normal_Val": 750,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6013,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 17500,
+    "Normal_Val": 875,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6014,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 20000,
+    "Normal_Val": 1000,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6015,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 22500,
+    "Normal_Val": 1125,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6016,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 25000,
+    "Normal_Val": 1250,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6017,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 27500,
+    "Normal_Val": 1375,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6018,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 30000,
+    "Normal_Val": 1500,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6019,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 32500,
+    "Normal_Val": 1625,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6020,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 35000,
+    "Normal_Val": 1750,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6021,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 37500,
+    "Normal_Val": 1875,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6022,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 40000,
+    "Normal_Val": 2000,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6023,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 42500,
+    "Normal_Val": 2125,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6024,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 45000,
+    "Normal_Val": 2250,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6025,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 47500,
+    "Normal_Val": 2375,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 6026,
+    "Desc": "최대 SP",
+    "Trait_ID": 22,
+    "Abili_Val": 50000,
+    "Normal_Val": 2500,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7001,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 0,
+    "Normal_Val": 1,
+    "Range_Rate": 0,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7002,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 150,
+    "Normal_Val": 5,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7003,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 500,
+    "Normal_Val": 19,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7004,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 1000,
+    "Normal_Val": 40,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7005,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 1500,
+    "Normal_Val": 63,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7006,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 2000,
+    "Normal_Val": 88,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7007,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 2500,
+    "Normal_Val": 115,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7008,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 5000,
+    "Normal_Val": 240,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7009,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 7500,
+    "Normal_Val": 375,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7010,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 10000,
+    "Normal_Val": 500,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7011,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 12500,
+    "Normal_Val": 625,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7012,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 15000,
+    "Normal_Val": 750,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7013,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 17500,
+    "Normal_Val": 875,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7014,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 20000,
+    "Normal_Val": 1000,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7015,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 22500,
+    "Normal_Val": 1125,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7016,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 25000,
+    "Normal_Val": 1250,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7017,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 27500,
+    "Normal_Val": 1375,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7018,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 30000,
+    "Normal_Val": 1500,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7019,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 32500,
+    "Normal_Val": 1625,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7020,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 35000,
+    "Normal_Val": 1750,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7021,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 37500,
+    "Normal_Val": 1875,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7022,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 40000,
+    "Normal_Val": 2000,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7023,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 42500,
+    "Normal_Val": 2125,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7024,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 45000,
+    "Normal_Val": 2250,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7025,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 47500,
+    "Normal_Val": 2375,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 7026,
+    "Desc": "물리 공격력",
+    "Trait_ID": 23,
+    "Abili_Val": 50000,
+    "Normal_Val": 2500,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8001,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 0,
+    "Normal_Val": 1,
+    "Range_Rate": 0,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8002,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 150,
+    "Normal_Val": 5,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8003,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 500,
+    "Normal_Val": 19,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8004,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 1000,
+    "Normal_Val": 40,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8005,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 1500,
+    "Normal_Val": 63,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8006,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 2000,
+    "Normal_Val": 88,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8007,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 2500,
+    "Normal_Val": 115,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8008,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 5000,
+    "Normal_Val": 240,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8009,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 7500,
+    "Normal_Val": 375,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8010,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 10000,
+    "Normal_Val": 500,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8011,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 12500,
+    "Normal_Val": 625,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8012,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 15000,
+    "Normal_Val": 750,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8013,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 17500,
+    "Normal_Val": 875,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8014,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 20000,
+    "Normal_Val": 1000,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8015,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 22500,
+    "Normal_Val": 1125,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8016,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 25000,
+    "Normal_Val": 1250,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8017,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 27500,
+    "Normal_Val": 1375,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8018,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 30000,
+    "Normal_Val": 1500,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8019,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 32500,
+    "Normal_Val": 1625,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8020,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 35000,
+    "Normal_Val": 1750,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8021,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 37500,
+    "Normal_Val": 1875,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8022,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 40000,
+    "Normal_Val": 2000,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8023,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 42500,
+    "Normal_Val": 2125,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8024,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 45000,
+    "Normal_Val": 2250,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8025,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 47500,
+    "Normal_Val": 2375,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 8026,
+    "Desc": "마법 공격력",
+    "Trait_ID": 25,
+    "Abili_Val": 50000,
+    "Normal_Val": 2500,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9001,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 0,
+    "Normal_Val": 1,
+    "Range_Rate": 0,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9002,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 150,
+    "Normal_Val": 4,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9003,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 500,
+    "Normal_Val": 13,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9004,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 1000,
+    "Normal_Val": 26,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9005,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 1500,
+    "Normal_Val": 42,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9006,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 2000,
+    "Normal_Val": 58,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9007,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 2500,
+    "Normal_Val": 76,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9008,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 5000,
+    "Normal_Val": 160,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9009,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 7500,
+    "Normal_Val": 250,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9010,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 10000,
+    "Normal_Val": 333,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9011,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 12500,
+    "Normal_Val": 417,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9012,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 15000,
+    "Normal_Val": 500,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9013,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 17500,
+    "Normal_Val": 583,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9014,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 20000,
+    "Normal_Val": 667,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9015,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 22500,
+    "Normal_Val": 750,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9016,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 25000,
+    "Normal_Val": 833,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9017,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 27500,
+    "Normal_Val": 917,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9018,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 30000,
+    "Normal_Val": 1000,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9019,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 32500,
+    "Normal_Val": 1083,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9020,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 35000,
+    "Normal_Val": 1167,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9021,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 37500,
+    "Normal_Val": 1250,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9022,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 40000,
+    "Normal_Val": 1333,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9023,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 42500,
+    "Normal_Val": 1417,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9024,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 45000,
+    "Normal_Val": 1500,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9025,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 47500,
+    "Normal_Val": 1583,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 9026,
+    "Desc": "물리 방어력",
+    "Trait_ID": 26,
+    "Abili_Val": 50000,
+    "Normal_Val": 1667,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10001,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 0,
+    "Normal_Val": 1,
+    "Range_Rate": 0,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10002,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 150,
+    "Normal_Val": 1,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10003,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 500,
+    "Normal_Val": 4,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10004,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 1000,
+    "Normal_Val": 9,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10005,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 1500,
+    "Normal_Val": 14,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10006,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 2000,
+    "Normal_Val": 19,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10007,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 2500,
+    "Normal_Val": 25,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10008,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 5000,
+    "Normal_Val": 53,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10009,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 7500,
+    "Normal_Val": 83,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10010,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 10000,
+    "Normal_Val": 111,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10011,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 12500,
+    "Normal_Val": 139,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10012,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 15000,
+    "Normal_Val": 167,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10013,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 17500,
+    "Normal_Val": 194,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10014,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 20000,
+    "Normal_Val": 222,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10015,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 22500,
+    "Normal_Val": 250,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10016,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 25000,
+    "Normal_Val": 278,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10017,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 27500,
+    "Normal_Val": 306,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10018,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 30000,
+    "Normal_Val": 333,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10019,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 32500,
+    "Normal_Val": 361,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10020,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 35000,
+    "Normal_Val": 389,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10021,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 37500,
+    "Normal_Val": 417,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10022,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 40000,
+    "Normal_Val": 444,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10023,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 42500,
+    "Normal_Val": 472,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10024,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 45000,
+    "Normal_Val": 500,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10025,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 47500,
+    "Normal_Val": 528,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 10026,
+    "Desc": "명중도",
+    "Trait_ID": 58,
+    "Abili_Val": 50000,
+    "Normal_Val": 556,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11001,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 0,
+    "Normal_Val": 1,
+    "Range_Rate": 0,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11002,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 150,
+    "Normal_Val": 1,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11003,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 500,
+    "Normal_Val": 4,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11004,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 1000,
+    "Normal_Val": 8,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11005,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 1500,
+    "Normal_Val": 12,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11006,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 2000,
+    "Normal_Val": 17,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11007,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 2500,
+    "Normal_Val": 22,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11008,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 5000,
+    "Normal_Val": 46,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11009,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 7500,
+    "Normal_Val": 71,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11010,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 10000,
+    "Normal_Val": 95,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11011,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 12500,
+    "Normal_Val": 119,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11012,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 15000,
+    "Normal_Val": 143,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11013,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 17500,
+    "Normal_Val": 167,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11014,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 20000,
+    "Normal_Val": 190,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11015,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 22500,
+    "Normal_Val": 214,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11016,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 25000,
+    "Normal_Val": 238,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11017,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 27500,
+    "Normal_Val": 262,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11018,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 30000,
+    "Normal_Val": 286,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11019,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 32500,
+    "Normal_Val": 310,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11020,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 35000,
+    "Normal_Val": 333,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11021,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 37500,
+    "Normal_Val": 357,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11022,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 40000,
+    "Normal_Val": 381,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11023,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 42500,
+    "Normal_Val": 405,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11024,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 45000,
+    "Normal_Val": 429,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11025,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 47500,
+    "Normal_Val": 452,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 11026,
+    "Desc": "회피도",
+    "Trait_ID": 59,
+    "Abili_Val": 50000,
+    "Normal_Val": 476,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12001,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 0,
+    "Normal_Val": 1,
+    "Range_Rate": 0,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12002,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 150,
+    "Normal_Val": 1,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12003,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 500,
+    "Normal_Val": 2,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12004,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 1000,
+    "Normal_Val": 5,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12005,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 1500,
+    "Normal_Val": 8,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12006,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 2000,
+    "Normal_Val": 11,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12007,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 2500,
+    "Normal_Val": 15,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12008,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 5000,
+    "Normal_Val": 31,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12009,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 7500,
+    "Normal_Val": 48,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12010,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 10000,
+    "Normal_Val": 65,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12011,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 12500,
+    "Normal_Val": 81,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12012,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 15000,
+    "Normal_Val": 97,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12013,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 17500,
+    "Normal_Val": 113,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12014,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 20000,
+    "Normal_Val": 129,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12015,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 22500,
+    "Normal_Val": 145,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12016,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 25000,
+    "Normal_Val": 161,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12017,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 27500,
+    "Normal_Val": 177,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12018,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 30000,
+    "Normal_Val": 194,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12019,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 32500,
+    "Normal_Val": 210,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12020,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 35000,
+    "Normal_Val": 226,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12021,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 37500,
+    "Normal_Val": 242,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12022,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 40000,
+    "Normal_Val": 258,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12023,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 42500,
+    "Normal_Val": 274,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12024,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 45000,
+    "Normal_Val": 290,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12025,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 47500,
+    "Normal_Val": 306,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 12026,
+    "Desc": "치명도",
+    "Trait_ID": 60,
+    "Abili_Val": 50000,
+    "Normal_Val": 323,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13001,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 0,
+    "Normal_Val": 1,
+    "Range_Rate": 0,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13002,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 150,
+    "Normal_Val": 1,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13003,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 500,
+    "Normal_Val": 2,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13004,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 1000,
+    "Normal_Val": 4,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13005,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 1500,
+    "Normal_Val": 7,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13006,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 2000,
+    "Normal_Val": 10,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13007,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 2500,
+    "Normal_Val": 13,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13008,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 5000,
+    "Normal_Val": 27,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13009,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 7500,
+    "Normal_Val": 42,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13010,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 10000,
+    "Normal_Val": 56,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13011,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 12500,
+    "Normal_Val": 69,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13012,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 15000,
+    "Normal_Val": 83,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13013,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 17500,
+    "Normal_Val": 97,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13014,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 20000,
+    "Normal_Val": 111,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13015,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 22500,
+    "Normal_Val": 125,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13016,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 25000,
+    "Normal_Val": 139,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13017,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 27500,
+    "Normal_Val": 153,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13018,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 30000,
+    "Normal_Val": 167,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13019,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 32500,
+    "Normal_Val": 181,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13020,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 35000,
+    "Normal_Val": 194,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13021,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 37500,
+    "Normal_Val": 208,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13022,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 40000,
+    "Normal_Val": 222,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13023,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 42500,
+    "Normal_Val": 236,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13024,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 45000,
+    "Normal_Val": 250,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13025,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 47500,
+    "Normal_Val": 264,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 13026,
+    "Desc": "공격저지도",
+    "Trait_ID": 61,
+    "Abili_Val": 50000,
+    "Normal_Val": 278,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14001,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 0,
+    "Normal_Val": 1,
+    "Range_Rate": 0,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14002,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 150,
+    "Normal_Val": 1,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14003,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 500,
+    "Normal_Val": 4,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14004,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 1000,
+    "Normal_Val": 8,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14005,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 1500,
+    "Normal_Val": 13,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14006,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 2000,
+    "Normal_Val": 18,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14007,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 2500,
+    "Normal_Val": 23,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14008,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 5000,
+    "Normal_Val": 48,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14009,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 7500,
+    "Normal_Val": 75,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14010,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 10000,
+    "Normal_Val": 100,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14011,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 12500,
+    "Normal_Val": 125,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14012,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 15000,
+    "Normal_Val": 150,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14013,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 17500,
+    "Normal_Val": 175,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14014,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 20000,
+    "Normal_Val": 200,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14015,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 22500,
+    "Normal_Val": 225,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14016,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 25000,
+    "Normal_Val": 250,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14017,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 27500,
+    "Normal_Val": 275,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14018,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 30000,
+    "Normal_Val": 300,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14019,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 32500,
+    "Normal_Val": 325,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14020,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 35000,
+    "Normal_Val": 350,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14021,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 37500,
+    "Normal_Val": 375,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14022,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 40000,
+    "Normal_Val": 400,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14023,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 42500,
+    "Normal_Val": 425,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14024,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 45000,
+    "Normal_Val": 450,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14025,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 47500,
+    "Normal_Val": 475,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 14026,
+    "Desc": "활력도",
+    "Trait_ID": 62,
+    "Abili_Val": 50000,
+    "Normal_Val": 500,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15001,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 0,
+    "Normal_Val": 1,
+    "Range_Rate": 0,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15002,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 150,
+    "Normal_Val": 1,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15003,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 500,
+    "Normal_Val": 4,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15004,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 1000,
+    "Normal_Val": 9,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15005,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 1500,
+    "Normal_Val": 14,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15006,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 2000,
+    "Normal_Val": 19,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15007,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 2500,
+    "Normal_Val": 25,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15008,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 5000,
+    "Normal_Val": 53,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15009,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 7500,
+    "Normal_Val": 83,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15010,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 10000,
+    "Normal_Val": 111,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15011,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 12500,
+    "Normal_Val": 139,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15012,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 15000,
+    "Normal_Val": 167,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15013,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 17500,
+    "Normal_Val": 194,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15014,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 20000,
+    "Normal_Val": 222,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15015,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 22500,
+    "Normal_Val": 250,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15016,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 25000,
+    "Normal_Val": 278,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15017,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 27500,
+    "Normal_Val": 306,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15018,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 30000,
+    "Normal_Val": 333,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15019,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 32500,
+    "Normal_Val": 361,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15020,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 35000,
+    "Normal_Val": 389,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15021,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 37500,
+    "Normal_Val": 417,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15022,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 40000,
+    "Normal_Val": 444,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15023,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 42500,
+    "Normal_Val": 472,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15024,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 45000,
+    "Normal_Val": 500,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15025,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 47500,
+    "Normal_Val": 528,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 15026,
+    "Desc": "가속도",
+    "Trait_ID": 63,
+    "Abili_Val": 50000,
+    "Normal_Val": 556,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 16001,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 0,
+    "Normal_Val": 1,
+    "Range_Rate": 0,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16002,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 150,
+    "Normal_Val": 2,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16003,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 500,
+    "Normal_Val": 8,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16004,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 1000,
+    "Normal_Val": 16,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16005,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 1500,
+    "Normal_Val": 25,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16006,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 2000,
+    "Normal_Val": 35,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16007,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 2500,
+    "Normal_Val": 46,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16008,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 5000,
+    "Normal_Val": 96,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16009,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 7500,
+    "Normal_Val": 150,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16010,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 10000,
+    "Normal_Val": 200,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16011,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 12500,
+    "Normal_Val": 250,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16012,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 15000,
+    "Normal_Val": 300,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16013,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 17500,
+    "Normal_Val": 350,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16014,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 20000,
+    "Normal_Val": 400,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16015,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 22500,
+    "Normal_Val": 450,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16016,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 25000,
+    "Normal_Val": 500,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16017,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 27500,
+    "Normal_Val": 550,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16018,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 30000,
+    "Normal_Val": 600,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16019,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 32500,
+    "Normal_Val": 650,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16020,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 35000,
+    "Normal_Val": 700,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16021,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 37500,
+    "Normal_Val": 750,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16022,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 40000,
+    "Normal_Val": 800,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16023,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 42500,
+    "Normal_Val": 850,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16024,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 45000,
+    "Normal_Val": 900,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16025,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 47500,
+    "Normal_Val": 950,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 16026,
+    "Desc": "PVP 피해율",
+    "Trait_ID": 71,
+    "Abili_Val": 50000,
+    "Normal_Val": 1000,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17001,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 0,
+    "Normal_Val": 1,
+    "Range_Rate": 0,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17002,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 150,
+    "Normal_Val": 1,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17003,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 500,
+    "Normal_Val": 5,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17004,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 1000,
+    "Normal_Val": 11,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17005,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 1500,
+    "Normal_Val": 17,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17006,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 2000,
+    "Normal_Val": 23,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17007,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 2500,
+    "Normal_Val": 31,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17008,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 5000,
+    "Normal_Val": 64,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17009,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 7500,
+    "Normal_Val": 100,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17010,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 10000,
+    "Normal_Val": 133,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17011,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 12500,
+    "Normal_Val": 167,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17012,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 15000,
+    "Normal_Val": 200,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17013,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 17500,
+    "Normal_Val": 233,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17014,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 20000,
+    "Normal_Val": 267,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17015,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 22500,
+    "Normal_Val": 300,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17016,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 25000,
+    "Normal_Val": 333,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17017,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 27500,
+    "Normal_Val": 367,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17018,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 30000,
+    "Normal_Val": 400,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17019,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 32500,
+    "Normal_Val": 433,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17020,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 35000,
+    "Normal_Val": 467,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17021,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 37500,
+    "Normal_Val": 500,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17022,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 40000,
+    "Normal_Val": 533,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17023,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 42500,
+    "Normal_Val": 567,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17024,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 45000,
+    "Normal_Val": 600,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17025,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 47500,
+    "Normal_Val": 633,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 17026,
+    "Desc": "PVP 방어율",
+    "Trait_ID": 72,
+    "Abili_Val": 50000,
+    "Normal_Val": 667,
+    "Range_Rate": 1000,
+    "Trait_Type": 2
+  },
+  {
+    "Abili_ID": 20001,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 0,
+    "Normal_Val": 1,
+    "Range_Rate": 0,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20002,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 150,
+    "Normal_Val": 1,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20003,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 500,
+    "Normal_Val": 4,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20004,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 1000,
+    "Normal_Val": 9,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20005,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 1500,
+    "Normal_Val": 14,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20006,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 2000,
+    "Normal_Val": 19,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20007,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 2500,
+    "Normal_Val": 25,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20008,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 5000,
+    "Normal_Val": 53,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20009,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 7500,
+    "Normal_Val": 83,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20010,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 10000,
+    "Normal_Val": 111,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20011,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 12500,
+    "Normal_Val": 139,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20012,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 15000,
+    "Normal_Val": 167,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20013,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 17500,
+    "Normal_Val": 194,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20014,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 20000,
+    "Normal_Val": 222,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20015,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 22500,
+    "Normal_Val": 250,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20016,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 25000,
+    "Normal_Val": 278,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20017,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 27500,
+    "Normal_Val": 306,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20018,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 30000,
+    "Normal_Val": 333,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20019,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 32500,
+    "Normal_Val": 361,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20020,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 35000,
+    "Normal_Val": 389,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20021,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 37500,
+    "Normal_Val": 417,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20022,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 40000,
+    "Normal_Val": 444,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20023,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 42500,
+    "Normal_Val": 472,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20024,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 45000,
+    "Normal_Val": 500,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20025,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 47500,
+    "Normal_Val": 528,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  },
+  {
+    "Abili_ID": 20026,
+    "Desc": "시전 속도",
+    "Trait_ID": 98,
+    "Abili_Val": 50000,
+    "Normal_Val": 556,
+    "Range_Rate": 1000,
+    "Trait_Type": 1
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "Category_ID": 1,
+    "Category_Name": "퀘스트",
+    "String_ID": 10088
+  },
+  {
+    "Category_ID": 2,
+    "Category_Name": "파티 던전",
+    "String_ID": 10089
+  },
+  {
+    "Category_ID": 3,
+    "Category_Name": "공격대 던전",
+    "String_ID": 10090
+  },
+  {
+    "Category_ID": 4,
+    "Category_Name": "PvP",
+    "String_ID": 10091
+  }
+]

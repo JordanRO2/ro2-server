@@ -1,0 +1,704 @@
+[
+  {
+    "type": 1,
+    "Memo": "길드 생성 최소 레벨",
+    "Value": "10",
+    "NationEnable": 127
+  },
+  {
+    "type": 2,
+    "Memo": "길드 생성에 필요한 금액",
+    "Value": "20000",
+    "NationEnable": 127
+  },
+  {
+    "type": 3,
+    "Memo": "길드 생성 제한 - 최근 길드 해체 후 길드 생성 할 수 있는 최소한의 시간",
+    "Value": "168",
+    "NationEnable": 127
+  },
+  {
+    "type": 4,
+    "Memo": "길드 생성 제한 - 필요한 전직 회수 (0:필요없음, 1:1차전직완료)",
+    "Value": "1",
+    "NationEnable": 127
+  },
+  {
+    "type": 5,
+    "Memo": "길드 초대 메시지 응답 기다리는 시간(초)",
+    "Value": "300",
+    "NationEnable": 127
+  },
+  {
+    "type": 6,
+    "Memo": "중복로그인 경우, 이전 접속자 접속 종료 시킬 것인가? (true/false)",
+    "Value": "true",
+    "NationEnable": 127
+  },
+  {
+    "type": 7,
+    "Memo": "카드 합성 기본 확률 (10000 = 100%)",
+    "Value": "5000",
+    "NationEnable": 127
+  },
+  {
+    "type": 8,
+    "Memo": "길드 생성시 최초 길드 멤버 가입 최대 수",
+    "Value": "20",
+    "NationEnable": 127
+  },
+  {
+    "type": 9,
+    "Memo": "길드 권한 최소 수",
+    "Value": "2",
+    "NationEnable": 127
+  },
+  {
+    "type": 10,
+    "Memo": "길드 창고 최대 슬롯 수",
+    "Value": "100",
+    "NationEnable": 127
+  },
+  {
+    "type": 11,
+    "Memo": "길드 창고 기본 슬롯 수",
+    "Value": "20",
+    "NationEnable": 127
+  },
+  {
+    "type": 12,
+    "Memo": "길드창고 슬롯 잠김 최대 시간(초)",
+    "Value": "5",
+    "NationEnable": 127
+  },
+  {
+    "type": 13,
+    "Memo": "길드창고 기본 최대 소지금",
+    "Value": "10000000",
+    "NationEnable": 127
+  },
+  {
+    "type": 14,
+    "Memo": "길드창고내역 페이지당 최대개수",
+    "Value": "13",
+    "NationEnable": 127
+  },
+  {
+    "type": 15,
+    "Memo": "CenterSErver 켰을 때, Value에 적힌 값 이상 오래된 길드창고내역 지우기(일/Day)",
+    "Value": "31",
+    "NationEnable": 127
+  },
+  {
+    "type": 16,
+    "Memo": "공격대 구성/가입 최소 레벨",
+    "Value": "10",
+    "NationEnable": 127
+  },
+  {
+    "type": 17,
+    "Memo": "스페셜 카드 합성 확률 (1000000 = 100%)",
+    "Value": "50000",
+    "NationEnable": 127
+  },
+  {
+    "type": 18,
+    "Memo": "길드명 길이( 최대 50)",
+    "Value": "10",
+    "NationEnable": 127
+  },
+  {
+    "type": 19,
+    "Memo": "길드 공지 길이(최대 100)",
+    "Value": "100",
+    "NationEnable": 127
+  },
+  {
+    "type": 20,
+    "Memo": "CenterServer 반응없을 때, ZoneServer 종료하기 전에 유저에게 보낼 공지 사항",
+    "Value": "0",
+    "NationEnable": 127
+  },
+  {
+    "type": 21,
+    "Memo": "20번공지 색깔 (RRGGBB)",
+    "Value": "65535",
+    "NationEnable": 127
+  },
+  {
+    "type": 22,
+    "Memo": "일반 몬스터 루팅 대기 시간(초)",
+    "Value": "120",
+    "NationEnable": 127
+  },
+  {
+    "type": 23,
+    "Memo": "네임드 몬스터/던전 정예 몬스터 루팅 대기 시간(초)",
+    "Value": "180",
+    "NationEnable": 127
+  },
+  {
+    "type": 24,
+    "Memo": "던전 보스급 몬스터 루팅 대기 시간(초)",
+    "Value": "3600",
+    "NationEnable": 127
+  },
+  {
+    "type": 25,
+    "Memo": "셧다운 연령제한 ",
+    "Value": "16",
+    "NationEnable": 127
+  },
+  {
+    "type": 26,
+    "Memo": "셧다운 기간",
+    "Value": "00:00,06:00",
+    "NationEnable": 127
+  },
+  {
+    "type": 27,
+    "Memo": "셧다운 공지 시간(셧다운 시간  전 몇 분)",
+    "Value": "23:50,23:55,23:59",
+    "NationEnable": 127
+  },
+  {
+    "type": 28,
+    "Memo": "셧다운 중간 공지",
+    "Value": "/d/고객님은 만 16세 미만의 청소년이므로 /t1/ %d시에 자동으로 게임이 종료됩니다.",
+    "NationEnable": 127
+  },
+  {
+    "type": 29,
+    "Memo": "셧다운 적용 공지",
+    "Value": "/t45/고객님은 만 16세 미만 청소년이므로 5초 후에 게임이 종료됩니다./t1/5/t1/4/t1/3/t1/2/t1/1/t1/0/t2/게임을 종료합니다.",
+    "NationEnable": 127
+  },
+  {
+    "type": 30,
+    "Memo": "몬스터 사체 채집 대기 시간(초)",
+    "Value": "40",
+    "NationEnable": 127
+  },
+  {
+    "type": 31,
+    "Memo": "2차비밀번호 연속입력실패 블럭시간(분)",
+    "Value": "5",
+    "NationEnable": 127
+  },
+  {
+    "type": 32,
+    "Memo": "웹이벤트 당첨자 공지 보내기 기능 사용 여부",
+    "Value": "false",
+    "NationEnable": 127
+  },
+  {
+    "type": 33,
+    "Memo": "웹 이벤트 당첨자 공지 메시지",
+    "Value": "축하합니다. 2보다 좋을 수 없는 이벤트! <%cha_name%>님이 사례금 <%product_name%>만원에 당첨되셨습니다.",
+    "NationEnable": 127
+  },
+  {
+    "type": 34,
+    "Memo": "웹 이벤트 당첨자 공지 메시지 간격(초)",
+    "Value": "10",
+    "NationEnable": 127
+  },
+  {
+    "type": 35,
+    "Memo": "웹 이벤트 당첨자 공지 메시지 시작 시간(초)",
+    "Value": "1800",
+    "NationEnable": 127
+  },
+  {
+    "type": 36,
+    "Memo": "스피넬(제자리 부활 기능) 재사용 가능 시간",
+    "Value": "10",
+    "NationEnable": 127
+  },
+  {
+    "type": 37,
+    "Memo": "인트로 동영상",
+    "Value": "100000",
+    "NationEnable": 127
+  },
+  {
+    "type": 38,
+    "Memo": "오프닝 애니메이션 동영상",
+    "Value": "100001",
+    "NationEnable": 127
+  },
+  {
+    "type": 39,
+    "Memo": "낙하 대미지 안전 높이 (m)",
+    "Value": "7",
+    "NationEnable": 127
+  },
+  {
+    "type": 40,
+    "Memo": "PC방 제자리 부활 기능 재사용 가능 시간",
+    "Value": "10",
+    "NationEnable": 127
+  },
+  {
+    "type": 41,
+    "Memo": "랜덤상자 아이템 당첨 공지 메시지",
+    "Value": "<%world_name%>서버의 <%cha_name%>님이 <%item_name%>에 당첨되었습니다.",
+    "NationEnable": 127
+  },
+  {
+    "type": 42,
+    "Memo": "원격 상점 사용 시 호출되는 머천트 ID",
+    "Value": "10210058",
+    "NationEnable": 127
+  },
+  {
+    "type": 43,
+    "Memo": "PvP 전적 및 랭킹 갱신 시간 (PvP_Reset_Time)",
+    "Value": "10:00",
+    "NationEnable": 127
+  },
+  {
+    "type": 44,
+    "Memo": "PvP 전적 갱신 주단위 (월화수목금토일 순)(PvP_Reset_Week)",
+    "Value": "3",
+    "NationEnable": 127
+  },
+  {
+    "type": 45,
+    "Memo": "실시간 PvP 랭킹을 적용하는 최소 index (PvP_Class_ Refresh)",
+    "Value": "3",
+    "NationEnable": 127
+  },
+  {
+    "type": 46,
+    "Memo": "pvp 보상 받을수 있는 유효 거리",
+    "Value": "30",
+    "NationEnable": 127
+  },
+  {
+    "type": 47,
+    "Memo": "노엘 인트로 동영상",
+    "Value": "100004",
+    "NationEnable": 127
+  },
+  {
+    "type": 48,
+    "Memo": "레벨 보정용 버프 아이디",
+    "Value": "62050",
+    "NationEnable": 127
+  },
+  {
+    "type": 49,
+    "Memo": "장비 능력치 보정용 버프 아이디",
+    "Value": "62051",
+    "NationEnable": 127
+  },
+  {
+    "type": 50,
+    "Memo": "길드로브(디폴트용)",
+    "Value": "12711452",
+    "NationEnable": 127
+  },
+  {
+    "type": 51,
+    "Memo": "프론테라 세금율",
+    "Value": "10%",
+    "NationEnable": 127
+  },
+  {
+    "type": 52,
+    "Memo": "신비한 영혼의 돌 필요 수량. 단위 개",
+    "Value": "10",
+    "NationEnable": 127
+  },
+  {
+    "type": 53,
+    "Memo": "영롱한 영혼의 돌 필요 수량 단위 개",
+    "Value": "10",
+    "NationEnable": 127
+  },
+  {
+    "type": 54,
+    "Memo": "환영의 피라미드용 마일리지 최대 보유량 단위 개 ( 최대 3자리 )",
+    "Value": "999",
+    "NationEnable": 127
+  },
+  {
+    "type": 55,
+    "Memo": "환영의 피라미드 영혼의 돌 보유 수량 오버 위험 알림 수치 단위 개",
+    "Value": "990",
+    "NationEnable": 127
+  },
+  {
+    "type": 56,
+    "Memo": "환영의 피라미드 최소 연출 시간. 단위 초.",
+    "Value": "2",
+    "NationEnable": 127
+  },
+  {
+    "type": 57,
+    "Memo": "환영의 피라미드 시즌 시작 연",
+    "Value": "2013",
+    "NationEnable": 127
+  },
+  {
+    "type": 58,
+    "Memo": "환영의 피라미드 시즌 시작 월",
+    "Value": "12",
+    "NationEnable": 127
+  },
+  {
+    "type": 59,
+    "Memo": "환영의 피라미드 시즌 시작 일",
+    "Value": "11",
+    "NationEnable": 127
+  },
+  {
+    "type": 60,
+    "Memo": "환영의 피라미드 시즌 시작 시",
+    "Value": "5",
+    "NationEnable": 127
+  },
+  {
+    "type": 61,
+    "Memo": "소환 컬렉션 최대 레벨",
+    "Value": "4",
+    "NationEnable": 127
+  },
+  {
+    "type": 62,
+    "Memo": "공병기기 10% 공용 모델용 NPC ID",
+    "Value": "17860000",
+    "NationEnable": 127
+  },
+  {
+    "type": 63,
+    "Memo": "공병기기 50% 공용 모델용 NPC ID",
+    "Value": "17870000",
+    "NationEnable": 127
+  },
+  {
+    "type": 64,
+    "Memo": "용병 카프라 제한 횟수",
+    "Value": "10",
+    "NationEnable": 127
+  },
+  {
+    "type": 65,
+    "Memo": "맵이동시 사용되는 버프 ID",
+    "Value": "60205",
+    "NationEnable": 127
+  },
+  {
+    "type": 66,
+    "Memo": "맵이동시 사용되는 버프 ID의 시간 (단위 초)",
+    "Value": "10",
+    "NationEnable": 127
+  },
+  {
+    "type": 67,
+    "Memo": "캐릭터명 길이",
+    "Value": "10",
+    "NationEnable": 127
+  },
+  {
+    "type": 68,
+    "Memo": "랭킹 갱신 시점",
+    "Value": "5",
+    "NationEnable": 127
+  },
+  {
+    "type": 69,
+    "Memo": "버프 제공 NPC 버프 가격",
+    "Value": "12000",
+    "NationEnable": 127
+  },
+  {
+    "type": 70,
+    "Memo": "버프 제공 NPC 버프 제공 시간(단위 분)",
+    "Value": "60",
+    "NationEnable": 127
+  },
+  {
+    "type": 71,
+    "Memo": "경험치 게이지 표기 비율",
+    "Value": "1000",
+    "NationEnable": 127
+  },
+  {
+    "type": 72,
+    "Memo": "전투직업 경험치 획득 비율. 단위 10000 = 100%",
+    "Value": "10000",
+    "NationEnable": 127
+  },
+  {
+    "type": 73,
+    "Memo": "전문직업 경험치 획득 비율. 단위 10000 = 100%",
+    "Value": "1000",
+    "NationEnable": 127
+  },
+  {
+    "type": 74,
+    "Memo": "사망 시 마스터리 포인트 소모 비율.단위 10000 = 100%",
+    "Value": "500",
+    "NationEnable": 127
+  },
+  {
+    "type": 75,
+    "Memo": "구매 스탯 포인트 상한선",
+    "Value": "100",
+    "NationEnable": 127
+  },
+  {
+    "type": 76,
+    "Memo": "구매 스킬 포인트 상한선",
+    "Value": "20",
+    "NationEnable": 127
+  },
+  {
+    "type": 77,
+    "Memo": "실버 PC 방 부활 시 마스터리 포인트 복구량 단위 10000 = 100%",
+    "Value": "5000",
+    "NationEnable": 127
+  },
+  {
+    "type": 78,
+    "Memo": "골드 PC 방 부활 시 마스터리 포인트 복구량 단위 10000 = 100%",
+    "Value": "5000",
+    "NationEnable": 127
+  },
+  {
+    "type": 79,
+    "Memo": "경험치 게이지 줄 최대값",
+    "Value": "1000000",
+    "NationEnable": 127
+  },
+  {
+    "type": 80,
+    "Memo": "체력 낮음 (경고)(단위 %)",
+    "Value": "20",
+    "NationEnable": 127
+  },
+  {
+    "type": 81,
+    "Memo": "탈출 가능 시간",
+    "Value": "60",
+    "NationEnable": 127
+  },
+  {
+    "type": 82,
+    "Memo": "엠펠 파괴시 점령 시간 증가량 (엠펠 1회 파괴시 마다 입력값만큼 % 증가)",
+    "Value": "1",
+    "NationEnable": 127
+  },
+  {
+    "type": 83,
+    "Memo": "제련 전승 기본 수수료값 (단위 1 = 1MP)",
+    "Value": "5000",
+    "NationEnable": 127
+  },
+  {
+    "type": 84,
+    "Memo": "길드 하우스 응모권 최소 판매 가격(루피 단위)",
+    "Value": "100000",
+    "NationEnable": 127
+  },
+  {
+    "type": 85,
+    "Memo": "길드 탈퇴 시 재가입에 필요한 대기 시간 (단위 시)",
+    "Value": "1",
+    "NationEnable": 127
+  },
+  {
+    "type": 86,
+    "Memo": "선물함_이벤트탭 수령 가능 날짜",
+    "Value": "7",
+    "NationEnable": 127
+  },
+  {
+    "type": 87,
+    "Memo": "캐릭터 이름 재변경 제한 (단위 일)",
+    "Value": "14",
+    "NationEnable": 127
+  },
+  {
+    "type": 88,
+    "Memo": "opt-in 시작 날짜",
+    "Value": "2015-02-03",
+    "NationEnable": 1
+  },
+  {
+    "type": 89,
+    "Memo": "opt-in 끝 날짜",
+    "Value": "2016-02-03",
+    "NationEnable": 1
+  },
+  {
+    "type": 91,
+    "Memo": "캐릭터가 소지할 수 있는 최대 금액 (단위 루피)",
+    "Value": "10000000000",
+    "NationEnable": 127
+  },
+  {
+    "type": 92,
+    "Memo": "메일로 보낼 수 있는 최대 금액 (단위 루피)",
+    "Value": "10000000000",
+    "NationEnable": 127
+  },
+  {
+    "type": 93,
+    "Memo": "Siege Weapon",
+    "Value": "40013",
+    "NationEnable": 127
+  },
+  {
+    "type": 94,
+    "Memo": "Pet Collection Skill",
+    "Value": "2021001",
+    "NationEnable": 127
+  },
+  {
+    "type": 100,
+    "Memo": "옵션강화 최대 증가폭(잡마스터레벨 기준)",
+    "Value": "20",
+    "NationEnable": 127
+  },
+  {
+    "type": 107,
+    "Memo": "제련 전승 MP 수수료 보정용 값",
+    "Value": "300",
+    "NationEnable": 127
+  },
+  {
+    "type": 108,
+    "Memo": "제련 전승 수치 보정용 값",
+    "Value": "0.5",
+    "NationEnable": 127
+  },
+  {
+    "type": 109,
+    "Memo": "최대 소유 할 수 있는 다이아몬드 개수",
+    "Value": "2000000000",
+    "NationEnable": 127
+  },
+  {
+    "type": 110,
+    "Memo": "외형변경 다이아몬드 수수료 값",
+    "Value": "1512",
+    "NationEnable": 127
+  },
+  {
+    "type": 1000,
+    "Memo": "Center\\Guild.cpp  스트링",
+    "Value": "길원추가(0)",
+    "NationEnable": 127
+  },
+  {
+    "type": 1001,
+    "Memo": "Center\\Guild.cpp  스트링",
+    "Value": "길원추가(X)",
+    "NationEnable": 127
+  },
+  {
+    "type": 1002,
+    "Memo": "Center\\Guild.cpp  스트링",
+    "Value": ",길원탈퇴(0)",
+    "NationEnable": 127
+  },
+  {
+    "type": 1003,
+    "Memo": "Center\\Guild.cpp  스트링",
+    "Value": ",길원탈퇴(X)",
+    "NationEnable": 127
+  },
+  {
+    "type": 1004,
+    "Memo": "Center\\Guild.cpp  스트링",
+    "Value": ",창고이용(0)",
+    "NationEnable": 127
+  },
+  {
+    "type": 1005,
+    "Memo": "Center\\Guild.cpp  스트링",
+    "Value": ",창고이용(X)",
+    "NationEnable": 127
+  },
+  {
+    "type": 1006,
+    "Memo": "Center\\Guild.cpp  스트링",
+    "Value": ",공지변경(0)",
+    "NationEnable": 127
+  },
+  {
+    "type": 1007,
+    "Memo": "Center\\Guild.cpp  스트링",
+    "Value": ",공지변경(X)",
+    "NationEnable": 127
+  },
+  {
+    "type": 1008,
+    "Memo": "Zone\\PCModule.cpp 스트링",
+    "Value": "시스템",
+    "NationEnable": 127
+  },
+  {
+    "type": 1009,
+    "Memo": "Zone\\Level0.cpp 스트링",
+    "Value": "<%string%>님이 당신에게 죽음을 명령했습니다.",
+    "NationEnable": 127
+  },
+  {
+    "type": 1010,
+    "Memo": "Zone\\Level0.cp  스트링",
+    "Value": "당신은 <%string%>님에 의해 강제 퇴장당했습니다.",
+    "NationEnable": 127
+  },
+  {
+    "type": 1011,
+    "Memo": "Zone\\Level0.cp  스트링",
+    "Value": "채널에 총 Player 수:<%totalcount%>, Map(<%mapidx%>) 에 Player 수 :<%mappccount%>",
+    "NationEnable": 127
+  },
+  {
+    "type": 1012,
+    "Memo": "Certify\\AccountMng.cpp  스트링",
+    "Value": "2차 비밀번호 입력실패",
+    "NationEnable": 127
+  },
+  {
+    "type": 101,
+    "Memo": "제작 1등 혜택 - 추가 Grade_val (104번 트레잇에 더해짐) (블스/아티잔 용)",
+    "Value": "5000",
+    "NationEnable": 63
+  },
+  {
+    "type": 102,
+    "Memo": "제작 2등 혜택 - 추가 Grade_val (104번 트레잇에 더해짐) (블스/아티잔 용)",
+    "Value": "3000",
+    "NationEnable": 63
+  },
+  {
+    "type": 103,
+    "Memo": "연마 1등 혜택 - 추가 Grade_val (103번 트레잇에 더해짐) (만분률)",
+    "Value": "2000",
+    "NationEnable": 63
+  },
+  {
+    "type": 104,
+    "Memo": "연마 2등 혜택 - 추가 Grade_val (103번 트레잇에 더해짐) (만분률)",
+    "Value": "1000",
+    "NationEnable": 63
+  },
+  {
+    "type": 105,
+    "Memo": "제작 1등 혜택 - 생산량 x배 (쉐프/알케 용)",
+    "Value": "2",
+    "NationEnable": 63
+  },
+  {
+    "type": 106,
+    "Memo": "제작 2등 혜택 - 생산량 x배 (쉐프/알케 용)",
+    "Value": "1.5",
+    "NationEnable": 63
+  }
+]

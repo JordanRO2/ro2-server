@@ -1,0 +1,222 @@
+[
+  {
+    "ID": 1,
+    "NormalTexID": 1,
+    "NormalUV": "683/319/721/357",
+    "OverTexID": 1,
+    "OverUV": "723/319/761/357",
+    "PressTexID": 1,
+    "PressUV": "763/319/801/357",
+    "DisableTexID": 1,
+    "DisableUV": "803/319/841/357"
+  },
+  {
+    "ID": 2,
+    "NormalTexID": 1,
+    "NormalUV": "521/319/559/357",
+    "OverTexID": 1,
+    "OverUV": "561/319/599/357",
+    "PressTexID": 1,
+    "PressUV": "601/319/639/357",
+    "DisableTexID": 1,
+    "DisableUV": "641/319/679/357"
+  },
+  {
+    "ID": 3,
+    "NormalTexID": 1,
+    "NormalUV": "521/359/559/397",
+    "OverTexID": 1,
+    "OverUV": "561/359/599/397",
+    "PressTexID": 1,
+    "PressUV": "601/359/639/397",
+    "DisableTexID": 1,
+    "DisableUV": "641/359/679/397"
+  },
+  {
+    "ID": 4,
+    "NormalTexID": 1,
+    "NormalUV": "521/399/559/437",
+    "OverTexID": 1,
+    "OverUV": "561/399/599/437",
+    "PressTexID": 1,
+    "PressUV": "601/399/639/437",
+    "DisableTexID": 1,
+    "DisableUV": "641/399/679/437"
+  },
+  {
+    "ID": 5,
+    "NormalTexID": 1,
+    "NormalUV": "359/520/397/558",
+    "OverTexID": 1,
+    "OverUV": "399/520/437/558",
+    "PressTexID": 1,
+    "PressUV": "439/520/477/558",
+    "DisableTexID": 1,
+    "DisableUV": "479/520/517/558"
+  },
+  {
+    "ID": 6,
+    "NormalTexID": 1,
+    "NormalUV": "683/359/721/397",
+    "OverTexID": 1,
+    "OverUV": "723/359/761/397",
+    "PressTexID": 1,
+    "PressUV": "763/359/801/397",
+    "DisableTexID": 1,
+    "DisableUV": "803/359/841/397"
+  },
+  {
+    "ID": 7,
+    "NormalTexID": 1,
+    "NormalUV": "683/399/721/437",
+    "OverTexID": 1,
+    "OverUV": "723/399/761/437",
+    "PressTexID": 1,
+    "PressUV": "763/399/801/437",
+    "DisableTexID": 1,
+    "DisableUV": "803/399/841/437"
+  },
+  {
+    "ID": 8,
+    "NormalTexID": 1,
+    "NormalUV": "683/439/721/477",
+    "OverTexID": 1,
+    "OverUV": "723/439/761/477",
+    "PressTexID": 1,
+    "PressUV": "763/439/801/477",
+    "DisableTexID": 1,
+    "DisableUV": "803/439/841/477"
+  },
+  {
+    "ID": 9,
+    "NormalTexID": 1,
+    "NormalUV": "521/479/559/517",
+    "OverTexID": 1,
+    "OverUV": "561/479/599/517",
+    "PressTexID": 1,
+    "PressUV": "601/479/639/517",
+    "DisableTexID": 1,
+    "DisableUV": "641/479/679/517"
+  },
+  {
+    "ID": 10,
+    "NormalTexID": 1,
+    "NormalUV": "359/359/397/397",
+    "OverTexID": 1,
+    "OverUV": "399/359/437/397",
+    "PressTexID": 1,
+    "PressUV": "439/359/477/397",
+    "DisableTexID": 1,
+    "DisableUV": "479/359/517/397"
+  },
+  {
+    "ID": 11,
+    "NormalTexID": 1,
+    "NormalUV": "359/319/397/357",
+    "OverTexID": 1,
+    "OverUV": "399/319/437/357",
+    "PressTexID": 1,
+    "PressUV": "439/319/477/357",
+    "DisableTexID": 1,
+    "DisableUV": "479/319/517/357"
+  },
+  {
+    "ID": 12,
+    "NormalTexID": 1,
+    "NormalUV": "359/399/397/437",
+    "OverTexID": 1,
+    "OverUV": "399/399/437/437",
+    "PressTexID": 1,
+    "PressUV": "439/399/477/437",
+    "DisableTexID": 1,
+    "DisableUV": "479/399/517/437"
+  },
+  {
+    "ID": 13,
+    "NormalTexID": 1,
+    "NormalUV": "521/439/559/477",
+    "OverTexID": 1,
+    "OverUV": "561/439/599/477",
+    "PressTexID": 1,
+    "PressUV": "601/439/639/477",
+    "DisableTexID": 1,
+    "DisableUV": "641/439/679/477"
+  },
+  {
+    "ID": 14,
+    "NormalTexID": 1,
+    "NormalUV": "359/439/397/477",
+    "OverTexID": 1,
+    "OverUV": "399/439/437/477",
+    "PressTexID": 1,
+    "PressUV": "439/439/477/477",
+    "DisableTexID": 1,
+    "DisableUV": "479/439/517/477"
+  },
+  {
+    "ID": 15,
+    "NormalTexID": 1,
+    "NormalUV": "359/479/397/517",
+    "OverTexID": 1,
+    "OverUV": "399/479/437/517",
+    "PressTexID": 1,
+    "PressUV": "439/479/477/517",
+    "DisableTexID": 1,
+    "DisableUV": "479/479/517/517"
+  },
+  {
+    "ID": 16,
+    "NormalTexID": 1,
+    "NormalUV": "598/688/636/726",
+    "OverTexID": 1,
+    "OverUV": "638/688/676/726",
+    "PressTexID": 1,
+    "PressUV": "678/688/716/726",
+    "DisableTexID": 1,
+    "DisableUV": "718/688/756/726"
+  },
+  {
+    "ID": 17,
+    "NormalTexID": 1,
+    "NormalUV": "521/520/559/558",
+    "OverTexID": 1,
+    "OverUV": "561/520/599/558",
+    "PressTexID": 1,
+    "PressUV": "601/520/639/558",
+    "DisableTexID": 1,
+    "DisableUV": "641/520/679/558"
+  },
+  {
+    "ID": 18,
+    "NormalTexID": 1,
+    "NormalUV": "683/479/721/517",
+    "OverTexID": 1,
+    "OverUV": "723/479/761/517",
+    "PressTexID": 1,
+    "PressUV": "763/479/801/517",
+    "DisableTexID": 1,
+    "DisableUV": "803/479/841/517"
+  },
+  {
+    "ID": 19,
+    "NormalTexID": 1,
+    "NormalUV": "4/608/42/646 ",
+    "OverTexID": 1,
+    "OverUV": "44/608/82/646",
+    "PressTexID": 1,
+    "PressUV": "84/608/122/646",
+    "DisableTexID": 1,
+    "DisableUV": "124/608/162/646"
+  },
+  {
+    "ID": 20,
+    "NormalTexID": 1,
+    "NormalUV": "683/520/721/558 ",
+    "OverTexID": 1,
+    "OverUV": "723/520/761/558",
+    "PressTexID": 1,
+    "PressUV": "763/520/801/558",
+    "DisableTexID": 1,
+    "DisableUV": "763/520/801/558"
+  }
+]

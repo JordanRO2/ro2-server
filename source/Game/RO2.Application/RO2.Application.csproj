@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Domain\RO2.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

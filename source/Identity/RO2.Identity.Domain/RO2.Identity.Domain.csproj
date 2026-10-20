@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- §7 rule #1: a service's Domain references ONLY RO2.BuildingBlocks.Domain.
+         No Mongo, no ProudNet, no Contracts, no other service, no BCrypt package leak. -->
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+  </ItemGroup>
+
+</Project>

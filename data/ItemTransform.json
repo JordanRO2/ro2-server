@@ -1,0 +1,776 @@
+[
+  {
+    "ID": 70000001,
+    "TargetItemID": 70000002,
+    "TargetItemCount": 1,
+    "plan": "스피넬 보라포션 (무제한)"
+  },
+  {
+    "ID": 70000001,
+    "TargetItemID": 70000003,
+    "TargetItemCount": 1,
+    "plan": "스피넬 수리키트 (무제한)"
+  },
+  {
+    "ID": 60000034,
+    "TargetItemID": 60000035,
+    "TargetItemCount": 1,
+    "plan": "스피넬 보라포션(드래곤사가 제휴 이벤트)"
+  },
+  {
+    "ID": 60000034,
+    "TargetItemID": 60000036,
+    "TargetItemCount": 1,
+    "plan": "스피넬 수리키트(드래곤사가 제휴 이벤트)"
+  },
+  {
+    "ID": 60000050,
+    "TargetItemID": 60000051,
+    "TargetItemCount": 1,
+    "plan": "스피넬 보라포션"
+  },
+  {
+    "ID": 60000050,
+    "TargetItemID": 60000052,
+    "TargetItemCount": 1,
+    "plan": "스피넬 수리키트"
+  },
+  {
+    "ID": 60000206,
+    "TargetItemID": 60000207,
+    "TargetItemCount": 1,
+    "plan": "스피넬 보라포션"
+  },
+  {
+    "ID": 60000206,
+    "TargetItemID": 60000208,
+    "TargetItemCount": 1,
+    "plan": "스피넬 수리키트"
+  },
+  {
+    "ID": 30000281,
+    "TargetItemID": 30000282,
+    "TargetItemCount": 1,
+    "plan": "스피넬 보라포션"
+  },
+  {
+    "ID": 30000281,
+    "TargetItemID": 30000283,
+    "TargetItemCount": 1,
+    "plan": "스피넬 수리키트"
+  },
+  {
+    "ID": 70000881,
+    "TargetItemID": 34000450,
+    "TargetItemCount": 1,
+    "plan": "최대 HP 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70000881,
+    "TargetItemID": 34000451,
+    "TargetItemCount": 1,
+    "plan": "최대 SP 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70000882,
+    "TargetItemID": 34000452,
+    "TargetItemCount": 1,
+    "plan": "물리 공격력 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70000882,
+    "TargetItemID": 34000453,
+    "TargetItemCount": 1,
+    "plan": "마법 공격력 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70000882,
+    "TargetItemID": 34000456,
+    "TargetItemCount": 1,
+    "plan": "명중도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70000883,
+    "TargetItemID": 34000454,
+    "TargetItemCount": 1,
+    "plan": "물리 방어력 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70000883,
+    "TargetItemID": 34000459,
+    "TargetItemCount": 1,
+    "plan": "방패방어도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70000883,
+    "TargetItemID": 34000457,
+    "TargetItemCount": 1,
+    "plan": "회피도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70000884,
+    "TargetItemID": 34000458,
+    "TargetItemCount": 1,
+    "plan": "치명도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70000884,
+    "TargetItemID": 34000460,
+    "TargetItemCount": 1,
+    "plan": "활력도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70000884,
+    "TargetItemID": 34000461,
+    "TargetItemCount": 1,
+    "plan": "가속도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70000885,
+    "TargetItemID": 34000462,
+    "TargetItemCount": 1,
+    "plan": "PVP 피해율 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70000885,
+    "TargetItemID": 34000463,
+    "TargetItemCount": 1,
+    "plan": "PVP 방어율 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70000950,
+    "TargetItemID": 12711620,
+    "TargetItemCount": 1,
+    "plan": "RO1 Merchant Style(Man)"
+  },
+  {
+    "ID": 70000950,
+    "TargetItemID": 12711624,
+    "TargetItemCount": 1,
+    "plan": "RO1 Merchant Style(Woman)"
+  },
+  {
+    "ID": 70001053,
+    "TargetItemID": 70000002,
+    "TargetItemCount": 1,
+    "plan": "스피넬 보라포션 (무제한)"
+  },
+  {
+    "ID": 70001053,
+    "TargetItemID": 70000003,
+    "TargetItemCount": 1,
+    "plan": "스피넬 수리키트 (무제한)"
+  },
+  {
+    "ID": 70001068,
+    "TargetItemID": 34000450,
+    "TargetItemCount": 1,
+    "plan": "최대 HP 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70001068,
+    "TargetItemID": 34000451,
+    "TargetItemCount": 1,
+    "plan": "최대 SP 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70001069,
+    "TargetItemID": 34000452,
+    "TargetItemCount": 1,
+    "plan": "물리 공격력 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70001069,
+    "TargetItemID": 34000453,
+    "TargetItemCount": 1,
+    "plan": "마법 공격력 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70001069,
+    "TargetItemID": 34000456,
+    "TargetItemCount": 1,
+    "plan": "명중도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70001070,
+    "TargetItemID": 34000454,
+    "TargetItemCount": 1,
+    "plan": "물리 방어력 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70001070,
+    "TargetItemID": 34000459,
+    "TargetItemCount": 1,
+    "plan": "방패방어도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70001070,
+    "TargetItemID": 34000457,
+    "TargetItemCount": 1,
+    "plan": "회피도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70001071,
+    "TargetItemID": 34000458,
+    "TargetItemCount": 1,
+    "plan": "치명도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70001071,
+    "TargetItemID": 34000460,
+    "TargetItemCount": 1,
+    "plan": "활력도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70001071,
+    "TargetItemID": 34000461,
+    "TargetItemCount": 1,
+    "plan": "가속도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70001072,
+    "TargetItemID": 34000462,
+    "TargetItemCount": 1,
+    "plan": "PVP 피해율 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70001072,
+    "TargetItemID": 34000463,
+    "TargetItemCount": 1,
+    "plan": "PVP 방어율 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60000797,
+    "TargetItemID": 60000735,
+    "TargetItemCount": 1,
+    "plan": "럭키 파우더"
+  },
+  {
+    "ID": 60000797,
+    "TargetItemID": 60000734,
+    "TargetItemCount": 1,
+    "plan": "블레싱 파우더"
+  },
+  {
+    "ID": 60000798,
+    "TargetItemID": 60000115,
+    "TargetItemCount": 1,
+    "plan": "탐험가의 빨간 패키지"
+  },
+  {
+    "ID": 60000798,
+    "TargetItemID": 60000077,
+    "TargetItemCount": 1,
+    "plan": "탐험가의 비약 패키지"
+  },
+  {
+    "ID": 60000799,
+    "TargetItemID": 60000047,
+    "TargetItemCount": 1,
+    "plan": "스킬 초기화 주문서"
+  },
+  {
+    "ID": 60000799,
+    "TargetItemID": 60000048,
+    "TargetItemCount": 1,
+    "plan": "능력치 초기화 주문서"
+  },
+  {
+    "ID": 60000852,
+    "TargetItemID": 12711190,
+    "TargetItemCount": 1,
+    "plan": "고양이 집사의 귀 (무제한)"
+  },
+  {
+    "ID": 60000852,
+    "TargetItemID": 12711196,
+    "TargetItemCount": 1,
+    "plan": "토끼 귀 (무제한)"
+  },
+  {
+    "ID": 60000878,
+    "TargetItemID": 60000876,
+    "TargetItemCount": 1,
+    "plan": "카나리아 액세서리 교환권"
+  },
+  {
+    "ID": 60000878,
+    "TargetItemID": 60000877,
+    "TargetItemCount": 1,
+    "plan": "카나리아 액세서리 교환권"
+  },
+  {
+    "ID": 60000879,
+    "TargetItemID": 60000874,
+    "TargetItemCount": 1,
+    "plan": "카나리아 코스튬 교환권"
+  },
+  {
+    "ID": 60000879,
+    "TargetItemID": 60000875,
+    "TargetItemCount": 1,
+    "plan": "카나리아 코스튬 교환권"
+  },
+  {
+    "ID": 70002008,
+    "TargetItemID": 34000450,
+    "TargetItemCount": 1,
+    "plan": "최대 HP 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70002008,
+    "TargetItemID": 34000451,
+    "TargetItemCount": 1,
+    "plan": "최대 SP 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70002009,
+    "TargetItemID": 34000452,
+    "TargetItemCount": 1,
+    "plan": "물리 공격력 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70002009,
+    "TargetItemID": 34000453,
+    "TargetItemCount": 1,
+    "plan": "마법 공격력 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70002009,
+    "TargetItemID": 34000456,
+    "TargetItemCount": 1,
+    "plan": "명중도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70002010,
+    "TargetItemID": 34000454,
+    "TargetItemCount": 1,
+    "plan": "물리 방어력 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70002010,
+    "TargetItemID": 34000459,
+    "TargetItemCount": 1,
+    "plan": "방패방어도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70002010,
+    "TargetItemID": 34000457,
+    "TargetItemCount": 1,
+    "plan": "회피도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70002011,
+    "TargetItemID": 34000458,
+    "TargetItemCount": 1,
+    "plan": "치명도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70002011,
+    "TargetItemID": 34000460,
+    "TargetItemCount": 1,
+    "plan": "활력도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70002011,
+    "TargetItemID": 34000461,
+    "TargetItemCount": 1,
+    "plan": "가속도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70002012,
+    "TargetItemID": 34000462,
+    "TargetItemCount": 1,
+    "plan": "PVP 피해율 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70002012,
+    "TargetItemID": 34000463,
+    "TargetItemCount": 1,
+    "plan": "PVP 방어율 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005004,
+    "TargetItemID": 34000450,
+    "TargetItemCount": 1,
+    "plan": "최대 HP 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005004,
+    "TargetItemID": 34000451,
+    "TargetItemCount": 1,
+    "plan": "최대 SP 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005005,
+    "TargetItemID": 34000450,
+    "TargetItemCount": 1,
+    "plan": "최대 HP 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005005,
+    "TargetItemID": 34000451,
+    "TargetItemCount": 1,
+    "plan": "최대 SP 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005006,
+    "TargetItemID": 34000452,
+    "TargetItemCount": 1,
+    "plan": "물리 공격력 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005006,
+    "TargetItemID": 34000453,
+    "TargetItemCount": 1,
+    "plan": "마법 공격력 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005006,
+    "TargetItemID": 34000456,
+    "TargetItemCount": 1,
+    "plan": "명중도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005007,
+    "TargetItemID": 34000452,
+    "TargetItemCount": 1,
+    "plan": "물리 공격력 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005007,
+    "TargetItemID": 34000453,
+    "TargetItemCount": 1,
+    "plan": "마법 공격력 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005007,
+    "TargetItemID": 34000456,
+    "TargetItemCount": 1,
+    "plan": "명중도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005008,
+    "TargetItemID": 34000454,
+    "TargetItemCount": 1,
+    "plan": "물리 방어력 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005008,
+    "TargetItemID": 34000459,
+    "TargetItemCount": 1,
+    "plan": "방패방어도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005008,
+    "TargetItemID": 34000457,
+    "TargetItemCount": 1,
+    "plan": "회피도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005009,
+    "TargetItemID": 34000454,
+    "TargetItemCount": 1,
+    "plan": "물리 방어력 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005009,
+    "TargetItemID": 34000459,
+    "TargetItemCount": 1,
+    "plan": "방패방어도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005009,
+    "TargetItemID": 34000457,
+    "TargetItemCount": 1,
+    "plan": "회피도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005010,
+    "TargetItemID": 34000458,
+    "TargetItemCount": 1,
+    "plan": "치명도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005010,
+    "TargetItemID": 34000460,
+    "TargetItemCount": 1,
+    "plan": "활력도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005010,
+    "TargetItemID": 34000461,
+    "TargetItemCount": 1,
+    "plan": "가속도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005011,
+    "TargetItemID": 34000458,
+    "TargetItemCount": 1,
+    "plan": "치명도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005011,
+    "TargetItemID": 34000460,
+    "TargetItemCount": 1,
+    "plan": "활력도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005011,
+    "TargetItemID": 34000461,
+    "TargetItemCount": 1,
+    "plan": "가속도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005012,
+    "TargetItemID": 34000462,
+    "TargetItemCount": 1,
+    "plan": "PVP 피해율 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005012,
+    "TargetItemID": 34000463,
+    "TargetItemCount": 1,
+    "plan": "PVP 방어율 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005013,
+    "TargetItemID": 34000462,
+    "TargetItemCount": 1,
+    "plan": "PVP 피해율 연마 보조제 (100%)"
+  },
+  {
+    "ID": 70005013,
+    "TargetItemID": 34000463,
+    "TargetItemCount": 1,
+    "plan": "PVP 방어율 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002166,
+    "TargetItemID": 34000462,
+    "TargetItemCount": 1,
+    "plan": "PVP 피해율 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002166,
+    "TargetItemID": 34000463,
+    "TargetItemCount": 1,
+    "plan": "PVP 방어율 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002167,
+    "TargetItemID": 34000462,
+    "TargetItemCount": 1,
+    "plan": "PVP 피해율 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002167,
+    "TargetItemID": 34000463,
+    "TargetItemCount": 1,
+    "plan": "PVP 방어율 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002158,
+    "TargetItemID": 34000450,
+    "TargetItemCount": 1,
+    "plan": "최대 HP 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002158,
+    "TargetItemID": 34000451,
+    "TargetItemCount": 1,
+    "plan": "최대 SP 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002159,
+    "TargetItemID": 34000450,
+    "TargetItemCount": 1,
+    "plan": "최대 HP 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002159,
+    "TargetItemID": 34000451,
+    "TargetItemCount": 1,
+    "plan": "최대 SP 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002164,
+    "TargetItemID": 34000458,
+    "TargetItemCount": 1,
+    "plan": "치명도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002164,
+    "TargetItemID": 34000460,
+    "TargetItemCount": 1,
+    "plan": "활력도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002164,
+    "TargetItemID": 34000461,
+    "TargetItemCount": 1,
+    "plan": "가속도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002165,
+    "TargetItemID": 34000458,
+    "TargetItemCount": 1,
+    "plan": "치명도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002165,
+    "TargetItemID": 34000460,
+    "TargetItemCount": 1,
+    "plan": "활력도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002165,
+    "TargetItemID": 34000461,
+    "TargetItemCount": 1,
+    "plan": "가속도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002160,
+    "TargetItemID": 34000452,
+    "TargetItemCount": 1,
+    "plan": "물리 공격력 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002160,
+    "TargetItemID": 34000453,
+    "TargetItemCount": 1,
+    "plan": "마법 공격력 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002160,
+    "TargetItemID": 34000456,
+    "TargetItemCount": 1,
+    "plan": "명중도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002161,
+    "TargetItemID": 34000452,
+    "TargetItemCount": 1,
+    "plan": "물리 공격력 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002161,
+    "TargetItemID": 34000453,
+    "TargetItemCount": 1,
+    "plan": "마법 공격력 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002161,
+    "TargetItemID": 34000456,
+    "TargetItemCount": 1,
+    "plan": "명중도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002162,
+    "TargetItemID": 34000454,
+    "TargetItemCount": 1,
+    "plan": "물리 방어력 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002162,
+    "TargetItemID": 34000459,
+    "TargetItemCount": 1,
+    "plan": "방패방어도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002162,
+    "TargetItemID": 34000457,
+    "TargetItemCount": 1,
+    "plan": "회피도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002163,
+    "TargetItemID": 34000454,
+    "TargetItemCount": 1,
+    "plan": "물리 방어력 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002163,
+    "TargetItemID": 34000459,
+    "TargetItemCount": 1,
+    "plan": "방패방어도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002163,
+    "TargetItemID": 34000457,
+    "TargetItemCount": 1,
+    "plan": "회피도 연마 보조제 (100%)"
+  },
+  {
+    "ID": 60002130,
+    "TargetItemID": 70000002,
+    "TargetItemCount": 1,
+    "plan": "스피넬 보라포션 (무제한)"
+  },
+  {
+    "ID": 60002130,
+    "TargetItemID": 70000003,
+    "TargetItemCount": 1,
+    "plan": "스피넬 수리키트 (무제한)"
+  },
+  {
+    "ID": 60002131,
+    "TargetItemID": 70000002,
+    "TargetItemCount": 1,
+    "plan": "스피넬 보라포션 (무제한)"
+  },
+  {
+    "ID": 60002131,
+    "TargetItemID": 70000003,
+    "TargetItemCount": 1,
+    "plan": "스피넬 수리키트 (무제한)"
+  },
+  {
+    "ID": 99900005,
+    "TargetItemID": 99900006,
+    "TargetItemCount": 1,
+    "plan": "ROR Crossover Costume Box (M)"
+  },
+  {
+    "ID": 99900005,
+    "TargetItemID": 99900007,
+    "TargetItemCount": 1,
+    "plan": "ROR Crossover Costume Box (F)"
+  },
+  {
+    "ID": 34000476,
+    "TargetItemID": 34000477,
+    "TargetItemCount": 1,
+    "plan": "Santa Costume Package (M)"
+  },
+  {
+    "ID": 34000476,
+    "TargetItemID": 34000478,
+    "TargetItemCount": 1,
+    "plan": "Santa Costume Package (F)"
+  },
+  {
+    "ID": 99900016,
+    "TargetItemID": 99900020,
+    "TargetItemCount": 1,
+    "plan": "Epic Hooded Pajama Random Box"
+  },
+  {
+    "ID": 99900016,
+    "TargetItemID": 99900017,
+    "TargetItemCount": 1,
+    "plan": "Epic Poring Master Random Box"
+  },
+  {
+    "ID": 60002449,
+    "TargetItemID": 30000282,
+    "TargetItemCount": 1,
+    "plan": "Spinel Purple Potion"
+  },
+  {
+    "ID": 60002449,
+    "TargetItemID": 30000283,
+    "TargetItemCount": 1,
+    "plan": "Spinel Repair Kit"
+  }
+]

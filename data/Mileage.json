@@ -1,0 +1,27 @@
+[
+  {
+    "Mileage_ID": 1,
+    "Mileage_Type": 1,
+    "Item": 30000267
+  },
+  {
+    "Mileage_ID": 2,
+    "Mileage_Type": 1,
+    "Item": 30000268
+  },
+  {
+    "Mileage_ID": 3,
+    "Mileage_Type": 2,
+    "Item": 30000314
+  },
+  {
+    "Mileage_ID": 4,
+    "Mileage_Type": 2,
+    "Item": 30000313
+  },
+  {
+    "Mileage_ID": 5,
+    "Mileage_Type": 3,
+    "Item": 50001073
+  }
+]

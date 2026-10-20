@@ -1,0 +1,210 @@
+{
+ "_source": "Derived from the retail NPC engage-dialogue broadcasts.",
+ "_window_ms": 200,
+ "rows": [
+  {
+   "asset": 50003705,
+   "lineId": 500373421,
+   "engagements": 64,
+   "spoken": 64
+  },
+  {
+   "asset": 50003707,
+   "lineId": 500371126,
+   "engagements": 48,
+   "spoken": 48
+  },
+  {
+   "asset": 50003710,
+   "lineId": 500371003,
+   "engagements": 8,
+   "spoken": 5
+  },
+  {
+   "asset": 50003711,
+   "lineId": 500371103,
+   "engagements": 8,
+   "spoken": 5
+  },
+  {
+   "asset": 50003712,
+   "lineId": 500371203,
+   "engagements": 8,
+   "spoken": 5
+  },
+  {
+   "asset": 50003713,
+   "lineId": 500371312,
+   "engagements": 13,
+   "spoken": 10
+  },
+  {
+   "asset": 50003714,
+   "lineId": 500371419,
+   "engagements": 18,
+   "spoken": 12
+  },
+  {
+   "asset": 50003715,
+   "lineId": 500371516,
+   "engagements": 111,
+   "spoken": 64
+  },
+  {
+   "asset": 50003716,
+   "lineId": 500371616,
+   "engagements": 61,
+   "spoken": 40
+  },
+  {
+   "asset": 50003724,
+   "lineId": 500372415,
+   "engagements": 36,
+   "spoken": 25
+  },
+  {
+   "asset": 50003725,
+   "lineId": 500372515,
+   "engagements": 20,
+   "spoken": 16
+  },
+  {
+   "asset": 50003726,
+   "lineId": 500372615,
+   "engagements": 37,
+   "spoken": 19
+  },
+  {
+   "asset": 50003730,
+   "lineId": 500373016,
+   "engagements": 80,
+   "spoken": 63
+  },
+  {
+   "asset": 50003735,
+   "lineId": 500373511,
+   "engagements": 27,
+   "spoken": 11
+  },
+  {
+   "asset": 50003736,
+   "lineId": 500373615,
+   "engagements": 56,
+   "spoken": 25
+  },
+  {
+   "asset": 50003739,
+   "lineId": 500373914,
+   "engagements": 9,
+   "spoken": 9
+  },
+  {
+   "asset": 50003741,
+   "lineId": 500374119,
+   "engagements": 148,
+   "spoken": 129
+  },
+  {
+   "asset": 50003743,
+   "lineId": 500374314,
+   "engagements": 5,
+   "spoken": 4
+  },
+  {
+   "asset": 50003744,
+   "lineId": 500374414,
+   "engagements": 5,
+   "spoken": 3
+  },
+  {
+   "asset": 50003745,
+   "lineId": 500374514,
+   "engagements": 6,
+   "spoken": 4
+  },
+  {
+   "asset": 50003746,
+   "lineId": 500374612,
+   "engagements": 158,
+   "spoken": 130
+  },
+  {
+   "asset": 50003747,
+   "lineId": 500374712,
+   "engagements": 146,
+   "spoken": 123
+  },
+  {
+   "asset": 50003748,
+   "lineId": 500374812,
+   "engagements": 147,
+   "spoken": 125
+  },
+  {
+   "asset": 50003751,
+   "lineId": 500375112,
+   "engagements": 53,
+   "spoken": 29
+  },
+  {
+   "asset": 50003752,
+   "lineId": 500375212,
+   "engagements": 81,
+   "spoken": 51
+  },
+  {
+   "asset": 50003766,
+   "lineId": 500371022,
+   "engagements": 33,
+   "spoken": 33
+  },
+  {
+   "asset": 50003777,
+   "lineId": 500377702,
+   "engagements": 6,
+   "spoken": 3
+  },
+  {
+   "asset": 50004110,
+   "lineId": 500377702,
+   "engagements": 5,
+   "spoken": 5
+  },
+  {
+   "asset": 50004117,
+   "lineId": 500411703,
+   "engagements": 5,
+   "spoken": 5
+  },
+  {
+   "asset": 50004118,
+   "lineId": 500411803,
+   "engagements": 5,
+   "spoken": 5
+  },
+  {
+   "asset": 50004148,
+   "lineId": 500376203,
+   "engagements": 43,
+   "spoken": 19
+  },
+  {
+   "asset": 50004149,
+   "lineId": 500376303,
+   "engagements": 55,
+   "spoken": 53
+  },
+  {
+   "asset": 50004150,
+   "lineId": 500376403,
+   "engagements": 53,
+   "spoken": 51
+  },
+  {
+   "asset": 50004151,
+   "lineId": 500370601,
+   "engagements": 52,
+   "spoken": 51
+  }
+ ]
+}

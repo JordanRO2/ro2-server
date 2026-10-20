@@ -1,0 +1,80 @@
+[
+  {
+    "Union_Group_ID": 1,
+    "String_Union_Group_ID": 10639,
+    "Union_Group_Name": "룬 미드가츠 왕국",
+    "Union_ID": 101,
+    "String_Union_ID": 10640,
+    "Union_Name": "프론테라 기사단",
+    "Union_Emblem_Path": ".\\UI\\icon\\Emblem\\Emblem_Union_PronteraKnightage_01.dds",
+    "String_Union_Info_ID": 3900000001,
+    "Reward_Union_Point_ID": 36800148,
+    "NationEnable": 511,
+    "UpdateCode": "기본"
+  },
+  {
+    "Union_Group_ID": 1,
+    "String_Union_Group_ID": 10639,
+    "Union_Group_Name": "룬 미드가츠 왕국",
+    "Union_ID": 102,
+    "String_Union_ID": 10641,
+    "Union_Name": "오딘 정교회",
+    "Union_Emblem_Path": ".\\UI\\icon\\Emblem\\Emblem_Union_OdinOrthodoxy_01.dds",
+    "String_Union_Info_ID": 3900000002,
+    "Reward_Union_Point_ID": 36800149,
+    "NationEnable": 511,
+    "UpdateCode": "기본"
+  },
+  {
+    "Union_Group_ID": 1,
+    "String_Union_Group_ID": 10639,
+    "Union_Group_Name": "룬 미드가츠 왕국",
+    "Union_ID": 103,
+    "String_Union_ID": 10642,
+    "Union_Name": "칠흑 그림자",
+    "Union_Emblem_Path": ".\\UI\\icon\\Emblem\\Emblem_Union_PitchdarknessShadow_01.dds",
+    "String_Union_Info_ID": 3900000003,
+    "Reward_Union_Point_ID": 36800150,
+    "NationEnable": 511,
+    "UpdateCode": "기본"
+  },
+  {
+    "Union_Group_ID": 1,
+    "String_Union_Group_ID": 10639,
+    "Union_Group_Name": "룬 미드가츠 왕국",
+    "Union_ID": 104,
+    "String_Union_ID": 10643,
+    "Union_Name": "헌터",
+    "Union_Emblem_Path": ".\\UI\\icon\\Emblem\\Emblem_Union_Hunter_01.dds",
+    "String_Union_Info_ID": 3900000004,
+    "Reward_Union_Point_ID": 36800151,
+    "NationEnable": 511,
+    "UpdateCode": "기본"
+  },
+  {
+    "Union_Group_ID": 1,
+    "String_Union_Group_ID": 10639,
+    "Union_Group_Name": "룬 미드가츠 왕국",
+    "Union_ID": 105,
+    "String_Union_ID": 10644,
+    "Union_Name": "마법 아카데미",
+    "Union_Emblem_Path": ".\\UI\\icon\\Emblem\\Emblem_Union_MagicAcademy_01.dds",
+    "String_Union_Info_ID": 3900000005,
+    "Reward_Union_Point_ID": 36800152,
+    "NationEnable": 511,
+    "UpdateCode": "기본"
+  },
+  {
+    "Union_Group_ID": 1,
+    "String_Union_Group_ID": 10639,
+    "Union_Group_Name": "룬 미드가츠 왕국",
+    "Union_ID": 106,
+    "String_Union_ID": 10645,
+    "Union_Name": "알베르타 상인 연합",
+    "Union_Emblem_Path": ".\\UI\\icon\\Emblem\\Emblem_Union_AlbertaMerchantAlliance_01.dds",
+    "String_Union_Info_ID": 3900000006,
+    "Reward_Union_Point_ID": 36800153,
+    "NationEnable": 511,
+    "UpdateCode": "기본"
+  }
+]

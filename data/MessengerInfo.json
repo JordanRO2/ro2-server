@@ -1,0 +1,26 @@
+[
+  {
+    "Chat_Type": 12,
+    "ChannelName": "Public",
+    "AutoJoin": 1,
+    "ColorR": 247,
+    "ColorG": 148,
+    "ColorB": 29
+  },
+  {
+    "Chat_Type": 13,
+    "ChannelName": "Trade",
+    "AutoJoin": 1,
+    "ColorR": 240,
+    "ColorG": 170,
+    "ColorB": 70
+  },
+  {
+    "Chat_Type": 14,
+    "ChannelName": "FindParty",
+    "AutoJoin": 1,
+    "ColorR": 140,
+    "ColorG": 170,
+    "ColorB": 250
+  }
+]

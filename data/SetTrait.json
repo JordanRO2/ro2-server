@@ -1,0 +1,4069 @@
+[
+  {
+    "Set_ID": 1,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 1.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 1.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 2,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 1.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 2,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 2.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 3,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 1.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 3,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 1.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 4,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 1.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 4,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 2.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 5,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 1.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 5,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 1.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 6,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 2.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 6,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 2.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 6,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 2.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 7,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 2.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 7,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 2.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 7,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 2.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 8,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 2.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 8,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 2.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 8,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 2.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 9,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 2.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 9,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 2.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 9,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 2.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 10,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 2.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 10,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 2.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 10,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 2.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 11,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 2.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 11,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 2.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 11,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 2.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 12,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 3.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 12,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 3.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 12,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 3.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 12,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 4.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 13,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 3.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 13,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 3.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 13,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 3.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 13,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 1.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 14,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 3.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 14,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 3.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 14,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 3.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 14,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 15,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 3.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 15,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 3.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 15,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 3.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 15,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 1.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 16,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 3.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 16,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 3.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 16,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 3.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 16,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 17,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 4.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 17,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 4.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 17,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 4.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 17,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 2.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 18,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 4.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 18,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 4.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 18,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 4.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 18,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 2.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 19,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 4.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 19,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 4.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 19,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 4.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 19,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 20,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 4.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 20,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 4.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 20,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 4.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 20,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 2.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 21,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 4.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 21,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 4.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 21,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 4.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 21,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 7.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 22,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 22,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 18.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 22,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 18.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 22,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 26.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 23,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 23,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 18.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 23,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 18.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 23,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 26.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 24,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 24,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 19.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 24,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 19.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 24,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 28.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 25,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 25,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 18.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 25,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 18.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 25,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 26.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 26,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 26,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 24.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 26,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 24.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 26,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 35.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 27,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 27,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 25.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 27,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 25.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 27,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 37.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 28,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 23.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 28,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 23.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 28,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 33.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 29,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 23.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 29,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 23.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 29,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 33.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 30,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 23.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 30,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 23.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 30,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 33.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1001,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1001,
+    "Trait_Kind": 2,
+    "Trait_Type": 58,
+    "Value": 300.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1001,
+    "Trait_Kind": 2,
+    "Trait_Type": 60,
+    "Value": 500.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1001,
+    "Trait_Kind": 2,
+    "Trait_Type": 62,
+    "Value": 1000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1001,
+    "Trait_Kind": 2,
+    "Trait_Type": 63,
+    "Value": 1000.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1002,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1002,
+    "Trait_Kind": 2,
+    "Trait_Type": 58,
+    "Value": 300.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1002,
+    "Trait_Kind": 2,
+    "Trait_Type": 59,
+    "Value": 1000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1002,
+    "Trait_Kind": 2,
+    "Trait_Type": 60,
+    "Value": 500.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1002,
+    "Trait_Kind": 2,
+    "Trait_Type": 61,
+    "Value": 1000.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1003,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1003,
+    "Trait_Kind": 2,
+    "Trait_Type": 58,
+    "Value": 300.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1003,
+    "Trait_Kind": 2,
+    "Trait_Type": 60,
+    "Value": 500.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1003,
+    "Trait_Kind": 2,
+    "Trait_Type": 62,
+    "Value": 1000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1003,
+    "Trait_Kind": 2,
+    "Trait_Type": 63,
+    "Value": 1000.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1004,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1004,
+    "Trait_Kind": 2,
+    "Trait_Type": 58,
+    "Value": 300.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1004,
+    "Trait_Kind": 2,
+    "Trait_Type": 60,
+    "Value": 500.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1004,
+    "Trait_Kind": 2,
+    "Trait_Type": 62,
+    "Value": 1000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1004,
+    "Trait_Kind": 2,
+    "Trait_Type": 63,
+    "Value": 1000.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1005,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1005,
+    "Trait_Kind": 2,
+    "Trait_Type": 58,
+    "Value": 300.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1005,
+    "Trait_Kind": 2,
+    "Trait_Type": 60,
+    "Value": 500.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1005,
+    "Trait_Kind": 2,
+    "Trait_Type": 62,
+    "Value": 1000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1005,
+    "Trait_Kind": 2,
+    "Trait_Type": 63,
+    "Value": 1000.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1006,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1006,
+    "Trait_Kind": 2,
+    "Trait_Type": 58,
+    "Value": 300.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1006,
+    "Trait_Kind": 2,
+    "Trait_Type": 59,
+    "Value": 1000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1006,
+    "Trait_Kind": 2,
+    "Trait_Type": 60,
+    "Value": 500.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1006,
+    "Trait_Kind": 2,
+    "Trait_Type": 61,
+    "Value": 1000.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1007,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1007,
+    "Trait_Kind": 2,
+    "Trait_Type": 58,
+    "Value": 300.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1007,
+    "Trait_Kind": 2,
+    "Trait_Type": 60,
+    "Value": 500.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1007,
+    "Trait_Kind": 2,
+    "Trait_Type": 62,
+    "Value": 1000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1007,
+    "Trait_Kind": 2,
+    "Trait_Type": 63,
+    "Value": 1000.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1008,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1008,
+    "Trait_Kind": 2,
+    "Trait_Type": 58,
+    "Value": 300.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1008,
+    "Trait_Kind": 2,
+    "Trait_Type": 59,
+    "Value": 1000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1008,
+    "Trait_Kind": 2,
+    "Trait_Type": 60,
+    "Value": 500.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1008,
+    "Trait_Kind": 2,
+    "Trait_Type": 61,
+    "Value": 1000.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1009,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1009,
+    "Trait_Kind": 2,
+    "Trait_Type": 58,
+    "Value": 300.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1009,
+    "Trait_Kind": 2,
+    "Trait_Type": 60,
+    "Value": 500.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1009,
+    "Trait_Kind": 2,
+    "Trait_Type": 62,
+    "Value": 1000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1009,
+    "Trait_Kind": 2,
+    "Trait_Type": 63,
+    "Value": 1000.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1010,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1010,
+    "Trait_Kind": 2,
+    "Trait_Type": 58,
+    "Value": 300.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1010,
+    "Trait_Kind": 2,
+    "Trait_Type": 60,
+    "Value": 500.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1010,
+    "Trait_Kind": 2,
+    "Trait_Type": 62,
+    "Value": 1000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1010,
+    "Trait_Kind": 2,
+    "Trait_Type": 63,
+    "Value": 1000.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1011,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1011,
+    "Trait_Kind": 2,
+    "Trait_Type": 58,
+    "Value": 300.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1011,
+    "Trait_Kind": 2,
+    "Trait_Type": 60,
+    "Value": 500.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1011,
+    "Trait_Kind": 2,
+    "Trait_Type": 62,
+    "Value": 1000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1011,
+    "Trait_Kind": 2,
+    "Trait_Type": 63,
+    "Value": 1000.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1012,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1012,
+    "Trait_Kind": 2,
+    "Trait_Type": 58,
+    "Value": 300.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1012,
+    "Trait_Kind": 2,
+    "Trait_Type": 59,
+    "Value": 1000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1012,
+    "Trait_Kind": 2,
+    "Trait_Type": 60,
+    "Value": 500.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1012,
+    "Trait_Kind": 2,
+    "Trait_Type": 61,
+    "Value": 1000.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1013,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1013,
+    "Trait_Kind": 2,
+    "Trait_Type": 58,
+    "Value": 300.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1013,
+    "Trait_Kind": 2,
+    "Trait_Type": 60,
+    "Value": 500.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1013,
+    "Trait_Kind": 2,
+    "Trait_Type": 62,
+    "Value": 1000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1013,
+    "Trait_Kind": 2,
+    "Trait_Type": 63,
+    "Value": 1000.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1014,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1014,
+    "Trait_Kind": 2,
+    "Trait_Type": 58,
+    "Value": 300.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1014,
+    "Trait_Kind": 2,
+    "Trait_Type": 60,
+    "Value": 500.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1014,
+    "Trait_Kind": 2,
+    "Trait_Type": 62,
+    "Value": 1000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1014,
+    "Trait_Kind": 2,
+    "Trait_Type": 63,
+    "Value": 1000.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1015,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1015,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1015,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1015,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1015,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1016,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1016,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1016,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1016,
+    "Trait_Kind": 2,
+    "Trait_Type": 35,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1016,
+    "Trait_Kind": 2,
+    "Trait_Type": 36,
+    "Value": 500.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1017,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1017,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1017,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1017,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1017,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1018,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1018,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1018,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1018,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1018,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1019,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1019,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1019,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1019,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1019,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1020,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1020,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1020,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1020,
+    "Trait_Kind": 2,
+    "Trait_Type": 35,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1020,
+    "Trait_Kind": 2,
+    "Trait_Type": 36,
+    "Value": 500.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1021,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1021,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1021,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1021,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1021,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1022,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1022,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1022,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1022,
+    "Trait_Kind": 2,
+    "Trait_Type": 35,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1022,
+    "Trait_Kind": 2,
+    "Trait_Type": 36,
+    "Value": 500.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1023,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1023,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1023,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1023,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1023,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1024,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1024,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1024,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1024,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1024,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1025,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1025,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1025,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1025,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1025,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1026,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1026,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1026,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1026,
+    "Trait_Kind": 2,
+    "Trait_Type": 35,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1026,
+    "Trait_Kind": 2,
+    "Trait_Type": 36,
+    "Value": 500.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1027,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1027,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1027,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1027,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1027,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1028,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1028,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1028,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1028,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1028,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1029,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1029,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1029,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1029,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1029,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1030,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1030,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1030,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1030,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1030,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1030,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1031,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1031,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1031,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1031,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1031,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1032,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1032,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1032,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1032,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1032,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1033,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1033,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1033,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1033,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1033,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1034,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1034,
+    "Trait_Kind": 2,
+    "Trait_Type": 58,
+    "Value": 300.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1034,
+    "Trait_Kind": 2,
+    "Trait_Type": 60,
+    "Value": 500.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1034,
+    "Trait_Kind": 2,
+    "Trait_Type": 62,
+    "Value": 1000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1034,
+    "Trait_Kind": 2,
+    "Trait_Type": 63,
+    "Value": 1000.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1035,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1035,
+    "Trait_Kind": 2,
+    "Trait_Type": 58,
+    "Value": 300.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1035,
+    "Trait_Kind": 2,
+    "Trait_Type": 60,
+    "Value": 500.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1035,
+    "Trait_Kind": 2,
+    "Trait_Type": 62,
+    "Value": 1000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1035,
+    "Trait_Kind": 2,
+    "Trait_Type": 63,
+    "Value": 1000.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1036,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1036,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1036,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1036,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1036,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1037,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1037,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 5
+  },
+  {
+    "Set_ID": 1037,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 4
+  },
+  {
+    "Set_ID": 1037,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1037,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1038,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 6.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1038,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 6.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1038,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 6.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1038,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 6.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1038,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 6.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1039,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 6.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1039,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 6.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1039,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 6.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1039,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 6.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1039,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 6.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1040,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1040,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1040,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1040,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1040,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1040,
+    "Trait_Kind": 2,
+    "Trait_Type": 78,
+    "Value": 3000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1041,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1041,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1041,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1041,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1041,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1042,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1042,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1042,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1042,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1042,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1043,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1043,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1043,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1043,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1043,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1044,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1044,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1044,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1044,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1044,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1045,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1045,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1045,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1045,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1045,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1045,
+    "Trait_Kind": 2,
+    "Trait_Type": 78,
+    "Value": 3000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1046,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 3.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1046,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 3.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1046,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 3.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1046,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 3.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1046,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 3.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1047,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 3.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1047,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 3.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1047,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 3.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1047,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 3.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1047,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 3.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1048,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1048,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1048,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1048,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1049,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1049,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1049,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1049,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1050,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1050,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1050,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1050,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1050,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1051,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1051,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1051,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1051,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1051,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1051,
+    "Trait_Kind": 2,
+    "Trait_Type": 78,
+    "Value": 3000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1052,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1052,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1052,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1052,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1053,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1053,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1053,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1053,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1054,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1054,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1054,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1054,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1055,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1055,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1055,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1055,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1055,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1055,
+    "Trait_Kind": 2,
+    "Trait_Type": 78,
+    "Value": 3000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1056,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1056,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1056,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1056,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1056,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1057,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1057,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1057,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1057,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1057,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1058,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1058,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1058,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1058,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1058,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1059,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1059,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1059,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1059,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1078,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1078,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1078,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1078,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1079,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1079,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1079,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1079,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1082,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1082,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1082,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1082,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1083,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1083,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1083,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1083,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1090,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1090,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1090,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1090,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1090,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1091,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1091,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1091,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1091,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1091,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1091,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1092,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1092,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1092,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1092,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1092,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 10.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1092,
+    "Trait_Kind": 2,
+    "Trait_Type": 78,
+    "Value": 3000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1093,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1093,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1093,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1093,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1093,
+    "Trait_Kind": 2,
+    "Trait_Type": 78,
+    "Value": 3000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1094,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1094,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1094,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1094,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1095,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1095,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1095,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1095,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1095,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1095,
+    "Trait_Kind": 1,
+    "Trait_Type": 23,
+    "Value": 50.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1095,
+    "Trait_Kind": 1,
+    "Trait_Type": 25,
+    "Value": 50.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1095,
+    "Trait_Kind": 2,
+    "Trait_Type": 23,
+    "Value": 1250.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1095,
+    "Trait_Kind": 2,
+    "Trait_Type": 25,
+    "Value": 1250.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1095,
+    "Trait_Kind": 2,
+    "Trait_Type": 78,
+    "Value": 3000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1096,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1096,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1096,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1096,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1097,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1097,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1097,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1097,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1097,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1097,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1098,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1098,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1098,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1098,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1098,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1098,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1099,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1099,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1099,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1099,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1099,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 1099,
+    "Trait_Kind": 1,
+    "Trait_Type": 23,
+    "Value": 50.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1099,
+    "Trait_Kind": 1,
+    "Trait_Type": 25,
+    "Value": 50.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1099,
+    "Trait_Kind": 2,
+    "Trait_Type": 23,
+    "Value": 1250.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1099,
+    "Trait_Kind": 2,
+    "Trait_Type": 25,
+    "Value": 1250.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1099,
+    "Trait_Kind": 2,
+    "Trait_Type": 78,
+    "Value": 3000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1100,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1100,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1100,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1100,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1100,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1101,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1101,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1101,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1101,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1101,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1101,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1102,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1102,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1102,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1102,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1103,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1103,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 14.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1103,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 14.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1103,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 14.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1103,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 14.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1103,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 14.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1103,
+    "Trait_Kind": 2,
+    "Trait_Type": 78,
+    "Value": 1000.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1104,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1104,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 14.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1104,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 14.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1104,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 14.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1104,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 14.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1104,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 14.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1104,
+    "Trait_Kind": 2,
+    "Trait_Type": 78,
+    "Value": 1000.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1105,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1105,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1105,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1105,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1105,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1106,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1106,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1106,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1106,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1106,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1107,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1107,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1107,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1107,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1107,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1108,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1108,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1108,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1108,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1108,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1109,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1109,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1109,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1109,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1109,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1110,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 1110,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 14.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1110,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 14.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1110,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 14.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1110,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 14.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1110,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 14.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1110,
+    "Trait_Kind": 2,
+    "Trait_Type": 78,
+    "Value": 1000.0,
+    "Count": 1
+  },
+  {
+    "Set_ID": 1111,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1111,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1111,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1111,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1111,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1112,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1112,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1112,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1112,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1112,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1113,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 7.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1113,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 7.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1113,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 7.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1113,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 7.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1113,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 7.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1113,
+    "Trait_Kind": 1,
+    "Trait_Type": 23,
+    "Value": 50.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1113,
+    "Trait_Kind": 1,
+    "Trait_Type": 25,
+    "Value": 50.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1113,
+    "Trait_Kind": 2,
+    "Trait_Type": 23,
+    "Value": 1250.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1113,
+    "Trait_Kind": 2,
+    "Trait_Type": 25,
+    "Value": 1250.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1113,
+    "Trait_Kind": 2,
+    "Trait_Type": 78,
+    "Value": 3000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1114,
+    "Trait_Kind": 2,
+    "Trait_Type": 33,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1114,
+    "Trait_Kind": 2,
+    "Trait_Type": 34,
+    "Value": 400.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1114,
+    "Trait_Kind": 2,
+    "Trait_Type": 56,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 1114,
+    "Trait_Kind": 2,
+    "Trait_Type": 57,
+    "Value": 200.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 5003,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 5003,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 5003,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 5003,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 5003,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 5003,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 3
+  },
+  {
+    "Set_ID": 5003,
+    "Trait_Kind": 1,
+    "Trait_Type": 23,
+    "Value": 50.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 5003,
+    "Trait_Kind": 1,
+    "Trait_Type": 25,
+    "Value": 50.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 5003,
+    "Trait_Kind": 2,
+    "Trait_Type": 23,
+    "Value": 1250.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 5003,
+    "Trait_Kind": 2,
+    "Trait_Type": 25,
+    "Value": 1250.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 5003,
+    "Trait_Kind": 2,
+    "Trait_Type": 78,
+    "Value": 3000.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 5004,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 5004,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 5004,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 5004,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 5004,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 5004,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 5005,
+    "Trait_Kind": 0,
+    "Trait_Type": 0,
+    "Value": 0.0,
+    "Count": 0
+  },
+  {
+    "Set_ID": 5005,
+    "Trait_Kind": 1,
+    "Trait_Type": 0,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 5005,
+    "Trait_Kind": 1,
+    "Trait_Type": 1,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 5005,
+    "Trait_Kind": 1,
+    "Trait_Type": 2,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 5005,
+    "Trait_Kind": 1,
+    "Trait_Type": 3,
+    "Value": 5.0,
+    "Count": 2
+  },
+  {
+    "Set_ID": 5005,
+    "Trait_Kind": 1,
+    "Trait_Type": 4,
+    "Value": 5.0,
+    "Count": 2
+  }
+]

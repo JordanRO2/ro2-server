@@ -1,0 +1,218 @@
+[
+  {
+    "ID": 1,
+    "Level": 1,
+    "FileName": "./cursor/Normal.ani",
+    "Desc": "이동 커서"
+  },
+  {
+    "ID": 2,
+    "Level": 1,
+    "FileName": "./cursor/Attack.ani",
+    "Desc": "적 커서"
+  },
+  {
+    "ID": 3,
+    "Level": 1,
+    "FileName": "./cursor/Action.ani",
+    "Desc": "줍기 커서"
+  },
+  {
+    "ID": 4,
+    "Level": 1,
+    "FileName": "./cursor/Dialogue.ani",
+    "Desc": "대화 커서"
+  },
+  {
+    "ID": 5,
+    "Level": 1,
+    "FileName": "./cursor/Resize.ani",
+    "Desc": "리사이즈 커서"
+  },
+  {
+    "ID": 6,
+    "Level": 1,
+    "FileName": "./cursor/Gear_1.ani",
+    "Desc": "손모양 커서"
+  },
+  {
+    "ID": 7,
+    "Level": 1,
+    "FileName": "./cursor/Repair_tool_1.ani",
+    "Desc": "망치모양 커서"
+  },
+  {
+    "ID": 8,
+    "Level": 1,
+    "FileName": "./cursor/Attack02.ani",
+    "Desc": "원거리양호"
+  },
+  {
+    "ID": 9,
+    "Level": 1,
+    "FileName": "./cursor/Attack02_Unable.ani",
+    "Desc": "원거리불가"
+  },
+  {
+    "ID": 10,
+    "Level": 1,
+    "FileName": "./cursor/DyeSelColor.ani",
+    "Desc": "아이템 염색색 추출 아이콘"
+  },
+  {
+    "ID": 11,
+    "Level": 1,
+    "FileName": "./cursor/FuncObject_Control_Gather_01.ani",
+    "Desc": "채집 커서"
+  },
+  {
+    "ID": 12,
+    "Level": 1,
+    "FileName": "./cursor/FuncObject_Control_Mining_01.ani",
+    "Desc": "채광 커서"
+  },
+  {
+    "ID": 13,
+    "Level": 1,
+    "FileName": "./cursor/FuncObject_Control_CuttingMeat_01.ani",
+    "Desc": "시체수집"
+  },
+  {
+    "ID": 14,
+    "Level": 1,
+    "FileName": "./cursor/Waiting.ani",
+    "Desc": "로딩중"
+  },
+  {
+    "ID": 15,
+    "Level": 1,
+    "FileName": "./cursor/typing.ani",
+    "Desc": "키입력"
+  },
+  {
+    "ID": 16,
+    "Level": 10,
+    "FileName": "./cursor/Empty.ani",
+    "Desc": "지형 선택 스킬 사용시"
+  },
+  {
+    "ID": 17,
+    "Level": 1,
+    "FileName": "./cursor/BreakDown.ani",
+    "Desc": "분해커서"
+  },
+  {
+    "ID": 18,
+    "Level": 1,
+    "FileName": "./cursor/Masic.ani",
+    "Desc": "마법부여커서"
+  },
+  {
+    "ID": 19,
+    "Level": 1,
+    "FileName": "./cursor/Drill_1.ani",
+    "Desc": "룬뚫기"
+  },
+  {
+    "ID": 20,
+    "Level": 1,
+    "FileName": "./cursor/Gear_1.ani",
+    "Desc": "룬박기"
+  },
+  {
+    "ID": 21,
+    "Level": 1,
+    "FileName": "./cursor/DyeItemSel.ani",
+    "Desc": "염색 아이템 선택 커서"
+  },
+  {
+    "ID": 22,
+    "Level": 1,
+    "FileName": "./cursor/Cash_Extend.ani",
+    "Desc": "기간연장 커서"
+  },
+  {
+    "ID": 23,
+    "Level": 1,
+    "FileName": "./cursor/BagSlotExtend.ani",
+    "Desc": "가방슬롯확장 커서"
+  },
+  {
+    "ID": 24,
+    "Level": 1,
+    "FileName": "./cursor/Change_1.ani",
+    "Desc": "룬강화"
+  },
+  {
+    "ID": 25,
+    "Level": 1,
+    "FileName": "./cursor/Hammer.ani",
+    "Desc": "판도라망치"
+  },
+  {
+    "ID": 26,
+    "Level": 1,
+    "FileName": "./cursor/Key.ani",
+    "Desc": "판도라열쇠"
+  },
+  {
+    "ID": 27,
+    "Level": 1,
+    "FileName": "./cursor/Costume_Reinforce.ani",
+    "Desc": "테마의상강화"
+  },
+  {
+    "ID": 28,
+    "Level": 1,
+    "FileName": "./cursor/Seal.ani",
+    "Desc": "봉인"
+  },
+  {
+    "ID": 29,
+    "Level": 1,
+    "FileName": "./cursor/Enchant_None.ani",
+    "Desc": "무속성 부여"
+  },
+  {
+    "ID": 30,
+    "Level": 1,
+    "FileName": "./cursor/Enchant_Firmament.ani",
+    "Desc": "천공 부여"
+  },
+  {
+    "ID": 31,
+    "Level": 1,
+    "FileName": "./cursor/Enchant_Earth.ani",
+    "Desc": "대지 부여"
+  },
+  {
+    "ID": 32,
+    "Level": 1,
+    "FileName": "./cursor/Enchant_Life.ani",
+    "Desc": "생명 부여"
+  },
+  {
+    "ID": 33,
+    "Level": 1,
+    "FileName": "./cursor/Enchant_Ruin.ani",
+    "Desc": "파멸 부여"
+  },
+  {
+    "ID": 34,
+    "Level": 1,
+    "FileName": "./cursor/Enchant_Thought.ani",
+    "Desc": "사념 부여"
+  },
+  {
+    "ID": 35,
+    "Level": 1,
+    "FileName": "./cursor/Reset.ani",
+    "Desc": "연마초기화"
+  },
+  {
+    "ID": 36,
+    "Level": 1,
+    "FileName": "./cursor/twinkle.ani",
+    "Desc": "공물"
+  }
+]

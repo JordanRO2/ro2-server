@@ -1,0 +1,5447 @@
+[
+  {
+    "Theme_Type": 100011,
+    "Type": 16,
+    "Item_Socket_0": 12711611,
+    "Item_Socket_1": 12711612,
+    "Item_Socket_2": 12711613,
+    "Item_Socket_3": 12711614,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100011,
+    "Type": 16,
+    "Item_Socket_0": 12711736,
+    "Item_Socket_1": 12711737,
+    "Item_Socket_2": 12711738,
+    "Item_Socket_3": 12711739,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100012,
+    "Type": 16,
+    "Item_Socket_0": 12711615,
+    "Item_Socket_1": 12711616,
+    "Item_Socket_2": 12711617,
+    "Item_Socket_3": 12711618,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100012,
+    "Type": 16,
+    "Item_Socket_0": 12711740,
+    "Item_Socket_1": 12711741,
+    "Item_Socket_2": 12711742,
+    "Item_Socket_3": 12711743,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100021,
+    "Type": 16,
+    "Item_Socket_0": 12711635,
+    "Item_Socket_1": 12711636,
+    "Item_Socket_2": 12711637,
+    "Item_Socket_3": 12711638,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100021,
+    "Type": 16,
+    "Item_Socket_0": 12711760,
+    "Item_Socket_1": 12711761,
+    "Item_Socket_2": 12711762,
+    "Item_Socket_3": 12711763,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100031,
+    "Type": 16,
+    "Item_Socket_0": 12711627,
+    "Item_Socket_1": 12711628,
+    "Item_Socket_2": 12711629,
+    "Item_Socket_3": 12711630,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100031,
+    "Type": 16,
+    "Item_Socket_0": 12711752,
+    "Item_Socket_1": 12711753,
+    "Item_Socket_2": 12711754,
+    "Item_Socket_3": 12711755,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100032,
+    "Type": 16,
+    "Item_Socket_0": 12711631,
+    "Item_Socket_1": 12711632,
+    "Item_Socket_2": 12711633,
+    "Item_Socket_3": 12711634,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100032,
+    "Type": 16,
+    "Item_Socket_0": 12711756,
+    "Item_Socket_1": 12711757,
+    "Item_Socket_2": 12711758,
+    "Item_Socket_3": 12711759,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100042,
+    "Type": 16,
+    "Item_Socket_0": 12711639,
+    "Item_Socket_1": 12711640,
+    "Item_Socket_2": 12711641,
+    "Item_Socket_3": 12711642,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100042,
+    "Type": 16,
+    "Item_Socket_0": 12711764,
+    "Item_Socket_1": 12711765,
+    "Item_Socket_2": 12711766,
+    "Item_Socket_3": 12711767,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100051,
+    "Type": 16,
+    "Item_Socket_0": 12711603,
+    "Item_Socket_1": 12711604,
+    "Item_Socket_2": 12711605,
+    "Item_Socket_3": 12711606,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100051,
+    "Type": 16,
+    "Item_Socket_0": 12711728,
+    "Item_Socket_1": 12711729,
+    "Item_Socket_2": 12711730,
+    "Item_Socket_3": 12711731,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100052,
+    "Type": 16,
+    "Item_Socket_0": 12711607,
+    "Item_Socket_1": 12711608,
+    "Item_Socket_2": 12711609,
+    "Item_Socket_3": 12711610,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100052,
+    "Type": 16,
+    "Item_Socket_0": 12711732,
+    "Item_Socket_1": 12711733,
+    "Item_Socket_2": 12711734,
+    "Item_Socket_3": 12711735,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100061,
+    "Type": 16,
+    "Item_Socket_0": 12711619,
+    "Item_Socket_1": 12711620,
+    "Item_Socket_2": 12711621,
+    "Item_Socket_3": 12711622,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100061,
+    "Type": 16,
+    "Item_Socket_0": 12711744,
+    "Item_Socket_1": 12711745,
+    "Item_Socket_2": 12711746,
+    "Item_Socket_3": 12711747,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100062,
+    "Type": 16,
+    "Item_Socket_0": 12711623,
+    "Item_Socket_1": 12711624,
+    "Item_Socket_2": 12711625,
+    "Item_Socket_3": 12711626,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100062,
+    "Type": 16,
+    "Item_Socket_0": 12711748,
+    "Item_Socket_1": 12711749,
+    "Item_Socket_2": 12711750,
+    "Item_Socket_3": 12711751,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100071,
+    "Type": 16,
+    "Item_Socket_0": 12711587,
+    "Item_Socket_1": 12711588,
+    "Item_Socket_2": 12711589,
+    "Item_Socket_3": 12711590,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100071,
+    "Type": 16,
+    "Item_Socket_0": 12711712,
+    "Item_Socket_1": 12711713,
+    "Item_Socket_2": 12711714,
+    "Item_Socket_3": 12711715,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100072,
+    "Type": 16,
+    "Item_Socket_0": 12711591,
+    "Item_Socket_1": 12711592,
+    "Item_Socket_2": 12711593,
+    "Item_Socket_3": 12711594,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100072,
+    "Type": 16,
+    "Item_Socket_0": 12711716,
+    "Item_Socket_1": 12711717,
+    "Item_Socket_2": 12711718,
+    "Item_Socket_3": 12711719,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100081,
+    "Type": 16,
+    "Item_Socket_0": 12711595,
+    "Item_Socket_1": 12711596,
+    "Item_Socket_2": 12711597,
+    "Item_Socket_3": 12711598,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100081,
+    "Type": 16,
+    "Item_Socket_0": 12711720,
+    "Item_Socket_1": 12711721,
+    "Item_Socket_2": 12711722,
+    "Item_Socket_3": 12711723,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100082,
+    "Type": 16,
+    "Item_Socket_0": 12711599,
+    "Item_Socket_1": 12711600,
+    "Item_Socket_2": 12711601,
+    "Item_Socket_3": 12711602,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100082,
+    "Type": 16,
+    "Item_Socket_0": 12711724,
+    "Item_Socket_1": 12711725,
+    "Item_Socket_2": 12711726,
+    "Item_Socket_3": 12711727,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100091,
+    "Type": 16,
+    "Item_Socket_0": 12711579,
+    "Item_Socket_1": 12711580,
+    "Item_Socket_2": 12711581,
+    "Item_Socket_3": 12711582,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100091,
+    "Type": 16,
+    "Item_Socket_0": 12711704,
+    "Item_Socket_1": 12711705,
+    "Item_Socket_2": 12711706,
+    "Item_Socket_3": 12711707,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100092,
+    "Type": 16,
+    "Item_Socket_0": 12711583,
+    "Item_Socket_1": 12711584,
+    "Item_Socket_2": 12711585,
+    "Item_Socket_3": 12711586,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100092,
+    "Type": 16,
+    "Item_Socket_0": 12711708,
+    "Item_Socket_1": 12711709,
+    "Item_Socket_2": 12711710,
+    "Item_Socket_3": 12711711,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100101,
+    "Type": 16,
+    "Item_Socket_0": 12711092,
+    "Item_Socket_1": 12711156,
+    "Item_Socket_2": 12711212,
+    "Item_Socket_3": 12711268,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100102,
+    "Type": 16,
+    "Item_Socket_0": 12711105,
+    "Item_Socket_1": 12711169,
+    "Item_Socket_2": 12711225,
+    "Item_Socket_3": 12711281,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100111,
+    "Type": 16,
+    "Item_Socket_0": 12711091,
+    "Item_Socket_1": 12711155,
+    "Item_Socket_2": 12711211,
+    "Item_Socket_3": 12711267,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100112,
+    "Type": 16,
+    "Item_Socket_0": 12711097,
+    "Item_Socket_1": 12711161,
+    "Item_Socket_2": 12711217,
+    "Item_Socket_3": 12711273,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100121,
+    "Type": 16,
+    "Item_Socket_0": 12711093,
+    "Item_Socket_1": 12711157,
+    "Item_Socket_2": 12711213,
+    "Item_Socket_3": 12711269,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100122,
+    "Type": 16,
+    "Item_Socket_0": 12711098,
+    "Item_Socket_1": 12711162,
+    "Item_Socket_2": 12711218,
+    "Item_Socket_3": 12711274,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100131,
+    "Type": 16,
+    "Item_Socket_0": 12711088,
+    "Item_Socket_1": 12711152,
+    "Item_Socket_2": 12711208,
+    "Item_Socket_3": 12711264,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100132,
+    "Type": 16,
+    "Item_Socket_0": 12711102,
+    "Item_Socket_1": 12711166,
+    "Item_Socket_2": 12711222,
+    "Item_Socket_3": 12711278,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100151,
+    "Type": 16,
+    "Item_Socket_0": 12711095,
+    "Item_Socket_1": 12711159,
+    "Item_Socket_2": 12711215,
+    "Item_Socket_3": 12711271,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100152,
+    "Type": 16,
+    "Item_Socket_0": 12711094,
+    "Item_Socket_1": 12711158,
+    "Item_Socket_2": 12711214,
+    "Item_Socket_3": 12711270,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100163,
+    "Type": 16,
+    "Item_Socket_0": 60000451,
+    "Item_Socket_1": 60000452,
+    "Item_Socket_2": 60000453,
+    "Item_Socket_3": 60000454,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100171,
+    "Type": 16,
+    "Item_Socket_0": 70000635,
+    "Item_Socket_1": 70000636,
+    "Item_Socket_2": 70000637,
+    "Item_Socket_3": 70000638,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100172,
+    "Type": 16,
+    "Item_Socket_0": 70000639,
+    "Item_Socket_1": 70000640,
+    "Item_Socket_2": 70000641,
+    "Item_Socket_3": 70000642,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100180,
+    "Type": 16,
+    "Item_Socket_0": 12711113,
+    "Item_Socket_1": 12711177,
+    "Item_Socket_2": 12711233,
+    "Item_Socket_3": 12711289,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100183,
+    "Type": 16,
+    "Item_Socket_0": 12711342,
+    "Item_Socket_1": 12711370,
+    "Item_Socket_2": 12711018,
+    "Item_Socket_3": 12711398,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100191,
+    "Type": 16,
+    "Item_Socket_0": 12711556,
+    "Item_Socket_1": 12711484,
+    "Item_Socket_2": 12711496,
+    "Item_Socket_3": 12711508,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100192,
+    "Type": 16,
+    "Item_Socket_0": 12711550,
+    "Item_Socket_1": 12711562,
+    "Item_Socket_2": 12711490,
+    "Item_Socket_3": 12711502,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100201,
+    "Type": 16,
+    "Item_Socket_0": 12711085,
+    "Item_Socket_1": 12711149,
+    "Item_Socket_2": 12711205,
+    "Item_Socket_3": 12711261,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100205,
+    "Type": 16,
+    "Item_Socket_0": 12711099,
+    "Item_Socket_1": 12711163,
+    "Item_Socket_2": 12711219,
+    "Item_Socket_3": 12711275,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100213,
+    "Type": 16,
+    "Item_Socket_0": 60000447,
+    "Item_Socket_1": 60000448,
+    "Item_Socket_2": 60000449,
+    "Item_Socket_3": 60000450,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100220,
+    "Type": 16,
+    "Item_Socket_0": 12711116,
+    "Item_Socket_1": 12711180,
+    "Item_Socket_2": 12711236,
+    "Item_Socket_3": 12711292,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100221,
+    "Type": 16,
+    "Item_Socket_0": 12711573,
+    "Item_Socket_1": 12711574,
+    "Item_Socket_2": 12711520,
+    "Item_Socket_3": 12711521,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100222,
+    "Type": 16,
+    "Item_Socket_0": 12711571,
+    "Item_Socket_1": 12711572,
+    "Item_Socket_2": 12711516,
+    "Item_Socket_3": 12711517,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100231,
+    "Type": 16,
+    "Item_Socket_0": 12711106,
+    "Item_Socket_1": 12711170,
+    "Item_Socket_2": 12711226,
+    "Item_Socket_3": 12711282,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100232,
+    "Type": 16,
+    "Item_Socket_0": 12711117,
+    "Item_Socket_1": 12711181,
+    "Item_Socket_2": 12711237,
+    "Item_Socket_3": 12711293,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100241,
+    "Type": 16,
+    "Item_Socket_0": 12711087,
+    "Item_Socket_1": 12711151,
+    "Item_Socket_2": 12711207,
+    "Item_Socket_3": 12711263,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100242,
+    "Type": 16,
+    "Item_Socket_0": 12711101,
+    "Item_Socket_1": 12711165,
+    "Item_Socket_2": 12711221,
+    "Item_Socket_3": 12711277,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100250,
+    "Type": 16,
+    "Item_Socket_0": 12711118,
+    "Item_Socket_1": 12711182,
+    "Item_Socket_2": 12711238,
+    "Item_Socket_3": 12711294,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100261,
+    "Type": 16,
+    "Item_Socket_0": 70000508,
+    "Item_Socket_1": 70000509,
+    "Item_Socket_2": 70000510,
+    "Item_Socket_3": 70000511,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100262,
+    "Type": 16,
+    "Item_Socket_0": 70000512,
+    "Item_Socket_1": 70000513,
+    "Item_Socket_2": 70000514,
+    "Item_Socket_3": 70000515,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100271,
+    "Type": 16,
+    "Item_Socket_0": 12711115,
+    "Item_Socket_1": 12711179,
+    "Item_Socket_2": 12711235,
+    "Item_Socket_3": 12711291,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100272,
+    "Type": 16,
+    "Item_Socket_0": 12711114,
+    "Item_Socket_1": 12711178,
+    "Item_Socket_2": 12711234,
+    "Item_Socket_3": 12711290,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100281,
+    "Type": 16,
+    "Item_Socket_0": 12711558,
+    "Item_Socket_1": 12711486,
+    "Item_Socket_2": 12711498,
+    "Item_Socket_3": 12711510,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100282,
+    "Type": 16,
+    "Item_Socket_0": 12711552,
+    "Item_Socket_1": 12711564,
+    "Item_Socket_2": 12711492,
+    "Item_Socket_3": 12711504,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100291,
+    "Type": 16,
+    "Item_Socket_0": 12710694,
+    "Item_Socket_1": 12710695,
+    "Item_Socket_2": 12710696,
+    "Item_Socket_3": 12710697,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100292,
+    "Type": 16,
+    "Item_Socket_0": 12710698,
+    "Item_Socket_1": 12710699,
+    "Item_Socket_2": 12710700,
+    "Item_Socket_3": 12710701,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100301,
+    "Type": 16,
+    "Item_Socket_0": 12711446,
+    "Item_Socket_1": 12711447,
+    "Item_Socket_2": 12710022,
+    "Item_Socket_3": 12711448,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100302,
+    "Type": 16,
+    "Item_Socket_0": 12711449,
+    "Item_Socket_1": 12711450,
+    "Item_Socket_2": 12710033,
+    "Item_Socket_3": 12711451,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100311,
+    "Type": 16,
+    "Item_Socket_0": 70000578,
+    "Item_Socket_1": 70000579,
+    "Item_Socket_2": 70000580,
+    "Item_Socket_3": 70000581,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100312,
+    "Type": 16,
+    "Item_Socket_0": 70000582,
+    "Item_Socket_1": 70000583,
+    "Item_Socket_2": 70000584,
+    "Item_Socket_3": 70000585,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100321,
+    "Type": 16,
+    "Item_Socket_0": 12711686,
+    "Item_Socket_1": 12711687,
+    "Item_Socket_2": 12711688,
+    "Item_Socket_3": 12711689,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100322,
+    "Type": 16,
+    "Item_Socket_0": 12711690,
+    "Item_Socket_1": 12711691,
+    "Item_Socket_2": 12711692,
+    "Item_Socket_3": 12711693,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100333,
+    "Type": 16,
+    "Item_Socket_0": 60000443,
+    "Item_Socket_1": 60000444,
+    "Item_Socket_2": 60000445,
+    "Item_Socket_3": 60000446,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100340,
+    "Type": 16,
+    "Item_Socket_0": 70000534,
+    "Item_Socket_1": 70000535,
+    "Item_Socket_2": 70000536,
+    "Item_Socket_3": 70000537,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100341,
+    "Type": 16,
+    "Item_Socket_0": 12711104,
+    "Item_Socket_1": 12711168,
+    "Item_Socket_2": 12711224,
+    "Item_Socket_3": 12711280,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100342,
+    "Type": 16,
+    "Item_Socket_0": 12711090,
+    "Item_Socket_1": 12711154,
+    "Item_Socket_2": 12711210,
+    "Item_Socket_3": 12711266,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100350,
+    "Type": 16,
+    "Item_Socket_0": 12711110,
+    "Item_Socket_1": 12711174,
+    "Item_Socket_2": 12711230,
+    "Item_Socket_3": 12711286,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100361,
+    "Type": 16,
+    "Item_Socket_0": 12711560,
+    "Item_Socket_1": 12711488,
+    "Item_Socket_2": 12711500,
+    "Item_Socket_3": 12711512,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100362,
+    "Type": 16,
+    "Item_Socket_0": 12711554,
+    "Item_Socket_1": 12711482,
+    "Item_Socket_2": 12711494,
+    "Item_Socket_3": 12711506,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100373,
+    "Type": 16,
+    "Item_Socket_0": 60000459,
+    "Item_Socket_1": 60000460,
+    "Item_Socket_2": 60000461,
+    "Item_Socket_3": 60000462,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100383,
+    "Type": 16,
+    "Item_Socket_0": 60000455,
+    "Item_Socket_1": 60000456,
+    "Item_Socket_2": 60000457,
+    "Item_Socket_3": 60000458,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100391,
+    "Type": 16,
+    "Item_Socket_0": 70000242,
+    "Item_Socket_1": 70000244,
+    "Item_Socket_2": 70000246,
+    "Item_Socket_3": 70000248,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100392,
+    "Type": 16,
+    "Item_Socket_0": 70000241,
+    "Item_Socket_1": 70000243,
+    "Item_Socket_2": 70000245,
+    "Item_Socket_3": 70000247,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100400,
+    "Type": 16,
+    "Item_Socket_0": 12711111,
+    "Item_Socket_1": 12711175,
+    "Item_Socket_2": 12711231,
+    "Item_Socket_3": 12711287,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100414,
+    "Type": 16,
+    "Item_Socket_0": 12711530,
+    "Item_Socket_1": 12711575,
+    "Item_Socket_2": 12711534,
+    "Item_Socket_3": 12711536,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100415,
+    "Type": 16,
+    "Item_Socket_0": 12711531,
+    "Item_Socket_1": 12711576,
+    "Item_Socket_2": 12711535,
+    "Item_Socket_3": 12711537,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100420,
+    "Type": 16,
+    "Item_Socket_0": 12711109,
+    "Item_Socket_1": 12711173,
+    "Item_Socket_2": 12711229,
+    "Item_Socket_3": 12711285,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100441,
+    "Type": 16,
+    "Item_Socket_0": 12711086,
+    "Item_Socket_1": 12711150,
+    "Item_Socket_2": 12711206,
+    "Item_Socket_3": 12711262,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100442,
+    "Type": 16,
+    "Item_Socket_0": 12711100,
+    "Item_Socket_1": 12711164,
+    "Item_Socket_2": 12711220,
+    "Item_Socket_3": 12711276,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100451,
+    "Type": 16,
+    "Item_Socket_0": 12721349,
+    "Item_Socket_1": 12721350,
+    "Item_Socket_2": 12721351,
+    "Item_Socket_3": 12721352,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100452,
+    "Type": 16,
+    "Item_Socket_0": 12721353,
+    "Item_Socket_1": 12721354,
+    "Item_Socket_2": 12721355,
+    "Item_Socket_3": 12721356,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100463,
+    "Type": 16,
+    "Item_Socket_0": 60000439,
+    "Item_Socket_1": 60000440,
+    "Item_Socket_2": 60000441,
+    "Item_Socket_3": 60000442,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100470,
+    "Type": 16,
+    "Item_Socket_0": 12711682,
+    "Item_Socket_1": 12711683,
+    "Item_Socket_2": 12711684,
+    "Item_Socket_3": 12711685,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100471,
+    "Type": 16,
+    "Item_Socket_0": 12711089,
+    "Item_Socket_1": 12711153,
+    "Item_Socket_2": 12711209,
+    "Item_Socket_3": 12711265,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100472,
+    "Type": 16,
+    "Item_Socket_0": 12711103,
+    "Item_Socket_1": 12711167,
+    "Item_Socket_2": 12711223,
+    "Item_Socket_3": 12711279,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100481,
+    "Type": 16,
+    "Item_Socket_0": 70000586,
+    "Item_Socket_1": 70000587,
+    "Item_Socket_2": 70000588,
+    "Item_Socket_3": 70000589,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100482,
+    "Type": 16,
+    "Item_Socket_0": 70000590,
+    "Item_Socket_1": 70000591,
+    "Item_Socket_2": 70000592,
+    "Item_Socket_3": 70000593,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100500,
+    "Type": 16,
+    "Item_Socket_0": 12711414,
+    "Item_Socket_1": 12711415,
+    "Item_Socket_2": 12711410,
+    "Item_Socket_3": 12711416,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100501,
+    "Type": 16,
+    "Item_Socket_0": 70000500,
+    "Item_Socket_1": 70000501,
+    "Item_Socket_2": 70000502,
+    "Item_Socket_3": 70000503,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100502,
+    "Type": 16,
+    "Item_Socket_0": 70000504,
+    "Item_Socket_1": 70000505,
+    "Item_Socket_2": 70000506,
+    "Item_Socket_3": 70000507,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100521,
+    "Type": 16,
+    "Item_Socket_0": 12711107,
+    "Item_Socket_1": 12711171,
+    "Item_Socket_2": 12711227,
+    "Item_Socket_3": 12711283,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100522,
+    "Type": 16,
+    "Item_Socket_0": 12711108,
+    "Item_Socket_1": 12711172,
+    "Item_Socket_2": 12711228,
+    "Item_Socket_3": 12711284,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100531,
+    "Type": 16,
+    "Item_Socket_0": 70000570,
+    "Item_Socket_1": 70000571,
+    "Item_Socket_2": 70000572,
+    "Item_Socket_3": 70000573,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100532,
+    "Type": 16,
+    "Item_Socket_0": 70000574,
+    "Item_Socket_1": 70000575,
+    "Item_Socket_2": 70000576,
+    "Item_Socket_3": 70000577,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100541,
+    "Type": 16,
+    "Item_Socket_0": 70000662,
+    "Item_Socket_1": 70000663,
+    "Item_Socket_2": 70000664,
+    "Item_Socket_3": 70000665,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100542,
+    "Type": 16,
+    "Item_Socket_0": 70000666,
+    "Item_Socket_1": 70000667,
+    "Item_Socket_2": 70000668,
+    "Item_Socket_3": 70000669,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100551,
+    "Type": 16,
+    "Item_Socket_0": 70000670,
+    "Item_Socket_1": 70000671,
+    "Item_Socket_2": 70000672,
+    "Item_Socket_3": 70000673,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100552,
+    "Type": 16,
+    "Item_Socket_0": 70000674,
+    "Item_Socket_1": 70000675,
+    "Item_Socket_2": 70000676,
+    "Item_Socket_3": 70000677,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100561,
+    "Type": 16,
+    "Item_Socket_0": 70000689,
+    "Item_Socket_1": 70000690,
+    "Item_Socket_2": 70000691,
+    "Item_Socket_3": 70000692,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100572,
+    "Type": 16,
+    "Item_Socket_0": 70000693,
+    "Item_Socket_1": 70000694,
+    "Item_Socket_2": 70000695,
+    "Item_Socket_3": 70000696,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100581,
+    "Type": 16,
+    "Item_Socket_0": 70000697,
+    "Item_Socket_1": 70000698,
+    "Item_Socket_2": 70000699,
+    "Item_Socket_3": 70000700,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100592,
+    "Type": 16,
+    "Item_Socket_0": 70000701,
+    "Item_Socket_1": 70000702,
+    "Item_Socket_2": 70000703,
+    "Item_Socket_3": 70000704,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100600,
+    "Type": 16,
+    "Item_Socket_0": 70000705,
+    "Item_Socket_1": 70000706,
+    "Item_Socket_2": 70000707,
+    "Item_Socket_3": 70000708,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100611,
+    "Type": 16,
+    "Item_Socket_0": 70000709,
+    "Item_Socket_1": 70000710,
+    "Item_Socket_2": 70000711,
+    "Item_Socket_3": 70000712,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100622,
+    "Type": 16,
+    "Item_Socket_0": 70000713,
+    "Item_Socket_1": 70000714,
+    "Item_Socket_2": 70000715,
+    "Item_Socket_3": 70000716,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100630,
+    "Type": 16,
+    "Item_Socket_0": 70000717,
+    "Item_Socket_1": 70000718,
+    "Item_Socket_2": 70000719,
+    "Item_Socket_3": 70000720,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100641,
+    "Type": 16,
+    "Item_Socket_0": 70000721,
+    "Item_Socket_1": 70000722,
+    "Item_Socket_2": 70000723,
+    "Item_Socket_3": 70000724,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100652,
+    "Type": 16,
+    "Item_Socket_0": 70000725,
+    "Item_Socket_1": 70000726,
+    "Item_Socket_2": 70000727,
+    "Item_Socket_3": 70000728,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100660,
+    "Type": 16,
+    "Item_Socket_0": 70000729,
+    "Item_Socket_1": 70000730,
+    "Item_Socket_2": 70000731,
+    "Item_Socket_3": 70000732,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100670,
+    "Type": 16,
+    "Item_Socket_0": 70000733,
+    "Item_Socket_1": 70000734,
+    "Item_Socket_2": 70000735,
+    "Item_Socket_3": 70000736,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100681,
+    "Type": 16,
+    "Item_Socket_0": 70000840,
+    "Item_Socket_1": 70000841,
+    "Item_Socket_2": 70000842,
+    "Item_Socket_3": 70000843,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100682,
+    "Type": 16,
+    "Item_Socket_0": 70000844,
+    "Item_Socket_1": 70000845,
+    "Item_Socket_2": 70000846,
+    "Item_Socket_3": 70000847,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100691,
+    "Type": 16,
+    "Item_Socket_0": 70000911,
+    "Item_Socket_1": 70000912,
+    "Item_Socket_2": 70000913,
+    "Item_Socket_3": 70000914,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100692,
+    "Type": 16,
+    "Item_Socket_0": 70000915,
+    "Item_Socket_1": 70000916,
+    "Item_Socket_2": 70000917,
+    "Item_Socket_3": 70000918,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100701,
+    "Type": 16,
+    "Item_Socket_0": 70000952,
+    "Item_Socket_1": 70000953,
+    "Item_Socket_2": 70000954,
+    "Item_Socket_3": 70000955,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100702,
+    "Type": 16,
+    "Item_Socket_0": 70000956,
+    "Item_Socket_1": 70000957,
+    "Item_Socket_2": 70000958,
+    "Item_Socket_3": 70000959,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100711,
+    "Type": 16,
+    "Item_Socket_0": 70000995,
+    "Item_Socket_1": 70000996,
+    "Item_Socket_2": 70000997,
+    "Item_Socket_3": 70000998,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100712,
+    "Type": 16,
+    "Item_Socket_0": 70000999,
+    "Item_Socket_1": 70001000,
+    "Item_Socket_2": 70001001,
+    "Item_Socket_3": 70001002,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100721,
+    "Type": 16,
+    "Item_Socket_0": 70001011,
+    "Item_Socket_1": 70001012,
+    "Item_Socket_2": 70001013,
+    "Item_Socket_3": 70001014,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100722,
+    "Type": 16,
+    "Item_Socket_0": 70001015,
+    "Item_Socket_1": 70001016,
+    "Item_Socket_2": 70001017,
+    "Item_Socket_3": 70001018,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100731,
+    "Type": 16,
+    "Item_Socket_0": 70001027,
+    "Item_Socket_1": 70001028,
+    "Item_Socket_2": 70001029,
+    "Item_Socket_3": 70001030,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100732,
+    "Type": 16,
+    "Item_Socket_0": 70001031,
+    "Item_Socket_1": 70001032,
+    "Item_Socket_2": 70001033,
+    "Item_Socket_3": 70001034,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100741,
+    "Type": 16,
+    "Item_Socket_0": 60000530,
+    "Item_Socket_1": 60000531,
+    "Item_Socket_2": 60000532,
+    "Item_Socket_3": 60000533,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100742,
+    "Type": 16,
+    "Item_Socket_0": 60000534,
+    "Item_Socket_1": 60000535,
+    "Item_Socket_2": 60000536,
+    "Item_Socket_3": 60000537,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100750,
+    "Type": 16,
+    "Item_Socket_0": 70001231,
+    "Item_Socket_1": 70001232,
+    "Item_Socket_2": 70001233,
+    "Item_Socket_3": 70001234,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100761,
+    "Type": 16,
+    "Item_Socket_0": 70001235,
+    "Item_Socket_1": 70001236,
+    "Item_Socket_2": 70001237,
+    "Item_Socket_3": 70001238,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100762,
+    "Type": 16,
+    "Item_Socket_0": 70001239,
+    "Item_Socket_1": 70001240,
+    "Item_Socket_2": 70001241,
+    "Item_Socket_3": 70001242,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100771,
+    "Type": 16,
+    "Item_Socket_0": 70001243,
+    "Item_Socket_1": 70001244,
+    "Item_Socket_2": 70001245,
+    "Item_Socket_3": 70001246,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100772,
+    "Type": 16,
+    "Item_Socket_0": 70001247,
+    "Item_Socket_1": 70001248,
+    "Item_Socket_2": 70001249,
+    "Item_Socket_3": 70001250,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100780,
+    "Type": 16,
+    "Item_Socket_0": 70001251,
+    "Item_Socket_1": 70001252,
+    "Item_Socket_2": 70001253,
+    "Item_Socket_3": 70001254,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100791,
+    "Type": 16,
+    "Item_Socket_0": 70001255,
+    "Item_Socket_1": 70001256,
+    "Item_Socket_2": 70001257,
+    "Item_Socket_3": 70001258,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100792,
+    "Type": 16,
+    "Item_Socket_0": 70001259,
+    "Item_Socket_1": 70001260,
+    "Item_Socket_2": 70001261,
+    "Item_Socket_3": 70001262,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100801,
+    "Type": 16,
+    "Item_Socket_0": 70001347,
+    "Item_Socket_1": 70001348,
+    "Item_Socket_2": 70001349,
+    "Item_Socket_3": 70001350,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100801,
+    "Type": 16,
+    "Item_Socket_0": 70003091,
+    "Item_Socket_1": 70003092,
+    "Item_Socket_2": 70003093,
+    "Item_Socket_3": 70003094,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100802,
+    "Type": 16,
+    "Item_Socket_0": 70001351,
+    "Item_Socket_1": 70001352,
+    "Item_Socket_2": 70001353,
+    "Item_Socket_3": 70001354,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100802,
+    "Type": 16,
+    "Item_Socket_0": 70003095,
+    "Item_Socket_1": 70003096,
+    "Item_Socket_2": 70003097,
+    "Item_Socket_3": 70003098,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100811,
+    "Type": 16,
+    "Item_Socket_0": 70001355,
+    "Item_Socket_1": 70001356,
+    "Item_Socket_2": 70001357,
+    "Item_Socket_3": 70001358,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100811,
+    "Type": 16,
+    "Item_Socket_0": 70003099,
+    "Item_Socket_1": 70003100,
+    "Item_Socket_2": 70003101,
+    "Item_Socket_3": 70003102,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100812,
+    "Type": 16,
+    "Item_Socket_0": 70001359,
+    "Item_Socket_1": 70001360,
+    "Item_Socket_2": 70001361,
+    "Item_Socket_3": 70001362,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100812,
+    "Type": 16,
+    "Item_Socket_0": 70003103,
+    "Item_Socket_1": 70003104,
+    "Item_Socket_2": 70003105,
+    "Item_Socket_3": 70003106,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100821,
+    "Type": 16,
+    "Item_Socket_0": 70001363,
+    "Item_Socket_1": 70001364,
+    "Item_Socket_2": 70001365,
+    "Item_Socket_3": 70001366,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100821,
+    "Type": 16,
+    "Item_Socket_0": 70003107,
+    "Item_Socket_1": 70003108,
+    "Item_Socket_2": 70003109,
+    "Item_Socket_3": 70003110,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100822,
+    "Type": 16,
+    "Item_Socket_0": 70001367,
+    "Item_Socket_1": 70001368,
+    "Item_Socket_2": 70001369,
+    "Item_Socket_3": 70001370,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100822,
+    "Type": 16,
+    "Item_Socket_0": 70003111,
+    "Item_Socket_1": 70003112,
+    "Item_Socket_2": 70003113,
+    "Item_Socket_3": 70003114,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100831,
+    "Type": 16,
+    "Item_Socket_0": 70001371,
+    "Item_Socket_1": 70001372,
+    "Item_Socket_2": 70001373,
+    "Item_Socket_3": 70001374,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100831,
+    "Type": 16,
+    "Item_Socket_0": 70003115,
+    "Item_Socket_1": 70003116,
+    "Item_Socket_2": 70003117,
+    "Item_Socket_3": 70003118,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100832,
+    "Type": 16,
+    "Item_Socket_0": 70001375,
+    "Item_Socket_1": 70001376,
+    "Item_Socket_2": 70001377,
+    "Item_Socket_3": 70001378,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100832,
+    "Type": 16,
+    "Item_Socket_0": 70003119,
+    "Item_Socket_1": 70003120,
+    "Item_Socket_2": 70003121,
+    "Item_Socket_3": 70003122,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100841,
+    "Type": 16,
+    "Item_Socket_0": 70001379,
+    "Item_Socket_1": 70001380,
+    "Item_Socket_2": 70001381,
+    "Item_Socket_3": 70001382,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100841,
+    "Type": 16,
+    "Item_Socket_0": 70003123,
+    "Item_Socket_1": 70003124,
+    "Item_Socket_2": 70003125,
+    "Item_Socket_3": 70003126,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100842,
+    "Type": 16,
+    "Item_Socket_0": 70001383,
+    "Item_Socket_1": 70001384,
+    "Item_Socket_2": 70001385,
+    "Item_Socket_3": 70001386,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100842,
+    "Type": 16,
+    "Item_Socket_0": 70003127,
+    "Item_Socket_1": 70003128,
+    "Item_Socket_2": 70003129,
+    "Item_Socket_3": 70003130,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100850,
+    "Type": 16,
+    "Item_Socket_0": 70001445,
+    "Item_Socket_1": 70001446,
+    "Item_Socket_2": 70001447,
+    "Item_Socket_3": 70001448,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100860,
+    "Type": 16,
+    "Item_Socket_0": 70001453,
+    "Item_Socket_1": 70001454,
+    "Item_Socket_2": 70001455,
+    "Item_Socket_3": 70001456,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100870,
+    "Type": 16,
+    "Item_Socket_0": 70001461,
+    "Item_Socket_1": 70001462,
+    "Item_Socket_2": 70001463,
+    "Item_Socket_3": 70001464,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100880,
+    "Type": 16,
+    "Item_Socket_0": 70001469,
+    "Item_Socket_1": 70001470,
+    "Item_Socket_2": 70001471,
+    "Item_Socket_3": 70001472,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100890,
+    "Type": 16,
+    "Item_Socket_0": 70001477,
+    "Item_Socket_1": 70001478,
+    "Item_Socket_2": 70001479,
+    "Item_Socket_3": 70001480,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100900,
+    "Type": 16,
+    "Item_Socket_0": 70001485,
+    "Item_Socket_1": 70001486,
+    "Item_Socket_2": 70001487,
+    "Item_Socket_3": 70001488,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100910,
+    "Type": 16,
+    "Item_Socket_0": 70001493,
+    "Item_Socket_1": 70001494,
+    "Item_Socket_2": 70001495,
+    "Item_Socket_3": 70001496,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100920,
+    "Type": 16,
+    "Item_Socket_0": 70001501,
+    "Item_Socket_1": 70001502,
+    "Item_Socket_2": 70001503,
+    "Item_Socket_3": 70001504,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100930,
+    "Type": 16,
+    "Item_Socket_0": 70001513,
+    "Item_Socket_1": 70001514,
+    "Item_Socket_2": 70001515,
+    "Item_Socket_3": 70001516,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100940,
+    "Type": 16,
+    "Item_Socket_0": 70001525,
+    "Item_Socket_1": 70001526,
+    "Item_Socket_2": 70001527,
+    "Item_Socket_3": 70001528,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100950,
+    "Type": 16,
+    "Item_Socket_0": 70001771,
+    "Item_Socket_1": 70001772,
+    "Item_Socket_2": 70001773,
+    "Item_Socket_3": 70001774,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100961,
+    "Type": 16,
+    "Item_Socket_0": 70001961,
+    "Item_Socket_1": 70001962,
+    "Item_Socket_2": 70001963,
+    "Item_Socket_3": 70001964,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100962,
+    "Type": 16,
+    "Item_Socket_0": 70001973,
+    "Item_Socket_1": 70001974,
+    "Item_Socket_2": 70001975,
+    "Item_Socket_3": 70001976,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100971,
+    "Type": 16,
+    "Item_Socket_0": 70003057,
+    "Item_Socket_1": 70003058,
+    "Item_Socket_2": 70003059,
+    "Item_Socket_3": 70003060,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 100982,
+    "Type": 16,
+    "Item_Socket_0": 70003069,
+    "Item_Socket_1": 70003070,
+    "Item_Socket_2": 70003071,
+    "Item_Socket_3": 70003072,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 101041,
+    "Type": 16,
+    "Item_Socket_0": 70003196,
+    "Item_Socket_1": 70003197,
+    "Item_Socket_2": 70003198,
+    "Item_Socket_3": 70003199,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 101042,
+    "Type": 16,
+    "Item_Socket_0": 70003200,
+    "Item_Socket_1": 70003201,
+    "Item_Socket_2": 70003202,
+    "Item_Socket_3": 70003203,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 101051,
+    "Type": 16,
+    "Item_Socket_0": 70003204,
+    "Item_Socket_1": 70003205,
+    "Item_Socket_2": 70003206,
+    "Item_Socket_3": 70003207,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 101052,
+    "Type": 16,
+    "Item_Socket_0": 70003208,
+    "Item_Socket_1": 70003209,
+    "Item_Socket_2": 70003210,
+    "Item_Socket_3": 70003211,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 101061,
+    "Type": 16,
+    "Item_Socket_0": 70003212,
+    "Item_Socket_1": 70003213,
+    "Item_Socket_2": 70003214,
+    "Item_Socket_3": 70003215,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 101062,
+    "Type": 16,
+    "Item_Socket_0": 70003216,
+    "Item_Socket_1": 70003217,
+    "Item_Socket_2": 70003218,
+    "Item_Socket_3": 70003219,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200101,
+    "Type": 14,
+    "Item_Socket_0": 12711127,
+    "Item_Socket_1": 12711191,
+    "Item_Socket_2": 12711247,
+    "Item_Socket_3": 12711303,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200102,
+    "Type": 14,
+    "Item_Socket_0": 12711418,
+    "Item_Socket_1": 12711420,
+    "Item_Socket_2": 12711422,
+    "Item_Socket_3": 12711424,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200111,
+    "Type": 14,
+    "Item_Socket_0": 12711126,
+    "Item_Socket_1": 12711190,
+    "Item_Socket_2": 12711246,
+    "Item_Socket_3": 12711302,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200112,
+    "Type": 14,
+    "Item_Socket_0": 12711132,
+    "Item_Socket_1": 12711196,
+    "Item_Socket_2": 12711252,
+    "Item_Socket_3": 12711308,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200121,
+    "Type": 14,
+    "Item_Socket_0": 12711128,
+    "Item_Socket_1": 12711192,
+    "Item_Socket_2": 12711248,
+    "Item_Socket_3": 12711304,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200122,
+    "Type": 14,
+    "Item_Socket_0": 12711133,
+    "Item_Socket_1": 12711197,
+    "Item_Socket_2": 12711253,
+    "Item_Socket_3": 12711309,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200125,
+    "Type": 15,
+    "Item_Socket_0": 12711134,
+    "Item_Socket_1": 12711198,
+    "Item_Socket_2": 12711254,
+    "Item_Socket_3": 12711310,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200130,
+    "Type": 14,
+    "Item_Socket_0": 12711121,
+    "Item_Socket_1": 12711185,
+    "Item_Socket_2": 12711241,
+    "Item_Socket_3": 12711297,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200131,
+    "Type": 14,
+    "Item_Socket_0": 70000447,
+    "Item_Socket_1": 70000448,
+    "Item_Socket_2": 70000449,
+    "Item_Socket_3": 70000450,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200132,
+    "Type": 14,
+    "Item_Socket_0": 70000451,
+    "Item_Socket_1": 70000452,
+    "Item_Socket_2": 70000453,
+    "Item_Socket_3": 70000454,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200151,
+    "Type": 14,
+    "Item_Socket_0": 12711131,
+    "Item_Socket_1": 12711195,
+    "Item_Socket_2": 12711251,
+    "Item_Socket_3": 12711307,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200152,
+    "Type": 14,
+    "Item_Socket_0": 12711130,
+    "Item_Socket_1": 12711194,
+    "Item_Socket_2": 12711250,
+    "Item_Socket_3": 12711306,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200180,
+    "Type": 14,
+    "Item_Socket_0": 12711112,
+    "Item_Socket_1": 12711176,
+    "Item_Socket_2": 12711232,
+    "Item_Socket_3": 12711288,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200191,
+    "Type": 14,
+    "Item_Socket_0": 12711557,
+    "Item_Socket_1": 12711485,
+    "Item_Socket_2": 12711497,
+    "Item_Socket_3": 12711509,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200192,
+    "Type": 14,
+    "Item_Socket_0": 12711551,
+    "Item_Socket_1": 12711563,
+    "Item_Socket_2": 12711491,
+    "Item_Socket_3": 12711503,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200201,
+    "Type": 14,
+    "Item_Socket_0": 70000927,
+    "Item_Socket_1": 70000928,
+    "Item_Socket_2": 70000929,
+    "Item_Socket_3": 70000930,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200202,
+    "Type": 14,
+    "Item_Socket_0": 70000931,
+    "Item_Socket_1": 70000932,
+    "Item_Socket_2": 70000933,
+    "Item_Socket_3": 70000934,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200221,
+    "Type": 14,
+    "Item_Socket_0": 12710664,
+    "Item_Socket_1": 12710665,
+    "Item_Socket_2": 12711528,
+    "Item_Socket_3": 12711529,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200222,
+    "Type": 14,
+    "Item_Socket_0": 12710662,
+    "Item_Socket_1": 12710663,
+    "Item_Socket_2": 12711524,
+    "Item_Socket_3": 12711525,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200230,
+    "Type": 14,
+    "Item_Socket_0": 17325034,
+    "Item_Socket_1": 12711317,
+    "Item_Socket_2": 12711320,
+    "Item_Socket_3": 12711323,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200240,
+    "Type": 14,
+    "Item_Socket_0": 12711120,
+    "Item_Socket_1": 12711184,
+    "Item_Socket_2": 12711240,
+    "Item_Socket_3": 12711296,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200241,
+    "Type": 14,
+    "Item_Socket_0": 12711652,
+    "Item_Socket_1": 12711653,
+    "Item_Socket_2": 12711654,
+    "Item_Socket_3": 12711655,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200242,
+    "Type": 14,
+    "Item_Socket_0": 12711656,
+    "Item_Socket_1": 12711657,
+    "Item_Socket_2": 12711658,
+    "Item_Socket_3": 12711659,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200250,
+    "Type": 14,
+    "Item_Socket_0": 12710681,
+    "Item_Socket_1": 12711318,
+    "Item_Socket_2": 12711321,
+    "Item_Socket_3": 12711324,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200261,
+    "Type": 14,
+    "Item_Socket_0": 70000516,
+    "Item_Socket_1": 70000517,
+    "Item_Socket_2": 70000518,
+    "Item_Socket_3": 70000519,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200262,
+    "Type": 14,
+    "Item_Socket_0": 70000520,
+    "Item_Socket_1": 70000521,
+    "Item_Socket_2": 70000522,
+    "Item_Socket_3": 70000523,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200271,
+    "Type": 14,
+    "Item_Socket_0": 12710710,
+    "Item_Socket_1": 12710711,
+    "Item_Socket_2": 12710712,
+    "Item_Socket_3": 12710713,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200272,
+    "Type": 14,
+    "Item_Socket_0": 17325035,
+    "Item_Socket_1": 12711319,
+    "Item_Socket_2": 12711322,
+    "Item_Socket_3": 12711325,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200281,
+    "Type": 14,
+    "Item_Socket_0": 12711559,
+    "Item_Socket_1": 12711487,
+    "Item_Socket_2": 12711499,
+    "Item_Socket_3": 12711511,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200282,
+    "Type": 14,
+    "Item_Socket_0": 12711553,
+    "Item_Socket_1": 12711565,
+    "Item_Socket_2": 12711493,
+    "Item_Socket_3": 12711505,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200291,
+    "Type": 14,
+    "Item_Socket_0": 12710702,
+    "Item_Socket_1": 12710703,
+    "Item_Socket_2": 12710704,
+    "Item_Socket_3": 12710705,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200292,
+    "Type": 14,
+    "Item_Socket_0": 12710706,
+    "Item_Socket_1": 12710707,
+    "Item_Socket_2": 12710708,
+    "Item_Socket_3": 12710709,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200301,
+    "Type": 14,
+    "Item_Socket_0": 12710675,
+    "Item_Socket_1": 12710579,
+    "Item_Socket_2": 12710676,
+    "Item_Socket_3": 12710677,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200302,
+    "Type": 14,
+    "Item_Socket_0": 12710669,
+    "Item_Socket_1": 12710577,
+    "Item_Socket_2": 12710670,
+    "Item_Socket_3": 12710671,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200311,
+    "Type": 14,
+    "Item_Socket_0": 70000602,
+    "Item_Socket_1": 70000603,
+    "Item_Socket_2": 70000604,
+    "Item_Socket_3": 70000605,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200312,
+    "Type": 14,
+    "Item_Socket_0": 70000606,
+    "Item_Socket_1": 70000607,
+    "Item_Socket_2": 70000608,
+    "Item_Socket_3": 70000609,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200320,
+    "Type": 14,
+    "Item_Socket_0": 12711694,
+    "Item_Socket_1": 12711695,
+    "Item_Socket_2": 12711696,
+    "Item_Socket_3": 12711697,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200340,
+    "Type": 14,
+    "Item_Socket_0": 12711124,
+    "Item_Socket_1": 12711188,
+    "Item_Socket_2": 12711244,
+    "Item_Socket_3": 12711300,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200350,
+    "Type": 14,
+    "Item_Socket_0": 12711138,
+    "Item_Socket_1": 12711202,
+    "Item_Socket_2": 12711258,
+    "Item_Socket_3": 12711314,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200355,
+    "Type": 19,
+    "Item_Socket_0": 12711139,
+    "Item_Socket_1": 12711203,
+    "Item_Socket_2": 12711259,
+    "Item_Socket_3": 12711315,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200361,
+    "Type": 14,
+    "Item_Socket_0": 12711561,
+    "Item_Socket_1": 12711489,
+    "Item_Socket_2": 12711501,
+    "Item_Socket_3": 12711513,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200362,
+    "Type": 14,
+    "Item_Socket_0": 12711555,
+    "Item_Socket_1": 12711483,
+    "Item_Socket_2": 12711495,
+    "Item_Socket_3": 12711507,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200400,
+    "Type": 14,
+    "Item_Socket_0": 12711140,
+    "Item_Socket_1": 12711204,
+    "Item_Socket_2": 12711260,
+    "Item_Socket_3": 12711316,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200420,
+    "Type": 14,
+    "Item_Socket_0": 12711137,
+    "Item_Socket_1": 12711201,
+    "Item_Socket_2": 12711257,
+    "Item_Socket_3": 12711313,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200421,
+    "Type": 14,
+    "Item_Socket_0": 12711417,
+    "Item_Socket_1": 12711419,
+    "Item_Socket_2": 12711421,
+    "Item_Socket_3": 12711423,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200451,
+    "Type": 14,
+    "Item_Socket_0": 12721357,
+    "Item_Socket_1": 12721358,
+    "Item_Socket_2": 12721359,
+    "Item_Socket_3": 12721360,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200452,
+    "Type": 14,
+    "Item_Socket_0": 12721361,
+    "Item_Socket_1": 12721362,
+    "Item_Socket_2": 12721363,
+    "Item_Socket_3": 12721364,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200470,
+    "Type": 14,
+    "Item_Socket_0": 12711122,
+    "Item_Socket_1": 12711186,
+    "Item_Socket_2": 12711242,
+    "Item_Socket_3": 12711298,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200481,
+    "Type": 14,
+    "Item_Socket_0": 70000610,
+    "Item_Socket_1": 70000611,
+    "Item_Socket_2": 70000612,
+    "Item_Socket_3": 70000613,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200482,
+    "Type": 14,
+    "Item_Socket_0": 70000614,
+    "Item_Socket_1": 70000615,
+    "Item_Socket_2": 70000616,
+    "Item_Socket_3": 70000617,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200500,
+    "Type": 14,
+    "Item_Socket_0": 12711671,
+    "Item_Socket_1": 12711672,
+    "Item_Socket_2": 12711411,
+    "Item_Socket_3": 12711673,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200520,
+    "Type": 14,
+    "Item_Socket_0": 12711135,
+    "Item_Socket_1": 12711199,
+    "Item_Socket_2": 12711255,
+    "Item_Socket_3": 12711311,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200521,
+    "Type": 14,
+    "Item_Socket_0": 12721322,
+    "Item_Socket_1": 12721323,
+    "Item_Socket_2": 12721324,
+    "Item_Socket_3": 12721325,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200522,
+    "Type": 14,
+    "Item_Socket_0": 12721326,
+    "Item_Socket_1": 12721327,
+    "Item_Socket_2": 12721328,
+    "Item_Socket_3": 12721329,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200531,
+    "Type": 14,
+    "Item_Socket_0": 70000594,
+    "Item_Socket_1": 70000595,
+    "Item_Socket_2": 70000596,
+    "Item_Socket_3": 70000597,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200532,
+    "Type": 14,
+    "Item_Socket_0": 70000598,
+    "Item_Socket_1": 70000599,
+    "Item_Socket_2": 70000600,
+    "Item_Socket_3": 70000601,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200561,
+    "Type": 15,
+    "Item_Socket_0": 70000737,
+    "Item_Socket_1": 70000738,
+    "Item_Socket_2": 70000739,
+    "Item_Socket_3": 70000740,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200572,
+    "Type": 14,
+    "Item_Socket_0": 70000741,
+    "Item_Socket_1": 70000742,
+    "Item_Socket_2": 70000743,
+    "Item_Socket_3": 70000744,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200581,
+    "Type": 15,
+    "Item_Socket_0": 70000753,
+    "Item_Socket_1": 70000754,
+    "Item_Socket_2": 70000755,
+    "Item_Socket_3": 70000756,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200584,
+    "Type": 14,
+    "Item_Socket_0": 70000745,
+    "Item_Socket_1": 70000746,
+    "Item_Socket_2": 70000747,
+    "Item_Socket_3": 70000748,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200592,
+    "Type": 15,
+    "Item_Socket_0": 70000757,
+    "Item_Socket_1": 70000758,
+    "Item_Socket_2": 70000759,
+    "Item_Socket_3": 70000760,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200595,
+    "Type": 14,
+    "Item_Socket_0": 70000749,
+    "Item_Socket_1": 70000750,
+    "Item_Socket_2": 70000751,
+    "Item_Socket_3": 70000752,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200600,
+    "Type": 14,
+    "Item_Socket_0": 70000761,
+    "Item_Socket_1": 70000762,
+    "Item_Socket_2": 70000763,
+    "Item_Socket_3": 70000764,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200611,
+    "Type": 14,
+    "Item_Socket_0": 70000765,
+    "Item_Socket_1": 70000766,
+    "Item_Socket_2": 70000767,
+    "Item_Socket_3": 70000768,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200622,
+    "Type": 14,
+    "Item_Socket_0": 70000769,
+    "Item_Socket_1": 70000770,
+    "Item_Socket_2": 70000771,
+    "Item_Socket_3": 70000772,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200630,
+    "Type": 14,
+    "Item_Socket_0": 70000773,
+    "Item_Socket_1": 70000774,
+    "Item_Socket_2": 70000775,
+    "Item_Socket_3": 70000776,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200641,
+    "Type": 15,
+    "Item_Socket_0": 70000777,
+    "Item_Socket_1": 70000778,
+    "Item_Socket_2": 70000779,
+    "Item_Socket_3": 70000780,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200652,
+    "Type": 14,
+    "Item_Socket_0": 70000781,
+    "Item_Socket_1": 70000782,
+    "Item_Socket_2": 70000783,
+    "Item_Socket_3": 70000784,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200660,
+    "Type": 14,
+    "Item_Socket_0": 70000785,
+    "Item_Socket_1": 70000786,
+    "Item_Socket_2": 70000787,
+    "Item_Socket_3": 70000788,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200671,
+    "Type": 19,
+    "Item_Socket_0": 70000789,
+    "Item_Socket_1": 70000790,
+    "Item_Socket_2": 70000791,
+    "Item_Socket_3": 70000792,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200672,
+    "Type": 14,
+    "Item_Socket_0": 70000793,
+    "Item_Socket_1": 70000794,
+    "Item_Socket_2": 70000795,
+    "Item_Socket_3": 70000796,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200681,
+    "Type": 14,
+    "Item_Socket_0": 70000848,
+    "Item_Socket_1": 70000849,
+    "Item_Socket_2": 70000850,
+    "Item_Socket_3": 70000851,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200682,
+    "Type": 14,
+    "Item_Socket_0": 70000852,
+    "Item_Socket_1": 70000853,
+    "Item_Socket_2": 70000854,
+    "Item_Socket_3": 70000855,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200691,
+    "Type": 14,
+    "Item_Socket_0": 70000919,
+    "Item_Socket_1": 70000920,
+    "Item_Socket_2": 70000921,
+    "Item_Socket_3": 70000922,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200692,
+    "Type": 14,
+    "Item_Socket_0": 70000923,
+    "Item_Socket_1": 70000924,
+    "Item_Socket_2": 70000925,
+    "Item_Socket_3": 70000926,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200701,
+    "Type": 14,
+    "Item_Socket_0": 70000960,
+    "Item_Socket_1": 70000961,
+    "Item_Socket_2": 70000962,
+    "Item_Socket_3": 70000963,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200702,
+    "Type": 14,
+    "Item_Socket_0": 70000964,
+    "Item_Socket_1": 70000965,
+    "Item_Socket_2": 70000966,
+    "Item_Socket_3": 70000967,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200704,
+    "Type": 15,
+    "Item_Socket_0": 70000968,
+    "Item_Socket_1": 70000969,
+    "Item_Socket_2": 70000970,
+    "Item_Socket_3": 70000971,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200705,
+    "Type": 15,
+    "Item_Socket_0": 70000972,
+    "Item_Socket_1": 70000973,
+    "Item_Socket_2": 70000974,
+    "Item_Socket_3": 70000975,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200711,
+    "Type": 14,
+    "Item_Socket_0": 70001003,
+    "Item_Socket_1": 70001004,
+    "Item_Socket_2": 70001005,
+    "Item_Socket_3": 70001006,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200712,
+    "Type": 14,
+    "Item_Socket_0": 70001007,
+    "Item_Socket_1": 70001008,
+    "Item_Socket_2": 70001009,
+    "Item_Socket_3": 70001010,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200721,
+    "Type": 14,
+    "Item_Socket_0": 70001019,
+    "Item_Socket_1": 70001020,
+    "Item_Socket_2": 70001021,
+    "Item_Socket_3": 70001022,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200722,
+    "Type": 14,
+    "Item_Socket_0": 70001023,
+    "Item_Socket_1": 70001024,
+    "Item_Socket_2": 70001025,
+    "Item_Socket_3": 70001026,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200731,
+    "Type": 14,
+    "Item_Socket_0": 70001035,
+    "Item_Socket_1": 70001036,
+    "Item_Socket_2": 70001037,
+    "Item_Socket_3": 70001038,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200732,
+    "Type": 14,
+    "Item_Socket_0": 70001039,
+    "Item_Socket_1": 70001040,
+    "Item_Socket_2": 70001041,
+    "Item_Socket_3": 70001042,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200741,
+    "Type": 14,
+    "Item_Socket_0": 60000538,
+    "Item_Socket_1": 60000539,
+    "Item_Socket_2": 60000540,
+    "Item_Socket_3": 60000541,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 200742,
+    "Type": 14,
+    "Item_Socket_0": 60000542,
+    "Item_Socket_1": 60000543,
+    "Item_Socket_2": 60000544,
+    "Item_Socket_3": 60000545,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210010,
+    "Type": 19,
+    "Item_Socket_0": 12721101,
+    "Item_Socket_1": 12710492,
+    "Item_Socket_2": 12721102,
+    "Item_Socket_3": 12721103,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210020,
+    "Type": 14,
+    "Item_Socket_0": 12710504,
+    "Item_Socket_1": 12710589,
+    "Item_Socket_2": 12710601,
+    "Item_Socket_3": 12710613,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210030,
+    "Type": 15,
+    "Item_Socket_0": 12721116,
+    "Item_Socket_1": 12710468,
+    "Item_Socket_2": 12721117,
+    "Item_Socket_3": 12721118,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210040,
+    "Type": 19,
+    "Item_Socket_0": 12710560,
+    "Item_Socket_1": 12721077,
+    "Item_Socket_2": 12721078,
+    "Item_Socket_3": 12721079,
+    "Ratio": 0
+  },
+  {
+    "Theme_Type": 210050,
+    "Type": 14,
+    "Item_Socket_0": 12710521,
+    "Item_Socket_1": 12710591,
+    "Item_Socket_2": 12710603,
+    "Item_Socket_3": 12710615,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210060,
+    "Type": 14,
+    "Item_Socket_0": 12710532,
+    "Item_Socket_1": 12721290,
+    "Item_Socket_2": 12721291,
+    "Item_Socket_3": 12721292,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210070,
+    "Type": 14,
+    "Item_Socket_0": 12721206,
+    "Item_Socket_1": 12710507,
+    "Item_Socket_2": 12721207,
+    "Item_Socket_3": 12721208,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210080,
+    "Type": 14,
+    "Item_Socket_0": 12710516,
+    "Item_Socket_1": 12721254,
+    "Item_Socket_2": 12721255,
+    "Item_Socket_3": 12721256,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210090,
+    "Type": 14,
+    "Item_Socket_0": 12710503,
+    "Item_Socket_1": 12710586,
+    "Item_Socket_2": 12710598,
+    "Item_Socket_3": 12710610,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210100,
+    "Type": 15,
+    "Item_Socket_0": 12721330,
+    "Item_Socket_1": 12721331,
+    "Item_Socket_2": 12721332,
+    "Item_Socket_3": 12721333,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210110,
+    "Type": 14,
+    "Item_Socket_0": 12721185,
+    "Item_Socket_1": 12710497,
+    "Item_Socket_2": 12721186,
+    "Item_Socket_3": 12721187,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210120,
+    "Type": 14,
+    "Item_Socket_0": 12710432,
+    "Item_Socket_1": 12710587,
+    "Item_Socket_2": 12710599,
+    "Item_Socket_3": 12710611,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210130,
+    "Type": 19,
+    "Item_Socket_0": 12721092,
+    "Item_Socket_1": 12710463,
+    "Item_Socket_2": 12721093,
+    "Item_Socket_3": 12721094,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210140,
+    "Type": 15,
+    "Item_Socket_0": 12721122,
+    "Item_Socket_1": 12710470,
+    "Item_Socket_2": 12721123,
+    "Item_Socket_3": 12721124,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210150,
+    "Type": 15,
+    "Item_Socket_0": 12721119,
+    "Item_Socket_1": 12710476,
+    "Item_Socket_2": 12721120,
+    "Item_Socket_3": 12721121,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210160,
+    "Type": 14,
+    "Item_Socket_0": 12710637,
+    "Item_Socket_1": 12710501,
+    "Item_Socket_2": 12710642,
+    "Item_Socket_3": 12710647,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210170,
+    "Type": 14,
+    "Item_Socket_0": 12710528,
+    "Item_Socket_1": 12710656,
+    "Item_Socket_2": 12710657,
+    "Item_Socket_3": 12710658,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210180,
+    "Type": 14,
+    "Item_Socket_0": 12721218,
+    "Item_Socket_1": 12721319,
+    "Item_Socket_2": 12721219,
+    "Item_Socket_3": 12721220,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210190,
+    "Type": 14,
+    "Item_Socket_0": 12721239,
+    "Item_Socket_1": 12710496,
+    "Item_Socket_2": 12721240,
+    "Item_Socket_3": 12721241,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210200,
+    "Type": 15,
+    "Item_Socket_0": 12710556,
+    "Item_Socket_1": 12721137,
+    "Item_Socket_2": 12721138,
+    "Item_Socket_3": 12721139,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210210,
+    "Type": 19,
+    "Item_Socket_0": 12721080,
+    "Item_Socket_1": 12710475,
+    "Item_Socket_2": 12721081,
+    "Item_Socket_3": 12721082,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210220,
+    "Type": 14,
+    "Item_Socket_0": 12710541,
+    "Item_Socket_1": 12710738,
+    "Item_Socket_2": 12710739,
+    "Item_Socket_3": 12710740,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210230,
+    "Type": 14,
+    "Item_Socket_0": 12721278,
+    "Item_Socket_1": 12710493,
+    "Item_Socket_2": 12721279,
+    "Item_Socket_3": 12721280,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210240,
+    "Type": 14,
+    "Item_Socket_0": 12721263,
+    "Item_Socket_1": 12710434,
+    "Item_Socket_2": 12721264,
+    "Item_Socket_3": 12721265,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210250,
+    "Type": 15,
+    "Item_Socket_0": 12721125,
+    "Item_Socket_1": 12710485,
+    "Item_Socket_2": 12721126,
+    "Item_Socket_3": 12721127,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210260,
+    "Type": 15,
+    "Item_Socket_0": 12710559,
+    "Item_Socket_1": 12710659,
+    "Item_Socket_2": 12710660,
+    "Item_Socket_3": 12710661,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210270,
+    "Type": 14,
+    "Item_Socket_0": 12710546,
+    "Item_Socket_1": 12721245,
+    "Item_Socket_2": 12721246,
+    "Item_Socket_3": 12721247,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210280,
+    "Type": 19,
+    "Item_Socket_0": 12721095,
+    "Item_Socket_1": 12710464,
+    "Item_Socket_2": 12721096,
+    "Item_Socket_3": 12721097,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210290,
+    "Type": 14,
+    "Item_Socket_0": 12721188,
+    "Item_Socket_1": 12710449,
+    "Item_Socket_2": 12721189,
+    "Item_Socket_3": 12721190,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210300,
+    "Type": 15,
+    "Item_Socket_0": 12710714,
+    "Item_Socket_1": 12710474,
+    "Item_Socket_2": 12710715,
+    "Item_Socket_3": 12710716,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210310,
+    "Type": 19,
+    "Item_Socket_0": 12721083,
+    "Item_Socket_1": 12710465,
+    "Item_Socket_2": 12721084,
+    "Item_Socket_3": 12721085,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210320,
+    "Type": 15,
+    "Item_Socket_0": 12721173,
+    "Item_Socket_1": 12710482,
+    "Item_Socket_2": 12721174,
+    "Item_Socket_3": 12721175,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210330,
+    "Type": 19,
+    "Item_Socket_0": 12721074,
+    "Item_Socket_1": 12710460,
+    "Item_Socket_2": 12721075,
+    "Item_Socket_3": 12721076,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210340,
+    "Type": 14,
+    "Item_Socket_0": 12721209,
+    "Item_Socket_1": 12710443,
+    "Item_Socket_2": 12721210,
+    "Item_Socket_3": 12721211,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210350,
+    "Type": 19,
+    "Item_Socket_0": 12721068,
+    "Item_Socket_1": 12710508,
+    "Item_Socket_2": 12721069,
+    "Item_Socket_3": 12721070,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210360,
+    "Type": 14,
+    "Item_Socket_0": 12710535,
+    "Item_Socket_1": 12721284,
+    "Item_Socket_2": 12721285,
+    "Item_Socket_3": 12721286,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210370,
+    "Type": 14,
+    "Item_Socket_0": 12710741,
+    "Item_Socket_1": 12710512,
+    "Item_Socket_2": 12710742,
+    "Item_Socket_3": 12710743,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210380,
+    "Type": 14,
+    "Item_Socket_0": 12721224,
+    "Item_Socket_1": 12721225,
+    "Item_Socket_2": 12721321,
+    "Item_Socket_3": 12721226,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210390,
+    "Type": 14,
+    "Item_Socket_0": 12710495,
+    "Item_Socket_1": 12710590,
+    "Item_Socket_2": 12710602,
+    "Item_Socket_3": 12710614,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210400,
+    "Type": 14,
+    "Item_Socket_0": 12710525,
+    "Item_Socket_1": 12710744,
+    "Item_Socket_2": 12710745,
+    "Item_Socket_3": 12710746,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210410,
+    "Type": 15,
+    "Item_Socket_0": 12721149,
+    "Item_Socket_1": 12710472,
+    "Item_Socket_2": 12721150,
+    "Item_Socket_3": 12721151,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210420,
+    "Type": 14,
+    "Item_Socket_0": 12710536,
+    "Item_Socket_1": 12721251,
+    "Item_Socket_2": 12721252,
+    "Item_Socket_3": 12721253,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210430,
+    "Type": 14,
+    "Item_Socket_0": 12721242,
+    "Item_Socket_1": 12710505,
+    "Item_Socket_2": 12721243,
+    "Item_Socket_3": 12721244,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210440,
+    "Type": 14,
+    "Item_Socket_0": 12710638,
+    "Item_Socket_1": 12710453,
+    "Item_Socket_2": 12710643,
+    "Item_Socket_3": 12710648,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210450,
+    "Type": 14,
+    "Item_Socket_0": 12710685,
+    "Item_Socket_1": 12710451,
+    "Item_Socket_2": 12710686,
+    "Item_Socket_3": 12710687,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210460,
+    "Type": 14,
+    "Item_Socket_0": 12710520,
+    "Item_Socket_1": 12721293,
+    "Item_Socket_2": 12721294,
+    "Item_Socket_3": 12721295,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210470,
+    "Type": 14,
+    "Item_Socket_0": 12721191,
+    "Item_Socket_1": 12710439,
+    "Item_Socket_2": 12721192,
+    "Item_Socket_3": 12721193,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210480,
+    "Type": 14,
+    "Item_Socket_0": 12710543,
+    "Item_Socket_1": 12710431,
+    "Item_Socket_2": 12711666,
+    "Item_Socket_3": 12711667,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210490,
+    "Type": 15,
+    "Item_Socket_0": 12710717,
+    "Item_Socket_1": 12710478,
+    "Item_Socket_2": 12710718,
+    "Item_Socket_3": 12710719,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210500,
+    "Type": 19,
+    "Item_Socket_0": 12721071,
+    "Item_Socket_1": 12710479,
+    "Item_Socket_2": 12721072,
+    "Item_Socket_3": 12721073,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210510,
+    "Type": 19,
+    "Item_Socket_0": 12721098,
+    "Item_Socket_1": 12710462,
+    "Item_Socket_2": 12721099,
+    "Item_Socket_3": 12721100,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210520,
+    "Type": 19,
+    "Item_Socket_0": 12721086,
+    "Item_Socket_1": 12710473,
+    "Item_Socket_2": 12721087,
+    "Item_Socket_3": 12721088,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210530,
+    "Type": 15,
+    "Item_Socket_0": 12721155,
+    "Item_Socket_1": 12710471,
+    "Item_Socket_2": 12721156,
+    "Item_Socket_3": 12721157,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210540,
+    "Type": 15,
+    "Item_Socket_0": 12721113,
+    "Item_Socket_1": 12710467,
+    "Item_Socket_2": 12721114,
+    "Item_Socket_3": 12721115,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210550,
+    "Type": 14,
+    "Item_Socket_0": 12710540,
+    "Item_Socket_1": 12710735,
+    "Item_Socket_2": 12710736,
+    "Item_Socket_3": 12710737,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210560,
+    "Type": 14,
+    "Item_Socket_0": 12711668,
+    "Item_Socket_1": 12710454,
+    "Item_Socket_2": 12711669,
+    "Item_Socket_3": 12711670,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210570,
+    "Type": 15,
+    "Item_Socket_0": 12710561,
+    "Item_Socket_1": 12710720,
+    "Item_Socket_2": 12710721,
+    "Item_Socket_3": 12710722,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210580,
+    "Type": 14,
+    "Item_Socket_0": 12711663,
+    "Item_Socket_1": 12710429,
+    "Item_Socket_2": 12711664,
+    "Item_Socket_3": 12711665,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210590,
+    "Type": 14,
+    "Item_Socket_0": 12721287,
+    "Item_Socket_1": 12710486,
+    "Item_Socket_2": 12721288,
+    "Item_Socket_3": 12721289,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210600,
+    "Type": 15,
+    "Item_Socket_0": 12710557,
+    "Item_Socket_1": 12710723,
+    "Item_Socket_2": 12710724,
+    "Item_Socket_3": 12710725,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210610,
+    "Type": 15,
+    "Item_Socket_0": 12721152,
+    "Item_Socket_1": 12710480,
+    "Item_Socket_2": 12721153,
+    "Item_Socket_3": 12711549,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210620,
+    "Type": 15,
+    "Item_Socket_0": 12721146,
+    "Item_Socket_1": 12710481,
+    "Item_Socket_2": 12721147,
+    "Item_Socket_3": 12721148,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210630,
+    "Type": 15,
+    "Item_Socket_0": 12710552,
+    "Item_Socket_1": 12721128,
+    "Item_Socket_2": 12721129,
+    "Item_Socket_3": 12721130,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210640,
+    "Type": 19,
+    "Item_Socket_0": 12710562,
+    "Item_Socket_1": 12710500,
+    "Item_Socket_2": 12721066,
+    "Item_Socket_3": 12721067,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210650,
+    "Type": 15,
+    "Item_Socket_0": 12721164,
+    "Item_Socket_1": 12710484,
+    "Item_Socket_2": 12721165,
+    "Item_Socket_3": 12721166,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210660,
+    "Type": 15,
+    "Item_Socket_0": 12721110,
+    "Item_Socket_1": 12710515,
+    "Item_Socket_2": 12721111,
+    "Item_Socket_3": 12721112,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210670,
+    "Type": 14,
+    "Item_Socket_0": 12711646,
+    "Item_Socket_1": 12710457,
+    "Item_Socket_2": 12711647,
+    "Item_Socket_3": 12711648,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210680,
+    "Type": 19,
+    "Item_Socket_0": 12710666,
+    "Item_Socket_1": 12710461,
+    "Item_Socket_2": 12710667,
+    "Item_Socket_3": 12710668,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210690,
+    "Type": 15,
+    "Item_Socket_0": 12710563,
+    "Item_Socket_1": 12721140,
+    "Item_Socket_2": 12721141,
+    "Item_Socket_3": 12721142,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210700,
+    "Type": 14,
+    "Item_Socket_0": 12710444,
+    "Item_Socket_1": 12710584,
+    "Item_Socket_2": 12710596,
+    "Item_Socket_3": 12710608,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210710,
+    "Type": 14,
+    "Item_Socket_0": 12710542,
+    "Item_Socket_1": 12711643,
+    "Item_Socket_2": 12711644,
+    "Item_Socket_3": 12711645,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210720,
+    "Type": 14,
+    "Item_Socket_0": 12721260,
+    "Item_Socket_1": 12710436,
+    "Item_Socket_2": 12721261,
+    "Item_Socket_3": 12721262,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210730,
+    "Type": 14,
+    "Item_Socket_0": 12711538,
+    "Item_Socket_1": 12710427,
+    "Item_Socket_2": 12711542,
+    "Item_Socket_3": 12711546,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210740,
+    "Type": 14,
+    "Item_Socket_0": 12710729,
+    "Item_Socket_1": 12710442,
+    "Item_Socket_2": 12710730,
+    "Item_Socket_3": 12710731,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210750,
+    "Type": 14,
+    "Item_Socket_0": 12710747,
+    "Item_Socket_1": 12710748,
+    "Item_Socket_2": 12710749,
+    "Item_Socket_3": 12710750,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210760,
+    "Type": 15,
+    "Item_Socket_0": 12721161,
+    "Item_Socket_1": 12710514,
+    "Item_Socket_2": 12721162,
+    "Item_Socket_3": 12721163,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210770,
+    "Type": 15,
+    "Item_Socket_0": 12710553,
+    "Item_Socket_1": 12721158,
+    "Item_Socket_2": 12721159,
+    "Item_Socket_3": 12721160,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210780,
+    "Type": 15,
+    "Item_Socket_0": 12710565,
+    "Item_Socket_1": 12721131,
+    "Item_Socket_2": 12721132,
+    "Item_Socket_3": 12721133,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210790,
+    "Type": 14,
+    "Item_Socket_0": 12710441,
+    "Item_Socket_1": 12710592,
+    "Item_Socket_2": 12710604,
+    "Item_Socket_3": 12710616,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210800,
+    "Type": 19,
+    "Item_Socket_0": 12721089,
+    "Item_Socket_1": 12710499,
+    "Item_Socket_2": 12721090,
+    "Item_Socket_3": 12721091,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210810,
+    "Type": 14,
+    "Item_Socket_0": 12721230,
+    "Item_Socket_1": 12721318,
+    "Item_Socket_2": 12721231,
+    "Item_Socket_3": 12721232,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210820,
+    "Type": 15,
+    "Item_Socket_0": 12721170,
+    "Item_Socket_1": 12710466,
+    "Item_Socket_2": 12721171,
+    "Item_Socket_3": 12721172,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210830,
+    "Type": 14,
+    "Item_Socket_0": 12710430,
+    "Item_Socket_1": 12710594,
+    "Item_Socket_2": 12710606,
+    "Item_Socket_3": 12710618,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210840,
+    "Type": 14,
+    "Item_Socket_0": 12710531,
+    "Item_Socket_1": 12710688,
+    "Item_Socket_2": 12710689,
+    "Item_Socket_3": 12710690,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210850,
+    "Type": 15,
+    "Item_Socket_0": 12721167,
+    "Item_Socket_1": 12710469,
+    "Item_Socket_2": 12721168,
+    "Item_Socket_3": 12721169,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210860,
+    "Type": 14,
+    "Item_Socket_0": 12710445,
+    "Item_Socket_1": 12710583,
+    "Item_Socket_2": 12710595,
+    "Item_Socket_3": 12710607,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210870,
+    "Type": 14,
+    "Item_Socket_0": 12721200,
+    "Item_Socket_1": 12710490,
+    "Item_Socket_2": 12721201,
+    "Item_Socket_3": 12721202,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210880,
+    "Type": 14,
+    "Item_Socket_0": 12721236,
+    "Item_Socket_1": 12710437,
+    "Item_Socket_2": 12721237,
+    "Item_Socket_3": 12721238,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210890,
+    "Type": 14,
+    "Item_Socket_0": 12721233,
+    "Item_Socket_1": 12710489,
+    "Item_Socket_2": 12721234,
+    "Item_Socket_3": 12721235,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210900,
+    "Type": 14,
+    "Item_Socket_0": 12711119,
+    "Item_Socket_1": 12711183,
+    "Item_Socket_2": 12711239,
+    "Item_Socket_3": 12711295,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210910,
+    "Type": 14,
+    "Item_Socket_0": 12710522,
+    "Item_Socket_1": 12721275,
+    "Item_Socket_2": 12721276,
+    "Item_Socket_3": 12721277,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210920,
+    "Type": 14,
+    "Item_Socket_0": 12721269,
+    "Item_Socket_1": 12710438,
+    "Item_Socket_2": 12721270,
+    "Item_Socket_3": 12721271,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210930,
+    "Type": 14,
+    "Item_Socket_0": 12711660,
+    "Item_Socket_1": 12710450,
+    "Item_Socket_2": 12711661,
+    "Item_Socket_3": 12711662,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210940,
+    "Type": 14,
+    "Item_Socket_0": 12711649,
+    "Item_Socket_1": 12710428,
+    "Item_Socket_2": 12711650,
+    "Item_Socket_3": 12711651,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210950,
+    "Type": 14,
+    "Item_Socket_0": 12721212,
+    "Item_Socket_1": 12710459,
+    "Item_Socket_2": 12721213,
+    "Item_Socket_3": 12721214,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210960,
+    "Type": 14,
+    "Item_Socket_0": 12721221,
+    "Item_Socket_1": 12721317,
+    "Item_Socket_2": 12721222,
+    "Item_Socket_3": 12721223,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210970,
+    "Type": 14,
+    "Item_Socket_0": 12721227,
+    "Item_Socket_1": 12721320,
+    "Item_Socket_2": 12721228,
+    "Item_Socket_3": 12721229,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210980,
+    "Type": 14,
+    "Item_Socket_0": 12710636,
+    "Item_Socket_1": 12710498,
+    "Item_Socket_2": 12710641,
+    "Item_Socket_3": 12710646,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 210990,
+    "Type": 14,
+    "Item_Socket_0": 12721197,
+    "Item_Socket_1": 12710458,
+    "Item_Socket_2": 12721198,
+    "Item_Socket_3": 12721199,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211000,
+    "Type": 14,
+    "Item_Socket_0": 12721203,
+    "Item_Socket_1": 12710491,
+    "Item_Socket_2": 12721204,
+    "Item_Socket_3": 12721205,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211010,
+    "Type": 15,
+    "Item_Socket_0": 12710554,
+    "Item_Socket_1": 12721107,
+    "Item_Socket_2": 12721108,
+    "Item_Socket_3": 12721109,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211020,
+    "Type": 14,
+    "Item_Socket_0": 12710682,
+    "Item_Socket_1": 12710433,
+    "Item_Socket_2": 12710683,
+    "Item_Socket_3": 12710684,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211030,
+    "Type": 15,
+    "Item_Socket_0": 12710564,
+    "Item_Socket_1": 12721134,
+    "Item_Socket_2": 12721135,
+    "Item_Socket_3": 12721136,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211040,
+    "Type": 14,
+    "Item_Socket_0": 12710518,
+    "Item_Socket_1": 12710593,
+    "Item_Socket_2": 12710605,
+    "Item_Socket_3": 12710617,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211050,
+    "Type": 14,
+    "Item_Socket_0": 12710435,
+    "Item_Socket_1": 12710585,
+    "Item_Socket_2": 12710597,
+    "Item_Socket_3": 12710609,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211060,
+    "Type": 14,
+    "Item_Socket_0": 12710519,
+    "Item_Socket_1": 12721272,
+    "Item_Socket_2": 12721273,
+    "Item_Socket_3": 12721274,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211070,
+    "Type": 14,
+    "Item_Socket_0": 12710653,
+    "Item_Socket_1": 12710488,
+    "Item_Socket_2": 12710654,
+    "Item_Socket_3": 12710655,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211080,
+    "Type": 19,
+    "Item_Socket_0": 12710551,
+    "Item_Socket_1": 12721104,
+    "Item_Socket_2": 12721105,
+    "Item_Socket_3": 12721106,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211090,
+    "Type": 14,
+    "Item_Socket_0": 12710732,
+    "Item_Socket_1": 12710456,
+    "Item_Socket_2": 12710733,
+    "Item_Socket_3": 12710734,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211100,
+    "Type": 14,
+    "Item_Socket_0": 12721257,
+    "Item_Socket_1": 12710487,
+    "Item_Socket_2": 12721258,
+    "Item_Socket_3": 12721259,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211110,
+    "Type": 15,
+    "Item_Socket_0": 12721143,
+    "Item_Socket_1": 12710483,
+    "Item_Socket_2": 12721144,
+    "Item_Socket_3": 12721145,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211120,
+    "Type": 15,
+    "Item_Socket_0": 12710726,
+    "Item_Socket_1": 12710494,
+    "Item_Socket_2": 12710727,
+    "Item_Socket_3": 12710728,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211130,
+    "Type": 14,
+    "Item_Socket_0": 12721281,
+    "Item_Socket_1": 12710513,
+    "Item_Socket_2": 12721282,
+    "Item_Socket_3": 12721283,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211140,
+    "Type": 14,
+    "Item_Socket_0": 12721194,
+    "Item_Socket_1": 12710440,
+    "Item_Socket_2": 12721195,
+    "Item_Socket_3": 12721196,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211150,
+    "Type": 14,
+    "Item_Socket_0": 12710523,
+    "Item_Socket_1": 12721296,
+    "Item_Socket_2": 12721297,
+    "Item_Socket_3": 12721298,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211160,
+    "Type": 14,
+    "Item_Socket_0": 12710524,
+    "Item_Socket_1": 12710588,
+    "Item_Socket_2": 12710600,
+    "Item_Socket_3": 12710612,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211170,
+    "Type": 14,
+    "Item_Socket_0": 12710537,
+    "Item_Socket_1": 12721266,
+    "Item_Socket_2": 12721267,
+    "Item_Socket_3": 12721268,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211180,
+    "Type": 15,
+    "Item_Socket_0": 12721341,
+    "Item_Socket_1": 12721342,
+    "Item_Socket_2": 12721343,
+    "Item_Socket_3": 12721344,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211190,
+    "Type": 14,
+    "Item_Socket_0": 70000976,
+    "Item_Socket_1": 70000977,
+    "Item_Socket_2": 70000978,
+    "Item_Socket_3": 70000979,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211200,
+    "Type": 14,
+    "Item_Socket_0": 12721345,
+    "Item_Socket_1": 12721346,
+    "Item_Socket_2": 12721347,
+    "Item_Socket_3": 12721348,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211210,
+    "Type": 14,
+    "Item_Socket_0": 12721365,
+    "Item_Socket_1": 12721366,
+    "Item_Socket_2": 12721367,
+    "Item_Socket_3": 12721368,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211220,
+    "Type": 14,
+    "Item_Socket_0": 12721373,
+    "Item_Socket_1": 12710446,
+    "Item_Socket_2": 13211036,
+    "Item_Socket_3": 12721374,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211230,
+    "Type": 14,
+    "Item_Socket_0": 12710545,
+    "Item_Socket_1": 12721375,
+    "Item_Socket_2": 13211078,
+    "Item_Socket_3": 12721376,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211240,
+    "Type": 14,
+    "Item_Socket_0": 70001267,
+    "Item_Socket_1": 70001268,
+    "Item_Socket_2": 70001269,
+    "Item_Socket_3": 70001270,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211250,
+    "Type": 14,
+    "Item_Socket_0": 70001271,
+    "Item_Socket_1": 70001272,
+    "Item_Socket_2": 70001273,
+    "Item_Socket_3": 70001274,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211261,
+    "Type": 14,
+    "Item_Socket_0": 70001275,
+    "Item_Socket_1": 70001276,
+    "Item_Socket_2": 70001277,
+    "Item_Socket_3": 70001278,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211262,
+    "Type": 14,
+    "Item_Socket_0": 70001279,
+    "Item_Socket_1": 70001280,
+    "Item_Socket_2": 70001281,
+    "Item_Socket_3": 70001282,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211271,
+    "Type": 15,
+    "Item_Socket_0": 70001283,
+    "Item_Socket_1": 70001284,
+    "Item_Socket_2": 70001285,
+    "Item_Socket_3": 70001286,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211272,
+    "Type": 15,
+    "Item_Socket_0": 70001287,
+    "Item_Socket_1": 70001288,
+    "Item_Socket_2": 70001289,
+    "Item_Socket_3": 70001290,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211281,
+    "Type": 14,
+    "Item_Socket_0": 70001291,
+    "Item_Socket_1": 70001292,
+    "Item_Socket_2": 70001293,
+    "Item_Socket_3": 70001294,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211282,
+    "Type": 14,
+    "Item_Socket_0": 70001295,
+    "Item_Socket_1": 70001296,
+    "Item_Socket_2": 70001297,
+    "Item_Socket_3": 70001298,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211291,
+    "Type": 14,
+    "Item_Socket_0": 70001387,
+    "Item_Socket_1": 70001388,
+    "Item_Socket_2": 70001389,
+    "Item_Socket_3": 70001390,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211291,
+    "Type": 14,
+    "Item_Socket_0": 70003131,
+    "Item_Socket_1": 70003132,
+    "Item_Socket_2": 70003133,
+    "Item_Socket_3": 70003134,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211292,
+    "Type": 14,
+    "Item_Socket_0": 70001391,
+    "Item_Socket_1": 70001392,
+    "Item_Socket_2": 70001393,
+    "Item_Socket_3": 70001394,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211292,
+    "Type": 14,
+    "Item_Socket_0": 70003135,
+    "Item_Socket_1": 70003136,
+    "Item_Socket_2": 70003137,
+    "Item_Socket_3": 70003138,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211301,
+    "Type": 14,
+    "Item_Socket_0": 70001395,
+    "Item_Socket_1": 70001396,
+    "Item_Socket_2": 70001397,
+    "Item_Socket_3": 70001398,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211301,
+    "Type": 14,
+    "Item_Socket_0": 70003139,
+    "Item_Socket_1": 70003140,
+    "Item_Socket_2": 70003141,
+    "Item_Socket_3": 70003142,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211302,
+    "Type": 14,
+    "Item_Socket_0": 70001399,
+    "Item_Socket_1": 70001400,
+    "Item_Socket_2": 70001401,
+    "Item_Socket_3": 70001402,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211302,
+    "Type": 14,
+    "Item_Socket_0": 70003143,
+    "Item_Socket_1": 70003144,
+    "Item_Socket_2": 70003145,
+    "Item_Socket_3": 70003146,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211311,
+    "Type": 14,
+    "Item_Socket_0": 70001403,
+    "Item_Socket_1": 70001404,
+    "Item_Socket_2": 70001405,
+    "Item_Socket_3": 70001406,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211311,
+    "Type": 14,
+    "Item_Socket_0": 70003147,
+    "Item_Socket_1": 70003148,
+    "Item_Socket_2": 70003149,
+    "Item_Socket_3": 70003150,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211312,
+    "Type": 14,
+    "Item_Socket_0": 70001407,
+    "Item_Socket_1": 70001408,
+    "Item_Socket_2": 70001409,
+    "Item_Socket_3": 70001410,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211312,
+    "Type": 14,
+    "Item_Socket_0": 70003151,
+    "Item_Socket_1": 70003152,
+    "Item_Socket_2": 70003153,
+    "Item_Socket_3": 70003154,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211322,
+    "Type": 14,
+    "Item_Socket_0": 70001411,
+    "Item_Socket_1": 70001412,
+    "Item_Socket_2": 70001413,
+    "Item_Socket_3": 70001414,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211322,
+    "Type": 14,
+    "Item_Socket_0": 70003155,
+    "Item_Socket_1": 70003156,
+    "Item_Socket_2": 70003157,
+    "Item_Socket_3": 70003158,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211330,
+    "Type": 19,
+    "Item_Socket_0": 70001415,
+    "Item_Socket_1": 70001416,
+    "Item_Socket_2": 70001417,
+    "Item_Socket_3": 70001418,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211330,
+    "Type": 19,
+    "Item_Socket_0": 70003159,
+    "Item_Socket_1": 70003160,
+    "Item_Socket_2": 70003161,
+    "Item_Socket_3": 70003162,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211341,
+    "Type": 14,
+    "Item_Socket_0": 70001423,
+    "Item_Socket_1": 70001424,
+    "Item_Socket_2": 70001425,
+    "Item_Socket_3": 70001426,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211341,
+    "Type": 14,
+    "Item_Socket_0": 70003167,
+    "Item_Socket_1": 70003168,
+    "Item_Socket_2": 70003169,
+    "Item_Socket_3": 70003170,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211350,
+    "Type": 14,
+    "Item_Socket_0": 70001431,
+    "Item_Socket_1": 70001432,
+    "Item_Socket_2": 70001433,
+    "Item_Socket_3": 70001434,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211350,
+    "Type": 14,
+    "Item_Socket_0": 70003175,
+    "Item_Socket_1": 70003176,
+    "Item_Socket_2": 70003177,
+    "Item_Socket_3": 70003178,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211360,
+    "Type": 14,
+    "Item_Socket_0": 70001435,
+    "Item_Socket_1": 70001436,
+    "Item_Socket_2": 70001437,
+    "Item_Socket_3": 70001438,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211360,
+    "Type": 14,
+    "Item_Socket_0": 70003179,
+    "Item_Socket_1": 70003180,
+    "Item_Socket_2": 70003181,
+    "Item_Socket_3": 70003182,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211370,
+    "Type": 14,
+    "Item_Socket_0": 60000681,
+    "Item_Socket_1": 60000682,
+    "Item_Socket_2": 60000683,
+    "Item_Socket_3": 60000684,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211380,
+    "Type": 14,
+    "Item_Socket_0": 70001449,
+    "Item_Socket_1": 70001450,
+    "Item_Socket_2": 70001451,
+    "Item_Socket_3": 70001452,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211390,
+    "Type": 14,
+    "Item_Socket_0": 70001457,
+    "Item_Socket_1": 70001458,
+    "Item_Socket_2": 70001459,
+    "Item_Socket_3": 70001460,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211400,
+    "Type": 14,
+    "Item_Socket_0": 70001465,
+    "Item_Socket_1": 70001466,
+    "Item_Socket_2": 70001467,
+    "Item_Socket_3": 70001468,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211410,
+    "Type": 14,
+    "Item_Socket_0": 70001473,
+    "Item_Socket_1": 70001474,
+    "Item_Socket_2": 70001475,
+    "Item_Socket_3": 70001476,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211420,
+    "Type": 14,
+    "Item_Socket_0": 70001481,
+    "Item_Socket_1": 70001482,
+    "Item_Socket_2": 70001483,
+    "Item_Socket_3": 70001484,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211430,
+    "Type": 14,
+    "Item_Socket_0": 70001489,
+    "Item_Socket_1": 70001490,
+    "Item_Socket_2": 70001491,
+    "Item_Socket_3": 70001492,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211440,
+    "Type": 14,
+    "Item_Socket_0": 70001497,
+    "Item_Socket_1": 70001498,
+    "Item_Socket_2": 70001499,
+    "Item_Socket_3": 70001500,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211450,
+    "Type": 14,
+    "Item_Socket_0": 70001505,
+    "Item_Socket_1": 70001506,
+    "Item_Socket_2": 70001507,
+    "Item_Socket_3": 70001508,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211460,
+    "Type": 14,
+    "Item_Socket_0": 70001517,
+    "Item_Socket_1": 70001518,
+    "Item_Socket_2": 70001519,
+    "Item_Socket_3": 70001520,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211470,
+    "Type": 15,
+    "Item_Socket_0": 70001529,
+    "Item_Socket_1": 70001530,
+    "Item_Socket_2": 70001531,
+    "Item_Socket_3": 70001532,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211480,
+    "Type": 15,
+    "Item_Socket_0": 12721377,
+    "Item_Socket_1": 12721378,
+    "Item_Socket_2": 12721379,
+    "Item_Socket_3": 12721380,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211490,
+    "Type": 14,
+    "Item_Socket_0": 12721385,
+    "Item_Socket_1": 12721386,
+    "Item_Socket_2": 12721387,
+    "Item_Socket_3": 12721388,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211500,
+    "Type": 14,
+    "Item_Socket_0": 70000824,
+    "Item_Socket_1": 70000825,
+    "Item_Socket_2": 70000826,
+    "Item_Socket_3": 70000827,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211510,
+    "Type": 14,
+    "Item_Socket_0": 70000828,
+    "Item_Socket_1": 70000829,
+    "Item_Socket_2": 70000830,
+    "Item_Socket_3": 70000831,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211520,
+    "Type": 14,
+    "Item_Socket_0": 70000832,
+    "Item_Socket_1": 70000833,
+    "Item_Socket_2": 70000834,
+    "Item_Socket_3": 70000835,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211530,
+    "Type": 14,
+    "Item_Socket_0": 70000836,
+    "Item_Socket_1": 70000837,
+    "Item_Socket_2": 70000838,
+    "Item_Socket_3": 70000839,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211540,
+    "Type": 14,
+    "Item_Socket_0": 70001694,
+    "Item_Socket_1": 70001695,
+    "Item_Socket_2": 70001696,
+    "Item_Socket_3": 70001697,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211550,
+    "Type": 15,
+    "Item_Socket_0": 70001727,
+    "Item_Socket_1": 70001728,
+    "Item_Socket_2": 70001729,
+    "Item_Socket_3": 70001730,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211560,
+    "Type": 14,
+    "Item_Socket_0": 70001775,
+    "Item_Socket_1": 70001776,
+    "Item_Socket_2": 70001777,
+    "Item_Socket_3": 70001778,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211570,
+    "Type": 14,
+    "Item_Socket_0": 12711788,
+    "Item_Socket_1": 12711789,
+    "Item_Socket_2": 12711790,
+    "Item_Socket_3": 12711791,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211590,
+    "Type": 14,
+    "Item_Socket_0": 70001834,
+    "Item_Socket_1": 70001835,
+    "Item_Socket_2": 70001836,
+    "Item_Socket_3": 70001837,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211600,
+    "Type": 14,
+    "Item_Socket_0": 70001838,
+    "Item_Socket_1": 70001839,
+    "Item_Socket_2": 70001840,
+    "Item_Socket_3": 70001841,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211610,
+    "Type": 14,
+    "Item_Socket_0": 70001842,
+    "Item_Socket_1": 70001843,
+    "Item_Socket_2": 70001844,
+    "Item_Socket_3": 70001845,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211620,
+    "Type": 14,
+    "Item_Socket_0": 70001846,
+    "Item_Socket_1": 70001847,
+    "Item_Socket_2": 70001848,
+    "Item_Socket_3": 70001849,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211630,
+    "Type": 15,
+    "Item_Socket_0": 70001850,
+    "Item_Socket_1": 70001851,
+    "Item_Socket_2": 70001852,
+    "Item_Socket_3": 70001853,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211640,
+    "Type": 14,
+    "Item_Socket_0": 70001854,
+    "Item_Socket_1": 70001855,
+    "Item_Socket_2": 70001856,
+    "Item_Socket_3": 70001857,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211651,
+    "Type": 14,
+    "Item_Socket_0": 70001965,
+    "Item_Socket_1": 70001966,
+    "Item_Socket_2": 70001967,
+    "Item_Socket_3": 70001968,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211652,
+    "Type": 14,
+    "Item_Socket_0": 70001977,
+    "Item_Socket_1": 70001978,
+    "Item_Socket_2": 70001979,
+    "Item_Socket_3": 70001980,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211660,
+    "Type": 14,
+    "Item_Socket_0": 70003020,
+    "Item_Socket_1": 70003021,
+    "Item_Socket_2": 70003022,
+    "Item_Socket_3": 70003023,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211671,
+    "Type": 14,
+    "Item_Socket_0": 70003061,
+    "Item_Socket_1": 70003062,
+    "Item_Socket_2": 70003063,
+    "Item_Socket_3": 70003064,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211682,
+    "Type": 14,
+    "Item_Socket_0": 70003073,
+    "Item_Socket_1": 70003074,
+    "Item_Socket_2": 70003075,
+    "Item_Socket_3": 70003076,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211692,
+    "Type": 15,
+    "Item_Socket_0": 70003077,
+    "Item_Socket_1": 70003078,
+    "Item_Socket_2": 70003079,
+    "Item_Socket_3": 70003080,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211780,
+    "Type": 15,
+    "Item_Socket_0": 70003220,
+    "Item_Socket_1": 70003221,
+    "Item_Socket_2": 70003222,
+    "Item_Socket_3": 70003223,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211790,
+    "Type": 19,
+    "Item_Socket_0": 70003224,
+    "Item_Socket_1": 70003225,
+    "Item_Socket_2": 70003226,
+    "Item_Socket_3": 70003227,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 211800,
+    "Type": 15,
+    "Item_Socket_0": 70003228,
+    "Item_Socket_1": 70003229,
+    "Item_Socket_2": 70003230,
+    "Item_Socket_3": 70003231,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 220240,
+    "Type": 15,
+    "Item_Socket_0": 12710558,
+    "Item_Socket_1": 12710477,
+    "Item_Socket_2": 12710751,
+    "Item_Socket_3": 12710752,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 300121,
+    "Type": 18,
+    "Item_Socket_0": 12711129,
+    "Item_Socket_1": 12711193,
+    "Item_Socket_2": 12711249,
+    "Item_Socket_3": 12711305,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 300261,
+    "Type": 18,
+    "Item_Socket_0": 70000524,
+    "Item_Socket_1": 70000525,
+    "Item_Socket_2": 70000526,
+    "Item_Socket_3": 70000527,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 300262,
+    "Type": 18,
+    "Item_Socket_0": 70000528,
+    "Item_Socket_1": 70000529,
+    "Item_Socket_2": 70000530,
+    "Item_Socket_3": 70000531,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 300301,
+    "Type": 18,
+    "Item_Socket_0": 12710581,
+    "Item_Socket_1": 12710678,
+    "Item_Socket_2": 12710679,
+    "Item_Socket_3": 12710680,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 300302,
+    "Type": 18,
+    "Item_Socket_0": 12710578,
+    "Item_Socket_1": 12710672,
+    "Item_Socket_2": 12710673,
+    "Item_Socket_3": 12710674,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 300340,
+    "Type": 18,
+    "Item_Socket_0": 12711125,
+    "Item_Socket_1": 12711189,
+    "Item_Socket_2": 12711245,
+    "Item_Socket_3": 12711301,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 300470,
+    "Type": 18,
+    "Item_Socket_0": 12711123,
+    "Item_Socket_1": 12711187,
+    "Item_Socket_2": 12711243,
+    "Item_Socket_3": 12711299,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 300600,
+    "Type": 18,
+    "Item_Socket_0": 70000797,
+    "Item_Socket_1": 70000798,
+    "Item_Socket_2": 70000799,
+    "Item_Socket_3": 70000800,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 300630,
+    "Type": 18,
+    "Item_Socket_0": 70000801,
+    "Item_Socket_1": 70000802,
+    "Item_Socket_2": 70000803,
+    "Item_Socket_3": 70000804,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 300660,
+    "Type": 18,
+    "Item_Socket_0": 70000935,
+    "Item_Socket_1": 70000936,
+    "Item_Socket_2": 70000937,
+    "Item_Socket_3": 70000938,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320030,
+    "Type": 18,
+    "Item_Socket_0": 70000470,
+    "Item_Socket_1": 70000471,
+    "Item_Socket_2": 70000472,
+    "Item_Socket_3": 70000473,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320040,
+    "Type": 18,
+    "Item_Socket_0": 13231076,
+    "Item_Socket_1": 13231077,
+    "Item_Socket_2": 13231078,
+    "Item_Socket_3": 13231079,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320050,
+    "Type": 18,
+    "Item_Socket_0": 13231056,
+    "Item_Socket_1": 13231057,
+    "Item_Socket_2": 13231058,
+    "Item_Socket_3": 13231059,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320060,
+    "Type": 18,
+    "Item_Socket_0": 13231060,
+    "Item_Socket_1": 13231061,
+    "Item_Socket_2": 13231062,
+    "Item_Socket_3": 13231063,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320070,
+    "Type": 18,
+    "Item_Socket_0": 13231052,
+    "Item_Socket_1": 13231053,
+    "Item_Socket_2": 13231054,
+    "Item_Socket_3": 13231055,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320080,
+    "Type": 18,
+    "Item_Socket_0": 13231064,
+    "Item_Socket_1": 13231065,
+    "Item_Socket_2": 13231066,
+    "Item_Socket_3": 13231067,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320090,
+    "Type": 18,
+    "Item_Socket_0": 13231072,
+    "Item_Socket_1": 13231073,
+    "Item_Socket_2": 13231074,
+    "Item_Socket_3": 13231075,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320100,
+    "Type": 18,
+    "Item_Socket_0": 13231080,
+    "Item_Socket_1": 13231081,
+    "Item_Socket_2": 13231082,
+    "Item_Socket_3": 13231083,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320110,
+    "Type": 18,
+    "Item_Socket_0": 13231008,
+    "Item_Socket_1": 13231009,
+    "Item_Socket_2": 13231010,
+    "Item_Socket_3": 13231011,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320120,
+    "Type": 18,
+    "Item_Socket_0": 13231032,
+    "Item_Socket_1": 13231033,
+    "Item_Socket_2": 13231034,
+    "Item_Socket_3": 13231035,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320130,
+    "Type": 18,
+    "Item_Socket_0": 13231028,
+    "Item_Socket_1": 13231029,
+    "Item_Socket_2": 13231030,
+    "Item_Socket_3": 13231031,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320140,
+    "Type": 18,
+    "Item_Socket_0": 13231040,
+    "Item_Socket_1": 13231041,
+    "Item_Socket_2": 13231042,
+    "Item_Socket_3": 13231043,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320150,
+    "Type": 18,
+    "Item_Socket_0": 13231048,
+    "Item_Socket_1": 13231049,
+    "Item_Socket_2": 13231050,
+    "Item_Socket_3": 13231051,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320160,
+    "Type": 18,
+    "Item_Socket_0": 13231016,
+    "Item_Socket_1": 13231017,
+    "Item_Socket_2": 13231018,
+    "Item_Socket_3": 13231019,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320170,
+    "Type": 18,
+    "Item_Socket_0": 13231024,
+    "Item_Socket_1": 13231025,
+    "Item_Socket_2": 13231026,
+    "Item_Socket_3": 13231027,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320180,
+    "Type": 18,
+    "Item_Socket_0": 13231084,
+    "Item_Socket_1": 13231085,
+    "Item_Socket_2": 13231086,
+    "Item_Socket_3": 13231087,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320190,
+    "Type": 18,
+    "Item_Socket_0": 13231020,
+    "Item_Socket_1": 13231021,
+    "Item_Socket_2": 13231022,
+    "Item_Socket_3": 13231023,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320200,
+    "Type": 18,
+    "Item_Socket_0": 13231068,
+    "Item_Socket_1": 13231069,
+    "Item_Socket_2": 13231070,
+    "Item_Socket_3": 13231071,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320210,
+    "Type": 18,
+    "Item_Socket_0": 13231044,
+    "Item_Socket_1": 13231045,
+    "Item_Socket_2": 13231046,
+    "Item_Socket_3": 13231047,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320220,
+    "Type": 18,
+    "Item_Socket_0": 13231005,
+    "Item_Socket_1": 13231004,
+    "Item_Socket_2": 13231006,
+    "Item_Socket_3": 13231007,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320230,
+    "Type": 18,
+    "Item_Socket_0": 13231036,
+    "Item_Socket_1": 13231037,
+    "Item_Socket_2": 13231038,
+    "Item_Socket_3": 13231039,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320250,
+    "Type": 18,
+    "Item_Socket_0": 13231088,
+    "Item_Socket_1": 13231089,
+    "Item_Socket_2": 13231090,
+    "Item_Socket_3": 13231091,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320260,
+    "Type": 18,
+    "Item_Socket_0": 13231092,
+    "Item_Socket_1": 13231093,
+    "Item_Socket_2": 13231094,
+    "Item_Socket_3": 13231095,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320270,
+    "Type": 18,
+    "Item_Socket_0": 13231096,
+    "Item_Socket_1": 13231097,
+    "Item_Socket_2": 13231098,
+    "Item_Socket_3": 13231099,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320280,
+    "Type": 18,
+    "Item_Socket_0": 70001185,
+    "Item_Socket_1": 70001186,
+    "Item_Socket_2": 70001187,
+    "Item_Socket_3": 70001188,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320290,
+    "Type": 18,
+    "Item_Socket_0": 70001189,
+    "Item_Socket_1": 70001190,
+    "Item_Socket_2": 70001191,
+    "Item_Socket_3": 70001192,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320300,
+    "Type": 18,
+    "Item_Socket_0": 70001193,
+    "Item_Socket_1": 70001194,
+    "Item_Socket_2": 70001195,
+    "Item_Socket_3": 70001196,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320310,
+    "Type": 18,
+    "Item_Socket_0": 70001201,
+    "Item_Socket_1": 70001202,
+    "Item_Socket_2": 70001203,
+    "Item_Socket_3": 70001204,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320320,
+    "Type": 18,
+    "Item_Socket_0": 70001205,
+    "Item_Socket_1": 70001206,
+    "Item_Socket_2": 70001207,
+    "Item_Socket_3": 70001208,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320330,
+    "Type": 18,
+    "Item_Socket_0": 70001209,
+    "Item_Socket_1": 70001210,
+    "Item_Socket_2": 70001211,
+    "Item_Socket_3": 70001212,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320340,
+    "Type": 18,
+    "Item_Socket_0": 70000483,
+    "Item_Socket_1": 70000484,
+    "Item_Socket_2": 70000485,
+    "Item_Socket_3": 70000486,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320350,
+    "Type": 18,
+    "Item_Socket_0": 70000487,
+    "Item_Socket_1": 70000488,
+    "Item_Socket_2": 70000489,
+    "Item_Socket_3": 70000490,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320360,
+    "Type": 18,
+    "Item_Socket_0": 70000491,
+    "Item_Socket_1": 70000492,
+    "Item_Socket_2": 70000493,
+    "Item_Socket_3": 70000494,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320370,
+    "Type": 18,
+    "Item_Socket_0": 70000495,
+    "Item_Socket_1": 70000496,
+    "Item_Socket_2": 70000497,
+    "Item_Socket_3": 70000498,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320380,
+    "Type": 18,
+    "Item_Socket_0": 70001213,
+    "Item_Socket_1": 70001214,
+    "Item_Socket_2": 70001215,
+    "Item_Socket_3": 70001216,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320390,
+    "Type": 18,
+    "Item_Socket_0": 70001217,
+    "Item_Socket_1": 70001218,
+    "Item_Socket_2": 70001219,
+    "Item_Socket_3": 70001220,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320400,
+    "Type": 18,
+    "Item_Socket_0": 12721369,
+    "Item_Socket_1": 12721370,
+    "Item_Socket_2": 12721371,
+    "Item_Socket_3": 12721372,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320410,
+    "Type": 18,
+    "Item_Socket_0": 70001263,
+    "Item_Socket_1": 70001264,
+    "Item_Socket_2": 70001265,
+    "Item_Socket_3": 70001266,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320421,
+    "Type": 18,
+    "Item_Socket_0": 70001299,
+    "Item_Socket_1": 70001300,
+    "Item_Socket_2": 70001301,
+    "Item_Socket_3": 70001302,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320422,
+    "Type": 18,
+    "Item_Socket_0": 70001303,
+    "Item_Socket_1": 70001304,
+    "Item_Socket_2": 70001305,
+    "Item_Socket_3": 70001306,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320431,
+    "Type": 18,
+    "Item_Socket_0": 70001419,
+    "Item_Socket_1": 70001420,
+    "Item_Socket_2": 70001421,
+    "Item_Socket_3": 70001422,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320431,
+    "Type": 18,
+    "Item_Socket_0": 70003163,
+    "Item_Socket_1": 70003164,
+    "Item_Socket_2": 70003165,
+    "Item_Socket_3": 70003166,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320442,
+    "Type": 18,
+    "Item_Socket_0": 70001427,
+    "Item_Socket_1": 70001428,
+    "Item_Socket_2": 70001429,
+    "Item_Socket_3": 70001430,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320442,
+    "Type": 18,
+    "Item_Socket_0": 70003171,
+    "Item_Socket_1": 70003172,
+    "Item_Socket_2": 70003173,
+    "Item_Socket_3": 70003174,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320450,
+    "Type": 18,
+    "Item_Socket_0": 70001509,
+    "Item_Socket_1": 70001510,
+    "Item_Socket_2": 70001511,
+    "Item_Socket_3": 70001512,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320460,
+    "Type": 18,
+    "Item_Socket_0": 70001521,
+    "Item_Socket_1": 70001522,
+    "Item_Socket_2": 70001523,
+    "Item_Socket_3": 70001524,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320470,
+    "Type": 18,
+    "Item_Socket_0": 12721381,
+    "Item_Socket_1": 12721382,
+    "Item_Socket_2": 12721383,
+    "Item_Socket_3": 12721384,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320480,
+    "Type": 18,
+    "Item_Socket_0": 70001731,
+    "Item_Socket_1": 70001732,
+    "Item_Socket_2": 70001733,
+    "Item_Socket_3": 70001734,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320490,
+    "Type": 18,
+    "Item_Socket_0": 70001735,
+    "Item_Socket_1": 70001736,
+    "Item_Socket_2": 70001737,
+    "Item_Socket_3": 70001738,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320500,
+    "Type": 18,
+    "Item_Socket_0": 70001739,
+    "Item_Socket_1": 70001740,
+    "Item_Socket_2": 70001741,
+    "Item_Socket_3": 70001742,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320510,
+    "Type": 18,
+    "Item_Socket_0": 70001743,
+    "Item_Socket_1": 70001744,
+    "Item_Socket_2": 70001745,
+    "Item_Socket_3": 70001746,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320520,
+    "Type": 18,
+    "Item_Socket_0": 70001747,
+    "Item_Socket_1": 70001748,
+    "Item_Socket_2": 70001749,
+    "Item_Socket_3": 70001750,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320530,
+    "Type": 18,
+    "Item_Socket_0": 70001751,
+    "Item_Socket_1": 70001752,
+    "Item_Socket_2": 70001753,
+    "Item_Socket_3": 70001754,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320540,
+    "Type": 18,
+    "Item_Socket_0": 70001755,
+    "Item_Socket_1": 70001756,
+    "Item_Socket_2": 70001757,
+    "Item_Socket_3": 70001758,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320550,
+    "Type": 18,
+    "Item_Socket_0": 70001759,
+    "Item_Socket_1": 70001760,
+    "Item_Socket_2": 70001761,
+    "Item_Socket_3": 70001762,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320560,
+    "Type": 18,
+    "Item_Socket_0": 70001763,
+    "Item_Socket_1": 70001764,
+    "Item_Socket_2": 70001765,
+    "Item_Socket_3": 70001766,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320570,
+    "Type": 18,
+    "Item_Socket_0": 70001767,
+    "Item_Socket_1": 70001768,
+    "Item_Socket_2": 70001769,
+    "Item_Socket_3": 70001770,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320580,
+    "Type": 18,
+    "Item_Socket_0": 70001779,
+    "Item_Socket_1": 70001780,
+    "Item_Socket_2": 70001781,
+    "Item_Socket_3": 70001782,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320590,
+    "Type": 18,
+    "Item_Socket_0": 12711768,
+    "Item_Socket_1": 12711769,
+    "Item_Socket_2": 12711770,
+    "Item_Socket_3": 12711771,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320600,
+    "Type": 18,
+    "Item_Socket_0": 12711772,
+    "Item_Socket_1": 12711773,
+    "Item_Socket_2": 12711774,
+    "Item_Socket_3": 12711775,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320610,
+    "Type": 18,
+    "Item_Socket_0": 12711776,
+    "Item_Socket_1": 12711777,
+    "Item_Socket_2": 12711778,
+    "Item_Socket_3": 12711779,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320620,
+    "Type": 18,
+    "Item_Socket_0": 12711780,
+    "Item_Socket_1": 12711781,
+    "Item_Socket_2": 12711782,
+    "Item_Socket_3": 12711783,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320630,
+    "Type": 18,
+    "Item_Socket_0": 12711784,
+    "Item_Socket_1": 12711785,
+    "Item_Socket_2": 12711786,
+    "Item_Socket_3": 12711787,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320641,
+    "Type": 18,
+    "Item_Socket_0": 70001969,
+    "Item_Socket_1": 70001970,
+    "Item_Socket_2": 70001971,
+    "Item_Socket_3": 70001972,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320642,
+    "Type": 18,
+    "Item_Socket_0": 70001981,
+    "Item_Socket_1": 70001982,
+    "Item_Socket_2": 70001983,
+    "Item_Socket_3": 70001984,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320651,
+    "Type": 18,
+    "Item_Socket_0": 70003065,
+    "Item_Socket_1": 70003066,
+    "Item_Socket_2": 70003067,
+    "Item_Socket_3": 70003068,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320660,
+    "Type": 18,
+    "Item_Socket_0": 13231105,
+    "Item_Socket_1": 13231107,
+    "Item_Socket_2": 13231109,
+    "Item_Socket_3": 13231110,
+    "Ratio": 20
+  },
+  {
+    "Theme_Type": 320661,
+    "Type": 18,
+    "Item_Socket_0": 13231112,
+    "Item_Socket_1": 13231114,
+    "Item_Socket_2": 13231116,
+    "Item_Socket_3": 13231117,
+    "Ratio": 20
+  },
+  {
+    "Theme_Type": 320662,
+    "Type": 18,
+    "Item_Socket_0": 13231119,
+    "Item_Socket_1": 13231120,
+    "Item_Socket_2": 13231121,
+    "Item_Socket_3": 13231122,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320663,
+    "Type": 18,
+    "Item_Socket_0": 13231124,
+    "Item_Socket_1": 13231125,
+    "Item_Socket_2": 13231126,
+    "Item_Socket_3": 13231127,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320664,
+    "Type": 18,
+    "Item_Socket_0": 13231131,
+    "Item_Socket_1": 13231132,
+    "Item_Socket_2": 13231133,
+    "Item_Socket_3": 13231134,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320665,
+    "Type": 18,
+    "Item_Socket_0": 13231136,
+    "Item_Socket_1": 13231137,
+    "Item_Socket_2": 13231138,
+    "Item_Socket_3": 13231139,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320666,
+    "Type": 18,
+    "Item_Socket_0": 13231141,
+    "Item_Socket_1": 13231142,
+    "Item_Socket_2": 13231143,
+    "Item_Socket_3": 13231144,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320667,
+    "Type": 18,
+    "Item_Socket_0": 13231146,
+    "Item_Socket_1": 13231147,
+    "Item_Socket_2": 13231148,
+    "Item_Socket_3": 13231149,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320668,
+    "Type": 18,
+    "Item_Socket_0": 13231151,
+    "Item_Socket_1": 13231152,
+    "Item_Socket_2": 13231153,
+    "Item_Socket_3": 13231154,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320669,
+    "Type": 18,
+    "Item_Socket_0": 13231156,
+    "Item_Socket_1": 13231157,
+    "Item_Socket_2": 13231158,
+    "Item_Socket_3": 13231159,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320670,
+    "Type": 18,
+    "Item_Socket_0": 13231161,
+    "Item_Socket_1": 13231162,
+    "Item_Socket_2": 13231163,
+    "Item_Socket_3": 13231164,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320671,
+    "Type": 18,
+    "Item_Socket_0": 13231166,
+    "Item_Socket_1": 13231167,
+    "Item_Socket_2": 13231168,
+    "Item_Socket_3": 13231169,
+    "Ratio": 20
+  },
+  {
+    "Theme_Type": 320672,
+    "Type": 18,
+    "Item_Socket_0": 13231171,
+    "Item_Socket_1": 13231172,
+    "Item_Socket_2": 13231173,
+    "Item_Socket_3": 13231174,
+    "Ratio": 20
+  },
+  {
+    "Theme_Type": 320673,
+    "Type": 14,
+    "Item_Socket_0": 13231176,
+    "Item_Socket_1": 13231177,
+    "Item_Socket_2": 13231178,
+    "Item_Socket_3": 13231179,
+    "Ratio": 1
+  },
+  {
+    "Theme_Type": 320674,
+    "Type": 14,
+    "Item_Socket_0": 13231181,
+    "Item_Socket_1": 13231182,
+    "Item_Socket_2": 13231183,
+    "Item_Socket_3": 13231184,
+    "Ratio": 0
+  },
+  {
+    "Theme_Type": 320675,
+    "Type": 18,
+    "Item_Socket_0": 13231186,
+    "Item_Socket_1": 13231187,
+    "Item_Socket_2": 13231188,
+    "Item_Socket_3": 13231189,
+    "Ratio": 1
+  },
+  {
+    "Theme_Type": 320676,
+    "Type": 14,
+    "Item_Socket_0": 13231191,
+    "Item_Socket_1": 13231192,
+    "Item_Socket_2": 13231193,
+    "Item_Socket_3": 13231194,
+    "Ratio": 1
+  },
+  {
+    "Theme_Type": 320677,
+    "Type": 18,
+    "Item_Socket_0": 13231196,
+    "Item_Socket_1": 13231197,
+    "Item_Socket_2": 13231198,
+    "Item_Socket_3": 13231199,
+    "Ratio": 1
+  },
+  {
+    "Theme_Type": 320678,
+    "Type": 16,
+    "Item_Socket_0": 13231201,
+    "Item_Socket_1": 13231202,
+    "Item_Socket_2": 13231203,
+    "Item_Socket_3": 13231204,
+    "Ratio": 1
+  },
+  {
+    "Theme_Type": 320679,
+    "Type": 14,
+    "Item_Socket_0": 13231206,
+    "Item_Socket_1": 13231207,
+    "Item_Socket_2": 13231208,
+    "Item_Socket_3": 13231209,
+    "Ratio": 1
+  },
+  {
+    "Theme_Type": 320680,
+    "Type": 18,
+    "Item_Socket_0": 13231211,
+    "Item_Socket_1": 13231212,
+    "Item_Socket_2": 13231213,
+    "Item_Socket_3": 13231214,
+    "Ratio": 1
+  },
+  {
+    "Theme_Type": 320681,
+    "Type": 18,
+    "Item_Socket_0": 13231216,
+    "Item_Socket_1": 13231217,
+    "Item_Socket_2": 13231218,
+    "Item_Socket_3": 13231219,
+    "Ratio": 1
+  },
+  {
+    "Theme_Type": 320682,
+    "Type": 18,
+    "Item_Socket_0": 13231221,
+    "Item_Socket_1": 13231222,
+    "Item_Socket_2": 13231223,
+    "Item_Socket_3": 13231224,
+    "Ratio": 1
+  },
+  {
+    "Theme_Type": 320683,
+    "Type": 18,
+    "Item_Socket_0": 13231226,
+    "Item_Socket_1": 13231227,
+    "Item_Socket_2": 13231228,
+    "Item_Socket_3": 13231229,
+    "Ratio": 1
+  },
+  {
+    "Theme_Type": 320684,
+    "Type": 16,
+    "Item_Socket_0": 13231231,
+    "Item_Socket_1": 13231232,
+    "Item_Socket_2": 13231233,
+    "Item_Socket_3": 13231234,
+    "Ratio": 0
+  },
+  {
+    "Theme_Type": 320685,
+    "Type": 19,
+    "Item_Socket_0": 13231236,
+    "Item_Socket_1": 13231237,
+    "Item_Socket_2": 13231238,
+    "Item_Socket_3": 13231239,
+    "Ratio": 1
+  },
+  {
+    "Theme_Type": 320686,
+    "Type": 18,
+    "Item_Socket_0": 13231241,
+    "Item_Socket_1": 13231242,
+    "Item_Socket_2": 13231243,
+    "Item_Socket_3": 13231244,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320687,
+    "Type": 18,
+    "Item_Socket_0": 13231246,
+    "Item_Socket_1": 13231247,
+    "Item_Socket_2": 13231248,
+    "Item_Socket_3": 13231249,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320688,
+    "Type": 18,
+    "Item_Socket_0": 13231251,
+    "Item_Socket_1": 13231252,
+    "Item_Socket_2": 13231253,
+    "Item_Socket_3": 13231254,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320689,
+    "Type": 18,
+    "Item_Socket_0": 13231256,
+    "Item_Socket_1": 13231257,
+    "Item_Socket_2": 13231258,
+    "Item_Socket_3": 13231259,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320690,
+    "Type": 18,
+    "Item_Socket_0": 13231261,
+    "Item_Socket_1": 13231262,
+    "Item_Socket_2": 13231263,
+    "Item_Socket_3": 13231264,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320691,
+    "Type": 18,
+    "Item_Socket_0": 13231266,
+    "Item_Socket_1": 13231267,
+    "Item_Socket_2": 13231268,
+    "Item_Socket_3": 13231269,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320692,
+    "Type": 18,
+    "Item_Socket_0": 13231271,
+    "Item_Socket_1": 13231272,
+    "Item_Socket_2": 13231273,
+    "Item_Socket_3": 13231274,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320693,
+    "Type": 18,
+    "Item_Socket_0": 13231276,
+    "Item_Socket_1": 13231277,
+    "Item_Socket_2": 13231278,
+    "Item_Socket_3": 13231279,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320694,
+    "Type": 19,
+    "Item_Socket_0": 13231281,
+    "Item_Socket_1": 13231282,
+    "Item_Socket_2": 13231283,
+    "Item_Socket_3": 13231284,
+    "Ratio": 20
+  },
+  {
+    "Theme_Type": 320695,
+    "Type": 14,
+    "Item_Socket_0": 13231285,
+    "Item_Socket_1": 13231286,
+    "Item_Socket_2": 13231287,
+    "Item_Socket_3": 13231288,
+    "Ratio": 20
+  },
+  {
+    "Theme_Type": 320696,
+    "Type": 18,
+    "Item_Socket_0": 13231289,
+    "Item_Socket_1": 13231290,
+    "Item_Socket_2": 13231291,
+    "Item_Socket_3": 13231292,
+    "Ratio": 20
+  },
+  {
+    "Theme_Type": 320697,
+    "Type": 18,
+    "Item_Socket_0": 13231294,
+    "Item_Socket_1": 13231295,
+    "Item_Socket_2": 13231296,
+    "Item_Socket_3": 13231297,
+    "Ratio": 20
+  },
+  {
+    "Theme_Type": 320698,
+    "Type": 19,
+    "Item_Socket_0": 13231299,
+    "Item_Socket_1": 13231300,
+    "Item_Socket_2": 13231301,
+    "Item_Socket_3": 13231302,
+    "Ratio": 20
+  },
+  {
+    "Theme_Type": 320699,
+    "Type": 14,
+    "Item_Socket_0": 13231304,
+    "Item_Socket_1": 13231305,
+    "Item_Socket_2": 13231306,
+    "Item_Socket_3": 13231307,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320700,
+    "Type": 14,
+    "Item_Socket_0": 13231309,
+    "Item_Socket_1": 13231310,
+    "Item_Socket_2": 13231311,
+    "Item_Socket_3": 13231312,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320701,
+    "Type": 19,
+    "Item_Socket_0": 13231314,
+    "Item_Socket_1": 13231315,
+    "Item_Socket_2": 13231316,
+    "Item_Socket_3": 13231317,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320702,
+    "Type": 14,
+    "Item_Socket_0": 13231319,
+    "Item_Socket_1": 13231320,
+    "Item_Socket_2": 13231321,
+    "Item_Socket_3": 13231322,
+    "Ratio": 20
+  },
+  {
+    "Theme_Type": 320703,
+    "Type": 15,
+    "Item_Socket_0": 13231324,
+    "Item_Socket_1": 13231325,
+    "Item_Socket_2": 13231326,
+    "Item_Socket_3": 13231327,
+    "Ratio": 20
+  },
+  {
+    "Theme_Type": 320704,
+    "Type": 14,
+    "Item_Socket_0": 13231329,
+    "Item_Socket_1": 13231330,
+    "Item_Socket_2": 13231331,
+    "Item_Socket_3": 13231332,
+    "Ratio": 20
+  },
+  {
+    "Theme_Type": 320705,
+    "Type": 14,
+    "Item_Socket_0": 13231334,
+    "Item_Socket_1": 13231335,
+    "Item_Socket_2": 13231336,
+    "Item_Socket_3": 13231337,
+    "Ratio": 20
+  },
+  {
+    "Theme_Type": 320706,
+    "Type": 15,
+    "Item_Socket_0": 13231339,
+    "Item_Socket_1": 13231340,
+    "Item_Socket_2": 13231341,
+    "Item_Socket_3": 13231342,
+    "Ratio": 20
+  },
+  {
+    "Theme_Type": 320707,
+    "Type": 15,
+    "Item_Socket_0": 13231344,
+    "Item_Socket_1": 13231345,
+    "Item_Socket_2": 13231346,
+    "Item_Socket_3": 13231347,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320708,
+    "Type": 15,
+    "Item_Socket_0": 13231349,
+    "Item_Socket_1": 13231350,
+    "Item_Socket_2": 13231351,
+    "Item_Socket_3": 13231352,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320709,
+    "Type": 14,
+    "Item_Socket_0": 13231354,
+    "Item_Socket_1": 13231355,
+    "Item_Socket_2": 13231356,
+    "Item_Socket_3": 13231357,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320710,
+    "Type": 15,
+    "Item_Socket_0": 13231359,
+    "Item_Socket_1": 13231360,
+    "Item_Socket_2": 13231361,
+    "Item_Socket_3": 13231362,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320711,
+    "Type": 18,
+    "Item_Socket_0": 13231364,
+    "Item_Socket_1": 13231365,
+    "Item_Socket_2": 13231366,
+    "Item_Socket_3": 13231367,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320712,
+    "Type": 18,
+    "Item_Socket_0": 13231369,
+    "Item_Socket_1": 13231370,
+    "Item_Socket_2": 13231371,
+    "Item_Socket_3": 13231372,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320713,
+    "Type": 18,
+    "Item_Socket_0": 13231374,
+    "Item_Socket_1": 13231375,
+    "Item_Socket_2": 13231376,
+    "Item_Socket_3": 13231377,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320714,
+    "Type": 18,
+    "Item_Socket_0": 13231379,
+    "Item_Socket_1": 13231380,
+    "Item_Socket_2": 13231381,
+    "Item_Socket_3": 13231382,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320715,
+    "Type": 18,
+    "Item_Socket_0": 13231384,
+    "Item_Socket_1": 13231385,
+    "Item_Socket_2": 13231386,
+    "Item_Socket_3": 13231387,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320716,
+    "Type": 14,
+    "Item_Socket_0": 13231389,
+    "Item_Socket_1": 13231390,
+    "Item_Socket_2": 13231391,
+    "Item_Socket_3": 13231392,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320717,
+    "Type": 14,
+    "Item_Socket_0": 13231394,
+    "Item_Socket_1": 13231395,
+    "Item_Socket_2": 13231396,
+    "Item_Socket_3": 13231397,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320718,
+    "Type": 14,
+    "Item_Socket_0": 13231399,
+    "Item_Socket_1": 13231400,
+    "Item_Socket_2": 13231401,
+    "Item_Socket_3": 13231402,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320719,
+    "Type": 14,
+    "Item_Socket_0": 13231404,
+    "Item_Socket_1": 13231405,
+    "Item_Socket_2": 13231406,
+    "Item_Socket_3": 13231407,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320720,
+    "Type": 14,
+    "Item_Socket_0": 13231409,
+    "Item_Socket_1": 13231410,
+    "Item_Socket_2": 13231411,
+    "Item_Socket_3": 13231412,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320721,
+    "Type": 19,
+    "Item_Socket_0": 13231414,
+    "Item_Socket_1": 13231415,
+    "Item_Socket_2": 13231416,
+    "Item_Socket_3": 13231417,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320722,
+    "Type": 19,
+    "Item_Socket_0": 13231419,
+    "Item_Socket_1": 13231420,
+    "Item_Socket_2": 13231421,
+    "Item_Socket_3": 13231422,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320723,
+    "Type": 19,
+    "Item_Socket_0": 13231424,
+    "Item_Socket_1": 13231425,
+    "Item_Socket_2": 13231426,
+    "Item_Socket_3": 13231427,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320724,
+    "Type": 19,
+    "Item_Socket_0": 13231429,
+    "Item_Socket_1": 13231430,
+    "Item_Socket_2": 13231431,
+    "Item_Socket_3": 13231432,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320725,
+    "Type": 19,
+    "Item_Socket_0": 13231434,
+    "Item_Socket_1": 13231435,
+    "Item_Socket_2": 13231436,
+    "Item_Socket_3": 13231437,
+    "Ratio": 100
+  },
+  {
+    "Theme_Type": 320726,
+    "Type": 18,
+    "Item_Socket_0": 13231439,
+    "Item_Socket_1": 13231440,
+    "Item_Socket_2": 13231441,
+    "Item_Socket_3": 13231442,
+    "Ratio": 100
+  }
+]

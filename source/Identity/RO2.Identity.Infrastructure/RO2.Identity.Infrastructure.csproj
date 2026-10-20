@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <!-- Provider-NEUTRAL Identity infrastructure: the BCrypt password hasher and the system clock, used under
+       any store provider. The Mongo and Postgres account stores live in the sibling
+       RO2.Identity.Infrastructure.Mongo / .Postgres projects, so no store driver is referenced here. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Identity.Domain\RO2.Identity.Domain.csproj" />
+    <ProjectReference Include="..\RO2.Identity.Application\RO2.Identity.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" />
+  </ItemGroup>
+
+</Project>

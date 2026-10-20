@@ -1,0 +1,226 @@
+[
+  {
+    "Group_ID": 1,
+    "Group_Name_(기획)": "퀘스트",
+    "Destination_ID": 1,
+    "Destination_String": "묘르닐 산맥",
+    "Destination_String_ID": 10096,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 1,
+    "Group_Name_(기획)": "퀘스트",
+    "Destination_ID": 2,
+    "Destination_String": "남부 평원",
+    "Destination_String_ID": 10097,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 1,
+    "Group_Name_(기획)": "퀘스트",
+    "Destination_ID": 3,
+    "Destination_String": "이즈루드 언덕",
+    "Destination_String_ID": 10098,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 1,
+    "Group_Name_(기획)": "퀘스트",
+    "Destination_ID": 4,
+    "Destination_String": "페이욘 숲",
+    "Destination_String_ID": 10099,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 1,
+    "Group_Name_(기획)": "퀘스트",
+    "Destination_ID": 5,
+    "Destination_String": "메이플 숲",
+    "Destination_String_ID": 10100,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 1,
+    "Group_Name_(기획)": "퀘스트",
+    "Destination_ID": 6,
+    "Destination_String": "갈라진 평원",
+    "Destination_String_ID": 10101,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 1,
+    "Group_Name_(기획)": "퀘스트",
+    "Destination_ID": 7,
+    "Destination_String": "베르타 삼각주",
+    "Destination_String_ID": 10102,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 1,
+    "Group_Name_(기획)": "퀘스트",
+    "Destination_ID": 8,
+    "Destination_String": "소그라트 사막",
+    "Destination_String_ID": 10103,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 1,
+    "Group_Name_(기획)": "퀘스트",
+    "Destination_ID": 9,
+    "Destination_String": "축복의 길",
+    "Destination_String_ID": 10104,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 2,
+    "Group_Name_(기획)": "파티 던전",
+    "Destination_ID": 10,
+    "Destination_String": "프론테라 지하수로",
+    "Destination_String_ID": 10105,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 2,
+    "Group_Name_(기획)": "파티 던전",
+    "Destination_ID": 11,
+    "Destination_String": "늑대굴",
+    "Destination_String_ID": 10106,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 2,
+    "Group_Name_(기획)": "파티 던전",
+    "Destination_ID": 12,
+    "Destination_String": "이즈루드 동굴",
+    "Destination_String_ID": 10107,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 2,
+    "Group_Name_(기획)": "파티 던전",
+    "Destination_ID": 13,
+    "Destination_String": "해신의 신전",
+    "Destination_String_ID": 10108,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 2,
+    "Group_Name_(기획)": "파티 던전",
+    "Destination_ID": 14,
+    "Destination_String": "비림총",
+    "Destination_String_ID": 10109,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 2,
+    "Group_Name_(기획)": "파티 던전",
+    "Destination_ID": 15,
+    "Destination_String": "버려진 연구소",
+    "Destination_String_ID": 10110,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 2,
+    "Group_Name_(기획)": "파티 던전",
+    "Destination_ID": 16,
+    "Destination_String": "맹독의 나락",
+    "Destination_String_ID": 10111,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 2,
+    "Group_Name_(기획)": "파티 던전",
+    "Destination_ID": 17,
+    "Destination_String": "저주받은 유령선",
+    "Destination_String_ID": 10112,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 2,
+    "Group_Name_(기획)": "파티 던전",
+    "Destination_ID": 18,
+    "Destination_String": "모래폭픙 요새",
+    "Destination_String_ID": 10113,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 2,
+    "Group_Name_(기획)": "파티 던전",
+    "Destination_ID": 19,
+    "Destination_String": "산다르만 요새",
+    "Destination_String_ID": 10114,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 2,
+    "Group_Name_(기획)": "파티 던전",
+    "Destination_ID": 27,
+    "Destination_String": "오시리스의 무덤",
+    "Destination_String_ID": 11917,
+    "UpdateCode": "컨텐츠_자와이"
+  },
+  {
+    "Group_ID": 2,
+    "Group_Name_(기획)": "파티 던전",
+    "Destination_ID": 28,
+    "Destination_String": "침묵의 회랑",
+    "Destination_String_ID": 15233,
+    "UpdateCode": "컨텐츠_자와이"
+  },
+  {
+    "Group_ID": 2,
+    "Group_Name_(기획)": "파티 던전",
+    "Destination_ID": 29,
+    "Destination_String": "어쌔신의 성소",
+    "Destination_String_ID": 15234,
+    "UpdateCode": "컨텐츠_자와이"
+  },
+  {
+    "Group_ID": 3,
+    "Group_Name_(기획)": "공격대 던전",
+    "Destination_ID": 20,
+    "Destination_String": "바포메트의 정원",
+    "Destination_String_ID": 10115,
+    "UpdateCode": "컨텐츠_바포메트의 정원"
+  },
+  {
+    "Group_ID": 3,
+    "Group_Name_(기획)": "공격대 던전",
+    "Destination_ID": 21,
+    "Destination_String": "PvE 아레나",
+    "Destination_String_ID": 10116,
+    "UpdateCode": "컨텐츠_아레나"
+  },
+  {
+    "Group_ID": 3,
+    "Group_Name_(기획)": "공격대 던전",
+    "Destination_ID": 22,
+    "Destination_String": "심연의 지하수로",
+    "Destination_String_ID": 10117,
+    "UpdateCode": "컨텐츠_심연의지하수로"
+  },
+  {
+    "Group_ID": 3,
+    "Group_Name_(기획)": "공격대 던전",
+    "Destination_ID": 23,
+    "Destination_String": "절망의 무저갱",
+    "Destination_String_ID": 10118,
+    "UpdateCode": "컨텐츠_절망의무저갱"
+  },
+  {
+    "Group_ID": 3,
+    "Group_Name_(기획)": "공격대 던전",
+    "Destination_ID": 25,
+    "Destination_String": "카오스",
+    "Destination_String_ID": 10120,
+    "UpdateCode": "컨텐츠_카오스_씨드룬"
+  },
+  {
+    "Group_ID": 4,
+    "Group_Name_(기획)": "파티 던전",
+    "Destination_ID": 24,
+    "Destination_String": "PvP 아레나",
+    "Destination_String_ID": 10119,
+    "UpdateCode": "컨텐츠_아레나"
+  }
+]

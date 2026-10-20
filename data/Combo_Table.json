@@ -1,0 +1,182 @@
+[
+  {
+    "Class_ID": 1,
+    "SkillGroup_ID": 0,
+    "Skill_Lv": 0,
+    "Combo_UI_Location": 1,
+    "ComboBuff_ID": 1303,
+    "Max_Num": 3,
+    "Icon_Num": 1,
+    "Bar_Color_Num": 2
+  },
+  {
+    "Class_ID": 3,
+    "SkillGroup_ID": 0,
+    "Skill_Lv": 0,
+    "Combo_UI_Location": 1,
+    "ComboBuff_ID": 3103,
+    "Max_Num": 100,
+    "Icon_Num": 4,
+    "Bar_Color_Num": 1
+  },
+  {
+    "Class_ID": 4,
+    "SkillGroup_ID": 0,
+    "Skill_Lv": 0,
+    "Combo_UI_Location": 1,
+    "ComboBuff_ID": 4101,
+    "Max_Num": 5,
+    "Icon_Num": 8,
+    "Bar_Color_Num": 4
+  },
+  {
+    "Class_ID": 5,
+    "SkillGroup_ID": 0,
+    "Skill_Lv": 0,
+    "Combo_UI_Location": 1,
+    "ComboBuff_ID": 5109,
+    "Max_Num": 3,
+    "Icon_Num": 0,
+    "Bar_Color_Num": 0
+  },
+  {
+    "Class_ID": 6,
+    "SkillGroup_ID": 1201,
+    "Skill_Lv": 0,
+    "Combo_UI_Location": 1,
+    "ComboBuff_ID": 1303,
+    "Max_Num": 3,
+    "Icon_Num": 1,
+    "Bar_Color_Num": 2
+  },
+  {
+    "Class_ID": 6,
+    "SkillGroup_ID": 1201,
+    "Skill_Lv": 1,
+    "Combo_UI_Location": 1,
+    "ComboBuff_ID": 1201,
+    "Max_Num": 50,
+    "Icon_Num": 7,
+    "Bar_Color_Num": 3
+  },
+  {
+    "Class_ID": 6,
+    "SkillGroup_ID": 1201,
+    "Skill_Lv": 2,
+    "Combo_UI_Location": 1,
+    "ComboBuff_ID": 1201,
+    "Max_Num": 100,
+    "Icon_Num": 7,
+    "Bar_Color_Num": 3
+  },
+  {
+    "Class_ID": 7,
+    "SkillGroup_ID": 0,
+    "Skill_Lv": 0,
+    "Combo_UI_Location": 1,
+    "ComboBuff_ID": 1303,
+    "Max_Num": 3,
+    "Icon_Num": 1,
+    "Bar_Color_Num": 2
+  },
+  {
+    "Class_ID": 8,
+    "SkillGroup_ID": 0,
+    "Skill_Lv": 0,
+    "Combo_UI_Location": 1,
+    "ComboBuff_ID": 2246,
+    "Max_Num": 100,
+    "Icon_Num": 6,
+    "Bar_Color_Num": 3
+  },
+  {
+    "Class_ID": 9,
+    "SkillGroup_ID": 0,
+    "Skill_Lv": 0,
+    "Combo_UI_Location": 1,
+    "ComboBuff_ID": 21091,
+    "Max_Num": 4,
+    "Icon_Num": 9,
+    "Bar_Color_Num": 0
+  },
+  {
+    "Class_ID": 10,
+    "SkillGroup_ID": 0,
+    "Skill_Lv": 0,
+    "Combo_UI_Location": 1,
+    "ComboBuff_ID": 3103,
+    "Max_Num": 100,
+    "Icon_Num": 4,
+    "Bar_Color_Num": 1
+  },
+  {
+    "Class_ID": 11,
+    "SkillGroup_ID": 0,
+    "Skill_Lv": 0,
+    "Combo_UI_Location": 1,
+    "ComboBuff_ID": 3304,
+    "Max_Num": 100,
+    "Icon_Num": 2,
+    "Bar_Color_Num": 0
+  },
+  {
+    "Class_ID": 12,
+    "SkillGroup_ID": 0,
+    "Skill_Lv": 0,
+    "Combo_UI_Location": 1,
+    "ComboBuff_ID": 4101,
+    "Max_Num": 5,
+    "Icon_Num": 8,
+    "Bar_Color_Num": 4
+  },
+  {
+    "Class_ID": 13,
+    "SkillGroup_ID": 0,
+    "Skill_Lv": 0,
+    "Combo_UI_Location": 1,
+    "ComboBuff_ID": 4101,
+    "Max_Num": 5,
+    "Icon_Num": 8,
+    "Bar_Color_Num": 4
+  },
+  {
+    "Class_ID": 14,
+    "SkillGroup_ID": 0,
+    "Skill_Lv": 0,
+    "Combo_UI_Location": 1,
+    "ComboBuff_ID": 5109,
+    "Max_Num": 3,
+    "Icon_Num": 0,
+    "Bar_Color_Num": 0
+  },
+  {
+    "Class_ID": 15,
+    "SkillGroup_ID": 0,
+    "Skill_Lv": 0,
+    "Combo_UI_Location": 1,
+    "ComboBuff_ID": 5304,
+    "Max_Num": 3,
+    "Icon_Num": 3,
+    "Bar_Color_Num": 1
+  },
+  {
+    "Class_ID": 16,
+    "SkillGroup_ID": 0,
+    "Skill_Lv": 0,
+    "Combo_UI_Location": 3,
+    "ComboBuff_ID": 6110,
+    "Max_Num": 5,
+    "Icon_Num": 0,
+    "Bar_Color_Num": 0
+  },
+  {
+    "Class_ID": 17,
+    "SkillGroup_ID": 0,
+    "Skill_Lv": 0,
+    "Combo_UI_Location": 3,
+    "ComboBuff_ID": 6110,
+    "Max_Num": 5,
+    "Icon_Num": 0,
+    "Bar_Color_Num": 0
+  }
+]

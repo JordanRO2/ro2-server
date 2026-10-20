@@ -1,0 +1,116 @@
+[
+  {
+    "Pattern_Index": 1,
+    "Pattern_Name_E": "no_pattern",
+    "Pattern_Name_H": "패턴없음",
+    "Pattern_Path_Filename": "Item/PCParts/Weave/Weave_000.png"
+  },
+  {
+    "Pattern_Index": 2,
+    "Pattern_Name_E": "square_pattern",
+    "Pattern_Name_H": "네모점",
+    "Pattern_Path_Filename": "Item/PCParts/Weave/Weave_002.png"
+  },
+  {
+    "Pattern_Index": 3,
+    "Pattern_Name_E": "flower",
+    "Pattern_Name_H": "꽃무늬",
+    "Pattern_Path_Filename": "Item/PCParts/Weave/Weave_003.png"
+  },
+  {
+    "Pattern_Index": 4,
+    "Pattern_Name_E": "net_pattern",
+    "Pattern_Name_H": "그물무늬",
+    "Pattern_Path_Filename": "Item/PCParts/Weave/Weave_004.png"
+  },
+  {
+    "Pattern_Index": 5,
+    "Pattern_Name_E": "cross_pattern",
+    "Pattern_Name_H": "격자무늬",
+    "Pattern_Path_Filename": "Item/PCParts/Weave/Weave_005.png"
+  },
+  {
+    "Pattern_Index": 6,
+    "Pattern_Name_E": "squareinsquare",
+    "Pattern_Name_H": "네모네모",
+    "Pattern_Path_Filename": "Item/PCParts/Weave/Weave_006.png"
+  },
+  {
+    "Pattern_Index": 7,
+    "Pattern_Name_E": "checked_square",
+    "Pattern_Name_H": "네모체크",
+    "Pattern_Path_Filename": "Item/PCParts/Weave/Weave_007.png"
+  },
+  {
+    "Pattern_Index": 8,
+    "Pattern_Name_E": "mosi_pattern",
+    "Pattern_Name_H": "모시무늬",
+    "Pattern_Path_Filename": "Item/PCParts/Weave/Weave_008.png"
+  },
+  {
+    "Pattern_Index": 9,
+    "Pattern_Name_E": "cristal_pattern",
+    "Pattern_Name_H": "수정무늬",
+    "Pattern_Path_Filename": "Item/PCParts/Weave/Weave_009.png"
+  },
+  {
+    "Pattern_Index": 10,
+    "Pattern_Name_E": "diamond_pattern",
+    "Pattern_Name_H": "다이아몬드",
+    "Pattern_Path_Filename": "Item/PCParts/Weave/Weave_010.png"
+  },
+  {
+    "Pattern_Index": 11,
+    "Pattern_Name_E": "point_pattern",
+    "Pattern_Name_H": "점박이무늬",
+    "Pattern_Path_Filename": "Item/PCParts/Weave/Weave_011.png"
+  },
+  {
+    "Pattern_Index": 12,
+    "Pattern_Name_E": "comb_line",
+    "Pattern_Name_H": "빗살무늬",
+    "Pattern_Path_Filename": "Item/PCParts/Weave/Weave_012.png"
+  },
+  {
+    "Pattern_Index": 13,
+    "Pattern_Name_E": "line_point_pattern",
+    "Pattern_Name_H": "점선무늬",
+    "Pattern_Path_Filename": "Item/PCParts/Weave/Weave_013.png"
+  },
+  {
+    "Pattern_Index": 14,
+    "Pattern_Name_E": "padding_pattern",
+    "Pattern_Name_H": "패딩무늬",
+    "Pattern_Path_Filename": "Item/PCParts/Weave/Weave_014.png"
+  },
+  {
+    "Pattern_Index": 15,
+    "Pattern_Name_E": "circle_pattern",
+    "Pattern_Name_H": "큰점무늬",
+    "Pattern_Path_Filename": "Item/PCParts/Weave/Weave_015.png"
+  },
+  {
+    "Pattern_Index": 16,
+    "Pattern_Name_E": "haze_pattern",
+    "Pattern_Name_H": "아지랑이",
+    "Pattern_Path_Filename": "Item/PCParts/Weave/Weave_016.png"
+  },
+  {
+    "Pattern_Index": 17,
+    "Pattern_Name_E": "leaf_pattern",
+    "Pattern_Name_H": "잎무늬",
+    "Pattern_Path_Filename": "Item/PCParts/Weave/Weave_017.png"
+  },
+  {
+    "Pattern_Index": 18,
+    "Pattern_Name_E": "modern_pattern",
+    "Pattern_Name_H": "모던무늬",
+    "Pattern_Path_Filename": "Item/PCParts/Weave/Weave_018.png"
+  },
+  {
+    "Pattern_Index": 19,
+    "Pattern_Name_E": "x_pattern",
+    "Pattern_Name_H": "엑스문양",
+    "Pattern_Path_Filename": "Item/PCParts/Weave/Weave_001.png"
+  }
+]

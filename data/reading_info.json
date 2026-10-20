@@ -1,0 +1,394 @@
+[
+  {
+    "Item_ID": 30000037,
+    "Name": "연습용 편지",
+    "Reading_Type": 2,
+    "String_Reading_ID": 1340000055,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 30000038,
+    "Name": "연습용 책",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000056,
+    "Send_Server": 0
+  },
+  {
+    "Item_ID": 40000021,
+    "Name": "추모 기도문",
+    "Reading_Type": 2,
+    "String_Reading_ID": 1340000057,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40000030,
+    "Name": "시몽의 역사책",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000058,
+    "Send_Server": 0
+  },
+  {
+    "Item_ID": 40000126,
+    "Name": "아버지의 편지",
+    "Reading_Type": 2,
+    "String_Reading_ID": 1340000059,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40000127,
+    "Name": "장비를 효과적으로 빼돌리는 법",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000060,
+    "Send_Server": 0
+  },
+  {
+    "Item_ID": 40000180,
+    "Name": "샘플 조사 보고서",
+    "Reading_Type": 2,
+    "String_Reading_ID": 1340000061,
+    "Send_Server": 0
+  },
+  {
+    "Item_ID": 40000197,
+    "Name": "복원된 편지",
+    "Reading_Type": 2,
+    "String_Reading_ID": 1340000062,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40000264,
+    "Name": "누구나 배우는 역사학",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000063,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40000221,
+    "Name": "아쉬카론 연대기",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000064,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40000210,
+    "Name": "조사수첩",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000065,
+    "Send_Server": 0
+  },
+  {
+    "Item_ID": 40000211,
+    "Name": "내용이 추가 된 조사수첩",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000066,
+    "Send_Server": 0
+  },
+  {
+    "Item_ID": 40000212,
+    "Name": "내용이 조금 더 추가된 조사수첩",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000067,
+    "Send_Server": 0
+  },
+  {
+    "Item_ID": 40000213,
+    "Name": "내용이 꽤 많이 추가된 조사수첩",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000068,
+    "Send_Server": 0
+  },
+  {
+    "Item_ID": 40000214,
+    "Name": "증거가 모두 모인 조사수첩",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000069,
+    "Send_Server": 0
+  },
+  {
+    "Item_ID": 40000119,
+    "Name": "비밀 일기장",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000070,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40000117,
+    "Name": "홀그렌 가문의 비밀 문서",
+    "Reading_Type": 2,
+    "String_Reading_ID": 1340000071,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40000251,
+    "Name": "제이콥의 연구서",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000072,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40000829,
+    "Name": "누군가의 일기장",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000073,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40000446,
+    "Name": "밀드윈의 편지",
+    "Reading_Type": 2,
+    "String_Reading_ID": 1340000074,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40000934,
+    "Name": "노엘의 역사 1권",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000075,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40000935,
+    "Name": "노엘의 역사 2권",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000076,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40000936,
+    "Name": "노엘의 역사 3권",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000077,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 99999999,
+    "Name": "첫 번째 봉인의 이그드라실의 책",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000078,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 99999999,
+    "Name": "두 번째 봉인의 이그드라실의 책",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000079,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 99999999,
+    "Name": "세 번째 봉인의 이그드라실의 책",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000080,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 99999999,
+    "Name": "마지막 봉인의 이그드라실의 책",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000081,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40000967,
+    "Name": "다이르 방죽의 두루마리 사본",
+    "Reading_Type": 2,
+    "String_Reading_ID": 1340000082,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40000968,
+    "Name": "제 1 신전의 두루마리 사본",
+    "Reading_Type": 2,
+    "String_Reading_ID": 1340000083,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40000969,
+    "Name": "제 2 신전의 두루마리 사본",
+    "Reading_Type": 2,
+    "String_Reading_ID": 1340000084,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40000970,
+    "Name": "제 4 신전의 두루마리 사본",
+    "Reading_Type": 2,
+    "String_Reading_ID": 1340000085,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40000971,
+    "Name": "다이르 방죽 까지의 기록 수첩",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000086,
+    "Send_Server": 0
+  },
+  {
+    "Item_ID": 40000972,
+    "Name": "제 1 신전 까지의 기록 수첩",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000087,
+    "Send_Server": 0
+  },
+  {
+    "Item_ID": 40000973,
+    "Name": "제 2 신전 까지의 기록 수첩",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000088,
+    "Send_Server": 0
+  },
+  {
+    "Item_ID": 40000974,
+    "Name": "제 4 신전 까지의 기록 수첩",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000089,
+    "Send_Server": 0
+  },
+  {
+    "Item_ID": 40001092,
+    "Name": "사냥목록",
+    "Reading_Type": 2,
+    "String_Reading_ID": 1340000090,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40001093,
+    "Name": "첫번째 지령서",
+    "Reading_Type": 2,
+    "String_Reading_ID": 1340000091,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40001094,
+    "Name": "두번째 지령서",
+    "Reading_Type": 2,
+    "String_Reading_ID": 1340000092,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40001095,
+    "Name": "첫번째 쪽지",
+    "Reading_Type": 2,
+    "String_Reading_ID": 1340000093,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40001096,
+    "Name": "두번째 쪽지",
+    "Reading_Type": 2,
+    "String_Reading_ID": 1340000094,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40001097,
+    "Name": "세번째 쪽지",
+    "Reading_Type": 2,
+    "String_Reading_ID": 1340000095,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40001098,
+    "Name": "세번째 지령서",
+    "Reading_Type": 2,
+    "String_Reading_ID": 1340000096,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40001099,
+    "Name": "실험 보고서",
+    "Reading_Type": 2,
+    "String_Reading_ID": 1340000097,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40001087,
+    "Name": "크레센티아의 기록",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000098,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40001088,
+    "Name": "그림자의 비책서1",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000099,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40001089,
+    "Name": "그림자의 비책서2",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000100,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40001090,
+    "Name": "그림자의 비책서3",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000101,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40001091,
+    "Name": "그림자의 비책서4",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000102,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40001168,
+    "Name": "역사의 숨겨진 발자국",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000103,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40001230,
+    "Name": "낡은 종이 뭉치",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000104,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40001232,
+    "Name": "합쳐진 종이 조각",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000105,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40001245,
+    "Name": "안토니오의 기록",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000106,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40001008,
+    "Name": "첫 번째 봉인의 이그드라실의 책",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000078,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40001009,
+    "Name": "두 번째 봉인의 이그드라실의 책",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000079,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40001010,
+    "Name": "세 번째 봉인의 이그드라실의 책",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000080,
+    "Send_Server": 1
+  },
+  {
+    "Item_ID": 40001011,
+    "Name": "마지막 봉인의 이그드라실의 책",
+    "Reading_Type": 1,
+    "String_Reading_ID": 1340000081,
+    "Send_Server": 1
+  }
+]

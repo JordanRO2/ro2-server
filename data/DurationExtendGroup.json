@@ -1,0 +1,37 @@
+[
+  {
+    "Item_ID": 70000021,
+    "ItemStringName": "테마의상 30일 기간연장권 (30일 기간제)",
+    "DurationExtend_ID": 1
+  },
+  {
+    "Item_ID": 70000024,
+    "ItemStringName": "꾸미기 액세서리 30일 기간연장권 (30일 기간제)",
+    "DurationExtend_ID": 2
+  },
+  {
+    "Item_ID": 70001080,
+    "ItemStringName": "7일 탈 것 기간 연장권",
+    "DurationExtend_ID": 4
+  },
+  {
+    "Item_ID": 70001081,
+    "ItemStringName": "14일 탈 것 기간 연장권",
+    "DurationExtend_ID": 8
+  },
+  {
+    "Item_ID": 70001082,
+    "ItemStringName": "30일 탈 것 기간 연장권",
+    "DurationExtend_ID": 16
+  },
+  {
+    "Item_ID": 22401990,
+    "ItemStringName": "블랙라벨 전용 탈 것 기간 연장권(7일)",
+    "DurationExtend_ID": 32
+  },
+  {
+    "Item_ID": 22401991,
+    "ItemStringName": "백색의전령 전용 탈 것 기간 연장권(7일)",
+    "DurationExtend_ID": 64
+  }
+]

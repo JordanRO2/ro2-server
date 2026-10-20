@@ -1,0 +1,84 @@
+name: CI
+
+# Builds the solution and runs the RO2.Tests suite on every push to main and on
+# every pull request. Nothing else executed these tests before this workflow.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  DOTNET_NOLOGO: 1
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+
+jobs:
+  build-and-test:
+    name: Build and test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    # No MongoDB service container on purpose.
+    #
+    # Exactly one test file touches a database:
+    # tests/RO2.Tests/Identity/MongoAccountRepositoryIntegrationTests.cs. It probes
+    # mongodb://localhost:27017 with a 2-second ServerSelectionTimeout, catches
+    # TimeoutException / MongoConnectionException / MongoException, and returns early
+    # so the two facts become green no-ops when no database is reachable. Every other
+    # test is a pure in-memory packet/domain test with no network or filesystem access.
+    #
+    # Adding a database here would therefore change what those two tests assert (they
+    # would start requiring a seeded 'admin' account in ro2_server.accounts) without
+    # making the suite any more correct.
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # The repo has no global.json; every project inherits TargetFramework net11.0
+      # (C# 15) from Directory.Build.props, so the SDK is pinned to the 11.0 band.
+      # .NET 11 is still a release candidate until its November 2026 GA, so the
+      # preview quality is allowed; drop dotnet-quality once 11.0 ships.
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '11.0.x'
+          dotnet-quality: 'preview'
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', 'Directory.Packages.props', 'Directory.Build.props') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Restore
+        run: dotnet restore RO2_Server.sln
+
+      - name: Build
+        run: dotnet build RO2_Server.sln --no-restore -c Release
+
+      - name: Test
+        id: test
+        run: >
+          dotnet test RO2_Server.sln
+          --no-build
+          -c Release
+          --logger "trx;LogFileName=RO2.Tests.trx"
+          --results-directory "${{ github.workspace }}/TestResults"
+
+      # Runs whether the suite passed or failed, but not when an earlier step
+      # already failed and left the test step skipped (there would be no .trx).
+      - name: Upload test results
+        if: ${{ !cancelled() && steps.test.conclusion != 'skipped' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: TestResults/
+          if-no-files-found: error
+          retention-days: 30

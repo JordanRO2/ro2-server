@@ -1,0 +1,87 @@
+[
+  {
+    "Tactics_List": 1,
+    "Route": "FX\\Common\\Tactic\\Tactic_icon_01.nif",
+    "기획참고용": "1(숫자)"
+  },
+  {
+    "Tactics_List": 2,
+    "Route": "FX\\Common\\Tactic\\Tactic_icon_02.nif",
+    "기획참고용": "2(숫자)"
+  },
+  {
+    "Tactics_List": 3,
+    "Route": "FX\\Common\\Tactic\\Tactic_icon_03.nif",
+    "기획참고용": "3(숫자)"
+  },
+  {
+    "Tactics_List": 4,
+    "Route": "FX\\Common\\Tactic\\Tactic_icon_04.nif",
+    "기획참고용": "4(숫자)"
+  },
+  {
+    "Tactics_List": 5,
+    "Route": "FX\\Common\\Tactic\\Tactic_icon_05.nif",
+    "기획참고용": "5(숫자)"
+  },
+  {
+    "Tactics_List": 6,
+    "Route": "FX\\Common\\Tactic\\Tactic_icon_06.nif",
+    "기획참고용": "6(숫자)"
+  },
+  {
+    "Tactics_List": 7,
+    "Route": "FX\\Common\\Tactic\\Tactic_icon_07.nif",
+    "기획참고용": "7(숫자)"
+  },
+  {
+    "Tactics_List": 8,
+    "Route": "FX\\Common\\Tactic\\Tactic_icon_08.nif",
+    "기획참고용": "8(숫자)"
+  },
+  {
+    "Tactics_List": 9,
+    "Route": "FX\\Common\\Tactic\\Tactic_icon_09.nif",
+    "기획참고용": "9(숫자)"
+  },
+  {
+    "Tactics_List": 10,
+    "Route": "FX\\Common\\Tactic\\Tactic_icon_10.nif",
+    "기획참고용": "10(숫자)"
+  },
+  {
+    "Tactics_List": 11,
+    "Route": "FX\\Common\\Tactic\\Tactic_icon_heart.nif",
+    "기획참고용": "하트"
+  },
+  {
+    "Tactics_List": 12,
+    "Route": "FX\\Common\\Tactic\\Tactic_icon_clover.nif",
+    "기획참고용": "클로버"
+  },
+  {
+    "Tactics_List": 13,
+    "Route": "FX\\Common\\Tactic\\Tactic_icon_skeleton.nif",
+    "기획참고용": "해골"
+  },
+  {
+    "Tactics_List": 14,
+    "Route": "FX\\Common\\Tactic\\Tactic_icon_triangle.nif",
+    "기획참고용": "역삼"
+  },
+  {
+    "Tactics_List": 15,
+    "Route": "FX\\Common\\Tactic\\Tactic_icon_star.nif",
+    "기획참고용": "별"
+  },
+  {
+    "Tactics_List": 16,
+    "Route": "FX\\Common\\Tactic\\Tactic_icon_diamond.nif",
+    "기획참고용": "다이아몬드"
+  },
+  {
+    "Tactics_List": 17,
+    "Route": "FX\\Common\\Tactic\\Tactic_icon_dollar.nif",
+    "기획참고용": "달러"
+  }
+]

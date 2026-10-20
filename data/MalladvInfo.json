@@ -1,0 +1,242 @@
+[
+  {
+    "Index": 1,
+    "Adv_Use": 1,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event01.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event01_L.tga",
+    "String_Adv_List": "기본 배너",
+    "UpdateCode": "배너_한국"
+  },
+  {
+    "Index": 2,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event02.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event02_L.tga",
+    "String_Adv_List": "지구촌대축제",
+    "UpdateCode": "배너_한국"
+  },
+  {
+    "Index": 3,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event03.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event03_L.tga",
+    "String_Adv_List": "5월은 라그2와 함께",
+    "UpdateCode": "배너_한국"
+  },
+  {
+    "Index": 4,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event04.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event04_L.tga",
+    "String_Adv_List": "8월 이벤트",
+    "UpdateCode": "배너_한국"
+  },
+  {
+    "Index": 5,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event05.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event05_L.tga",
+    "String_Adv_List": "라그2 6월 이벤트",
+    "UpdateCode": "배너_한국"
+  },
+  {
+    "Index": 1,
+    "Adv_Use": 1,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event01.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event01_L.tga",
+    "String_Adv_List": "기본 배너",
+    "UpdateCode": "배너_북미"
+  },
+  {
+    "Index": 2,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event02.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event02_L.tga",
+    "String_Adv_List": "지구촌대축제",
+    "UpdateCode": "배너_북미"
+  },
+  {
+    "Index": 3,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event03.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event03_L.tga",
+    "String_Adv_List": "5월은 라그2와 함께",
+    "UpdateCode": "배너_북미"
+  },
+  {
+    "Index": 4,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event04.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event04_L.tga",
+    "String_Adv_List": "8월 이벤트",
+    "UpdateCode": "배너_북미"
+  },
+  {
+    "Index": 5,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event05.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event05_L.tga",
+    "String_Adv_List": "라그2 6월 이벤트",
+    "UpdateCode": "배너_북미"
+  },
+  {
+    "Index": 1,
+    "Adv_Use": 1,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event01.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event01_L.tga",
+    "String_Adv_List": "기본 배너",
+    "UpdateCode": "배너_싱말"
+  },
+  {
+    "Index": 2,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event02.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event02_L.tga",
+    "String_Adv_List": "지구촌대축제",
+    "UpdateCode": "배너_싱말"
+  },
+  {
+    "Index": 3,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event03.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event03_L.tga",
+    "String_Adv_List": "5월은 라그2와 함께",
+    "UpdateCode": "배너_싱말"
+  },
+  {
+    "Index": 4,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event04.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event04_L.tga",
+    "String_Adv_List": "8월 이벤트",
+    "UpdateCode": "배너_싱말"
+  },
+  {
+    "Index": 5,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event05.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event05_L.tga",
+    "String_Adv_List": "라그2 6월 이벤트",
+    "UpdateCode": "배너_싱말"
+  },
+  {
+    "Index": 1,
+    "Adv_Use": 1,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event01.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event01_L.tga",
+    "String_Adv_List": "기본 배너",
+    "UpdateCode": "배너_인니"
+  },
+  {
+    "Index": 2,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event02.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event02_L.tga",
+    "String_Adv_List": "지구촌대축제",
+    "UpdateCode": "배너_인니"
+  },
+  {
+    "Index": 3,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event03.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event03_L.tga",
+    "String_Adv_List": "5월은 라그2와 함께",
+    "UpdateCode": "배너_인니"
+  },
+  {
+    "Index": 4,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event04.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event04_L.tga",
+    "String_Adv_List": "8월 이벤트",
+    "UpdateCode": "배너_인니"
+  },
+  {
+    "Index": 5,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event05.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event05_L.tga",
+    "String_Adv_List": "라그2 6월 이벤트",
+    "UpdateCode": "배너_인니"
+  },
+  {
+    "Index": 1,
+    "Adv_Use": 1,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event01.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event01_L.tga",
+    "String_Adv_List": "기본 배너",
+    "UpdateCode": "배너_태국"
+  },
+  {
+    "Index": 2,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event02.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event02_L.tga",
+    "String_Adv_List": "지구촌대축제",
+    "UpdateCode": "배너_태국"
+  },
+  {
+    "Index": 3,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event03.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event03_L.tga",
+    "String_Adv_List": "5월은 라그2와 함께",
+    "UpdateCode": "배너_태국"
+  },
+  {
+    "Index": 4,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event04.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event04_L.tga",
+    "String_Adv_List": "8월 이벤트",
+    "UpdateCode": "배너_태국"
+  },
+  {
+    "Index": 5,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event05.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event05_L.tga",
+    "String_Adv_List": "라그2 6월 이벤트",
+    "UpdateCode": "배너_태국"
+  },
+  {
+    "Index": 1,
+    "Adv_Use": 1,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event01.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event01_L.tga",
+    "String_Adv_List": "기본 배너",
+    "UpdateCode": "배너_대만"
+  },
+  {
+    "Index": 2,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event02.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event02_L.tga",
+    "String_Adv_List": "지구촌대축제",
+    "UpdateCode": "배너_대만"
+  },
+  {
+    "Index": 3,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event03.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event03_L.tga",
+    "String_Adv_List": "5월은 라그2와 함께",
+    "UpdateCode": "배너_대만"
+  },
+  {
+    "Index": 4,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event04.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event04_L.tga",
+    "String_Adv_List": "8월 이벤트",
+    "UpdateCode": "배너_대만"
+  },
+  {
+    "Index": 5,
+    "Adv_Use": 0,
+    "Adv_Img1": ".\\lang\\%d\\UI\\Texture\\MallADV\\event05.tga",
+    "Adv_Img2": ".\\lang\\%d\\UI\\Texture\\MallADV\\event05_L.tga",
+    "String_Adv_List": "라그2 6월 이벤트",
+    "UpdateCode": "배너_대만"
+  }
+]

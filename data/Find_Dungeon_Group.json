@@ -1,0 +1,65 @@
+[
+  {
+    "Group_ID": 1,
+    "Group_Name": "묘르닐 산맥 지역 던전 (Normal)",
+    "Min_Level": 6,
+    "String_ID": 10168,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 2,
+    "Group_Name": "프론테라 지역 던전 (Normal)",
+    "Min_Level": 13,
+    "String_ID": 10169,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 3,
+    "Group_Name": "알베르타 지역 던전 (Normal)",
+    "Min_Level": 32,
+    "String_ID": 10170,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 4,
+    "Group_Name": "모로크 지역 던전 (Normal)",
+    "Min_Level": 39,
+    "String_ID": 10171,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 5,
+    "Group_Name": "묘르닐 산맥 지역 던전 (Hard)",
+    "Min_Level": 50,
+    "String_ID": 10172,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 6,
+    "Group_Name": "프론테라 지역 던전 (Hard)",
+    "Min_Level": 50,
+    "String_ID": 10173,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 7,
+    "Group_Name": "알베르타 지역 던전 (Hard)",
+    "Min_Level": 50,
+    "String_ID": 10174,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 8,
+    "Group_Name": "모로크 지역 던전 (Hard)",
+    "Min_Level": 50,
+    "String_ID": 10175,
+    "UpdateCode": "기본"
+  },
+  {
+    "Group_ID": 9,
+    "Group_Name": "외전 던전 (Single)",
+    "Min_Level": 1,
+    "String_ID": 15787,
+    "UpdateCode": "컨텐츠_싱글_지하수로"
+  }
+]

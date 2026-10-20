@@ -1,0 +1,142 @@
+[
+  {
+    "INDEX": 1,
+    "Check_Group_ID": 112210101,
+    "Check_Map": 1221,
+    "Check_Type": 2,
+    "Type_Data_1": 32480000,
+    "Type_Data_2": 35000000,
+    "Type_Data_3": 991,
+    "Type_Data_4": 15773
+  },
+  {
+    "INDEX": 2,
+    "Check_Group_ID": 112210102,
+    "Check_Map": 1221,
+    "Check_Type": 2,
+    "Type_Data_1": 32510000,
+    "Type_Data_2": 35000001,
+    "Type_Data_3": 98,
+    "Type_Data_4": 15774
+  },
+  {
+    "INDEX": 3,
+    "Check_Group_ID": 112210102,
+    "Check_Map": 1221,
+    "Check_Type": 2,
+    "Type_Data_1": 32510000,
+    "Type_Data_2": 35000002,
+    "Type_Data_3": 98,
+    "Type_Data_4": 15775
+  },
+  {
+    "INDEX": 4,
+    "Check_Group_ID": 212210101,
+    "Check_Map": 1115,
+    "Check_Type": 1,
+    "Type_Data_1": 50003704,
+    "Type_Data_2": 5,
+    "Type_Data_3": 0,
+    "Type_Data_4": 0
+  },
+  {
+    "INDEX": 5,
+    "Check_Group_ID": 112210103,
+    "Check_Map": 1221,
+    "Check_Type": 2,
+    "Type_Data_1": 32420000,
+    "Type_Data_2": 35000003,
+    "Type_Data_3": 9,
+    "Type_Data_4": 15776
+  },
+  {
+    "INDEX": 6,
+    "Check_Group_ID": 112210103,
+    "Check_Map": 1221,
+    "Check_Type": 2,
+    "Type_Data_1": 32420000,
+    "Type_Data_2": 35000004,
+    "Type_Data_3": 9,
+    "Type_Data_4": 15776
+  },
+  {
+    "INDEX": 7,
+    "Check_Group_ID": 212210102,
+    "Check_Map": 1115,
+    "Check_Type": 3,
+    "Type_Data_1": 39,
+    "Type_Data_2": 0,
+    "Type_Data_3": 0,
+    "Type_Data_4": 0
+  },
+  {
+    "INDEX": 8,
+    "Check_Group_ID": 112210104,
+    "Check_Map": 1221,
+    "Check_Type": 2,
+    "Type_Data_1": 32490000,
+    "Type_Data_2": 35000005,
+    "Type_Data_3": 4,
+    "Type_Data_4": 15777
+  },
+  {
+    "INDEX": 9,
+    "Check_Group_ID": 212210103,
+    "Check_Map": 1115,
+    "Check_Type": 3,
+    "Type_Data_1": 399,
+    "Type_Data_2": 0,
+    "Type_Data_3": 0,
+    "Type_Data_4": 0
+  },
+  {
+    "INDEX": 10,
+    "Check_Group_ID": 111000101,
+    "Check_Map": 1100,
+    "Check_Type": 2,
+    "Type_Data_1": 99220022,
+    "Type_Data_2": 60001060,
+    "Type_Data_3": 100,
+    "Type_Data_4": 0
+  },
+  {
+    "INDEX": 11,
+    "Check_Group_ID": 111000102,
+    "Check_Map": 1100,
+    "Check_Type": 2,
+    "Type_Data_1": 99220018,
+    "Type_Data_2": 60001060,
+    "Type_Data_3": 300,
+    "Type_Data_4": 0
+  },
+  {
+    "INDEX": 12,
+    "Check_Group_ID": 111000103,
+    "Check_Map": 1100,
+    "Check_Type": 2,
+    "Type_Data_1": 99220019,
+    "Type_Data_2": 60001060,
+    "Type_Data_3": 800,
+    "Type_Data_4": 0
+  },
+  {
+    "INDEX": 13,
+    "Check_Group_ID": 111000104,
+    "Check_Map": 1100,
+    "Check_Type": 2,
+    "Type_Data_1": 99220020,
+    "Type_Data_2": 60001060,
+    "Type_Data_3": 1500,
+    "Type_Data_4": 0
+  },
+  {
+    "INDEX": 14,
+    "Check_Group_ID": 111000105,
+    "Check_Map": 1100,
+    "Check_Type": 2,
+    "Type_Data_1": 99220021,
+    "Type_Data_2": 60001060,
+    "Type_Data_3": 1500,
+    "Type_Data_4": 0
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Incubator_ID": 22402101,
+    "Incubator_Name": "Basic Incubator",
+    "String_Item_Name": 1022402101,
+    "Charge_Quantity": 2,
+    "Incubation_Speed": 10000,
+    "Active_Icon": "/UI/Icon/Misc/Incubator_Base_Egg.dds"
+  },
+  {
+    "Incubator_ID": 22402102,
+    "Incubator_Name": "Golden Incubator",
+    "String_Item_Name": 1022402102,
+    "Charge_Quantity": 3,
+    "Incubation_Speed": 7500,
+    "Active_Icon": "/UI/Icon/Misc/Incubator_Golden_Egg.dds"
+  },
+  {
+    "Incubator_ID": 22402103,
+    "Incubator_Name": "Cracked Incubator",
+    "String_Item_Name": 1022402103,
+    "Charge_Quantity": 1,
+    "Incubation_Speed": 5000,
+    "Active_Icon": "/UI/Icon/Misc/Incubator_Cracked_Egg.dds"
+  },
+  {
+    "Incubator_ID": 22402112,
+    "Incubator_Name": "Golden Incubator [Bound]",
+    "String_Item_Name": 1022402102,
+    "Charge_Quantity": 3,
+    "Incubation_Speed": 7500,
+    "Active_Icon": "/UI/Icon/Misc/Incubator_Golden_Egg.dds"
+  }
+]

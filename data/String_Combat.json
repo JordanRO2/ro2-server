@@ -1,0 +1,155 @@
+[
+  {
+    "Color_Tendency_Type": 1,
+    "Attack_Type": 1,
+    "Combat_Type": 8,
+    "String_ID": 200023,
+    "설명": "포링(@1) 의 HP를 100(@2) 회복 시켰습니다. [힐@3]",
+    "Color_Value1": 4294046450,
+    "Color_Value2": 4280580122
+  },
+  {
+    "Color_Tendency_Type": 1,
+    "Attack_Type": 1,
+    "Combat_Type": 9,
+    "String_ID": 200039,
+    "설명": "포링(@1) 의 SP를 100(@2) 회복 시켰습니다. [힐@3]",
+    "Color_Value1": 4294046450,
+    "Color_Value2": 4280580122
+  },
+  {
+    "Color_Tendency_Type": 1,
+    "Attack_Type": 2,
+    "Combat_Type": 6,
+    "String_ID": 200024,
+    "설명": "포링(@1) 의 HP를 100(@2) 회복 시켰습니다. [힐@3]",
+    "Color_Value1": 4294046450,
+    "Color_Value2": 4280580122
+  },
+  {
+    "Color_Tendency_Type": 1,
+    "Attack_Type": 2,
+    "Combat_Type": 7,
+    "String_ID": 200036,
+    "설명": "포링(@1) 의 SP를 100(@2) 회복 시켰습니다. [힐@3]",
+    "Color_Value1": 4294046450,
+    "Color_Value2": 4280580122
+  },
+  {
+    "Color_Tendency_Type": 2,
+    "Attack_Type": 0,
+    "Combat_Type": 1,
+    "String_ID": 200037,
+    "설명": "포링(@1) 에게 100(@2) 피해를 받았습니다.",
+    "Color_Value1": 4288717217,
+    "Color_Value2": 4293822464
+  },
+  {
+    "Color_Tendency_Type": 2,
+    "Attack_Type": 0,
+    "Combat_Type": 2,
+    "String_ID": 200028,
+    "설명": "포링(@1) 의 공격을 회피 하였습니다.",
+    "Color_Value1": 4288717217,
+    "Color_Value2": 4288717217
+  },
+  {
+    "Color_Tendency_Type": 2,
+    "Attack_Type": 0,
+    "Combat_Type": 3,
+    "String_ID": 200041,
+    "설명": "포링(@1) 의 공격을 막았습니다.",
+    "Color_Value1": 4288717217,
+    "Color_Value2": 4288717217
+  },
+  {
+    "Color_Tendency_Type": 2,
+    "Attack_Type": 0,
+    "Combat_Type": 4,
+    "String_ID": 200042,
+    "설명": "포링(@1) 에게 100(@2) 크리티컬 피해를 받았습니다.",
+    "Color_Value1": 4288717217,
+    "Color_Value2": 4291830306
+  },
+  {
+    "Color_Tendency_Type": 2,
+    "Attack_Type": 1,
+    "Combat_Type": 1,
+    "String_ID": 200029,
+    "설명": "포링(@1) 에게 100(@2) 피해를 받았습니다. [배쉬@3]",
+    "Color_Value1": 4288717217,
+    "Color_Value2": 4293822464
+  },
+  {
+    "Color_Tendency_Type": 2,
+    "Attack_Type": 1,
+    "Combat_Type": 2,
+    "String_ID": 200043,
+    "설명": "포링(@1) 의 공격을 회피 하였습니다. [배쉬@2]",
+    "Color_Value1": 4288717217,
+    "Color_Value2": 4288717217
+  },
+  {
+    "Color_Tendency_Type": 2,
+    "Attack_Type": 1,
+    "Combat_Type": 3,
+    "String_ID": 200044,
+    "설명": "포링(@1) 의 공격을 막았습니다. [배쉬@2]",
+    "Color_Value1": 4288717217,
+    "Color_Value2": 4288717217
+  },
+  {
+    "Color_Tendency_Type": 2,
+    "Attack_Type": 1,
+    "Combat_Type": 4,
+    "String_ID": 200025,
+    "설명": "포링(@1) 에게 100(@2) 크리티컬 피해를 받았습니다. [배쉬@3]",
+    "Color_Value1": 4288717217,
+    "Color_Value2": 4291830306
+  },
+  {
+    "Color_Tendency_Type": 2,
+    "Attack_Type": 1,
+    "Combat_Type": 8,
+    "String_ID": 200045,
+    "설명": "포링(@1) 을 통해 HP를 100(@2) 회복 받았습니다. [힐@3]",
+    "Color_Value1": 4288717217,
+    "Color_Value2": 4280580122
+  },
+  {
+    "Color_Tendency_Type": 2,
+    "Attack_Type": 1,
+    "Combat_Type": 9,
+    "String_ID": 200046,
+    "설명": "포링(@1) 을 통해 SP를 100(@2) 회복 받았습니다. [힐@3]",
+    "Color_Value1": 4288717217,
+    "Color_Value2": 4280580122
+  },
+  {
+    "Color_Tendency_Type": 2,
+    "Attack_Type": 2,
+    "Combat_Type": 5,
+    "String_ID": 200030,
+    "설명": "포링(@1) 에게 100(@2) 피해를 받았습니다. [출혈@3]",
+    "Color_Value1": 4288717217,
+    "Color_Value2": 4290005431
+  },
+  {
+    "Color_Tendency_Type": 2,
+    "Attack_Type": 2,
+    "Combat_Type": 6,
+    "String_ID": 200034,
+    "설명": "포링(@1) 을 통해 HP를 100(@2) 회복 받았습니다. [힐@3]",
+    "Color_Value1": 4288717217,
+    "Color_Value2": 4280580122
+  },
+  {
+    "Color_Tendency_Type": 2,
+    "Attack_Type": 2,
+    "Combat_Type": 7,
+    "String_ID": 200035,
+    "설명": "포링(@1) 을 통해 SP를 100(@2) 회복 받았습니다. [힐@3]",
+    "Color_Value1": 4288717217,
+    "Color_Value2": 4280580122
+  }
+]
