@@ -1,3 +1,4 @@
+using RO2.Economy.Domain;
 using RO2.Domain.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -509,7 +510,7 @@ public class LoginPCHandler : NetworkZoneRmiBase
         IReadOnlyList<ushort>? learnedCraftRecipes = null;
         try
         {
-            learnedCraftRecipes = await services.GetRequiredService<RO2.Application.Interfaces.ICraftRecipeRepository>()
+            learnedCraftRecipes = await services.GetRequiredService<RO2.Economy.Domain.ICraftRecipeRepository>()
                 .GetAsync(characterId, ct);
         }
         catch (Exception ex)

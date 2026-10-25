@@ -1,4 +1,4 @@
-namespace RO2.Application.Interfaces;
+namespace RO2.Economy.Domain;
 
 /// <summary>
 /// Persistence for a character's learned crafting recipes (the Craft_ItemList ids learned with 1348

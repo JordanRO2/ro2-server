@@ -2,7 +2,7 @@ namespace RO2.Server.Zone.Services;
 
 /// <summary>
 /// Protocol constants for the game-mall item lists. The per-account list is stored behind
-/// <see cref="RO2.Application.Interfaces.IGameMallListRepository"/>.
+/// <see cref="RO2.Economy.Domain.IGameMallListRepository"/>.
 /// </summary>
 public static class GameMallListStore
 {

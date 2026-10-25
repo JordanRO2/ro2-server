@@ -1,3 +1,4 @@
+using RO2.Economy.Domain;
 using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -66,7 +67,7 @@ public class CraftListLearnHandler : ZoneRmiHandlerBase<CraftListLearnHandler>
         }
 
         var table = services.GetRequiredService<GameDataStore>().CraftItemList;
-        var recipes = services.GetRequiredService<RO2.Application.Interfaces.ICraftRecipeRepository>();
+        var recipes = services.GetRequiredService<RO2.Economy.Domain.ICraftRecipeRepository>();
         byte profession = WorldEntryService.CreationProfessionByte(c);
         var learned = await recipes.GetAsync(player.CharacterId, ct);
         var row = table.FirstOrDefault(r => r.ID == recipeId);

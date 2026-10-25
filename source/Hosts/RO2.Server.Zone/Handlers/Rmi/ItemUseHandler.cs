@@ -1,3 +1,4 @@
+using RO2.Economy.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
@@ -242,7 +243,7 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
         // answer.
         if (CraftScrollLearning.TryResolve(store, used.ItemId) is { } blueprintRecipe
             && !await CraftScrollLearning.TryLearnAsync(session, player, store,
-                services.GetRequiredService<RO2.Application.Interfaces.ICraftRecipeRepository>(), blueprintRecipe, used.ItemId, Logger, ct))
+                services.GetRequiredService<RO2.Economy.Domain.ICraftRecipeRepository>(), blueprintRecipe, used.ItemId, Logger, ct))
             return;
 
         var questTicked = await AdvanceUseItemQuestsAsync(session, player, used.ItemId, store, services);

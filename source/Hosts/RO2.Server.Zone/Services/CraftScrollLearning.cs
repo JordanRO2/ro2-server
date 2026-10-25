@@ -1,3 +1,4 @@
+using RO2.Economy.Domain;
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Logging;
 using RO2.Domain.GameData;
@@ -60,7 +61,7 @@ internal static class CraftScrollLearning
  /// consume the blueprint.
  /// </summary>
     internal static async Task<bool> TryLearnAsync(ProudSession session, PlayerState player, GameDataStore store,
-        RO2.Application.Interfaces.ICraftRecipeRepository recipes, CraftItemList recipe, uint itemId, ILogger logger, CancellationToken ct)
+        ICraftRecipeRepository recipes, CraftItemList recipe, uint itemId, ILogger logger, CancellationToken ct)
     {
         if (player.Character is not { } c)
         {

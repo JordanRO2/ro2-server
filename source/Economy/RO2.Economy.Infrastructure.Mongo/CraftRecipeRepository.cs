@@ -1,8 +1,8 @@
+using RO2.Economy.Domain;
 using MongoDB.Driver;
-using RO2.Application.Interfaces;
 using RO2.Persistence.Mongo.Persistence;
 
-namespace RO2.Persistence.Mongo.Repositories;
+namespace RO2.Economy.Infrastructure.Mongo;
 
 /// <summary>
 /// MongoDB implementation of <see cref="ICraftRecipeRepository"/>, storing each character's learned
@@ -24,17 +24,20 @@ public sealed class CraftRecipeRepository : ICraftRecipeRepository
 
     private readonly IMongoCollection<CraftRecipeDocument> _docs;
 
+    /// <summary>Creates the repository over the given database context.</summary>
     public CraftRecipeRepository(MongoDbContext context)
     {
         _docs = context.GetCollection<CraftRecipeDocument>(CollectionName);
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<ushort>> GetAsync(uint characterId, CancellationToken ct = default)
     {
         var doc = await _docs.Find(d => d.Id == characterId).FirstOrDefaultAsync(ct);
         return doc?.Recipes ?? (IReadOnlyList<ushort>)Array.Empty<ushort>();
     }
 
+    /// <inheritdoc />
     public async Task<bool> AddAsync(uint characterId, ushort recipeId, CancellationToken ct = default)
     {
         var result = await _docs.UpdateOneAsync(

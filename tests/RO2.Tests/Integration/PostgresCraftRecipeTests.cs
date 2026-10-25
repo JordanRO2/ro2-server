@@ -1,3 +1,4 @@
+using RO2.Economy.Infrastructure.Postgres;
 using RO2.Persistence.Postgres.Repositories;
 using Xunit;
 

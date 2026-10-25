@@ -1,9 +1,8 @@
+using RO2.Economy.Domain;
 using MongoDB.Driver;
-using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
 using RO2.Persistence.Mongo.Persistence;
 
-namespace RO2.Persistence.Mongo.Repositories;
+namespace RO2.Economy.Infrastructure.Mongo;
 
 /// <summary>
 /// MongoDB store for <see cref="IPrivateShopCraftRepository"/>, one document per character in the
@@ -46,17 +45,20 @@ public sealed class PrivateShopCraftRepository : IPrivateShopCraftRepository
 
     private readonly IMongoCollection<PrivateShopCraftDocument> _docs;
 
+    /// <summary>Creates the repository over the given database context.</summary>
     public PrivateShopCraftRepository(MongoDbContext context)
     {
         _docs = context.GetCollection<PrivateShopCraftDocument>(CollectionName);
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<PrivateShopCraftOffer>> GetOffersAsync(uint characterId, CancellationToken ct = default)
     {
         var doc = await _docs.Find(d => d.Id == characterId).FirstOrDefaultAsync(ct);
         return doc is null ? Array.Empty<PrivateShopCraftOffer>() : FromEntries(doc.Offers);
     }
 
+    /// <inheritdoc />
     public Task ReplaceOffersAsync(uint characterId, IReadOnlyList<PrivateShopCraftOffer> offers, CancellationToken ct = default) =>
         _docs.ReplaceOneAsync(d => d.Id == characterId,
             new PrivateShopCraftDocument { Id = characterId, Offers = ToEntries(offers), UpdatedAt = DateTime.UtcNow },

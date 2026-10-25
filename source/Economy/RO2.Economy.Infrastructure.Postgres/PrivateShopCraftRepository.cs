@@ -1,10 +1,10 @@
+using RO2.Economy.Domain;
+using RO2.Persistence.Postgres;
 using System.Text.Json;
 using Npgsql;
 using NpgsqlTypes;
-using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
 
-namespace RO2.Persistence.Postgres.Repositories;
+namespace RO2.Economy.Infrastructure.Postgres;
 
 /// <summary>
 /// PostgreSQL implementation of <see cref="IPrivateShopCraftRepository"/>: one row per character in the
@@ -27,15 +27,18 @@ namespace RO2.Persistence.Postgres.Repositories;
 /// </remarks>
 public sealed class PrivateShopCraftRepository : IPrivateShopCraftRepository
 {
+    /// <summary>The TableName table name.</summary>
     public const string TableName = "private_shop_crafts";
 
     private readonly PostgresDbContext _db;
 
+    /// <summary>Creates the repository over the given database context.</summary>
     public PrivateShopCraftRepository(PostgresDbContext db) => _db = db;
 
  /// <summary>Wire shape of one offer inside the <c>offers</c> jsonb array; <c>Price</c> is the u64 bit pattern.</summary>
     private sealed record StoredOffer(ushort CraftId, long Price);
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<PrivateShopCraftOffer>> GetOffersAsync(uint characterId, CancellationToken ct = default)
     {
         await using var conn = await _db.OpenConnectionAsync(ct);
@@ -50,6 +53,7 @@ public sealed class PrivateShopCraftRepository : IPrivateShopCraftRepository
         return stored.Select(e => new PrivateShopCraftOffer(e.CraftId, unchecked((ulong)e.Price))).ToList();
     }
 
+    /// <inheritdoc />
     public async Task ReplaceOffersAsync(uint characterId, IReadOnlyList<PrivateShopCraftOffer> offers, CancellationToken ct = default)
     {
         var json = JsonSerializer.Serialize(

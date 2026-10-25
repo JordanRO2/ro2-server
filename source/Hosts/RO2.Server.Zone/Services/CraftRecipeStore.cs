@@ -1,3 +1,4 @@
+using RO2.Economy.Domain;
 using System;
 using System.Buffers.Binary;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace RO2.Server.Zone.Services;
 /// <summary>
 /// Protocol helpers for the crafting recipe list: the list rule, the 2535 and 2538 builders and the 2538
 /// result codes. Learned recipes are persisted through
-/// <see cref="RO2.Application.Interfaces.ICraftRecipeRepository"/>. This class turns stored ids into the
+/// <see cref="RO2.Economy.Domain.ICraftRecipeRepository"/>. This class turns stored ids into the
 /// payload sent to the client.
 /// </summary>
 /// <remarks>

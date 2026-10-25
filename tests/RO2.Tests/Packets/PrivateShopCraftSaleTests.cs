@@ -1,3 +1,4 @@
+using RO2.Economy.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;

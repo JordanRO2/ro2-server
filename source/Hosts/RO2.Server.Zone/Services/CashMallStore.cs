@@ -4,7 +4,7 @@ using RO2.Domain.Entities;
 namespace RO2.Server.Zone.Services;
 
 /// <summary>
-/// Zone-side constants and helpers for the per-account cash mall. Persistence goes through <see cref="RO2.Application.Interfaces.ICashMallRepository"/>; box filtering and counting are in <see cref="CashMallRules"/>.
+/// Zone-side constants and helpers for the per-account cash mall. Persistence goes through <see cref="RO2.Economy.Domain.ICashMallRepository"/>; box filtering and counting are in <see cref="CashMallRules"/>.
 /// </summary>
 public static class CashMallStore
 {

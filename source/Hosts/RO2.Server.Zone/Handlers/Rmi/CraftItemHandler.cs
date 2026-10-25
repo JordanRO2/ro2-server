@@ -1,3 +1,4 @@
+using RO2.Economy.Domain;
 using System.Buffers.Binary;
 using System.Collections.Concurrent;
 using Microsoft.Extensions.DependencyInjection;
@@ -183,7 +184,7 @@ public class CraftItemHandler : ZoneRmiHandlerBase<CraftItemHandler>
             var store = services.GetRequiredService<GameDataStore>();
             var recipe = store.CraftItemList.FirstOrDefault(r => r.ID == recipeId);
             var materialRow = store.CraftMaterial.FirstOrDefault(m => m.ID == recipeId);
-            var learned = await services.GetRequiredService<RO2.Application.Interfaces.ICraftRecipeRepository>()
+            var learned = await services.GetRequiredService<RO2.Economy.Domain.ICraftRecipeRepository>()
                 .GetAsync(player.CharacterId, ct);
             var known = CraftRecipeStore.KnownRecipeIds(store.CraftItemList,
                 WorldEntryService.CreationProfessionByte(character), learned);

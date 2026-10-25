@@ -1,3 +1,4 @@
+using RO2.Economy.Domain;
 using System.Runtime.CompilerServices;
 using RO2.Domain.Entities;
 using RO2.Server.Zone.Models;

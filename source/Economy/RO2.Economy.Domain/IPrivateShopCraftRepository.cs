@@ -1,6 +1,5 @@
-using RO2.Domain.Entities;
 
-namespace RO2.Application.Interfaces;
+namespace RO2.Economy.Domain;
 
 /// <summary>
 /// Persistence for one character's private-shop craft offers (1476 ReqAddPrivateShopCraft, withdrawn by 1477),
