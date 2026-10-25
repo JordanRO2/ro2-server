@@ -2,6 +2,7 @@ using System.Text.Json;
 using RO2.GameData;
 using RO2.Server.Zone.Services;
 using Xunit;
+using RO2.Characters.Domain;
 
 namespace RO2.Tests.Packets;
 
@@ -38,15 +39,15 @@ public class ProfessionExpPacketsTests
         var table = await LoadExpTableAsync();
 
         
-        Assert.Equal(new ProfessionExp.Result(16, 14, true), ProfessionExp.Apply(15, 23026, 42, table));
+        Assert.Equal(new JobExpRules.Result(16, 14, true), JobExpRules.Apply(15, 23026, 42, table));
         
-        Assert.Equal(new ProfessionExp.Result(3, 573, true), ProfessionExp.Apply(1, 50, 887, table));
+        Assert.Equal(new JobExpRules.Result(3, 573, true), JobExpRules.Apply(1, 50, 887, table));
         
-        Assert.Equal(new ProfessionExp.Result(5, 1079, true), ProfessionExp.Apply(3, 613, 2448, table));
+        Assert.Equal(new JobExpRules.Result(5, 1079, true), JobExpRules.Apply(3, 613, 2448, table));
         
-        Assert.Equal(new ProfessionExp.Result(50, 0, true), ProfessionExp.Apply(49, 422057, 6811, table));
+        Assert.Equal(new JobExpRules.Result(50, 0, true), JobExpRules.Apply(49, 422057, 6811, table));
         
-        Assert.Equal(new ProfessionExp.Result(15, 23026, false), ProfessionExp.Apply(15, 22984, 42, table));
+        Assert.Equal(new JobExpRules.Result(15, 23026, false), JobExpRules.Apply(15, 22984, 42, table));
     }
 
     [Fact]
@@ -54,14 +55,14 @@ public class ProfessionExpPacketsTests
     {
         var table = await LoadExpTableAsync();
 
-        ulong toThirty = ProfessionExp.ExpToReach(1, 0, 30, table);
-        Assert.Equal(new ProfessionExp.Result(30, 0, true), ProfessionExp.Apply(1, 0, toThirty, table));
+        ulong toThirty = JobExpRules.ExpToReach(1, 0, 30, table);
+        Assert.Equal(new JobExpRules.Result(30, 0, true), JobExpRules.Apply(1, 0, toThirty, table));
 
-        ulong toFifty = ProfessionExp.ExpToReach(12, 500, 50, table);
-        Assert.Equal(new ProfessionExp.Result(50, 0, true), ProfessionExp.Apply(12, 500, toFifty, table));
+        ulong toFifty = JobExpRules.ExpToReach(12, 500, 50, table);
+        Assert.Equal(new JobExpRules.Result(50, 0, true), JobExpRules.Apply(12, 500, toFifty, table));
 
-        Assert.Equal(0UL, ProfessionExp.ExpToReach(30, 0, 30, table));   
-        Assert.Equal(0UL, ProfessionExp.ExpToReach(40, 0, 30, table));
+        Assert.Equal(0UL, JobExpRules.ExpToReach(30, 0, 30, table));   
+        Assert.Equal(0UL, JobExpRules.ExpToReach(40, 0, 30, table));
     }
 
  /// <summary>
@@ -80,7 +81,7 @@ public class ProfessionExpPacketsTests
             rows++;
         }
         Assert.Equal(50, rows);
-        Assert.Equal(50, ProfessionExp.MaxLevel(await LoadExpTableAsync()));
+        Assert.Equal(50, JobExpRules.MaxLevel(await LoadExpTableAsync()));
     }
 
     private static async Task<Dictionary<byte, ExpTableEntry>> LoadExpTableAsync()

@@ -157,14 +157,14 @@ public class JumpingLevelupHandler : ZoneRmiHandlerBase<JumpingLevelupHandler>
     internal static ulong ExpNeeded(bool classItem, byte level, ulong exp, byte? jobLevel, ulong jobExp, byte target,
         IReadOnlyDictionary<byte, ExpTableEntry> table)
     {
-        if (classItem) return ProfessionExp.ExpToReach(level, exp, target, table);
-        return jobLevel is { } jl ? ProfessionExp.ExpToReach(jl, jobExp, target, table) : 0;
+        if (classItem) return JobExpRules.ExpToReach(level, exp, target, table);
+        return jobLevel is { } jl ? JobExpRules.ExpToReach(jl, jobExp, target, table) : 0;
     }
 
     /// <summary>Class level: grant exactly the exp that ends at <paramref name="target"/> with 0 left.</summary>
     private static async Task<bool> RaiseClassLevelAsync(PlayerState player, byte target, GameDataStore store, IServiceProvider services)
     {
-        ulong needed = ProfessionExp.ExpToReach(player.Level, player.Exp, target, store.ExpTable);
+        ulong needed = JobExpRules.ExpToReach(player.Level, player.Exp, target, store.ExpTable);
         if (needed == 0) return false;
         await services.GetRequiredService<CombatService>().GrantExpAsync(player, needed);
         return true;
@@ -175,7 +175,7 @@ public class JumpingLevelupHandler : ZoneRmiHandlerBase<JumpingLevelupHandler>
         IServiceProvider services)
     {
         if (player.Character is not Character character) return false;
-        ulong needed = ProfessionExp.ExpToReach(character.JobLevel, character.JobExp, target, store.ExpTable);
+        ulong needed = JobExpRules.ExpToReach(character.JobLevel, character.JobExp, target, store.ExpTable);
         if (needed == 0) return false;
         return await ProfessionExp.GrantAsync(session, player, needed, store, Broadcast,
             services.GetRequiredService<ICharacterRepository>(), Logger, services);
