@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.Domain.GameData;
+using RO2.Inventory.Domain;
 using RO2.Persistence.Mongo.Persistence;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
@@ -42,9 +43,8 @@ public class GuildStorageItemGetHandler : ZoneRmiHandlerBase<GuildStorageItemGet
     
     
     
-    private const int MainBagCells = 20;
-    private const int ExtraBagStride = 35;
-    private const int ExtraBagCount = 3;
+    private const int MainBagCells = BagLayout.MainBagCells;
+    private const int ExtraBagStride = BagLayout.ExtraBagStride;
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
@@ -121,35 +121,7 @@ public class GuildStorageItemGetHandler : ZoneRmiHandlerBase<GuildStorageItemGet
  /// Returns the requested bag cell when it is free, otherwise the lowest usable free cell, or -1 when the main bag and every equipped bag are full.
  /// </summary>
     private static short ChooseCell(IReadOnlyList<InventoryItem> all, IReadOnlyDictionary<uint, ItemData> items, int requested)
-    {
-        var used = new HashSet<int>(all.Where(i => i.StorageType == 0 && i.Slot >= 0).Select(i => (int)i.Slot));
-        if (requested >= 0 && !used.Contains(requested) && IsUsableCell(all, items, requested))
-            return (short)requested;
-
-        for (int f = 0; f < MainBagCells; f++)
-            if (!used.Contains(f)) return (short)f;
-        foreach (var bag in all.Where(i => i.StorageType == 3 && i.Slot >= 0 && i.Slot < ExtraBagCount).OrderBy(i => i.Slot))
-        {
-            int size = BagSize(items, bag);
-            for (int k = 0; k < size; k++)
-            {
-                int f = MainBagCells + ExtraBagStride * bag.Slot + k;
-                if (!used.Contains(f)) return (short)f;
-            }
-        }
-        return -1;
-    }
-
-    private static bool IsUsableCell(IReadOnlyList<InventoryItem> all, IReadOnlyDictionary<uint, ItemData> items, int flat)
-    {
-        if (flat < MainBagCells) return true;
-        int n = (flat - MainBagCells) / ExtraBagStride, k = (flat - MainBagCells) % ExtraBagStride;
-        var bag = all.FirstOrDefault(i => i.StorageType == 3 && i.Slot == n);
-        return n < ExtraBagCount && bag != null && k < BagSize(items, bag);
-    }
-
-    private static int BagSize(IReadOnlyDictionary<uint, ItemData> items, InventoryItem bag)
-        => items.TryGetValue(bag.ItemId, out var data) ? Math.Clamp(data.Bag_Size, 0, ExtraBagStride) : 0;
+        => BagLayout.ChooseCell(BagCapacity.OccupiedCells(all), BagCapacity.ExtraBagsOf(all, items), requested);
 
  /// <summary>
  /// Converts the client's (bag, slot) into a flat inventory slot: container 1 slots 50 to 69 map to 0 to 19, and containers 2 to 4 slots 0 to 34 map to 20 + (bag - 2) * 35 + slot. Returns -1 for anything that is not a bag cell.

@@ -2,6 +2,7 @@ using Npgsql;
 using NpgsqlTypes;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
+using RO2.Inventory.Domain;
 
 namespace RO2.Persistence.Postgres.Repositories;
 
@@ -139,14 +140,7 @@ public sealed class InventoryRepository : IInventoryRepository
     }
 
     /// <summary>The lowest slot index (from 0) that is not in <paramref name="occupied"/>.</summary>
-    public static short LowestFreeSlot(IEnumerable<int> occupied)
-    {
-        var taken = new HashSet<int>(occupied);
-        short slot = 0;
-        while (taken.Contains(slot))
-            slot++;
-        return slot;
-    }
+    public static short LowestFreeSlot(IEnumerable<int> occupied) => BagLayout.LowestFreeSlot(occupied);
 
     private static bool IsSlotCollision(PostgresException ex) =>
         ex.SqlState == PostgresErrorCodes.UniqueViolation
@@ -289,20 +283,13 @@ public sealed class InventoryRepository : IInventoryRepository
         foreach (var grp in items.GroupBy(i => i.StorageType))
         {
             if (grp.Key == 1) continue; // equipment slot = equip position, never reassign
-            var occupied = new HashSet<int>();
-            short next = 0;
-            foreach (var it in grp.OrderBy(i => i.Slot < 0 ? int.MaxValue : (int)i.Slot).ThenBy(i => i.Id))
+            foreach (var move in BagLayout.PlanSlotRepair(grp.Select(i => (i.Id, i.Slot))))
             {
-                if (it.Slot >= 0 && occupied.Add((int)it.Slot))
-                    continue;                                    // first claimant keeps its (valid, unique) slot
-                while (occupied.Contains(next)) next++;
-                occupied.Add(next);
                 await using var conn = await _db.OpenConnectionAsync();
                 await using var cmd = new NpgsqlCommand($"UPDATE {ItemsTable} SET slot = @s WHERE id = @id", conn);
-                cmd.Parameters.Add(new NpgsqlParameter("s", NpgsqlDbType.Smallint) { Value = next });
-                cmd.Parameters.AddWithValue("id", unchecked((long)it.Id));
+                cmd.Parameters.Add(new NpgsqlParameter("s", NpgsqlDbType.Smallint) { Value = move.Slot });
+                cmd.Parameters.AddWithValue("id", unchecked((long)move.Id));
                 await cmd.ExecuteNonQueryAsync();
-                next++;
                 repaired++;
             }
         }

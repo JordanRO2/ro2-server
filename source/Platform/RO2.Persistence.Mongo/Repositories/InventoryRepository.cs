@@ -2,6 +2,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
+using RO2.Inventory.Domain;
 using RO2.Persistence.Mongo.Persistence;
 
 using RO2.Application;
@@ -104,14 +105,7 @@ public class InventoryRepository : IInventoryRepository
     }
 
     /// <summary>The lowest slot index (from 0) that is not in <paramref name="occupied"/>.</summary>
-    public static short LowestFreeSlot(IEnumerable<int> occupied)
-    {
-        var taken = new HashSet<int>(occupied);
-        short slot = 0;
-        while (taken.Contains(slot))
-            slot++;
-        return slot;
-    }
+    public static short LowestFreeSlot(IEnumerable<int> occupied) => BagLayout.LowestFreeSlot(occupied);
 
     private static bool IsSlotCollision(MongoWriteException ex) =>
         ex.WriteError.Category == ServerErrorCategory.DuplicateKey
@@ -318,17 +312,10 @@ public class InventoryRepository : IInventoryRepository
         foreach (var grp in items.GroupBy(i => i.StorageType))
         {
             if (grp.Key == StorageWorn) continue; // equipment slot = equip position, never reassign
-            var occupied = new HashSet<int>();
-            short next = 0;
-            foreach (var it in grp.OrderBy(i => i.Slot < 0 ? int.MaxValue : (int)i.Slot).ThenBy(i => i.Id))
+            foreach (var move in BagLayout.PlanSlotRepair(grp.Select(i => (i.Id, i.Slot))))
             {
-                if (it.Slot >= 0 && occupied.Add((int)it.Slot))
-                    continue;                                    // first claimant keeps its (valid, unique) slot
-                while (occupied.Contains(next)) next++;
-                occupied.Add(next);
-                await _items.UpdateOneAsync(x => x.Id == it.Id,
-                    Builders<InventoryItem>.Update.Set(x => x.Slot, next));
-                next++;
+                await _items.UpdateOneAsync(x => x.Id == move.Id,
+                    Builders<InventoryItem>.Update.Set(x => x.Slot, move.Slot));
                 repaired++;
             }
         }

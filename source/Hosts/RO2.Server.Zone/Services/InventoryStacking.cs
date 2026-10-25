@@ -1,6 +1,7 @@
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.Domain.GameData;
+using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -47,15 +48,15 @@ internal static class InventoryStacking
     {
         var placed = new List<Placed>();
         if (quantity <= 0) return placed;
-        int perStack = stackMax < 1 ? 1 : stackMax;   
+        int perStack = BagStackPlanner.StackSize(stackMax);
 
         if (perStack > 1)
         {
             var bag = await inventory.GetByCharacterAsync(characterId);
-            var target = bag
-                .Where(i => i.StorageType == 0 && i.ItemId == itemId && i.Count > 0 && i.Count + quantity <= perStack)
-                .OrderBy(i => i.Slot)
-                .FirstOrDefault();
+            var bagRows = bag.Where(i => i.StorageType == 0).ToList();
+            int at = BagStackPlanner.FindMergeTarget(
+                bagRows.Select(i => new BagStack(i.Id, i.ItemId, i.Count, i.Slot)).ToList(), itemId, quantity, stackMax);
+            var target = at >= 0 ? bagRows[at] : null;
             if (target is not null)
             {
                 target.Count += quantity;

@@ -1,5 +1,6 @@
 using RO2.Domain.Entities;
 using RO2.Domain.GameData;
+using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -14,19 +15,19 @@ namespace RO2.Server.Zone.Services;
 /// Inventory insertion uses this to refuse new items when the bag is full, instead of placing them in cells the character does not own.
 /// </para>
 /// <para>
-/// Other handlers duplicate this search (FirstFreeBagCell); keep them in sync.
+/// The slot math itself lives in <see cref="BagLayout"/> (Inventory context); this class maps the inventory rows and item data onto it.
 /// </para>
 /// </remarks>
 public static class BagCapacity
 {
  /// <summary>Number of cells in the main bag (container 1).</summary>
-    public const int MainBagCells = 20;
+    public const int MainBagCells = BagLayout.MainBagCells;
 
  /// <summary>Flat-slot stride between extra bags, which is also the largest supported Bag_Size.</summary>
-    public const int ExtraBagStride = 35;
+    public const int ExtraBagStride = BagLayout.ExtraBagStride;
 
  /// <summary>Number of character-bag cells that can hold an extra bag.</summary>
-    public const int ExtraBagCount = 3;
+    public const int ExtraBagCount = BagLayout.ExtraBagCount;
 
  /// <summary>
  /// Lists the free usable bag slots, lowest first: the main bag, then each equipped bag in character-bag order.
@@ -37,21 +38,16 @@ public static class BagCapacity
     public static List<short> FreeCells(IEnumerable<InventoryItem> all, IReadOnlyDictionary<uint, ItemData> items)
     {
         var rows = all as IReadOnlyCollection<InventoryItem> ?? all.ToList();
-        var used = new HashSet<int>(rows.Where(i => i.StorageType == 0 && i.Slot >= 0).Select(i => (int)i.Slot));
-        var free = new List<short>();
-
-        for (int f = 0; f < MainBagCells; f++)
-            if (!used.Contains(f)) free.Add((short)f);
-
-        foreach (var bag in rows.Where(i => i.StorageType == 3 && i.Slot >= 0 && i.Slot < ExtraBagCount).OrderBy(i => i.Slot))
-        {
-            int size = items.TryGetValue(bag.ItemId, out var data) ? Math.Clamp(data.Bag_Size, 0, ExtraBagStride) : 0;
-            for (int k = 0; k < size; k++)
-            {
-                int f = MainBagCells + ExtraBagStride * bag.Slot + k;
-                if (!used.Contains(f)) free.Add((short)f);
-            }
-        }
-        return free;
+        return BagLayout.FreeCells(OccupiedCells(rows), ExtraBagsOf(rows, items));
     }
+
+ /// <summary>The flat cells that hold a placed bag row (storage type 0, slot 0 or more).</summary>
+    public static IEnumerable<int> OccupiedCells(IEnumerable<InventoryItem> all)
+        => all.Where(i => i.StorageType == 0 && i.Slot >= 0).Select(i => (int)i.Slot);
+
+ /// <summary>The extra bags equipped in the character-bag cells (storage type 3) with the Bag_Size of their item data.</summary>
+    public static List<ExtraBag> ExtraBagsOf(IEnumerable<InventoryItem> all, IReadOnlyDictionary<uint, ItemData> items)
+        => all.Where(i => i.StorageType == 3 && i.Slot >= 0)
+              .Select(i => new ExtraBag(i.Slot, items.TryGetValue(i.ItemId, out var data) ? data.Bag_Size : 0))
+              .ToList();
 }

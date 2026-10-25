@@ -7,24 +7,39 @@ namespace RO2.Inventory.Domain;
 /// </summary>
 public static class BagStackPlanner
 {
+    /// <summary>The units one stack of an item holds: its Stack_Max, with 0 and 1 (not stackable) both meaning 1.</summary>
+    public static int StackSize(byte stackMax) => stackMax < 1 ? 1 : stackMax;
+
+    /// <summary>
+    /// The stack an add of <paramref name="quantity"/> folds into whole: among the stacks of <paramref name="itemId"/>
+    /// that are non-empty and still fit it (count + quantity at most the stack size), the one in the lowest cell (the
+    /// earlier in <paramref name="owned"/> on a tie). Returns its index in <paramref name="owned"/>, or -1 when none
+    /// fits or the item is not stackable.
+    /// </summary>
+    public static int FindMergeTarget(IReadOnlyList<BagStack> owned, uint itemId, int quantity, byte stackMax)
+    {
+        int perStack = StackSize(stackMax);
+        if (perStack <= 1) return -1;
+        return owned
+            .Select((s, index) => (Stack: s, Index: index))
+            .Where(x => x.Stack.ItemId == itemId && x.Stack.Count > 0 && x.Stack.Count + quantity <= perStack)
+            .OrderBy(x => x.Stack.Slot)
+            .Select(x => x.Index)
+            .DefaultIfEmpty(-1)
+            .First();
+    }
+
     /// <summary>
     /// Where an add of <paramref name="quantity"/> lands: onto the lowest-cell stack of the item it fits into
-    /// whole (existing + quantity ≤ stack max), else into new stacks of the stack max, each in the next of
+    /// whole (<see cref="FindMergeTarget"/>), else into new stacks of the stack max, each in the next of
     /// <paramref name="freeCells"/>. Null when there are fewer free cells than the new stacks need.
     /// </summary>
     public static PlacementPlan? Plan(IReadOnlyList<BagStack> owned, IReadOnlyList<short> freeCells,
         uint itemId, int quantity, byte stackMax)
     {
-        int perStack = stackMax < 1 ? 1 : stackMax;   // ItemInfo: Stack_Max 1 = not stackable
-        if (perStack > 1)
-        {
-            var target = owned
-                .Where(i => i.ItemId == itemId && i.Count > 0 && i.Count + quantity <= perStack)
-                .OrderBy(i => i.Slot)
-                .Select(i => (ulong?)i.Id)
-                .FirstOrDefault();
-            if (target is not null) return new PlacementPlan(target, System.Array.Empty<(short, int)>());
-        }
+        int perStack = StackSize(stackMax);   // ItemInfo: Stack_Max 1 = not stackable
+        int target = FindMergeTarget(owned, itemId, quantity, stackMax);
+        if (target >= 0) return new PlacementPlan(owned[target].Id, System.Array.Empty<(short, int)>());
         var stacks = new List<(short Cell, int Count)>();
         for (int remaining = quantity, next = 0; remaining > 0; next++)
         {
