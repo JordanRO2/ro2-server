@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <!-- Economy bounded context: Application holds the economy flows (auction/trade/shop use cases) and the
+       ports they consume. It references its own Domain and the shared kernel (IWallet, ItemStackSnapshot,
+       the event bus). The host implements the ports and does the wire/packet work. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Economy.Domain\RO2.Economy.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks.Bus\RO2.BuildingBlocks.Bus.csproj" />
+  </ItemGroup>
+
+</Project>

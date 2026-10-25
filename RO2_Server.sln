@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Economy.Infrastructure.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Economy.Infrastructure.Postgres", "source\Economy\RO2.Economy.Infrastructure.Postgres\RO2.Economy.Infrastructure.Postgres.csproj", "{0C6726B8-AE0E-4792-9455-4EBEAAF30A3B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Economy.Application", "source\Economy\RO2.Economy.Application\RO2.Economy.Application.csproj", "{C8C11280-73F8-4B86-9E87-46D0FF4EF0D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -317,6 +319,18 @@ Global
 		{0C6726B8-AE0E-4792-9455-4EBEAAF30A3B}.Release|x64.Build.0 = Release|Any CPU
 		{0C6726B8-AE0E-4792-9455-4EBEAAF30A3B}.Release|x86.ActiveCfg = Release|Any CPU
 		{0C6726B8-AE0E-4792-9455-4EBEAAF30A3B}.Release|x86.Build.0 = Release|Any CPU
+		{C8C11280-73F8-4B86-9E87-46D0FF4EF0D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8C11280-73F8-4B86-9E87-46D0FF4EF0D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8C11280-73F8-4B86-9E87-46D0FF4EF0D7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C8C11280-73F8-4B86-9E87-46D0FF4EF0D7}.Debug|x64.Build.0 = Debug|Any CPU
+		{C8C11280-73F8-4B86-9E87-46D0FF4EF0D7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C8C11280-73F8-4B86-9E87-46D0FF4EF0D7}.Debug|x86.Build.0 = Debug|Any CPU
+		{C8C11280-73F8-4B86-9E87-46D0FF4EF0D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8C11280-73F8-4B86-9E87-46D0FF4EF0D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8C11280-73F8-4B86-9E87-46D0FF4EF0D7}.Release|x64.ActiveCfg = Release|Any CPU
+		{C8C11280-73F8-4B86-9E87-46D0FF4EF0D7}.Release|x64.Build.0 = Release|Any CPU
+		{C8C11280-73F8-4B86-9E87-46D0FF4EF0D7}.Release|x86.ActiveCfg = Release|Any CPU
+		{C8C11280-73F8-4B86-9E87-46D0FF4EF0D7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -336,5 +350,6 @@ Global
 		{B98A4E91-C7BA-466B-B243-0B4E61636111} = {03995048-8FF0-4E42-B7C6-CAEC907035DD}
 		{B01B1906-A4AF-4EBF-BA86-62E23D03E9E5} = {03995048-8FF0-4E42-B7C6-CAEC907035DD}
 		{0C6726B8-AE0E-4792-9455-4EBEAAF30A3B} = {03995048-8FF0-4E42-B7C6-CAEC907035DD}
+		{C8C11280-73F8-4B86-9E87-46D0FF4EF0D7} = {03995048-8FF0-4E42-B7C6-CAEC907035DD}
 	EndGlobalSection
 EndGlobal
