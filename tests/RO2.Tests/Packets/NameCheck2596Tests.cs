@@ -1,7 +1,7 @@
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Services;
 using Xunit;
-using NameFilterRow = RO2.Domain.GameData.Tables.NameFilter;
+using NameFilterRow = RO2.GameData.Tables.NameFilter;
 
 namespace RO2.Tests.Packets;
 

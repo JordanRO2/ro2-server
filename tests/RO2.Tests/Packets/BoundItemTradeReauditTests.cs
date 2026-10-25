@@ -1,7 +1,7 @@
 using System.Buffers.Binary;
 using System.Text.Json;
 using RO2.Domain.Entities;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Services;
 using Xunit;

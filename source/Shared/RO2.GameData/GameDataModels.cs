@@ -1,4 +1,4 @@
-namespace RO2.Domain.GameData;
+namespace RO2.GameData;
 
 /// <summary>
 /// Item master data from ItemInfo.xlsx (18,428 records)

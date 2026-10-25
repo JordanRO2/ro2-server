@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 

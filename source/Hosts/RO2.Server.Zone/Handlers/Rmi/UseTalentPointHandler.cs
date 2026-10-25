@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using RO2.Application.Interfaces;
 using Microsoft.Extensions.Logging;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;

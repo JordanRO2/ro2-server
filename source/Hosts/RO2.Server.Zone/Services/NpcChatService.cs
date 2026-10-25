@@ -3,7 +3,7 @@ using System.Collections.Frozen;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.Logging;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Network.Protocol;
 
 namespace RO2.Server.Zone.Services;

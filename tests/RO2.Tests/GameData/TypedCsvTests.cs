@@ -1,12 +1,12 @@
 using System.Text.Json.Serialization;
-using RO2.Domain.GameData;
-using RO2.Domain.GameData.Tables;
+using RO2.GameData;
+using RO2.GameData.Tables;
 using Xunit;
 
 namespace RO2.Tests.GameData;
 
 /// <summary>
-/// The typed-CSV reader (RO2.Domain.GameData.TypedCsv) that GameDataStore prefers over a table's JSON:
+/// The typed-CSV reader (RO2.GameData.TypedCsv) that GameDataStore prefers over a table's JSON:
 /// quoting, empty cells, conversion to the PROPERTY's type, header tolerance, and the JSON-name mapping.
 /// </summary>
 public class TypedCsvTests

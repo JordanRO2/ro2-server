@@ -1,6 +1,6 @@
 using System.Buffers.Binary;
 using RO2.Domain.Entities;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Network.Protocol;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Models;

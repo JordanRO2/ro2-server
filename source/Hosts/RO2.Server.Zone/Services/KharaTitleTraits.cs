@@ -1,5 +1,5 @@
 using System.Runtime.CompilerServices;
-using RO2.Domain.GameData;
+using RO2.GameData;
 
 namespace RO2.Server.Zone.Services;
 
@@ -37,8 +37,8 @@ internal static class KharaTitleTraits
             }
 
             
-            var first = new Dictionary<uint, RO2.Domain.GameData.Tables.KHARATitleInfo>();
-            var retail = new Dictionary<uint, RO2.Domain.GameData.Tables.KHARATitleInfo>();
+            var first = new Dictionary<uint, RO2.GameData.Tables.KHARATitleInfo>();
+            var retail = new Dictionary<uint, RO2.GameData.Tables.KHARATitleInfo>();
             foreach (var row in s.KHARATitleInfo)
             {
                 first.TryAdd(row.Title_ID, row);

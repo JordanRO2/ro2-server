@@ -91,7 +91,7 @@ public class CharacterCreateHandler : NetworkZoneRmiBase
         
         
         
-        var store = services.GetRequiredService<RO2.Domain.GameData.GameDataStore>();
+        var store = services.GetRequiredService<RO2.GameData.GameDataStore>();
         (int, int, int, int, int, int, int, int)? seedStats = null;
         if (StatService.ClassBasePrimaries(store, job) is { } bp)
         {

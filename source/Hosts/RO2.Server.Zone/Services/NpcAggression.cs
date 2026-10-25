@@ -24,7 +24,7 @@ public enum NpcAggressionMode
 /// <remarks>
 /// <para>
 /// SERVER-SIDE, CUSTOM CONTENT — not shipped game data. The NPCInfo table carries a reaction/sight
-/// radius (<see cref="RO2.Domain.GameData.NpcData.Reaction_Bound"/>) but NO aggression flag: <c>Camp == 2</c> only
+/// radius (<see cref="RO2.GameData.NpcData.Reaction_Bound"/>) but NO aggression flag: <c>Camp == 2</c> only
 /// means "hostile faction / attackable" (the passive Poring family is Camp 2), and no NPCInfo column separates
 /// aggressive from passive monsters. That information belongs to server-side mob/AI data, which this project
 /// does not ship — the same situation as monster drops.

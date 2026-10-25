@@ -1,6 +1,6 @@
 using RO2.Domain.Entities;
 using System.Text.Json;
-using RO2.Domain.GameData.Tables;
+using RO2.GameData.Tables;
 using RO2.Server.Zone.Services;
 using Xunit;
 

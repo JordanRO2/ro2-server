@@ -1,7 +1,7 @@
 using System.Collections.Frozen;
 using System.Runtime.CompilerServices;
 using RO2.Domain.Entities;
-using RO2.Domain.GameData.Tables;
+using RO2.GameData.Tables;
 using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Services;

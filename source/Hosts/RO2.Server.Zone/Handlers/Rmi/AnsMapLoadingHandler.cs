@@ -190,7 +190,7 @@ public class AnsMapLoadingHandler : Base1304
             
             DungeonInstanceRegistry.Shared.RecordLoadedMap(player.CharacterId, player.MapId);
             KharaTitleClock.OnMapLoaded(player.CharacterId,
-                services.GetRequiredService<RO2.Domain.GameData.GameDataStore>().GetMap(player.MapId)?.Map_Type,
+                services.GetRequiredService<RO2.GameData.GameDataStore>().GetMap(player.MapId)?.Map_Type,
                 System.DateTime.UtcNow);
 
             
@@ -274,13 +274,13 @@ public class AnsMapLoadingHandler : Base1304
             
             
             
-            var funcObjects = FuncObjectRegistry.ForMap(services.GetRequiredService<RO2.Domain.GameData.GameDataStore>(), player.MapId);
+            var funcObjects = FuncObjectRegistry.ForMap(services.GetRequiredService<RO2.GameData.GameDataStore>(), player.MapId);
             foreach (var frame in FuncObjectPackets.BuildMapLoadFrames2512(funcObjects))
                 await session.SendInternalRmiAsync(ZoneS2COpcodes.OnFuncObject_In, frame);
 
             var characterRepo = services.GetRequiredService<RO2.Application.Interfaces.ICharacterRepository>();
             var inventoryRepo = services.GetRequiredService<RO2.Inventory.Domain.IInventoryRepository>();
-            var store = services.GetRequiredService<RO2.Domain.GameData.GameDataStore>();
+            var store = services.GetRequiredService<RO2.GameData.GameDataStore>();
             
             
             var effectService = services.GetRequiredService<EffectService>();
@@ -542,7 +542,7 @@ public class AnsMapLoadingHandler : Base1304
  /// </para>
  /// </remarks>
     private async Task<AccountGift?> SendMapLoadNotifiesAsync(ProudSession session, RO2.Server.Zone.Models.PlayerState player,
-        RO2.Domain.Entities.Character? character, RO2.Domain.GameData.GameDataStore store, IAccountGiftRepository giftBox,
+        RO2.Domain.Entities.Character? character, RO2.GameData.GameDataStore store, IAccountGiftRepository giftBox,
         CancellationToken ct)
     {
         await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyServerTime,

@@ -88,7 +88,7 @@ public class GuildInfoHandler : ZoneRmiHandlerBase<GuildInfoHandler>
         {
             
             
-            var store = services.GetRequiredService<RO2.Domain.GameData.GameDataStore>();
+            var store = services.GetRequiredService<RO2.GameData.GameDataStore>();
             await session.SendRmiAsync(ZoneS2COpcodes.AnsMyGuildInfo, (ReadOnlyMemory<byte>)GuildRosterPackets.BuildAnsMyGuildInfo(
                 guild, player.CharacterId, cid => GuildRosterPackets.IsOnline(PlayerManager, cid), emblems, store.GuildExpTable));
             return;

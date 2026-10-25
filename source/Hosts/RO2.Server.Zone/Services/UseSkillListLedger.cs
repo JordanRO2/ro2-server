@@ -1,5 +1,5 @@
 using System.Runtime.CompilerServices;
-using RO2.Domain.GameData.Tables;
+using RO2.GameData.Tables;
 using RO2.Network.ProudNet;
 
 namespace RO2.Server.Zone.Services;

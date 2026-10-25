@@ -1,7 +1,7 @@
 using System.Text;
 using Microsoft.Extensions.Logging;
 using RO2.Domain.Entities;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
@@ -1665,7 +1665,7 @@ public static class WorldEntryService
         => RegenAmounts(store is not null && store.PcBaseStatus.TryGetValue(job, out var row) ? row : null, vit, wis, equip);
 
  /// <summary>Regeneration amounts for the given base stat row. Null for both when the row is missing.</summary>
-    internal static (ushort? Hp, ushort? Sp) RegenAmounts(RO2.Domain.GameData.Tables.PCBaseStatus? pc, int vit, int wis,
+    internal static (ushort? Hp, ushort? Sp) RegenAmounts(RO2.GameData.Tables.PCBaseStatus? pc, int vit, int wis,
         StatService.EquipStats? equip)
     {
         if (pc is null) return (null, null);
@@ -1729,7 +1729,7 @@ public static class WorldEntryService
  /// <remarks>
  /// Returns null when there are no recipes, since an empty message is not sent.
  /// </remarks>
-    internal static byte[]? BuildNotifyCraftIndex2535(IEnumerable<RO2.Domain.GameData.Tables.CraftItemList> recipes, byte proType,
+    internal static byte[]? BuildNotifyCraftIndex2535(IEnumerable<RO2.GameData.Tables.CraftItemList> recipes, byte proType,
         IEnumerable<ushort>? learned = null)
     {
         var ids = CraftRecipeStore.KnownRecipeIds(recipes, proType, learned);

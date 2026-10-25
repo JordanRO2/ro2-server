@@ -1,5 +1,5 @@
-using RO2.Domain.GameData;
-using RO2.Domain.GameData.Tables;
+using RO2.GameData;
+using RO2.GameData.Tables;
 
 namespace RO2.Domain.Entities;
 

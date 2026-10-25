@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.DependencyInjection;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
@@ -66,9 +66,9 @@ public static class RidingService
  /// NationEnable has bit 0 set, or null when there is none.
  /// </summary>
  /// <remarks>Nine vehicles have two rows.</remarks>
-    internal static RO2.Domain.GameData.Tables.RidingInfo? RideRow(GameDataStore store, uint vehicleId)
+    internal static RO2.GameData.Tables.RidingInfo? RideRow(GameDataStore store, uint vehicleId)
     {
-        RO2.Domain.GameData.Tables.RidingInfo? row = null;
+        RO2.GameData.Tables.RidingInfo? row = null;
         foreach (var r in store.RidingInfo)
         {
             if (r.ID == vehicleId && (r.NationEnable & 1) != 0)

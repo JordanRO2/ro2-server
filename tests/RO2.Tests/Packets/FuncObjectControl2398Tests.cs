@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;

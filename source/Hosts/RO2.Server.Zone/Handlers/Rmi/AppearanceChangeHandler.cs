@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Persistence.Mongo.Persistence;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;

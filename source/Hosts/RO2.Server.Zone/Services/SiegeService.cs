@@ -47,7 +47,7 @@ public static class SiegeService
  /// The cooldown group an arm skill counts against: Skill_Table_Base.CoolTime_Group of its
  /// Skill_Group (skill id / 100), or the Skill_Group itself when the table gives 0 or has no row.
  /// </summary>
-    public static uint CooldownGroupOf(uint skillId, IReadOnlyDictionary<uint, RO2.Domain.GameData.SkillData> skills)
+    public static uint CooldownGroupOf(uint skillId, IReadOnlyDictionary<uint, RO2.GameData.SkillData> skills)
     {
         uint skillGroup = skillId / 100;
         return skills.TryGetValue(skillGroup, out var row) && row.CoolTime_Group != 0 ? row.CoolTime_Group : skillGroup;

@@ -1,6 +1,6 @@
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Economy.Application;
 using RO2.Economy.Domain;
 using RO2.Inventory.Domain;

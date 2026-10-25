@@ -1,6 +1,6 @@
 using System.Collections.Frozen;
 using System.Runtime.CompilerServices;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Server.Zone.Models;
 
 namespace RO2.Server.Zone.Services;

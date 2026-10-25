@@ -1,6 +1,6 @@
 using System.Buffers.Binary;
 using System.Runtime.CompilerServices;
-using RO2.Domain.GameData.Tables;
+using RO2.GameData.Tables;
 using RO2.Network.Packets;
 
 namespace RO2.Server.Zone.Services;

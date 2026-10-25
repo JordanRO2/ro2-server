@@ -2,7 +2,7 @@ using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Persistence.Mongo.Persistence;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
@@ -157,7 +157,7 @@ public class DungeonLevelSelectHandler : ZoneRmiHandlerBase<DungeonLevelSelectHa
 
  /// <summary>Records an entry that has already been handed off. A storage failure is logged, not thrown.</summary>
     internal static async Task CountEntryAsync(IDungeonEntryCountRepository counts, PlayerState player,
-        RO2.Domain.GameData.Tables.DungeonInfo row, ILogger logger, CancellationToken ct)
+        RO2.GameData.Tables.DungeonInfo row, ILogger logger, CancellationToken ct)
     {
         try
         {

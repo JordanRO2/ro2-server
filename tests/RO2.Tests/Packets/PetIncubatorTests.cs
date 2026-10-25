@@ -1,6 +1,6 @@
 using System.Buffers.Binary;
 using RO2.Domain.Entities;
-using RO2.Domain.GameData.Tables;
+using RO2.GameData.Tables;
 using RO2.Server.Zone.Services;
 using Xunit;
 

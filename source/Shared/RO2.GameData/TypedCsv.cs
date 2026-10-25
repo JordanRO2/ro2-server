@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace RO2.Domain.GameData;
+namespace RO2.GameData;
 
 /// <summary>
 /// Reader for the game's own typed-CSV table format (the master data tables the client ships):

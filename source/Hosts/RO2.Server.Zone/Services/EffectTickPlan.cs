@@ -1,4 +1,4 @@
-using EffectRow = RO2.Domain.GameData.Tables.EffectTable;
+using EffectRow = RO2.GameData.Tables.EffectTable;
 
 namespace RO2.Server.Zone.Services;
 

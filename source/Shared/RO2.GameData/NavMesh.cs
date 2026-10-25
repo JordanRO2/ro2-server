@@ -1,6 +1,6 @@
 using System.IO.Compression;
 
-namespace RO2.Domain.GameData;
+namespace RO2.GameData;
 
 /// <summary>
 /// Runtime point -> navmesh-cell solver for ONE map: the polygon set of the client's own PathEngine

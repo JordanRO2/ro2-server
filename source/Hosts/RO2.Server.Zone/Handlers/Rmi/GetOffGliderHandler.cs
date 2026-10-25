@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
@@ -118,7 +118,7 @@ public class GetOffGliderHandler : ZoneRmiHandlerBase<GetOffGliderHandler>
     /// that change map belong to the Kafra far-glider NPCs (22090000, 22100000, 27190000), which a 1313 never
     /// names, and an end point on another map would put the rider at that map's coordinates on this one.
     /// </summary>
-    internal static (float X, float Y, float Z) DismountPosition(RO2.Domain.GameData.Tables.Spline? spline,
+    internal static (float X, float Y, float Z) DismountPosition(RO2.GameData.Tables.Spline? spline,
         uint riderMapId, float requestX, float requestY, float requestZ)
         => spline != null && spline.emap_index == riderMapId
             ? (spline.end_x, spline.end_y, spline.end_z)

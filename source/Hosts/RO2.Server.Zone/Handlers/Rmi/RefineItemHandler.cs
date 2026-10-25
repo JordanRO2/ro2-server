@@ -3,7 +3,7 @@ using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
@@ -368,8 +368,8 @@ public class RefineItemHandler : ZoneRmiHandlerBase<RefineItemHandler>
     /// </list>
     /// The catalyst rows' <c>Down_Rate</c> is 0 in every row of REFINE_ITEM and is not read.
     /// </summary>
-    internal static RefineRollResult RollRefine(RO2.Domain.GameData.Tables.REFINERATE rate,
-        RO2.Domain.GameData.Tables.REFINEITEM mat, RO2.Domain.GameData.Tables.REFINEITEM? prot,
+    internal static RefineRollResult RollRefine(RO2.GameData.Tables.REFINERATE rate,
+        RO2.GameData.Tables.REFINEITEM mat, RO2.GameData.Tables.REFINEITEM? prot,
         int cur, int maxRefine, Random rng)
     {
         int succ = Math.Clamp(rate.Succ_Rate + mat.Succ_Rate + (prot?.Succ_Rate ?? 0), 0, RateScale);
@@ -392,13 +392,13 @@ public class RefineItemHandler : ZoneRmiHandlerBase<RefineItemHandler>
         return new RefineRollResult(OutcomeFailKept, cur, "fail-kept", succ);
     }
 
-    private static RO2.Domain.GameData.Tables.REFINERATE? FindRate(GameDataStore store, int targetGrade)
+    private static RO2.GameData.Tables.REFINERATE? FindRate(GameDataStore store, int targetGrade)
     {
         foreach (var r in store.REFINERATE) if (r.INDEX == targetGrade) return r;
         return null;
     }
 
-    private static RO2.Domain.GameData.Tables.REFINEITEM? FindMaterial(GameDataStore store, uint materialTemplateId)
+    private static RO2.GameData.Tables.REFINEITEM? FindMaterial(GameDataStore store, uint materialTemplateId)
     {
         foreach (var m in store.REFINEITEM) if (m.ITEM_ID == materialTemplateId) return m;
         return null;

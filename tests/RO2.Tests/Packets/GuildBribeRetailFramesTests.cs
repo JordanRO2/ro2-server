@@ -1,7 +1,7 @@
 using System.Text.Json;
 using RO2.Server.Zone.Services;
 using Xunit;
-using EffectRow = RO2.Domain.GameData.Tables.EffectTable;
+using EffectRow = RO2.GameData.Tables.EffectTable;
 
 namespace RO2.Tests.Packets;
 

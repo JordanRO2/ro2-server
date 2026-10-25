@@ -1,6 +1,6 @@
 using System.Buffers.Binary;
 using RO2.Domain.Entities;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Server.Zone.Services;
 using Xunit;
 using RO2.Inventory.Domain;
@@ -110,9 +110,9 @@ public class TimedEnchant2786Tests
     public void ApplyingAgain_RestartsAtTheFullDuration_AndReplacesAnother()
     {
         var item = new InventoryItem { EnchantReinforceId = 30003, EnchantSeconds = 40 };
-        TimedEnchant.Apply(item, new RO2.Domain.GameData.Tables.ItemReinforceInfo { Reinforce_ID = 30003, Duration = 300 });
+        TimedEnchant.Apply(item, new RO2.GameData.Tables.ItemReinforceInfo { Reinforce_ID = 30003, Duration = 300 });
         Assert.Equal(((ushort)30003, (ushort)300), (item.EnchantReinforceId, item.EnchantSeconds));
-        TimedEnchant.Apply(item, new RO2.Domain.GameData.Tables.ItemReinforceInfo { Reinforce_ID = 10001, Duration = 1800 });
+        TimedEnchant.Apply(item, new RO2.GameData.Tables.ItemReinforceInfo { Reinforce_ID = 10001, Duration = 1800 });
         Assert.Equal(((ushort)10001, (ushort)1800), (item.EnchantReinforceId, item.EnchantSeconds));
         Assert.True(TimedEnchant.IsLive(item));
         Assert.False(TimedEnchant.IsLive(new InventoryItem { EnchantReinforceId = 10001, EnchantSeconds = 0 }));

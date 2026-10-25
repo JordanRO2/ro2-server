@@ -4,7 +4,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
-using RO2.Domain.GameData.Tables;
+using RO2.GameData.Tables;
 
 namespace RO2.Server.Zone.Services;
 

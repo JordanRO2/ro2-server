@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
@@ -275,12 +275,12 @@ public class CardCompositionHandler : ZoneRmiHandlerBase<CardCompositionHandler>
 
         if (cards.Count != CardsPerComposition || req.SourceIndex >= cards.Count) return (null, ResultNotComposable);
 
-        var cardInfo = new Dictionary<uint, RO2.Domain.GameData.Tables.CardInfo>();
+        var cardInfo = new Dictionary<uint, RO2.GameData.Tables.CardInfo>();
         foreach (var c in store.CardInfo) cardInfo.TryAdd(c.Card_ID, c);
         foreach (var it in cards)
             if (!cardInfo.ContainsKey(it.ItemId)) return (null, ResultNotComposable);
 
-        RO2.Domain.GameData.Tables.CardCompose? stone = null;
+        RO2.GameData.Tables.CardCompose? stone = null;
         foreach (var it in catalysts)
         {
             foreach (var row in store.CardCompose)

@@ -1,6 +1,6 @@
 using System.Buffers.Binary;
 using System.Globalization;
-using RO2.Domain.GameData.Tables;
+using RO2.GameData.Tables;
 
 namespace RO2.Server.Zone.Services;
 

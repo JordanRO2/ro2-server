@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Network.Protocol;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Models;
@@ -29,7 +29,7 @@ public sealed class EquipLegalityWiringTests
     private const ulong SrcUid = 0x0E043DA80E61A001UL;
     private const ulong DstUid = 0x0E043DA80E61A002UL;
 
-    // --- templates (RO2.Domain.GameData.ItemData) ---------------------------------------------------------------
+    // --- templates (RO2.GameData.ItemData) ---------------------------------------------------------------
     // A level-50 main-hand sword usable by job 7 (Require_Job bit 6 = 64), unisex; worn slot 6 only.
     private static readonly ItemData Sword = new() { ID = 1001, Item_Type = 1, Equip_Slot = 6, Equip_Type = 2, Require_Level = 50, Require_Job = 64, Require_Sex = 3 };
     // Chest armour, worn slot 2 (Equip_Type = 18 + slot), no requirements.

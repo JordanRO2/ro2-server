@@ -4,7 +4,7 @@ using System.Runtime.ExceptionServices;
 using Microsoft.Extensions.Logging.Abstractions;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;

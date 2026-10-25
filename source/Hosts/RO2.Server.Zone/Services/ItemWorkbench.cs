@@ -1,6 +1,6 @@
 using System.Buffers.Binary;
 using RO2.Domain.Entities;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Services;

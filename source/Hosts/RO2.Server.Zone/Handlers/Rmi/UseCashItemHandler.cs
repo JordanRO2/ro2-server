@@ -2,7 +2,7 @@ using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Persistence.Mongo.Persistence;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
@@ -72,7 +72,7 @@ public class UseCashItemHandler : ZoneRmiHandlerBase<UseCashItemHandler>
         var item = await inventory.GetByIdAsync(itemUid);
 
         string? why = null;
-        RO2.Domain.GameData.Tables.ItemCashInfo? cash = null;
+        RO2.GameData.Tables.ItemCashInfo? cash = null;
         if (item is null || item.CharacterId != player.CharacterId || item.StorageType != 0 || item.Count < 1)
             why = "no such item in the bag";
         else if (store.GetItem(item.ItemId)?.Item_Type != CardAlbumItemType)

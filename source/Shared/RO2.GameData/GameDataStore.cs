@@ -2,9 +2,9 @@ using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using RO2.Domain.GameData.Tables; // generated table models (PCBaseStatus, …)
+using RO2.GameData.Tables; // generated table models (PCBaseStatus, …)
 
-namespace RO2.Domain.GameData;
+namespace RO2.GameData;
 
 /// <summary>
 /// In-memory store for all game master data.

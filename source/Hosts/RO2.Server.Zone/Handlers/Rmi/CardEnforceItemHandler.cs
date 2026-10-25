@@ -2,7 +2,7 @@ using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
@@ -326,7 +326,7 @@ public class CardEnforceItemHandler : ZoneRmiHandlerBase<CardEnforceItemHandler>
  /// Paper or a Cardfinium (their legendary versions for a legendary card); the catalyst is a Card Lucky Powder
  /// or the synthesis stone whose CardCompose.Card_Grade is the card's CardInfo.Grade_Type.
  /// </summary>
-    internal static bool MaterialFits(GameDataStore store, uint cardId, RO2.Domain.GameData.Tables.CardEnforce row, int slot,
+    internal static bool MaterialFits(GameDataStore store, uint cardId, RO2.GameData.Tables.CardEnforce row, int slot,
         uint materialId, int count)
     {
         if (slot == StoneSlot) return materialId == row.MeterialID && count >= row.MeterialCount;

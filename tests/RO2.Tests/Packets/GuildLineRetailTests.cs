@@ -51,7 +51,7 @@ public class GuildLineRetailTests
         g.Members.Add(new GuildMember { CharId = 1, Gid = 1, Name = "Master", AuthId = 0 });
         // This test pins only Object 1 (identity + robe), which is independent of the guild level, so an empty
         // exp table (guild level 0) is sufficient here; the level path is covered by the exp-table unit tests.
-        var body = GuildRosterPackets.BuildAnsMyGuildInfo(g, 1, _ => false, emblems, Array.Empty<RO2.Domain.GameData.Tables.GuildExpTable>());
+        var body = GuildRosterPackets.BuildAnsMyGuildInfo(g, 1, _ => false, emblems, Array.Empty<RO2.GameData.Tables.GuildExpTable>());
 
         const string retailHead = "40000000" + "de83b20dbc5a164ea2303ca75b474951" + "0a"
             + "4c00650053007300650072006100660069006d00" + "0100";

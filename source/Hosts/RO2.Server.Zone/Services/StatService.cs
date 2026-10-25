@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using RO2.Domain.Entities;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Services;
@@ -419,20 +419,20 @@ public static class StatService
     }
 
     private static readonly Lock RefineLock = new();
-    private static Dictionary<uint, RO2.Domain.GameData.Tables.REFINEINFO>? _refineIndex;
+    private static Dictionary<uint, RO2.GameData.Tables.REFINEINFO>? _refineIndex;
 
     /// <summary>Lazily builds the REFINE_INFO lookup keyed by its composite <c>INDEX</c>
     /// (= Equip_Type_ID·100000 + MasteryGrade·1000 + Refine_GRADE, verified unique across all rows), so a
     /// worn item's (Equip_Type, Grade, Refine) resolves its refine trait bonus in O(1). Cached like the
     /// item/set/rune indices (the GameDataStore is a startup singleton).</summary>
-    private static Dictionary<uint, RO2.Domain.GameData.Tables.REFINEINFO> RefineIndex(GameDataStore store)
+    private static Dictionary<uint, RO2.GameData.Tables.REFINEINFO> RefineIndex(GameDataStore store)
     {
         if (_refineIndex is not null) return _refineIndex;
         lock (RefineLock)
         {
             if (_refineIndex is null)
             {
-                var idx = new Dictionary<uint, RO2.Domain.GameData.Tables.REFINEINFO>(store.REFINEINFO.Count);
+                var idx = new Dictionary<uint, RO2.GameData.Tables.REFINEINFO>(store.REFINEINFO.Count);
                 foreach (var r in store.REFINEINFO) idx[r.INDEX] = r;
                 _refineIndex = idx;
             }

@@ -1,5 +1,5 @@
 using System.Text.Json;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using Xunit;
 
 namespace RO2.Tests.GameData;

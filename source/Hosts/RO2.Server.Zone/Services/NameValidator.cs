@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
-using RO2.Domain.GameData;
-using NameFilterRow = RO2.Domain.GameData.Tables.NameFilter;
+using RO2.GameData;
+using NameFilterRow = RO2.GameData.Tables.NameFilter;
 
 namespace RO2.Server.Zone.Services;
 

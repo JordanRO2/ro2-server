@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using RO2.Domain.Entities;
-using RO2.Domain.GameData.Tables;
+using RO2.GameData.Tables;
 using RO2.Network.Packets;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Services;

@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Handlers.Rmi;
@@ -1235,7 +1235,7 @@ public class LootService
  /// <remarks>
  /// The respawn of the NPC does not end this lifetime, because the respawn gets a fresh handle.
  /// </remarks>
-    internal static TimeSpan UnlootedCorpseLifetime(IReadOnlyList<RO2.Domain.GameData.Tables.ConfigDef> config,
+    internal static TimeSpan UnlootedCorpseLifetime(IReadOnlyList<RO2.GameData.Tables.ConfigDef> config,
         NpcData? npc, ILogger logger)
     {
         if (npc != null && IsNamedEliteGrade(npc.Grade))
@@ -1254,7 +1254,7 @@ public class LootService
     }
 
  /// <summary>Positive whole seconds of a config row, or null when the row is missing or not a positive integer.</summary>
-    private static TimeSpan? ConfigSeconds(IReadOnlyList<RO2.Domain.GameData.Tables.ConfigDef> config, ushort type)
+    private static TimeSpan? ConfigSeconds(IReadOnlyList<RO2.GameData.Tables.ConfigDef> config, ushort type)
     {
         var row = config.FirstOrDefault(c => c.type == type);
         return row != null && int.TryParse(row.Value, System.Globalization.NumberStyles.Integer,

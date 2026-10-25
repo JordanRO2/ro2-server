@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
@@ -57,7 +57,7 @@ public class Reaudit_B1_Tests
         var data = await Data.Value;
         // Config_Def 65 '맵이동시 사용되는 버프 ID' = 60205, 66 '... 시간 (단위 초)' = 10: the 2492 carries 10,000 ms.
         Assert.Equal((60205u, 10_000UL), MapMoveBuff.Of(data.ConfigDef));
-        Assert.Null(MapMoveBuff.Of(Array.Empty<RO2.Domain.GameData.Tables.ConfigDef>()));
+        Assert.Null(MapMoveBuff.Of(Array.Empty<RO2.GameData.Tables.ConfigDef>()));
     }
 
     [Fact]

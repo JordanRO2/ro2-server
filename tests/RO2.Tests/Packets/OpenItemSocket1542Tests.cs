@@ -1,5 +1,5 @@
 using RO2.Domain.Entities;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Server.Chat;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Services;
@@ -298,7 +298,7 @@ public class RefineTransfer1682Tests
     {
         
         
-        var rule = new RO2.Domain.GameData.Tables.REFINETransITEM { ITEM_ID = 60000801, Succ_Rate = 8000, DISC_RATE = 10000, Max_Value = 10000, limit_level = 5 };
+        var rule = new RO2.GameData.Tables.REFINETransITEM { ITEM_ID = 60000801, Succ_Rate = 8000, DISC_RATE = 10000, Max_Value = 10000, limit_level = 5 };
         var config = (5000f, 300f, 0.5f);
         var nine = RefineTransferRules.Compute(rule, 10, 9, 1, 1, config);
         var eight = RefineTransferRules.Compute(rule, 10, 8, 1, 1, config);

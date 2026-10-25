@@ -1,5 +1,5 @@
-using RO2.Domain.GameData;
-using RO2.Domain.GameData.Tables;
+using RO2.GameData;
+using RO2.GameData.Tables;
 using RO2.Network.Packets;
 
 namespace RO2.Server.Zone.Services;

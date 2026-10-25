@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- No GenerateDocumentationFile: the generated GameDataTables.g.cs has thousands of undocumented members,
+       exactly as when these files lived in RO2.Domain (which also does not generate docs). -->
+
+  <!-- Shared game-data kernel: read-only row models + generated tables, plus the loader (GameDataStore/
+       TypedCsv/NavMesh) pending its P0b split into an adapter. References NOTHING; every Domain may reference it.
+       The rule is "a Domain references only RO2.BuildingBlocks + RO2.GameData". -->
+
+</Project>

@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Logging.Abstractions;
-using NameFilterRow = RO2.Domain.GameData.Tables.NameFilter;
+using NameFilterRow = RO2.GameData.Tables.NameFilter;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Chat.Handlers.Rmi;

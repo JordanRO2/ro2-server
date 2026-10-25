@@ -2,9 +2,9 @@ using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Server.Zone.Models;
-using NameFilterRow = RO2.Domain.GameData.Tables.NameFilter;
+using NameFilterRow = RO2.GameData.Tables.NameFilter;
 using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Services;

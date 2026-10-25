@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Models;

@@ -1,6 +1,6 @@
 using System.Buffers.Binary;
 using RO2.Domain.Entities;
-using RO2.Domain.GameData;
+using RO2.GameData;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Services;
 using Xunit;
@@ -541,7 +541,7 @@ public class PartyCrashSweepTests
     [Fact]
     public void RandomItemBatting_InBoxList_IsTheDistinctItemsOfTheDrawableRows()
     {
-        var rows = new List<RO2.Domain.GameData.Tables.RandomSet>
+        var rows = new List<RO2.GameData.Tables.RandomSet>
         {
             new() { ID = 804, Item = 70000362, Package = 1, Ratio = 10, NationEnable = 1 },
             new() { ID = 804, Item = 60000408, Package = 1, Ratio = 5, NationEnable = 1 },

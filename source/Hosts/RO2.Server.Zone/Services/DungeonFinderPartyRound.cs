@@ -1,4 +1,4 @@
-using RO2.Domain.GameData.Tables;
+using RO2.GameData.Tables;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;

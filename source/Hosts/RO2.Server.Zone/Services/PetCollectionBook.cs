@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using RO2.Domain.Entities;
-using RO2.Domain.GameData;
-using RO2.Domain.GameData.Tables;
+using RO2.GameData;
+using RO2.GameData.Tables;
 
 namespace RO2.Server.Zone.Services;
 

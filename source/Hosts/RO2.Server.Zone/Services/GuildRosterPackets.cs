@@ -212,7 +212,7 @@ public static class GuildRosterPackets
  /// total experience. The level is capped at the table's last level. A new guild is level 1 with 0 experience.
  /// Level 0 is returned only when the table cannot be read.
  /// </summary>
-    public static (byte Level, ulong Exp) GuildLevelOf(ulong lifetimeExp, IReadOnlyList<RO2.Domain.GameData.Tables.GuildExpTable>? table)
+    public static (byte Level, ulong Exp) GuildLevelOf(ulong lifetimeExp, IReadOnlyList<RO2.GameData.Tables.GuildExpTable>? table)
     {
         if (table is not { Count: > 0 }) return (0, lifetimeExp);
         var rows = table.OrderBy(r => r.Guild_Base_Level).ToArray();
@@ -231,7 +231,7 @@ public static class GuildRosterPackets
  /// guild panel never undoes a learn. Returns 0 before the game data is loaded.
  /// </summary>
     private static byte UnspentGuildSkillPoints(byte guildLevel, uint[] skills) =>
-        RO2.Domain.GameData.GameDataStore.Loaded is { } data
+        RO2.GameData.GameDataStore.Loaded is { } data
             ? GuildSkillLearnPackets.UnspentPoints(guildLevel, skills, GuildSkillLearnPackets.Index(data.GuildSkillLevel))
             : (byte)0;
 
@@ -240,7 +240,7 @@ public static class GuildRosterPackets
  /// the rank of the viewer, and the member counts and guild master. Members who are not online are counted as
  /// offline. Lists that are not identified are sent empty.
  /// </summary>
-    public static byte[] BuildAnsMyGuildInfo(Guild g, uint viewerCharId, Func<uint, bool> isOnline, IGuildEmblemRepository emblems, IReadOnlyList<RO2.Domain.GameData.Tables.GuildExpTable> expTable)
+    public static byte[] BuildAnsMyGuildInfo(Guild g, uint viewerCharId, Func<uint, bool> isOnline, IGuildEmblemRepository emblems, IReadOnlyList<RO2.GameData.Tables.GuildExpTable> expTable)
     {
         GuildMember[] members;
         uint[] skills;
