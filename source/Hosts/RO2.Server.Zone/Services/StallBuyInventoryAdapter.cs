@@ -3,6 +3,7 @@ using RO2.Domain.Entities;
 using RO2.Domain.GameData;
 using RO2.Economy.Application;
 using RO2.Economy.Domain;
+using RO2.Inventory.Domain;
 using RO2.Server.Zone.Models;
 
 namespace RO2.Server.Zone.Services;

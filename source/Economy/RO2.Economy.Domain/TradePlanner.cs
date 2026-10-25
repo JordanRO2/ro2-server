@@ -1,3 +1,5 @@
+using RO2.Inventory.Domain;
+
 namespace RO2.Economy.Domain;
 
 /// <summary>One offered item as the trade planner sees it: the live stack it comes from and the quantity offered.</summary>

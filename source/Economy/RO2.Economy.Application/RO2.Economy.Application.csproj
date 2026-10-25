@@ -9,6 +9,7 @@
        the event bus). The host implements the ports and does the wire/packet work. -->
   <ItemGroup>
     <ProjectReference Include="..\RO2.Economy.Domain\RO2.Economy.Domain.csproj" />
+    <ProjectReference Include="..\..\Inventory\RO2.Inventory.Domain\RO2.Inventory.Domain.csproj" />
     <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
     <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks.Bus\RO2.BuildingBlocks.Bus.csproj" />
   </ItemGroup>

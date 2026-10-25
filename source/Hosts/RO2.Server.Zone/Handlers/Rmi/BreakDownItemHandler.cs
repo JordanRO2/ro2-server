@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.Economy.Domain;
+using RO2.Inventory.Domain;
 using RO2.Domain.GameData;
 using RO2.Domain.GameData.Tables;
 using RO2.Network.Packets;
@@ -246,7 +247,7 @@ public class BreakDownItemHandler : ZoneRmiHandlerBase<BreakDownItemHandler>
         // The take order (lowest cell first, exclude the source uid) is the economy planner's shared primitive; the
         // host maps its rows in and resolves the chosen stack ids back to the live inventory rows it mutates.
         var rows = bagRows.Where(i => i.StorageType == BagStorageType).ToList();
-        var plan = ShopBuyPlanner.TakeFromStacks(
+        var plan = BagStackPlanner.TakeFromStacks(
             rows.Select(i => new BagStack(i.Id, i.ItemId, i.Count, i.Slot)).ToList(), stoneItemId, need, sourceUid);
         if (plan is null) return null;
         var byId = rows.ToDictionary(i => i.Id);

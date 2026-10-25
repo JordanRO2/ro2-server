@@ -1,5 +1,6 @@
 using RO2.BuildingBlocks;
 using RO2.Economy.Domain;
+using RO2.Inventory.Domain;
 
 namespace RO2.Economy.Application;
 

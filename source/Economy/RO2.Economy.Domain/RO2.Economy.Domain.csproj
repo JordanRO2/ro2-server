@@ -4,9 +4,11 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
-  <!-- Economy bounded context: Domain references ONLY RO2.BuildingBlocks (no Mongo, no ProudNet, no other
-       service). Holds the economy entities, rules and repository ports. -->
+  <!-- Economy bounded context: Domain references ONLY RO2.BuildingBlocks and RO2.Inventory.Domain (no Mongo,
+       no ProudNet, no other service). Holds the economy entities, rules and repository ports. Dependency points
+       Economy -> Inventory, never the reverse. -->
   <ItemGroup>
+    <ProjectReference Include="..\..\Inventory\RO2.Inventory.Domain\RO2.Inventory.Domain.csproj" />
     <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
   </ItemGroup>
 

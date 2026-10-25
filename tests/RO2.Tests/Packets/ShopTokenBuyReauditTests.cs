@@ -5,6 +5,7 @@ using RO2.Domain.Entities;
 using RO2.Domain.GameData.Tables;
 using RO2.Domain.GameData;
 using RO2.Economy.Domain;
+using RO2.Inventory.Domain;
 using RO2.Identity.Application.Commands;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
