@@ -169,25 +169,29 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
     internal static string? ShopRefusal(NpcRuntimeState? npc, uint playerMapId, uint itemId, GameDataStore store,
         MerchantRow? row, bool merchantTableLoaded)
     {
-        if (npc is null || npc.IsDead || npc.MapId != playerMapId)
-            return "its NPC handle names no live NPC on the player's map";
+        // Resolve the facts; the pure catalog verdict lives in ShopPurchaseRules.CheckPurchase. The NPC's FULL
+        // shop is resolved through its Function slots, not just its own Merchant row: a field NPC opens a
+        // Kafra/general-goods shop (Function_Type 11), and a merchant may also reference a second shop (e.g.
+        // 10780000 sells mounts AND opens the 10780100 taxi shop). The Merchant row decides the currency, so a
+        // request that names no row (the client always sends one) or a row of another shop would price the item
+        // as plain zeny (Price_Buy 0 on the token rows); when the table is unreadable the BuyTokenInfo-field
+        // fallback stays (see LoadMerchantRows).
+        bool npcLiveOnMap = npc is not null && !npc.IsDead && npc.MapId == playerMapId;
+        var stock = npcLiveOnMap ? store.GetNpcShopItems(npc!.NpcId) : Array.Empty<uint>();
+        bool stocksItem = Array.IndexOf(stock, itemId) >= 0;
+        bool rowBelongs = npcLiveOnMap && row is not null && ShopMerchantIds(store, npc!.NpcId).Contains(row.ID);
 
-        // Resolve the NPC's FULL shop through its Function slots, not just its own Merchant row: a field NPC
-        // opens a Kafra/general-goods shop (Function_Type 11), and a merchant may also reference a second shop
-        // (e.g. 10780000 sells mounts AND opens the 10780100 taxi shop).
-        var stock = store.GetNpcShopItems(npc.NpcId);
-        if (stock.Length == 0) return "that NPC has no shop";
-        if (Array.IndexOf(stock, itemId) < 0) return "that NPC's shop does not stock the item";
-
-        // The Merchant row decides the currency, so a request that names no row (the client always sends one)
-        // or a row of another shop would price the item as plain zeny: Price_Buy 0 on the token
-        // rows. When the table is unreadable the BuyTokenInfo-field fallback stays (see LoadMerchantRows).
-        if (merchantTableLoaded)
+        return ShopPurchaseRules.CheckPurchase(npcLiveOnMap, stock.Length, stocksItem,
+            merchantTableLoaded, row is not null, rowBelongs) switch
         {
-            if (row is null) return "it names no Merchant row";
-            if (!ShopMerchantIds(store, npc.NpcId).Contains(row.ID)) return "its Merchant row belongs to another shop";
-        }
-        return null;
+            ShopPurchaseRefusal.None => null,
+            ShopPurchaseRefusal.NpcUnavailable => "its NPC handle names no live NPC on the player's map",
+            ShopPurchaseRefusal.NoShop => "that NPC has no shop",
+            ShopPurchaseRefusal.NotStocked => "that NPC's shop does not stock the item",
+            ShopPurchaseRefusal.NoMerchantRow => "it names no Merchant row",
+            ShopPurchaseRefusal.WrongMerchantRow => "its Merchant row belongs to another shop",
+            _ => "refused",
+        };
     }
 
     /// <summary>The Merchant ids an NPC's shop is made of: its own id and every Function_Type 11 target (the same
