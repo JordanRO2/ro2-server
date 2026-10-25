@@ -66,26 +66,26 @@ public static partial class AuctionPackets
 
     
  /// <summary>Result code 16302: not enough zeny in the wallet (client text 2114 "Not enough money in your inventory.").</summary>
-    public const ushort ResultNotEnoughMoney = 16302;
+    public const ushort ResultNotEnoughMoney = AuctionCodes.ResultNotEnoughMoney;
  /// <summary>Result code 16306: internal error while placing the bid (client text 8609). It is also what a character at the <see cref="MaxTopBids"/> limit gets.</summary>
-    public const ushort ResultBidFailed = 16306;
+    public const ushort ResultBidFailed = AuctionCodes.ResultBidFailed;
  /// <summary>Result code 16313: the item information does not match the article (client text 8612).</summary>
-    public const ushort ResultBidItemMismatch = 16313;
+    public const ushort ResultBidItemMismatch = AuctionCodes.ResultBidItemMismatch;
 
     
     
  // Types of the 2693 NfyAuctionSystemMessage notice for bid events; the client prints a chat line per type
  // (see AuctionBidMailKind for the texts).
  /// <summary>Notice type to the seller: the article went to its top bidder (text 8646).</summary>
-    public const uint NotifyBidSold = 3;
+    public const uint NotifyBidSold = AuctionCodes.NotifyBidSold;
  /// <summary>Notice type to the top bidder: the article is theirs (text 8654).</summary>
-    public const uint NotifyBidWon = 4;
+    public const uint NotifyBidWon = AuctionCodes.NotifyBidWon;
  /// <summary>Notice type to a bidder who was outbid (text 8656).</summary>
-    public const uint NotifyOutbid = 5;
+    public const uint NotifyOutbid = AuctionCodes.NotifyOutbid;
  /// <summary>Notice type to the top bidder of an article bought at the instant price by another player (text 8013).</summary>
-    public const uint NotifyInstantBoughtOverBid = 6;
+    public const uint NotifyInstantBoughtOverBid = AuctionCodes.NotifyInstantBoughtOverBid;
  /// <summary>Notice type to the top bidder of an article its seller cancelled (text 8657).</summary>
-    public const uint NotifyCancelledWithBid = 8;
+    public const uint NotifyCancelledWithBid = AuctionCodes.NotifyCancelledWithBid;
 
  /// <summary>
  /// Maximum number of articles one character may be top bidder on.

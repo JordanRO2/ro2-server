@@ -152,7 +152,7 @@ public static partial class AuctionPackets
     private const byte BagStorageType = 0;
 
     /// <summary>Result code 0 of 2458 / 2460 / 2461: the request succeeded.</summary>
-    public const ushort ResultSuccess = 0;
+    public const ushort ResultSuccess = AuctionCodes.ResultSuccess;
 
     // Blob-relative layout of the requests (blob+0 = the u16 innerSize). Every request carries its u16 msgTag
     // at blob+2 and the requester's u32 handle at blob+4.
@@ -212,14 +212,14 @@ public static partial class AuctionPackets
 
     /// <summary>2461/2460 result the client special-cases (16308): a buyout of an article another character had
     /// already bought, answered 16308 with the buyer's wallet unchanged.</summary>
-    public const ushort ResultArticleGone = 16308;
+    public const ushort ResultArticleGone = AuctionCodes.ResultArticleGone;
 
     // 2693 NfyAuctionSystemMessage types (u32 at body+4), each tied to the request it follows.
     // NotifySold carries an amount (the seller's proceeds); a 1-zeny sale gives amount 0, since
     // (long)float32(0.95) = 0. BuyAsync sends the notice either way.
-    public const uint NotifySold = 1;      // to the SELLER, amount = proceeds
-    public const uint NotifyBought = 2;    // to the BUYER, sent before 2449 + 2461
-    public const uint NotifyCancelled = 7; // to the canceller, sent before 2460
+    public const uint NotifySold = AuctionCodes.NotifySold;      // to the SELLER, amount = proceeds
+    public const uint NotifyBought = AuctionCodes.NotifyBought;    // to the BUYER, sent before 2449 + 2461
+    public const uint NotifyCancelled = AuctionCodes.NotifyCancelled; // to the canceller, sent before 2460
 
     /// <summary>The article uid band (104·10^16 + counter); items use band 101 and mails 103.</summary>
     public static ulong MakeArticleUid(ulong id) => AuctionArticle.MakeUid(id);

@@ -1,3 +1,4 @@
+using RO2.Economy.Domain;
 using System;
 using RO2.Domain.Entities;
 using RO2.Domain.GameData;
@@ -13,10 +14,10 @@ public static partial class AuctionPackets
     // money in your inventory.") is ResultNotEnoughMoney (AuctionBidding.cs).
 
     /// <summary>16301: 8606 "Failed purchase registration due to an internal system error."</summary>
-    public const ushort ResultSellInternalError = 16301;
+    public const ushort ResultSellInternalError = AuctionCodes.ResultSellInternalError;
 
     /// <summary>16303: 8603 "Can only register an item if buyout price is higher than the starting bid price."</summary>
-    public const ushort ResultSellBuyoutBelowStart = 16303;
+    public const ushort ResultSellBuyoutBelowStart = AuctionCodes.ResultSellBuyoutBelowStart;
 
     /// <summary>
     /// 16304: 8607 "Failed purchase registration due to incorrect item info." The general item-refusal code: the
@@ -24,7 +25,7 @@ public static partial class AuctionPackets
     /// already listed the item), or fails one of the other item checks of
     /// <see cref="AuctionService.CheckSellStart"/>.
     /// </summary>
-    public const ushort ResultSellItemMismatch = 16304;
+    public const ushort ResultSellItemMismatch = AuctionCodes.ResultSellItemMismatch;
 
     /// <summary>
     /// The listing durations the client offers, in hours (1, 3 or 7 days: the days byte of the sell tab x 24, see
@@ -34,7 +35,7 @@ public static partial class AuctionPackets
     public static readonly byte[] AllowedSellHours = [24, 72, 168];
 
     /// <summary>16307: 8604 "Cannot register for purchase because the item quantity limit for auction has been exceeded."</summary>
-    public const ushort ResultSellQuantityLimit = 16307;
+    public const ushort ResultSellQuantityLimit = AuctionCodes.ResultSellQuantityLimit;
 
     /// <summary>
     /// Live articles one seller may have: the client refuses with 8631 "Exceeded the item quantity limit a player
