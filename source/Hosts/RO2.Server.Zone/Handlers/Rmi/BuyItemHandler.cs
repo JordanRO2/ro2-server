@@ -11,6 +11,8 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 
+using RO2.Economy.Domain;
+
 namespace RO2.Server.Zone.Handlers.Rmi;
 
 /// <summary>
@@ -80,28 +82,6 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
 
     private static MerchantRow? LookupMerchantRow(ushort no)
         => MerchantRows.Value is { } rows && rows.TryGetValue(no, out var row) ? row : null;
-
-    /// <summary>
-    /// 2375 failure codes per Merchant Buy_Type. Code 1 is the generic failure used for most rows (Buy_Type 1,
-    /// Dia, 7 and zeny), while Mastery-point rows (Buy_Type 4) fail with 20084. PvP rows (2, 3) take the
-    /// generic code. The codes are system-message ids the client resolves itself (ShowResultCodeMessage).
-    /// </summary>
-    private const ushort BuyFailGeneric = 1;
-    private const ushort BuyFailMastery = 20084;
-
-    /// <summary>
-    /// 2375 code for a buy the bag has no cell for: 20020, the "no free bag cell" code also used in
-    /// 2438 OnCommonError and 2801 (BagCapacity, CardBookTakeOff1PcsHandler). It is answered with the
-    /// plain refusal form and nothing else.
-    /// </summary>
-    private const ushort BuyFailBagFull = 20020;
-
-    /// <summary>
-    /// 2375 code for a buy past the item's possession limit. The client shows "Due to
-    /// possessing the maximum number of those items you are not able to possess more." It is sent when the
-    /// bag total plus the count would pass the item's limit (see <see cref="MeasuredPossessionLimits"/>).
-    /// </summary>
-    private const ushort BuyFailPossession = 20166;
 
     /// <summary>
     /// Possession limits that override the Possession_Max this server ships. These take precedence over
@@ -466,7 +446,7 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
         {
             Logger.LogInformation("{Name} tried to buy item {Item} (NPC handle 0x{Npc:X8}, template {Template}, "
                 + "Merchant row {No}); refused: {Why}", player.Name, itemId, npcHandle, npc?.NpcId ?? 0, merchantNo, refusal);
-            await RefuseAsync(BuyFailGeneric);
+            await RefuseAsync(ShopCodes.BuyFailGeneric);
             return;
         }
 
@@ -478,7 +458,7 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
         {
             Logger.LogInformation("{Name} tried to buy item {Item} from NPC 0x{Npc:X8}; refused: {Why}",
                 player.Name, itemId, npcHandle, reach);
-            await RefuseAsync(BuyFailGeneric);
+            await RefuseAsync(ShopCodes.BuyFailGeneric);
             return;
         }
 
@@ -496,7 +476,7 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
             // A row/item mismatch is refused with the generic code 1.
             Logger.LogInformation("{Name} sent Merchant row {No} (item {RowItem}) with item {Item}; refused",
                 player.Name, merchantNo, merchantRow.Item, itemId);
-            await RefuseAsync(BuyFailGeneric);
+            await RefuseAsync(ShopCodes.BuyFailGeneric);
             return;
         }
         var buyType = merchantRow?.Buy_Type ?? (tokenRow != 0 ? BuyTypeNoMerchantRow : BuyTypeZeny);
@@ -515,7 +495,7 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
                 Logger.LogInformation("{Name} tried a token purchase of item {Item} (Merchant row {No}, BuyTokenInfo {Token}): "
                     + "{Why}; refused", player.Name, itemId, merchantNo, merchantRow.BuyTokenID,
                     tokenCost is null ? "no such BuyTokenInfo row" : "it also costs PvP, Mastery or Dia points, which this server keeps no balance of");
-                await RefuseAsync(BuyFailGeneric);
+                await RefuseAsync(ShopCodes.BuyFailGeneric);
                 return;
             }
         }
@@ -524,7 +504,7 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
             Logger.LogInformation("{Name} tried a non-zeny purchase of item {Item} (Merchant row {No}, "
                 + "Buy_Type {BuyType}, BuyTokenInfo {Token}); no Dia/Mastery/PvP balance or token exchange "
                 + "exists server-side, refused", player.Name, itemId, merchantNo, buyType, tokenRow);
-            await RefuseAsync(buyType == BuyTypeMastery ? BuyFailMastery : BuyFailGeneric);
+            await RefuseAsync(buyType == BuyTypeMastery ? ShopCodes.BuyFailMastery : ShopCodes.BuyFailGeneric);
             return;
         }
 
@@ -532,13 +512,13 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
         if (item == null)
         {
             Logger.LogWarning("Session {Id}: Buy unknown item {ItemId}", session.SessionId, itemId);
-            await RefuseAsync(BuyFailGeneric);
+            await RefuseAsync(ShopCodes.BuyFailGeneric);
             return;
         }
 
         // A token buy costs no zeny (the 2375 wallet is unchanged). A zeny buy costs Price_Buy x count. The
         // timed shop-discount state is not modelled, so no discount is applied.
-        var totalCost = tokenCost is null ? item.Price_Buy * (long)quantity : 0L;
+        var totalCost = tokenCost is null ? ShopPricing.BuyCost(item.Price_Buy, quantity) : 0L;
 
         // Can't buy what you can't afford. The cost is TAKEN from the wallet here, atomically (TryDebit), not
         // just compared: a check followed by a later deduct lets a concurrent spender drain the same funds in
@@ -547,7 +527,7 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
         {
             Logger.LogInformation("{Name} cannot afford {Count}x '{Item}' ({Cost}g, has {Have}g)",
                 player.Name, quantity, item.Name, totalCost, player.Gold);
-            await RefuseAsync(BuyFailGeneric);
+            await RefuseAsync(ShopCodes.BuyFailGeneric);
             return;
         }
         reservedZeny = totalCost;
@@ -562,18 +542,18 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
         {
             Logger.LogWarning(ex, "{Name}: bag unreadable for a buy of {Count}x '{Item}'; refused, nothing charged",
                 player.Name, quantity, item.Name);
-            await RefuseAsync(BuyFailGeneric);
+            await RefuseAsync(ShopCodes.BuyFailGeneric);
             return;
         }
 
         // Possession limit: the bag total after the buy may not pass it. The limit is the override where one
         // exists (15 for the siege supplies 22261077, where ItemInfo says 10), otherwise ItemInfo's
-        // Possession_Max. See MeasuredPossessionLimits and BuyFailPossession.
+        // Possession_Max. See MeasuredPossessionLimits and ShopCodes.BuyFailPossession.
         if (ExceedsPossessionLimit(owned, itemId, quantity, out var held, out var limit))
         {
             Logger.LogInformation("{Name} cannot hold {Count} more '{Item}' ({Held} held, possession limit {Max})",
                 player.Name, quantity, item.Name, held, limit);
-            await RefuseAsync(BuyFailPossession);
+            await RefuseAsync(ShopCodes.BuyFailPossession);
             return;
         }
 
@@ -585,7 +565,7 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
             {
                 Logger.LogInformation("{Name} cannot pay {Count}x '{Item}' with BuyTokenInfo {Token}: the bag holds too few tokens; refused",
                     player.Name, quantity, item.Name, tokenCost.ID);
-                await RefuseAsync(BuyFailGeneric);
+                await RefuseAsync(ShopCodes.BuyFailGeneric);
                 return;
             }
         }
@@ -596,7 +576,7 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
         if (plan is null)
         {
             Logger.LogInformation("{Name}: no free bag cell for {Count}x '{Item}'; refused", player.Name, quantity, item.Name);
-            await RefuseAsync(BuyFailBagFull);
+            await RefuseAsync(ShopCodes.BuyFailBagFull);
             return;
         }
 
@@ -622,7 +602,7 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
         {
             Logger.LogWarning(ex, "{Name}: buy of {Count}x '{Item}' could not be saved; refused, nothing delivered or charged",
                 player.Name, quantity, item.Name);
-            await RefuseAsync(BuyFailGeneric);
+            await RefuseAsync(ShopCodes.BuyFailGeneric);
             return;
         }
         var stacks = written.Stacks;

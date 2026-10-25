@@ -12,6 +12,8 @@ using RO2.Persistence.Mongo.Repositories;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 
+using RO2.Economy.Domain;
+
 namespace RO2.Server.Zone.Handlers.Rmi;
 
 /// <summary>
@@ -49,14 +51,14 @@ public class CancelSellItemHandler : ZoneRmiHandlerBase<CancelSellItemHandler>
 
     /// <summary>The failure code sent on 2377 for a refused buy-back. It is a
     /// system-message id the client resolves itself.</summary>
-    internal const short RefusedResult = 1;
+    internal const short RefusedResult = ShopCodes.CancelRefused;
 
     /// <summary>
     /// Refusal code for a buy-back with no free bag cell: 20020, the "no free bag cell" code retail uses in 2375
     /// (BuyItemHandler.BuyFailBagFull), 2438 and 2801. The client already renders this code, so it is reused
     /// here for the bag-full buy-back case.
     /// </summary>
-    internal const short BagFullResult = 20020;
+    internal const short BagFullResult = ShopCodes.CancelBagFull;
 
     /// <summary>Blob length of 2377.</summary>
     internal const int BlobLength = 152;

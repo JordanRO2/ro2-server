@@ -11,6 +11,8 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 
+using RO2.Economy.Domain;
+
 namespace RO2.Server.Zone.Handlers.Rmi;
 
 /// <summary>
@@ -33,9 +35,6 @@ public class SellItemHandler : ZoneRmiHandlerBase<SellItemHandler>
 
     /// <summary>InventoryItem.StorageType of the bag; worn and banked items use other values and cannot be sold.</summary>
     private const byte StorageBag = 0;
-
-    /// <summary>OnSellItem 2376 result: the sale went through.</summary>
-    private const ushort SellResultSold = 0;
 
     /// <summary>Offset of the u8 stack count inside a 126-byte item record.</summary>
     private const int ItemRecordCountOffset = 14;
@@ -113,7 +112,7 @@ public class SellItemHandler : ZoneRmiHandlerBase<SellItemHandler>
             // Gold-dupe guard: NEVER pay for more than the owned stack. The client sends a u8 count
             // (1..255); without this clamp, selling qty > it.Count still credits unit*qty while the
             // stack is only removed once — free gold.
-            var sellQty = Math.Min(qty, it.Count);
+            var sellQty = ShopPricing.SellQty(qty, it.Count);
             if (sellQty <= 0) continue;
             var newCount = it.Count - sellQty;
 
@@ -129,7 +128,7 @@ public class SellItemHandler : ZoneRmiHandlerBase<SellItemHandler>
             // Each item carries its OWN sell price (ItemInfo Price_Sell) — it is NOT half the buy price.
             // e.g. 21330011 buys at 250 but sells for 1; 30000311 buys at 100000 but sells for 100.
             var unit = tmpl.Price_Sell;
-            proceeds += (long)unit * sellQty;
+            proceeds += ShopPricing.SellProceeds(unit, sellQty);
 
             // Build the record from the item as it was (its pre-sale count), then FORCE the stack-count
             // byte. WriteItemInstance clamps record+0x0E to a minimum of 1, so a fully-sold stack can only
@@ -146,10 +145,10 @@ public class SellItemHandler : ZoneRmiHandlerBase<SellItemHandler>
             // carries the sold quantity), and Paid is what this sale
             // credits, which is what the buy-back charges. Recorded only after the inventory write went
             // through, so a failed write cannot leave a buy-back entry for an item the player still has.
-            BuyBackLedger.RecordSale(player, it, sellQty, (long)unit * sellQty);
+            BuyBackLedger.RecordSale(player, it, sellQty, ShopPricing.SellProceeds(unit, sellQty));
 
             Logger.LogInformation("{Name} sold uid {Uid} ('{Item}') x{Qty} for {Gold}g",
-                player.Name, itemUid, tmpl.Name, sellQty, (long)unit * sellQty);
+                player.Name, itemUid, tmpl.Name, sellQty, ShopPricing.SellProceeds(unit, sellQty));
         }
         return 0;
         });
@@ -192,7 +191,7 @@ public class SellItemHandler : ZoneRmiHandlerBase<SellItemHandler>
         // result@8=0, newZeny u64@10, sold-uid list (10 × u64, zero-padded)@18, count@98, then
         // N x 126B records@99 (ShopItemPackets.BuildSellItem2376). The consumer compares uids against
         // every one of the ten list slots.
-        var sellBody = ShopItemPackets.BuildSellItem2376(player.EntityId, SellResultSold, player.Gold, soldList, records);
+        var sellBody = ShopItemPackets.BuildSellItem2376(player.EntityId, ShopCodes.SellResultSold, player.Gold, soldList, records);
         await session.SendRmiAsync(ZoneS2COpcodes.OnSellItem, writer => writer.WriteBytes(sellBody));
     }
 }

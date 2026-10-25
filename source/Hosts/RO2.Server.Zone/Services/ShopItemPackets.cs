@@ -1,6 +1,8 @@
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 
+using RO2.Economy.Domain;
+
 namespace RO2.Server.Zone.Services;
 
 /// <summary>
@@ -613,7 +615,7 @@ public static class ShopItemPackets
     }
 
     /// <summary>2376 result of a sell that sold nothing (see <see cref="BuildSellItem2376(uint, ushort, long, IReadOnlyList{ulong}, IReadOnlyList{byte[]})"/>).</summary>
-    internal const ushort SellResultNothingSold = 1;
+    internal const ushort SellResultNothingSold = ShopCodes.SellResultNothingSold;
 
     /// <summary>
     /// RMI 2376 OnSellItem: <c>[msgTag 58051][u32 sellerHandle@4][u16 result@8][u64 wallet@10]
