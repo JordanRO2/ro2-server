@@ -1,3 +1,4 @@
+using RO2.Economy.Domain;
 using System.Buffers.Binary;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;

@@ -134,7 +134,7 @@ public static class Program
         // Auction store: Zone-only. AuctionService is built per call (AuctionService.From, and a fresh scope per expiry-sweep
         // pass), and the repository ctor retries its index build until one succeeds, so keep it transient like the
         // per-call `new AuctionRepository(ctx)` it replaces.
-        services.AddProviderRepository<IAuctionRepository, RO2.Persistence.Mongo.Repositories.AuctionRepository, RO2.Persistence.Postgres.Repositories.AuctionRepository>(config.Database.Provider, ServiceLifetime.Transient);
+        services.AddProviderRepository<IAuctionRepository, RO2.Economy.Infrastructure.Mongo.AuctionRepository, RO2.Economy.Infrastructure.Postgres.AuctionRepository>(config.Database.Provider, ServiceLifetime.Transient);
 
         // Game data (loaded at startup, immutable)
         services.AddSingleton<GameDataStore>();

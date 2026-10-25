@@ -1,10 +1,9 @@
+using RO2.Economy.Domain;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
 using RO2.Persistence.Mongo.Persistence;
 
-namespace RO2.Persistence.Mongo.Repositories;
+namespace RO2.Economy.Infrastructure.Mongo;
 
 /// <summary>
 /// MongoDB implementation of <see cref="IAuctionRepository"/>: owns <c>auction_articles</c> + <c>auction_counters</c>
@@ -32,6 +31,7 @@ public sealed class AuctionRepository : IAuctionRepository
 
     private static int _indexesEnsured; // 0 = not yet
 
+    /// <summary>Creates the repository over the given database context.</summary>
     public AuctionRepository(MongoDbContext context)
     {
         _articles = context.GetCollection<AuctionArticle>(ArticlesCollection);
@@ -66,6 +66,7 @@ public sealed class AuctionRepository : IAuctionRepository
         }
     }
 
+    /// <inheritdoc />
     public async Task<ulong> GetNextIdAsync(CancellationToken ct = default)
     {
         var filter = Builders<BsonDocument>.Filter.Eq("_id", CounterId);
@@ -75,14 +76,17 @@ public sealed class AuctionRepository : IAuctionRepository
         return (ulong)(doc != null && doc.Contains(CounterSequenceField) ? doc[CounterSequenceField].ToInt64() : FirstArticleId);
     }
 
+    /// <inheritdoc />
     public Task InsertAsync(AuctionArticle article, CancellationToken ct = default)
         => _articles.InsertOneAsync(article, cancellationToken: ct);
 
+    /// <inheritdoc />
     public async Task<AuctionArticle?> GetByUidAsync(ulong uid, CancellationToken ct = default)
     {
         return await _articles.Find(a => a.Uid == uid).FirstOrDefaultAsync(ct);
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<AuctionArticle>> GetActiveBySellerAsync(uint sellerCharId, DateTime nowUtc, CancellationToken ct = default)
     {
         return await _articles.Find(a => a.SellerCharId == sellerCharId && a.State == AuctionArticleState.Active && a.ExpiresAt > nowUtc)
@@ -90,11 +94,13 @@ public sealed class AuctionRepository : IAuctionRepository
             .ToListAsync(ct);
     }
 
+    /// <inheritdoc />
     public async Task<int> CountActiveBySellerAsync(uint sellerCharId, DateTime nowUtc, CancellationToken ct = default) =>
         (int)Math.Min(int.MaxValue, await _articles.CountDocumentsAsync(
             a => a.SellerCharId == sellerCharId && a.State == AuctionArticleState.Active && a.ExpiresAt > nowUtc,
             cancellationToken: ct));
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<AuctionArticle>> GetActiveSortRowsAsync(IReadOnlyCollection<uint>? itemIds, DateTime nowUtc, CancellationToken ct = default)
     {
         if (itemIds is { Count: 0 }) return new List<AuctionArticle>();
@@ -112,11 +118,13 @@ public sealed class AuctionRepository : IAuctionRepository
         return await _articles.Find(filter).Project<AuctionArticle>(sortFields).ToListAsync(ct);
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<AuctionArticle>> GetByIdsAsync(IReadOnlyCollection<ulong> ids, CancellationToken ct = default)
     {
         return await _articles.Find(Builders<AuctionArticle>.Filter.In(a => a.Id, ids)).ToListAsync(ct);
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<uint>> GetActiveItemIdsAsync(DateTime nowUtc, CancellationToken ct = default)
     {
         var cursor = await _articles.DistinctAsync(a => a.ItemId,
@@ -124,12 +132,14 @@ public sealed class AuctionRepository : IAuctionRepository
         return await cursor.ToListAsync(ct);
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<AuctionArticle>> GetDueBySellerAsync(uint sellerCharId, DateTime nowUtc, CancellationToken ct = default)
     {
         return await _articles.Find(a => a.SellerCharId == sellerCharId && a.State == AuctionArticleState.Active && a.ExpiresAt <= nowUtc)
             .ToListAsync(ct);
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<AuctionArticle>> GetDueAsync(DateTime nowUtc, int limit, CancellationToken ct = default)
     {
         return await _articles.Find(a => a.State == AuctionArticleState.Active && a.ExpiresAt <= nowUtc)
@@ -138,14 +148,17 @@ public sealed class AuctionRepository : IAuctionRepository
             .ToListAsync(ct);
     }
 
+    /// <inheritdoc />
     public Task<AuctionArticle?> TryCancelAsync(ulong uid, uint sellerCharId, DateTime nowUtc, CancellationToken ct = default) =>
         CloseAsync(Builders<AuctionArticle>.Filter.Eq(a => a.SellerCharId, sellerCharId),
             uid, AuctionArticleState.Cancelled, 0, nowUtc, ct);
 
+    /// <inheritdoc />
     public Task<AuctionArticle?> TrySellAsync(ulong uid, uint buyerCharId, DateTime nowUtc, CancellationToken ct = default) =>
         CloseAsync(Builders<AuctionArticle>.Filter.Gt(a => a.ExpiresAt, nowUtc),
             uid, AuctionArticleState.Sold, buyerCharId, nowUtc, ct);
 
+    /// <inheritdoc />
     public Task<AuctionArticle?> TryExpireAsync(ulong uid, DateTime nowUtc, CancellationToken ct = default) =>
         CloseAsync(Builders<AuctionArticle>.Filter.Lte(a => a.ExpiresAt, nowUtc),
             uid, AuctionArticleState.Expired, 0, nowUtc, ct);
@@ -189,6 +202,7 @@ public sealed class AuctionRepository : IAuctionRepository
                & BidUnchanged(read);
     }
 
+    /// <inheritdoc />
     public async Task<AuctionArticle?> TryPlaceBidAsync(AuctionArticle read, uint bidderCharId, string bidderName,
         ulong bidderCharUid, long bid, DateTime nowUtc, CancellationToken ct = default)
     {
@@ -223,14 +237,17 @@ public sealed class AuctionRepository : IAuctionRepository
             new FindOneAndUpdateOptions<AuctionArticle> { ReturnDocument = ReturnDocument.After }, ct);
     }
 
+    /// <inheritdoc />
     public Task<AuctionArticle?> TryWinAtInstantPriceAsync(AuctionArticle read, uint bidderCharId, string bidderName,
         ulong bidderCharUid, long bid, DateTime nowUtc, CancellationToken ct = default) =>
         TrySellToBidderAsync(read, 0, bidderCharId, bidderName, bidderCharUid, bid, nowUtc, ct);
 
+    /// <inheritdoc />
     public Task<AuctionArticle?> TryAcceptTopBidAsync(AuctionArticle read, uint sellerCharId, DateTime nowUtc, CancellationToken ct = default) =>
         TrySellToBidderAsync(read, sellerCharId, read.TopBidderCharId, read.TopBidderName, read.TopBidderCharUid,
             read.TopBid, nowUtc, ct);
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<AuctionArticle>> GetTopBidsAsync(uint bidderCharId, DateTime nowUtc, CancellationToken ct = default)
     {
         return await _articles.Find(a => a.TopBidderCharId == bidderCharId && a.State == AuctionArticleState.Active && a.ExpiresAt > nowUtc)
@@ -238,6 +255,7 @@ public sealed class AuctionRepository : IAuctionRepository
             .ToListAsync(ct);
     }
 
+    /// <inheritdoc />
     public async Task<int> CountTopBidsAsync(uint bidderCharId, DateTime nowUtc, CancellationToken ct = default) =>
         (int)Math.Min(int.MaxValue, await _articles.CountDocumentsAsync(
             a => a.TopBidderCharId == bidderCharId && a.State == AuctionArticleState.Active && a.ExpiresAt > nowUtc,

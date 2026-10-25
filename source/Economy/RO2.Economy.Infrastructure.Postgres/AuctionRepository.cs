@@ -1,10 +1,10 @@
+using RO2.Economy.Domain;
+using RO2.Persistence.Postgres;
 using System.Text.Json;
 using Npgsql;
 using NpgsqlTypes;
-using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
 
-namespace RO2.Persistence.Postgres.Repositories;
+namespace RO2.Economy.Infrastructure.Postgres;
 
 /// <summary>
 /// PostgreSQL implementation of <see cref="IAuctionRepository"/>: the <c>auction_articles</c> table (one row per
@@ -34,6 +34,7 @@ public sealed class AuctionRepository : IAuctionRepository
 
     private readonly PostgresDbContext _db;
 
+    /// <summary>Creates the repository over the given database context.</summary>
     public AuctionRepository(PostgresDbContext db) => _db = db;
 
  /// <summary>The never-filtered item fields, stored in the <c>item_snapshot</c> jsonb column.</summary>
@@ -120,6 +121,7 @@ public sealed class AuctionRepository : IAuctionRepository
         return (int)Math.Min(int.MaxValue, n);
     }
 
+    /// <inheritdoc />
     public async Task<ulong> GetNextIdAsync(CancellationToken ct = default)
     {
         await using var conn = await _db.OpenConnectionAsync(ct);
@@ -131,6 +133,7 @@ public sealed class AuctionRepository : IAuctionRepository
         return (ulong)(seq is long l ? l : 1L);
     }
 
+    /// <inheritdoc />
     public async Task InsertAsync(AuctionArticle article, CancellationToken ct = default)
     {
         var snapshot = JsonSerializer.Serialize(new ItemSnapshot(
@@ -166,21 +169,25 @@ public sealed class AuctionRepository : IAuctionRepository
         await cmd.ExecuteNonQueryAsync(ct);
     }
 
+    /// <inheritdoc />
     public Task<AuctionArticle?> GetByUidAsync(ulong uid, CancellationToken ct = default) =>
         QuerySingleAsync($"SELECT {Columns} FROM auction_articles WHERE uid = @uid LIMIT 1",
             c => Add(c, "uid", (long)uid), ct);
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<AuctionArticle>> GetActiveBySellerAsync(uint sellerCharId, DateTime nowUtc, CancellationToken ct = default) =>
         await QueryAsync(
             $"SELECT {Columns} FROM auction_articles WHERE seller_char_id = @seller AND state = {Active} " +
             "AND expires_at > @now ORDER BY started_at DESC",
             c => { Add(c, "seller", sellerCharId); Add(c, "now", nowUtc); }, ct);
 
+    /// <inheritdoc />
     public Task<int> CountActiveBySellerAsync(uint sellerCharId, DateTime nowUtc, CancellationToken ct = default) =>
         CountAsync(
             $"SELECT COUNT(*) FROM auction_articles WHERE seller_char_id = @seller AND state = {Active} AND expires_at > @now",
             c => { Add(c, "seller", sellerCharId); Add(c, "now", nowUtc); }, ct);
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<AuctionArticle>> GetActiveSortRowsAsync(IReadOnlyCollection<uint>? itemIds, DateTime nowUtc, CancellationToken ct = default)
     {
         if (itemIds is { Count: 0 }) return new List<AuctionArticle>();
@@ -212,6 +219,7 @@ public sealed class AuctionRepository : IAuctionRepository
         return list;
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<AuctionArticle>> GetByIdsAsync(IReadOnlyCollection<ulong> ids, CancellationToken ct = default)
     {
         if (ids.Count == 0) return new List<AuctionArticle>();
@@ -219,6 +227,7 @@ public sealed class AuctionRepository : IAuctionRepository
             c => c.Parameters.AddWithValue("ids", ids.Select(i => (long)i).ToArray()), ct);
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<uint>> GetActiveItemIdsAsync(DateTime nowUtc, CancellationToken ct = default)
     {
         await using var conn = await _db.OpenConnectionAsync(ct);
@@ -231,11 +240,13 @@ public sealed class AuctionRepository : IAuctionRepository
         return list;
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<AuctionArticle>> GetDueBySellerAsync(uint sellerCharId, DateTime nowUtc, CancellationToken ct = default) =>
         await QueryAsync(
             $"SELECT {Columns} FROM auction_articles WHERE seller_char_id = @seller AND state = {Active} AND expires_at <= @now",
             c => { Add(c, "seller", sellerCharId); Add(c, "now", nowUtc); }, ct);
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<AuctionArticle>> GetDueAsync(DateTime nowUtc, int limit, CancellationToken ct = default) =>
         await QueryAsync(
             $"SELECT {Columns} FROM auction_articles WHERE state = {Active} AND expires_at <= @now " +
@@ -243,13 +254,16 @@ public sealed class AuctionRepository : IAuctionRepository
             c => { Add(c, "now", nowUtc); Add(c, "limit", Math.Max(1, limit)); }, ct);
 
     
+    /// <inheritdoc />
     public Task<AuctionArticle?> TryCancelAsync(ulong uid, uint sellerCharId, DateTime nowUtc, CancellationToken ct = default) =>
         CloseAsync("AND seller_char_id = @seller", c => Add(c, "seller", sellerCharId),
             uid, AuctionArticleState.Cancelled, 0, nowUtc, ct);
 
+    /// <inheritdoc />
     public Task<AuctionArticle?> TrySellAsync(ulong uid, uint buyerCharId, DateTime nowUtc, CancellationToken ct = default) =>
         CloseAsync("AND expires_at > @now", _ => { }, uid, AuctionArticleState.Sold, buyerCharId, nowUtc, ct);
 
+    /// <inheritdoc />
     public Task<AuctionArticle?> TryExpireAsync(ulong uid, DateTime nowUtc, CancellationToken ct = default) =>
         CloseAsync("AND expires_at <= @now", _ => { }, uid, AuctionArticleState.Expired, 0, nowUtc, ct);
 
@@ -292,6 +306,7 @@ public sealed class AuctionRepository : IAuctionRepository
         Add(c, "buid", (long)bidderCharUid);
     }
 
+    /// <inheritdoc />
     public async Task<AuctionArticle?> TryPlaceBidAsync(AuctionArticle read, uint bidderCharId, string bidderName,
         ulong bidderCharUid, long bid, DateTime nowUtc, CancellationToken ct = default)
     {
@@ -333,20 +348,24 @@ public sealed class AuctionRepository : IAuctionRepository
         return await reader.ReadAsync(ct) ? ReadArticle(reader) : null;
     }
 
+    /// <inheritdoc />
     public Task<AuctionArticle?> TryWinAtInstantPriceAsync(AuctionArticle read, uint bidderCharId, string bidderName,
         ulong bidderCharUid, long bid, DateTime nowUtc, CancellationToken ct = default) =>
         TrySellToBidderAsync(read, 0, bidderCharId, bidderName, bidderCharUid, bid, nowUtc, ct);
 
+    /// <inheritdoc />
     public Task<AuctionArticle?> TryAcceptTopBidAsync(AuctionArticle read, uint sellerCharId, DateTime nowUtc, CancellationToken ct = default) =>
         TrySellToBidderAsync(read, sellerCharId, read.TopBidderCharId, read.TopBidderName, read.TopBidderCharUid,
             read.TopBid, nowUtc, ct);
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<AuctionArticle>> GetTopBidsAsync(uint bidderCharId, DateTime nowUtc, CancellationToken ct = default) =>
         await QueryAsync(
             $"SELECT {Columns} FROM auction_articles WHERE top_bidder_char_id = @bidder AND state = {Active} " +
             "AND expires_at > @now ORDER BY started_at DESC",
             c => { Add(c, "bidder", bidderCharId); Add(c, "now", nowUtc); }, ct);
 
+    /// <inheritdoc />
     public Task<int> CountTopBidsAsync(uint bidderCharId, DateTime nowUtc, CancellationToken ct = default) =>
         CountAsync(
             $"SELECT COUNT(*) FROM auction_articles WHERE top_bidder_char_id = @bidder AND state = {Active} AND expires_at > @now",

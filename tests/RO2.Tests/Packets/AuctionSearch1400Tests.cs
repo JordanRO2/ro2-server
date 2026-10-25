@@ -1,3 +1,4 @@
+using RO2.Economy.Domain;
 using System.Buffers.Binary;
 using RO2.Domain.Entities;
 using RO2.Server.Zone.Services;

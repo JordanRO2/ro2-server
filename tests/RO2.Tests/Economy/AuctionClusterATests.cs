@@ -1,3 +1,4 @@
+using RO2.Economy.Domain;
 using System.Buffers.Binary;
 using System.Reflection;
 using System.Runtime.ExceptionServices;

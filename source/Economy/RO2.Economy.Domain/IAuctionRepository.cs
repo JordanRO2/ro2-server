@@ -1,6 +1,5 @@
-using RO2.Domain.Entities;
 
-namespace RO2.Application.Interfaces;
+namespace RO2.Economy.Domain;
 
 /// <summary>
 /// Persistence for auction house articles and their id counter.
@@ -16,8 +15,10 @@ public interface IAuctionRepository
  /// <summary>Returns the next article id from the counter, creating the counter on first use.</summary>
     Task<ulong> GetNextIdAsync(CancellationToken ct = default);
 
+    /// <summary>Inserts a new auction article.</summary>
     Task InsertAsync(AuctionArticle article, CancellationToken ct = default);
 
+    /// <summary>Returns the article with the given uid, or null if none exists.</summary>
     Task<AuctionArticle?> GetByUidAsync(ulong uid, CancellationToken ct = default);
 
  /// <summary>The seller's live (active, unexpired) articles, newest first.</summary>

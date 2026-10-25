@@ -1,3 +1,4 @@
+using RO2.Economy.Domain;
 using System.Buffers.Binary;
 using System.Text.Json;
 using RO2.Domain.Entities;
