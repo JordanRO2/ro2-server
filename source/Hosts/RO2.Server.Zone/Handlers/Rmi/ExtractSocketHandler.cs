@@ -259,16 +259,19 @@ public class ExtractSocketHandler : ZoneRmiHandlerBase<ExtractSocketHandler>
     internal static (InventoryItem? Join, short Cell) PlaceExtracted(IReadOnlyList<InventoryItem> owned,
         InventoryItem tool, uint runeId, GameDataStore store)
     {
-        int stackMax = store.GetItem(runeId)?.Stack_Max ?? 1;
-        var join = stackMax <= 1 ? null : owned
-            .Where(i => i.StorageType == StorageBag && i.Slot >= 0 && i.ItemId == runeId && i.Count > 0 && i.Count + 1 <= stackMax)
-            .OrderBy(i => i.Slot)
-            .FirstOrDefault();
-        if (join is not null) return (join, NoCell);
-
+        byte stackMax = store.GetItem(runeId)?.Stack_Max ?? 1;
+        var candidates = owned
+            .Where(i => i.StorageType == StorageBag && i.Slot >= 0)
+            .Select(i => new BagStack(i.Id, i.ItemId, i.Count, i.Slot))
+            .ToList();
         var afterSpend = tool.Count <= 1 ? owned.Where(i => i.Id != tool.Id) : owned;
         var free = BagCapacity.FreeCells(afterSpend, store.Items);
-        return (null, free.Count > 0 ? free[0] : NoCell);
+        // One extracted rune (quantity 1): the shared Inventory.Domain rule folds it into the lowest-cell stack
+        // that still fits, else opens one new stack in the first free cell, else (null, NoCell).
+        var plan = BagStackPlanner.Plan(candidates, free, runeId, 1, stackMax);
+        if (plan is null) return (null, NoCell);
+        if (plan.RestackId is { } id) return (owned.First(i => i.Id == id), NoCell);
+        return (null, plan.NewStacks[0].Cell);
     }
 
  /// <summary>
