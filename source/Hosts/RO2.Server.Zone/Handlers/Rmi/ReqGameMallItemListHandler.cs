@@ -1,3 +1,4 @@
+using RO2.Economy.Domain;
 using RO2.Application.Interfaces;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;

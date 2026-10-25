@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Economy.Domain;
 
 /// <summary>
 /// The pure box rules of an account's cash-mall storage: which entries of a box are still live and in what order

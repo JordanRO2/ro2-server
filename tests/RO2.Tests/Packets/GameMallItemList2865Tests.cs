@@ -1,3 +1,4 @@
+using RO2.Economy.Infrastructure.Mongo;
 using RO2.Persistence.Mongo.Repositories;
 using RO2.Network.Packets;
 using RO2.Server.Zone.Handlers.Rmi;

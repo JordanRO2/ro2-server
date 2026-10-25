@@ -1,6 +1,5 @@
-using RO2.Domain.Entities;
 
-namespace RO2.Application.Interfaces;
+namespace RO2.Economy.Domain;
 
 /// <summary>
 /// Per-account cash-mall persistence: the balance (2868), the web-mall storage box (2638/1471/1472) and the

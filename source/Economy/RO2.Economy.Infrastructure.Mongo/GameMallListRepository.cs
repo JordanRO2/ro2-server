@@ -1,8 +1,8 @@
+using RO2.Economy.Domain;
 using MongoDB.Driver;
-using RO2.Application.Interfaces;
 using RO2.Persistence.Mongo.Persistence;
 
-namespace RO2.Persistence.Mongo.Repositories;
+namespace RO2.Economy.Infrastructure.Mongo;
 
 /// <summary>
 /// MongoDB implementation of <see cref="IGameMallListRepository"/>, owning the <c>game_mall_lists</c>
@@ -21,17 +21,20 @@ public sealed class GameMallListRepository : IGameMallListRepository
 
     private readonly IMongoCollection<GameMallListDocument> _docs;
 
+    /// <summary>Creates the repository over the given database context.</summary>
     public GameMallListRepository(MongoDbContext context)
     {
         _docs = context.GetCollection<GameMallListDocument>("game_mall_lists");
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<uint>> GetAsync(uint accountId, CancellationToken ct = default)
     {
         var doc = await _docs.Find(d => d.Id == accountId).FirstOrDefaultAsync(ct);
         return doc?.Items ?? (IReadOnlyList<uint>)Array.Empty<uint>();
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<uint>> AddAsync(uint accountId, IReadOnlyList<uint> ids, CancellationToken ct = default)
     {
         var doc = await _docs.Find(d => d.Id == accountId).FirstOrDefaultAsync(ct)

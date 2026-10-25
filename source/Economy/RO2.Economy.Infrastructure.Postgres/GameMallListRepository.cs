@@ -1,8 +1,9 @@
+using RO2.Economy.Domain;
+using RO2.Persistence.Postgres;
 using Npgsql;
 using NpgsqlTypes;
-using RO2.Application.Interfaces;
 
-namespace RO2.Persistence.Postgres.Repositories;
+namespace RO2.Economy.Infrastructure.Postgres;
 
 /// <summary>
 /// PostgreSQL implementation of <see cref="IGameMallListRepository"/>: the per-account game-mall item list 2
@@ -20,18 +21,22 @@ namespace RO2.Persistence.Postgres.Repositories;
 /// </remarks>
 public sealed class GameMallListRepository : IGameMallListRepository
 {
+    /// <summary>The TableName table name.</summary>
     public const string TableName = "game_mall_list_items";
 
     private readonly PostgresDbContext _db;
 
+    /// <summary>Creates the repository over the given database context.</summary>
     public GameMallListRepository(PostgresDbContext db) => _db = db;
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<uint>> GetAsync(uint accountId, CancellationToken ct = default)
     {
         await using var conn = await _db.OpenConnectionAsync(ct);
         return await ReadListAsync(conn, null, accountId, ct);
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<uint>> AddAsync(uint accountId, IReadOnlyList<uint> ids, CancellationToken ct = default)
     {
         await using var conn = await _db.OpenConnectionAsync(ct);

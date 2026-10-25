@@ -29,6 +29,9 @@
     <ProjectReference Include="..\..\source\Identity\RO2.Identity.Infrastructure\RO2.Identity.Infrastructure.csproj" />
     <ProjectReference Include="..\..\source\Identity\RO2.Identity.Infrastructure.Mongo\RO2.Identity.Infrastructure.Mongo.csproj" />
     <ProjectReference Include="..\..\source\Identity\RO2.Identity.Infrastructure.Postgres\RO2.Identity.Infrastructure.Postgres.csproj" />
+    <ProjectReference Include="..\..\source\Economy\RO2.Economy.Domain\RO2.Economy.Domain.csproj" />
+    <ProjectReference Include="..\..\source\Economy\RO2.Economy.Infrastructure.Mongo\RO2.Economy.Infrastructure.Mongo.csproj" />
+    <ProjectReference Include="..\..\source\Economy\RO2.Economy.Infrastructure.Postgres\RO2.Economy.Infrastructure.Postgres.csproj" />
   </ItemGroup>
 
 </Project>

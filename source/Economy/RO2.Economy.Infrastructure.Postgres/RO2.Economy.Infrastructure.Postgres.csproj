@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <!-- PostgreSQL persistence for the Economy bounded context, sibling of RO2.Economy.Infrastructure.Mongo.
+       References the shared RO2.Persistence.Postgres for PostgresDbContext: economy data lives in the same
+       database as the game data (not db-per-service). -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Economy.Domain\RO2.Economy.Domain.csproj" />
+    <ProjectReference Include="..\..\Platform\RO2.Persistence.Postgres\RO2.Persistence.Postgres.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+</Project>

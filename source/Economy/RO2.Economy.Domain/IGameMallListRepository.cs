@@ -1,4 +1,4 @@
-namespace RO2.Application.Interfaces;
+namespace RO2.Economy.Domain;
 
 /// <summary>
 /// Per-ACCOUNT storage of game-mall item list 2, the list 1597 ReqGameMallUpdate adds to and 1593

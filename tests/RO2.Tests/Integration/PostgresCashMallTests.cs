@@ -1,3 +1,5 @@
+using RO2.Economy.Infrastructure.Postgres;
+using RO2.Economy.Domain;
 using Npgsql;
 using RO2.Domain.Entities;
 using RO2.Persistence.Postgres.Repositories;

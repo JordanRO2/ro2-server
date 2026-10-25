@@ -1,8 +1,8 @@
+using RO2.Economy.Domain;
+using RO2.Persistence.Postgres;
 using Npgsql;
-using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
 
-namespace RO2.Persistence.Postgres.Repositories;
+namespace RO2.Economy.Infrastructure.Postgres;
 
 /// <summary>
 /// PostgreSQL implementation of <see cref="ICashMallRepository"/>. The Mongo provider keeps one
@@ -23,9 +23,13 @@ namespace RO2.Persistence.Postgres.Repositories;
 /// </remarks>
 public sealed class CashMallRepository : ICashMallRepository
 {
+    /// <summary>The Accounts table name.</summary>
     public const string AccountsTable = "cash_mall_accounts";
+    /// <summary>The Entries table name.</summary>
     public const string EntriesTable = "cash_mall_entries";
+    /// <summary>The Purchases table name.</summary>
     public const string PurchasesTable = "cash_mall_purchases";
+    /// <summary>The Counters table name.</summary>
     public const string CountersTable = "cash_mall_counters";
 
     private const string EntryColumns = "entry_id, box, item_id, units, filed_utc, sender_name";
@@ -34,8 +38,10 @@ public sealed class CashMallRepository : ICashMallRepository
 
     private readonly PostgresDbContext _db;
 
+    /// <summary>Creates the repository over the given database context.</summary>
     public CashMallRepository(PostgresDbContext db) => _db = db;
 
+    /// <inheritdoc />
     public async Task<long> GetBalanceAsync(uint accountId, CancellationToken ct = default)
     {
         await using var conn = await _db.OpenConnectionAsync(ct);
@@ -44,6 +50,7 @@ public sealed class CashMallRepository : ICashMallRepository
         return await cmd.ExecuteScalarAsync(ct) is long balance ? balance : 0;
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<CashMallBoxEntry>> GetBoxAsync(uint accountId, byte box, CancellationToken ct = default)
     {
         await using var conn = await _db.OpenConnectionAsync(ct);
@@ -58,6 +65,7 @@ public sealed class CashMallRepository : ICashMallRepository
         return CashMallRules.LiveEntries(entries, box);
     }
 
+    /// <inheritdoc />
     public async Task<CashMallBoxEntry?> GetBoxEntryAsync(uint accountId, uint entryId, CancellationToken ct = default)
     {
         await using var conn = await _db.OpenConnectionAsync(ct);
@@ -69,6 +77,7 @@ public sealed class CashMallRepository : ICashMallRepository
         return await reader.ReadAsync(ct) ? ReadEntry(reader) : null;
     }
 
+    /// <inheritdoc />
     public async Task<(int Purchased, int Gifts)> GetBoxCountsAsync(uint accountId, CancellationToken ct = default)
     {
         await using var conn = await _db.OpenConnectionAsync(ct);
@@ -87,6 +96,7 @@ public sealed class CashMallRepository : ICashMallRepository
         return (purchased, gifts);
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<CashMallPurchase>> GetPurchaseHistoryAsync(uint accountId, CancellationToken ct = default)
     {
         await using var conn = await _db.OpenConnectionAsync(ct);
@@ -114,6 +124,7 @@ public sealed class CashMallRepository : ICashMallRepository
         return history;
     }
 
+    /// <inheritdoc />
     public async Task<uint[]> ReserveIdsAsync(string counter, int count, CancellationToken ct = default)
     {
         if (count <= 0) return Array.Empty<uint>();
@@ -130,6 +141,7 @@ public sealed class CashMallRepository : ICashMallRepository
         return ids;
     }
 
+    /// <inheritdoc />
     public async Task<long?> TryPurchaseAsync(uint accountId, long total, IReadOnlyList<CashMallPurchase> log,
         IReadOnlyList<CashMallBoxEntry> ownEntries, CancellationToken ct = default)
     {
@@ -155,6 +167,7 @@ public sealed class CashMallRepository : ICashMallRepository
         return after;
     }
 
+    /// <inheritdoc />
     public async Task RefundAsync(uint accountId, long total, uint[] orderIds, uint[] entryIds, CancellationToken ct = default)
     {
         await using var conn = await _db.OpenConnectionAsync(ct);
@@ -190,6 +203,7 @@ public sealed class CashMallRepository : ICashMallRepository
         await tx.CommitAsync(ct);
     }
 
+    /// <inheritdoc />
     public async Task FileGiftAsync(uint accountId, IReadOnlyList<CashMallBoxEntry> entries, CancellationToken ct = default)
     {
         if (entries.Count == 0) return;
@@ -210,6 +224,7 @@ public sealed class CashMallRepository : ICashMallRepository
         await tx.CommitAsync(ct);
     }
 
+    /// <inheritdoc />
     public async Task<CashMallBoxEntry?> TryTakeUnitsAsync(uint accountId, uint entryId, int units, CancellationToken ct = default)
     {
         if (units <= 0) return null;
@@ -264,6 +279,7 @@ public sealed class CashMallRepository : ICashMallRepository
         return entry;
     }
 
+    /// <inheritdoc />
     public async Task ReturnUnitsAsync(uint accountId, CashMallBoxEntry taken, int units, CancellationToken ct = default)
     {
         if (units <= 0) return;

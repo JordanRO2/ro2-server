@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <!-- MongoDB persistence for the Economy bounded context, sibling of RO2.Economy.Infrastructure.Postgres.
+       References the shared RO2.Persistence.Mongo for MongoDbContext: economy data lives in the same database
+       as the game data (not db-per-service). -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Economy.Domain\RO2.Economy.Domain.csproj" />
+    <ProjectReference Include="..\..\Platform\RO2.Persistence.Mongo\RO2.Persistence.Mongo.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+</Project>

@@ -1,11 +1,10 @@
+using RO2.Economy.Domain;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
-using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
 using RO2.Persistence.Mongo.Persistence;
 
-namespace RO2.Persistence.Mongo.Repositories;
+namespace RO2.Economy.Infrastructure.Mongo;
 
 /// <summary>
 /// MongoDB implementation of <see cref="ICashMallRepository"/> over the <c>cash_mall_accounts</c> collection (one
@@ -40,6 +39,7 @@ public sealed class CashMallRepository : ICashMallRepository
     private readonly IMongoCollection<CashMallAccountDocument> _docs;
     private readonly IMongoCollection<BsonDocument> _counters;
 
+    /// <summary>Creates the repository over the given database context.</summary>
     public CashMallRepository(MongoDbContext context)
     {
         _docs = context.GetCollection<CashMallAccountDocument>(CollectionName);
@@ -49,21 +49,27 @@ public sealed class CashMallRepository : ICashMallRepository
     private async Task<CashMallAccountDocument?> GetAsync(uint accountId, CancellationToken ct = default)
         => await _docs.Find(d => d.Id == accountId).FirstOrDefaultAsync(ct);
 
+    /// <inheritdoc />
     public async Task<long> GetBalanceAsync(uint accountId, CancellationToken ct = default)
         => (await GetAsync(accountId, ct))?.Balance ?? 0;
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<CashMallBoxEntry>> GetBoxAsync(uint accountId, byte box, CancellationToken ct = default)
         => CashMallRules.LiveEntries((await GetAsync(accountId, ct))?.Entries, box);
 
+    /// <inheritdoc />
     public async Task<CashMallBoxEntry?> GetBoxEntryAsync(uint accountId, uint entryId, CancellationToken ct = default)
         => (await GetAsync(accountId, ct))?.Entries.FirstOrDefault(e => e.EntryId == entryId && e.Count > 0);
 
+    /// <inheritdoc />
     public async Task<(int Purchased, int Gifts)> GetBoxCountsAsync(uint accountId, CancellationToken ct = default)
         => CashMallRules.BoxCounts((await GetAsync(accountId, ct))?.Entries);
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<CashMallPurchase>> GetPurchaseHistoryAsync(uint accountId, CancellationToken ct = default)
         => (await GetAsync(accountId, ct))?.Purchases ?? (IReadOnlyList<CashMallPurchase>)Array.Empty<CashMallPurchase>();
 
+    /// <inheritdoc />
     public async Task<uint[]> ReserveIdsAsync(string counter, int count, CancellationToken ct = default)
     {
         if (count <= 0) return Array.Empty<uint>();
@@ -77,6 +83,7 @@ public sealed class CashMallRepository : ICashMallRepository
         return ids;
     }
 
+    /// <inheritdoc />
     public async Task<long?> TryPurchaseAsync(uint accountId, long total, IReadOnlyList<CashMallPurchase> log,
         IReadOnlyList<CashMallBoxEntry> ownEntries, CancellationToken ct = default)
     {
@@ -90,6 +97,7 @@ public sealed class CashMallRepository : ICashMallRepository
         return after?.Balance;
     }
 
+    /// <inheritdoc />
     public Task RefundAsync(uint accountId, long total, uint[] orderIds, uint[] entryIds, CancellationToken ct = default)
     {
         var update = Builders<CashMallAccountDocument>.Update
@@ -100,6 +108,7 @@ public sealed class CashMallRepository : ICashMallRepository
         return _docs.UpdateOneAsync(d => d.Id == accountId, update, cancellationToken: ct);
     }
 
+    /// <inheritdoc />
     public Task FileGiftAsync(uint accountId, IReadOnlyList<CashMallBoxEntry> entries, CancellationToken ct = default)
         => entries.Count == 0
             ? Task.CompletedTask
@@ -107,6 +116,7 @@ public sealed class CashMallRepository : ICashMallRepository
                 Builders<CashMallAccountDocument>.Update.PushEach(d => d.Entries, entries).Set(d => d.UpdatedAt, DateTime.UtcNow),
                 new UpdateOptions { IsUpsert = true }, ct);
 
+    /// <inheritdoc />
     public async Task<CashMallBoxEntry?> TryTakeUnitsAsync(uint accountId, uint entryId, int units, CancellationToken ct = default)
     {
         if (units <= 0) return null;
@@ -124,6 +134,7 @@ public sealed class CashMallRepository : ICashMallRepository
         return entry;
     }
 
+    /// <inheritdoc />
     public async Task ReturnUnitsAsync(uint accountId, CashMallBoxEntry taken, int units, CancellationToken ct = default)
     {
         if (units <= 0) return;

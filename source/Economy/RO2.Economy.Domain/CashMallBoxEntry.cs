@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Economy.Domain;
 
 /// <summary>One entry of an account's web-mall storage box, the row 2639 (box 1) / 2640 (box 2) list.</summary>
 public sealed class CashMallBoxEntry
@@ -10,6 +10,7 @@ public sealed class CashMallBoxEntry
  /// <summary>CashMallRules.BoxPurchased or CashMallRules.BoxGift.</summary>
     public byte Box { get; set; }
 
+ /// <summary>The item this box entry holds.</summary>
     public uint ItemId { get; set; }
 
  /// <summary>Units still waiting (the list's u8 count).</summary>
