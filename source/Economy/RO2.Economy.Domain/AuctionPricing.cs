@@ -42,13 +42,11 @@ public static class AuctionPricing
         return step > long.MaxValue - current ? long.MaxValue : current + step;
     }
 
-    /// <summary>The seller's share of a sale (95%); the other 5% is the house's cut. The product is formed in
-    /// double and narrowed to float32, as the client does.</summary>
-    private const double SellerProceedsRate = 0.95;
-
     /// <summary>
-    /// What the seller receives for a sale: 95% of the price, in single precision. The price is rounded to float32
-    /// before the multiply too, so the proceeds are float32(float32(price) × 0.95).
+    /// What the seller receives for a sale: <paramref name="sellerProceedsRate"/> of the price (the house keeps
+    /// the rest), in single precision. The price is rounded to float32 before the multiply too, so the proceeds
+    /// are float32(float32(price) × rate). With the retail default rate of 0.95 the house cut is 5%.
     /// </summary>
-    public static long SellerProceeds(long price) => price <= 0 ? 0 : (long)(float)((float)price * SellerProceedsRate);
+    public static long SellerProceeds(long price, double sellerProceedsRate)
+        => price <= 0 ? 0 : (long)(float)((float)price * sellerProceedsRate);
 }

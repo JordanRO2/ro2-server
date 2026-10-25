@@ -40,4 +40,8 @@ public class GameConfig
 
     /// <summary>Largest number of stacks one GM /i command emits.</summary>
     public int GmMaxGiveRecords { get; set; } = 200;
+
+    /// <summary>Fraction of an auction-house sale the seller keeps; the house cut is (1 − this). The retail
+    /// default is 0.95 (a 5% cut). The proceeds are computed in single precision, so the default is byte-exact.</summary>
+    public double AuctionSellerProceedsRate { get; set; } = 0.95;
 }

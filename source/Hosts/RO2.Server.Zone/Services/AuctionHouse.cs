@@ -13,6 +13,7 @@ using RO2.Domain.GameData;
 using RO2.Network.Packets;
 using RO2.Application;
 using RO2.Persistence.Mongo.Repositories;
+using RO2.Server.Zone.Configuration;
 using RO2.Server.Zone.Models;
 
 namespace RO2.Server.Zone.Services;
@@ -817,19 +818,26 @@ public sealed partial class AuctionService
     private readonly IAuctionRepository _repo;
     private readonly IEconomyMailPort _mailPort;
     private readonly IAuctionNotifier _notifier;
+    private readonly double _sellerProceedsRate;
     private readonly ILogger _log;
 
-    private AuctionService(IAuctionRepository repo, IMailRepository mails, MailService mailService, PlayerStateManager players, BroadcastService broadcast, ILogger log)
+    /// <summary>Retail seller-proceeds rate (a 5% house cut), used when no <see cref="ServerConfiguration"/> is
+    /// registered — e.g. in tests. Must match <see cref="GameConfig.AuctionSellerProceedsRate"/>'s default.</summary>
+    private const double DefaultSellerProceedsRate = 0.95;
+
+    private AuctionService(IAuctionRepository repo, IMailRepository mails, MailService mailService, PlayerStateManager players, BroadcastService broadcast, double sellerProceedsRate, ILogger log)
     {
         _repo = repo;
         _mailPort = new EconomyMailAdapter(mails, mailService);
         _notifier = new AuctionNotifierAdapter(players, broadcast, log);
+        _sellerProceedsRate = sellerProceedsRate;
         _log = log;
     }
 
     public static AuctionService From(IServiceProvider services, PlayerStateManager players, BroadcastService broadcast, ILogger log) =>
         new(services.GetRequiredService<IAuctionRepository>(), services.GetRequiredService<IMailRepository>(),
-            MailService.From(services, players, broadcast, log), players, broadcast, log);
+            MailService.From(services, players, broadcast, log), players, broadcast,
+            services.GetService<ServerConfiguration>()?.Game.AuctionSellerProceedsRate ?? DefaultSellerProceedsRate, log);
 
     // ---------------------------------------------------------------------------------------------
     // Expiry sweep
@@ -878,7 +886,8 @@ public sealed partial class AuctionService
             var repo = sp.GetService<IAuctionRepository>();
             if (repo == null) return;
             var service = new AuctionService(repo, sp.GetRequiredService<IMailRepository>(),
-                MailService.From(sp, players, broadcast, log), players, broadcast, log);
+                MailService.From(sp, players, broadcast, log), players, broadcast,
+                sp.GetService<ServerConfiguration>()?.Game.AuctionSellerProceedsRate ?? DefaultSellerProceedsRate, log);
             int returned = await service.ReturnExpiredAsync(DateTime.UtcNow);
             if (returned > 0) log.LogInformation("Auction expiry sweep returned {Count} unsold article(s) by mail", returned);
         }
@@ -971,8 +980,9 @@ public sealed partial class AuctionService
 
     // The registration fee (RegistrationFee) and the listing rules (CheckSellStart) are in AuctionSellStartRules.cs.
 
-    /// <summary>What the seller receives for a sale (see <see cref="AuctionPricing.SellerProceeds"/>).</summary>
-    public static long SellerProceeds(long price) => AuctionPricing.SellerProceeds(price);
+    /// <summary>What the seller receives for a sale (see <see cref="AuctionPricing.SellerProceeds"/>), at the
+    /// server's configured proceeds rate (<see cref="GameConfig.AuctionSellerProceedsRate"/>).</summary>
+    private long SellerProceeds(long price) => AuctionPricing.SellerProceeds(price, _sellerProceedsRate);
 
     /// <summary>Inventory <c>StorageType</c> of the character's bag (1 = worn equipment, 2 = bank).</summary>
     private const byte BagStorageType = 0;

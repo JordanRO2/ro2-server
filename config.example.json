@@ -19,7 +19,8 @@
     "ZoneTokenLifetimeMinutes": 5,
     "GmDefaultZenyAmount": 10000000,
     "GmMaxGiveQuantity": 9999,
-    "GmMaxGiveRecords": 200
+    "GmMaxGiveRecords": 200,
+    "AuctionSellerProceedsRate": 0.95
   },
   "Tick": {
     "MinHz": 20,
