@@ -103,7 +103,6 @@ public class Character
 
     // Navigation
     public virtual Account Account { get; set; } = null!;
-    public virtual ICollection<InventoryItem> Inventory { get; set; } = [];
     public virtual ICollection<CharacterSkill> Skills { get; set; } = [];
     public virtual ICollection<CharacterQuest> Quests { get; set; } = [];
 }

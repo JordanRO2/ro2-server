@@ -148,7 +148,4 @@ public class InventoryItem
         AbilityValue = source.AbilityValue;
         return this;
     }
-
-    
-    public virtual Character Character { get; set; } = null!;
 }
