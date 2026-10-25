@@ -66,21 +66,19 @@ internal static class InventoryStacking
             }
         }
 
-        for (int remaining = quantity; remaining > 0;)
+        foreach (int n in BagStackPlanner.ChunkCounts(quantity, stackMax))
         {
-            int n = Math.Min(perStack, remaining);
             var stack = new InventoryItem
             {
                 CharacterId = characterId,
                 ItemId = itemId,
                 Count = n,
-                Slot = -1,        
-                StorageType = 0,  
+                Slot = -1,
+                StorageType = 0,
                 Durability = newStackDurability,
             };
-            await inventory.AddItemAsync(stack);   
+            await inventory.AddItemAsync(stack);
             placed.Add(new Placed(stack, false));
-            remaining -= n;
         }
         return placed;
     }

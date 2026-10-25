@@ -11,6 +11,23 @@ public static class BagStackPlanner
     public static int StackSize(byte stackMax) => stackMax < 1 ? 1 : stackMax;
 
     /// <summary>
+    /// The counts of the new stacks an add of <paramref name="quantity"/> opens: full stacks of the stack max
+    /// first, then the remainder. Empty when <paramref name="quantity"/> is not positive.
+    /// </summary>
+    public static IReadOnlyList<int> ChunkCounts(int quantity, byte stackMax)
+    {
+        int perStack = StackSize(stackMax);
+        var counts = new List<int>();
+        for (int remaining = quantity; remaining > 0;)
+        {
+            int n = System.Math.Min(perStack, remaining);
+            counts.Add(n);
+            remaining -= n;
+        }
+        return counts;
+    }
+
+    /// <summary>
     /// The stack an add of <paramref name="quantity"/> folds into whole: among the stacks of <paramref name="itemId"/>
     /// that are non-empty and still fit it (count + quantity at most the stack size), the one in the lowest cell (the
     /// earlier in <paramref name="owned"/> on a tie). Returns its index in <paramref name="owned"/>, or -1 when none
@@ -37,17 +54,13 @@ public static class BagStackPlanner
     public static PlacementPlan? Plan(IReadOnlyList<BagStack> owned, IReadOnlyList<short> freeCells,
         uint itemId, int quantity, byte stackMax)
     {
-        int perStack = StackSize(stackMax);   // ItemInfo: Stack_Max 1 = not stackable
         int target = FindMergeTarget(owned, itemId, quantity, stackMax);
         if (target >= 0) return new PlacementPlan(owned[target].Id, System.Array.Empty<(short, int)>());
-        var stacks = new List<(short Cell, int Count)>();
-        for (int remaining = quantity, next = 0; remaining > 0; next++)
-        {
-            if (next >= freeCells.Count) return null;
-            int n = System.Math.Min(perStack, remaining);
-            stacks.Add((freeCells[next], n));
-            remaining -= n;
-        }
+        var counts = ChunkCounts(quantity, stackMax);
+        if (counts.Count > freeCells.Count) return null;
+        var stacks = new List<(short Cell, int Count)>(counts.Count);
+        for (int i = 0; i < counts.Count; i++)
+            stacks.Add((freeCells[i], counts[i]));
         return new PlacementPlan(null, stacks);
     }
 
@@ -97,20 +110,18 @@ public static class BagStackPlanner
                 }
             }
 
-            int needed = (quantity + perStack - 1) / perStack;
-            if (freeCells.Count - nextCell < needed)
+            var counts = ChunkCounts(quantity, stackMax);
+            if (freeCells.Count - nextCell < counts.Count)
             {
                 result[k] = new SequencedPlacement(true, null, 0, System.Array.Empty<(short, int)>());
                 continue;
             }
-            var opened = new List<(short Cell, int Count)>(needed);
-            for (int remaining = quantity; remaining > 0;)
+            var opened = new List<(short Cell, int Count)>(counts.Count);
+            foreach (int n in counts)
             {
-                int n = System.Math.Min(perStack, remaining);
                 short cell = freeCells[nextCell++];
                 opened.Add((cell, n));
                 stacks.Add((itemId, cell, n));
-                remaining -= n;
             }
             result[k] = new SequencedPlacement(false, null, 0, opened);
         }
