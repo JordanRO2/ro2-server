@@ -23,8 +23,4 @@ public interface IInventoryEscrow
     /// the escrowed amount, so the implementation can re-merge a partial take or re-add a whole one.
     /// </summary>
     Task RestoreAsync(uint characterId, ItemStackSnapshot taken, int countLeft, int count);
-
-    /// <summary>Places an item into <paramref name="characterId"/>'s bag (a won, bought or returned item), applying
-    /// the stacking rules. Used by the payout/purchase paths.</summary>
-    Task GiveAsync(uint characterId, ItemStackSnapshot item);
 }

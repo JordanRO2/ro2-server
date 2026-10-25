@@ -41,4 +41,6 @@ public sealed record ItemStackSnapshot
     public bool Bound { get; init; }
     /// <summary>The item's own ability value (null = use its template's).</summary>
     public uint? AbilityValue { get; init; }
+    /// <summary>When the item instance was created (UTC); preserved so a restored row is byte-identical.</summary>
+    public DateTime CreatedAt { get; init; }
 }

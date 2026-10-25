@@ -1,3 +1,4 @@
+using RO2.Economy.Application;
 using RO2.Economy.Domain;
 using System;
 using System.Buffers.Binary;
@@ -1036,26 +1037,14 @@ public sealed partial class AuctionService
         // part an $inc guarded by the live count), so a concurrent trade / sale / mail attach that took the
         // stack first leaves this take with nothing: the item is listed once or not at all. The gate must NOT
         // wrap the restore below (AddItemAsync of an unplaced row takes the same gate).
-        var take = await CharacterInventoryGate.RunAsync(seller.CharacterId, async () =>
-        {
-            var live = await inventory.GetByIdAsync(req.ItemUid);
-            if (live == null || live.CharacterId != seller.CharacterId || live.StorageType != BagStorageType || live.Count < req.Count)
-                return (Item: (InventoryItem?)null, CountLeft: 0);
-            if (req.Count >= live.Count)
-                return await inventory.RemoveItemAsync(live.Id, seller.CharacterId)
-                    ? (Item: (InventoryItem?)live, CountLeft: 0)
-                    : (Item: (InventoryItem?)null, CountLeft: 0);
-            var left = await inventory.AdjustCountAsync(live.Id, seller.CharacterId, -req.Count);
-            return left.HasValue
-                ? (Item: (InventoryItem?)live, CountLeft: left.Value)
-                : (Item: (InventoryItem?)null, CountLeft: 0);
-        });
-        if (take.Item is not { } taken)
+        IInventoryEscrow escrow = new InventoryEscrowAdapter(inventory);
+        var (takenSnapshot, countLeft) = await escrow.TakeAsync(seller.CharacterId, req.ItemUid, req.Count);
+        if (takenSnapshot is not { } snapshot)
         {
             seller.Credit(fee);
             return Refuse(AuctionPackets.ResultSellItemMismatch, $"item {req.ItemUid} x{req.Count} was taken from the bag meanwhile");
         }
-        int countLeft = take.CountLeft;
+        var taken = InventoryEscrowAdapter.ToInventoryItem(snapshot, seller.CharacterId);
 
         // The slot the client knows the item by: 2458 blob+236 is the listed item's slot.
         byte bagSlot = WorldEntryService.BuildItemRecord126(taken)[AuctionPackets.ItemRecordSlotOffset];
@@ -1104,15 +1093,7 @@ public sealed partial class AuctionService
         catch (Exception ex)
         {
             _log.LogError(ex, "Auction insert failed; restoring item {Uid} to {Seller}", taken.Id, seller.Name);
-            if (countLeft <= 0) await inventory.AddItemAsync(taken); // same Id and slot as before
-            else if (await inventory.AdjustCountAsync(taken.Id, seller.CharacterId, req.Count) is null)
-            {
-                // The rest of the stack left the bag too: re-add the listed part as a row of its own.
-                taken.Id = 0;
-                taken.Slot = -1;
-                taken.Count = req.Count;
-                await inventory.AddItemAsync(taken);
-            }
+            await escrow.RestoreAsync(seller.CharacterId, snapshot, countLeft, req.Count);
             seller.Credit(fee);   // the fee was taken above and nothing was listed
             // 16301: 8606 "Failed purchase registration due to an internal system error."
             return new SellStartOutcome(AuctionPackets.ResultSellInternalError, null, seller.Gold, 0, 0, 0);
