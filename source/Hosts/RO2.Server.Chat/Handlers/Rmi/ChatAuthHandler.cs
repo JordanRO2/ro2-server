@@ -7,6 +7,7 @@ using RO2.Network.Handlers;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Chat.Handlers.Rmi;
 

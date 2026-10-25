@@ -14,6 +14,7 @@ using RO2.Server.Zone.Services;
 using RO2.Economy.Application;
 using RO2.Economy.Domain;
 using RO2.Inventory.Domain;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 

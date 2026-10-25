@@ -19,6 +19,7 @@ using Xunit.Abstractions;
 using static RO2.Tests.Packets.ReauditShared;
 using RO2.Inventory.Domain;
 using RO2.Inventory.Infrastructure.Mongo;
+using RO2.Characters.Domain;
 
 namespace RO2.Tests.Packets;
 

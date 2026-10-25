@@ -8,6 +8,7 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Services;
 
 using NetworkZoneRmiBase = RO2.Network.Handlers.ZoneRmiHandlerBase<RO2.Server.Zone.Handlers.Rmi.CharacterDeleteHandler>;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 

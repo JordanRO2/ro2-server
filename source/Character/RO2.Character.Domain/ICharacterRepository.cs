@@ -1,16 +1,19 @@
-using RO2.Domain.Entities;
-using RO2.Characters.Domain;
+namespace RO2.Characters.Domain;
 
-namespace RO2.Application.Interfaces;
-
+/// <summary>Persistence port for the character aggregate (identity, stats, wallet, position, appearance).</summary>
 public interface ICharacterRepository
 {
+    /// <summary>The character with the given id (deleted or not), or null.</summary>
     Task<Character?> GetByIdAsync(uint id);
+    /// <summary>The account's characters (deleted ones included; the caller filters).</summary>
     Task<IReadOnlyList<Character>> GetCharactersByAccountAsync(uint accountId);
+    /// <summary>Whether a character with exactly this name exists (case-sensitive).</summary>
     Task<bool> CharacterNameExistsAsync(string name);
+    /// <summary>Creates a character for the account; returns it, or an error message when it could not be created.</summary>
     Task<(Character? character, string? error)> CreateCharacterAsync(
         uint accountId, string name, byte job, byte gender, string appearanceJson,
         (int hp, int mp, int str, int agi, int intel, int wis, int vit, int luk)? stats = null);
+    /// <summary>Soft-deletes the character when it belongs to the account. True when a row was deleted.</summary>
     Task<bool> DeleteCharacterAsync(uint characterId, uint accountId);
 
  /// <summary>
@@ -24,9 +27,13 @@ public interface ICharacterRepository
  /// </summary>
     Task<CharacterRestoreResult> TryRestoreCharacterAsync(uint characterId, uint accountId, DateTime notDeletedBeforeUtc);
 
+    /// <summary>Persists the whole character row.</summary>
     Task SaveCharacterAsync(Character character);
+    /// <summary>Persists only the character's map and position.</summary>
     Task UpdatePositionAsync(uint characterId, uint mapId, float x, float y, float z);
+    /// <summary>Persists only HP/MP, level and base EXP.</summary>
     Task UpdateStatsAsync(uint characterId, int hp, int mp, byte level, ulong exp);
+    /// <summary>Persists only the carried zeny.</summary>
     Task UpdateGoldAsync(uint characterId, long gold);
 
  /// <summary>Persist only <see cref="Character.EquipHideFlag"/> (RMI 1312). A targeted $set rather than a
@@ -89,26 +96,3 @@ public interface ICharacterRepository
  /// case-insensitive collation ("en", secondary strength) the Chat block list resolves names with.</summary>
     Task<IReadOnlyList<Character>> FindByNamesCollatedAsync(IReadOnlyCollection<string> names, CancellationToken ct = default);
 }
-
-/// <summary>Outcome of <see cref="ICharacterRepository.TryRestoreCharacterAsync"/>.</summary>
-public enum CharacterRestoreResult
-{
- /// <summary>This call cleared IsDeleted; the character is live again.</summary>
-    Restored,
- /// <summary>The account's character is not deleted, so there was nothing to restore.</summary>
-    AlreadyLive,
- /// <summary>No character with this id belongs to the account.</summary>
-    NotFound,
- /// <summary>Deleted before the cutoff, or deleted without a DeletedAt stamp.</summary>
-    Expired,
- /// <summary>A live character now has the name.</summary>
-    NameTaken,
- /// <summary>The account already has its maximum number of live characters.</summary>
-    AccountFull,
-}
-
-/// <summary>One player's frequently-changing persistent state, for the bulk autosave.</summary>
-public readonly record struct PlayerStateSave(
-    uint CharacterId, uint MapId, float X, float Y, float Z,
-    int Hp, int MaxHp, int Mp, int MaxMp, byte Level, ulong Exp, long Gold, long BankGold, byte Job, ushort BindIndex,
-    float FacingYaw);

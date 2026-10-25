@@ -9,6 +9,7 @@ using RO2.Server.Zone.Services;
 using Xunit;
 using NameFilterRow = RO2.GameData.Tables.NameFilter;
 using RO2.Inventory.Domain;
+using RO2.Characters.Domain;
 
 namespace RO2.Tests.Packets;
 

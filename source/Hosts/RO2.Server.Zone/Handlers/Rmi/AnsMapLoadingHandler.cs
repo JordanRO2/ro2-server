@@ -279,7 +279,7 @@ public class AnsMapLoadingHandler : Base1304
             foreach (var frame in FuncObjectPackets.BuildMapLoadFrames2512(funcObjects))
                 await session.SendInternalRmiAsync(ZoneS2COpcodes.OnFuncObject_In, frame);
 
-            var characterRepo = services.GetRequiredService<RO2.Application.Interfaces.ICharacterRepository>();
+            var characterRepo = services.GetRequiredService<RO2.Characters.Domain.ICharacterRepository>();
             var inventoryRepo = services.GetRequiredService<RO2.Inventory.Domain.IInventoryRepository>();
             var store = services.GetRequiredService<RO2.GameData.GameDataStore>();
             

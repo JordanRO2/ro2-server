@@ -7,6 +7,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 
 using NetworkZoneRmiBase2 = RO2.Network.Handlers.ZoneRmiHandlerBase<RO2.Server.Zone.Handlers.Rmi.CancelReserveDeleteHandler>;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 

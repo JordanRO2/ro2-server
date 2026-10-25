@@ -2,6 +2,7 @@ using System.Buffers.Binary;
 using RO2.Application.Interfaces;
 using RO2.Server.Zone.Handlers.Rmi;
 using Xunit;
+using RO2.Characters.Domain;
 
 namespace RO2.Tests.Packets;
 
