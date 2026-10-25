@@ -40,11 +40,11 @@ public static class UnionRules
  /// <summary>2849 result: level below the minimum (50).</summary>
     internal const ushort ResultLevelTooLow = 24106;
 
- /// <summary>How long after joining a character may leave: 14 days.</summary>
-    internal static readonly TimeSpan WithdrawLock = TimeSpan.FromDays(14);
+ /// <summary>How long after joining a character may leave: 14 days. The rule lives in <see cref="UnionPolicy"/>.</summary>
+    internal static TimeSpan WithdrawLock => UnionPolicy.WithdrawLock;
 
- /// <summary>The lowest level that may join: 50.</summary>
-    internal const int JoinMinLevel = 50;
+ /// <summary>The lowest level that may join: 50. The rule lives in <see cref="UnionPolicy"/>.</summary>
+    internal const int JoinMinLevel = UnionPolicy.JoinMinLevel;
 
  /// <summary>The join time of a refused 2849: FF x8, meaning no join time.</summary>
     internal const ulong NoJoinTime = ulong.MaxValue;
@@ -54,12 +54,17 @@ public static class UnionRules
  /// a different union already joined; a level below the minimum; otherwise success with a new membership.
  /// </summary>
     internal static ushort JoinResult(UnionMembership? current, uint requestedUnionId, bool unionExists, int level)
+        => Code(UnionPolicy.JoinResult(current, requestedUnionId, unionExists, level));
+
+ /// <summary>Maps a join outcome to its 2849 wire result code.</summary>
+    private static ushort Code(JoinUnionOutcome o) => o switch
     {
-        if (!unionExists) return ResultUnknownUnion;
-        if (current is { } m) return m.UnionId == requestedUnionId ? ResultOk : ResultAlreadyJoined;
-        if (level < JoinMinLevel) return ResultLevelTooLow;
-        return ResultOk;
-    }
+        JoinUnionOutcome.Ok => ResultOk,
+        JoinUnionOutcome.UnknownUnion => ResultUnknownUnion,
+        JoinUnionOutcome.AlreadyJoined => ResultAlreadyJoined,
+        JoinUnionOutcome.LevelTooLow => ResultLevelTooLow,
+        _ => ResultUnknownUnion,
+    };
 
  /// <summary>
  /// The 2850 answer to a withdraw request, checked in order: union id 0 or no membership; a different union;
@@ -70,13 +75,16 @@ public static class UnionRules
  /// The union-quest check is left to the client.
  /// </remarks>
     internal static ushort WithdrawResult(UnionMembership? membership, uint requestedUnionId, long nowUnix)
+        => Code(UnionPolicy.WithdrawResult(membership, requestedUnionId, nowUnix));
+
+ /// <summary>Maps a withdraw outcome to its 2850 wire result code.</summary>
+    private static ushort Code(WithdrawUnionOutcome o) => o switch
     {
-        if (requestedUnionId == 0) return ResultNotInUnion;
-        if (membership is not { } m) return ResultOk;
-        if (m.UnionId != requestedUnionId) return ResultNotInUnion;
-        if (nowUnix - m.JoinedAtUnix < (long)WithdrawLock.TotalSeconds) return ResultWithdrawTooSoon;
-        return ResultOk;
-    }
+        WithdrawUnionOutcome.Ok => ResultOk,
+        WithdrawUnionOutcome.NotInUnion => ResultNotInUnion,
+        WithdrawUnionOutcome.TooSoon => ResultWithdrawTooSoon,
+        _ => ResultNotInUnion,
+    };
 
  /// <summary>
  /// Body of 2849 AnsJoinUnion: [u32 union id][u64 join time][u16 result], 14 bytes.
