@@ -421,30 +421,7 @@ public static class StatService
 
     public static BaseStats ComputeBaseStats(
         GameDataStore store, byte job, int level, int str, int agi, int intel, int wis, int vit, int luk)
-    {
-        if (!store.PcBaseStatus.TryGetValue(job, out var pc))
-            return new BaseStats(0, 0, new Dictionary<byte, int>());
-
-        int lvl = Math.Max(1, level);
-        long basePool = (long)Math.Floor((double)pc.BaseHP * pc.BaseHPRate * pc.BaseHPRateValue);
-        long maxHp = basePool + (long)pc.BaseHPValue * (lvl - 1) + (long)pc.VitHPValue * vit;
-        long maxSp = (long)pc.WisSPValue * wis;
-
-        var d = new Dictionary<byte, int>
-        {
-            [23] = pc.APValue * str,                                   // Physical Attack   
-            [25] = pc.MAValue * intel,                                 // Magic Attack      
-            [26] = pc.VitDefenseValue * vit,                           // Defense (naked)   (+armor elsewhere)
-            [60] = pc.AgiCrticalValue * agi,                           // Critical          
-            [61] = pc.StrParryValue * str + pc.IntParryValue * intel,  // Parry / Guard     
-            [59] = pc.AgiDodgeValue * agi,                             // Dodge / Evade     (base only; +1 level term omitted)
-            [58] = pc.StrHitValue * str + pc.IntHitValue * intel,      // Hit / Precision   (partial; level term unresolved)
-        };
-        return new BaseStats(
-            (uint)Math.Clamp(maxHp, 0, uint.MaxValue),
-            (ushort)Math.Clamp(maxSp, 0, ushort.MaxValue),
-            d);
-    }
+        => CharacterStats.ComputeBaseStats(store.PcBaseStatus.GetValueOrDefault(job), level, str, agi, intel, wis, vit, luk);
 
     /// <summary>
     /// Refunds all allocated bonus stat points: zeroes the per-stat allocation deltas and resets the
@@ -456,13 +433,7 @@ public static class StatService
     /// The caller must mirror the primaries to the runtime PlayerState, persist, and re-push the 2498 sheet.
     /// </summary>
     public static bool ResetBonusStats(GameDataStore store, Character c)
-    {
-        if (ClassBasePrimaries(store, c.Job) is not { } cb) return false;
-        c.BonusStr = c.BonusAgi = c.BonusInt = c.BonusWis = c.BonusVit = c.BonusLuk = 0;
-        c.Str = cb.str; c.Agi = cb.agi; c.Int = cb.intel;
-        c.Wis = cb.wis; c.Vit = cb.vit; c.Luk = cb.luk;
-        return true;
-    }
+        => CharacterStats.ResetBonusStats(c, ClassBasePrimaries(store, c.Job));
 
     /// <summary>
     /// A new character's starting primary stats for its class, read from the REAL <c>Standard_Stat</c>
@@ -474,10 +445,7 @@ public static class StatService
     /// </summary>
     public static (int str, int agi, int intel, int wis, int vit, int luk)? ClassBasePrimaries(
         GameDataStore store, byte job)
-    {
-        if (!store.StandardStats.TryGetValue(job, out var s)) return null;
-        return (s.Base_STR, s.Base_AGI, s.Base_INT, s.Base_DEX, s.Base_VIT, s.Base_LUK);
-    }
+        => CharacterStats.ClassBasePrimaries(store.StandardStats.GetValueOrDefault(job));
 
     // ===================== Bonus (allocatable) stat points =====================
 
@@ -768,6 +736,6 @@ public static class StatService
             }
         }
         // The off-table cost of 1 is a server default; Status_Point.json has no row for this value.
-        return map.TryGetValue(currentStatValue, out var c) ? c : 1;
+        return CharacterStats.BonusStatCost(map, currentStatValue);
     }
 }
