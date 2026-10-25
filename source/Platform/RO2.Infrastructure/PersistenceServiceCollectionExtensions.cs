@@ -6,6 +6,7 @@ using RO2.Inventory.Domain;
 using MongoRepos = RO2.Persistence.Mongo.Repositories;
 using MongoPersist = RO2.Persistence.Mongo.Persistence;
 using PgRepos = RO2.Persistence.Postgres.Repositories;
+using RO2.Characters.Domain;
 
 namespace RO2.Infrastructure;
 

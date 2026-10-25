@@ -17,6 +17,7 @@ using RO2.Server.Zone.Extensions;
 using RO2.Server.Zone.Services;
 using Serilog;
 using RO2.Inventory.Domain;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone;
 

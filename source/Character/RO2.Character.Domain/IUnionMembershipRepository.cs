@@ -1,6 +1,4 @@
-using RO2.Domain.Entities;
-
-namespace RO2.Application.Interfaces;
+namespace RO2.Characters.Domain;
 
 /// <summary>
 /// Per-character union memberships (the Union_Info a character joined with 1582 ReqJoinUnion and left with

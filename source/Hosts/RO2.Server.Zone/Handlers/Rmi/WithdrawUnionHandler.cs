@@ -6,6 +6,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -35,7 +36,7 @@ public class WithdrawUnionHandler : ZoneRmiHandlerBase<WithdrawUnionHandler>
         }
         uint unionId = BinaryPrimitives.ReadUInt32LittleEndian(payload.Span);
 
-        var memberships = services.GetRequiredService<RO2.Application.Interfaces.IUnionMembershipRepository>();
+        var memberships = services.GetRequiredService<RO2.Characters.Domain.IUnionMembershipRepository>();
         var membership = await memberships.GetAsync(player.CharacterId, ct);
         ushort result = UnionRules.WithdrawResult(membership, unionId, DateTimeOffset.UtcNow.ToUnixTimeSeconds());
 

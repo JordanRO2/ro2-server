@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Characters.Domain;
 
 /// <summary>
 /// A character's saved key bindings, exactly as its client last sent them in C2S 1423
@@ -17,5 +17,6 @@ public sealed class KeyConfigDocument
     /// <c>{u8 vkCode, u8 vkCode2, u16 actionId}</c> (Windows virtual-key codes, e.g. 0x68 NUMPAD8).</summary>
     public byte[] Entries { get; set; } = Array.Empty<byte>();
 
+    /// <summary>When the record was last written (UTC).</summary>
     public DateTime UpdatedUtc { get; set; }
 }

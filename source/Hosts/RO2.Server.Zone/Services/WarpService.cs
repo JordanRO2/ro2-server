@@ -10,6 +10,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Inventory.Domain;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -234,7 +235,7 @@ public static class WarpService
         KeyConfigDocument? keyConfig = null;
         try
         {
-            keyConfig = await services.GetRequiredService<RO2.Application.Interfaces.IKeyConfigRepository>()
+            keyConfig = await services.GetRequiredService<RO2.Characters.Domain.IKeyConfigRepository>()
                 .GetAsync(player.CharacterId);
         }
         catch (Exception ex)

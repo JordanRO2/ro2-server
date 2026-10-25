@@ -16,7 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-        <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+            <ProjectReference Include="..\..\Character\RO2.Character.Domain\RO2.Character.Domain.csproj" />
+<ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
 <ProjectReference Include="..\..\Game\RO2.Domain\RO2.Domain.csproj" />
     <ProjectReference Include="..\..\Game\RO2.Application\RO2.Application.csproj" />
     <ProjectReference Include="..\..\Platform\RO2.Infrastructure\RO2.Infrastructure.csproj" />

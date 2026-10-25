@@ -13,6 +13,7 @@ using RO2.Server.Zone.Services;
 
 using NetworkZoneRmiBase = RO2.Network.Handlers.ZoneRmiHandlerBase<RO2.Server.Zone.Handlers.Rmi.LoginPCHandler>;
 using RO2.Inventory.Domain;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -440,7 +441,7 @@ public class LoginPCHandler : NetworkZoneRmiBase
 
         // Load the saved quick-slot bar so 2472 can restore it. Without this the bar goes out
         // empty on every login regardless of what was persisted.
-        IReadOnlyList<RO2.Domain.Entities.CharacterQuickSlot>? quickSlots = null;
+        IReadOnlyList<RO2.Characters.Domain.CharacterQuickSlot>? quickSlots = null;
         try
         {
             var qs = services.GetRequiredService<IQuickSlotRepository>();
@@ -459,7 +460,7 @@ public class LoginPCHandler : NetworkZoneRmiBase
         KeyConfigDocument? keyConfig = null;
         try
         {
-            keyConfig = await services.GetRequiredService<RO2.Application.Interfaces.IKeyConfigRepository>()
+            keyConfig = await services.GetRequiredService<RO2.Characters.Domain.IKeyConfigRepository>()
                 .GetAsync(characterId, ct);
         }
         catch (Exception ex)
@@ -523,7 +524,7 @@ public class LoginPCHandler : NetworkZoneRmiBase
         // it synchronously (UnionMembershipStore). A storage error publishes nothing: the head then says no union.
         try
         {
-            await UnionMembershipStore.PreloadAsync(characterId, services.GetRequiredService<RO2.Application.Interfaces.IUnionMembershipRepository>(), ct);
+            await UnionMembershipStore.PreloadAsync(characterId, services.GetRequiredService<RO2.Characters.Domain.IUnionMembershipRepository>(), ct);
         }
         catch (Exception ex)
         {

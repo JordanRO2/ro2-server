@@ -1,6 +1,4 @@
-using RO2.Domain.Entities;
-
-namespace RO2.Application.Interfaces;
+namespace RO2.Characters.Domain;
 
 /// <summary>
 /// Persistence for a character's saved key bindings (the 1423 ReqUpdateKeyConfig state the server returns

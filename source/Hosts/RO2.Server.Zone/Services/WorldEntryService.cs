@@ -6,6 +6,7 @@ using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Inventory.Domain;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -88,7 +89,7 @@ public static class WorldEntryService
         int completedQuestCount = 0,
         IReadOnlyList<CharacterSkill>? learnedSkills = null,
         GameDataStore? gameData = null,
-        IReadOnlyList<RO2.Domain.Entities.CharacterQuickSlot>? quickSlots = null,
+        IReadOnlyList<RO2.Characters.Domain.CharacterQuickSlot>? quickSlots = null,
         bool isWarp = false,
         (uint MapId, float X, float Y, float Z)? warpSpawn = null,
         CollectionDocument? collection = null,
@@ -301,7 +302,7 @@ public static class WorldEntryService
         
         
         {
-            var slots = quickSlots ?? Array.Empty<RO2.Domain.Entities.CharacterQuickSlot>();
+            var slots = quickSlots ?? Array.Empty<RO2.Characters.Domain.CharacterQuickSlot>();
             using var tw = new PacketWriter();
             tw.WriteUInt32((uint)(QuickSlotListHeaderLength + QuickSlotRecordLength * slots.Count));
             tw.WriteUInt64(charUid);

@@ -1,5 +1,6 @@
 using System.Buffers.Binary;
 using RO2.Domain.Entities;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Services;
 

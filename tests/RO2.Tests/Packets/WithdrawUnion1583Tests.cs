@@ -4,6 +4,7 @@ using System.Text.Json;
 using RO2.Network.Packets;
 using RO2.Server.Zone.Services;
 using Xunit;
+using RO2.Characters.Domain;
 
 namespace RO2.Tests.Packets;
 

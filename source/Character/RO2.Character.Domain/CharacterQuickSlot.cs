@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Characters.Domain;
 
 /// <summary>
 /// One entry on a character's quick-slot bar (the skill/item bar).
@@ -24,7 +24,9 @@ namespace RO2.Domain.Entities;
 /// </remarks>
 public class CharacterQuickSlot
 {
+    /// <summary>Row id (storage key).</summary>
     public ulong Id { get; set; }
+    /// <summary>Owning character id.</summary>
     public uint CharacterId { get; set; }
 
  /// <summary>Bar page, 0..2.</summary>

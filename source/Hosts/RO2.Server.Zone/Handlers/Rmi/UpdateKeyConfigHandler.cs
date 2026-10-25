@@ -6,6 +6,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -38,7 +39,7 @@ public class UpdateKeyConfigHandler : ZoneRmiHandlerBase<UpdateKeyConfigHandler>
 
         try
         {
-            var repo = services.GetRequiredService<RO2.Application.Interfaces.IKeyConfigRepository>();
+            var repo = services.GetRequiredService<RO2.Characters.Domain.IKeyConfigRepository>();
             
             
             

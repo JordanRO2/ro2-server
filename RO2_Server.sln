@@ -73,6 +73,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{2C8C2E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.GameData", "source\Shared\RO2.GameData\RO2.GameData.csproj", "{EBA58B8C-3DB4-47A5-B86B-35CB3EB2474B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Character.Domain", "source\Character\RO2.Character.Domain\RO2.Character.Domain.csproj", "{C4A4C7E4-0B2D-4E1A-9C01-0000000C1D01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -407,6 +409,18 @@ Global
 		{EBA58B8C-3DB4-47A5-B86B-35CB3EB2474B}.Release|x64.Build.0 = Release|Any CPU
 		{EBA58B8C-3DB4-47A5-B86B-35CB3EB2474B}.Release|x86.ActiveCfg = Release|Any CPU
 		{EBA58B8C-3DB4-47A5-B86B-35CB3EB2474B}.Release|x86.Build.0 = Release|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000C1D01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000C1D01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000C1D01}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000C1D01}.Debug|x64.Build.0 = Debug|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000C1D01}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000C1D01}.Debug|x86.Build.0 = Debug|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000C1D01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000C1D01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000C1D01}.Release|x64.ActiveCfg = Release|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000C1D01}.Release|x64.Build.0 = Release|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000C1D01}.Release|x86.ActiveCfg = Release|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000C1D01}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
