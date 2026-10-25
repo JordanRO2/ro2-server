@@ -1,3 +1,4 @@
+using RO2.BuildingBlocks;
 using System.Numerics;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;

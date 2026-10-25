@@ -23,6 +23,7 @@
     <ProjectReference Include="..\..\Platform\RO2.Network\RO2.Network.csproj" />
     <ProjectReference Include="..\..\Economy\RO2.Economy.Infrastructure.Mongo\RO2.Economy.Infrastructure.Mongo.csproj" />
     <ProjectReference Include="..\..\Economy\RO2.Economy.Infrastructure.Postgres\RO2.Economy.Infrastructure.Postgres.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
   </ItemGroup>
 
 </Project>

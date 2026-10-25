@@ -1,4 +1,4 @@
-namespace RO2.Application.Interfaces;
+namespace RO2.BuildingBlocks;
 
 /// <summary>
 /// The player's zeny wallet as a port: the single authoritative balance and its atomic mutators. Implemented by
