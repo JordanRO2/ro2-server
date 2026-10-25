@@ -3,8 +3,9 @@ using NpgsqlTypes;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.Characters.Domain;
+using RO2.Persistence.Postgres;
 
-namespace RO2.Persistence.Postgres.Repositories;
+namespace RO2.Characters.Infrastructure.Postgres;
 
 /// <summary>
 /// PostgreSQL implementation of <see cref="IKeyConfigRepository"/>: one flat row per character in the
@@ -64,13 +65,10 @@ public sealed class KeyConfigRepository : IKeyConfigRepository
         await cmd.ExecuteNonQueryAsync(ct);
     }
 
- /// <summary>True for the 1423 that only clears the flag: mode 0 with no records. Retail keeps the
- /// stored records for it.</summary>
-    public static bool IsFlagOnlyUpdate(ushort mode, int entryBytes) => mode == 0 && entryBytes == 0;
 
     public async Task ApplyUpdateAsync(uint characterId, ushort mode, byte[] entries, DateTime updatedUtc, CancellationToken ct = default)
     {
-        if (!IsFlagOnlyUpdate(mode, entries.Length))
+        if (!KeyConfigRules.IsFlagOnlyUpdate(mode, entries.Length))
         {
             await SaveAsync(new KeyConfigDocument
             {

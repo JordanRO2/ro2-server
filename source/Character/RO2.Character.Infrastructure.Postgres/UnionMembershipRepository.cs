@@ -2,8 +2,9 @@ using Npgsql;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.Characters.Domain;
+using RO2.Persistence.Postgres;
 
-namespace RO2.Persistence.Postgres.Repositories;
+namespace RO2.Characters.Infrastructure.Postgres;
 
 /// <summary>
 /// PostgreSQL implementation of <see cref="IUnionMembershipRepository"/>: one membership per character in

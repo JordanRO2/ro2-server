@@ -46,7 +46,7 @@ public class UpdateKeyConfigHandler : ZoneRmiHandlerBase<UpdateKeyConfigHandler>
             
             await repo.ApplyUpdateAsync(player.CharacterId, mode, entries, DateTime.UtcNow, ct);
             Logger.LogDebug("{Name}: saved key config (mode {Mode}, {Count} bindings{Kept})", player.Name, mode,
-                entries.Length / 4, RO2.Persistence.Mongo.Repositories.KeyConfigRepository.IsFlagOnlyUpdate(mode, entries.Length) ? ", stored list kept" : "");
+                entries.Length / 4, RO2.Characters.Domain.KeyConfigRules.IsFlagOnlyUpdate(mode, entries.Length) ? ", stored list kept" : "");
         }
         catch (Exception ex)
         {

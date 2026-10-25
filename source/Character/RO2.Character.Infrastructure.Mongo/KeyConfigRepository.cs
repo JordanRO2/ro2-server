@@ -4,7 +4,7 @@ using RO2.Domain.Entities;
 using RO2.Persistence.Mongo.Persistence;
 using RO2.Characters.Domain;
 
-namespace RO2.Persistence.Mongo.Repositories;
+namespace RO2.Characters.Infrastructure.Mongo;
 
 /// <summary>
 /// MongoDB implementation of <see cref="IKeyConfigRepository"/>, storing key bindings in the
@@ -30,12 +30,10 @@ public sealed class KeyConfigRepository : IKeyConfigRepository
     public Task SaveAsync(KeyConfigDocument doc, CancellationToken ct = default) =>
         _configs.ReplaceOneAsync(d => d.Id == doc.Id, doc, new ReplaceOptions { IsUpsert = true }, ct);
 
- /// <summary>True when the update only clears the flag: mode 0 with no records. The stored records are kept.</summary>
-    public static bool IsFlagOnlyUpdate(ushort mode, int entryBytes) => mode == 0 && entryBytes == 0;
 
     public Task ApplyUpdateAsync(uint characterId, ushort mode, byte[] entries, DateTime updatedUtc, CancellationToken ct = default)
     {
-        if (IsFlagOnlyUpdate(mode, entries.Length))
+        if (KeyConfigRules.IsFlagOnlyUpdate(mode, entries.Length))
             return _configs.UpdateOneAsync(d => d.Id == characterId,
                 Builders<KeyConfigDocument>.Update
                     .Set(d => d.Mode, mode)

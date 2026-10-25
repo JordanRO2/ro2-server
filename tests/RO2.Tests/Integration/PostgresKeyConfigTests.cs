@@ -2,6 +2,7 @@ using RO2.Domain.Entities;
 using RO2.Persistence.Postgres.Repositories;
 using Xunit;
 using RO2.Characters.Domain;
+using RO2.Characters.Infrastructure.Postgres;
 
 namespace RO2.Tests.Integration;
 
@@ -270,9 +271,9 @@ public sealed class PostgresKeyConfigTests
     [Fact]
     public void IsFlagOnlyUpdate_is_mode_zero_and_no_entry_bytes()
     {
-        Assert.True(KeyConfigRepository.IsFlagOnlyUpdate(0, 0));
-        Assert.False(KeyConfigRepository.IsFlagOnlyUpdate(0, 4));
-        Assert.False(KeyConfigRepository.IsFlagOnlyUpdate(1, 0));
-        Assert.False(KeyConfigRepository.IsFlagOnlyUpdate(1, 4));
+        Assert.True(RO2.Characters.Domain.KeyConfigRules.IsFlagOnlyUpdate(0, 0));
+        Assert.False(RO2.Characters.Domain.KeyConfigRules.IsFlagOnlyUpdate(0, 4));
+        Assert.False(RO2.Characters.Domain.KeyConfigRules.IsFlagOnlyUpdate(1, 0));
+        Assert.False(RO2.Characters.Domain.KeyConfigRules.IsFlagOnlyUpdate(1, 4));
     }
 }

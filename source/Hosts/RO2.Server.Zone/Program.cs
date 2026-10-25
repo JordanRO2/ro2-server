@@ -110,7 +110,7 @@ public static class Program
         // collection handles, so singletons; handlers resolve them from the per-message scope, never into a field.
         services.AddProviderRepository<ICashMallRepository, RO2.Economy.Infrastructure.Mongo.CashMallRepository, RO2.Economy.Infrastructure.Postgres.CashMallRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IVehicleRepository, RO2.Persistence.Mongo.Repositories.VehicleRepository, RO2.Persistence.Postgres.Repositories.VehicleRepository>(config.Database.Provider, ServiceLifetime.Singleton);
-        services.AddProviderRepository<IKeyConfigRepository, RO2.Persistence.Mongo.Repositories.KeyConfigRepository, RO2.Persistence.Postgres.Repositories.KeyConfigRepository>(config.Database.Provider, ServiceLifetime.Singleton);
+        services.AddProviderRepository<IKeyConfigRepository, RO2.Characters.Infrastructure.Mongo.KeyConfigRepository, RO2.Characters.Infrastructure.Postgres.KeyConfigRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IAccountGiftRepository, RO2.Persistence.Mongo.Repositories.AccountGiftRepository, RO2.Persistence.Postgres.Repositories.AccountGiftRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IPresentPasswordRepository, RO2.Persistence.Mongo.Repositories.PresentPasswordRepository, RO2.Persistence.Postgres.Repositories.PresentPasswordRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IMailRepository, RO2.Persistence.Mongo.Repositories.MailRepository, RO2.Persistence.Postgres.Repositories.MailRepository>(config.Database.Provider, ServiceLifetime.Singleton);
@@ -119,7 +119,7 @@ public static class Program
         services.AddProviderRepository<ICardBookChargeRepository, RO2.Persistence.Mongo.Repositories.CardBookChargeRepository, RO2.Persistence.Postgres.Repositories.CardBookChargeRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IPrivateShopCraftRepository, RO2.Economy.Infrastructure.Mongo.PrivateShopCraftRepository, RO2.Economy.Infrastructure.Postgres.PrivateShopCraftRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IPetIncubatorRepository, RO2.Persistence.Mongo.Repositories.PetIncubatorRepository, RO2.Persistence.Postgres.Repositories.PetIncubatorRepository>(config.Database.Provider, ServiceLifetime.Singleton);
-        services.AddProviderRepository<IUnionMembershipRepository, RO2.Persistence.Mongo.Repositories.UnionMembershipRepository, RO2.Persistence.Postgres.Repositories.UnionMembershipRepository>(config.Database.Provider, ServiceLifetime.Singleton);
+        services.AddProviderRepository<IUnionMembershipRepository, RO2.Characters.Infrastructure.Mongo.UnionMembershipRepository, RO2.Characters.Infrastructure.Postgres.UnionMembershipRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddSingleton<PlayTimeRewardStore>();
         services.AddProviderRepository<ICardRegistryRepository, RO2.Persistence.Mongo.Repositories.CardRegistryRepository, RO2.Persistence.Postgres.Repositories.CardRegistryRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IGameMallListRepository, RO2.Economy.Infrastructure.Mongo.GameMallListRepository, RO2.Economy.Infrastructure.Postgres.GameMallListRepository>(config.Database.Provider, ServiceLifetime.Singleton);

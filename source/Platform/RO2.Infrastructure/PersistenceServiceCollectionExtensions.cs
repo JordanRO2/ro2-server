@@ -53,7 +53,7 @@ public static class PersistenceServiceCollectionExtensions
         services.AddProviderRepository<ICharacterRepository, MongoRepos.CharacterRepository, PgRepos.CharacterRepository>(provider, ServiceLifetime.Scoped);
         services.AddProviderRepository<IInventoryRepository, RO2.Inventory.Infrastructure.Mongo.InventoryRepository, RO2.Inventory.Infrastructure.Postgres.InventoryRepository>(provider, ServiceLifetime.Scoped);
         services.AddProviderRepository<ITimedEnchantRepository, MongoRepos.TimedEnchantRepository, PgRepos.TimedEnchantRepository>(provider, ServiceLifetime.Scoped);
-        services.AddProviderRepository<IQuickSlotRepository, MongoRepos.QuickSlotRepository, PgRepos.QuickSlotRepository>(provider, ServiceLifetime.Scoped);
+        services.AddProviderRepository<IQuickSlotRepository, RO2.Characters.Infrastructure.Mongo.QuickSlotRepository, RO2.Characters.Infrastructure.Postgres.QuickSlotRepository>(provider, ServiceLifetime.Scoped);
         services.AddProviderRepository<ISkillRepository, MongoRepos.SkillRepository, PgRepos.SkillRepository>(provider, ServiceLifetime.Scoped);
         services.AddProviderRepository<IQuestRepository, MongoRepos.QuestRepository, PgRepos.QuestRepository>(provider, ServiceLifetime.Scoped);
         services.AddProviderRepository<IZoneAuthTokenRepository, MongoRepos.ZoneAuthTokenRepository, PgRepos.ZoneAuthTokenRepository>(provider, ServiceLifetime.Scoped);
