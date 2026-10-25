@@ -93,7 +93,7 @@ public static partial class AuctionPackets
  /// <remarks>
  /// The client refuses a bid at 100 top bids (text 8632 "Exceeded the item quantity limit a player can bid on.") only when its list count reaches the limit, and the server never reports a non-zero count, so the client does not apply it itself; the server enforces it.
  /// </remarks>
-    public const int MaxTopBids = 100;
+    public const int MaxTopBids = AuctionBidRules.MaxTopBids;
 
  /// <summary>Parsed 1407 ReqAuctionTenderJoin request.</summary>
     public readonly record struct TenderJoinRequest(ulong ArticleUid, ulong ItemUid, uint ItemId, ulong Bid);
@@ -167,19 +167,7 @@ public sealed partial class AuctionService
  /// <param name="req">Bid request.</param>
     public static ushort CheckBid(AuctionArticle article, uint bidderCharId, AuctionPackets.TenderJoinRequest req,
         long wallet, int activeTopBids)
-    {
-        if (req.ItemUid != article.ItemUid || req.ItemId != article.ItemId) return AuctionPackets.ResultBidItemMismatch;
-        if (article.SellerCharId == bidderCharId) return AuctionPackets.ResultBidItemMismatch;
-        if (article.TopBidderCharId == bidderCharId) return AuctionPackets.ResultBidItemMismatch;
-        if (req.Bid == 0 || req.Bid > long.MaxValue) return AuctionPackets.ResultBidItemMismatch;
-        long bid = (long)req.Bid;
-        bool instant = article.BuyoutPrice > 0 && bid == article.BuyoutPrice;
-        if (article.BuyoutPrice > 0 && bid > article.BuyoutPrice) return AuctionPackets.ResultBidItemMismatch;
-        if (!instant && bid < AuctionPackets.MinimumBid(AuctionPackets.CurrentPrice(article))) return AuctionPackets.ResultBidItemMismatch;
-        if (activeTopBids >= AuctionPackets.MaxTopBids) return AuctionPackets.ResultBidFailed;
-        if (wallet < bid) return AuctionPackets.ResultNotEnoughMoney;
-        return AuctionPackets.ResultSuccess;
-    }
+        => AuctionBidRules.Check(article, bidderCharId, req.ItemUid, req.ItemId, req.Bid, wallet, activeTopBids);
 
  /// <summary>
  /// Places a bid. The zeny is taken from the bidder's wallet only after the article accepts the bid atomically, and the displaced bid is refunded by mail.
