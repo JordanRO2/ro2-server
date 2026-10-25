@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Runtime.CompilerServices;
 using RO2.GameData;
 using RO2.Characters.Domain;
@@ -81,18 +82,8 @@ internal static class KharaTitleTraits
         var b = TraitsOf(store, titleB);
         if (a.Count == 0 && b.Count == 0) return equip;
 
-        var flat = equip is { } e ? new Dictionary<byte, int>(e.Flat) : new Dictionary<byte, int>();
-        var pct = equip is { } e2 ? new Dictionary<byte, float>(e2.Percent) : new Dictionary<byte, float>();
-        foreach (var rows in new[] { a, b })
-        {
-            foreach (var (kind, type, value) in rows)
-            {
-                if (kind == 2)
-                    pct[type] = pct.GetValueOrDefault(type) + value / CharacterStats.PercentTraitDivisor;
-                else
-                    flat[type] = flat.GetValueOrDefault(type) + (int)Math.Round(value);
-            }
-        }
-        return new EquipStats(flat, pct);
+        // Title A rows then title B rows, folded onto the gear pool by the same Domain accumulation the gear uses.
+        var lines = a.Concat(b).Select(t => new TraitLine(t.Kind, t.Type, t.Value));
+        return EquipStats.WithLines(equip, lines);
     }
 }

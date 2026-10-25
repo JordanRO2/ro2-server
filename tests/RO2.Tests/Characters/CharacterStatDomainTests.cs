@@ -130,4 +130,35 @@ public class CharacterStatDomainTests
         Assert.Equal(5, c.BonusStr);
         Assert.Equal(99, c.Str);
     }
+
+    // ---- S9: gear-fold ----
+
+    [Fact]
+    public void EquipStats_Fold_SplitsFlatAndPercentByKind()
+    {
+        var eq = EquipStats.Fold(new[]
+        {
+            new TraitLine(1, 0, 5f),       // flat
+            new TraitLine(1, 0, 3f),       // flat, same stat => 8
+            new TraitLine(2, 26, 1000f),   // percent => 10
+            new TraitLine(2, 26, 500f),    // percent, same stat => 15
+            new TraitLine(1, 96, 10.6f),   // flat, rounds to 11
+            new TraitLine(3, 7, 2f),       // non-1/2 kind treated as flat
+        });
+        Assert.Equal(8, eq.FlatOf(0));
+        Assert.Equal(15f, eq.PercentOf(26));
+        Assert.Equal(11, eq.FlatOf(96));
+        Assert.Equal(2, eq.FlatOf(7));
+    }
+
+    [Fact]
+    public void EquipStats_WithLines_FoldsOntoABase()
+    {
+        var baseStats = new EquipStats(
+            new Dictionary<byte, int> { [0] = 10 },
+            new Dictionary<byte, float> { [26] = 5f });
+        var eq = EquipStats.WithLines(baseStats, new[] { new TraitLine(1, 0, 3f), new TraitLine(2, 26, 500f) });
+        Assert.Equal(13, eq.FlatOf(0));
+        Assert.Equal(10f, eq.PercentOf(26));
+    }
 }

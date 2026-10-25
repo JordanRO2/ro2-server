@@ -81,16 +81,10 @@ public static class StatService
         GameDataStore store, IEnumerable<InventoryItem> equipped)
     {
         var index = ItemBonusIndex(store);
-        var flat = new Dictionary<byte, int>();
-        var pct = new Dictionary<byte, float>();
-
-        void Add(byte kind, byte type, float value)
-        {
-            if (kind == 2) // PERCENT: Value is ×100 (1000 = +10%)
-                pct[type] = pct.GetValueOrDefault(type) + value / CharacterStats.PercentTraitDivisor;
-            else           // FLAT (Kind 1, and any unexpected kind treated conservatively as flat)
-                flat[type] = flat.GetValueOrDefault(type) + (int)Math.Round(value);
-        }
+        // Collect every contribution in Add-order; the Domain fold (EquipStats.Fold) does the Kind-2 percent /
+        // Kind-1 flat accumulation. The list preserves order, so the float percent sum is byte-identical.
+        var lines = new List<TraitLine>();
+        void Add(byte kind, byte type, float value) => lines.Add(new TraitLine(kind, type, value));
 
         var runeIndex = RuneBonusIndex(store);
         var enchantIndex = EnchantBonusIndex(store);
@@ -185,7 +179,7 @@ public static class StatService
             }
         }
 
-        return new EquipStats(flat, pct);
+        return EquipStats.Fold(lines);
     }
 
     /// <summary>
