@@ -3,6 +3,8 @@ using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.Domain.GameData;
+using RO2.Economy.Application;
+using RO2.Economy.Domain;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
@@ -54,16 +56,14 @@ public class PrivateShopBuyItemHandler : ZoneRmiHandlerBase<PrivateShopBuyItemHa
         {
             var inventory = services.GetRequiredService<IInventoryRepository>();
             var store = services.GetRequiredService<GameDataStore>();
-            var sale = await PurchaseAsync(player, owner, indices, inventory, store.Items);
+            var sale = await PurchaseAsync(player, owner, indices, inventory, store.Items,
+                gold => services.GetRequiredService<ICharacterRepository>().UpdateGoldAsync(player.CharacterId, gold),
+                gold => services.GetRequiredService<ICharacterRepository>().UpdateGoldAsync(owner.CharacterId, gold));
             if (sale.Refusal != 0)
             {
                 await RefuseAsync(session, player, sale.Refusal, sale.Reason, ct);
                 return;
             }
-
-            var characters = services.GetRequiredService<ICharacterRepository>();
-            await characters.UpdateGoldAsync(player.CharacterId, sale.BuyerGoldAfter);
-            await characters.UpdateGoldAsync(owner.CharacterId, sale.SellerGoldAfter);
 
             
             foreach (var stack in sale.BuyerStacks)
@@ -157,218 +157,49 @@ public class PrivateShopBuyItemHandler : ZoneRmiHandlerBase<PrivateShopBuyItemHa
         internal static Sale Refused(ushort code, string reason) => new() { Refusal = code, Reason = reason };
     }
 
- /// <summary>
- /// Carries out the purchase of the listings <paramref name="indices"/> from <paramref name="owner"/>'s shop.
- /// Checks everything first, then moves the items and zeny and removes the listings. The caller holds the
- /// shop's purchase gate. Nothing is sent from here.
- /// </summary>
+    /// <summary>
+    /// Carries out the purchase of the listings <paramref name="indices"/> from <paramref name="owner"/>'s shop: the host
+    /// eligibility gates (not the owner, shop open, buyer viewing, every index still listed), then
+    /// <see cref="StallBuyApplicationService.BuyAsync"/>, then the frames' data from the host rows. The caller holds the
+    /// shop's purchase gate. Nothing is sent from here. The wallets' persistence is the optional callbacks (the balance
+    /// right after the payment, buyer then seller); a refusal persists nothing.
+    /// </summary>
     internal static async Task<Sale> PurchaseAsync(PlayerState buyer, PlayerState owner, IReadOnlyList<byte> indices,
-        IInventoryRepository inventory, IReadOnlyDictionary<uint, ItemData> itemData)
+        IInventoryRepository inventory, IReadOnlyDictionary<uint, ItemData> itemData,
+        Func<long, Task>? persistBuyer = null, Func<long, Task>? persistSeller = null)
     {
-        if (ReferenceEquals(owner, buyer))
-            return Sale.Refused(PrivateShopItemSalePackets.ResultWrongBuyer, "the buyer owns the shop");
-        if (!PrivateShopRegistry.IsOpen(owner) || !PrivateShopRegistry.TryGet(owner, out _, out var listings))
-            return Sale.Refused(PrivateShopItemSalePackets.ResultShopClosed, $"{owner.Name}'s shop is not open");
-        if (!PrivateShopRegistry.IsViewer(owner, buyer))
-            return Sale.Refused(PrivateShopItemSalePackets.ResultWrongBuyer, $"the buyer has not opened {owner.Name}'s shop");
+        bool buyerIsOwner = ReferenceEquals(owner, buyer);
+        List<PrivateShopRegistry.Listing>? listings = null;
+        bool openAndListed = PrivateShopRegistry.IsOpen(owner) && PrivateShopRegistry.TryGet(owner, out _, out listings);
+        var refusal = StallBuyRules.EligibilityRefusal(buyerIsOwner, openAndListed, PrivateShopRegistry.IsViewer(owner, buyer));
+        if (refusal != 0)
+            return Sale.Refused(refusal, buyerIsOwner ? "the buyer owns the shop"
+                : !openAndListed ? $"{owner.Name}'s shop is not open" : $"the buyer has not opened {owner.Name}'s shop");
 
-        
-        var picked = new List<PrivateShopRegistry.Listing>();
+        var picked = new List<StallListing>();
         foreach (var index in indices.Distinct())
         {
-            var listing = listings.FirstOrDefault(l => l.Index == index);
+            var listing = listings!.FirstOrDefault(l => l.Index == index);
             if (listing is null)
                 return Sale.Refused(PrivateShopItemSalePackets.ResultAlreadySold, $"list index {index} is not on sale");
-            picked.Add(listing);
-        }
-        var sold = PrivateShopRegistry.Live(picked, await inventory.GetByCharacterAsync(owner.CharacterId));
-        if (sold.Count != picked.Count)
-            return Sale.Refused(PrivateShopItemSalePackets.ResultAlreadySold, "a listed item left the seller's bag");
-
-        ulong total = 0;
-        foreach (var (listing, _) in sold)
-        {
-            if (listing.Price > ulong.MaxValue - total)
-                return Sale.Refused(PrivateShopItemSalePackets.ResultNotEnoughMoney, "the total overflows");
-            total += listing.Price;
-        }
-        if (total > long.MaxValue || buyer.Gold < (long)total)
-            return Sale.Refused(PrivateShopItemSalePackets.ResultNotEnoughMoney, $"{buyer.Gold} zeny for {total}");
-
-        var plan = PlanPlacement(sold, await inventory.GetByCharacterAsync(buyer.CharacterId), itemData);
-        if (plan is null)
-            return Sale.Refused(PrivateShopItemSalePackets.ResultNoBagRoom, "no free bag cell");
-
-        long price = (long)total;
-        long buyerAfter, sellerAfter;
-        lock (PrivateShopRegistry.WalletLock) 
-        {
-            if (owner.Gold > long.MaxValue - price)
-                return Sale.Refused(PrivateShopItemSalePackets.ResultSellerMoneyLimit, $"seller wallet {owner.Gold} + {total}");
-            if (!buyer.TryDebit(price))
-                return Sale.Refused(PrivateShopItemSalePackets.ResultNotEnoughMoney, $"{buyer.Gold} zeny for {total}");
-            owner.Credit(price);
-            buyerAfter = buyer.Gold;
-            sellerAfter = owner.Gold;
+            picked.Add(new StallListing(listing.Index, listing.Uid, listing.Count, listing.Price));
         }
 
-        
-        var leavingWhole = new Dictionary<InventoryItem, byte[]>(ReferenceEqualityComparer.Instance);
-        foreach (var (listing, item) in sold)
-            if (listing.Count >= item.Count)
-            {
-                var record = WorldEntryService.BuildItemRecord126(item);
-                record[14] = 0; 
-                leavingWhole[item] = record;
-            }
-
-        var placed = await ApplyPlacementAsync(inventory, plan, buyer.CharacterId);
-
-        foreach (var (listing, _) in sold)
-            PrivateShopRegistry.TryRemove(owner, listing.Index);
+        var stall = new StallBuyInventoryAdapter(inventory, itemData, owner);
+        var result = await new StallBuyApplicationService().BuyAsync(
+            new StallBuyCommand(buyer.CharacterId, owner.CharacterId, picked), buyer, owner, PrivateShopRegistry.WalletLock, stall,
+            persistBuyer ?? (_ => Task.CompletedTask), persistSeller ?? (_ => Task.CompletedTask));
+        if (!result.Succeeded)
+            return Sale.Refused(result.Refusal, result.Reason);
 
         return new Sale
         {
-            Total = total,
-            BuyerGoldAfter = buyerAfter,
-            SellerGoldAfter = sellerAfter,
-            SoldItemIds = sold.Select(s => s.Item.ItemId).ToList(),
-            BuyerStacks = placed,
-            SellerRecords = sold.Select(s => leavingWhole.TryGetValue(s.Item, out var gone)
-                ? gone : WorldEntryService.BuildItemRecord126(s.Item)).ToList(),
+            Total = result.Total,
+            BuyerGoldAfter = result.BuyerGoldAfter,
+            SellerGoldAfter = result.SellerGoldAfter,
+            SoldItemIds = result.SoldItemIds.ToList(),
+            BuyerStacks = stall.BuyerStacks,
+            SellerRecords = stall.BuildSellerRecords(),
         };
-    }
-
- /// <summary>
- /// Plans where each bought listing goes in the buyer's bag, without writing: first into the buyer's stacks of
- /// the same item up to Stack_Max, then into free cells. Null when a listing needs a cell and none is left.
- /// </summary>
-    private static Placement? PlanPlacement(List<(PrivateShopRegistry.Listing Listing, InventoryItem Item)> sold,
-        IReadOnlyList<InventoryItem> buyerInventory, IReadOnlyDictionary<uint, ItemData> itemData)
-    {
-        var plan = new Placement();
-        var freeCells = BagCapacity.FreeCells(buyerInventory, itemData);
-        int nextFree = 0;
-        var targets = buyerInventory
-            .Where(i => i.StorageType == 0 && i.Slot >= 0)
-            .OrderBy(i => i.Slot)
-            .Select(i => new MergeTarget(i.ItemId, i.Count) { Held = i })
-            .ToList();
-
-        foreach (var (listing, item) in sold)
-        {
-            int max = itemData.TryGetValue(item.ItemId, out var data) ? data.Stack_Max : 0;
-            int remaining = listing.Count;
-            if (max > 1)
-            {
-                foreach (var target in targets)
-                {
-                    if (remaining == 0) break;
-                    if (target.ItemId != item.ItemId || target.Count >= max) continue;
-                    int add = Math.Min(max - target.Count, remaining);
-                    target.Count += add;
-                    remaining -= add;
-                    if (target.Held is { } held)
-                    {
-                        if (!plan.HeldCounts.ContainsKey(held)) plan.Touched.Add(held);
-                        plan.HeldCounts[held] = target.Count;
-                    }
-                    else target.Created!.CellCount = target.Count;
-                }
-            }
-
-            var move = new PlannedMove(item, listing.Count);
-            if (remaining > 0)
-            {
-                if (nextFree >= freeCells.Count) return null;
-                move.Cell = freeCells[nextFree++];
-                move.CellCount = remaining;
-                targets.Add(new MergeTarget(item.ItemId, remaining) { Created = move });
-                plan.Touched.Add(move);
-            }
-            plan.Moves.Add(move);
-        }
-        return plan;
-    }
-
- /// <summary>
- /// Writes a placement plan and returns the buyer's stacks that received items, in the order they were first filled.
- /// </summary>
-    private static async Task<List<InventoryItem>> ApplyPlacementAsync(IInventoryRepository inventory, Placement plan, uint buyerCharacterId)
-    {
-        foreach (var (held, count) in plan.HeldCounts)
-        {
-            held.Count = count;
-            await inventory.UpdateItemAsync(held);
-        }
-
-        foreach (var move in plan.Moves)
-        {
-            var it = move.Item;
-            bool wholeStack = move.Qty >= it.Count;
-            if (move.Cell < 0)
-            {
-                if (wholeStack) await inventory.RemoveItemAsync(it.Id);
-                else
-                {
-                    it.Count -= move.Qty;
-                    await inventory.UpdateItemAsync(it);
-                }
-                continue;
-            }
-            if (!wholeStack)
-            {
-                it.Count -= move.Qty;
-                await inventory.UpdateItemAsync(it);
-                var row = new InventoryItem
-                {
-                    CharacterId = buyerCharacterId,
-                    ItemId = it.ItemId,
-                    Count = move.CellCount,
-                    Slot = move.Cell,
-                    StorageType = 0,
-                }.CopyInstanceStateFrom(it);
-                await inventory.AddItemAsync(row);
-                move.Placed = row;
-            }
-            else
-            {
-                it.CharacterId = buyerCharacterId;
-                it.StorageType = 0;
-                it.Slot = move.Cell;
-                it.Count = move.CellCount;
-                await inventory.UpdateItemAsync(it);
-                move.Placed = it;
-            }
-        }
-
-        return plan.Touched.Select(t => t as InventoryItem ?? ((PlannedMove)t).Placed!).ToList();
-    }
-
-    private sealed class Placement
-    {
-        public Dictionary<InventoryItem, int> HeldCounts { get; } = new(ReferenceEqualityComparer.Instance);
-        public List<PlannedMove> Moves { get; } = new();
- /// <summary>Held stacks (InventoryItem) and cell moves (PlannedMove), in the order they were first filled.</summary>
-        public List<object> Touched { get; } = new();
-    }
-
- /// <summary>A bought item and its destination; <see cref="Cell"/> -1 means it merged completely.</summary>
-    private sealed class PlannedMove(InventoryItem item, int qty)
-    {
-        public InventoryItem Item { get; } = item;
-        public int Qty { get; } = qty;
-        public short Cell { get; set; } = -1;
-        public int CellCount { get; set; }
-        public InventoryItem? Placed { get; set; }
-    }
-
- /// <summary>A stack a bought item may merge into: one the buyer holds, or a cell planned for an earlier listing.</summary>
-    private sealed class MergeTarget(uint itemId, int count)
-    {
-        public uint ItemId { get; } = itemId;
-        public int Count { get; set; } = count;
-        public InventoryItem? Held { get; init; }
-        public PlannedMove? Created { get; init; }
     }
 }

@@ -317,7 +317,7 @@ internal static class PrivateShopRegistry
         foreach (var l in listings)
         {
             var it = ownerInventory.FirstOrDefault(i => i.Id == l.Uid && i.StorageType == BagStorageType);
-            if (it != null && it.Count >= l.Count) live.Add((l, it));
+            if (StallBuyRules.IsListingLive(it != null, it?.Count ?? 0, l.Count)) live.Add((l, it!));
         }
         return live;
     }

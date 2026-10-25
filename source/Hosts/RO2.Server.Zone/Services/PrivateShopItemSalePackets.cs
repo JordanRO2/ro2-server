@@ -1,4 +1,5 @@
 using System.Buffers.Binary;
+using RO2.Economy.Domain;
 using RO2.Network.Packets;
 
 namespace RO2.Server.Zone.Services;
@@ -19,22 +20,22 @@ internal static class PrivateShopItemSalePackets
     
     
  /// <summary>Refusal: an item on the purchased list was already sold to another buyer.</summary>
-    internal const ushort ResultAlreadySold = 23006;
+    internal const ushort ResultAlreadySold = StallCodes.ResultAlreadySold;
 
  /// <summary>Refusal: the buyer is not the buyer this private shop is open to.</summary>
-    internal const ushort ResultWrongBuyer = 23019;
+    internal const ushort ResultWrongBuyer = StallCodes.ResultWrongBuyer;
 
  /// <summary>Refusal: the buyer does not have enough room in the bags.</summary>
-    internal const ushort ResultNoBagRoom = 23020;
+    internal const ushort ResultNoBagRoom = StallCodes.ResultNoBagRoom;
 
  /// <summary>Refusal: the seller's total zeny would exceed the limit.</summary>
-    internal const ushort ResultSellerMoneyLimit = 23021;
+    internal const ushort ResultSellerMoneyLimit = StallCodes.ResultSellerMoneyLimit;
 
  /// <summary>Refusal: the private shop has closed.</summary>
-    internal const ushort ResultShopClosed = 23023;
+    internal const ushort ResultShopClosed = StallCodes.ResultShopClosed;
 
  /// <summary>Refusal: the buyer does not have enough zeny.</summary>
-    internal const ushort ResultNotEnoughMoney = 23026;
+    internal const ushort ResultNotEnoughMoney = StallCodes.ResultNotEnoughMoney;
 
  /// <summary>
  /// Reads a 1482 ReqBuyPrivateShopItem body: <c>[u8 1][u8 6+n][blob]</c>, where the blob is

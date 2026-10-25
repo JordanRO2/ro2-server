@@ -48,7 +48,16 @@ public sealed class TradePlacement
 
     /// <summary>One move per offered item, in offer order.</summary>
     public List<TradePlannedMove> Moves { get; } = new();
+
+    /// <summary>The stacks the plan filled (held stacks and planned cells), in the order they were first filled.</summary>
+    public List<TradeFill> Filled { get; } = new();
 }
+
+/// <summary>One stack a placement filled: a held stack of the recipient (<see cref="HeldUid"/>), or the new cell of the
+/// move at <see cref="MoveIndex"/> (<see cref="HeldUid"/> null).</summary>
+/// <param name="HeldUid">The held stack's uid; null when the fill is a planned cell.</param>
+/// <param name="MoveIndex">With a null <paramref name="HeldUid"/>: the index into <see cref="TradePlacement.Moves"/> of the move whose cell it is.</param>
+public readonly record struct TradeFill(ulong? HeldUid, int MoveIndex);
 
 /// <summary>Both directions of a swap. A null placement means that recipient's bag cannot take the goods.</summary>
 /// <param name="AToB">Side A's items into side B's bag; null when B has no room.</param>
@@ -134,7 +143,11 @@ public static class TradePlanner
                     int add = Math.Min(max - target.Count, remaining);
                     target.Count += add;
                     remaining -= add;
-                    if (target.HeldUid is { } held) plan.HeldCounts[held] = target.Count;
+                    if (target.HeldUid is { } held)
+                    {
+                        if (!plan.HeldCounts.ContainsKey(held)) plan.Filled.Add(new TradeFill(held, -1));
+                        plan.HeldCounts[held] = target.Count;
+                    }
                     else target.Created!.CellCount = target.Count;
                 }
             }
@@ -147,6 +160,7 @@ public static class TradePlanner
                 move.Cell = freeCells[nextFree++];
                 move.CellCount = remaining;
                 stacks.Add(new MergeTarget(it.ItemId, remaining) { Created = move });
+                plan.Filled.Add(new TradeFill(null, plan.Moves.Count));
             }
             plan.Moves.Add(move);
         }
