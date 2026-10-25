@@ -510,18 +510,19 @@ public class CraftItemHandler : ZoneRmiHandlerBase<CraftItemHandler>
         IReadOnlyList<(uint ItemId, int Count)> materials, uint productId, int quantity, byte stackMax,
         IReadOnlyDictionary<uint, ItemData> items)
     {
-        int perStack = stackMax < 1 ? 1 : stackMax;   
-        if (perStack > 1)
-        {
-            var target = BagStacks(bag, productId).FirstOrDefault(i => i.Count + quantity <= perStack);
-            if (target is not null) return new ProductPlacement(target, Array.Empty<short>());
-        }
-
-        int needed = (quantity + perStack - 1) / perStack;
+        // Merge candidates come from the full bag (StorageBag, Count>0; no Slot>=0 filter here); free cells exclude
+        // cells this tick's materials empty. The placement rule itself is the shared Inventory.Domain primitive;
+        // PlaceProductAsync keeps the per-cell write loop (min(perStack, remaining) each), so only the cells are mapped.
+        var candidates = bag
+            .Where(i => i.StorageType == StorageBag && i.Count > 0)
+            .Select(i => new BagStack(i.Id, i.ItemId, i.Count, i.Slot))
+            .ToList();
         var emptied = StacksEmptiedBy(bag, materials);
         var free = BagCapacity.FreeCells(bag.Where(i => !emptied.Contains(i)), items);
-        if (free.Count < needed) return null;
-        return new ProductPlacement(null, free.GetRange(0, needed));
+        var plan = BagStackPlanner.Plan(candidates, free, productId, quantity, stackMax);
+        if (plan is null) return null;
+        if (plan.RestackId is { } id) return new ProductPlacement(bag.First(i => i.Id == id), Array.Empty<short>());
+        return new ProductPlacement(null, plan.NewStacks.Select(s => s.Cell).ToList());
     }
 
  /// <summary>The bag stacks that one item's worth of <paramref name="materials"/> takes to 0, in slot order, as <see cref="ConsumeAsync"/> does.</summary>
