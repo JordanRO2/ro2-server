@@ -1,6 +1,7 @@
 using RO2.Economy.Domain;
 using RO2.Domain.Entities;
 using Xunit;
+using RO2.Inventory.Domain;
 
 namespace RO2.Tests.Economy;
 

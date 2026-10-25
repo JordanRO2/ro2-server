@@ -5,6 +5,7 @@ using RO2.Domain.GameData;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
+using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -82,7 +83,7 @@ public static class WorldEntryService
         ulong charUid,
         uint entityId,
         ILogger logger,
-        IReadOnlyList<RO2.Domain.Entities.InventoryItem>? inventoryItems = null,
+        IReadOnlyList<RO2.Inventory.Domain.InventoryItem>? inventoryItems = null,
         IReadOnlyList<CharacterQuest>? activeQuests = null,
         int completedQuestCount = 0,
         IReadOnlyList<CharacterSkill>? learnedSkills = null,
@@ -713,7 +714,7 @@ public static class WorldEntryService
  /// <param name="vitals">Current HP and SP and their maximums. Null uses the default values.</param>
  /// <param name="skillList">Usable skills as (group, level) pairs. Null writes the default three ids.</param>
     internal static void WriteCharacterDetail(PacketWriter writer, Character character, ulong charUid, uint entityId,
-        IReadOnlyList<RO2.Domain.Entities.InventoryItem>? items, uint mapId, float posX, float posY, float posZ,
+        IReadOnlyList<RO2.Inventory.Domain.InventoryItem>? items, uint mapId, float posX, float posY, float posZ,
         IReadOnlyList<RO2.Domain.Entities.CharacterQuest>? activeQuests = null,
         byte talentPointsRemaining = 0,
         GameDataStore? gameData = null,
@@ -1137,7 +1138,7 @@ public static class WorldEntryService
  /// <remarks>
  /// Shares the inventory item writer so that every message encodes items the same way. Only the uid, item id and durability offsets are confirmed; the rest is the current model of the record.
  /// </remarks>
-    internal static byte[] BuildItemRecord126(RO2.Domain.Entities.InventoryItem item)
+    internal static byte[] BuildItemRecord126(RO2.Inventory.Domain.InventoryItem item)
     {
         using var w = new PacketWriter(ItemPackets.ItemRecordLength);
         WriteItemInstance(w, item);
@@ -1147,7 +1148,7 @@ public static class WorldEntryService
  /// <summary>
  /// Writes a single 126-byte item instance, in the same format as the item information message.
  /// </summary>
-    private static void WriteItemInstance(PacketWriter writer, RO2.Domain.Entities.InventoryItem item)
+    private static void WriteItemInstance(PacketWriter writer, RO2.Inventory.Domain.InventoryItem item)
     {
         var startPos = writer.Length;
 
@@ -1270,7 +1271,7 @@ public static class WorldEntryService
  /// The flags are read from the template's bind type and the item's storage location and history.
  /// The template comes from the loaded game data. Without loaded game data the value stays 0.
  /// </remarks>
-    internal static byte RecordBindFlags(RO2.Domain.Entities.InventoryItem item)
+    internal static byte RecordBindFlags(RO2.Inventory.Domain.InventoryItem item)
         => GameDataStore.Loaded?.GetItem(item.ItemId) is { } template
             ? RecordBindFlags(template.Bind_Type, item.StorageType, item.Bound)
             : (byte)0;
@@ -1291,7 +1292,7 @@ public static class WorldEntryService
  /// Items bought from an NPC stack store 0 for their own value, which takes precedence over the template value.
  /// Returns 0 when no loaded game data knows the template.
  /// </remarks>
-    internal static uint RecordAbilityValue(RO2.Domain.Entities.InventoryItem item)
+    internal static uint RecordAbilityValue(RO2.Inventory.Domain.InventoryItem item)
         => RecordAbilityValue(item.ItemId, item.AbilityValue);
 
  /// <summary>
@@ -1317,7 +1318,7 @@ public static class WorldEntryService
  /// Every item record carries this block, so later records of an item keep its holes.
  /// Before the game data is loaded the block stays zero.
  /// </remarks>
-    private static void WriteRuneholes(PacketWriter writer, RO2.Domain.Entities.InventoryItem item)
+    private static void WriteRuneholes(PacketWriter writer, RO2.Inventory.Domain.InventoryItem item)
     {
         const int blockLength = ItemWorkbench.HoleCount * 7;
         var store = GameDataStore.Loaded;
@@ -1465,7 +1466,7 @@ public static class WorldEntryService
  /// Callers that include active effects go through the effect service instead of calling this directly.
  /// </remarks>
     internal static byte[] BuildFullPcTrait2498(
-        Character character, GameDataStore? gameData, IReadOnlyList<RO2.Domain.Entities.InventoryItem>? equipped,
+        Character character, GameDataStore? gameData, IReadOnlyList<RO2.Inventory.Domain.InventoryItem>? equipped,
         int currentHp, int currentSp)
     {
         StatService.EquipStats? derived = gameData is not null && equipped is not null

@@ -7,6 +7,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -345,7 +346,7 @@ public class SkillStartItemHandler : ZoneRmiHandlerBase<SkillStartItemHandler>
     /// uses to place it, which is the cell 2329 refreshes. Both bag 1 (slots 50-69) and extra bags
     /// (e.g. bag 3 slot 23) are covered by this partition.
     /// </summary>
-    private static (byte bag, byte slot) ClientBagSlot(RO2.Domain.Entities.InventoryItem it)
+    private static (byte bag, byte slot) ClientBagSlot(RO2.Inventory.Domain.InventoryItem it)
     {
         if (it.StorageType == StorageTypeEquipped)
             return (EquipmentContainer, (byte)Math.Clamp(it.Slot < 0 ? 0 : (int)it.Slot, 0, MainBagFirstWireSlot - 1));

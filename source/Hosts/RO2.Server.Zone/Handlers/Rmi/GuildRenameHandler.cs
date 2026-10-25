@@ -8,6 +8,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -70,7 +71,7 @@ public class GuildRenameHandler : ZoneRmiHandlerBase<GuildRenameHandler>
         
         
         string oldName;
-        RO2.Domain.Entities.InventoryItem scroll;
+        RO2.Inventory.Domain.InventoryItem scroll;
         int remaining;
         await RenameGate.WaitAsync(ct);
         try
@@ -166,7 +167,7 @@ public class GuildRenameHandler : ZoneRmiHandlerBase<GuildRenameHandler>
     }
 
  /// <summary>Returns the client's (bag, slot) cell for a bag item, in the partition used by the item-use consumer.</summary>
-    private static (byte bag, byte slot) ClientBagSlot(RO2.Domain.Entities.InventoryItem it)
+    private static (byte bag, byte slot) ClientBagSlot(RO2.Inventory.Domain.InventoryItem it)
     {
         var flat = it.Slot < 0 ? 0 : (int)it.Slot;
         if (flat < 20) return (1, (byte)(50 + flat));

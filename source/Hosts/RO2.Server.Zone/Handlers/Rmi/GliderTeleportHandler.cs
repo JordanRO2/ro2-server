@@ -8,6 +8,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -263,7 +264,7 @@ public class GliderTeleportHandler : ZoneRmiHandlerBase<GliderTeleportHandler>
         // it. Loaded here, after the
         // pyramid close above, so an item that close moved is current. Nothing else in warp mode reads it (see the
         // quick-slot note above). A storage error sends no 2588, as before.
-        IReadOnlyList<RO2.Domain.Entities.InventoryItem>? bag = null;
+        IReadOnlyList<RO2.Inventory.Domain.InventoryItem>? bag = null;
         try
         {
             bag = await inventory.GetByCharacterAsync(player.CharacterId);

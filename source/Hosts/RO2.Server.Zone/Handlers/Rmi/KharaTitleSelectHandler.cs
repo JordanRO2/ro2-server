@@ -9,6 +9,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -142,7 +143,7 @@ public class KharaTitleSelectHandler : ZoneRmiHandlerBase<KharaTitleSelectHandle
             // EffectService.SendPcTraitSheetAsync does.
             if (player.Character is { } character)
             {
-                IReadOnlyList<RO2.Domain.Entities.InventoryItem>? worn = null;
+                IReadOnlyList<RO2.Inventory.Domain.InventoryItem>? worn = null;
                 try
                 {
                     worn = await services.GetRequiredService<RO2.Application.Interfaces.IInventoryRepository>()

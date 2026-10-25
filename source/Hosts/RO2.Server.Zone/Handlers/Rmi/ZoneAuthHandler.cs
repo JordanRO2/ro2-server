@@ -11,6 +11,7 @@ using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 
 using NetworkZoneRmiBase = RO2.Network.Handlers.ZoneRmiHandlerBase<RO2.Server.Zone.Handlers.Rmi.ZoneAuthHandler>;
+using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -499,7 +500,7 @@ public class ZoneAuthHandler : NetworkZoneRmiBase
         // Each character's worn equipment (StorageType==1) rides the 2307 equipment vector as 126-byte
         // records so the char-select preview — and the in-world model, which inherits that CKharaMgr
         // appearance state — renders the gear. See CharacterSerializer.WriteCharacterList.
-        var equipByChar = new Dictionary<uint, IReadOnlyList<RO2.Domain.Entities.InventoryItem>>();
+        var equipByChar = new Dictionary<uint, IReadOnlyList<RO2.Inventory.Domain.InventoryItem>>();
         if (charList.Count > 0)
         {
             var inventory = services.GetRequiredService<IInventoryRepository>();

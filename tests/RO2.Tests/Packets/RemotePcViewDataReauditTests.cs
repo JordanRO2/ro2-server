@@ -14,6 +14,7 @@ using System.Net;
 using System.Text;
 using Xunit;
 using static RO2.Tests.Packets.ReauditShared;
+using RO2.Inventory.Domain;
 
 namespace RO2.Tests.Packets;
 

@@ -8,6 +8,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -188,7 +189,7 @@ public class CardEnforceItemHandler : ZoneRmiHandlerBase<CardEnforceItemHandler>
         // coating item, CatalystSlot a catalyst. Four distinct stacks, so one stack can never be counted, and
         // consumed, twice.
         var seen = new HashSet<ulong> { targetDesc.Uid };
-        var materials = new RO2.Domain.Entities.InventoryItem[CardDescriptorCount];
+        var materials = new RO2.Inventory.Domain.InventoryItem[CardDescriptorCount];
         for (int i = 0; i < CardDescriptorCount; i++)
         {
             var d = descriptors[FirstMaterialDescriptorIndex + i];
@@ -359,7 +360,7 @@ public class CardEnforceItemHandler : ZoneRmiHandlerBase<CardEnforceItemHandler>
  /// <summary>2899 result code for a refused enforce: the only non-zero code sent for a 1611.</summary>
     private const short ResultRefused = 5;
 
-    private static bool InBag([System.Diagnostics.CodeAnalysis.NotNullWhen(true)] RO2.Domain.Entities.InventoryItem? it,
+    private static bool InBag([System.Diagnostics.CodeAnalysis.NotNullWhen(true)] RO2.Inventory.Domain.InventoryItem? it,
         PlayerState player) =>
         it is not null && it.CharacterId == player.CharacterId && it.StorageType == StorageBag;
 
@@ -371,7 +372,7 @@ public class CardEnforceItemHandler : ZoneRmiHandlerBase<CardEnforceItemHandler>
  /// server may not hold.
  /// </summary>
     private async Task RefuseAsync(ProudSession session, PlayerState player,
-        (byte Slot, byte Bag, byte Count, ulong Uid) target, RO2.Domain.Entities.InventoryItem? held, string why)
+        (byte Slot, byte Bag, byte Count, ulong Uid) target, RO2.Inventory.Domain.InventoryItem? held, string why)
     {
         Logger.LogInformation("{Name} card-enforce of uid {Uid} refused: {Why}", player.Name, target.Uid, why);
         var echo = new byte[ItemPackets.ItemRecordLength];

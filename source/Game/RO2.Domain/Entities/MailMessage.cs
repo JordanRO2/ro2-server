@@ -31,7 +31,7 @@ public sealed class MailMessage
     public string? AttachedItemCardsJson { get; set; }
 
  /// <summary>
- /// The attached item's bestowed element (<see cref="RO2.Domain.Entities.InventoryItem.Element"/>, record+68).
+ /// The attached item's bestowed element (<see cref="RO2.Inventory.Domain.InventoryItem.Element"/>, record+68).
  /// Kept so an elemented item comes back out of the mail (and out of an auction, whose items leave by
  /// mail) with its element: the claim re-creates the bag row from these snapshot fields only.
  /// Mails stored before this field existed load with 0, the neutral element.
@@ -39,8 +39,8 @@ public sealed class MailMessage
     public byte AttachedItemElement { get; set; }
 
  /// <summary>
- /// The attached item's dye colour and rune-hole punchers (<see cref="RO2.Domain.Entities.InventoryItem.DyeColor"/>,
- /// record+23, and <see cref="RO2.Domain.Entities.InventoryItem.SocketPunchersJson"/>, hole+3), kept for the same
+ /// The attached item's dye colour and rune-hole punchers (<see cref="RO2.Inventory.Domain.InventoryItem.DyeColor"/>,
+ /// record+23, and <see cref="RO2.Inventory.Domain.InventoryItem.SocketPunchersJson"/>, hole+3), kept for the same
  /// reason as <see cref="AttachedItemElement"/>: the claim re-creates the item from these snapshot fields, and
  /// retail repeats both unchanged on every later record of the uid. Mails stored before these fields existed
  /// load with 0 / null, the neutral values.

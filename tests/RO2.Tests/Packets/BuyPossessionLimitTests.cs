@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using RO2.Domain.Entities;
 using RO2.Server.Zone.Handlers.Rmi;
 using Xunit;
+using RO2.Inventory.Domain;
 
 namespace RO2.Tests.Packets;
 

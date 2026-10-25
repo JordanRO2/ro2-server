@@ -6,6 +6,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -46,7 +47,7 @@ public class PrivateShopDeleteItemHandler : ZoneRmiHandlerBase<PrivateShopDelete
         
         
         byte[] title;
-        List<(PrivateShopRegistry.Listing Listing, RO2.Domain.Entities.InventoryItem Item)> live;
+        List<(PrivateShopRegistry.Listing Listing, RO2.Inventory.Domain.InventoryItem Item)> live;
         if (PrivateShopRegistry.TryGet(player, out var name, out var listings))
         {
             title = PrivateShopRegistry.IsOpen(player) ? name : new byte[PrivateShopRegistry.NameBytes];

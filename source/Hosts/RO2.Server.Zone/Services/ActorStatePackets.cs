@@ -1,4 +1,5 @@
 using RO2.Network.Packets;
+using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -227,7 +228,7 @@ public static class ActorStatePackets
  /// <param name="equipped">The PC's worn gear. It dresses the PC on other screens; the local client does not apply it.</param>
  /// <param name="emblems">The guild emblem registry used by the guild block.</param>
     public static byte[] BuildOnPCViewData2315(RO2.Server.Zone.Models.PlayerState player,
-        RO2.Domain.Entities.Character character, IReadOnlyList<RO2.Domain.Entities.InventoryItem>? equipped,
+        RO2.Domain.Entities.Character character, IReadOnlyList<RO2.Inventory.Domain.InventoryItem>? equipped,
         RO2.Application.Interfaces.IGuildEmblemRepository emblems)
     {
         using var pw = new PacketWriter();
@@ -261,7 +262,7 @@ public static class ActorStatePackets
  /// <param name="masterLevel">Master level, written as a u16.</param>
     public static byte[] BuildOnPCViewData2315(uint actorHandle, ulong characterGid, string name, byte race, byte gender,
         float x, float y, float z, float yaw, uint curHp, uint maxHp, ushort curSp, ushort maxSp, byte level,
-        byte job, byte jobLevel, IReadOnlyList<RO2.Domain.Entities.InventoryItem>? equipped,
+        byte job, byte jobLevel, IReadOnlyList<RO2.Inventory.Domain.InventoryItem>? equipped,
         float moveSpeed = DefaultMoveSpeed, byte[]? appearanceRaw = null, byte modelClass = 0, ushort masterLevel = 0)
     {
         int nameLen = System.Math.Min(name?.Length ?? 0, MaxNameChars);
@@ -278,7 +279,7 @@ public static class ActorStatePackets
         // Worn gear fills the record's equipment list, which dresses this PC on other clients' screens. The
         // active-effect list is separate and is written empty below.
         var gear = equipped is null
-            ? new System.Collections.Generic.List<RO2.Domain.Entities.InventoryItem>()
+            ? new System.Collections.Generic.List<RO2.Inventory.Domain.InventoryItem>()
             : System.Linq.Enumerable.ToList(System.Linq.Enumerable.Where(equipped, i => i.StorageType == StorageTypeEquipped));
 
         // Minimal PC record: identity, vitals, position and speed are the live values; every optional section

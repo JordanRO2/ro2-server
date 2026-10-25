@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RO2.Domain\RO2.Domain.csproj" />
+    <ProjectReference Include="..\..\Inventory\RO2.Inventory.Domain\RO2.Inventory.Domain.csproj" />
   </ItemGroup>
 
 </Project>

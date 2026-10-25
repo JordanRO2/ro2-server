@@ -4,6 +4,7 @@ using RO2.Persistence.Mongo.Persistence;
 using Xunit;
 using MongoInventoryRepository = RO2.Persistence.Mongo.Repositories.InventoryRepository;
 using PgInventoryRepository = RO2.Persistence.Postgres.Repositories.InventoryRepository;
+using RO2.Inventory.Domain;
 
 namespace RO2.Tests.Integration;
 

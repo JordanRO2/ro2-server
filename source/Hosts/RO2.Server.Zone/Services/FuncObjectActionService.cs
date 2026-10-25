@@ -6,6 +6,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Models;
+using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -50,7 +51,7 @@ public static class FuncObjectActionService
         if (rolled.Count == 0) return 0;
 
         var inventory = services.GetRequiredService<IInventoryRepository>();
-        var owned = new List<RO2.Domain.Entities.InventoryItem>(await inventory.GetByCharacterAsync(player.CharacterId));
+        var owned = new List<RO2.Inventory.Domain.InventoryItem>(await inventory.GetByCharacterAsync(player.CharacterId));
         var plans = new List<(uint ItemId, int Count, ItemPickUpHandler.Landing Landing)>(rolled.Count);
         foreach (var (itemId, count) in rolled)
         {

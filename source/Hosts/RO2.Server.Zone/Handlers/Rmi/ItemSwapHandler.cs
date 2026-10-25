@@ -11,6 +11,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -207,7 +208,7 @@ public class ItemSwapHandler : ZoneRmiHandlerBase<ItemSwapHandler>
                 await SendRevert(session);
                 return 0;
             }
-            var newItem = new RO2.Domain.Entities.InventoryItem
+            var newItem = new RO2.Inventory.Domain.InventoryItem
             {
                 CharacterId = player.CharacterId,
                 ItemId = srcItem.ItemId,

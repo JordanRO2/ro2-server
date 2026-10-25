@@ -12,6 +12,7 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Services;
 
 using NetworkZoneRmiBase = RO2.Network.Handlers.ZoneRmiHandlerBase<RO2.Server.Zone.Handlers.Rmi.LoginPCHandler>;
+using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -309,7 +310,7 @@ public class LoginPCHandler : NetworkZoneRmiBase
         });
 
         // Load inventory for the character detail packet
-        IReadOnlyList<RO2.Domain.Entities.InventoryItem>? inventoryItems = null;
+        IReadOnlyList<RO2.Inventory.Domain.InventoryItem>? inventoryItems = null;
         try
         {
             var inventory = services.GetRequiredService<RO2.Application.Interfaces.IInventoryRepository>();

@@ -9,6 +9,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -41,7 +42,7 @@ public class DirectReInforceHandler : ZoneRmiHandlerBase<DirectReInforceHandler>
         var itemB = uidB != 0 ? await inventory.GetByIdAsync(uidB) : null;
 
         
-        RO2.Domain.Entities.InventoryItem? stone = null, target = null;
+        RO2.Inventory.Domain.InventoryItem? stone = null, target = null;
         RO2.Domain.GameData.ItemData? stoneInfo = null;
         foreach (var it in new[] { itemA, itemB })
         {
@@ -114,7 +115,7 @@ public class DirectReInforceHandler : ZoneRmiHandlerBase<DirectReInforceHandler>
         });
 
  /// <summary>Maps an item's storage slot to the client's bag and slot coordinates.</summary>
-    private static (byte bag, byte slot) ClientBagSlot(RO2.Domain.Entities.InventoryItem it)
+    private static (byte bag, byte slot) ClientBagSlot(RO2.Inventory.Domain.InventoryItem it)
     {
         if (it.StorageType == 1) return (0, (byte)Math.Clamp(it.Slot < 0 ? 0 : (int)it.Slot, 0, 49));
         if (it.StorageType == 2) return (5, (byte)Math.Clamp(it.Slot < 0 ? 0 : (int)it.Slot, 0, BankExpansion.MaxBankSlots - 1));

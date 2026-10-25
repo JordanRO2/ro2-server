@@ -1,24 +1,32 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Inventory.Domain;
 
 /// <summary>
 /// Character inventory item domain entity
 /// </summary>
 public class InventoryItem
 {
+    /// <summary>Row id (the item instance uid).</summary>
     public ulong Id { get; set; }
+    /// <summary>Id of the character that owns this item.</summary>
     public uint CharacterId { get; set; }
+    /// <summary>Item template id (ItemInfo).</summary>
     public uint ItemId { get; set; }
+    /// <summary>Stack count.</summary>
     public int Count { get; set; } = 1;
+    /// <summary>Slot within the container.</summary>
     public short Slot { get; set; }
+    /// <summary>Container (bag window) the item is stored in.</summary>
     public byte StorageType { get; set; } 
 
     
+    /// <summary>Equipment refine level (+N).</summary>
     public byte Refine { get; set; }
  /// <summary>
  /// Element bestowed by an attribute stone (RMI 1662, 0 = neutral, 1-5 = elements). Retail keeps it on
  /// the item and writes it back at record+68 of every later item record.
  /// </summary>
     public byte Element { get; set; }
+    /// <summary>Current durability; -1 when the item has none.</summary>
     public short Durability { get; set; } = -1;
 
  /// <summary>
@@ -65,6 +73,7 @@ public class InventoryItem
     public ushort EnchantSeconds { get; set; }
 
     
+    /// <summary>Socketed cards / rune holes, as a JSON array in the StatService.ParseSockets / SerializeSockets format.</summary>
     public string? CardsJson { get; set; }
 
  /// <summary>
@@ -110,6 +119,7 @@ public class InventoryItem
  /// </remarks>
     public uint? AbilityValue { get; set; }
 
+    /// <summary>UTC time the row was created.</summary>
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
  /// <summary>

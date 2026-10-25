@@ -10,6 +10,7 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Configuration;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -312,7 +313,7 @@ public class RefineItemHandler : ZoneRmiHandlerBase<RefineItemHandler>
 
     /// <summary>Map an item's flat inventory slot to the client (bag, slot) — the SAME mapping as
     /// WorldEntryService.WriteItemInstance, so the 2329/2379 bag updates hit the exact cell the client drew.</summary>
-    private static (byte bag, byte slot) ClientBagSlot(RO2.Domain.Entities.InventoryItem it)
+    private static (byte bag, byte slot) ClientBagSlot(RO2.Inventory.Domain.InventoryItem it)
     {
         if (it.StorageType == BankSwapItemHandler.StorageWorn)   // worn gear: container 0, slot = equip body-part
             return (EquipmentContainer, (byte)Math.Clamp(it.Slot < 0 ? 0 : (int)it.Slot, 0, MainBagFirstWireSlot - 1));

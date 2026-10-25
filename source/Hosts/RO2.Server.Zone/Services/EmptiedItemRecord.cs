@@ -1,4 +1,5 @@
 using RO2.Domain.Entities;
+using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Services;
 
