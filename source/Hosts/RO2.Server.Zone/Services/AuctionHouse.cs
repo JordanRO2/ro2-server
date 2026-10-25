@@ -971,17 +971,8 @@ public sealed partial class AuctionService
 
     // The registration fee (RegistrationFee) and the listing rules (CheckSellStart) are in AuctionSellStartRules.cs.
 
-    /// <summary>
-    /// What the seller receives for a sale: 95% of the price, computed in single precision. The PRICE is rounded
-    /// to float32 before the multiply too: the proceeds are float32(float32(price) × 0.95), which for a price of
-    /// 10,000,000,000 gives 9,500,000,256 and for 100,000,000 gives exactly 95,000,000. Neither the exact product
-    /// nor float32(price × 0.95) gives the same values for every price.
-    /// </summary>
-    public static long SellerProceeds(long price) => price <= 0 ? 0 : (long)(float)((float)price * SellerProceedsRate);
-
-    /// <summary>The seller's share of a sale (95%); the other 5% is the house's cut. A double on purpose: the
-    /// product is formed in double and then narrowed to float32 (<see cref="SellerProceeds"/>).</summary>
-    private const double SellerProceedsRate = 0.95;
+    /// <summary>What the seller receives for a sale (see <see cref="AuctionPricing.SellerProceeds"/>).</summary>
+    public static long SellerProceeds(long price) => AuctionPricing.SellerProceeds(price);
 
     /// <summary>Inventory <c>StorageType</c> of the character's bag (1 = worn equipment, 2 = bank).</summary>
     private const byte BagStorageType = 0;
