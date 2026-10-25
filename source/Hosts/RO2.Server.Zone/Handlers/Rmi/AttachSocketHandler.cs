@@ -154,7 +154,7 @@ public class AttachSocketHandler : ZoneRmiHandlerBase<AttachSocketHandler>
             return;
         }
 
-        var sockets = StatService.ParseSockets(target!.CardsJson);
+        var sockets = ItemSockets.ParseSockets(target!.CardsJson);
 
         // What goes into the hole: the rune itself, or for a seed rune the rune rolled from its RandomSet by
         // Ratio (class remarks; Check has already refused a seed whose set has nothing to roll).
@@ -173,7 +173,7 @@ public class AttachSocketHandler : ZoneRmiHandlerBase<AttachSocketHandler>
         // as the row's Reinforce_ID.
         uint replaced = sockets[socketIndex];
         sockets[socketIndex] = socketed;
-        target.CardsJson = StatService.SerializeSockets(sockets);
+        target.CardsJson = ItemSockets.SerializeSockets(sockets);
         await inventory.UpdateItemAsync(target);
 
         int left = await ConsumeOneAsync(session, player, inventory, rune);

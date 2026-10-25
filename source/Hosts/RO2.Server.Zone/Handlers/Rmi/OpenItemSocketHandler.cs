@@ -198,14 +198,14 @@ public class OpenItemSocketHandler : ZoneRmiHandlerBase<OpenItemSocketHandler>
  /// </summary>
     internal static void Punch(InventoryItem target, int hole, uint puncherTemplate)
     {
-        var holes = StatService.ParseSockets(target.CardsJson);
+        var holes = ItemSockets.ParseSockets(target.CardsJson);
         Array.Resize(ref holes, hole + 1);
         holes[hole] = 0;
-        target.CardsJson = StatService.SerializeSockets(holes);
-        var punchers = StatService.ParseSockets(target.SocketPunchersJson);
+        target.CardsJson = ItemSockets.SerializeSockets(holes);
+        var punchers = ItemSockets.ParseSockets(target.SocketPunchersJson);
         Array.Resize(ref punchers, hole + 1);
         punchers[hole] = puncherTemplate;
-        target.SocketPunchersJson = StatService.SerializeSockets(punchers);
+        target.SocketPunchersJson = ItemSockets.SerializeSockets(punchers);
     }
 
  /// <summary>Builds the 2785 success reply: a zero result followed by the 126-byte record of the target.</summary>

@@ -41,7 +41,7 @@ internal static class ItemWorkbench
  /// Number of holes opened on the item. Each entry of <c>CardsJson</c> is one opened hole; an empty hole holds 0.
  /// </summary>
     public static int OpenedHoles(InventoryItem item) =>
-        Math.Min(StatService.ParseSockets(item.CardsJson).Length, HoleCount);
+        Math.Min(ItemSockets.ParseSockets(item.CardsJson).Length, HoleCount);
 
  /// <summary>
  /// Hole kind of the hole at <paramref name="index"/> (0-based) of an item template, taken from its ItemSocketGroup row.
@@ -99,8 +99,8 @@ internal static class ItemWorkbench
         if (record126.Length < RuneholeOffset + HoleCount * HoleSize) return;
         var block = record126.AsSpan(RuneholeOffset, HoleCount * HoleSize);
         block.Clear();
-        var holes = StatService.ParseSockets(item.CardsJson);
-        var punchers = StatService.ParseSockets(item.SocketPunchersJson);
+        var holes = ItemSockets.ParseSockets(item.CardsJson);
+        var punchers = ItemSockets.ParseSockets(item.SocketPunchersJson);
         int opened = Math.Min(holes.Length, HoleCount);
         for (int i = 0; i < opened; i++)
         {

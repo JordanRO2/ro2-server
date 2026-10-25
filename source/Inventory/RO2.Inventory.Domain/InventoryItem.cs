@@ -73,12 +73,12 @@ public class InventoryItem
     public ushort EnchantSeconds { get; set; }
 
     
-    /// <summary>Socketed cards / rune holes, as a JSON array in the StatService.ParseSockets / SerializeSockets format.</summary>
+    /// <summary>Socketed cards / rune holes, as a JSON array in the ItemSockets.ParseSockets / SerializeSockets format.</summary>
     public string? CardsJson { get; set; }
 
  /// <summary>
  /// Template id of the puncher (ItemInfo Item_Type 30) that opened each runehole, in hole order: a JSON
- /// <c>uint[]</c> parallel to <see cref="CardsJson"/>, in the StatService.ParseSockets / SerializeSockets
+ /// <c>uint[]</c> parallel to <see cref="CardsJson"/>, in the ItemSockets.ParseSockets / SerializeSockets
  /// format. A missing entry (holes opened before this was kept) is 0. Retail writes it as the u32 at hole+3
  /// of the record's runehole block; it is unchanged by an extraction. It is the puncher the 1542 named: the
  /// hole an answered 1542 opens carries the template of the uid at the request's @0.

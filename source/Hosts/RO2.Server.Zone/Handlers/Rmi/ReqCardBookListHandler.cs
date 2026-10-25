@@ -125,7 +125,7 @@ public class ReqCardBookListHandler : Base1442
         foreach (var it in await services.GetRequiredService<IInventoryRepository>().GetByCharacterAsync(characterId))
         {
             if (Listable(it.ItemId)) held.Add(it.ItemId);
-            foreach (var socketed in StatService.ParseSockets(it.CardsJson))
+            foreach (var socketed in ItemSockets.ParseSockets(it.CardsJson))
                 if (Listable(socketed)) held.Add(socketed);
         }
         var inBook = new List<uint>();

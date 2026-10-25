@@ -128,7 +128,7 @@ public class ExtractSocketHandler : ZoneRmiHandlerBase<ExtractSocketHandler>
         if (code == Extracted)
         {
             // Where the rune will go, decided BEFORE anything is spent (see NoBagCell).
-            extractedId = StatService.ParseSockets(target!.CardsJson)[hole];
+            extractedId = ItemSockets.ParseSockets(target!.CardsJson)[hole];
             var owned = await inventory.GetByCharacterAsync(player.CharacterId);
             (joinStack, cell) = PlaceExtracted(owned, tool!, extractedId, store);
             if (joinStack is null && cell < 0)
@@ -147,9 +147,9 @@ public class ExtractSocketHandler : ZoneRmiHandlerBase<ExtractSocketHandler>
         }
 
         // Empty the hole; it stays open (the array keeps its length), as the client's record keeps kind and puncher.
-        var holes = StatService.ParseSockets(target!.CardsJson);
+        var holes = ItemSockets.ParseSockets(target!.CardsJson);
         holes[hole] = 0;
-        target.CardsJson = StatService.SerializeSockets(holes);
+        target.CardsJson = ItemSockets.SerializeSockets(holes);
         await inventory.UpdateItemAsync(target);
 
         // Consume one tool: 2329 OnUseItem, result 0, remaining = the stack after.
@@ -236,7 +236,7 @@ public class ExtractSocketHandler : ZoneRmiHandlerBase<ExtractSocketHandler>
             why = "target is not in the bag or worn";
             return TargetNotFound;
         }
-        var holes = StatService.ParseSockets(target.CardsJson);
+        var holes = ItemSockets.ParseSockets(target.CardsJson);
         if (hole >= ItemWorkbench.OpenedHoles(target))
         {
             why = $"hole #{hole + 1} is not open";

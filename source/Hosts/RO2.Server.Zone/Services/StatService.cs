@@ -122,7 +122,7 @@ public static class StatService
             //     derived stats). Without this ~890 socketed non-MVP cards contributed NOTHING (they are not
             //     ItemReinforce sources). Card ENFORCE (+N %) is a separate axis not applied here — it needs
             //     per-instance enforce-grade storage (CardsJson holds ids only); base card bonus works today.
-            foreach (var socketId in ParseSockets(it.CardsJson))
+            foreach (var socketId in ItemSockets.ParseSockets(it.CardsJson))
             {
                 if (socketId == 0) continue;
                 if (runeIndex.TryGetValue(socketId, out var rt))
@@ -417,19 +417,6 @@ public static class StatService
             return _cardIds;
         }
     }
-
-    /// <summary>Reads the per-instance socket content from an InventoryItem.CardsJson (a JSON array of rune
-    /// item ids, 0 = empty). Returns an empty span-like array on null/blank/malformed input (never throws).</summary>
-    public static uint[] ParseSockets(string? cardsJson)
-    {
-        if (string.IsNullOrWhiteSpace(cardsJson)) return System.Array.Empty<uint>();
-        try { return System.Text.Json.JsonSerializer.Deserialize<uint[]>(cardsJson) ?? System.Array.Empty<uint>(); }
-        catch { return System.Array.Empty<uint>(); }
-    }
-
-    /// <summary>Serialises socket content (rune item ids per slot, 0 = empty) back to CardsJson.</summary>
-    public static string SerializeSockets(uint[] sockets)
-        => System.Text.Json.JsonSerializer.Serialize(sockets);
 
 
     public static BaseStats ComputeBaseStats(
