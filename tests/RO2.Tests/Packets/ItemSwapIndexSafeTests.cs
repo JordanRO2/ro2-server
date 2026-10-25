@@ -15,6 +15,7 @@ using Xunit;
 using Xunit.Abstractions;
 using static RO2.Tests.Packets.ReauditShared;
 using RO2.Inventory.Domain;
+using RO2.Inventory.Infrastructure.Mongo;
 
 namespace RO2.Tests.Packets;
 

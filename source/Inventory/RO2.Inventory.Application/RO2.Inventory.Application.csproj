@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <!-- Inventory bounded context application layer: Application references only Inventory.Domain + BuildingBlocks.
+       Holds the per-character concurrency gate that serialises inventory read-modify-write flows. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Inventory.Domain\RO2.Inventory.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+  </ItemGroup>
+
+</Project>

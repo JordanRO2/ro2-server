@@ -11,6 +11,8 @@
     <ProjectReference Include="..\..\Game\RO2.Application\RO2.Application.csproj" />
     <ProjectReference Include="..\RO2.Persistence.Mongo\RO2.Persistence.Mongo.csproj" />
     <ProjectReference Include="..\RO2.Persistence.Postgres\RO2.Persistence.Postgres.csproj" />
+    <ProjectReference Include="..\..\Inventory\RO2.Inventory.Infrastructure.Mongo\RO2.Inventory.Infrastructure.Mongo.csproj" />
+    <ProjectReference Include="..\..\Inventory\RO2.Inventory.Infrastructure.Postgres\RO2.Inventory.Infrastructure.Postgres.csproj" />
     <ProjectReference Include="..\RO2.Persistence.Redis\RO2.Persistence.Redis.csproj" />
   </ItemGroup>
 

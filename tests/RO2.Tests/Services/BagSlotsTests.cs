@@ -4,8 +4,8 @@ using RO2.Inventory.Domain;
 using RO2.Server.Zone.Services;
 using RO2.Tests.Economy;
 using Xunit;
-using MongoInventoryRepository = RO2.Persistence.Mongo.Repositories.InventoryRepository;
-using PostgresInventoryRepository = RO2.Persistence.Postgres.Repositories.InventoryRepository;
+using MongoInventoryRepository = RO2.Inventory.Infrastructure.Mongo.InventoryRepository;
+using PostgresInventoryRepository = RO2.Inventory.Infrastructure.Postgres.InventoryRepository;
 
 namespace RO2.Tests.Services;
 

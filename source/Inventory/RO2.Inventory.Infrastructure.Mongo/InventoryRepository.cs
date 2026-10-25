@@ -5,14 +5,16 @@ using RO2.Domain.Entities;
 using RO2.Inventory.Domain;
 using RO2.Persistence.Mongo.Persistence;
 
-using RO2.Application;
+using RO2.Inventory.Application;
 
-namespace RO2.Persistence.Mongo.Repositories;
+namespace RO2.Inventory.Infrastructure.Mongo;
 
+/// <summary>MongoDB implementation of <see cref="IInventoryRepository"/> over the <c>inventory_items</c> collection, with the item-id sequence in <c>inventory_counters</c>.</summary>
 public class InventoryRepository : IInventoryRepository
 {
     /// <summary>The <c>_id</c> of the item-id sequence document in <see cref="CounterCollectionName"/>.</summary>
     public const string CounterId = "inventoryItemId";
+    /// <summary>Name of the collection holding the item-id sequence document.</summary>
     public const string CounterCollectionName = "inventory_counters";
 
     /// <summary>Name of the unique placement index (see <see cref="EnsureIndexesAsync"/>).</summary>
@@ -41,6 +43,7 @@ public class InventoryRepository : IInventoryRepository
     // processes seeding at once is harmless).
     private static int s_counterSeeded;
 
+    /// <summary>Creates the repository over the shared database context.</summary>
     public InventoryRepository(MongoDbContext context)
     {
         _items = context.GetCollection<InventoryItem>(ItemsCollectionName);
@@ -49,6 +52,7 @@ public class InventoryRepository : IInventoryRepository
         // when Mongo is down (the MailRepository/AuctionHouse lesson). Indexes: EnsureIndexesAsync.
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<InventoryItem>> GetByCharacterAsync(uint characterId)
     {
         return await _items.Find(i => i.CharacterId == characterId)
@@ -56,17 +60,20 @@ public class InventoryRepository : IInventoryRepository
             .ToListAsync();
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<InventoryItem>> GetEquipmentAsync(uint characterId)
     {
         return await _items.Find(i => i.CharacterId == characterId && i.StorageType == StorageWorn)
             .ToListAsync();
     }
 
+    /// <inheritdoc />
     public async Task<InventoryItem?> GetByIdAsync(ulong id)
     {
         return await _items.Find(i => i.Id == id).FirstOrDefaultAsync();
     }
 
+    /// <inheritdoc />
     public async Task AddItemAsync(InventoryItem item)
     {
         if (item.Id == 0)
@@ -111,6 +118,7 @@ public class InventoryRepository : IInventoryRepository
         ex.WriteError.Category == ServerErrorCategory.DuplicateKey
         && ex.WriteError.Message.Contains(SlotIndexName, StringComparison.Ordinal);
 
+    /// <inheritdoc />
     public async Task RemoveItemAsync(ulong itemId)
     {
         await _items.DeleteOneAsync(i => i.Id == itemId);
@@ -172,6 +180,7 @@ public class InventoryRepository : IInventoryRepository
         return after is not null;
     }
 
+    /// <summary>Update that re-homes a row to another character, storage and slot.</summary>
     public static UpdateDefinition<InventoryItem> BuildReassignUpdate(uint toCharId, byte toStorageType, short toSlot)
     {
         var u = Builders<InventoryItem>.Update;
@@ -196,6 +205,7 @@ public class InventoryRepository : IInventoryRepository
             : owned;
     }
 
+    /// <summary>Update that adds <paramref name="delta"/> to the item count.</summary>
     public static UpdateDefinition<InventoryItem> BuildAdjustCountUpdate(int delta) =>
         Builders<InventoryItem>.Update.Inc(i => i.Count, delta);
 
@@ -244,9 +254,11 @@ public class InventoryRepository : IInventoryRepository
         return (ulong)doc[CounterSeqField].ToInt64();
     }
 
+    /// <summary>Update that increments the item-id sequence by one.</summary>
     public static UpdateDefinition<BsonDocument> BuildCounterIncrement() =>
         Builders<BsonDocument>.Update.Inc(CounterSeqField, 1L);
 
+    /// <summary>Update that raises the item-id sequence to at least <paramref name="highestExistingId"/>.</summary>
     public static UpdateDefinition<BsonDocument> BuildCounterSeed(ulong highestExistingId) =>
         Builders<BsonDocument>.Update.SetOnInsert(CounterSeqField, checked((long)highestExistingId));
 
@@ -300,6 +312,7 @@ public class InventoryRepository : IInventoryRepository
         }
     }
 
+    /// <inheritdoc />
     public async Task<int> RepairSlotsAsync(uint characterId)
     {
         var items = await _items.Find(i => i.CharacterId == characterId).ToListAsync();

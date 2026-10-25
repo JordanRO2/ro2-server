@@ -2,9 +2,11 @@ using Npgsql;
 using NpgsqlTypes;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
+using RO2.Inventory.Application;
 using RO2.Inventory.Domain;
+using RO2.Persistence.Postgres;
 
-namespace RO2.Persistence.Postgres.Repositories;
+namespace RO2.Inventory.Infrastructure.Postgres;
 
 /// <summary>
 /// PostgreSQL implementation of <see cref="IInventoryRepository"/>. One row per <see cref="InventoryItem"/> in
@@ -33,7 +35,9 @@ namespace RO2.Persistence.Postgres.Repositories;
 /// </remarks>
 public sealed class InventoryRepository : IInventoryRepository
 {
+    /// <summary>Name of the table holding one row per inventory item.</summary>
     public const string ItemsTable = "inventory_items";
+    /// <summary>Name of the table holding the item-id sequence row.</summary>
     public const string CountersTable = "inventory_counters";
 
     /// <summary>The <c>counter_name</c> of the item-id sequence row (the Mongo <c>CounterId</c>).</summary>
@@ -82,8 +86,10 @@ public sealed class InventoryRepository : IInventoryRepository
 
     private readonly PostgresDbContext _db;
 
+    /// <summary>Creates the repository over the shared database context.</summary>
     public InventoryRepository(PostgresDbContext db) => _db = db;
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<InventoryItem>> GetByCharacterAsync(uint characterId)
     {
         await using var conn = await _db.OpenConnectionAsync();
@@ -93,6 +99,7 @@ public sealed class InventoryRepository : IInventoryRepository
         return await ReadItemsAsync(cmd);
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<InventoryItem>> GetEquipmentAsync(uint characterId)
     {
         await using var conn = await _db.OpenConnectionAsync();
@@ -102,6 +109,7 @@ public sealed class InventoryRepository : IInventoryRepository
         return await ReadItemsAsync(cmd);
     }
 
+    /// <inheritdoc />
     public async Task<InventoryItem?> GetByIdAsync(ulong id)
     {
         await using var conn = await _db.OpenConnectionAsync();
@@ -111,6 +119,7 @@ public sealed class InventoryRepository : IInventoryRepository
         return rows.Count > 0 ? rows[0] : null;
     }
 
+    /// <inheritdoc />
     public async Task AddItemAsync(InventoryItem item)
     {
         if (item.Id == 0)
@@ -146,6 +155,7 @@ public sealed class InventoryRepository : IInventoryRepository
         ex.SqlState == PostgresErrorCodes.UniqueViolation
         && string.Equals(ex.ConstraintName, SlotIndexName, StringComparison.Ordinal);
 
+    /// <inheritdoc />
     public async Task RemoveItemAsync(ulong itemId)
     {
         await using var conn = await _db.OpenConnectionAsync();
@@ -273,6 +283,7 @@ public sealed class InventoryRepository : IInventoryRepository
         }
     }
 
+    /// <inheritdoc />
     public async Task<int> RepairSlotsAsync(uint characterId)
     {
         var items = await GetByCharacterAsync(characterId);

@@ -1,6 +1,6 @@
 using System.Collections.Concurrent;
 
-namespace RO2.Application;
+namespace RO2.Inventory.Application;
 
 /// <summary>
 /// SP0-INV: a per-character, process-wide async gate for inventory mutations. The inventory is persisted

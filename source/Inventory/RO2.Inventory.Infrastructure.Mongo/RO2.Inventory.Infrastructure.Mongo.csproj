@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <!-- MongoDB persistence for the Inventory bounded context, sibling of RO2.Inventory.Infrastructure.Postgres.
+       References the shared RO2.Persistence.Mongo for MongoDbContext: inventory data lives in the same database
+       as the game data (not db-per-service). -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Inventory.Domain\RO2.Inventory.Domain.csproj" />
+    <ProjectReference Include="..\RO2.Inventory.Application\RO2.Inventory.Application.csproj" />
+    <ProjectReference Include="..\..\Platform\RO2.Persistence.Mongo\RO2.Persistence.Mongo.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+</Project>

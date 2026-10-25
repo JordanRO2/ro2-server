@@ -32,6 +32,9 @@
     <ProjectReference Include="..\..\source\Economy\RO2.Economy.Domain\RO2.Economy.Domain.csproj" />
     <ProjectReference Include="..\..\source\Economy\RO2.Economy.Infrastructure.Mongo\RO2.Economy.Infrastructure.Mongo.csproj" />
     <ProjectReference Include="..\..\source\Economy\RO2.Economy.Infrastructure.Postgres\RO2.Economy.Infrastructure.Postgres.csproj" />
+    <ProjectReference Include="..\..\source\Inventory\RO2.Inventory.Application\RO2.Inventory.Application.csproj" />
+    <ProjectReference Include="..\..\source\Inventory\RO2.Inventory.Infrastructure.Mongo\RO2.Inventory.Infrastructure.Mongo.csproj" />
+    <ProjectReference Include="..\..\source\Inventory\RO2.Inventory.Infrastructure.Postgres\RO2.Inventory.Infrastructure.Postgres.csproj" />
   </ItemGroup>
 
 </Project>

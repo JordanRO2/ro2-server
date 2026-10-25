@@ -3,6 +3,7 @@ using RO2.Domain.Entities;
 using RO2.Persistence.Postgres.Repositories;
 using Xunit;
 using RO2.Inventory.Domain;
+using RO2.Inventory.Infrastructure.Postgres;
 
 namespace RO2.Tests.Integration;
 

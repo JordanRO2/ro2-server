@@ -9,7 +9,9 @@ using RO2.Persistence.Mongo.Repositories;
 using RO2.Server.Zone.Services;
 using Xunit;
 using Xunit.Abstractions;
+using RO2.Inventory.Application;
 using RO2.Inventory.Domain;
+using RO2.Inventory.Infrastructure.Mongo;
 
 namespace RO2.Tests.Packets;
 

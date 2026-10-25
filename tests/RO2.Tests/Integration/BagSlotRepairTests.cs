@@ -2,8 +2,8 @@ using MongoDB.Driver;
 using RO2.Domain.Entities;
 using RO2.Persistence.Mongo.Persistence;
 using Xunit;
-using MongoInventoryRepository = RO2.Persistence.Mongo.Repositories.InventoryRepository;
-using PgInventoryRepository = RO2.Persistence.Postgres.Repositories.InventoryRepository;
+using MongoInventoryRepository = RO2.Inventory.Infrastructure.Mongo.InventoryRepository;
+using PgInventoryRepository = RO2.Inventory.Infrastructure.Postgres.InventoryRepository;
 using RO2.Inventory.Domain;
 
 namespace RO2.Tests.Integration;
