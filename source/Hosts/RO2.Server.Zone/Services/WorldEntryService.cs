@@ -582,11 +582,6 @@ public static class WorldEntryService
  /// <summary>Number of slots of the character bag window.</summary>
     private const int CharacterBagSlotCount = 3;
 
- /// <summary>Item bind type: bound when equipped.</summary>
-    private const byte BindOnEquip = 1;
- /// <summary>Item bind type: bound when acquired.</summary>
-    private const byte BindOnAcquire = 2;
-
  /// <summary>Number of decimals the class regeneration coefficients are rounded to before they are multiplied.</summary>
     private const int RegenCoefficientDecimals = 6;
 
@@ -1283,7 +1278,7 @@ public static class WorldEntryService
  /// <param name="storageType">Storage location of the item: 1 for worn, 3 for an equipped bag.</param>
  /// <param name="everWorn">Whether the item was worn at some point.</param>
     internal static byte RecordBindFlags(byte bindType, byte storageType, bool everWorn = false)
-        => bindType == BindOnAcquire || (bindType == BindOnEquip && (storageType is StorageWorn or StorageEquippedBag || everWorn)) ? RecordBoundFlag : (byte)0;
+        => RO2.Inventory.Domain.ItemTradeRules.IsBound(bindType, storageType, everWorn) ? RecordBoundFlag : (byte)0;
 
  /// <summary>
  /// The ability value of an item record: the item's own value when it has one, otherwise the template's value.

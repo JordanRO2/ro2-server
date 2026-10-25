@@ -12,10 +12,10 @@ public static class TradeGate
 {
  /// <summary>
  /// True when the item must be refused as untradeable: its template is flagged untradeable (Is_Trade 0),
- /// or the instance is bound. An instance is bound when <see cref="WorldEntryService.RecordBindFlags(byte, byte, bool)"/>
- /// sets <see cref="WorldEntryService.RecordBoundFlag"/>: Bind_Type 2, or Bind_Type 1 once worn.
+ /// or the instance is bound (Bind_Type 2, or Bind_Type 1 once worn). The rule itself lives in
+ /// <see cref="ItemTradeRules.RefusedAsNotTradeable(byte, byte, byte, bool)"/>; this reads the primitives
+ /// off the template and instance.
  /// </summary>
     public static bool RefusedAsNotTradeable(ItemData template, InventoryItem item)
-        => template.Is_Trade == 0
-            || WorldEntryService.RecordBindFlags(template.Bind_Type, item.StorageType, item.Bound) == WorldEntryService.RecordBoundFlag;
+        => ItemTradeRules.RefusedAsNotTradeable(template.Is_Trade, template.Bind_Type, item.StorageType, item.Bound);
 }
