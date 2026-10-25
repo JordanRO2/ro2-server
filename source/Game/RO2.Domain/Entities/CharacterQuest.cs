@@ -19,7 +19,4 @@ public class CharacterQuest
     public bool IsTraced { get; set; }
     public DateTime StartedAt { get; set; } = DateTime.UtcNow;
     public DateTime? CompletedAt { get; set; }
-
-    
-    public virtual Character Character { get; set; } = null!;
 }

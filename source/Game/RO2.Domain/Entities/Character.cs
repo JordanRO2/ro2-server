@@ -100,9 +100,4 @@ public class Character
     public long PlayTimeSeconds { get; set; }
     public bool IsDeleted { get; set; }
     public DateTime? DeletedAt { get; set; }
-
-    // Navigation
-    public virtual Account Account { get; set; } = null!;
-    public virtual ICollection<CharacterSkill> Skills { get; set; } = [];
-    public virtual ICollection<CharacterQuest> Quests { get; set; } = [];
 }

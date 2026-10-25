@@ -16,6 +16,4 @@ public class Account
     public DateTime? BanExpires { get; set; }
     public string? BanReason { get; set; }
     public byte AccessLevel { get; set; }
-
-    public virtual ICollection<Character> Characters { get; set; } = [];
 }
