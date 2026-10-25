@@ -52,6 +52,72 @@ public static class BagStackPlanner
     }
 
     /// <summary>
+    /// Plans a SEQUENCE of adds into the bag in one pass, as the kill auto-loot and dungeon-finder reward do: each
+    /// entry folds its whole quantity into the lowest-cell stack of its item that still fits (an existing stack OR one
+    /// opened by an earlier entry in this sequence), else opens new stacks of the stack max in the remaining free
+    /// cells, advancing a shared cell cursor; an entry that cannot fit is refused and consumes no cell (so later
+    /// entries may still place). Returns one element per entry, in order, with a null element for a skipped entry
+    /// (no item id, or non-positive quantity). The caller maps each cell back to its row and keeps its own
+    /// all-or-nothing vs per-entry refusal policy.
+    /// </summary>
+    /// <param name="owned">The bag stacks already held (the caller filters to real bag rows: the main bag and equipped bags).</param>
+    /// <param name="freeCells">The free cells, lowest first, that new stacks are opened into.</param>
+    /// <param name="entries">The adds, in order: the item, the quantity, and the item's stack max.</param>
+    public static IReadOnlyList<SequencedPlacement?> PlanSequence(
+        IReadOnlyList<BagStack> owned, IReadOnlyList<short> freeCells,
+        IReadOnlyList<(uint ItemId, int Quantity, byte StackMax)> entries)
+    {
+        var result = new SequencedPlacement?[entries.Count];
+        int nextCell = 0;
+        // Working stacks: the existing rows, then each stack this sequence opens (so later entries can merge into them).
+        var stacks = new List<(uint ItemId, short Slot, int Count)>();
+        foreach (var s in owned)
+            if (s.Count > 0) stacks.Add((s.ItemId, s.Slot, s.Count));
+
+        for (int k = 0; k < entries.Count; k++)
+        {
+            var (itemId, quantity, stackMax) = entries[k];
+            if (itemId == 0 || quantity <= 0) { result[k] = null; continue; }
+            int perStack = StackSize(stackMax);
+            if (perStack > 1)
+            {
+                int target = -1;
+                for (int s = 0; s < stacks.Count; s++)
+                {
+                    var c = stacks[s];
+                    if (c.ItemId != itemId || c.Count + quantity > perStack) continue;
+                    if (target < 0 || c.Slot < stacks[target].Slot) target = s;
+                }
+                if (target >= 0)
+                {
+                    int merged = stacks[target].Count + quantity;
+                    stacks[target] = (stacks[target].ItemId, stacks[target].Slot, merged);
+                    result[k] = new SequencedPlacement(false, stacks[target].Slot, merged, System.Array.Empty<(short, int)>());
+                    continue;
+                }
+            }
+
+            int needed = (quantity + perStack - 1) / perStack;
+            if (freeCells.Count - nextCell < needed)
+            {
+                result[k] = new SequencedPlacement(true, null, 0, System.Array.Empty<(short, int)>());
+                continue;
+            }
+            var opened = new List<(short Cell, int Count)>(needed);
+            for (int remaining = quantity; remaining > 0;)
+            {
+                int n = System.Math.Min(perStack, remaining);
+                short cell = freeCells[nextCell++];
+                opened.Add((cell, n));
+                stacks.Add((itemId, cell, n));
+                remaining -= n;
+            }
+            result[k] = new SequencedPlacement(false, null, 0, opened);
+        }
+        return result;
+    }
+
+    /// <summary>
     /// The stacks of <paramref name="itemId"/> that <paramref name="need"/> units are drawn from, lowest cell first,
     /// and the count each is left with. Excludes <paramref name="excludeId"/> (0 excludes nothing). Empty when
     /// <paramref name="need"/> is non-positive; null when the bag holds fewer than <paramref name="need"/>.

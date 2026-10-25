@@ -335,59 +335,46 @@ public class LootService
     private LootLanding?[] PlanAutoLoot(IReadOnlyList<(uint ItemId, int Count)> drops,
         IReadOnlyList<InventoryItem> owned, uint characterId)
     {
+        var free = BagCapacity.FreeCells(owned, _data.Items);
+        var bagRows = owned.Where(i => i.StorageType == 0 && i.Slot >= 0 && i.Count > 0).ToList();
+        var entries = new List<(uint, int, byte)>(drops.Count);
+        foreach (var (itemId, count) in drops)
+            entries.Add((itemId, count, _data.GetItem(itemId)?.Stack_Max ?? (byte)1));
+
+        // The placement rule is the shared Inventory.Domain primitive; this maps its result onto LootLanding and
+        // keeps the per-drop refusal (a full bag refuses only that drop; later drops may still land).
+        var seq = BagStackPlanner.PlanSequence(
+            bagRows.Select(i => new BagStack(i.Id, i.ItemId, i.Count, i.Slot)).ToList(), free, entries);
+
         var landings = new LootLanding?[drops.Count];
-        var freeCells = BagCapacity.FreeCells(owned, _data.Items);
-        int nextCell = 0;
-
-        
-        var stacks = owned.Where(i => i.StorageType == 0 && i.Slot >= 0 && i.Count > 0)
-            .Select(i => (Item: i, Count: i.Count)).ToList();
-
+        var bySlot = new Dictionary<short, InventoryItem>();
+        foreach (var i in bagRows) bySlot[i.Slot] = i;
         for (int k = 0; k < drops.Count; k++)
         {
             var (itemId, count) = drops[k];
-            if (itemId == 0 || count <= 0) continue;
-            var template = _data.GetItem(itemId);
-            int perStack = Math.Max(1, (int)(template?.Stack_Max ?? 1));
-
-            if (perStack > 1)
-            {
-                int target = -1;
-                for (int s = 0; s < stacks.Count; s++)
-                {
-                    var c = stacks[s];
-                    if (c.Item.ItemId != itemId || c.Count + count > perStack) continue;
-                    if (target < 0 || c.Item.Slot < stacks[target].Item.Slot) target = s;
-                }
-                if (target >= 0)
-                {
-                    var merged = stacks[target].Count + count;
-                    stacks[target] = (stacks[target].Item, merged);
-                    landings[k] = new LootLanding(Array.Empty<InventoryItem>())
-                    {
-                        MergeInto = stacks[target].Item,
-                        MergedCount = merged,
-                    };
-                    continue;
-                }
-            }
-
-            int needed = (count + perStack - 1) / perStack;
-            if (freeCells.Count - nextCell < needed)
+            var pl = seq[k];
+            if (pl is null) continue;
+            if (pl.Refused)
             {
                 landings[k] = new LootLanding(Array.Empty<InventoryItem>()) { Refused = true };
                 continue;
             }
-
-            short durability = TemplateDurability(itemId);
-            var opened = new List<InventoryItem>(needed);
-            for (int remaining = count; remaining > 0;)
+            if (pl.MergeIntoSlot is { } slot)
             {
-                int n = Math.Min(perStack, remaining);
-                var stack = NewLootStack(characterId, itemId, n, freeCells[nextCell++], durability);
+                landings[k] = new LootLanding(Array.Empty<InventoryItem>())
+                {
+                    MergeInto = bySlot[slot],
+                    MergedCount = pl.MergedCount,
+                };
+                continue;
+            }
+            short durability = TemplateDurability(itemId);
+            var opened = new List<InventoryItem>(pl.Opened.Count);
+            foreach (var (cell, n) in pl.Opened)
+            {
+                var stack = NewLootStack(characterId, itemId, n, cell, durability);
                 opened.Add(stack);
-                stacks.Add((stack, n));
-                remaining -= n;
+                bySlot[cell] = stack;
             }
             landings[k] = new LootLanding(opened);
         }

@@ -248,53 +248,47 @@ public static class DungeonFinderReward
     public static List<Landing>? PlanBag(IReadOnlyList<RewardItem> items, IReadOnlyList<InventoryItem> owned,
         uint characterId, IReadOnlyDictionary<uint, ItemData> templates)
     {
-        var plan = new List<Landing>(items.Count);
         var free = BagCapacity.FreeCells(owned, templates);
-        int nextCell = 0;
-        var stacks = owned.Where(i => i.StorageType == 0 && i.Slot >= 0 && i.Count > 0)
-            .Select(i => (Item: i, Count: i.Count)).ToList();
-
+        var bagRows = owned.Where(i => i.StorageType == 0 && i.Slot >= 0 && i.Count > 0).ToList();
+        var entries = new List<(uint, int, byte)>(items.Count);
         foreach (var (itemId, count) in items)
-        {
-            templates.TryGetValue(itemId, out var template);
-            int perStack = Math.Max(1, (int)(template?.Stack_Max ?? 1));
-            if (perStack > 1)
-            {
-                int target = -1;
-                for (int s = 0; s < stacks.Count; s++)
-                {
-                    var c = stacks[s];
-                    if (c.Item.ItemId != itemId || c.Count + count > perStack) continue;
-                    if (target < 0 || c.Item.Slot < stacks[target].Item.Slot) target = s;
-                }
-                if (target >= 0)
-                {
-                    int merged = stacks[target].Count + count;
-                    stacks[target] = (stacks[target].Item, merged);
-                    plan.Add(new Landing(itemId, count, stacks[target].Item, merged, []));
-                    continue;
-                }
-            }
+            entries.Add((itemId, count, templates.TryGetValue(itemId, out var t) ? t.Stack_Max : (byte)1));
 
-            int needed = (count + perStack - 1) / perStack;
-            if (free.Count - nextCell < needed) return null;
-            short durability = template is null ? (short)-1 : (short)Math.Min(template.Durability, (uint)short.MaxValue);
-            var opened = new List<InventoryItem>(needed);
-            for (int remaining = count; remaining > 0;)
+        // The sequential placement rule is the shared Inventory.Domain primitive; this maps its result onto Landing
+        // rows and keeps the all-or-nothing policy (any refused entry => null => the caller mails the reward).
+        var seq = BagStackPlanner.PlanSequence(
+            bagRows.Select(i => new BagStack(i.Id, i.ItemId, i.Count, i.Slot)).ToList(), free, entries);
+
+        var plan = new List<Landing>(items.Count);
+        var bySlot = new Dictionary<short, InventoryItem>();
+        foreach (var i in bagRows) bySlot[i.Slot] = i;
+        for (int k = 0; k < items.Count; k++)
+        {
+            var (itemId, count) = items[k];
+            var pl = seq[k];
+            if (pl is null) continue;
+            if (pl.Refused) return null;
+            if (pl.MergeIntoSlot is { } slot)
             {
-                int n = Math.Min(perStack, remaining);
+                plan.Add(new Landing(itemId, count, bySlot[slot], pl.MergedCount, []));
+                continue;
+            }
+            templates.TryGetValue(itemId, out var template);
+            short durability = template is null ? (short)-1 : (short)Math.Min(template.Durability, (uint)short.MaxValue);
+            var opened = new List<InventoryItem>(pl.Opened.Count);
+            foreach (var (cell, n) in pl.Opened)
+            {
                 var stack = new InventoryItem
                 {
                     CharacterId = characterId,
                     ItemId = itemId,
                     Count = n,
-                    Slot = free[nextCell++],
-                    StorageType = 0,   
+                    Slot = cell,
+                    StorageType = 0,
                     Durability = durability,
                 };
                 opened.Add(stack);
-                stacks.Add((stack, n));
-                remaining -= n;
+                bySlot[cell] = stack;   // an opened stack is a merge target for a later reward row
             }
             plan.Add(new Landing(itemId, count, null, 0, opened));
         }
