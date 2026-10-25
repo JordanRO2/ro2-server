@@ -235,39 +235,33 @@ public class ItemPickUpHandler : ZoneRmiHandlerBase<ItemPickUpHandler>
             return new Landing(null, 0, Array.Empty<InventoryItem>(), true, OverPossession: true);
 
         items.TryGetValue(itemId, out var template);
-        int perStack = Math.Max(1, (int)(template?.Stack_Max ?? 1));
-        if (perStack > 1)
-        {
-            var held = owned
-                .Where(i => i.StorageType == StorageBag && i.Slot >= 0 && i.ItemId == itemId && i.Count > 0 && i.Count + count <= perStack)
-                .OrderBy(i => i.Slot)
-                .FirstOrDefault();
-            if (held != null)
-                return new Landing(held, held.Count + count, Array.Empty<InventoryItem>(), false);
-        }
-
-        int needed = (count + perStack - 1) / perStack;
+        byte stackMax = template?.Stack_Max ?? 1;
+        // The merge/overflow decision is the shared Inventory.Domain rule over the Slot>=0 bag stacks; the host keeps
+        // the possession gate (above), the free-cell source, and the row construction (durability from the template).
+        var candidates = owned
+            .Where(i => i.StorageType == StorageBag && i.Slot >= 0)
+            .Select(i => new BagStack(i.Id, i.ItemId, i.Count, i.Slot))
+            .ToList();
         var free = BagCapacity.FreeCells(owned, items);
-        if (free.Count < needed)
+        var plan = BagStackPlanner.Plan(candidates, free, itemId, count, stackMax);
+        if (plan is null)
             return new Landing(null, 0, Array.Empty<InventoryItem>(), true);
+        if (plan.RestackId is { } id)
+        {
+            var held = owned.First(i => i.Id == id);
+            return new Landing(held, held.Count + count, Array.Empty<InventoryItem>(), false);
+        }
 
         short durability = template is null ? DurabilityUnset : (short)Math.Min(template.Durability, (uint)short.MaxValue);
-        var stacks = new List<InventoryItem>(needed);
-        int cell = 0;
-        for (int remaining = count; remaining > 0;)
+        var stacks = plan.NewStacks.Select(s => new InventoryItem
         {
-            int n = Math.Min(perStack, remaining);
-            stacks.Add(new InventoryItem
-            {
-                CharacterId = characterId,
-                ItemId = itemId,
-                Count = n,
-                Slot = free[cell++],
-                StorageType = StorageBag,
-                Durability = durability,
-            });
-            remaining -= n;
-        }
+            CharacterId = characterId,
+            ItemId = itemId,
+            Count = s.Count,
+            Slot = s.Cell,
+            StorageType = StorageBag,
+            Durability = durability,
+        }).ToList();
         return new Landing(null, 0, stacks, false);
     }
 
