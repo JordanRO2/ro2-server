@@ -340,20 +340,6 @@ public sealed partial class AuctionService
  /// <param name="type">Notice type.</param>
  /// <param name="article">Article the notice refers to.</param>
  /// <param name="amount">Amount to show.</param>
-    private async Task SendSystemMessageAsync(uint charId, uint type, AuctionArticle article, long amount)
-    {
-        try
-        {
-            var online = _players.GetPlayerByCharacterId(charId);
-            if (online == null) return;
-            var session = _broadcast.GetSession(online.SessionId);
-            if (session == null) return;
-            await session.SendRmiAsync(RO2.Network.Protocol.ZoneS2COpcodes.NfyAuctionSystemMessage,
-                AuctionPackets.BuildSystemMessage2693(online.EntityId, type, article.Uid, article.ItemId, amount));
-        }
-        catch (Exception ex)
-        {
-            _log.LogWarning(ex, "Auction notice {Type} failed for char {Char}", type, charId);
-        }
-    }
+    private Task SendSystemMessageAsync(uint charId, uint type, AuctionArticle article, long amount)
+        => _notifier.SendSystemMessageAsync(charId, type, article.Uid, article.ItemId, amount);
 }

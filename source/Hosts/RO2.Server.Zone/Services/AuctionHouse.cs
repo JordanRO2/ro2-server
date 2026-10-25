@@ -816,16 +816,14 @@ public sealed partial class AuctionService
 {
     private readonly IAuctionRepository _repo;
     private readonly IEconomyMailPort _mailPort;
-    private readonly PlayerStateManager _players;
-    private readonly BroadcastService _broadcast;
+    private readonly IAuctionNotifier _notifier;
     private readonly ILogger _log;
 
     private AuctionService(IAuctionRepository repo, IMailRepository mails, MailService mailService, PlayerStateManager players, BroadcastService broadcast, ILogger log)
     {
         _repo = repo;
         _mailPort = new EconomyMailAdapter(mails, mailService);
-        _players = players;
-        _broadcast = broadcast;
+        _notifier = new AuctionNotifierAdapter(players, broadcast, log);
         _log = log;
     }
 
@@ -1279,22 +1277,8 @@ public sealed partial class AuctionService
     // ---------------------------------------------------------------------------------------------
 
     /// <summary>2693 type 1 to the seller, if online: the article, the item template and the proceeds.</summary>
-    private async Task NotifySellerAsync(AuctionArticle sold, long proceeds)
-    {
-        try
-        {
-            var online = _players.GetPlayerByCharacterId(sold.SellerCharId);
-            if (online == null) return;
-            var session = _broadcast.GetSession(online.SessionId);
-            if (session == null) return;
-            await session.SendRmiAsync(RO2.Network.Protocol.ZoneS2COpcodes.NfyAuctionSystemMessage,
-                AuctionPackets.BuildSystemMessage2693(online.EntityId, AuctionPackets.NotifySold, sold.Uid, sold.ItemId, proceeds));
-        }
-        catch (Exception ex)
-        {
-            _log.LogWarning(ex, "Auction sold notify failed for char {Char}", sold.SellerCharId);
-        }
-    }
+    private Task NotifySellerAsync(AuctionArticle sold, long proceeds)
+        => _notifier.SendSystemMessageAsync(sold.SellerCharId, AuctionPackets.NotifySold, sold.Uid, sold.ItemId, proceeds);
 
     /// <summary>The article's item back to its seller: <see cref="AuctionMailKind.Cancelled"/> or
     /// <see cref="AuctionMailKind.Expired"/>, stamped <paramref name="sentAtUtc"/>.</summary>
