@@ -13,6 +13,7 @@ using RO2.Application;
 using RO2.Persistence.Mongo.Repositories;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Models;
+using RO2.Economy.Domain;
 using RO2.Server.Zone.Services;
 using Xunit;
 using static RO2.Tests.Packets.ReauditShared;

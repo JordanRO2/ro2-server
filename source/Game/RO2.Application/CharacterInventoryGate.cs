@@ -33,4 +33,20 @@ public static class CharacterInventoryGate
             gate.Release();
         }
     }
+
+    /// <summary>
+    /// Runs <paramref name="body"/> while holding BOTH characters' gates, the lower character id first, so two flows
+    /// over the same pair acquire them in the same order and cannot deadlock. A pair of equal ids takes the single
+    /// gate once: the gate is not re-entrant.
+    /// </summary>
+    /// <param name="c1">One character id.</param>
+    /// <param name="c2">The other character id.</param>
+    /// <param name="body">What to run under both gates.</param>
+    public static Task<T> WithBothGatesAsync<T>(uint c1, uint c2, Func<Task<T>> body)
+    {
+        uint a = Math.Min(c1, c2), b = Math.Max(c1, c2);
+        if (a == b)
+            return RunAsync(a, body);
+        return RunAsync(a, () => RunAsync(b, body));
+    }
 }

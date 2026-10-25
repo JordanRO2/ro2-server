@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.Domain.GameData;
+using RO2.Economy.Domain;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
@@ -102,7 +103,7 @@ public class TradeMoveHandler : ZoneRmiHandlerBase<TradeMoveHandler>
 
         // The item as the window shows it is frozen with the quantity (E-H4): the swap re-reads the row under
         // this uid and moves nothing unless it is still exactly this.
-        var change = trade.AddItem(player.SessionId, itemUid, offered, TradeOfferSnapshot.Of(item, offered));
+        var change = trade.AddItem(player.SessionId, itemUid, offered, TradeInventoryAdapter.SnapshotOf(item, offered));
         switch (change)
         {
             case TradeOfferChange.Applied:

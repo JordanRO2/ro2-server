@@ -1,3 +1,4 @@
+using RO2.Economy.Domain;
 using RO2.Server.Zone.Services;
 using Xunit;
 
