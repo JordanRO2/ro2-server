@@ -3,10 +3,13 @@ using System.Collections.Frozen;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
+using RO2.Application;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.Domain.GameData;
 using RO2.Domain.GameData.Tables;
+using RO2.Economy.Application;
+using RO2.Economy.Domain;
 using RO2.Network.Protocol;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Models;
@@ -253,22 +256,23 @@ public sealed class ShopHardeningTests
     // The write phase itself, with a token cost. Bag: token stacks of 5 (slot 0) and 3 (slot 1); a buy of 1 Stocked
     // costs 6 tokens: slot 0 is emptied (left 0), slot 1 is left at 2.
 
-    private static async Task<(List<(InventoryItem Stack, int Left)> Takes, BuyItemHandler.BuyPlan Plan)> PlanAsync(
+    private static ShopInventoryAdapter Adapter(Rig rig) => new(rig.Inventory, rig.Store.Items, NullLogger.Instance);
+
+    private static async Task<(IShopBag Bag, IReadOnlyList<StackTake> Takes, ShopBuyPlan Plan)> PlanAsync(
         Rig rig, int quantity = 1)
     {
-        var owned = await rig.Fx.InventoryRepo.GetByCharacterAsync(CharId);
-        var row = new BuyTokenInfo { ID = 1, TokenItemID1 = Token, NeedValue1 = 6 };
-        var takes = BuyItemHandler.PlanTokenTake(owned, row, quantity);
+        var bag = await Adapter(rig).ReadBagAsync(CharId);
+        var cost = BuyItemHandler.TokenCostOf(new BuyTokenInfo { ID = 1, TokenItemID1 = Token, NeedValue1 = 6 });
+        var takes = ShopBuyPlanner.PlanTokenTake(bag.Stacks, cost, quantity);
         Assert.NotNull(takes);
-        var plan = BuyItemHandler.PlanBuy(owned, rig.Store.Items, Stocked, quantity, 99);
+        var plan = ShopBuyPlanner.Plan(bag.Stacks, bag.FreeCells, Stocked, quantity, 99);
         Assert.NotNull(plan);
-        return (takes!, plan!);
+        return (bag, takes!, plan!);
     }
 
-    private static Task<BuyItemHandler.BuyWrite> WriteAsync(Rig rig, BuyItemHandler.BuyPlan plan,
-        IReadOnlyList<(InventoryItem Stack, int Left)> takes, int quantity = 1)
-        => BuyItemHandler.WriteBuyAsync(rig.Inventory, CharId, Stocked, quantity, plan, templateDurability: 0, takes,
-            NullLogger.Instance);
+    private static Task<ShopBuyWrite> WriteAsync(Rig rig, IShopBag bag, ShopBuyPlan plan,
+        IReadOnlyList<StackTake> takes, int quantity = 1)
+        => Adapter(rig).WriteBuyAsync(bag, CharId, Stocked, quantity, plan, templateDurability: 0, takes);
 
     [Fact]
     public async Task TokenBuy_Success_DeliversAndTakesTokens_AllInvariantsHold()
@@ -276,10 +280,10 @@ public sealed class ShopHardeningTests
         await using var rig = await StartAsync();
         var emptied = rig.Fx.GiveItem(CharId, Token, 5, slot: 0);
         rig.Fx.GiveItem(CharId, Token, 3, slot: 1);
-        var (takes, plan) = await PlanAsync(rig);
+        var (bag, takes, plan) = await PlanAsync(rig);
 
         var before = rig.Fx.Snapshot();
-        var written = await WriteAsync(rig, plan, takes);
+        var written = await WriteAsync(rig, bag, plan, takes);
         var after = rig.Fx.Snapshot();
 
         var created = after.Items.Select(i => i.Uid).Except(before.Items.Select(i => i.Uid)).ToHashSet();
@@ -290,8 +294,8 @@ public sealed class ShopHardeningTests
             QuantityDelta = new Dictionary<uint, long> { [Stocked] = 1, [Token] = -6 },
         });
         Assert.Single(written.Stacks);
-        Assert.Equal(2, written.TokenRecords.Count);
-        Assert.Equal(0, written.TokenRecords[0][14]);   // the emptied stack's 2379 record carries count 0
+        Assert.Equal(2, written.TokenTouches.Count);
+        Assert.Equal(0, BuyItemHandler.TokenRecordOf(written.TokenTouches[0], CharId)[14]);   // the emptied stack's 2379 record carries count 0
     }
 
     [Theory]
@@ -302,13 +306,13 @@ public sealed class ShopHardeningTests
         await using var rig = await StartAsync();
         var first = rig.Fx.GiveItem(CharId, Token, 5, slot: 0);
         var second = rig.Fx.GiveItem(CharId, Token, 3, slot: 1);
-        var (takes, plan) = await PlanAsync(rig);
+        var (bag, takes, plan) = await PlanAsync(rig);
         if (failing == "update") rig.Inventory.FailUpdateOnce.Add(second.Id);
         else rig.Inventory.FailRemoveOnce.Add(first.Id);
         var shapeBefore = Shape(rig.Fx);
 
         await rig.Fx.AssertInvariantsAsync(async () =>
-            await Assert.ThrowsAsync<InvalidOperationException>(() => WriteAsync(rig, plan, takes)));
+            await Assert.ThrowsAsync<InvalidOperationException>(() => WriteAsync(rig, bag, plan, takes)));
 
         Assert.Equal(shapeBefore, Shape(rig.Fx));   // the bought stack is gone, both token stacks are back as they were
     }
@@ -320,13 +324,13 @@ public sealed class ShopHardeningTests
         rig.Fx.GiveItem(CharId, Token, 5, slot: 0);
         var second = rig.Fx.GiveItem(CharId, Token, 3, slot: 1);
         rig.Fx.GiveItem(CharId, Stocked, 5, slot: 2);   // the buy restacks onto this one (5 + 1 <= 99)
-        var (takes, plan) = await PlanAsync(rig);
-        Assert.NotNull(plan.Restack);
+        var (bag, takes, plan) = await PlanAsync(rig);
+        Assert.NotNull(plan.RestackId);
         rig.Inventory.FailUpdateOnce.Add(second.Id);
         var shapeBefore = Shape(rig.Fx);
 
         await rig.Fx.AssertInvariantsAsync(async () =>
-            await Assert.ThrowsAsync<InvalidOperationException>(() => WriteAsync(rig, plan, takes)));
+            await Assert.ThrowsAsync<InvalidOperationException>(() => WriteAsync(rig, bag, plan, takes)));
 
         Assert.Equal(shapeBefore, Shape(rig.Fx));
     }
@@ -494,5 +498,177 @@ public sealed class ShopHardeningTests
         var back = Assert.Single(rig.Fx.Inventory.Rows, r => r.ItemId == Stocked);
         Assert.Equal((short)7, back.Slot);
         Assert.Equal(StartZeny - 20, rig.Player.Gold);
+    }
+
+    // ============================== the flows behind the handlers (economy application service) ==============================
+    // The frames and stored state are spelled out from the pre-extraction handlers' own rules, not read back from the
+    // code under test.
+
+    private static InventoryItem StoredRow(Rig rig, ulong id) => rig.Fx.Inventory.Rows.Single(r => r.Id == id);
+
+    private static long StoredGold(Rig rig) => rig.Fx.Characters.Rows.Single(c => c.Id == CharId).Gold;
+
+    private static byte[] WithCount(InventoryItem row, byte count)
+    {
+        var record = WorldEntryService.BuildItemRecord126(row);
+        record[14] = count;
+        return record;
+    }
+
+    [Fact]
+    public async Task Buy_Restack_TheRecordCarriesTheExistingUidWithTheNewTotal_AndTheWalletIsWrittenThrough()
+    {
+        await using var rig = await StartAsync();
+        var shop = rig.Spawn(x: 10, y: 10);
+        var existing = rig.Fx.GiveItem(CharId, Stocked, 5, slot: 2);
+
+        await BuyHandler(rig).HandleAsync(rig.Net.Sessions[0], Buy1334(shop, Stocked, count: 3));
+        var (op, body) = await rig.NextAsync();
+
+        Assert.Equal(ZoneS2COpcodes.OnBuyItem, op);
+        var live = StoredRow(rig, existing.Id);
+        Assert.Equal(8, live.Count);   // the live row was mutated, no second row appeared
+        Assert.Single(rig.Fx.Inventory.Rows, r => r.ItemId == Stocked);
+        Assert.Equal(Hex(ShopItemPackets.BuildBuyItem2375(rig.Player.EntityId, StartZeny - 120, Stocked,
+            new List<byte[]> { WorldEntryService.BuildItemRecord126(live) })), Hex(body));
+        Assert.Equal(existing.Id, BinaryPrimitives.ReadUInt64LittleEndian(body.AsSpan(body.Length - 126)));
+        Assert.Equal(StartZeny - 120, StoredGold(rig));   // persisted, not only in the live wallet
+    }
+
+    [Theory]
+    [InlineData(100_000u, short.MaxValue)]   // a template durability past the i16 range is capped
+    [InlineData(50u, (short)50)]
+    public async Task WriteBuy_ANewStackCarriesTheCappedTemplateDurability_AndAbilityValue0(uint templateDurability, short expected)
+    {
+        await using var rig = await StartAsync();
+        var bag = await Adapter(rig).ReadBagAsync(CharId);
+        var plan = ShopBuyPlanner.Plan(bag.Stacks, bag.FreeCells, Stocked, 1, 99);
+
+        var written = await Adapter(rig).WriteBuyAsync(bag, CharId, Stocked, 1, plan!, templateDurability, tokenTakes: null);
+
+        var row = Assert.Single(rig.Fx.Inventory.Rows);
+        Assert.Equal((expected, 0u), (row.Durability, row.AbilityValue));   // 0, not null: not the template's Abili_val
+        var snapshot = Assert.Single(written.Stacks);
+        Assert.Equal((row.Id, expected, 0u), (snapshot.Id, snapshot.Durability, snapshot.AbilityValue));
+    }
+
+    [Fact]
+    public async Task Sell_Frame_ListsTheUidsInRequestOrder_FullySoldRecordCount0_PartialIsWhatIsLeft_WalletWrittenThrough()
+    {
+        await using var rig = await StartAsync();
+        var shop = rig.Spawn(x: 10, y: 10);
+        var whole = rig.Fx.GiveItem(CharId, Stocked, 4, slot: 0);
+        var part = rig.Fx.GiveItem(CharId, Stocked, 10, slot: 1);
+
+        await SellHandler(rig).HandleAsync(rig.Net.Sessions[0], Sell1335(shop, (whole.Id, 4), (part.Id, 3)));
+        var (op, body) = await rig.NextAsync();
+
+        Assert.Equal(ZoneS2COpcodes.OnSellItem, op);
+        // The records are the PRE-sale rows (the clones GiveItem returned) with the count byte forced.
+        var expected = ShopItemPackets.BuildSellItem2376(rig.Player.EntityId, ShopCodes.SellResultSold, StartZeny + 70,
+            new[] { whole.Id, part.Id }, new List<byte[]> { WithCount(whole, 0), WithCount(part, 7) });
+        Assert.Equal(Hex(expected), Hex(body));
+        Assert.DoesNotContain(rig.Fx.Inventory.Rows, r => r.Id == whole.Id);
+        Assert.Equal(7, StoredRow(rig, part.Id).Count);
+        Assert.Equal(StartZeny + 70, StoredGold(rig));
+        Assert.Equal(new[] { whole.Id, part.Id }, BuyBackLedger.UidsOf(rig.Player));
+    }
+
+    [Theory]
+    [InlineData(0, (byte)0)]
+    [InlineData(-3, (byte)0)]
+    [InlineData(1, (byte)1)]
+    [InlineData(255, (byte)255)]
+    [InlineData(300, (byte)255)]
+    public void Sell_TheRecordCountByte_IsZeroWhenFullySold_ElseClampedTo255(int newCount, byte expected)
+        => Assert.Equal(expected, SellItemHandler.RecordCount(newCount));
+
+    [Fact]
+    public async Task Sell_AStackOver255_LeavesTheRecordCountSaturatedAt255()
+    {
+        await using var rig = await StartAsync();
+        var shop = rig.Spawn(x: 10, y: 10);
+        var big = rig.Fx.GiveItem(CharId, Stocked, 300, slot: 0);
+
+        await SellHandler(rig).HandleAsync(rig.Net.Sessions[0], Sell1335(shop, (big.Id, 1)));
+        var (_, body) = await rig.NextAsync();
+
+        Assert.Equal(255, body[body.Length - 126 + 14]);
+        Assert.Equal(299, StoredRow(rig, big.Id).Count);
+    }
+
+    [Fact]
+    public void BuyBackList_AnUnseenPlayerAndAnEmptiedLedger_EncodeTheSame2376()
+    {
+        var unseen = new PlayerState { EntityId = 0x11u, Gold = 5 };
+        var emptied = new PlayerState { EntityId = 0x11u, Gold = 5 };
+        BuyBackLedger.RecordSale(emptied, Sold(900), soldQty: 2, paid: 20);
+        Assert.True(BuyBackLedger.TryTake(emptied, 900, out _, out _));
+
+        byte[] Frame(PlayerState p) => ShopItemPackets.BuildSellItem2376(p.EntityId, ShopItemPackets.SellResultNothingSold,
+            p.Gold, BuyBackLedger.UidsOf(p), Array.Empty<byte[]>());
+
+        Assert.Empty(BuyBackLedger.UidsOf(unseen));
+        Assert.Empty(BuyBackLedger.UidsOf(emptied));
+        Assert.Equal(Hex(Frame(unseen)), Hex(Frame(emptied)));
+    }
+
+    [Fact]
+    public async Task BuyBack_Success_ReturnsTheSoldQuantityInTheFirstFreeCell_AndWritesTheWalletThrough()
+    {
+        await using var rig = await StartAsync();
+        BuyBackLedger.RecordSale(rig.Player, Sold(900), soldQty: 2, paid: 20);
+
+        await CancelHandler(rig).HandleAsync(rig.Net.Sessions[0], CancelSell1336(900));
+        var (op, body) = await rig.NextAsync();
+
+        Assert.Equal(ZoneS2COpcodes.OnCancelSellItem, op);
+        var back = Assert.Single(rig.Fx.Inventory.Rows);
+        Assert.Equal((Stocked, 2, (short)0), (back.ItemId, back.Count, back.Slot));
+        Assert.Equal(Hex(CancelSellItemHandler.Build2377(rig.Player.EntityId, 0, StartZeny - 20,
+            WorldEntryService.BuildItemRecord126(back), 900)), Hex(body));
+        Assert.Equal(StartZeny - 20, StoredGold(rig));
+        Assert.Empty(BuyBackLedger.UidsOf(rig.Player));   // a uid is bought back once
+    }
+
+    [Fact]
+    public async Task BuyBack_WhenTheUidWasReusedMeanwhile_TheItemGetsANewUid_AndTheFrameStillEchoesTheRequestedOne()
+    {
+        await using var rig = await StartAsync();
+        rig.Fx.Inventory.Seed(new InventoryItem { Id = 900, CharacterId = CharId, ItemId = NoSell, Count = 1, Slot = 0 });
+        BuyBackLedger.RecordSale(rig.Player, Sold(900), soldQty: 2, paid: 20);
+
+        await CancelHandler(rig).HandleAsync(rig.Net.Sessions[0], CancelSell1336(900));
+        var (_, body) = await rig.NextAsync();
+
+        var back = Assert.Single(rig.Fx.Inventory.Rows, r => r.ItemId == Stocked);
+        Assert.NotEqual(900UL, back.Id);
+        Assert.Contains(rig.Fx.Inventory.Rows, r => r.Id == 900 && r.ItemId == NoSell && r.Count == 1);   // the other stack is untouched
+        Assert.Equal(Hex(CancelSellItemHandler.Build2377(rig.Player.EntityId, 0, StartZeny - 20,
+            WorldEntryService.BuildItemRecord126(back), 900)), Hex(body));
+        Assert.Equal(900UL, BinaryPrimitives.ReadUInt64LittleEndian(body.AsSpan(3 + 144)));   // +144 echoes the request
+        Assert.Equal(back.Id, BinaryPrimitives.ReadUInt64LittleEndian(body.AsSpan(3 + 18)));  // the record carries the new uid
+    }
+
+    [Fact]
+    public async Task TakeForSale_HoldsTheInventoryGateOnceAcrossTheWholeLoop_NotPerItem()
+    {
+        var fx = new EconomyFixture();
+        var first = fx.GiveItem(CharId, Stocked, 4, slot: 0);
+        var second = fx.GiveItem(CharId, Stocked, 2, slot: 1);
+        var adapter = new ShopInventoryAdapter(fx.InventoryRepo, new Dictionary<uint, ItemData>(), NullLogger.Instance);
+        var events = new List<string>();
+        Task? competitor = null;
+
+        await adapter.TakeForSaleAsync(CharId, [new ShopSellEntry(first.Id, 4), new ShopSellEntry(second.Id, 2)], _ => true, line =>
+        {
+            events.Add($"sold:{line.Row.Id}");
+            // Another mutation of the same character (a trade-away, a mail attach) queues behind the gate the moment the
+            // first stack is taken; with the gate held per item it would run between the two stacks.
+            competitor ??= CharacterInventoryGate.RunAsync(CharId, () => { events.Add("other"); return Task.FromResult(0); });
+        });
+        await competitor!;
+
+        Assert.Equal([$"sold:{first.Id}", $"sold:{second.Id}", "other"], events);
     }
 }

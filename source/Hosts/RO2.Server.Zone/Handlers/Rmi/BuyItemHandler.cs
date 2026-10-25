@@ -11,6 +11,7 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 
+using RO2.Economy.Application;
 using RO2.Economy.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
@@ -22,6 +23,9 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
 {
     public override ushort Opcode => ZoneC2SOpcodes.ReqBuyItem;
     public override string Name => "BuyItem";
+
+    /// <summary>The shop economy flow; stateless, every dependency is passed per call.</summary>
+    private static readonly ShopApplicationService Shop = new();
 
     public BuyItemHandler(IServiceScopeFactory s, ILogger<BuyItemHandler> l, PlayerStateManager pm, BroadcastService bc) : base(s, l, pm, bc) { }
 
@@ -155,28 +159,6 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
         => owned.Where(i => i.StorageType == StorageBag).Select(i => new BagStack(i.Id, i.ItemId, i.Count, i.Slot)).ToList();
 
     /// <summary>
-    /// Where a zeny buy of <paramref name="quantity"/> lands, the way retail stacks a buy (the rule in InventoryStacking):
-    /// onto the lowest-cell stack of the item that it fits into whole
-    /// (existing + quantity &lt;= Stack_Max), else into new stacks of Stack_Max, each in the next free cell of
-    /// <see cref="BagCapacity.FreeCells"/>. Null when the bag has fewer free cells than the new stacks need.
-    /// </summary>
-    /// <remarks>
-    /// The cells come from BagCapacity rather than from AddItemAsync's Slot -1, which takes the lowest unused
-    /// index with no upper bound: a full main bag and a 30-cell bag in character-bag cell 0 would put the next
-    /// stack in flat 50, a cell no bag provides.
-    /// </remarks>
-    internal static BuyPlan? PlanBuy(IReadOnlyList<InventoryItem> owned, IReadOnlyDictionary<uint, ItemData> items,
-        uint itemId, int quantity, byte stackMax)
-    {
-        // The placement rule is the economy planner's; the host still resolves the free cells (BagCapacity) and maps
-        // the restack target back to the live inventory row the writer mutates.
-        var plan = ShopBuyPlanner.Plan(ToBagStacks(owned), BagCapacity.FreeCells(owned, items), itemId, quantity, stackMax);
-        if (plan is null) return null;
-        var restack = plan.RestackId is { } id ? owned.First(i => i.Id == id) : null;
-        return new BuyPlan(restack, plan.NewStacks);
-    }
-
-    /// <summary>
     /// Why a buy of <paramref name="itemId"/> from <paramref name="npc"/> must be refused, or null when the NPC is a
     /// live shop of the player's map that stocks the item (and, when Merchant.json is loaded, the Merchant row the
     /// request names is one of that NPC's own). An unresolved handle is a refusal, never a pass: with no NPC there is
@@ -243,137 +225,26 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
     internal static bool IsTokenOnly(BuyTokenInfo row)
         => row.PvP_Point == 0 && row.Mastery_Point == 0 && row.Dia == 0;
 
-    /// <summary>
-    /// The token stacks a Buy_Type 1 buy of <paramref name="quantity"/> takes and the count each is left with:
-    /// NeedValue_i x quantity of each TokenItemID_i (a template named twice adds up), from the bag stacks of that
-    /// template, lowest cell first (<see cref="BreakDownItemHandler.PlanStoneTake"/>, the order used for
-    /// break-down stones). Null when the bag holds fewer
-    /// than any one need.
-    /// </summary>
-    /// <remarks>
-    /// Several stacks are taken when one is not enough: a row that needs 3,400 of a token template is paid from as
-    /// many stacks as it takes, each emptied one reported with count 0 and the last left with the remainder.
-    /// </remarks>
-    internal static List<(InventoryItem Stack, int Left)>? PlanTokenTake(IReadOnlyList<InventoryItem> owned,
-        BuyTokenInfo row, int quantity)
-    {
-        var cost = new TokenCost(new (uint, int)[]
+    /// <summary>The per-unit token cost of a BuyTokenInfo row for the economy flow: up to three (template, need) pairs.</summary>
+    internal static TokenCost TokenCostOf(BuyTokenInfo row)
+        => new(new (uint, int)[]
         {
             (row.TokenItemID1, (int)row.NeedValue1),
             (row.TokenItemID2, (int)row.NeedValue2),
             (row.TokenItemID3, (int)row.NeedValue3),
         });
-        var plan = ShopBuyPlanner.PlanTokenTake(ToBagStacks(owned), cost, quantity);
-        if (plan is null) return null;
-        return plan.Select(t => (owned.First(i => i.Id == t.StackId), t.Left)).ToList();
-    }
-
-    /// <summary>A planned buy: <see cref="Restack"/> takes the whole quantity, or else <see cref="NewStacks"/>
-    /// lists the (cell, count) of each new stack.</summary>
-    internal sealed record BuyPlan(InventoryItem? Restack, IReadOnlyList<(short Cell, int Count)> NewStacks);
-
-    /// <summary>What <see cref="WriteBuyAsync"/> wrote: the bought stacks and, for a token buy, the 2379 record of each
-    /// token stack touched (count 0 for an emptied one).</summary>
-    internal sealed record BuyWrite(List<InventoryItem> Stacks, List<byte[]> TokenRecords);
 
     /// <summary>
-    /// Writes a planned buy: delivers the bought stacks (<see cref="PlanBuy"/>), then takes the tokens
-    /// (<see cref="PlanTokenTake"/>). FAIL-CLOSED: when any write throws, every write already made is undone, newest
-    /// first (an emptied token stack is put back, a shrunk one restored, a restacked one lowered, a new stack removed),
-    /// and the original exception is rethrown, so nothing is left delivered without its tokens taken. Each undo is
-    /// best effort and idempotent (it is registered BEFORE its write, because a write that throws may or may not have
-    /// landed); an undo that itself fails is logged and the rest still run.
+    /// The 2379 record of a token stack a buy touched: the stack as it now stands, with count 0 for an emptied one (the
+    /// record writer clamps the count to at least 1, so the client only empties the cell when the byte is forced to 0).
     /// </summary>
-    internal static async Task<BuyWrite> WriteBuyAsync(IInventoryRepository inventory, uint characterId, uint itemId,
-        int quantity, BuyPlan plan, uint templateDurability, IReadOnlyList<(InventoryItem Stack, int Left)>? tokenTakes,
-        ILogger logger)
+    internal static byte[] TokenRecordOf(ShopTokenTouch touch, uint characterId)
     {
-        var stacks = new List<InventoryItem>();
-        var tokenRecords = new List<byte[]>();
-        var undo = new List<Func<Task>>();
-        try
-        {
-            if (plan.Restack is { } target)
-            {
-                var before = target.Count;
-                undo.Add(async () =>
-                {
-                    target.Count = before;
-                    await inventory.UpdateItemAsync(target);
-                });
-                target.Count += quantity;
-                await inventory.UpdateItemAsync(target);
-                stacks.Add(target);
-            }
-            else
-            {
-                short durability = (short)Math.Min(templateDurability, (uint)short.MaxValue);
-                foreach (var (cell, count) in plan.NewStacks)
-                {
-                    var stack = new InventoryItem
-                    {
-                        CharacterId = characterId,
-                        ItemId = itemId,
-                        Count = count,
-                        Slot = cell,
-                        StorageType = StorageBag,
-                        Durability = durability,
-                        // record+69 = 0, not the template's Abili_val: a bought stack's 2375 record carries 0 there
-                        // (see WorldEntryService.RecordAbilityValue).
-                        AbilityValue = 0,
-                    };
-                    undo.Add(async () =>
-                    {
-                        if (stack.Id != 0) await inventory.RemoveItemAsync(stack.Id);   // 0: never stamped, never inserted
-                    });
-                    await inventory.AddItemAsync(stack);   // stamps the instance uid; a cell >= 0 is kept as given
-                    stacks.Add(stack);
-                }
-            }
-
-            // The tokens, after the bought stacks are stored (nothing is taken for a buy that could not be delivered).
-            foreach (var (stack, left) in tokenTakes ?? [])
-            {
-                var original = stack.Count;
-                if (left <= 0)
-                {
-                    undo.Add(async () =>
-                    {
-                        if (await inventory.GetByIdAsync(stack.Id) is null) await inventory.AddItemAsync(stack);
-                    });
-                    var record = WorldEntryService.BuildItemRecord126(stack);
-                    record[ItemRecordCountOffset] = 0;   // count 0 -> the client empties the cell (the record writer clamps to >= 1)
-                    await inventory.RemoveItemAsync(stack.Id);
-                    tokenRecords.Add(record);
-                }
-                else
-                {
-                    undo.Add(async () =>
-                    {
-                        stack.Count = original;
-                        await inventory.UpdateItemAsync(stack);
-                    });
-                    stack.Count = left;
-                    await inventory.UpdateItemAsync(stack);
-                    tokenRecords.Add(WorldEntryService.BuildItemRecord126(stack));
-                }
-            }
-            return new BuyWrite(stacks, tokenRecords);
-        }
-        catch
-        {
-            for (var i = undo.Count - 1; i >= 0; i--)
-            {
-                try { await undo[i](); }
-                catch (Exception undoEx)
-                {
-                    logger.LogError(undoEx, "Buy of item {Item} for character {Char}: could not undo write {Step} after a failed buy; "
-                        + "the bag may hold an item without its tokens taken", itemId, characterId, i);
-                }
-            }
-            throw;
-        }
+        var record = WorldEntryService.BuildItemRecord126(InventoryEscrowAdapter.ToInventoryItem(touch.Stack, characterId));
+        if (touch.Emptied) record[ItemRecordCountOffset] = 0;
+        return record;
     }
+
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
@@ -402,12 +273,10 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
         var store = services.GetRequiredService<GameDataStore>();
 
         // Every refusal is answered with the failed-buy 2375 (ShopItemPackets.BuildBuyRefusal2375). A
-        // silent return leaves the shop's quantity dialog waiting for an answer that never comes.
-        // Zeny held back from the wallet once the buy is affordable; a refusal after that hands it back.
-        long reservedZeny = 0;
+        // silent return leaves the shop's quantity dialog waiting for an answer that never comes. A refusal of the
+        // economy flow has already handed the reserved zeny back, so the wallet is final when the frame is built.
         async Task RefuseAsync(ushort code)
         {
-            if (reservedZeny > 0) { player.Credit(reservedZeny); reservedZeny = 0; }
             await session.SendRmiAsync(ZoneS2COpcodes.OnBuyItem, writer => writer.WriteBytes(
                 ShopItemPackets.BuildBuyRefusal2375(player.EntityId, code, tokenRow, itemId)));
         }
@@ -500,96 +369,35 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
             return;
         }
 
-        // A token buy costs no zeny (the 2375 wallet is unchanged). A zeny buy costs Price_Buy x count. The
-        // timed shop-discount state is not modelled, so no discount is applied.
-        var totalCost = tokenCost is null ? ShopPricing.BuyCost(item.Price_Buy, quantity) : 0L;
-
-        // Can't buy what you can't afford. The cost is TAKEN from the wallet here, atomically (TryDebit), not
-        // just compared: a check followed by a later deduct lets a concurrent spender drain the same funds in
-        // between. Every refusal below hands the reserved zeny back. Zeny-row failures carry code 1.
-        if (!player.TryDebit(totalCost))
-        {
-            Logger.LogInformation("{Name} cannot afford {Count}x '{Item}' ({Cost}g, has {Have}g)",
-                player.Name, quantity, item.Name, totalCost, player.Gold);
-            await RefuseAsync(ShopCodes.BuyFailGeneric);
-            return;
-        }
-        reservedZeny = totalCost;
-
-        var inventory = services.GetRequiredService<IInventoryRepository>();
-        IReadOnlyList<InventoryItem> owned;
-        try
-        {
-            owned = await inventory.GetByCharacterAsync(player.CharacterId);
-        }
-        catch (Exception ex)
-        {
-            Logger.LogWarning(ex, "{Name}: bag unreadable for a buy of {Count}x '{Item}'; refused, nothing charged",
-                player.Name, quantity, item.Name);
-            await RefuseAsync(ShopCodes.BuyFailGeneric);
-            return;
-        }
-
-        // Possession limit: the bag total after the buy may not pass it. The limit is the override where one
-        // exists (15 for the siege supplies 22261077, where ItemInfo says 10), otherwise ItemInfo's
-        // Possession_Max. See MeasuredPossessionLimits and ShopCodes.BuyFailPossession.
-        if (ExceedsPossessionLimit(owned, itemId, quantity, out var held, out var limit))
-        {
-            Logger.LogInformation("{Name} cannot hold {Count} more '{Item}' ({Held} held, possession limit {Max})",
-                player.Name, quantity, item.Name, held, limit);
-            await RefuseAsync(ShopCodes.BuyFailPossession);
-            return;
-        }
-
-        List<(InventoryItem Stack, int Left)>? tokenTakes = null;
-        if (tokenCost is not null)
-        {
-            tokenTakes = PlanTokenTake(owned, tokenCost, (int)quantity);
-            if (tokenTakes is null)
+        // The wallet, bag and placement rules are the economy flow's. The cost is TAKEN from the wallet first (a token
+        // buy costs none), every later refusal hands it back, and the order stays debit -> read bag -> possession ->
+        // tokens -> plan -> write -> ACK. The flow sends nothing: this handler sequences the packets around it.
+        var characters = services.GetRequiredService<ICharacterRepository>();
+        var command = new ShopBuyCommand(player.CharacterId, player.Name, npcHandle, itemId, item.Name, quantity,
+            item.Price_Buy, item.Stack_Max, item.Durability, PossessionLimitOf(itemId),
+            tokenCost is null ? null : TokenCostOf(tokenCost), tokenCost?.ID ?? 0);
+        var result = await Shop.BuyAsync(command, player,
+            new ShopInventoryAdapter(services.GetRequiredService<IInventoryRepository>(), store.Items, Logger),
+            new ShopLogAdapter(Logger),
+            () => characters.UpdateGoldAsync(player.CharacterId, player.Gold),
+            async written =>
             {
-                Logger.LogInformation("{Name} cannot pay {Count}x '{Item}' with BuyTokenInfo {Token}: the bag holds too few tokens; refused",
-                    player.Name, quantity, item.Name, tokenCost.ID);
-                await RefuseAsync(ShopCodes.BuyFailGeneric);
-                return;
-            }
-        }
-
-        // The cells are planned on the bag as it stands before the tokens are taken: a new stack is never put
-        // into a cell a token take empties.
-        var plan = PlanBuy(owned, store.Items, itemId, (int)quantity, item.Stack_Max);
-        if (plan is null)
+                // The token 2379s go out only now that every write succeeded (a failed buy sends none, so the client's
+                // cells never diverge from the bag): one per stack touched, ahead of the 2375 as in retail, each the
+                // stack as it now stands with reason 2 at blob+10, count 0 for an emptied one (as BreakDownItemHandler
+                // does). The wallet is written through after them.
+                foreach (var touch in written.TokenTouches)
+                {
+                    var destroyBody = ShopItemPackets.BuildDestroyItem2379(player.EntityId,
+                        TokenRecordOf(touch, player.CharacterId), ShopItemPackets.DestroyReasonTokenBuy);
+                    await session.SendRmiAsync(ZoneS2COpcodes.OnDestroyItem, writer => writer.WriteBytes(destroyBody));
+                }
+            });
+        if (result.Written is not { } written)
         {
-            Logger.LogInformation("{Name}: no free bag cell for {Count}x '{Item}'; refused", player.Name, quantity, item.Name);
-            await RefuseAsync(ShopCodes.BuyFailBagFull);
+            await RefuseAsync(result.RefusalCode);
             return;
         }
-
-        Logger.LogInformation("{Name} buys {Count}x '{Item}' for {Gold}g from NPC 0x{Npc:X8}",
-            player.Name, quantity, item.Name, totalCost, npcHandle);
-
-        // Actually GIVE the item, stacked the way retail stacks a buy (PlanBuy): a quantity that fits an
-        // existing stack of the item is added to it and the record carries that EXISTING uid with the new
-        // total; a quantity that does not fit is split into new stacks of Stack_Max (a 255-buy of a Stack_Max-99
-        // item is 99 + 99 + 57). A new stack carries the template's Durability, as retail's
-        // fresh stackable records do (see InventoryStacking).
-        // Persist BEFORE charging: if the bag cannot be written nothing was delivered, so answer retail's
-        // failed-buy form instead of charging for (and announcing) a record that would vanish on relog.
-        // The bought stacks AND the token takes are written as one unit (WriteBuyAsync): if any write fails the ones
-        // already made are undone, so a failure never leaves the item delivered with its tokens untaken (E-H13).
-        BuyWrite written;
-        try
-        {
-            written = await WriteBuyAsync(inventory, player.CharacterId, itemId, (int)quantity, plan, item.Durability,
-                tokenTakes, Logger);
-        }
-        catch (Exception ex)
-        {
-            Logger.LogWarning(ex, "{Name}: buy of {Count}x '{Item}' could not be saved; refused, nothing delivered or charged",
-                player.Name, quantity, item.Name);
-            await RefuseAsync(ShopCodes.BuyFailGeneric);
-            return;
-        }
-        var stacks = written.Stacks;
 
         // Deduct the cost and hand the stacks over INSIDE the OnBuyItem (2375) ACK. That single packet does
         // everything: its record count (body+29) is the number of 126-byte records that follow (from body+41),
@@ -599,24 +407,9 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
         // 2375 already sets the wallet, so no separate OnZenyChange 2435 is needed. Retail sends the 2375
         // ALONE: no 2333 OnPickupItem accompanies a successful buy. The client prints the "obtained" chat
         // itself for a uid it already holds (a restack); a fresh stack shows only the zeny spent.
-        // The token 2379s go out only now that every write succeeded (a failed buy sends none, so the client's cells
-        // never diverge from the bag): one per stack touched, ahead of the 2375 as in retail, each the stack as it now
-        // stands with reason 2 at blob+10, count 0 for an emptied one (as BreakDownItemHandler does).
-        foreach (var record in written.TokenRecords)
-        {
-            var destroyBody = ShopItemPackets.BuildDestroyItem2379(player.EntityId, record, ShopItemPackets.DestroyReasonTokenBuy);
-            await session.SendRmiAsync(ZoneS2COpcodes.OnDestroyItem, writer => writer.WriteBytes(destroyBody));
-        }
-
-        if (tokenCost is null)
-        {
-            reservedZeny = 0;   // the charge already happened at the affordability check
-            // Write-through: persist the wallet immediately so a crash can't lose a purchase (the stacks are
-            // already durable above). Position/vitals ride the periodic autosave instead.
-            await services.GetRequiredService<ICharacterRepository>().UpdateGoldAsync(player.CharacterId, player.Gold);
-        }
-        var records = new List<byte[]>(stacks.Count);
-        foreach (var st in stacks) records.Add(WorldEntryService.BuildItemRecord126(st));
+        var records = new List<byte[]>(written.Stacks.Count);
+        foreach (var st in written.Stacks)
+            records.Add(WorldEntryService.BuildItemRecord126(InventoryEscrowAdapter.ToInventoryItem(st, player.CharacterId)));
         var buyBody = tokenCost is null
             ? ShopItemPackets.BuildBuyItem2375(player.EntityId, player.Gold, itemId, records)
             : ShopItemPackets.BuildBuyItem2375(player.EntityId, player.Gold, itemId, records,

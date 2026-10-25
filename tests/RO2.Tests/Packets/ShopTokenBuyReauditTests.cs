@@ -4,6 +4,7 @@ using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.Domain.GameData.Tables;
 using RO2.Domain.GameData;
+using RO2.Economy.Domain;
 using RO2.Identity.Application.Commands;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
@@ -74,6 +75,12 @@ public sealed class ShopTokenBuyReauditTests
         Assert.Equal(0, ShopItemPackets.BuildDestroyItem2379(0x0787EB11u, record)[13]);
     }
 
+    /// <summary>The stacks a token buy of <paramref name="quantity"/> takes from <paramref name="owned"/>: the host's bag read
+    /// (bag rows only) and the economy planner.</summary>
+    private static IReadOnlyList<StackTake>? PlanTokenTake(IReadOnlyList<InventoryItem> owned, BuyTokenInfo row, int quantity)
+        => ShopBuyPlanner.PlanTokenTake(ShopInventoryAdapter.BagOf(owned, new Dictionary<uint, ItemData>()).Stacks,
+            BuyItemHandler.TokenCostOf(row), quantity);
+
     private static async Task<BuyTokenInfo> TokenRowAsync(ushort id)
     {
         await using var fs = File.OpenRead(Path.Combine(DataDir(), "BuyTokenInfo.json"));
@@ -90,11 +97,11 @@ public sealed class ShopTokenBuyReauditTests
 
         
         var stack = new InventoryItem { Id = 0x0E043DA8069FAD2BUL, ItemId = 60000121, Count = 233, Slot = 30, StorageType = 0 };
-        var takes = BuyItemHandler.PlanTokenTake(new[] { stack }, row, quantity: 1);
+        var takes = PlanTokenTake(new[] { stack }, row, quantity: 1);
 
         Assert.NotNull(takes);
         var (taken, left) = Assert.Single(takes);
-        Assert.Same(stack, taken);
+        Assert.Equal(stack.Id, taken);
         Assert.Equal(231, left);
     }
 
@@ -111,13 +118,13 @@ public sealed class ShopTokenBuyReauditTests
 
         
         
-        var takes = BuyItemHandler.PlanTokenTake(owned, row, quantity: 3);
+        var takes = PlanTokenTake(owned, row, quantity: 3);
         Assert.NotNull(takes);
-        Assert.Equal(new[] { (2UL, 0), (1UL, 210), (3UL, 0), (4UL, 27) }, takes.Select(t => (t.Stack.Id, t.Left)));
+        Assert.Equal(new[] { (2UL, 0), (1UL, 210), (3UL, 0), (4UL, 27) }, takes.Select(t => (t.StackId, t.Left)));
 
         
-        Assert.Null(BuyItemHandler.PlanTokenTake(owned, row, quantity: 6));
-        Assert.Null(BuyItemHandler.PlanTokenTake(new[] { bank, c, d }, row, quantity: 1));
+        Assert.Null(PlanTokenTake(owned, row, quantity: 6));
+        Assert.Null(PlanTokenTake(new[] { bank, c, d }, row, quantity: 1));
     }
 
     [Fact]

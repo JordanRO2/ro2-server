@@ -4,6 +4,7 @@ using System.Linq;
 using RO2.Domain.Entities;
 using RO2.Domain.GameData;
 using RO2.Domain.GameData.Tables;
+using RO2.Economy.Domain;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Services;
 using Xunit;
@@ -156,13 +157,20 @@ public class ShopItemRetailFramesTests
     
     private static readonly IReadOnlyDictionary<uint, ItemData> NoBags = new Dictionary<uint, ItemData>();
 
+    /// <summary>The placement of a buy on <paramref name="bag"/>: the host's bag read (free cells from BagCapacity) and the economy planner.</summary>
+    private static ShopBuyPlan? PlanBuy(IReadOnlyList<InventoryItem> bag, uint itemId, int quantity, byte stackMax)
+    {
+        var view = ShopInventoryAdapter.BagOf(bag, NoBags);
+        return ShopBuyPlanner.Plan(view.Stacks, view.FreeCells, itemId, quantity, stackMax);
+    }
+
     [Fact]
     public void PlanBuy_RestacksOntoTheLowestCellStackTheQuantityFits()
     {
         var bag = new List<InventoryItem> { Stack(1, 34000473, 95, 7), Stack(2, 34000473, 30, 9), Stack(3, 34000473, 20, 3) };
-        var plan = BuyItemHandler.PlanBuy(bag, NoBags, 34000473, 5, stackMax: 99);
+        var plan = PlanBuy(bag, 34000473, 5, stackMax: 99);
         Assert.NotNull(plan);
-        Assert.Equal(3UL, plan!.Restack!.Id);   
+        Assert.Equal(3UL, plan!.RestackId);   
         Assert.Empty(plan.NewStacks);
     }
 
@@ -171,13 +179,13 @@ public class ShopItemRetailFramesTests
     {
         
         var bag = Enumerable.Range(0, 17).Select(i => Stack((ulong)(10 + i), 70000001, 1, (short)(i < 5 ? i : i + 1))).ToList();
-        var plan = BuyItemHandler.PlanBuy(bag, NoBags, 34000473, 255, stackMax: 99);
+        var plan = PlanBuy(bag, 34000473, 255, stackMax: 99);
         Assert.NotNull(plan);
-        Assert.Null(plan!.Restack);
+        Assert.Null(plan!.RestackId);
         Assert.Equal(new (short, int)[] { (5, 99), (18, 99), (19, 57) }, plan.NewStacks.ToArray());
 
         bag.Add(Stack(99, 70000001, 1, 5));
-        Assert.Null(BuyItemHandler.PlanBuy(bag, NoBags, 34000473, 255, stackMax: 99));   
-        Assert.NotNull(BuyItemHandler.PlanBuy(bag, NoBags, 34000473, 198, stackMax: 99)); 
+        Assert.Null(PlanBuy(bag, 34000473, 255, stackMax: 99));   
+        Assert.NotNull(PlanBuy(bag, 34000473, 198, stackMax: 99)); 
     }
 }
