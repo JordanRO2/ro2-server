@@ -95,7 +95,7 @@ public sealed partial class AuctionService
         if (article.ExpiresAt <= now)
         {
             var expired = await _repo.TryExpireAsync(article.Uid, now);
-            if (expired != null) await SettleExpiredNowAsync(expired, now);
+            if (expired != null) await _app.SettleExpiredNowAsync(expired, now);
             return Refused("expired");
         }
         if (article.ItemUid != itemUid) return Refused($"item {itemUid} is not the article's {article.ItemUid}");
@@ -105,7 +105,7 @@ public sealed partial class AuctionService
         if (sold == null) return Refused("changed meanwhile");
 
         var receivers = new HashSet<uint>();
-        await AwardToTopBidderAsync(sold, now, notifyBidder: true, receivers);
+        await _app.AwardToTopBidderAsync(sold, now, notifyBidder: true, receivers);
         foreach (var receiver in receivers)
             await _mailPort.NotifyNewMailAsync(receiver);
         return sold;
@@ -117,32 +117,4 @@ public sealed partial class AuctionService
         }
     }
 
- /// <summary>
- /// Delivers an article that was sold to its top bidder, either by a bid at the instant price or by expiry with a bid.
- /// </summary>
- /// <remarks>
- /// The item goes to the bidder (<see cref="AuctionBidMailKind.BidWon"/>), and the top bid proceeds go to the seller (<see cref="AuctionBidMailKind.BidProceeds"/>), less the seller share as on an instant sale. The seller receives a notice with the proceeds. When <paramref name="notifyBidder"/> is set, the bidder receives a notice as well. The bid's zeny was taken when the bid was placed. Both receivers are added to <paramref name="mailReceivers"/>.
- /// </remarks>
- /// <param name="sold">Article that was sold.</param>
- /// <param name="nowUtc">Current UTC time.</param>
- /// <param name="notifyBidder">Whether the bidder also gets a notice.</param>
- /// <param name="mailReceivers">Set that collects the players who received mail.</param>
-    private async Task AwardToTopBidderAsync(AuctionArticle sold, DateTime nowUtc, bool notifyBidder, HashSet<uint> mailReceivers)
-    {
-        await DeliverAsync(sold.TopBidderCharId, sold.TopBidderName, sold, AuctionBidMailKind.BidWon, withItem: true, gold: 0, nowUtc);
-        mailReceivers.Add(sold.TopBidderCharId);
-
-        long proceeds = SellerProceeds(sold.TopBid);
-        if (proceeds > 0)
-        {
-            await DeliverAsync(sold.SellerCharId, sold.SellerName, sold, AuctionBidMailKind.BidProceeds, withItem: false, gold: proceeds, nowUtc);
-            mailReceivers.Add(sold.SellerCharId);
-        }
-        await SendSystemMessageAsync(sold.SellerCharId, AuctionPackets.NotifyBidSold, sold, proceeds);
-        if (notifyBidder)
-            await SendSystemMessageAsync(sold.TopBidderCharId, AuctionPackets.NotifyBidWon, sold, 0);
-
-        _log.LogInformation("Auction {Uid} goes to top bidder {Bidder} for {Bid}; seller {Seller} receives {Proceeds}",
-            sold.Uid, sold.TopBidderName, sold.TopBid, sold.SellerName, proceeds);
-    }
 }

@@ -31,16 +31,16 @@ namespace RO2.Server.Zone.Services;
 public static class AuctionBidMailKind
 {
  /// <summary>The seller's zeny from an article that went to its top bidder.</summary>
-    public const byte BidProceeds = 1;
+    public const byte BidProceeds = AuctionMailKinds.BidProceeds;
 
  /// <summary>The item, sent to the bidder who won it.</summary>
-    public const byte BidWon = 4;
+    public const byte BidWon = AuctionMailKinds.BidWon;
 
  /// <summary>The zeny of a displaced bid, returned to its bidder when outbid or when the article is bought at the instant price.</summary>
-    public const byte OutbidRefund = 6;
+    public const byte OutbidRefund = AuctionMailKinds.OutbidRefund;
 
  /// <summary>The top bid's zeny, returned to its bidder when the seller cancels the article.</summary>
-    public const byte CancelRefund = 8;
+    public const byte CancelRefund = AuctionMailKinds.CancelRefund;
 }
 
 public static partial class AuctionPackets
@@ -187,7 +187,7 @@ public sealed partial class AuctionService
         if (article.ExpiresAt <= now)
         {
             var expired = await _repo.TryExpireAsync(article.Uid, now);
-            if (expired != null) await SettleExpiredNowAsync(expired, now);
+            if (expired != null) await _app.SettleExpiredNowAsync(expired, now);
             return Refused(AuctionPackets.ResultArticleGone, "expired");
         }
 
@@ -226,14 +226,14 @@ public sealed partial class AuctionService
 
         
         if (article.TopBidderCharId != 0)
-            await RefundTopBidAsync(article, AuctionBidMailKind.OutbidRefund, AuctionPackets.NotifyOutbid, notifyBidder: true, now);
+            await _app.RefundTopBidAsync(article, AuctionBidMailKind.OutbidRefund, AuctionPackets.NotifyOutbid, notifyBidder: true, now);
 
         if (buys)
         {
             
             
             var receivers = new HashSet<uint>();
-            await AwardToTopBidderAsync(updated, now, notifyBidder: false, receivers);
+            await _app.AwardToTopBidderAsync(updated, now, notifyBidder: false, receivers);
             foreach (var receiver in receivers)
                 await _mailPort.NotifyNewMailAsync(receiver);
         }
@@ -255,46 +255,4 @@ public sealed partial class AuctionService
  /// <param name="bidderCharId">Bidder's character id.</param>
     public async Task<List<AuctionArticle>> GetTopBidsAsync(uint bidderCharId) => (await _repo.GetTopBidsAsync(bidderCharId, DateTime.UtcNow)).ToList();
 
- /// <summary>
- /// Mails a displaced top bid back to its bidder, optionally sends that bidder a notice, and then sends the 2449 message.
- /// </summary>
- /// <remarks>
- /// The notice amount is 0. The seller's notice, where one applies, carries the proceeds instead.
- /// </remarks>
- /// <param name="displaced">Article whose top bid was displaced.</param>
- /// <param name="mailKind">Mail kind to send.</param>
- /// <param name="notifyType">Notice type to send to the bidder.</param>
- /// <param name="notifyBidder">Whether the bidder receives the notice.</param>
- /// <param name="nowUtc">Current UTC time.</param>
-    private async Task RefundTopBidAsync(AuctionArticle displaced, byte mailKind, uint notifyType, bool notifyBidder, DateTime nowUtc)
-    {
-        if (displaced.TopBidderCharId == 0 || displaced.TopBid <= 0) return;
-        try
-        {
-            await DeliverAsync(displaced.TopBidderCharId, displaced.TopBidderName, displaced, mailKind, withItem: false,
-                gold: displaced.TopBid, nowUtc);
-        }
-        catch (Exception ex)
-        {
-            
-            
-            _log.LogError(ex, "Auction {Uid}: refund of {Bid} to char {Bidder} could not be mailed",
-                displaced.Uid, displaced.TopBid, displaced.TopBidderCharId);
-            return;
-        }
-        if (notifyBidder)
-            await SendSystemMessageAsync(displaced.TopBidderCharId, notifyType, displaced, NoticeAmountNone);
-        await _mailPort.NotifyNewMailAsync(displaced.TopBidderCharId);
-    }
-
- /// <summary>Amount shown by a bidder's notice: none, since the refund itself arrives by mail.</summary>
-    private const long NoticeAmountNone = 0;
-
- /// <summary>Sends a 2693 system notice to a character, if the character is online.</summary>
- /// <param name="charId">Character to notify.</param>
- /// <param name="type">Notice type.</param>
- /// <param name="article">Article the notice refers to.</param>
- /// <param name="amount">Amount to show.</param>
-    private Task SendSystemMessageAsync(uint charId, uint type, AuctionArticle article, long amount)
-        => _notifier.SendSystemMessageAsync(charId, type, article.Uid, article.ItemId, amount);
 }

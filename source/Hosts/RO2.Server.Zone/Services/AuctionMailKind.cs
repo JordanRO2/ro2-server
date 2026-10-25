@@ -1,23 +1,25 @@
 using RO2.Domain.Entities;
+using RO2.Economy.Domain;
 
 namespace RO2.Server.Zone.Services;
 
 /// <summary>
-/// Mail kinds used for auction results. Each value is a <see cref="MailMessage.Kind"/>.
+/// Mail kinds used for auction results. Each value is a <see cref="MailMessage.Kind"/>, aliasing the economy
+/// domain's <see cref="AuctionMailKinds"/>.
 /// </summary>
 public static class AuctionMailKind
 {
  /// <summary>Unsold item returned to its seller when the listing expires.</summary>
-    public const byte Expired = 2;
+    public const byte Expired = AuctionMailKinds.Expired;
 
  /// <summary>Item of a cancelled listing returned to its seller.</summary>
-    public const byte Cancelled = 7;
+    public const byte Cancelled = AuctionMailKinds.Cancelled;
 
  /// <summary>Sale proceeds paid to the seller, as zeny.</summary>
-    public const byte Proceeds = 10;
+    public const byte Proceeds = AuctionMailKinds.Proceeds;
 
  /// <summary>Purchased item delivered to the buyer.</summary>
-    public const byte Purchased = 11;
+    public const byte Purchased = AuctionMailKinds.Purchased;
 
  /// <summary>True for the auction mail kinds, including the bid kinds of <see cref="AuctionBidMailKind"/>.</summary>
  /// <remarks>

@@ -817,8 +817,7 @@ public sealed partial class AuctionService
 {
     private readonly IAuctionRepository _repo;
     private readonly IEconomyMailPort _mailPort;
-    private readonly IAuctionNotifier _notifier;
-    private readonly double _sellerProceedsRate;
+    private readonly AuctionApplicationService _app;
     private readonly ILogger _log;
 
     /// <summary>Retail seller-proceeds rate (a 5% house cut), used when no <see cref="ServerConfiguration"/> is
@@ -829,9 +828,19 @@ public sealed partial class AuctionService
     {
         _repo = repo;
         _mailPort = new EconomyMailAdapter(mails, mailService);
-        _notifier = new AuctionNotifierAdapter(players, broadcast, log);
-        _sellerProceedsRate = sellerProceedsRate;
         _log = log;
+        // The economy application owns the listing transaction and the settlement policy (who is mailed the item,
+        // the proceeds or a refunded bid, and who is notified). The host keeps the operational logging, so the
+        // settlement's awarded/error traces come back through these callbacks.
+        _app = new AuctionApplicationService(_repo, _mailPort, new AuctionNotifierAdapter(players, broadcast, log), sellerProceedsRate,
+            onAwarded: (sold, proceeds) => _log.LogInformation(
+                "Auction {Uid} goes to top bidder {Bidder} for {Bid}; seller {Seller} receives {Proceeds}",
+                sold.Uid, sold.TopBidderName, sold.TopBid, sold.SellerName, proceeds),
+            onRefundMailError: (a, ex) => _log.LogError(ex,
+                "Auction {Uid}: refund of {Bid} to char {Bidder} could not be mailed", a.Uid, a.TopBid, a.TopBidderCharId),
+            onExpirySettleError: (a, ex) => _log.LogError(ex,
+                "Auction {Uid} expired but its item {ItemId} x{Count} (seller {Seller}, top bidder {Bidder}) could not be mailed",
+                a.Uid, a.ItemId, a.Count, a.SellerCharId, a.TopBidderCharId));
     }
 
     public static AuctionService From(IServiceProvider services, PlayerStateManager players, BroadcastService broadcast, ILogger log) =>
@@ -848,9 +857,6 @@ public sealed partial class AuctionService
     /// not when its seller next looks; one minute keeps the lag small.
     /// </summary>
     public static readonly TimeSpan ExpirySweepPeriod = TimeSpan.FromMinutes(1);
-
-    /// <summary>Articles closed per query; a sweep keeps querying until a batch comes back short.</summary>
-    private const int ExpirySweepBatch = 100;
 
     private static int _sweepStarted; // 0 = not yet
     private static int _sweepRunning; // 0 = idle
@@ -902,87 +908,14 @@ public sealed partial class AuctionService
     }
 
     /// <summary>
-    /// Closes every article of any seller whose duration ran out by <paramref name="nowUtc"/> and settles it
-    /// (<see cref="SettleExpiredAsync"/>: the item back to its seller, or to its top bidder when it has one),
-    /// then sends each online receiver one 2449 with their unread count. Each close is the atomic
-    /// Active -> Expired update, so an article that a buyer, its seller or the lazy seller-list path closes at
-    /// the same moment is mailed once only. The whole pass stamps its mails with <paramref name="nowUtc"/>:
-    /// a batch of expiry mails carries one identical sent time, the mark of one batch, not of each article's own
-    /// expiry.
-    /// Returns how many articles it closed.
+    /// Closes every article of any seller whose duration ran out by <paramref name="nowUtc"/> and settles it (the
+    /// item back to its seller, or to its top bidder when it has one), then sends each online receiver one 2449.
+    /// The settlement is the economy application flow (<see cref="AuctionApplicationService.ReturnExpiredAsync"/>);
+    /// this keeps the method the expiry sweep calls. Returns how many articles it closed.
     /// </summary>
-    public async Task<int> ReturnExpiredAsync(DateTime nowUtc)
-    {
-        int returned = 0;
-        var receivers = new HashSet<uint>();
-        while (true)
-        {
-            var due = await _repo.GetDueAsync(nowUtc, ExpirySweepBatch);
-            int closedThisBatch = 0;
-            foreach (var article in due)
-            {
-                var closed = await _repo.TryExpireAsync(article.Uid, nowUtc);
-                if (closed == null) continue; // closed another way in between
-                closedThisBatch++;
-                try
-                {
-                    await SettleExpiredAsync(closed, nowUtc, receivers);
-                    returned++;
-                }
-                catch (Exception ex)
-                {
-                    // Not re-opened: if the insert did land, a retry would mail the item twice. The article
-                    // document keeps the whole item snapshot and the top bid (state Expired), so it can be
-                    // recovered by hand.
-                    _log.LogError(ex, "Auction {Uid} expired but its item {ItemId} x{Count} (seller {Seller}, top bidder {Bidder}) could not be mailed",
-                        closed.Uid, closed.ItemId, closed.Count, closed.SellerCharId, closed.TopBidderCharId);
-                }
-            }
-            // Stop on a short batch, and on one where nothing could be closed, so an article that stays
-            // Active against the conditional close can never spin this loop (the next period retries it).
-            if (due.Count < ExpirySweepBatch || closedThisBatch == 0) break;
-        }
-        foreach (var receiver in receivers)
-            await _mailPort.NotifyNewMailAsync(receiver);
-        return returned;
-    }
-
-    /// <summary>
-    /// Settles an article that <see cref="IAuctionRepository.TryExpireAsync"/> just closed. Without a bid its
-    /// item goes back to the seller (<see cref="AuctionMailKind.Expired"/>). With one, the top bidder wins it
-    /// at the top bid (<see cref="AwardToTopBidderAsync"/>): the bid's zeny was taken from the bidder when it
-    /// was placed, so returning the item alone would keep the bidder's zeny with nobody. That the bid wins at
-    /// expiry is not established. It is what the client's texts allow: the auction mail kinds and 2693 types have
-    /// a text for a bid that wins (kind 4 / type 4, 8654 "@1 item that you bid on has been auctioned off") and for
-    /// a bid returned because it was outbid (kind 6 / type 5) or the seller cancelled (kind 8 / type 8), but none
-    /// for a bid returned at expiry.
-    /// Every receiver's id goes into <paramref name="mailReceivers"/> for one 2449 once the caller is done.
-    /// </summary>
-    private async Task SettleExpiredAsync(AuctionArticle closed, DateTime nowUtc, HashSet<uint> mailReceivers)
-    {
-        if (closed.TopBidderCharId != 0)
-        {
-            await AwardToTopBidderAsync(closed, nowUtc, notifyBidder: true, mailReceivers);
-            return;
-        }
-        await ReturnItemToSellerAsync(closed, AuctionMailKind.Expired, nowUtc);
-        mailReceivers.Add(closed.SellerCharId);
-    }
-
-    /// <summary><see cref="SettleExpiredAsync"/> for one article, with its 2449s sent at once.</summary>
-    private async Task SettleExpiredNowAsync(AuctionArticle closed, DateTime nowUtc)
-    {
-        var receivers = new HashSet<uint>();
-        await SettleExpiredAsync(closed, nowUtc, receivers);
-        foreach (var receiver in receivers)
-            await _mailPort.NotifyNewMailAsync(receiver);
-    }
+    public Task<int> ReturnExpiredAsync(DateTime nowUtc) => _app.ReturnExpiredAsync(nowUtc);
 
     // The registration fee (RegistrationFee) and the listing rules (CheckSellStart) are in AuctionSellStartRules.cs.
-
-    /// <summary>What the seller receives for a sale (see <see cref="AuctionPricing.SellerProceeds"/>), at the
-    /// server's configured proceeds rate (<see cref="GameConfig.AuctionSellerProceedsRate"/>).</summary>
-    private long SellerProceeds(long price) => AuctionPricing.SellerProceeds(price, _sellerProceedsRate);
 
     /// <summary>Inventory <c>StorageType</c> of the character's bag (1 = worn equipment, 2 = bank).</summary>
     private const byte BagStorageType = 0;
@@ -1023,10 +956,9 @@ public sealed partial class AuctionService
 
         // The transactional listing (charge fee, take item into escrow, store the article, compensate on failure)
         // is the Economy application flow; the host keeps the game-data validation above and the wire below.
-        var app = new AuctionApplicationService(_repo, new InventoryEscrowAdapter(inventory));
         var cmd = new AuctionListCommand(seller.CharacterId, seller.Name, seller.CharacterUid, req.ItemUid,
             req.Count, (long)req.StartPrice, (long)req.BuyoutPrice, req.Hours, fee);
-        var result = await app.ListAsync(cmd, seller,
+        var result = await _app.ListAsync(cmd, seller, new InventoryEscrowAdapter(inventory),
             ex => _log.LogError(ex, "Auction insert failed; restoring the item to {Seller}", seller.Name));
 
         switch (result.Outcome)
@@ -1076,7 +1008,7 @@ public sealed partial class AuctionService
         {
             var closed = await _repo.TryExpireAsync(due.Uid, now);
             if (closed == null) continue;
-            await SettleExpiredAsync(closed, now, receivers);
+            await _app.SettleExpiredAsync(closed, now, receivers);
         }
         foreach (var receiver in receivers)
             await _mailPort.NotifyNewMailAsync(receiver);
@@ -1180,9 +1112,9 @@ public sealed partial class AuctionService
         var now = DateTime.UtcNow;
         var closed = await _repo.TryCancelAsync(articleUid, seller.CharacterId, now);
         if (closed == null) return null;
-        await ReturnItemToSellerAsync(closed, AuctionMailKind.Cancelled, now);
+        await _app.ReturnItemToSellerAsync(closed, AuctionMailKind.Cancelled, now);
         if (closed.TopBidderCharId != 0)
-            await RefundTopBidAsync(closed, AuctionBidMailKind.CancelRefund, AuctionPackets.NotifyCancelledWithBid, notifyBidder: true, now);
+            await _app.RefundTopBidAsync(closed, AuctionBidMailKind.CancelRefund, AuctionPackets.NotifyCancelledWithBid, notifyBidder: true, now);
         _log.LogInformation("Auction {Uid} cancelled by {Seller}; item {ItemId} x{Count} mailed back",
             closed.Uid, seller.Name, closed.ItemId, closed.Count);
         return closed;
@@ -1218,7 +1150,7 @@ public sealed partial class AuctionService
         if (article.ExpiresAt <= now)
         {
             var expired = await _repo.TryExpireAsync(article.Uid, now);
-            if (expired != null) await SettleExpiredNowAsync(expired, now);
+            if (expired != null) await _app.SettleExpiredNowAsync(expired, now);
             return (BuyResult.Gone, null);
         }
         // "You can't bid on your own item in an auction." (string_ui 1547)
@@ -1241,14 +1173,14 @@ public sealed partial class AuctionService
 
         await characters.UpdateGoldAsync(buyer.CharacterId, buyer.Gold);
 
-        await DeliverAsync(buyer.CharacterId, buyer.Name, sold, AuctionMailKind.Purchased, withItem: true, gold: 0, now);
+        await _app.DeliverAsync(buyer.CharacterId, buyer.Name, sold, AuctionMailKind.Purchased, withItem: true, gold: 0, now);
 
         // Seller side, in order (2693 type 1, then 2449). A 1-zeny article pays (long)float32(0.95) = 0, so it
         // gets the notice but no empty mail.
-        long proceeds = SellerProceeds(sold.BuyoutPrice);
+        long proceeds = _app.SellerProceeds(sold.BuyoutPrice);
         if (proceeds > 0)
-            await DeliverAsync(sold.SellerCharId, sold.SellerName, sold, AuctionMailKind.Proceeds, withItem: false, gold: proceeds, now);
-        await NotifySellerAsync(sold, proceeds);
+            await _app.DeliverAsync(sold.SellerCharId, sold.SellerName, sold, AuctionMailKind.Proceeds, withItem: false, gold: proceeds, now);
+        await _app.NotifySellerSoldAsync(sold, proceeds);
         if (proceeds > 0)
             await _mailPort.NotifyNewMailAsync(sold.SellerCharId);
 
@@ -1256,7 +1188,7 @@ public sealed partial class AuctionService
         // notice 8013 "Another user purchased @1..." is wrong for a top bidder who bought it, so they get the
         // refund mail alone.
         if (sold.TopBidderCharId != 0)
-            await RefundTopBidAsync(sold, AuctionBidMailKind.OutbidRefund, AuctionPackets.NotifyInstantBoughtOverBid,
+            await _app.RefundTopBidAsync(sold, AuctionBidMailKind.OutbidRefund, AuctionPackets.NotifyInstantBoughtOverBid,
                 notifyBidder: sold.TopBidderCharId != buyer.CharacterId, now);
 
         _log.LogInformation("Auction {Uid} bought by {Buyer} for {Price}; seller {Seller} receives {Proceeds}",
@@ -1272,35 +1204,4 @@ public sealed partial class AuctionService
 
     /// <summary>2449 OnMailNew to <paramref name="charId"/> if online (unread count), via the mail system.</summary>
     public Task NotifyNewMailAsync(uint charId) => _mailPort.NotifyNewMailAsync(charId);
-
-    // ---------------------------------------------------------------------------------------------
-    // Helpers
-    // ---------------------------------------------------------------------------------------------
-
-    /// <summary>2693 type 1 to the seller, if online: the article, the item template and the proceeds.</summary>
-    private Task NotifySellerAsync(AuctionArticle sold, long proceeds)
-        => _notifier.SendSystemMessageAsync(sold.SellerCharId, AuctionPackets.NotifySold, sold.Uid, sold.ItemId, proceeds);
-
-    /// <summary>The article's item back to its seller: <see cref="AuctionMailKind.Cancelled"/> or
-    /// <see cref="AuctionMailKind.Expired"/>, stamped <paramref name="sentAtUtc"/>.</summary>
-    private async Task ReturnItemToSellerAsync(AuctionArticle article, byte kind, DateTime sentAtUtc)
-    {
-        await DeliverAsync(article.SellerCharId, article.SellerName, article, kind, withItem: true, gold: 0, sentAtUtc);
-    }
-
-    /// <summary>
-    /// Stores a mail carrying the article's item and/or zeny for <paramref name="receiverCharId"/>. Sender
-    /// and title stay empty: auction mails carry empty sender and title strings and let the client
-    /// write the text from the list-row kind (<see cref="AuctionMailKind"/>) and the item template at rec+58,
-    /// which is the article's template on every such row, the item-less proceeds mail included.
-    /// Every kind also keeps the article's instant price (<see cref="MailMessage.AuctionPrice"/>), the
-    /// value the client's 2446 shows at record+173 on each of them — on the proceeds mail too, where it is the
-    /// price the article sold at, not the zeny the mail carries.
-    /// </summary>
-    private async Task DeliverAsync(uint receiverCharId, string receiverName, AuctionArticle article, byte kind, bool withItem, long gold,
-        DateTime sentAtUtc)
-    {
-        await _mailPort.SendAuctionMailAsync(receiverCharId, receiverName, kind, article.BuyoutPrice, gold,
-            withItem ? article.ToStackSnapshot() : null, article.ItemId, sentAtUtc);
-    }
 }
