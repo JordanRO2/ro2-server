@@ -1,7 +1,6 @@
 using MongoDB.Driver;
 using MongoDB.Bson.Serialization.Conventions;
 using RO2.Domain.Entities;
-using RO2.Characters.Domain;
 
 namespace RO2.Persistence.Mongo.Persistence;
 
@@ -15,7 +14,6 @@ public class MongoDbContext
     public const string DefaultDatabaseName = "ro2_server";
 
     /// <summary>Collection holding the player <see cref="Character"/> documents.</summary>
-    internal const string CharactersCollectionName = "characters";
 
     private readonly IMongoDatabase _database;
 
@@ -36,7 +34,6 @@ public class MongoDbContext
         _database = client.GetDatabase(databaseName);
     }
 
-    internal IMongoCollection<Character> Characters => _database.GetCollection<Character>(CharactersCollectionName);
 
     public IMongoCollection<T> GetCollection<T>(string name) => _database.GetCollection<T>(name);
 }

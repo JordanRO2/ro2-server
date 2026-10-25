@@ -25,7 +25,7 @@ public sealed class ProviderWiringTests
         var s = new ServiceCollection();
         s.AddPersistence(new DatabaseConfig { Provider = "Postgres", ConnectionString = "Host=localhost;Database=x" });
 
-        Assert.Equal("RO2.Persistence.Postgres.Repositories.CharacterRepository", ImplOf<ICharacterRepository>(s));
+        Assert.Equal("RO2.Characters.Infrastructure.Postgres.CharacterRepository", ImplOf<ICharacterRepository>(s));
         Assert.Equal("RO2.Inventory.Infrastructure.Postgres.InventoryRepository", ImplOf<IInventoryRepository>(s));
         Assert.Equal("RO2.Persistence.Postgres.Repositories.TimedEnchantRepository", ImplOf<ITimedEnchantRepository>(s));
         Assert.Equal("RO2.Persistence.Postgres.Repositories.ChannelPresenceStore", ImplOf<IChannelPresenceStore>(s));
@@ -42,7 +42,7 @@ public sealed class ProviderWiringTests
         var s = new ServiceCollection();
         s.AddPersistence(new DatabaseConfig { Provider = "Mongo", ConnectionString = "mongodb://localhost", DatabaseName = "x" });
 
-        Assert.Equal("RO2.Persistence.Mongo.Repositories.CharacterRepository", ImplOf<ICharacterRepository>(s));
+        Assert.Equal("RO2.Characters.Infrastructure.Mongo.CharacterRepository", ImplOf<ICharacterRepository>(s));
         Assert.Equal("RO2.Inventory.Infrastructure.Mongo.InventoryRepository", ImplOf<IInventoryRepository>(s));
         Assert.Equal("RO2.Persistence.Mongo.Persistence.ChannelPresenceStore", ImplOf<IChannelPresenceStore>(s));
         Assert.Equal("RO2.Persistence.Mongo.Repositories.OnlineAccountRegistry", ImplOf<IOnlineAccountRegistry>(s));
