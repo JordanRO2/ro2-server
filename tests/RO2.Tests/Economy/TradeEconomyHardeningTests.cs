@@ -9,6 +9,7 @@ using RO2.Domain.Entities;
 using RO2.Domain.GameData;
 using RO2.Network.ProudNet;
 using RO2.Network.Protocol;
+using RO2.Application;
 using RO2.Persistence.Mongo.Repositories;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Models;

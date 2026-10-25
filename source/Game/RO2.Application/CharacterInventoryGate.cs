@@ -1,6 +1,6 @@
 using System.Collections.Concurrent;
 
-namespace RO2.Persistence.Mongo.Repositories;
+namespace RO2.Application;
 
 /// <summary>
 /// SP0-INV: a per-character, process-wide async gate for inventory mutations. The inventory is persisted
