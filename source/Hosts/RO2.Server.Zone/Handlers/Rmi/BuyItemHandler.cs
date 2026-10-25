@@ -146,9 +146,13 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
         limit = PossessionLimitOf(itemId);
         held = 0;
         if (limit <= 0) return false;
-        held = owned.Where(i => i.StorageType == StorageBag && i.ItemId == itemId).Sum(i => (long)Math.Max(0, i.Count));
-        return held + quantity > limit;
+        return ShopBuyPlanner.ExceedsPossessionLimit(ToBagStacks(owned), itemId, quantity, limit, out held);
     }
+
+    /// <summary>The bag stacks (StorageType 0) of <paramref name="owned"/> as neutral <see cref="BagStack"/>s for the
+    /// economy planner; worn and banked rows are dropped.</summary>
+    private static IReadOnlyList<BagStack> ToBagStacks(IReadOnlyList<InventoryItem> owned)
+        => owned.Where(i => i.StorageType == StorageBag).Select(i => new BagStack(i.Id, i.ItemId, i.Count, i.Slot)).ToList();
 
     /// <summary>
     /// Where a zeny buy of <paramref name="quantity"/> lands, the way retail stacks a buy (the rule in InventoryStacking):
@@ -164,25 +168,12 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
     internal static BuyPlan? PlanBuy(IReadOnlyList<InventoryItem> owned, IReadOnlyDictionary<uint, ItemData> items,
         uint itemId, int quantity, byte stackMax)
     {
-        int perStack = stackMax < 1 ? 1 : stackMax;   // ItemInfo: Stack_Max 1 = not stackable
-        if (perStack > 1)
-        {
-            var target = owned
-                .Where(i => i.StorageType == StorageBag && i.ItemId == itemId && i.Count > 0 && i.Count + quantity <= perStack)
-                .OrderBy(i => i.Slot)
-                .FirstOrDefault();
-            if (target is not null) return new BuyPlan(target, Array.Empty<(short, int)>());
-        }
-        var free = BagCapacity.FreeCells(owned, items);
-        var stacks = new List<(short Cell, int Count)>();
-        for (int remaining = quantity, next = 0; remaining > 0; next++)
-        {
-            if (next >= free.Count) return null;
-            int n = Math.Min(perStack, remaining);
-            stacks.Add((free[next], n));
-            remaining -= n;
-        }
-        return new BuyPlan(null, stacks);
+        // The placement rule is the economy planner's; the host still resolves the free cells (BagCapacity) and maps
+        // the restack target back to the live inventory row the writer mutates.
+        var plan = ShopBuyPlanner.Plan(ToBagStacks(owned), BagCapacity.FreeCells(owned, items), itemId, quantity, stackMax);
+        if (plan is null) return null;
+        var restack = plan.RestackId is { } id ? owned.First(i => i.Id == id) : null;
+        return new BuyPlan(restack, plan.NewStacks);
     }
 
     /// <summary>
@@ -266,22 +257,15 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
     internal static List<(InventoryItem Stack, int Left)>? PlanTokenTake(IReadOnlyList<InventoryItem> owned,
         BuyTokenInfo row, int quantity)
     {
-        var needs = new List<(uint ItemId, int Need)>(3);
-        foreach (var (id, need) in new[] { (row.TokenItemID1, (int)row.NeedValue1), (row.TokenItemID2, (int)row.NeedValue2), (row.TokenItemID3, (int)row.NeedValue3) })
+        var cost = new TokenCost(new (uint, int)[]
         {
-            if (id == 0 || need <= 0) continue;
-            int i = needs.FindIndex(n => n.ItemId == id);
-            if (i >= 0) needs[i] = (id, needs[i].Need + need * quantity);
-            else needs.Add((id, need * quantity));
-        }
-        var takes = new List<(InventoryItem Stack, int Left)>();
-        foreach (var (id, need) in needs)
-        {
-            var part = BreakDownItemHandler.PlanStoneTake(owned, id, need, NoExcludedUid);
-            if (part is null) return null;
-            takes.AddRange(part);
-        }
-        return takes;
+            (row.TokenItemID1, (int)row.NeedValue1),
+            (row.TokenItemID2, (int)row.NeedValue2),
+            (row.TokenItemID3, (int)row.NeedValue3),
+        });
+        var plan = ShopBuyPlanner.PlanTokenTake(ToBagStacks(owned), cost, quantity);
+        if (plan is null) return null;
+        return plan.Select(t => (owned.First(i => i.Id == t.StackId), t.Left)).ToList();
     }
 
     /// <summary>A planned buy: <see cref="Restack"/> takes the whole quantity, or else <see cref="NewStacks"/>

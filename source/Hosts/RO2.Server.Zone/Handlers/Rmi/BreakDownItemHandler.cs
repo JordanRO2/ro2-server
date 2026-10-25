@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
+using RO2.Economy.Domain;
 using RO2.Domain.GameData;
 using RO2.Domain.GameData.Tables;
 using RO2.Network.Packets;
@@ -242,21 +243,14 @@ public class BreakDownItemHandler : ZoneRmiHandlerBase<BreakDownItemHandler>
     internal static List<(InventoryItem Stack, int Left)>? PlanStoneTake(IEnumerable<InventoryItem> bagRows,
         uint stoneItemId, int need, ulong sourceUid)
     {
-        var stacks = bagRows
-            .Where(i => i.StorageType == BagStorageType && i.ItemId == stoneItemId && i.Count > 0 && i.Id != sourceUid)
-            .OrderBy(i => i.Slot)
-            .ToList();
-        if (need <= 0) return new();
-        if (stacks.Sum(i => (long)i.Count) < need) return null;
-        var takes = new List<(InventoryItem Stack, int Left)>();
-        foreach (var stack in stacks)
-        {
-            if (need == 0) break;
-            int take = Math.Min(need, stack.Count);
-            takes.Add((stack, stack.Count - take));
-            need -= take;
-        }
-        return takes;
+        // The take order (lowest cell first, exclude the source uid) is the economy planner's shared primitive; the
+        // host maps its rows in and resolves the chosen stack ids back to the live inventory rows it mutates.
+        var rows = bagRows.Where(i => i.StorageType == BagStorageType).ToList();
+        var plan = ShopBuyPlanner.TakeFromStacks(
+            rows.Select(i => new BagStack(i.Id, i.ItemId, i.Count, i.Slot)).ToList(), stoneItemId, need, sourceUid);
+        if (plan is null) return null;
+        var byId = rows.ToDictionary(i => i.Id);
+        return plan.Select(t => (byId[t.StackId], t.Left)).ToList();
     }
 
     /// <summary>2417 result code for a refused break-down (the request echoed, k = 0, and no 2329/2379 before it).</summary>
