@@ -280,7 +280,7 @@ public sealed partial class AuctionService
             var receivers = new HashSet<uint>();
             await AwardToTopBidderAsync(updated, now, notifyBidder: false, receivers);
             foreach (var receiver in receivers)
-                await _mailService.NotifyNewMailAsync(receiver);
+                await _mailPort.NotifyNewMailAsync(receiver);
         }
 
         _log.LogInformation("Auction {Uid}: {Bidder} bid {Bid} (was {Previous} by char {PreviousBidder}){Bought}",
@@ -329,7 +329,7 @@ public sealed partial class AuctionService
         }
         if (notifyBidder)
             await SendSystemMessageAsync(displaced.TopBidderCharId, notifyType, displaced, NoticeAmountNone);
-        await _mailService.NotifyNewMailAsync(displaced.TopBidderCharId);
+        await _mailPort.NotifyNewMailAsync(displaced.TopBidderCharId);
     }
 
  /// <summary>Amount shown by a bidder's notice: none, since the refund itself arrives by mail.</summary>

@@ -1,3 +1,5 @@
+using RO2.BuildingBlocks;
+
 namespace RO2.Economy.Domain;
 
 /// <summary>Lifecycle of a consignment article. Only <see cref="Active"/> articles are listed or buyable.</summary>
@@ -25,6 +27,27 @@ public sealed class AuctionArticle
 
     /// <summary>Derives an article's display uid from its article id.</summary>
     public static ulong MakeUid(ulong id) => UidBase + id;
+
+    /// <summary>The listed item's per-instance state as a neutral snapshot, for a mail attachment or a bag restore.</summary>
+    public ItemStackSnapshot ToStackSnapshot() => new()
+    {
+        Id = ItemUid,
+        ItemId = ItemId,
+        Count = Count,
+        Refine = Refine,
+        Element = Element,
+        Durability = Durability,
+        DyeColor = DyeColor,
+        DyeColor2 = DyeColor2,
+        DyeColor3 = DyeColor3,
+        FxEnchantIndex = FxEnchantIndex,
+        EnchantReinforceId = EnchantReinforceId,
+        EnchantSeconds = EnchantSeconds,
+        CardsJson = CardsJson,
+        SocketPunchersJson = SocketPunchersJson,
+        Bound = Bound,
+        AbilityValue = AbilityValue,
+    };
 
     /// <summary>Monotonic numeric id from <c>auction_counters</c>. Maps to Mongo _id.</summary>
     public ulong Id { get; set; }

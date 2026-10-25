@@ -815,8 +815,7 @@ public static partial class AuctionPackets
 public sealed partial class AuctionService
 {
     private readonly IAuctionRepository _repo;
-    private readonly IMailRepository _mails;
-    private readonly MailService _mailService;
+    private readonly IEconomyMailPort _mailPort;
     private readonly PlayerStateManager _players;
     private readonly BroadcastService _broadcast;
     private readonly ILogger _log;
@@ -824,8 +823,7 @@ public sealed partial class AuctionService
     private AuctionService(IAuctionRepository repo, IMailRepository mails, MailService mailService, PlayerStateManager players, BroadcastService broadcast, ILogger log)
     {
         _repo = repo;
-        _mails = mails;
-        _mailService = mailService;
+        _mailPort = new EconomyMailAdapter(mails, mailService);
         _players = players;
         _broadcast = broadcast;
         _log = log;
@@ -938,7 +936,7 @@ public sealed partial class AuctionService
             if (due.Count < ExpirySweepBatch || closedThisBatch == 0) break;
         }
         foreach (var receiver in receivers)
-            await _mailService.NotifyNewMailAsync(receiver);
+            await _mailPort.NotifyNewMailAsync(receiver);
         return returned;
     }
 
@@ -970,7 +968,7 @@ public sealed partial class AuctionService
         var receivers = new HashSet<uint>();
         await SettleExpiredAsync(closed, nowUtc, receivers);
         foreach (var receiver in receivers)
-            await _mailService.NotifyNewMailAsync(receiver);
+            await _mailPort.NotifyNewMailAsync(receiver);
     }
 
     // The registration fee (RegistrationFee) and the listing rules (CheckSellStart) are in AuctionSellStartRules.cs.
@@ -1082,7 +1080,7 @@ public sealed partial class AuctionService
             await SettleExpiredAsync(closed, now, receivers);
         }
         foreach (var receiver in receivers)
-            await _mailService.NotifyNewMailAsync(receiver);
+            await _mailPort.NotifyNewMailAsync(receiver);
         return (await _repo.GetActiveBySellerAsync(sellerCharId, now)).ToList();
     }
 
@@ -1253,7 +1251,7 @@ public sealed partial class AuctionService
             await DeliverAsync(sold.SellerCharId, sold.SellerName, sold, AuctionMailKind.Proceeds, withItem: false, gold: proceeds, now);
         await NotifySellerAsync(sold, proceeds);
         if (proceeds > 0)
-            await _mailService.NotifyNewMailAsync(sold.SellerCharId);
+            await _mailPort.NotifyNewMailAsync(sold.SellerCharId);
 
         // The bid the purchase displaced, read from the document the purchase closed (see the summary). Its
         // notice 8013 "Another user purchased @1..." is wrong for a top bidder who bought it, so they get the
@@ -1274,7 +1272,7 @@ public sealed partial class AuctionService
     }
 
     /// <summary>2449 OnMailNew to <paramref name="charId"/> if online (unread count), via the mail system.</summary>
-    public Task NotifyNewMailAsync(uint charId) => _mailService.NotifyNewMailAsync(charId);
+    public Task NotifyNewMailAsync(uint charId) => _mailPort.NotifyNewMailAsync(charId);
 
     // ---------------------------------------------------------------------------------------------
     // Helpers
@@ -1317,36 +1315,7 @@ public sealed partial class AuctionService
     private async Task DeliverAsync(uint receiverCharId, string receiverName, AuctionArticle article, byte kind, bool withItem, long gold,
         DateTime sentAtUtc)
     {
-        var mail = new MailMessage
-        {
-            ReceiverCharId = receiverCharId,
-            ReceiverName = receiverName,
-            Gold = Math.Max(0, gold),
-            IsRead = false,
-            SentAt = sentAtUtc,
-            Kind = kind,
-            KindItemId = article.ItemId,
-            AuctionPrice = Math.Max(0, article.BuyoutPrice),
-        };
-        if (withItem)
-        {
-            mail.AttachedItemUid = article.ItemUid;
-            mail.AttachedItemId = article.ItemId;
-            mail.AttachedItemCount = article.Count > 0 ? article.Count : 1;
-            mail.AttachedItemRefine = article.Refine;
-            mail.AttachedItemDurability = article.Durability;
-            mail.AttachedItemCardsJson = article.CardsJson;
-            mail.AttachedItemElement = article.Element;
-            mail.AttachedItemDyeColor = article.DyeColor;
-            mail.AttachedItemSocketPunchersJson = article.SocketPunchersJson;
-            mail.AttachedItemDyeColor2 = article.DyeColor2;
-            mail.AttachedItemDyeColor3 = article.DyeColor3;
-            mail.AttachedItemFxEnchantIndex = article.FxEnchantIndex;
-            mail.AttachedItemEnchantReinforceId = article.EnchantReinforceId;
-            mail.AttachedItemEnchantSeconds = article.EnchantSeconds;
-            mail.AttachedItemBound = article.Bound;
-            mail.AttachedItemAbilityValue = article.AbilityValue;
-        }
-        await _mails.AddAsync(mail);
+        await _mailPort.SendAuctionMailAsync(receiverCharId, receiverName, kind, article.BuyoutPrice, gold,
+            withItem ? article.ToStackSnapshot() : null, article.ItemId, sentAtUtc);
     }
 }

@@ -107,7 +107,7 @@ public sealed partial class AuctionService
         var receivers = new HashSet<uint>();
         await AwardToTopBidderAsync(sold, now, notifyBidder: true, receivers);
         foreach (var receiver in receivers)
-            await _mailService.NotifyNewMailAsync(receiver);
+            await _mailPort.NotifyNewMailAsync(receiver);
         return sold;
 
         AuctionArticle? Refused(string why)
