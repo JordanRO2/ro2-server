@@ -25,6 +25,26 @@ public sealed record AuctionListCommand(
 /// build the client's slot record), and <see cref="CountLeft"/> is what stayed in the bag.</summary>
 public sealed record AuctionListResult(AuctionListOutcome Outcome, AuctionArticle? Article, ItemStackSnapshot? Taken, int CountLeft);
 
+/// <summary>How an instant buy ended; every result gets a 2461 from the host.</summary>
+public enum BuyResult
+{
+    /// <summary>The article was bought at its instant price.</summary>
+    Bought,
+    /// <summary>The article is gone (sold, expired or cancelled) by the time the buy ran.</summary>
+    Gone,
+    /// <summary>The buyer cannot buy this article (their own, or one with no instant price).</summary>
+    Refused,
+    /// <summary>The buyer's wallet is below the instant price.</summary>
+    NotEnoughMoney,
+}
+
+/// <summary>Who is bidding and on what: the bidder's identity plus the article, item and bid the request named.</summary>
+public sealed record AuctionBidCommand(
+    uint BidderCharId, string BidderName, ulong BidderCharUid, ulong ArticleUid, ulong ItemUid, uint ItemId, ulong Bid);
+
+/// <summary>Who is buying and what: the buyer's identity plus the article and the price the request named.</summary>
+public sealed record AuctionBuyCommand(uint BuyerCharId, string BuyerName, ulong ArticleUid, ulong Price);
+
 /// <summary>
 /// The auction economy flows as application logic: listing an item (fee → escrow → store → compensate) and the
 /// settlement policy that pays out a sale, cancellation or expiry (who is mailed the item, the proceeds or a
@@ -36,25 +56,19 @@ public sealed record AuctionListResult(AuctionListOutcome Outcome, AuctionArticl
 /// <param name="mail">Payout mail port.</param>
 /// <param name="notifier">In-world 2693 notice port.</param>
 /// <param name="sellerProceedsRate">Fraction of a sale the seller keeps (the house cut is 1 − this).</param>
-/// <param name="onAwarded">Invoked after an article is awarded to its top bidder, with the article and the seller's proceeds, so the host can log it.</param>
-/// <param name="onRefundMailError">Invoked when a displaced bid's refund mail could not be stored (the failure is swallowed, as it was before), so the host can log it.</param>
-/// <param name="onExpirySettleError">Invoked when an expired article could not be mailed during the sweep, so the host can log it.</param>
+/// <param name="log">The flows' operational log; the host implements it over its logger.</param>
 public sealed class AuctionApplicationService(
     IAuctionRepository repo,
     IEconomyMailPort mail,
     IAuctionNotifier notifier,
     double sellerProceedsRate,
-    Action<AuctionArticle, long>? onAwarded = null,
-    Action<AuctionArticle, Exception>? onRefundMailError = null,
-    Action<AuctionArticle, Exception>? onExpirySettleError = null)
+    IAuctionLog log)
 {
     private readonly IAuctionRepository _repo = repo;
     private readonly IEconomyMailPort _mail = mail;
     private readonly IAuctionNotifier _notifier = notifier;
     private readonly double _sellerProceedsRate = sellerProceedsRate;
-    private readonly Action<AuctionArticle, long>? _onAwarded = onAwarded;
-    private readonly Action<AuctionArticle, Exception>? _onRefundMailError = onRefundMailError;
-    private readonly Action<AuctionArticle, Exception>? _onExpirySettleError = onExpirySettleError;
+    private readonly IAuctionLog _log = log;
 
     /// <summary>Articles closed per expiry query; the sweep keeps querying until a batch comes back short.</summary>
     private const int ExpirySweepBatch = 100;
@@ -178,7 +192,7 @@ public sealed class AuctionApplicationService(
         }
         catch (Exception ex)
         {
-            _onRefundMailError?.Invoke(displaced, ex);
+            _log.RefundMailFailed(displaced.Uid, displaced.TopBid, displaced.TopBidderCharId, ex);
             return;
         }
         if (notifyBidder)
@@ -206,7 +220,7 @@ public sealed class AuctionApplicationService(
         if (notifyBidder)
             await SendSystemMessageAsync(sold.TopBidderCharId, AuctionCodes.NotifyBidWon, sold, 0);
 
-        _onAwarded?.Invoke(sold, proceeds);
+        _log.Awarded(sold.Uid, sold.TopBidderName, sold.TopBid, sold.SellerName, proceeds);
     }
 
     /// <summary>
@@ -262,7 +276,7 @@ public sealed class AuctionApplicationService(
                     // Not re-opened: if the insert did land, a retry would mail the item twice. The article
                     // document keeps the whole item snapshot and the top bid (state Expired), so it can be
                     // recovered by hand.
-                    _onExpirySettleError?.Invoke(closed, ex);
+                    _log.ExpirySettleFailed(closed.Uid, closed.ItemId, closed.Count, closed.SellerCharId, closed.TopBidderCharId, ex);
                 }
             }
             // Stop on a short batch, and on one where nothing could be closed, so an article that stays Active
@@ -272,5 +286,195 @@ public sealed class AuctionApplicationService(
         foreach (var receiver in receivers)
             await _mail.NotifyNewMailAsync(receiver);
         return returned;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Flows: the host parses the request and builds the reply; the wallet is the player, and the wallet's
+    // persistence is the host callback (the application layer does not know the character store).
+    // ---------------------------------------------------------------------------------------------
+
+    /// <summary>
+    /// Cancels a seller's article, mailing its item back and refunding its top bid (if any). Returns the closed
+    /// article, or null when it was not the seller's to cancel or already closed.
+    /// </summary>
+    public async Task<AuctionArticle?> CancelAsync(uint sellerCharId, string sellerName, ulong articleUid)
+    {
+        var now = DateTime.UtcNow;
+        var closed = await _repo.TryCancelAsync(articleUid, sellerCharId, now);
+        if (closed == null) return null;
+        await ReturnItemToSellerAsync(closed, AuctionMailKinds.Cancelled, now);
+        if (closed.TopBidderCharId != 0)
+            await RefundTopBidAsync(closed, AuctionMailKinds.CancelRefund, AuctionCodes.NotifyCancelledWithBid, notifyBidder: true, now);
+        _log.Cancelled(closed.Uid, sellerName, closed.ItemId, closed.Count);
+        return closed;
+    }
+
+    /// <summary>
+    /// Accepts the current top bid on a seller's article: the item goes to the bidder and the proceeds to the
+    /// seller, both by mail. Returns the sold article, or null when the request does not name an active article of
+    /// the seller's with a bid (an article found expired is settled first).
+    /// </summary>
+    public async Task<AuctionArticle?> AcceptTopBidAsync(uint sellerCharId, string sellerName, ulong articleUid, ulong itemUid)
+    {
+        var now = DateTime.UtcNow;
+        var article = await _repo.GetByUidAsync(articleUid);
+        if (article == null || article.State != AuctionArticleState.Active || article.SellerCharId != sellerCharId)
+            return Refused("not an active article of theirs");
+        if (article.ExpiresAt <= now)
+        {
+            var expired = await _repo.TryExpireAsync(article.Uid, now);
+            if (expired != null) await SettleExpiredNowAsync(expired, now);
+            return Refused("expired");
+        }
+        if (article.ItemUid != itemUid) return Refused($"item {itemUid} is not the article's {article.ItemUid}");
+        if (article.TopBidderCharId == 0 || article.TopBid <= 0) return Refused("no bidder");
+
+        var sold = await _repo.TryAcceptTopBidAsync(article, sellerCharId, now);
+        if (sold == null) return Refused("changed meanwhile");
+
+        var receivers = new HashSet<uint>();
+        await AwardToTopBidderAsync(sold, now, notifyBidder: true, receivers);
+        foreach (var receiver in receivers)
+            await _mail.NotifyNewMailAsync(receiver);
+        return sold;
+
+        AuctionArticle? Refused(string why)
+        {
+            _log.AcceptRefused(articleUid, sellerName, why);
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Places a bid. The zeny is taken from <paramref name="wallet"/> only after the article accepts the bid
+    /// atomically, the new balance is persisted through <paramref name="persistWalletAsync"/>, and any displaced
+    /// bid is refunded by mail. A bid at the instant price closes the article at once. A request for an article
+    /// that is gone or expired is answered with <see cref="AuctionCodes.ResultArticleGone"/>.
+    /// </summary>
+    public async Task<ushort> PlaceBidAsync(AuctionBidCommand cmd, IWallet wallet, Func<Task> persistWalletAsync)
+    {
+        var now = DateTime.UtcNow;
+        var article = await _repo.GetByUidAsync(cmd.ArticleUid);
+        if (article == null || article.State != AuctionArticleState.Active) return Refused(AuctionCodes.ResultArticleGone, "not on sale");
+        if (article.ExpiresAt <= now)
+        {
+            var expired = await _repo.TryExpireAsync(article.Uid, now);
+            if (expired != null) await SettleExpiredNowAsync(expired, now);
+            return Refused(AuctionCodes.ResultArticleGone, "expired");
+        }
+
+        int topBids = await _repo.CountTopBidsAsync(cmd.BidderCharId, now);
+        ushort code = AuctionBidRules.Check(article, cmd.BidderCharId, cmd.ItemUid, cmd.ItemId, cmd.Bid, wallet.Gold, topBids);
+        if (code != AuctionCodes.ResultSuccess) return Refused(code, $"rule (current {AuctionPricing.CurrentPrice(article)}, instant {article.BuyoutPrice}, wallet {wallet.Gold}, {topBids} top bids)");
+
+        long bid = (long)cmd.Bid;
+        bool buys = article.BuyoutPrice > 0 && bid >= article.BuyoutPrice;
+
+        if (!wallet.TryDebit(bid)) return Refused(AuctionCodes.ResultNotEnoughMoney, $"wallet {wallet.Gold} below the bid {bid}");
+        AuctionArticle? updated;
+        try
+        {
+            updated = buys
+                ? await _repo.TryWinAtInstantPriceAsync(article, cmd.BidderCharId, cmd.BidderName, cmd.BidderCharUid, bid, now)
+                : await _repo.TryPlaceBidAsync(article, cmd.BidderCharId, cmd.BidderName, cmd.BidderCharUid, bid, now);
+        }
+        catch
+        {
+            wallet.Credit(bid);
+            throw;
+        }
+        if (updated == null)
+        {
+            wallet.Credit(bid);
+            var again = await _repo.GetByUidAsync(cmd.ArticleUid);
+            bool open = again is { State: AuctionArticleState.Active } && again.ExpiresAt > now;
+            return Refused(open ? AuctionCodes.ResultBidItemMismatch : AuctionCodes.ResultArticleGone, "changed meanwhile");
+        }
+
+        await persistWalletAsync();
+
+        if (article.TopBidderCharId != 0)
+            await RefundTopBidAsync(article, AuctionMailKinds.OutbidRefund, AuctionCodes.NotifyOutbid, notifyBidder: true, now);
+
+        if (buys)
+        {
+            var receivers = new HashSet<uint>();
+            await AwardToTopBidderAsync(updated, now, notifyBidder: false, receivers);
+            foreach (var receiver in receivers)
+                await _mail.NotifyNewMailAsync(receiver);
+        }
+
+        _log.BidPlaced(updated.Uid, cmd.BidderName, bid, AuctionPricing.CurrentPrice(article), article.TopBidderCharId, buys);
+        return AuctionCodes.ResultSuccess;
+
+        ushort Refused(ushort result, string why)
+        {
+            _log.BidRefused(cmd.ArticleUid, cmd.Bid, cmd.BidderName, result, why);
+            return result;
+        }
+    }
+
+    /// <summary>
+    /// Buys an active article at its instant price: the buyer pays exactly that price (taken from
+    /// <paramref name="wallet"/> only after the article is closed atomically, then persisted through
+    /// <paramref name="persistWalletAsync"/>), the item goes to the buyer's mailbox and the proceeds to the
+    /// seller's. An instant buy also ends the bidding: a displaced top bid is refunded by mail. Returns the
+    /// outcome and, when bought, the sold article.
+    /// </summary>
+    public async Task<(BuyResult result, AuctionArticle? article)> BuyAsync(AuctionBuyCommand cmd, IWallet wallet, Func<Task> persistWalletAsync)
+    {
+        var now = DateTime.UtcNow;
+        var article = await _repo.GetByUidAsync(cmd.ArticleUid);
+        if (article == null || article.State != AuctionArticleState.Active) return (BuyResult.Gone, null);
+        if (article.ExpiresAt <= now)
+        {
+            var expired = await _repo.TryExpireAsync(article.Uid, now);
+            if (expired != null) await SettleExpiredNowAsync(expired, now);
+            return (BuyResult.Gone, null);
+        }
+        // "You can't bid on your own item in an auction." (string_ui 1547)
+        if (article.SellerCharId == cmd.BuyerCharId) return Refuse("own article");
+        if (article.BuyoutPrice <= 0) return Refuse("article has no instant price");
+        if ((ulong)article.BuyoutPrice != cmd.Price)
+            _log.BuyPriceMismatch(article.Uid, cmd.BuyerName, cmd.Price, article.BuyoutPrice);
+        // The price is taken atomically BEFORE the article is sold; handed back when the article is gone.
+        if (!wallet.TryDebit(article.BuyoutPrice)) return Refuse($"wallet {wallet.Gold} below {article.BuyoutPrice}", BuyResult.NotEnoughMoney);
+
+        AuctionArticle? sold;
+        try { sold = await _repo.TrySellAsync(article.Uid, cmd.BuyerCharId, now); }
+        catch { wallet.Credit(article.BuyoutPrice); throw; }
+        if (sold == null)
+        {
+            wallet.Credit(article.BuyoutPrice);
+            return (BuyResult.Gone, null);
+        }
+
+        await persistWalletAsync();
+
+        await DeliverAsync(cmd.BuyerCharId, cmd.BuyerName, sold, AuctionMailKinds.Purchased, withItem: true, gold: 0, now);
+
+        // Seller side, in order (2693 type 1, then 2449). A 1-zeny article pays (long)float32(0.95) = 0, so it
+        // gets the notice but no empty mail.
+        long proceeds = SellerProceeds(sold.BuyoutPrice);
+        if (proceeds > 0)
+            await DeliverAsync(sold.SellerCharId, sold.SellerName, sold, AuctionMailKinds.Proceeds, withItem: false, gold: proceeds, now);
+        await NotifySellerSoldAsync(sold, proceeds);
+        if (proceeds > 0)
+            await _mail.NotifyNewMailAsync(sold.SellerCharId);
+
+        // The bid the purchase displaced, read from the document the purchase closed. Its notice 8013 is wrong for
+        // a top bidder who bought it, so they get the refund mail alone.
+        if (sold.TopBidderCharId != 0)
+            await RefundTopBidAsync(sold, AuctionMailKinds.OutbidRefund, AuctionCodes.NotifyInstantBoughtOverBid,
+                notifyBidder: sold.TopBidderCharId != cmd.BuyerCharId, now);
+
+        _log.Bought(sold.Uid, cmd.BuyerName, sold.BuyoutPrice, sold.SellerName, proceeds);
+        return (BuyResult.Bought, sold);
+
+        (BuyResult, AuctionArticle?) Refuse(string why, BuyResult result = BuyResult.Refused)
+        {
+            _log.BuyRefused(cmd.ArticleUid, cmd.BuyerName, why);
+            return (result, null);
+        }
     }
 }

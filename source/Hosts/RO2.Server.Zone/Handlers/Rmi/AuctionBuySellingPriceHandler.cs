@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
+using RO2.Economy.Application;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
@@ -31,7 +32,7 @@ public class AuctionBuySellingPriceHandler : ZoneRmiHandlerBase<AuctionBuySellin
         var auction = AuctionService.From(services, PlayerManager, Broadcast, Logger);
         var (result, article) = await auction.BuyAsync(player, req, services.GetRequiredService<ICharacterRepository>());
 
-        if (result != AuctionService.BuyResult.Bought || article == null)
+        if (result != BuyResult.Bought || article == null)
         {
             // Every 1406 gets exactly one 2461: the client marks the auction request as pending and only an
             // answer clears it, so a silent refusal locks search, paging, bids and buyouts (see
@@ -41,7 +42,7 @@ public class AuctionBuySellingPriceHandler : ZoneRmiHandlerBase<AuctionBuySellin
             //  - NotEnoughMoney: 16302 (2114 "Not enough money in your inventory.").
             //  - Refused (own article, or no instant price): defensive. 16308 is the already-rendered
             //    "article is gone" text, chosen over an invented code.
-            ushort code = result == AuctionService.BuyResult.NotEnoughMoney
+            ushort code = result == BuyResult.NotEnoughMoney
                 ? AuctionPackets.ResultNotEnoughMoney
                 : AuctionPackets.ResultArticleGone;
             await session.SendRmiAsync(ZoneS2COpcodes.OnAuctionBuySellingPrice,

@@ -86,35 +86,7 @@ public sealed partial class AuctionService
  /// <param name="articleUid">Uid of the article.</param>
  /// <param name="itemUid">Uid of the item being sold.</param>
  /// <returns>The sold article, or null when the sale is refused.</returns>
-    public async Task<AuctionArticle?> AcceptTopBidAsync(PlayerState seller, ulong articleUid, ulong itemUid)
-    {
-        var now = DateTime.UtcNow;
-        var article = await _repo.GetByUidAsync(articleUid);
-        if (article == null || article.State != AuctionArticleState.Active || article.SellerCharId != seller.CharacterId)
-            return Refused("not an active article of theirs");
-        if (article.ExpiresAt <= now)
-        {
-            var expired = await _repo.TryExpireAsync(article.Uid, now);
-            if (expired != null) await _app.SettleExpiredNowAsync(expired, now);
-            return Refused("expired");
-        }
-        if (article.ItemUid != itemUid) return Refused($"item {itemUid} is not the article's {article.ItemUid}");
-        if (article.TopBidderCharId == 0 || article.TopBid <= 0) return Refused("no bidder");
-
-        var sold = await _repo.TryAcceptTopBidAsync(article, seller.CharacterId, now);
-        if (sold == null) return Refused("changed meanwhile");
-
-        var receivers = new HashSet<uint>();
-        await _app.AwardToTopBidderAsync(sold, now, notifyBidder: true, receivers);
-        foreach (var receiver in receivers)
-            await _mailPort.NotifyNewMailAsync(receiver);
-        return sold;
-
-        AuctionArticle? Refused(string why)
-        {
-            _log.LogInformation("Auction {Uid}: sell at bidding price by {Seller} refused: {Why}", articleUid, seller.Name, why);
-            return null;
-        }
-    }
+    public Task<AuctionArticle?> AcceptTopBidAsync(PlayerState seller, ulong articleUid, ulong itemUid)
+        => _app.AcceptTopBidAsync(seller.CharacterId, seller.Name, articleUid, itemUid);
 
 }

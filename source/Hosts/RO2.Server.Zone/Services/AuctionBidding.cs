@@ -1,3 +1,4 @@
+using RO2.Economy.Application;
 using RO2.Economy.Domain;
 using System;
 using System.Buffers.Binary;
@@ -179,77 +180,10 @@ public sealed partial class AuctionService
  /// <param name="req">Bid request.</param>
  /// <param name="characters">Character repository.</param>
  /// <returns>The 2462 result: <see cref="AuctionPackets.ResultSuccess"/> when the bid was placed or the article was bought, otherwise the refusal code.</returns>
-    public async Task<ushort> PlaceBidAsync(PlayerState bidder, AuctionPackets.TenderJoinRequest req, ICharacterRepository characters)
-    {
-        var now = DateTime.UtcNow;
-        var article = await _repo.GetByUidAsync(req.ArticleUid);
-        if (article == null || article.State != AuctionArticleState.Active) return Refused(AuctionPackets.ResultArticleGone, "not on sale");
-        if (article.ExpiresAt <= now)
-        {
-            var expired = await _repo.TryExpireAsync(article.Uid, now);
-            if (expired != null) await _app.SettleExpiredNowAsync(expired, now);
-            return Refused(AuctionPackets.ResultArticleGone, "expired");
-        }
-
-        int topBids = await _repo.CountTopBidsAsync(bidder.CharacterId, now);
-        ushort code = CheckBid(article, bidder.CharacterId, req, bidder.Gold, topBids);
-        if (code != AuctionPackets.ResultSuccess) return Refused(code, $"rule (current {AuctionPackets.CurrentPrice(article)}, instant {article.BuyoutPrice}, wallet {bidder.Gold}, {topBids} top bids)");
-
-        long bid = (long)req.Bid;
-        bool buys = article.BuyoutPrice > 0 && bid >= article.BuyoutPrice;
-        
-        
-        if (!bidder.TryDebit(bid)) return Refused(AuctionPackets.ResultNotEnoughMoney, $"wallet {bidder.Gold} below the bid {bid}");
-        AuctionArticle? updated;
-        try
-        {
-            updated = buys
-                ? await _repo.TryWinAtInstantPriceAsync(article, bidder.CharacterId, bidder.Name, bidder.CharacterUid, bid, now)
-                : await _repo.TryPlaceBidAsync(article, bidder.CharacterId, bidder.Name, bidder.CharacterUid, bid, now);
-        }
-        catch
-        {
-            bidder.Credit(bid);
-            throw;
-        }
-        if (updated == null)
-        {
-            bidder.Credit(bid);
-            
-            
-            var again = await _repo.GetByUidAsync(req.ArticleUid);
-            bool open = again is { State: AuctionArticleState.Active } && again.ExpiresAt > now;
-            return Refused(open ? AuctionPackets.ResultBidItemMismatch : AuctionPackets.ResultArticleGone, "changed meanwhile");
-        }
-
-        await characters.UpdateGoldAsync(bidder.CharacterId, bidder.Gold);
-
-        
-        if (article.TopBidderCharId != 0)
-            await _app.RefundTopBidAsync(article, AuctionBidMailKind.OutbidRefund, AuctionPackets.NotifyOutbid, notifyBidder: true, now);
-
-        if (buys)
-        {
-            
-            
-            var receivers = new HashSet<uint>();
-            await _app.AwardToTopBidderAsync(updated, now, notifyBidder: false, receivers);
-            foreach (var receiver in receivers)
-                await _mailPort.NotifyNewMailAsync(receiver);
-        }
-
-        _log.LogInformation("Auction {Uid}: {Bidder} bid {Bid} (was {Previous} by char {PreviousBidder}){Bought}",
-            updated.Uid, bidder.Name, bid, AuctionPackets.CurrentPrice(article), article.TopBidderCharId,
-            buys ? ", reaching the instant price: sold" : string.Empty);
-        return AuctionPackets.ResultSuccess;
-
-        ushort Refused(ushort result, string why)
-        {
-            _log.LogInformation("Auction {Uid} bid {Bid} by {Bidder} refused with {Code}: {Why}",
-                req.ArticleUid, req.Bid, bidder.Name, result, why);
-            return result;
-        }
-    }
+    public Task<ushort> PlaceBidAsync(PlayerState bidder, AuctionPackets.TenderJoinRequest req, ICharacterRepository characters)
+        => _app.PlaceBidAsync(
+            new AuctionBidCommand(bidder.CharacterId, bidder.Name, bidder.CharacterUid, req.ArticleUid, req.ItemUid, req.ItemId, req.Bid),
+            bidder, () => characters.UpdateGoldAsync(bidder.CharacterId, bidder.Gold));
 
  /// <summary>Gets the active articles the character is top bidder on, newest first.</summary>
  /// <param name="bidderCharId">Bidder's character id.</param>
