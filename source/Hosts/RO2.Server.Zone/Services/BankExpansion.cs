@@ -20,11 +20,8 @@ public static class BankExpansion
  /// <summary>Item type of the Storage Slot Expansion items. Each one adds 20 slots.</summary>
     public const byte ExpansionItemType = 39;
 
- /// <summary>Largest bank size. Expansion is refused at this count.</summary>
-    public const byte MaxBankSlots = 120;
-
- /// <summary>Step that the slot count is rounded to, equal to the slots added by one expansion item.</summary>
-    public const byte SlotStep = 20;
+ /// <summary>Largest bank size. Expansion is refused at this count. Re-exported from <see cref="BankSlots.Max"/> for the wire-clamp call sites in this host.</summary>
+    public const byte MaxBankSlots = BankSlots.Max;
 
  /// <summary>Message tag of packet 2345 OnBankBagSizeChange.</summary>
     internal const ushort MsgTagBankBagSizeChange = 58260;
@@ -33,40 +30,26 @@ public static class BankExpansion
  /// Gets the bank size to report to the client: the stored count, or the default when none is stored, clamped to <see cref="MaxBankSlots"/>.
  /// </summary>
  /// <param name="character">Character whose bank size is read. May be null.</param>
-    public static byte SlotsOf(Character? character)
-    {
-        var n = character?.BankSlots ?? Character.DefaultBankSlots;
-        if (n == 0) return Character.DefaultBankSlots;
-        return Math.Min(n, MaxBankSlots);
-    }
+    public static byte SlotsOf(Character? character) =>
+        BankSlots.SlotsOf(character?.BankSlots ?? Character.DefaultBankSlots);
 
  /// <summary>
  /// Gets the slot count after using an expansion item, capped at <see cref="MaxBankSlots"/>.
  /// </summary>
  /// <param name="current">Current slot count.</param>
  /// <param name="bagSize">Slots added by the item.</param>
-    public static byte Expanded(byte current, int bagSize) =>
-        (byte)Math.Clamp(current + Math.Max(0, bagSize), 0, MaxBankSlots);
+    public static byte Expanded(byte current, int bagSize) => BankSlots.Expanded(current, bagSize);
 
  /// <summary>
- /// Gets the slot count a bank needs to hold its stored items, rounded up to the next <see cref="SlotStep"/>.
+ /// Gets the slot count a bank needs to hold its stored items, rounded up to the expansion step.
  /// </summary>
  /// <remarks>
  /// Banks written before the count was stored may hold items past slot 19. The count is raised as needed so that every stored item stays reachable.
  /// </remarks>
  /// <param name="stored">Stored slot count.</param>
  /// <param name="items">Items held by the bank. May be null.</param>
-    public static byte RequiredFor(byte stored, IEnumerable<InventoryItem>? items)
-    {
-        var slots = stored == 0 ? Character.DefaultBankSlots : Math.Min(stored, MaxBankSlots);
-        if (items is null) return slots;
-        int highest = -1;
-        foreach (var it in items)
-            if (it.StorageType == 2 && it.Slot > highest) highest = it.Slot;
-        if (highest < slots) return slots;
-        int needed = (highest + 1 + SlotStep - 1) / SlotStep * SlotStep;
-        return (byte)Math.Min(needed, MaxBankSlots);
-    }
+    public static byte RequiredFor(byte stored, IEnumerable<InventoryItem>? items) =>
+        BankSlots.RequiredFor(stored, items);
 
  /// <summary>Stores the bank slot count on the character row. Only that field is written.</summary>
  /// <param name="characters">Character repository.</param>
