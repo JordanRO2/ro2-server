@@ -90,4 +90,28 @@ public static class CharacterStats
     /// </summary>
     public static int BonusStatCost(IReadOnlyDictionary<int, byte> costByCurrentStat, int currentStatValue)
         => costByCurrentStat.TryGetValue(currentStatValue, out var c) ? c : 1;
+
+    /// <summary>
+    /// A character's gear-adjusted combat inputs the SAME way the 2498 sheet resolves them, given the already
+    /// gear-and-title-folded <paramref name="eq"/> and the class <paramref name="pcRow"/>. Gear raises every stat
+    /// THROUGH the primaries (trait types 0..5); the effective primaries then feed <see cref="ComputeBaseStats"/>.
+    /// Max HP/SP add the flat trait-21/22 rows; Defense/Crit/Parry are naked-derived + the gear's flat (26/60/61);
+    /// Vigor (62) and Pen (94) are gear-only. The host resolves the gear, the titles and the row and calls this.
+    /// </summary>
+    public static EffectiveStats EffectivePlayerStats(Character c, EquipStats eq, PCBaseStatus? pcRow)
+    {
+        int P(int baseStat, byte traitType) => Math.Clamp(eq.Apply(traitType, baseStat), 0, ushort.MaxValue);
+        int str = P(c.Str, 0), agi = P(c.Agi, 1), intel = P(c.Int, 2),
+            wis = P(c.Wis, 3), vit = P(c.Vit, 4), luk = P(c.Luk, 5);
+        var bs = ComputeBaseStats(pcRow, c.Level, str, agi, intel, wis, vit, luk);
+        // Trait 21 / 22 Kind-1 rows add flat to the class max, as on the sheet. A class with no row keeps its 0 max.
+        uint maxHp = bs.MaxHp > 0 ? (uint)Math.Clamp((long)bs.MaxHp + eq.FlatOf(21), 0, uint.MaxValue) : bs.MaxHp;
+        ushort maxSp = bs.MaxHp > 0 ? (ushort)Math.Clamp(bs.MaxSp + eq.FlatOf(22), 0, ushort.MaxValue) : bs.MaxSp;
+        int defense = bs.Derived.GetValueOrDefault((byte)26) + eq.FlatOf(26);
+        int vigor = eq.FlatOf(62);
+        int crit = bs.Derived.GetValueOrDefault((byte)60) + eq.FlatOf(60);
+        int parry = bs.Derived.GetValueOrDefault((byte)61) + eq.FlatOf(61);
+        int pen = eq.FlatOf(94);
+        return new EffectiveStats(str, agi, intel, wis, vit, luk, maxHp, maxSp, defense, vigor, crit, parry, pen);
+    }
 }

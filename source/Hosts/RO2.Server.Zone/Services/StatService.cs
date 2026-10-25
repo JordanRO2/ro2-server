@@ -208,30 +208,11 @@ public static class StatService
     public static EffectiveStats EffectivePlayerStats(
         GameDataStore store, Character c, IEnumerable<InventoryItem> equipped)
     {
-        // The gear's pool with the worn Khara titles' rows added, the pool the 2498 builder folds them into
-        // (KharaTitleTraits), so combat reads the sheet's stats.
+        // The gear pool with the worn Khara titles' rows added (as the 2498 builder folds them), then the pure
+        // derivation in Character.Domain over the class row.
         var gear = ComputeEquipmentStats(store, equipped);
         var eq = KharaTitleTraits.Fold(gear, store, c.Id) ?? gear;
-        int P(int baseStat, byte traitType) => Math.Clamp(eq.Apply(traitType, baseStat), 0, ushort.MaxValue);
-        int str = P(c.Str, 0), agi = P(c.Agi, 1), intel = P(c.Int, 2),
-            wis = P(c.Wis, 3), vit = P(c.Vit, 4), luk = P(c.Luk, 5);
-        var bs = ComputeBaseStats(store, c.Job, c.Level, str, agi, intel, wis, vit, luk);
-        // Trait 21 / 22 Kind-1 rows add flat to the class max, as on the sheet (WorldEntryService.BuildPcTrait2498FromDonor).
-        // A class with no PCBaseStatus row keeps its 0 max, as before.
-        uint maxHp = bs.MaxHp > 0 ? (uint)Math.Clamp((long)bs.MaxHp + eq.FlatOf(21), 0, uint.MaxValue) : bs.MaxHp;
-        ushort maxSp = bs.MaxHp > 0 ? (ushort)Math.Clamp(bs.MaxSp + eq.FlatOf(22), 0, ushort.MaxValue) : bs.MaxSp;
-        // Effective Defense = naked derived DEF (VitDefenseValue·VIT) + worn gear's flat armour (trait 26),
-        // the same merge the sheet performs. 0 when the class has no PCBaseStatus row and no armour is worn.
-        int defense = bs.Derived.GetValueOrDefault((byte)26) + eq.FlatOf(26);
-        // Effective Vigor (trait 62) drives skill-cooldown reduction. It has NO PCBaseStatus class
-        // coefficient (gear/skill-driven only), so it is the summed worn-gear flat — 0 for a naked character.
-        int vigor = eq.FlatOf(62);
-        // Crit (trait 60, attacker roll) and Parry (trait 61, defender roll) are naked derived + gear flat,
-        // the same merge as Defense. Penetration (trait 94) is gear-only (no class coefficient), like Vigor.
-        int crit = bs.Derived.GetValueOrDefault((byte)60) + eq.FlatOf(60);
-        int parry = bs.Derived.GetValueOrDefault((byte)61) + eq.FlatOf(61);
-        int pen = eq.FlatOf(94);
-        return new EffectiveStats(str, agi, intel, wis, vit, luk, maxHp, maxSp, defense, vigor, crit, parry, pen);
+        return CharacterStats.EffectivePlayerStats(c, eq, store.PcBaseStatus.GetValueOrDefault(c.Job));
     }
 
     /// <summary>
