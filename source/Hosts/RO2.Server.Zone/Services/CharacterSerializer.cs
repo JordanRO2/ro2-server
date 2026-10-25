@@ -228,7 +228,7 @@ public static class CharacterSerializer
 
     private static ushort UnspentBonusStatPoints(Character character)
     {
-        int earned = StatService.BonusStatPointsEarned(character.Level);
+        int earned = CharacterStats.BonusStatPointsEarned(character.Level);
         int spent = character.BonusStr + character.BonusAgi + character.BonusInt
                   + character.BonusWis + character.BonusVit + character.BonusLuk;
         return (ushort)Math.Clamp(earned - spent, 0, ushort.MaxValue);

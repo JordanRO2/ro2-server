@@ -146,7 +146,7 @@ public class PcTraitEffectFold2498Tests
         var store = await LoadStoreAsync("PCBaseStatus.json");
         var character = Character();
 
-        var body = EffectService.BuildPcTraitSheet(character, store, StatService.EquipStats.Empty, 700, 40,
+        var body = EffectService.BuildPcTraitSheet(character, store, EquipStats.Empty, 700, 40,
             EffectService.EffectSheetModifiers.None);
 
         Assert.Equal(WorldEntryService.BuildFullPcTrait2498(character, store, null, 700, 40), body);
@@ -164,7 +164,7 @@ public class PcTraitEffectFold2498Tests
         var character = Character();
         var modifiers = Percent((0, 1000.0), (1, 1000.0), (2, 1000.0), (3, 1000.0), (4, 1000.0));
 
-        var body = EffectService.BuildPcTraitSheet(character, store, StatService.EquipStats.Empty, 700, 40, modifiers);
+        var body = EffectService.BuildPcTraitSheet(character, store, EquipStats.Empty, 700, 40, modifiers);
         var blob = body.AsSpan(BlobStart);
 
         int[] buffed = { 44, 22, 11, 33, 55 };   

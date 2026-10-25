@@ -790,7 +790,7 @@ public sealed class EffectService : BackgroundService
     }
 
     /// <summary>Trait ids the combat cache keeps beside the primaries: 26 defense, 60 crit, 61 parry, 62 vigor,
-    /// 94 penetration (see StatService.EffectiveStats).</summary>
+    /// 94 penetration (see EffectiveStats).</summary>
     private const byte DefenseTraitId = 26, CritTraitId = 60, ParryTraitId = 61, VigorTraitId = 62, PenTraitId = 94;
 
     /// <summary>Byte width of one primary stat (STR, AGI, INT, WIS, VIT, LUK) in the 2498 blob: a u16, laid out
@@ -804,7 +804,7 @@ public sealed class EffectService : BackgroundService
     /// buffed sheet's. Both bodies are 143-byte 2498s over the same gear; with no effect row they are equal and
     /// <paramref name="combat"/> comes back unchanged.
     /// </summary>
-    internal static StatService.EffectiveStats WithSheetDelta(StatService.EffectiveStats combat,
+    internal static EffectiveStats WithSheetDelta(EffectiveStats combat,
         ReadOnlySpan<byte> plainBody, ReadOnlySpan<byte> buffedBody)
     {
         var plain = plainBody[(TraitPackets.PcTraitBodyLen - TraitPackets.PcTraitBlobLen)..];
@@ -913,7 +913,7 @@ public sealed class EffectService : BackgroundService
     /// </summary>
     private static bool IsSheetRow(uint kind, uint traitId)
         => IsSheetTrait(traitId) || (traitId == MissRateTraitId && kind == PercentModifierKind)
-            || (kind == FlatModifierKind && PcTraitRates.IsRateTrait(traitId));
+            || (kind == FlatModifierKind && TraitRates.IsRateTrait(traitId));
 
     /// <summary>
     /// Sums the sheet rows of <paramref name="effects"/>: for each effect, every <see cref="ModifierIndex"/>
@@ -1083,7 +1083,7 @@ public sealed class EffectService : BackgroundService
     /// the primaries by 10% and, with them, max HP/SP and every stat the class formula derives from a primary, and
     /// the max HP / attack percent of 40011/40012 applies on top. A flat primary adds to
     /// the gear flat and a percent primary to the gear percent (<c>(base + flat) × (1 + percent)</c>,
-    /// StatService.EquipStats.Apply), which is also how the client combines them (105206's +5% STR over +10%, see
+    /// EquipStats.Apply), which is also how the client combines them (105206's +5% STR over +10%, see
     /// <see cref="SumSheetModifiers"/>). The client keeps the primaries fractional (111.1) and this server
     /// whole, so a cascaded value can differ by one.
     /// </para>
@@ -1094,7 +1094,7 @@ public sealed class EffectService : BackgroundService
     /// is used as the donor here, and every other byte is the donor's, as in the plain sheet.
     /// </para>
     /// </remarks>
-    internal static byte[] BuildPcTraitSheet(Character character, GameDataStore store, StatService.EquipStats gear,
+    internal static byte[] BuildPcTraitSheet(Character character, GameDataStore store, EquipStats gear,
         int currentHp, int currentSp, EffectSheetModifiers modifiers)
     {
         var flat = new Dictionary<byte, int>(gear.Flat);
@@ -1109,12 +1109,12 @@ public sealed class EffectService : BackgroundService
             // EquipStats.Percent is in percentage points (TraitInfo Kind 2 / PercentTraitDivisor), and a
             // Trait_Kind 4 value is on the same 1000 = +10% scale.
             if (trait <= LastPrimaryTraitId)
-                percent[trait] = percent.GetValueOrDefault(trait) + (float)(value / StatService.PercentTraitDivisor);
+                percent[trait] = percent.GetValueOrDefault(trait) + (float)(value / CharacterStats.PercentTraitDivisor);
         }
 
         var frame = WorldEntryService.BuildFullPcTrait2498(character, null, null, currentHp, currentSp);
         var sheet = WorldEntryService.BuildPcTrait2498FromDonor(frame, character,
-            new StatService.EquipStats(flat, percent), store, (currentHp, currentSp));
+            new EquipStats(flat, percent), store, (currentHp, currentSp));
         var folded = FoldSheetModifiers(sheet, modifiers, currentHp, currentSp);
         // The rate slots again, now from the consts the fold moved and with the Trait_Kind 3 rate lines added
         // (PcTraitRates: e.g. 4125 alone -> 1000).

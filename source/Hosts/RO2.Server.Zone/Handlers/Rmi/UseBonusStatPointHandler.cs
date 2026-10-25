@@ -64,7 +64,7 @@ public class UseBonusStatPointHandler : ZoneRmiHandlerBase<UseBonusStatPointHand
             // No Max_Status cap on the allocation: Max_Status never exceeds 99 at any level, so that table does not
             // bound what can be allocated. The per-point cost comes from Status_Point (1 per point up to 998); its 0
             // at the end of the table is the stat's upper bound and is answered with result 2.
-            int unspent = StatService.BonusStatPointsEarned(character.Level) - BonusOf(character).Sum();
+            int unspent = CharacterStats.BonusStatPointsEarned(character.Level) - BonusOf(character).Sum();
             var plan = Price(span, count, BonusOf(character), unspent, bonusNow => StatService.BonusStatCost(store, bonusNow));
             result = plan.Result;
             int totalCost = plan.TotalCost;

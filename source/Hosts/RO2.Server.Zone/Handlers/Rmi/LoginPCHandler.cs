@@ -212,7 +212,7 @@ public class LoginPCHandler : NetworkZoneRmiBase
         bool statsChanged = false;
         if (StatService.ClassBasePrimaries(store, character.Job) is { } cbp)
         {
-            int earned = StatService.BonusStatPointsEarned(character.Level);
+            int earned = CharacterStats.BonusStatPointsEarned(character.Level);
             int spent = character.BonusStr + character.BonusAgi + character.BonusInt
                       + character.BonusWis + character.BonusVit + character.BonusLuk;
             if (spent > earned)

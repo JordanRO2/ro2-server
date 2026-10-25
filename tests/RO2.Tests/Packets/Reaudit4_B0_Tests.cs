@@ -77,8 +77,8 @@ public sealed class Reaudit4_B0_Tests
     [Fact]
     public void Rates_Formula_AndTheVigorCap()
     {
-        Assert.Equal(0, PcTraitRates.Rate(0, 50));
-        Assert.Equal(319, PcTraitRates.Rate(50, 27));            
+        Assert.Equal(0, TraitRates.Rate(0, 50));
+        Assert.Equal(319, TraitRates.Rate(50, 27));            
         var body = new byte[TraitPackets.PcTraitBodyLen];
         BinaryPrimitives.WriteUInt16LittleEndian(body.AsSpan(3 + PcTraitRates.VigorConstOffset), 60000);
         PcTraitRates.Stamp(body, 50, null);
@@ -96,7 +96,7 @@ public sealed class Reaudit4_B0_Tests
         var modifiers = new EffectService.EffectSheetModifiers(
             new Dictionary<byte, double> { [33] = 1000, [34] = 700, [32] = 500, [56] = 200 },
             new Dictionary<byte, double>());
-        var body = EffectService.BuildPcTraitSheet(c, store, StatService.EquipStats.Empty, 100, 10, modifiers);
+        var body = EffectService.BuildPcTraitSheet(c, store, EquipStats.Empty, 100, 10, modifiers);
         Assert.Equal(1000, U16(body, PcTraitRates.CritRateOffset));
         Assert.Equal(700, U16(body, PcTraitRates.HitRateOffset));
         Assert.Equal(500, U16(body, PcTraitRates.CastRateOffset));     
@@ -110,7 +110,7 @@ public sealed class Reaudit4_B0_Tests
         var store = await SheetStore.Value;
         var c = Hero(4_400_002);
         c.Level = 27;
-        var gear = new StatService.EquipStats(new Dictionary<byte, int> { [94] = 50 }, new Dictionary<byte, float>());
+        var gear = new EquipStats(new Dictionary<byte, int> { [94] = 50 }, new Dictionary<byte, float>());
         var donor = WorldEntryService.BuildFullPcTrait2498(c, null, null, 100, 10);
         var body = WorldEntryService.BuildPcTrait2498FromDonor(donor, c, gear, store, (100, 10));
         Assert.Equal(50, U16(body, PcTraitRates.PenConstOffset));
@@ -185,7 +185,7 @@ public sealed class Reaudit4_B0_Tests
             Assert.Equal(1 + 200, combat.Vit);
 
             KharaTitleStore.Publish(id, new KharaTitleState(0, 556, null, null), store.KharaInfo);
-            var gear = new StatService.EquipStats(new Dictionary<byte, int>(), new Dictionary<byte, float> { [0] = 10f });
+            var gear = new EquipStats(new Dictionary<byte, int>(), new Dictionary<byte, float> { [0] = 10f });
             var donor = WorldEntryService.BuildFullPcTrait2498(c, null, null, 1, 1);
             var body = WorldEntryService.BuildPcTrait2498FromDonor(donor, c, gear, store, (1, 1));
             Assert.Equal(89, U16(body, TraitPackets.PcTraitPrimaryStatsOffset));

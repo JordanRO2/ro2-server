@@ -206,7 +206,7 @@ public class Reaudit2_B0_Tests
         var template = Convert.FromHexString(Retail2498);
         var flat = new Dictionary<byte, int>();
         if (range > 0) flat[42] = range;
-        var equip = new StatService.EquipStats(flat, new Dictionary<byte, float>());
+        var equip = new EquipStats(flat, new Dictionary<byte, float>());
         var body = WorldEntryService.BuildPcTrait2498FromDonor(template, Hero(), equip);
         Assert.Equal(expected, BinaryPrimitives.ReadSingleLittleEndian(body.AsSpan(3 + 68)));
     }

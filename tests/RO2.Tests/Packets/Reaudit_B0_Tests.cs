@@ -79,7 +79,7 @@ public class Reaudit_B0_Tests
     [Fact]
     public void Regen_AddsTheWornHpAndSpRestoreTraits()
     {
-        var gear = new StatService.EquipStats(new Dictionary<byte, int> { [28] = 40, [29] = 7 }, new Dictionary<byte, float>());
+        var gear = new EquipStats(new Dictionary<byte, int> { [28] = 40, [29] = 7 }, new Dictionary<byte, float>());
         var (h, s) = WorldEntryService.RegenAmounts(PcBase.Value[0], 251, 251, gear);
         Assert.Equal((ushort)(17 + 40), h);
         Assert.Equal((ushort)(12 + 7), s);

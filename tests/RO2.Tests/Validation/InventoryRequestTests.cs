@@ -5,6 +5,7 @@ using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using Xunit;
 using RO2.Inventory.Domain;
+using RO2.Characters.Domain;
 
 namespace RO2.Tests.Validation;
 
@@ -91,7 +92,7 @@ public class InventoryRequestTests
     // StatService caches the TraitInfo index process-wide from the FIRST store that asks; another test class may have
     // cached it from a store without TraitInfo. Drop that cache right before each compute so this store's own
     // TraitInfo is read (the window to a parallel test re-caching an empty one is the next call).
-    private static StatService.EquipStats Compute(GameDataStore store, params InventoryItem[] rows)
+    private static EquipStats Compute(GameDataStore store, params InventoryItem[] rows)
     {
         typeof(StatService).GetField("_index", BindingFlags.NonPublic | BindingFlags.Static)!.SetValue(null, null);
         return StatService.ComputeEquipmentStats(store, rows);

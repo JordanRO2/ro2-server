@@ -16,6 +16,7 @@ using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using Xunit;
 using RO2.Inventory.Domain;
+using RO2.Characters.Domain;
 
 namespace RO2.Tests.Packets;
 
@@ -178,15 +179,15 @@ public class RefineCommissionToBuyer3000Tests
     [Fact]
     public void RatesOf_TakesTheFlatTraits100To102_ClampedToU16()
     {
-        var worn = new StatService.EquipStats(
+        var worn = new EquipStats(
             new Dictionary<byte, int> { [100] = 2000, [101] = 500, [102] = 3000, [0] = 63 },
             new Dictionary<byte, float>());
         Assert.Equal(new RefineCommissionPackets.RefineRates(2000, 500, 3000), RefineCommissionPackets.RatesOf(worn));
 
-        var odd = new StatService.EquipStats(
+        var odd = new EquipStats(
             new Dictionary<byte, int> { [100] = 70000, [101] = -5 }, new Dictionary<byte, float>());
         Assert.Equal(new RefineCommissionPackets.RefineRates(ushort.MaxValue, 0, 0), RefineCommissionPackets.RatesOf(odd));
-        Assert.Equal(default, RefineCommissionPackets.RatesOf(StatService.EquipStats.Empty));
+        Assert.Equal(default, RefineCommissionPackets.RatesOf(EquipStats.Empty));
     }
 
     [Fact]

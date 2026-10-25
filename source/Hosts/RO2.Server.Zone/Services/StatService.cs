@@ -33,14 +33,6 @@ namespace RO2.Server.Zone.Services;
 /// </remarks>
 public static class StatService
 {
-    /// <summary>
-    /// Divisor that turns a <c>Trait_Kind == 2</c> <c>Value</c> into percentage points (<c>Value / 100</c>),
-    /// so <c>Value 1000 = 10</c> percentage points = ×1.10. Kind 1 is a flat amount (the "Faint Strength Rune" is
-    /// Kind 1 / Type 0 / Value 1 = +1 STR), and the Kind-2 value range spans −1250..+2000, which is a sane
-    /// −12.5%..+20% under /100 (and absurd under any other scale). Kept as a named constant so it is trivial to
-    /// correct if a live tooltip proves a different divisor.
-    /// </summary>
-    public const float PercentTraitDivisor = 100f;
 
     /// <summary>AoV DefenseRate denominator terms: Defense% = 100·Def/(Def + <see cref="DefenseRateAdd"/> +
     /// AttackerLv·<see cref="DefenseRateMulti"/>), capped 75%. Backed by data/PCBaseStatus.json fields
@@ -50,32 +42,6 @@ public static class StatService
     public const int DefenseRateAdd = 870;
     public const int DefenseRateMulti = 35;
 
-    /// <summary>
-    /// Worn-equipment trait bonuses split by <c>Trait_Kind</c>, keyed by <c>Trait_Type</c> (= the 2498
-    /// stat id). <see cref="Flat"/> holds the summed Kind-1 amounts; <see cref="Percent"/> holds the
-    /// summed Kind-2 amounts already converted to percentage points (Value/100).
-    /// </summary>
-    public readonly record struct EquipStats(
-        IReadOnlyDictionary<byte, int> Flat,
-        IReadOnlyDictionary<byte, float> Percent)
-    {
-        private static readonly Dictionary<byte, int> NoFlat = new();
-        private static readonly Dictionary<byte, float> NoPct = new();
-
-        /// <summary>An empty bonus set (no worn gear / no game data).</summary>
-        public static EquipStats Empty => new(NoFlat, NoPct);
-
-        /// <summary>Flat bonus for a stat id (0 if none).</summary>
-        public int FlatOf(byte statId) => Flat.GetValueOrDefault(statId);
-
-        /// <summary>Percent bonus (in percentage points) for a stat id (0 if none).</summary>
-        public float PercentOf(byte statId) => Percent.GetValueOrDefault(statId);
-
-        /// <summary>Applies this set's flat then percent bonus for <paramref name="statId"/> to a base
-        /// value: <c>(base + flat) · (1 + percent/100)</c>, rounded.</summary>
-        public int Apply(byte statId, int baseValue)
-            => (int)Math.Round((baseValue + FlatOf(statId)) * (1f + PercentOf(statId) / 100f));
-    }
 
     private static readonly Lock Lock = new();
     // ItemID -> [(Trait_Kind, Trait_Type, Value)] from the TraitInfo table.
@@ -121,7 +87,7 @@ public static class StatService
         void Add(byte kind, byte type, float value)
         {
             if (kind == 2) // PERCENT: Value is ×100 (1000 = +10%)
-                pct[type] = pct.GetValueOrDefault(type) + value / PercentTraitDivisor;
+                pct[type] = pct.GetValueOrDefault(type) + value / CharacterStats.PercentTraitDivisor;
             else           // FLAT (Kind 1, and any unexpected kind treated conservatively as flat)
                 flat[type] = flat.GetValueOrDefault(type) + (int)Math.Round(value);
         }
@@ -235,15 +201,6 @@ public static class StatService
         return (eq.FlatOf(96), eq.FlatOf(97), eq.FlatOf(42));
     }
 
-    /// <summary>
-    /// A character's full GEAR-ADJUSTED combat inputs — the SAME numbers the 2498 sheet shows the client,
-    /// resolved once so the combat path never re-derives them per hit. Holds the six effective primaries
-    /// (base + allocated + gear flat/percent), the geared MaxHP/MaxSP, and the effective physical Defense
-    /// (trait 26). Cached onto <c>PlayerState</c> wherever the 2498 sheet is recomputed (login/equip/socket).
-    /// </summary>
-    public readonly record struct EffectiveStats(
-        int Str, int Agi, int Int, int Wis, int Vit, int Luk,
-        uint MaxHp, ushort MaxSp, int Defense, int Vigor, int Crit, int Parry, int Pen);
 
     /// <summary>
     /// Resolves a character's gear-adjusted combat inputs the SAME way the 2498 builder does: gear raises
@@ -474,25 +431,6 @@ public static class StatService
     public static string SerializeSockets(uint[] sockets)
         => System.Text.Json.JsonSerializer.Serialize(sockets);
 
-    /// <summary>
-    /// A character's BASE (naked, no-gear) stats derived from its class, level and primary stats via the
-    /// RO2 formula reconstructed from <c>PCBaseStatus.json</c>. <see cref="Derived"/> maps the 2498 stat id
-    /// to the base value from (primary × class coefficient); equipment (<see cref="ComputeEquipmentStats"/>)
-    /// is added on top by the caller. <see cref="MaxHp"/> is 0 when the class has no PCBaseStatus row (the
-    /// caller then keeps its own fallback rather than zeroing HP).
-    /// </summary>
-    /// <remarks>
-    /// GROUNDING (see the stat-system notes): a level-1 character with all primaries = 1 has MaxHP=224, MaxSP=15.
-    /// That verifies: MaxHP base pool = floor(BaseHP·BaseHPRate·BaseHPRateValue) = floor(1000·0.85·0.25)=212,
-    /// plus VitHPValue·VIT (=12) → 224; MaxSP = WisSPValue·WIS; and the primary→derived coefficients
-    /// (APValue·STR, MAValue·INT, VitDefenseValue·VIT, AgiCrticalValue·AGI, StrParryValue·STR+IntParryValue·INT).
-    /// ASSUMED: the HP LEVEL term is additive <c>+ BaseHPValue·(level-1)</c> — the best-supported of the candidate
-    /// shapes (matches the monster level-scaling shape). Hit(58) and Dodge(59) have an unexplained +1 base-level
-    /// term; the level terms are omitted here (low confidence) so those two are the naked stat-only base for now.
-    /// Vigor/Haste/Pen/CastSpeed/AttackSpeed have no PCBaseStatus coefficient (gear/skill-driven) and are
-    /// left to equipment.
-    /// </remarks>
-    public readonly record struct BaseStats(uint MaxHp, ushort MaxSp, IReadOnlyDictionary<byte, int> Derived);
 
     public static BaseStats ComputeBaseStats(
         GameDataStore store, byte job, int level, int str, int agi, int intel, int wis, int vit, int luk)
@@ -524,7 +462,7 @@ public static class StatService
     /// <summary>
     /// Refunds all allocated bonus stat points: zeroes the per-stat allocation deltas and resets the
     /// effective primaries to the pure class base. Because the unspent pool is DERIVED
-    /// (<see cref="BonusStatPointsEarned"/> − sum of allocations), clearing the allocations makes the pool
+    /// (<see cref="CharacterStats.BonusStatPointsEarned"/> − sum of allocations), clearing the allocations makes the pool
     /// jump back to the full level curve automatically — no separate pool field to touch. Used by the
     /// stat-reset scroll (ItemInfo Item_Type 25) and by job-change resets (JobChange_Table Stat_Reset).
     /// Returns false (and changes nothing) when the class has no Standard_Stat row, so the caller can skip.
@@ -556,21 +494,6 @@ public static class StatService
 
     // ===================== Bonus (allocatable) stat points =====================
 
-    /// <summary>
-    /// Total bonus stat points a character has EARNED by reaching <paramref name="level"/> (cumulative,
-    /// 0 at level 1). The per-level grant comes from the 2394 OnLevelUp <c>statPointsGranted</c>
-    /// slot: 1 point per level up to 24, 2 per level above 24. Unspent points = this minus the sum of the
-    /// character's allocated bonuses. This is the
-    /// single source of the curve; <see cref="StatPointsForLevelUp"/>-style deltas are just differences of it.
-    /// </summary>
-    public static int BonusStatPointsEarned(int level)
-    {
-        int lvl = Math.Max(1, level);
-        int total = 0;
-        for (int l = 2; l <= lvl; l++)
-            total += l <= 24 ? 1 : 2;
-        return total;
-    }
 
     // ===================== Talent (skill) points =====================
 

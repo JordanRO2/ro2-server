@@ -1,4 +1,5 @@
 using RO2.Network.Packets;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -41,7 +42,7 @@ internal static class RefineCommissionPackets
  /// The owner's refine traits from its worn-item bonuses: the flat sums of Trait_Type 100, 101 and 102
  /// (the hammers are Trait_Kind 1), each clamped to a u16.
  /// </summary>
-    internal static RefineRates RatesOf(StatService.EquipStats worn) => new(
+    internal static RefineRates RatesOf(EquipStats worn) => new(
         ToU16(worn.FlatOf(TraitRefineSuccess2Grade)),
         ToU16(worn.FlatOf(TraitRefineSuccess3Grade)),
         ToU16(worn.FlatOf(TraitRefineProtectDown)));

@@ -124,7 +124,7 @@ public static class WorldEntryService
         
         
         
-        StatService.EquipStats? equipDerived = gameData is not null && inventoryItems is not null
+        EquipStats? equipDerived = gameData is not null && inventoryItems is not null
             ? StatService.ComputeEquipmentStats(gameData, inventoryItems)
             : null;
 
@@ -994,7 +994,7 @@ public static class WorldEntryService
  /// </summary>
     internal static (ushort[] Bonus5, ushort Unspent) BonusStatBlock(Character character)
     {
-        int earned = StatService.BonusStatPointsEarned(character.Level);
+        int earned = CharacterStats.BonusStatPointsEarned(character.Level);
         int spent = character.BonusStr + character.BonusAgi + character.BonusInt
                   + character.BonusWis + character.BonusVit + character.BonusLuk;
         var unspent = (ushort)Math.Clamp(earned - spent, 0, ushort.MaxValue);
@@ -1465,7 +1465,7 @@ public static class WorldEntryService
         Character character, GameDataStore? gameData, IReadOnlyList<RO2.Inventory.Domain.InventoryItem>? equipped,
         int currentHp, int currentSp)
     {
-        StatService.EquipStats? derived = gameData is not null && equipped is not null
+        EquipStats? derived = gameData is not null && equipped is not null
             ? StatService.ComputeEquipmentStats(gameData, equipped)
             : null;
         return BuildPcTrait2498FromDonor(PcTrait2498Donor, character, derived, gameData, (currentHp, currentSp));
@@ -1522,7 +1522,7 @@ public static class WorldEntryService
 
  /// <param name="liveVitals">The live current HP and SP of the player. Null derives them from the stored character, which is correct only at world entry.</param>
     internal static byte[] BuildPcTrait2498FromDonor(ReadOnlySpan<byte> donorBody, Character character,
-        StatService.EquipStats? equip = null, GameDataStore? store = null, (int Hp, int Sp)? liveVitals = null)
+        EquipStats? equip = null, GameDataStore? store = null, (int Hp, int Sp)? liveVitals = null)
     {
         
         var template = donorBody[PcTraitPrefixLen..];
@@ -1662,12 +1662,12 @@ public static class WorldEntryService
  /// Returns null for both when there is no game data or no matching row, and the template values are kept.
  /// </remarks>
     internal static (ushort? Hp, ushort? Sp) RegenAmounts(GameDataStore? store, byte job, int vit, int wis,
-        StatService.EquipStats? equip)
+        EquipStats? equip)
         => RegenAmounts(store is not null && store.PcBaseStatus.TryGetValue(job, out var row) ? row : null, vit, wis, equip);
 
  /// <summary>Regeneration amounts for the given base stat row. Null for both when the row is missing.</summary>
     internal static (ushort? Hp, ushort? Sp) RegenAmounts(RO2.GameData.Tables.PCBaseStatus? pc, int vit, int wis,
-        StatService.EquipStats? equip)
+        EquipStats? equip)
     {
         if (pc is null) return (null, null);
         static decimal Coef(float c) => decimal.Round((decimal)(double)c, RegenCoefficientDecimals, MidpointRounding.ToEven);

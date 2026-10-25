@@ -464,7 +464,7 @@ public class PlayerState : IWallet
 
     /// <summary>Mirror the freshly-resolved gear-adjusted combat inputs onto the runtime state. Called at
     /// every point the 2498 sheet is recomputed so the combat path stays in lock-step with the sheet.</summary>
-    public void CacheCombatStats(StatService.EffectiveStats s)
+    public void CacheCombatStats(EffectiveStats s)
     {
         CombatStr = s.Str; CombatAgi = s.Agi; CombatInt = s.Int;
         CombatWis = s.Wis; CombatVit = s.Vit; CombatLuk = s.Luk;
