@@ -20,6 +20,12 @@ public enum AuctionArticleState : byte
 /// </summary>
 public sealed class AuctionArticle
 {
+    /// <summary>The additive base of an article's display uid, distinct from an inventory item uid.</summary>
+    public const ulong UidBase = 1_040_000_000_000_000_000UL;
+
+    /// <summary>Derives an article's display uid from its article id.</summary>
+    public static ulong MakeUid(ulong id) => UidBase + id;
+
     /// <summary>Monotonic numeric id from <c>auction_counters</c>. Maps to Mongo _id.</summary>
     public ulong Id { get; set; }
 

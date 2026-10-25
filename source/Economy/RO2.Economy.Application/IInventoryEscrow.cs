@@ -23,4 +23,8 @@ public interface IInventoryEscrow
     /// the escrowed amount, so the implementation can re-merge a partial take or re-add a whole one.
     /// </summary>
     Task RestoreAsync(uint characterId, ItemStackSnapshot taken, int countLeft, int count);
+
+    /// <summary>Reserves a fresh item-instance uid (used when a split-off escrow part needs its own id so its
+    /// listing does not alias the stack still in the bag).</summary>
+    Task<ulong> NextItemUidAsync();
 }

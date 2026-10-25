@@ -56,6 +56,9 @@ public sealed class InventoryEscrowAdapter(IInventoryRepository inventory) : IIn
         }
     }
 
+    /// <inheritdoc />
+    public Task<ulong> NextItemUidAsync() => _inventory.GetNextIdAsync();
+
     /// <summary>Captures an inventory row's full per-instance state as a neutral snapshot.</summary>
     internal static ItemStackSnapshot ToSnapshot(InventoryItem i) => new()
     {

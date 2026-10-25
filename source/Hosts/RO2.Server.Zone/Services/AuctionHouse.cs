@@ -221,11 +221,8 @@ public static partial class AuctionPackets
     public const uint NotifyBought = 2;    // to the BUYER, sent before 2449 + 2461
     public const uint NotifyCancelled = 7; // to the canceller, sent before 2460
 
-    /// <summary>Uid band of an auction article: 104·10^16 + counter, as every article uid is; items use band 101
-    /// and mails 103.</summary>
-    private const ulong ArticleUidBase = 1_040_000_000_000_000_000UL;
-
-    public static ulong MakeArticleUid(ulong id) => ArticleUidBase + id;
+    /// <summary>The article uid band (104·10^16 + counter); items use band 101 and mails 103.</summary>
+    public static ulong MakeArticleUid(ulong id) => AuctionArticle.MakeUid(id);
 
     // ---------------------------------------------------------------------------------------------
     // C2S
@@ -1027,83 +1024,35 @@ public sealed partial class AuctionService
                 $"item {req.ItemUid} x{req.Count} (bag stack {item?.Count}), {req.Hours}h, start {req.StartPrice}, instant {req.BuyoutPrice}, " +
                 $"fee {fee}, wallet {seller.Gold}, {liveArticles} live articles");
 
-        // The registration fee is taken atomically before anything moves (CheckSellStart's wallet test can be
-        // stale by now); the paths below hand it back when nothing was listed.
-        if (!seller.TryDebit(fee))
-            return Refuse(AuctionPackets.ResultNotEnoughMoney, $"fee {fee}, wallet {seller.Gold}");
+        // The transactional listing (charge fee, take item into escrow, store the article, compensate on failure)
+        // is the Economy application flow; the host keeps the game-data validation above and the wire below.
+        var app = new AuctionApplicationService(_repo, new InventoryEscrowAdapter(inventory));
+        var cmd = new AuctionListCommand(seller.CharacterId, seller.Name, seller.CharacterUid, req.ItemUid,
+            req.Count, (long)req.StartPrice, (long)req.BuyoutPrice, req.Hours, fee);
+        var result = await app.ListAsync(cmd, seller,
+            ex => _log.LogError(ex, "Auction insert failed; restoring the item to {Seller}", seller.Name));
 
-        // Take the item first, so it can never be both in the bag and on sale. The read-decide-write runs under
-        // the seller's inventory gate and the write is owner-filtered and atomic (a whole stack is a delete, a
-        // part an $inc guarded by the live count), so a concurrent trade / sale / mail attach that took the
-        // stack first leaves this take with nothing: the item is listed once or not at all. The gate must NOT
-        // wrap the restore below (AddItemAsync of an unplaced row takes the same gate).
-        IInventoryEscrow escrow = new InventoryEscrowAdapter(inventory);
-        var (takenSnapshot, countLeft) = await escrow.TakeAsync(seller.CharacterId, req.ItemUid, req.Count);
-        if (takenSnapshot is not { } snapshot)
+        switch (result.Outcome)
         {
-            seller.Credit(fee);
-            return Refuse(AuctionPackets.ResultSellItemMismatch, $"item {req.ItemUid} x{req.Count} was taken from the bag meanwhile");
+            case AuctionListOutcome.NotEnoughMoney:
+                return Refuse(AuctionPackets.ResultNotEnoughMoney, $"fee {fee}, wallet {seller.Gold}");
+            case AuctionListOutcome.ItemGone:
+                return Refuse(AuctionPackets.ResultSellItemMismatch, $"item {req.ItemUid} x{req.Count} was taken from the bag meanwhile");
+            case AuctionListOutcome.InternalError:
+                // 16301: 8606 "Failed purchase registration due to an internal system error."
+                return new SellStartOutcome(AuctionPackets.ResultSellInternalError, null, seller.Gold, 0, 0, 0);
         }
-        var taken = InventoryEscrowAdapter.ToInventoryItem(snapshot, seller.CharacterId);
 
+        var article = result.Article!;
         // The slot the client knows the item by: 2458 blob+236 is the listed item's slot.
-        byte bagSlot = WorldEntryService.BuildItemRecord126(taken)[AuctionPackets.ItemRecordSlotOffset];
-
-        var now = DateTime.UtcNow;
-        AuctionArticle article;
-        try
-        {
-            // A whole stack keeps its uid (entry item uid == 1403 blob+8 == 2458 blob+228). A split-off part needs a
-            // uid of its own so the entry does not alias the stack still
-            // in the bag. The uid is display-only — the item is re-created with a fresh id when its mail is
-            // claimed — which is also why it may later coincide with a new bag item, as a mail attachment can.
-            ulong listedUid = countLeft > 0 ? await inventory.GetNextIdAsync() : taken.Id;
-            var id = await _repo.GetNextIdAsync();
-            article = new AuctionArticle
-            {
-                Id = id,
-                Uid = AuctionPackets.MakeArticleUid(id),
-                SellerCharId = seller.CharacterId,
-                SellerName = seller.Name,
-                SellerCharUid = seller.CharacterUid,
-                ItemUid = listedUid,
-                ItemId = taken.ItemId,
-                Count = req.Count,
-                Refine = taken.Refine,
-                Durability = taken.Durability,
-                CardsJson = taken.CardsJson,
-                Element = taken.Element,
-                DyeColor = taken.DyeColor,
-                SocketPunchersJson = taken.SocketPunchersJson,
-                DyeColor2 = taken.DyeColor2,
-                DyeColor3 = taken.DyeColor3,
-                FxEnchantIndex = taken.FxEnchantIndex,
-                EnchantReinforceId = taken.EnchantReinforceId,
-                EnchantSeconds = taken.EnchantSeconds,
-                Bound = taken.Bound,
-                AbilityValue = taken.AbilityValue,
-                StartPrice = (long)req.StartPrice,
-                BuyoutPrice = (long)req.BuyoutPrice,
-                StartedAt = now,
-                ExpiresAt = now.AddHours(req.Hours),
-                State = AuctionArticleState.Active,
-            };
-            await _repo.InsertAsync(article);
-        }
-        catch (Exception ex)
-        {
-            _log.LogError(ex, "Auction insert failed; restoring item {Uid} to {Seller}", taken.Id, seller.Name);
-            await escrow.RestoreAsync(seller.CharacterId, snapshot, countLeft, req.Count);
-            seller.Credit(fee);   // the fee was taken above and nothing was listed
-            // 16301: 8606 "Failed purchase registration due to an internal system error."
-            return new SellStartOutcome(AuctionPackets.ResultSellInternalError, null, seller.Gold, 0, 0, 0);
-        }
+        byte bagSlot = WorldEntryService.BuildItemRecord126(
+            InventoryEscrowAdapter.ToInventoryItem(result.Taken!, seller.CharacterId))[AuctionPackets.ItemRecordSlotOffset];
 
         await characters.UpdateGoldAsync(seller.CharacterId, seller.Gold);
 
         _log.LogInformation("Auction {Uid} listed by {Seller}: item {ItemId} x{Count}, start {Start}, instant {Buyout}, {Hours}h, fee {Fee}",
             article.Uid, seller.Name, article.ItemId, article.Count, article.StartPrice, article.BuyoutPrice, req.Hours, fee);
-        return new SellStartOutcome(AuctionPackets.ResultSuccess, article, seller.Gold, taken.Id, bagSlot, (byte)Math.Clamp(countLeft, 0, byte.MaxValue));
+        return new SellStartOutcome(AuctionPackets.ResultSuccess, article, seller.Gold, result.Taken!.Id, bagSlot, (byte)Math.Clamp(result.CountLeft, 0, byte.MaxValue));
 
         SellStartOutcome Refuse(ushort result, string why)
         {
