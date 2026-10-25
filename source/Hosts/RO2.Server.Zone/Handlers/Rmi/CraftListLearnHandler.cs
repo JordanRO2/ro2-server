@@ -10,6 +10,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -33,7 +34,7 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 /// fee, so they send no 2435.
 /// </para>
 /// <para>
-/// The craft level is compared with <see cref="RO2.Domain.Entities.Character.JobLevel"/>. This server does not model
+/// The craft level is compared with <see cref="RO2.Characters.Domain.Character.JobLevel"/>. This server does not model
 /// ProJob levels.
 /// </para>
 /// <para>

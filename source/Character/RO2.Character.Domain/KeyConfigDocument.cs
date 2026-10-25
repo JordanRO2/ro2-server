@@ -1,3 +1,4 @@
+using RO2.Characters.Domain;
 namespace RO2.Characters.Domain;
 
 /// <summary>

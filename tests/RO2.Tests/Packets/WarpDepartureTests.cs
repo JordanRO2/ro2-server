@@ -14,6 +14,7 @@ using RO2.Server.Zone.Services;
 using RO2.Tests.Services;
 using Xunit;
 using RO2.Inventory.Domain;
+using RO2.Characters.Domain;
 
 namespace RO2.Tests.Packets;
 

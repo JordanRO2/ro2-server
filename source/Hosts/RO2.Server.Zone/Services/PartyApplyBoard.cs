@@ -2,6 +2,7 @@ using System.Buffers.Binary;
 using System.Collections.Concurrent;
 using System.Text;
 using RO2.Server.Zone.Models;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Services;
 

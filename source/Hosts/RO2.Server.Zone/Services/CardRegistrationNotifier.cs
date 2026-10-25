@@ -8,6 +8,7 @@ using RO2.Persistence.Mongo.Persistence;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Inventory.Domain;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Services;
 

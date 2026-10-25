@@ -5,6 +5,7 @@ using RO2.Server.Chat;
 using RO2.Server.Login.Handlers.Rmi;
 using RO2.Server.Zone.Handlers.Rmi;
 using Xunit;
+using RO2.Characters.Domain;
 
 namespace RO2.Tests.Packets;
 

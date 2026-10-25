@@ -14,6 +14,7 @@ using System.Net;
 using System.Text;
 using Xunit;
 using static RO2.Tests.Packets.ReauditShared;
+using RO2.Characters.Domain;
 
 namespace RO2.Tests.Packets;
 
@@ -26,7 +27,7 @@ public class RepairAndCraftScrollReauditTests
     public void RepairItem2336_HeadCarriesLiveTalentPointsLevelAndWallet()
     {
         var player = new PlayerState { EntityId = 0x0B2C1A11, CharacterUid = 0x1234, Level = 50, Gold = 0x01020304,
-            Hp = 900, Mp = 300, Character = new RO2.Domain.Entities.Character { Name = "Repair", Level = 12 } };
+            Hp = 900, Mp = 300, Character = new RO2.Characters.Domain.Character { Name = "Repair", Level = 12 } };
         var body = RepairItemPackets.BuildOnRepairItem2336(player, [new byte[126]], new GameDataStore());
 
         Assert.Equal(217 + 126, body.Length);

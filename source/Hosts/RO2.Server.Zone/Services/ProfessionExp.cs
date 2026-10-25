@@ -4,12 +4,13 @@ using RO2.GameData;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Services;
 
 /// <summary>
-/// Job (profession) experience and level: the <see cref="RO2.Domain.Entities.Character.JobExp"/> and
-/// <see cref="RO2.Domain.Entities.Character.JobLevel"/> pair, which is sent in the character snapshot and moved live
+/// Job (profession) experience and level: the <see cref="RO2.Characters.Domain.Character.JobExp"/> and
+/// <see cref="RO2.Characters.Domain.Character.JobLevel"/> pair, which is sent in the character snapshot and moved live
 /// by <see cref="ProfessionExpPackets"/>.
 /// </summary>
 /// <remarks>

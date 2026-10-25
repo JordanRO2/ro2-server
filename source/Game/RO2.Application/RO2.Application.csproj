@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\RO2.Domain\RO2.Domain.csproj" />
+        <ProjectReference Include="..\..\Character\RO2.Character.Domain\RO2.Character.Domain.csproj" />
+<ProjectReference Include="..\RO2.Domain\RO2.Domain.csproj" />
     <ProjectReference Include="..\..\Inventory\RO2.Inventory.Domain\RO2.Inventory.Domain.csproj" />
   </ItemGroup>
 

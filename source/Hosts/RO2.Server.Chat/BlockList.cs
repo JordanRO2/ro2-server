@@ -6,6 +6,7 @@ using RO2.Domain.Entities;
 using RO2.Persistence.Mongo.Persistence;
 using RO2.Persistence.Mongo.Repositories;
 using RO2.Network.Packets;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Chat;
 

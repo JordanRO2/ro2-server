@@ -9,6 +9,7 @@ using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.Network.Packets;
 using RO2.Server.Zone.Models;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Services;
 

@@ -23,6 +23,7 @@ using Base1599 = RO2.Network.Handlers.ZoneRmiHandlerBase<RO2.Server.Zone.Handler
 using Base1642 = RO2.Network.Handlers.ZoneRmiHandlerBase<RO2.Server.Zone.Handlers.Rmi.ReqPlayTimeRewardHandler>;
 using Base1644 = RO2.Network.Handlers.ZoneRmiHandlerBase<RO2.Server.Zone.Handlers.Rmi.ReqAttendanceRewardHandler>;
 using RO2.Inventory.Domain;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -287,7 +288,7 @@ public class AnsMapLoadingHandler : Base1304
 
             
             
-            RO2.Domain.Entities.Character? character;
+            RO2.Characters.Domain.Character? character;
             if (player.PendingGliderDismount)
             {
                 player.PendingGliderDismount = false;
@@ -510,7 +511,7 @@ public class AnsMapLoadingHandler : Base1304
  /// would put the panel back to the login level on every later map load. WarpService does the same for its
  /// cross-map 2498.
  /// </remarks>
-    internal static void SyncLiveLevel(RO2.Server.Zone.Models.PlayerState player, RO2.Domain.Entities.Character? character)
+    internal static void SyncLiveLevel(RO2.Server.Zone.Models.PlayerState player, RO2.Characters.Domain.Character? character)
     {
         if (character is not null && player.Level != 0 && character.Level != player.Level)
             character.Level = player.Level;
@@ -542,7 +543,7 @@ public class AnsMapLoadingHandler : Base1304
  /// </para>
  /// </remarks>
     private async Task<AccountGift?> SendMapLoadNotifiesAsync(ProudSession session, RO2.Server.Zone.Models.PlayerState player,
-        RO2.Domain.Entities.Character? character, RO2.GameData.GameDataStore store, IAccountGiftRepository giftBox,
+        RO2.Characters.Domain.Character? character, RO2.GameData.GameDataStore store, IAccountGiftRepository giftBox,
         CancellationToken ct)
     {
         await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyServerTime,

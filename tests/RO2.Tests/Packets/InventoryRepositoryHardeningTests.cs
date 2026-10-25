@@ -12,6 +12,7 @@ using Xunit.Abstractions;
 using RO2.Inventory.Application;
 using RO2.Inventory.Domain;
 using RO2.Inventory.Infrastructure.Mongo;
+using RO2.Characters.Domain;
 
 namespace RO2.Tests.Packets;
 

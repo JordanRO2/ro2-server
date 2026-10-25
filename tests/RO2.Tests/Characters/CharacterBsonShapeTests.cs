@@ -5,6 +5,7 @@ using MongoDB.Bson.Serialization;
 using RO2.Domain.Entities;
 using RO2.Persistence.Mongo.Persistence;
 using Xunit;
+using RO2.Characters.Domain;
 
 namespace RO2.Tests.Characters;
 

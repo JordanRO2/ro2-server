@@ -1,6 +1,7 @@
 using MongoDB.Driver;
 using MongoDB.Bson.Serialization.Conventions;
 using RO2.Domain.Entities;
+using RO2.Characters.Domain;
 
 namespace RO2.Persistence.Mongo.Persistence;
 

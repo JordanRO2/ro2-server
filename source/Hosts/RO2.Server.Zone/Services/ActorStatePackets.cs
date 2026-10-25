@@ -1,5 +1,6 @@
 using RO2.Network.Packets;
 using RO2.Inventory.Domain;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -228,7 +229,7 @@ public static class ActorStatePackets
  /// <param name="equipped">The PC's worn gear. It dresses the PC on other screens; the local client does not apply it.</param>
  /// <param name="emblems">The guild emblem registry used by the guild block.</param>
     public static byte[] BuildOnPCViewData2315(RO2.Server.Zone.Models.PlayerState player,
-        RO2.Domain.Entities.Character character, IReadOnlyList<RO2.Inventory.Domain.InventoryItem>? equipped,
+        RO2.Characters.Domain.Character character, IReadOnlyList<RO2.Inventory.Domain.InventoryItem>? equipped,
         RO2.Application.Interfaces.IGuildEmblemRepository emblems)
     {
         using var pw = new PacketWriter();

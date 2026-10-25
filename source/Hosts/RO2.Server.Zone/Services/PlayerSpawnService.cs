@@ -10,6 +10,7 @@ using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Server.Zone.Models;
 using RO2.Inventory.Domain;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -180,7 +181,7 @@ public class PlayerSpawnService
  /// Returns null if the player has no cached character snapshot. The live position is used, and the snapshot and
  /// worn gear are returned so the 2315 that follows carries the same record.
  /// </summary>
-    private async Task<(byte[] Blob, RO2.Domain.Entities.Character Character, IReadOnlyList<InventoryItem> Equipment)?>
+    private async Task<(byte[] Blob, RO2.Characters.Domain.Character Character, IReadOnlyList<InventoryItem> Equipment)?>
         BuildSpawnBlobAsync(PlayerState player, IInventoryRepository invRepo)
     {
         var character = player.Character;
@@ -282,7 +283,7 @@ public class PlayerSpawnService
  /// Emits a single OnPC_In (2504) record in the variable wire form, with the 8-byte preamble and a record count of one.
  /// Internal and static for unit testing.
  /// </summary>
-    internal static void WriteOnPc2504(PacketWriter w, PlayerState player, RO2.Domain.Entities.Character character,
+    internal static void WriteOnPc2504(PacketWriter w, PlayerState player, RO2.Characters.Domain.Character character,
         IGuildEmblemRepository emblems, IReadOnlyList<InventoryItem>? equipment = null)
     {
         using var body = new PacketWriter();
@@ -309,7 +310,7 @@ public class PlayerSpawnService
  /// active effects, the discarded bytes and an empty u32 list. The guild block carries the player's guild.
  /// </summary>
  /// <param name="mountId">See <see cref="WriteBaseBlock"/>.</param>
-    internal static void WriteRecord(PacketWriter body, PlayerState player, RO2.Domain.Entities.Character character,
+    internal static void WriteRecord(PacketWriter body, PlayerState player, RO2.Characters.Domain.Character character,
         IGuildEmblemRepository emblems, IReadOnlyList<InventoryItem>? equipment = null, uint? mountId = null)
     {
         WriteBaseBlock(body, player, character, emblems, mountId);
@@ -336,7 +337,7 @@ public class PlayerSpawnService
  /// When set, the record carries the mount option bit and this id. Glider notifies (2464) pass a mount id; the 2504
  /// record passes null and leaves the bit clear.
  /// </param>
-    internal static void WriteBaseBlock(PacketWriter body, PlayerState player, RO2.Domain.Entities.Character character,
+    internal static void WriteBaseBlock(PacketWriter body, PlayerState player, RO2.Characters.Domain.Character character,
         IGuildEmblemRepository emblems, uint? mountId)
     {
         // Fixed 70-byte header, zero-filled so unwritten bytes stay 0.
@@ -480,7 +481,7 @@ public class PlayerSpawnService
  /// The appearance block matches the 15-byte block carried by the character's own 2310. A row without a create block
  /// uses zeros, with the most common value at the last byte.
  /// </remarks>
-    private static void WriteAppearanceBlock(Span<byte> dst, RO2.Domain.Entities.Character character)
+    private static void WriteAppearanceBlock(Span<byte> dst, RO2.Characters.Domain.Character character)
     {
         dst[..AppearanceLen].Clear();
         var raw = CharacterSerializer.ParseAppearancePublic(character.AppearanceJson).RawBytes;

@@ -17,6 +17,7 @@ using RO2.Persistence.Mongo.Repositories;
 using RO2.Server.Zone.Models;
 using RO2.Inventory.Application;
 using RO2.Inventory.Domain;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Services;
 

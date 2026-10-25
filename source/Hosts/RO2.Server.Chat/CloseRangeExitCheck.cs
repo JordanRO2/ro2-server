@@ -2,6 +2,7 @@ using System.Buffers.Binary;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.Network.Throttling;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Chat;
 
