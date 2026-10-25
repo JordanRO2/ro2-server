@@ -22,6 +22,7 @@ using Base1596 = RO2.Network.Handlers.ZoneRmiHandlerBase<RO2.Server.Zone.Handler
 using Base1599 = RO2.Network.Handlers.ZoneRmiHandlerBase<RO2.Server.Zone.Handlers.Rmi.ReqPresentPasswordStatusHandler>;
 using Base1642 = RO2.Network.Handlers.ZoneRmiHandlerBase<RO2.Server.Zone.Handlers.Rmi.ReqPlayTimeRewardHandler>;
 using Base1644 = RO2.Network.Handlers.ZoneRmiHandlerBase<RO2.Server.Zone.Handlers.Rmi.ReqAttendanceRewardHandler>;
+using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -278,7 +279,7 @@ public class AnsMapLoadingHandler : Base1304
                 await session.SendInternalRmiAsync(ZoneS2COpcodes.OnFuncObject_In, frame);
 
             var characterRepo = services.GetRequiredService<RO2.Application.Interfaces.ICharacterRepository>();
-            var inventoryRepo = services.GetRequiredService<RO2.Application.Interfaces.IInventoryRepository>();
+            var inventoryRepo = services.GetRequiredService<RO2.Inventory.Domain.IInventoryRepository>();
             var store = services.GetRequiredService<RO2.Domain.GameData.GameDataStore>();
             
             

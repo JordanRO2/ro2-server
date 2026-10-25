@@ -1,16 +1,21 @@
-using RO2.Domain.Entities;
-using RO2.Inventory.Domain;
+namespace RO2.Inventory.Domain;
 
-namespace RO2.Application.Interfaces;
-
+/// <summary>Persistence port for a character's inventory rows (bag, worn and stored items).</summary>
 public interface IInventoryRepository
 {
+    /// <summary>All of a character's inventory rows (every storage type).</summary>
     Task<IReadOnlyList<InventoryItem>> GetByCharacterAsync(uint characterId);
+    /// <summary>A character's worn equipment rows (StorageType 1).</summary>
     Task<IReadOnlyList<InventoryItem>> GetEquipmentAsync(uint characterId);
+    /// <summary>The row with the given uid, or null.</summary>
     Task<InventoryItem?> GetByIdAsync(ulong id);
+    /// <summary>Inserts a new row (an unassigned slot, &lt; 0, is placed by the store).</summary>
     Task AddItemAsync(InventoryItem item);
+    /// <summary>Deletes the row with the given uid.</summary>
     Task RemoveItemAsync(ulong itemId);
+    /// <summary>Writes the row's mutable fields back.</summary>
     Task UpdateItemAsync(InventoryItem item);
+    /// <summary>Allocates the next free item uid.</summary>
     Task<ulong> GetNextIdAsync();
 
     // SP0-INV. These three have default (non-atomic) bodies so existing implementations and test fakes keep

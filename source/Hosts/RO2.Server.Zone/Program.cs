@@ -16,6 +16,7 @@ using RO2.Server.Zone.Configuration;
 using RO2.Server.Zone.Extensions;
 using RO2.Server.Zone.Services;
 using Serilog;
+using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone;
 

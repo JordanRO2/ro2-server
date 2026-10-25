@@ -313,7 +313,7 @@ public class LoginPCHandler : NetworkZoneRmiBase
         IReadOnlyList<RO2.Inventory.Domain.InventoryItem>? inventoryItems = null;
         try
         {
-            var inventory = services.GetRequiredService<RO2.Application.Interfaces.IInventoryRepository>();
+            var inventory = services.GetRequiredService<RO2.Inventory.Domain.IInventoryRepository>();
             // Heal legacy items sitting at Slot -1 (added before slot-assignment existed): without a real
             // slot the wire mapping collapses them all onto bag slot 0, so the bag shows a different one of
             // them each login. Assign real slots once, before we deliver the inventory.

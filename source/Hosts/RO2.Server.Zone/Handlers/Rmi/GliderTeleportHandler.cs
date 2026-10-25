@@ -200,7 +200,7 @@ public class GliderTeleportHandler : ZoneRmiHandlerBase<GliderTeleportHandler>
         // once the destination map has loaded, then dismounts the glider and re-unblocks movement.
         // Worn gear feeds the 2315 equipment vectors (VEC28 dresses this PC on other screens, VEC23 is the
         // self equip list the C panel reads). Loaded here where the character is already in hand.
-        var inventory = services.GetRequiredService<RO2.Application.Interfaces.IInventoryRepository>();
+        var inventory = services.GetRequiredService<RO2.Inventory.Domain.IInventoryRepository>();
         var equipped = await inventory.GetEquipmentAsync(player.CharacterId);
         var appear = CharacterSerializer.ParseAppearancePublic(character.AppearanceJson);
         player.PendingGliderViewData = ActorStatePackets.BuildOnPCViewData2315(

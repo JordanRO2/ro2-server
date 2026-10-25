@@ -146,7 +146,7 @@ public class KharaTitleSelectHandler : ZoneRmiHandlerBase<KharaTitleSelectHandle
                 IReadOnlyList<RO2.Inventory.Domain.InventoryItem>? worn = null;
                 try
                 {
-                    worn = await services.GetRequiredService<RO2.Application.Interfaces.IInventoryRepository>()
+                    worn = await services.GetRequiredService<RO2.Inventory.Domain.IInventoryRepository>()
                         .GetEquipmentAsync(player.CharacterId);
                 }
                 catch (Exception ex) when (ex is not OperationCanceledException)

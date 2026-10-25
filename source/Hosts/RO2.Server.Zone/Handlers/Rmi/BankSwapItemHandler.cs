@@ -8,6 +8,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -112,7 +113,7 @@ public class BankSwapItemHandler : ZoneRmiHandlerBase<BankSwapItemHandler>
             destUid = System.Buffers.Binary.BinaryPrimitives.ReadUInt64LittleEndian(blob.Slice(BlobDestUidOffset));
         }
 
-        var inv = services.GetRequiredService<RO2.Application.Interfaces.IInventoryRepository>();
+        var inv = services.GetRequiredService<RO2.Inventory.Domain.IInventoryRepository>();
         var gameData = services.GetRequiredService<GameDataStore>();
 
         // INV-H12 input bounds. blob+0..7 is not read, so the tag and handle checks of Validate are fed
@@ -288,7 +289,7 @@ public class BankSwapItemHandler : ZoneRmiHandlerBase<BankSwapItemHandler>
         });
     }
 
-    private static async Task SendBankRefresh(ProudSession session, RO2.Application.Interfaces.IInventoryRepository inv, PlayerState player)
+    private static async Task SendBankRefresh(ProudSession session, RO2.Inventory.Domain.IInventoryRepository inv, PlayerState player)
     {
         var bank = System.Linq.Enumerable.ToList(System.Linq.Enumerable.OrderBy(
             System.Linq.Enumerable.Where(await inv.GetByCharacterAsync(player.CharacterId), i => i.StorageType == StorageBank),
@@ -311,7 +312,7 @@ public class BankSwapItemHandler : ZoneRmiHandlerBase<BankSwapItemHandler>
             + (container - FirstExtraBagContainer) * BagCapacity.ExtraBagStride + slot));
     }
 
-    private static async Task<short> FreeSlot(RO2.Application.Interfaces.IInventoryRepository inv, uint charId, byte storage)
+    private static async Task<short> FreeSlot(RO2.Inventory.Domain.IInventoryRepository inv, uint charId, byte storage)
     {
         var occupied = new System.Collections.Generic.HashSet<int>();
         foreach (var i in await inv.GetByCharacterAsync(charId))

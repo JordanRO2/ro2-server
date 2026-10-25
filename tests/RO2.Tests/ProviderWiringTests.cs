@@ -3,6 +3,7 @@ using RO2.Application.Configuration;
 using RO2.Application.Interfaces;
 using RO2.Infrastructure;
 using Xunit;
+using RO2.Inventory.Domain;
 
 namespace RO2.Tests;
 

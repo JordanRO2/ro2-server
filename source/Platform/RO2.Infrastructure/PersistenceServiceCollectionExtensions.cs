@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Configuration;
 using RO2.Application.Interfaces;
+using RO2.Inventory.Domain;
 using MongoRepos = RO2.Persistence.Mongo.Repositories;
 using MongoPersist = RO2.Persistence.Mongo.Persistence;
 using PgRepos = RO2.Persistence.Postgres.Repositories;

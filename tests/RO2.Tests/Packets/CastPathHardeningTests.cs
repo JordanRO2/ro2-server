@@ -449,7 +449,7 @@ public class CastPathHardeningTests
                 new InventoryItem { Id = uid, CharacterId = 4242, ItemId = ConsumableItemId, Count = 5,
                     StorageType = storageType, Slot = 0 },
             });
-            c.AddSingleton<RO2.Application.Interfaces.IInventoryRepository>(inventory);
+            c.AddSingleton<RO2.Inventory.Domain.IInventoryRepository>(inventory);
         });
         var handler = new SkillStartItemHandler(rig.Scopes, NullLogger<SkillStartItemHandler>.Instance, rig.Players, rig.Broadcast);
         await handler.HandleAsync(rig.Net.Sessions[0], Request1561(ConsumableItemSkill, rig.Caster.EntityId, uid));
@@ -480,7 +480,7 @@ public class CastPathHardeningTests
             {
                 new InventoryItem { Id = uid, CharacterId = 4242, ItemId = ConsumableItemId, Count = 5, StorageType = 0, Slot = 0 },
             });
-            c.AddSingleton<RO2.Application.Interfaces.IInventoryRepository>(inventory);
+            c.AddSingleton<RO2.Inventory.Domain.IInventoryRepository>(inventory);
         });
         var handler = new SkillStartItemHandler(rig.Scopes, NullLogger<SkillStartItemHandler>.Instance, rig.Players, rig.Broadcast);
         await handler.HandleAsync(rig.Net.Sessions[0], Request1561(ConsumableItemSkill, rig.Caster.EntityId, uid));

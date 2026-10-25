@@ -100,7 +100,7 @@ public class ItemSkillForgeryTests
         });
         var collection = new ServiceCollection();
         collection.AddSingleton(await LoadStoreAsync("ItemInfo.json", "Skill_Table_SkillLevel.json"));
-        collection.AddSingleton<RO2.Application.Interfaces.IInventoryRepository>(bag);
+        collection.AddSingleton<RO2.Inventory.Domain.IInventoryRepository>(bag);
         await using var services = collection.BuildServiceProvider();
 
         

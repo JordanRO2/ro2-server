@@ -20,6 +20,7 @@ using Base1596 = RO2.Network.Handlers.ZoneRmiHandlerBase<RO2.Server.Zone.Handler
 using Base1599 = RO2.Network.Handlers.ZoneRmiHandlerBase<RO2.Server.Zone.Handlers.Rmi.ReqPresentPasswordStatusHandler>;
 using Base1642 = RO2.Network.Handlers.ZoneRmiHandlerBase<RO2.Server.Zone.Handlers.Rmi.ReqPlayTimeRewardHandler>;
 using Base1644 = RO2.Network.Handlers.ZoneRmiHandlerBase<RO2.Server.Zone.Handlers.Rmi.ReqAttendanceRewardHandler>;
+using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -36,7 +37,7 @@ public class ReqPCBankDataHandler : Base1340
         
         var pm = services.GetRequiredService<RO2.Server.Zone.Services.PlayerStateManager>();
         if (!pm.TryGetPlayer(session.SessionId, out var player) || player is null) return;
-        var inv = services.GetRequiredService<RO2.Application.Interfaces.IInventoryRepository>();
+        var inv = services.GetRequiredService<RO2.Inventory.Domain.IInventoryRepository>();
         var bank = System.Linq.Enumerable.ToList(System.Linq.Enumerable.OrderBy(
             System.Linq.Enumerable.Where(await inv.GetByCharacterAsync(player.CharacterId), i => i.StorageType == 2),
             i => i.Slot));
