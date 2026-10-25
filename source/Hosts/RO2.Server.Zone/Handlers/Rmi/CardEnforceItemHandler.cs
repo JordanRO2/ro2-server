@@ -214,7 +214,6 @@ public class CardEnforceItemHandler : ZoneRmiHandlerBase<CardEnforceItemHandler>
 
         // ---- Consume: zeny (2435), then each material (2329 with useSource UseSourceEnhance, the value every
         // enhance consumption uses). The 2329 echoes the descriptor's (slot, bag). ----
-        if (player.Character is { } ch) ch.Gold = player.Gold;
         await services.GetRequiredService<ICharacterRepository>().UpdateGoldAsync(player.CharacterId, player.Gold);
         var zenyBody = ActorVitalsPackets.BuildZenyChange2435(player.EntityId, player.Gold);
         await session.SendRmiAsync(ZoneS2COpcodes.OnZenyChange, writer => writer.WriteBytes(zenyBody));

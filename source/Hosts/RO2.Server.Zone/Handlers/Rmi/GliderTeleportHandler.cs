@@ -123,7 +123,6 @@ public class GliderTeleportHandler : ZoneRmiHandlerBase<GliderTeleportHandler>
             }
             long newGold = player.Gold;
             character.Gold = newGold;
-            if (player.Character is { } snapshot) snapshot.Gold = newGold;
             await characterRepo.UpdateGoldAsync(player.CharacterId, newGold);
             Logger.LogInformation("{Name} glider fare {Fare}z charged (station {St}) -> {Gold}z left",
                 player.Name, fare, station, newGold);

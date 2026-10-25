@@ -89,7 +89,6 @@ public class GuildFundsWithdrawHandler : ZoneRmiHandlerBase<GuildFundsWithdrawHa
         }
 
         player.Credit(amount);
-        SyncSnapshot(player);
         try
         {
             await services.GetRequiredService<ICharacterRepository>().UpdateGoldAsync(player.CharacterId, player.Gold);
@@ -103,16 +102,10 @@ public class GuildFundsWithdrawHandler : ZoneRmiHandlerBase<GuildFundsWithdrawHa
                 Logger.LogError(ex, "{Name}: wallet write failed after a guild withdraw of {Amount}, but the zeny was already spent; kept as withdrawn", player.Name, amount);
                 return (GuildFundsInHandPackets.ResultOk, fundsAfter);
             }
-            SyncSnapshot(player);
             await GuildService.Instance.ReturnFundsAsync(guild, amount);
             Logger.LogError(ex, "{Name}: wallet write failed after a guild withdraw of {Amount}; the funds were given back", player.Name, amount);
             return (GuildFundsInHandPackets.ResultSystemError, 0);
         }
         return (GuildFundsInHandPackets.ResultOk, fundsAfter);
-    }
-
-    private static void SyncSnapshot(PlayerState player)
-    {
-        if (player.Character is { } ch) ch.Gold = player.Gold;
     }
 }

@@ -192,7 +192,6 @@ public class RefineItemHandler : ZoneRmiHandlerBase<RefineItemHandler>
 
         // ---- Consume zeny + one catalyst up front (best-effort: on success AND failure) ----
         long newGold = player.Gold;
-        if (player.Character is { } gch) gch.Gold = newGold;
         await services.GetRequiredService<ICharacterRepository>().UpdateGoldAsync(player.CharacterId, newGold);
         await session.SendInternalRmiAsync(ZoneS2COpcodes.OnZenyChange,
             ActorVitalsPackets.BuildZenyChange2435(player.EntityId, newGold));

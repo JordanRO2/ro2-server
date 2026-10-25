@@ -144,7 +144,6 @@ public static class DungeonFinderReward
     {
         if (money <= 0) return;
         killer.Credit(money);
-        if (killer.Character is { } character) character.Gold = killer.Gold;
     }
 
  /// <summary>

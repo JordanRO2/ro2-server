@@ -31,7 +31,6 @@ public class MailGetMoneyHandler : ZoneRmiHandlerBase<MailGetMoneyHandler>
             
             
             player.Credit(granted);
-            if (player.Character is { } ch) ch.Gold = player.Gold;
             await services.GetRequiredService<ICharacterRepository>().UpdateGoldAsync(player.CharacterId, player.Gold);
             Logger.LogInformation("{Name} claims {Gold} zeny from mail {Uid:X}", player.Name, granted, mailUid);
         }

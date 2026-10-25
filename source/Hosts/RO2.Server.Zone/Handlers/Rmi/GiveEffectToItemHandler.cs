@@ -140,7 +140,6 @@ public class GiveEffectToItemHandler : ZoneRmiHandlerBase<GiveEffectToItemHandle
         }
 
         // 1. 2435: the fee. The balance after the fee goes out, not the change.
-        if (player.Character is { } ch) ch.Gold = player.Gold;
         await services.GetRequiredService<ICharacterRepository>().UpdateGoldAsync(player.CharacterId, player.Gold);
         await session.SendInternalRmiAsync(ZoneS2COpcodes.OnZenyChange,
             ActorVitalsPackets.BuildZenyChange2435(player.EntityId, player.Gold));

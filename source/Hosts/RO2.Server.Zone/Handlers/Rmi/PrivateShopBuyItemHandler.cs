@@ -208,8 +208,6 @@ public class PrivateShopBuyItemHandler : ZoneRmiHandlerBase<PrivateShopBuyItemHa
             if (!buyer.TryDebit(price))
                 return Sale.Refused(PrivateShopItemSalePackets.ResultNotEnoughMoney, $"{buyer.Gold} zeny for {total}");
             owner.Credit(price);
-            if (buyer.Character is { } buyerCharacter) buyerCharacter.Gold = buyer.Gold;
-            if (owner.Character is { } sellerCharacter) sellerCharacter.Gold = owner.Gold;
             buyerAfter = buyer.Gold;
             sellerAfter = owner.Gold;
         }

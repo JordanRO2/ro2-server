@@ -160,7 +160,6 @@ public class BuyPrivateShopCraftHandler : ZoneRmiHandlerBase<BuyPrivateShopCraft
         
         
         var characters = services.GetRequiredService<ICharacterRepository>();
-        if (player.Character is { } buyerCharacter) buyerCharacter.Gold = player.Gold;
         await characters.UpdateGoldAsync(player.CharacterId, player.Gold);
         await session.SendRmiAsync(ZoneS2COpcodes.AnsBuyPrivateShopCraft,
             PrivateShopCraftPackets.BuildBuyPrivateShopCraft2660(craftId, player.Gold, recipe.Craft_Item_ID), ct);
@@ -170,7 +169,6 @@ public class BuyPrivateShopCraftHandler : ZoneRmiHandlerBase<BuyPrivateShopCraft
         {
             owner.Credit(price);
             sellerGold = owner.Gold;
-            if (owner.Character is { } sellerCharacter) sellerCharacter.Gold = sellerGold;
         }
         await characters.UpdateGoldAsync(owner.CharacterId, sellerGold);
         var sellerSession = Broadcast.GetSession(owner.SessionId);

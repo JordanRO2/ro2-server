@@ -116,7 +116,6 @@ public class InitGrindingOptHandler : ZoneRmiHandlerBase<InitGrindingOptHandler>
         }
 
         
-        if (player.Character is { } ch) ch.Gold = player.Gold;
         await services.GetRequiredService<ICharacterRepository>().UpdateGoldAsync(player.CharacterId, player.Gold);
         await session.SendInternalRmiAsync(ZoneS2COpcodes.OnZenyChange,
             ActorVitalsPackets.BuildZenyChange2435(player.EntityId, player.Gold));

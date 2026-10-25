@@ -138,7 +138,6 @@ public class GuildCreateHandler : ZoneRmiHandlerBase<GuildCreateHandler>
                 // nothing on the refusal (see BuildAnsGuildCreate).
                 if (fee > 0)
                 {
-                    if (player.Character is { } ch) ch.Gold = player.Gold;
                     await services.GetRequiredService<ICharacterRepository>().UpdateGoldAsync(player.CharacterId, player.Gold);
                 }
             }

@@ -108,7 +108,6 @@ public class MailSendHandler : ZoneRmiHandlerBase<MailSendHandler>
 
         // Postage + attached zeny were taken above. 2445 blob+10 is the sender's wallet after the send, which the
         // client writes straight into its wallet; no separate 2435 is sent for a send.
-        if (player.Character is { } ch) ch.Gold = player.Gold;
         await services.GetRequiredService<ICharacterRepository>().UpdateGoldAsync(player.CharacterId, player.Gold);
 
         // The mailed item as it sat in the bag: uid, its (slot, container) and what is left in that cell.

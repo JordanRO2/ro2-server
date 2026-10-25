@@ -132,7 +132,6 @@ public class RepairItemHandler : ZoneRmiHandlerBase<RepairItemHandler>
             // so a zeroed block would erase the holes and runes it shows.
             records.Add(ItemWorkbench.RecordWithRuneholes(item, store));
         }
-        if (player.Character is { } snapshot) snapshot.Gold = player.Gold;
         await services.GetRequiredService<ICharacterRepository>().UpdateGoldAsync(player.CharacterId, player.Gold);
 
         Logger.LogDebug("{Name} repairs {Count} items at NPC {Npc:X8} for {Cost} zeny (guild discount {Pct} %)",

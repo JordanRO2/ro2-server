@@ -132,6 +132,5 @@ public class GuildFundsDepositHandler : ZoneRmiHandlerBase<GuildFundsDepositHand
 
     private static void SyncSnapshot(PlayerState player)
     {
-        if (player.Character is { } ch) ch.Gold = player.Gold;
     }
 }

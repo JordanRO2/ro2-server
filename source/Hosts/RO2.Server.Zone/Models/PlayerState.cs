@@ -1,4 +1,5 @@
 using System.Numerics;
+using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.Server.Zone.Services;
 
@@ -7,7 +8,7 @@ namespace RO2.Server.Zone.Models;
 /// <summary>
 /// Runtime state for a connected player in the zone server.
 /// </summary>
-public class PlayerState
+public class PlayerState : IWallet
 {
     /// <summary>
     /// Where live changes to persistent fields are reported for real-time write-behind persistence.
@@ -202,7 +203,13 @@ public class PlayerState
         set
         {
             if (value < 0) throw new ArgumentOutOfRangeException(nameof(Gold), value, "Gold cannot be negative.");
-            lock (_walletGate) SetPersistent(ref field, value);
+            lock (_walletGate)
+            {
+                SetPersistent(ref field, value);
+                // Single source of truth: keep the persisted Character snapshot in lock-step, so no caller has to
+                // hand-sync `Character.Gold = Gold` after a debit/credit.
+                if (Character is { } character) character.Gold = value;
+            }
         }
     }
 

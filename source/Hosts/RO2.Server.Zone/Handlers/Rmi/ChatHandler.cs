@@ -315,7 +315,6 @@ public class ChatHandler : ZoneRmiHandlerBase<ChatHandler>
         
         player.Credit(amount);                       
         long newGold = player.Gold;
-        if (player.Character is { } ch) ch.Gold = newGold;
         await services.GetRequiredService<ICharacterRepository>().UpdateGoldAsync(player.CharacterId, newGold);
 
         

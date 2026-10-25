@@ -86,7 +86,6 @@ public class GetOffGliderHandler : ZoneRmiHandlerBase<GetOffGliderHandler>
             // refuse-on-insufficient TryDebit: a refusal leaves the rider stuck mounted (the client stops on a
             // non-zero result). The clamp is a defensive choice so the rider is never stranded.
             player.DebitUpTo(fare);
-            if (player.Character is { } ch) ch.Gold = player.Gold;
             await services.GetRequiredService<ICharacterRepository>().UpdateGoldAsync(player.CharacterId, player.Gold);
         }
         player.X = x; player.Y = y; player.Z = z;
