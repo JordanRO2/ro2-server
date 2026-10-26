@@ -1,7 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using RO2.Application.Interfaces;
-using RO2.Persistence.Mongo.Persistence;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
@@ -9,6 +7,7 @@ using RO2.Server.Zone.Services;
 
 using NetworkZoneRmiBase = RO2.Network.Handlers.ZoneRmiHandlerBase<RO2.Server.Zone.Handlers.Rmi.CharacterDeleteHandler>;
 using RO2.Characters.Domain;
+using RO2.Characters.Application;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -86,47 +85,42 @@ public class CharacterDeleteHandler : NetworkZoneRmiBase
         uint accountId = session.AccountId.Value;
 
         var reader = new PacketReader(payload.Span);
-        reader.Skip(CharacterUidOffset); 
+        reader.Skip(CharacterUidOffset);
         var charUid = reader.ReadUInt64();
         var characterId = (uint)(charUid & CharacterIdMask);
 
-        var characters = services.GetRequiredService<ICharacterRepository>();
-        var character = await characters.GetByIdAsync(characterId);
+        var repo = services.GetRequiredService<ICharacterRepository>();
+        var guilds = services.GetRequiredService<IGuildMembershipView>();
+        var result = await DeleteCharacterFlow.DeleteAsync(accountId, characterId, repo, guilds);
 
-        if (character == null || character.AccountId != accountId)
+        switch (result.Outcome)
         {
-            Logger.LogWarning("Session {Id}: DeleteCharacter for UID 0x{Uid:X16}, not a live character of account {Account}",
-                session.SessionId, charUid, accountId);
-            await session.SendInternalRmiAsync(ZoneS2COpcodes.OnDeleteCharacterACK,
-                BuildOnDeleteCharacterAck(accountId, ResultCannotDelete), ct);
-            return;
+            case DeleteCharacterFlow.DeleteOutcome.NotLive:
+                Logger.LogWarning("Session {Id}: DeleteCharacter for UID 0x{Uid:X16}, not a live character of account {Account}",
+                    session.SessionId, charUid, accountId);
+                await session.SendInternalRmiAsync(ZoneS2COpcodes.OnDeleteCharacterACK,
+                    BuildOnDeleteCharacterAck(accountId, ResultCannotDelete), ct);
+                return;
+
+            case DeleteCharacterFlow.DeleteOutcome.GuildMaster:
+                Logger.LogInformation("Session {Id}: DeleteCharacter refused, '{Name}' is a guild master",
+                    session.SessionId, result.Name);
+                await session.SendInternalRmiAsync(ZoneS2COpcodes.OnDeleteCharacterACK,
+                    BuildOnDeleteCharacterAck(accountId, ResultGuildMaster), ct);
+                return;
+
+            case DeleteCharacterFlow.DeleteOutcome.RaceLost:
+                // The delete lost a race with another; on purpose, nothing is answered.
+                Logger.LogWarning("Session {Id}: DeleteCharacter for '{Name}' lost a race with another delete",
+                    session.SessionId, result.Name);
+                return;
+
+            default:
+                Logger.LogInformation("Session {Id}: Deleted character '{Name}' (ID: {CharId})",
+                    session.SessionId, result.Name, characterId);
+                await session.SendInternalRmiAsync(ZoneS2COpcodes.OnDeleteCharacterACK,
+                    BuildOnDeleteCharacterAck(accountId, ResultDeleted), ct);
+                return;
         }
-
-        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
-        if (ReserveDeleteHandler.IsGuildMaster(GuildService.Instance.GetByCharId(characterId), characterId))
-        {
-            Logger.LogInformation("Session {Id}: DeleteCharacter refused, '{Name}' is a guild master",
-                session.SessionId, character.Name);
-            await session.SendInternalRmiAsync(ZoneS2COpcodes.OnDeleteCharacterACK,
-                BuildOnDeleteCharacterAck(accountId, ResultGuildMaster), ct);
-            return;
-        }
-
-        if (!await characters.DeleteCharacterAsync(characterId, accountId))
-        {
-            
-            
-            
-            Logger.LogWarning("Session {Id}: DeleteCharacter for '{Name}' lost a race with another delete",
-                session.SessionId, character.Name);
-            return;
-        }
-
-        Logger.LogInformation("Session {Id}: Deleted character '{Name}' (ID: {CharId})",
-            session.SessionId, character.Name, characterId);
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.OnDeleteCharacterACK,
-            BuildOnDeleteCharacterAck(accountId, ResultDeleted), ct);
-
-        
     }
 }
