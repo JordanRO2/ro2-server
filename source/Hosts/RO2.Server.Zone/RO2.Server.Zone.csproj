@@ -16,7 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-                    <ProjectReference Include="..\..\Character\RO2.Character.Infrastructure.Postgres\RO2.Character.Infrastructure.Postgres.csproj" />
+                        <ProjectReference Include="..\..\Character\RO2.Character.Application\RO2.Character.Application.csproj" />
+<ProjectReference Include="..\..\Character\RO2.Character.Infrastructure.Postgres\RO2.Character.Infrastructure.Postgres.csproj" />
 <ProjectReference Include="..\..\Character\RO2.Character.Infrastructure.Mongo\RO2.Character.Infrastructure.Mongo.csproj" />
 <ProjectReference Include="..\..\Character\RO2.Character.Domain\RO2.Character.Domain.csproj" />
 <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />

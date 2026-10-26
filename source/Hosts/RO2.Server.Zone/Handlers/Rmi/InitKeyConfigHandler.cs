@@ -2,12 +2,12 @@ using RO2.Domain.Entities;
 using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using RO2.Persistence.Mongo.Persistence;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Characters.Domain;
+using RO2.Characters.Application;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -49,19 +49,10 @@ public class InitKeyConfigHandler : ZoneRmiHandlerBase<InitKeyConfigHandler>
     internal static bool ClearsStoredSet(ushort mode) => mode != 0;
 
  /// <summary>
- /// Returns the document to store after the stored set is reset: the same character and mode with no bindings, or null when there is nothing to change.
+ /// Returns the document to store after the stored set is reset: the same character and mode with no bindings, or null when there is nothing to change. Delegates to <see cref="KeyConfigRules.AfterReset"/>.
  /// </summary>
     internal static KeyConfigDocument? AfterReset(KeyConfigDocument? stored, DateTime updatedUtc)
-    {
-        if (stored is null || stored.Entries.Length == 0) return null;
-        return new KeyConfigDocument
-        {
-            Id = stored.Id,
-            Mode = stored.Mode,
-            Entries = Array.Empty<byte>(),
-            UpdatedUtc = updatedUtc,
-        };
-    }
+        => KeyConfigRules.AfterReset(stored, updatedUtc);
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
@@ -80,12 +71,10 @@ public class InitKeyConfigHandler : ZoneRmiHandlerBase<InitKeyConfigHandler>
 
         try
         {
-            var repo = services.GetRequiredService<RO2.Characters.Domain.IKeyConfigRepository>();
-            var reset = AfterReset(await repo.GetAsync(player.CharacterId, ct), DateTime.UtcNow);
-            if (reset is not null)
-                await repo.SaveAsync(reset, ct);
+            var repo = services.GetRequiredService<IKeyConfigRepository>();
+            var outcome = await KeyConfigFlows.ResetAsync(repo, player.CharacterId, DateTime.UtcNow, ct);
             Logger.LogDebug("{Name}: key settings reset for mode {Mode}{Cleared}", player.Name, mode,
-                reset is not null ? ", stored bindings cleared" : ", nothing stored to clear");
+                outcome == KeyConfigFlows.ResetOutcome.Cleared ? ", stored bindings cleared" : ", nothing stored to clear");
         }
         catch (Exception ex)
         {

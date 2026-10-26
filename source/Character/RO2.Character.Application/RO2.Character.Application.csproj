@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Plural namespace (RO2.Characters.Application) so it cannot shadow the Character type. -->
+    <RootNamespace>RO2.Characters.Application</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Character bounded context: Application holds the character use-case flows and the ports they consume.
+       References its own Domain, the shared Inventory.Domain (items), and BuildingBlocks. The host implements
+       the ports and does the wire/packet work. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Character.Domain\RO2.Character.Domain.csproj" />
+    <ProjectReference Include="..\..\Inventory\RO2.Inventory.Domain\RO2.Inventory.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+  </ItemGroup>
+
+</Project>
