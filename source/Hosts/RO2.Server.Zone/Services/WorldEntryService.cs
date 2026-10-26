@@ -8,6 +8,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
+using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -19,12 +20,12 @@ namespace RO2.Server.Zone.Services;
 /// </remarks>
 public static class WorldEntryService
 {
- /// <summary>Default starting map.</summary>
-    public const uint DefaultMapId = 1101;
+ /// <summary>Default starting map (<see cref="SpawnRules.DefaultMapId"/>).</summary>
+    public const uint DefaultMapId = SpawnRules.DefaultMapId;
  /// <summary>Default spawn X position on the default starting map.</summary>
-    public const float DefaultX = 209.34f;
-    public const float DefaultY = 268.79f;
-    public const float DefaultZ = 48.23f;
+    public const float DefaultX = SpawnRules.DefaultX;
+    public const float DefaultY = SpawnRules.DefaultY;
+    public const float DefaultZ = SpawnRules.DefaultZ;
     private const string ChatHost = "127.0.0.1";
     private const ushort ChatPort = 7401;
 
@@ -36,48 +37,12 @@ public static class WorldEntryService
  /// Resolves the map and position a character enters the world at.
  /// </summary>
  /// <remarks>
- /// Falls back to the default starting map when the character's map is 0 or is not in the map list.
+ /// Delegates to <see cref="SpawnRules.ResolveSpawnPosition"/> with the game-data catalog adapter.
  /// </remarks>
     public static (uint MapId, float X, float Y, float Z) ResolveSpawnPosition(
         Character character, GameDataStore? data)
-    {
-        var mapId = character.MapId;
-        var x = character.X;
-        var y = character.Y;
-        var z = character.Z;
-
-        
-        var isValidMap = mapId != 0 && data?.GetMap(mapId) != null;
-
-        if (!isValidMap)
-        {
-            mapId = DefaultMapId;
-            x = DefaultX;
-            y = DefaultY;
-            z = DefaultZ;
-        }
-        else if (x == 0f && y == 0f && z == 0f)
-        {
-            
-            var mapData = data?.GetMap(mapId);
-            if (mapData != null && (mapData.x != 0 || mapData.y != 0 || mapData.z != 0))
-            {
-                x = mapData.x;
-                y = mapData.y;
-                z = mapData.z;
-            }
-            else
-            {
-                
-                
-                
-                
-                
-            }
-        }
-
-        return (mapId, x, y, z);
-    }
+        => SpawnRules.ResolveSpawnPosition(character.MapId, character.X, character.Y, character.Z,
+            data is null ? null : new GameDataWorldCatalog(data));
 
     public static async Task SendWorldEntryAsync(
         ProudSession session,
