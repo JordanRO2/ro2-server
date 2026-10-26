@@ -5,6 +5,7 @@ using RO2.Domain.Entities;
 using RO2.GameData;
 using RO2.GameData.Tables;
 using RO2.Network.Protocol;
+using RO2.Worlds.Application;
 using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Services;
@@ -50,10 +51,10 @@ public static class WorldEventMachine
     public static byte? TimedOut(WorldEventStateDocument doc, WorldEventTables t, DateTime nowUtc)
         => WorldEventStageRules.TimedOut(ToState(doc), t, nowUtc);
 
-    private static WorldEventState ToState(WorldEventStateDocument doc)
+    internal static WorldEventState ToState(WorldEventStateDocument doc)
         => new(doc.Id, doc.Stage, doc.StageEnteredUtc, doc.Counts, doc.UpdatedUtc);
 
-    private static WorldEventStateDocument ToDocument(WorldEventState state) => new()
+    internal static WorldEventStateDocument ToDocument(WorldEventState state) => new()
     {
         Id = state.Id,
         Stage = state.Stage,
@@ -80,8 +81,7 @@ public sealed class WorldEventService : BackgroundService
     private static readonly TimeSpan LoadRetryDelay = TimeSpan.FromMinutes(1);
 
     private readonly GameDataStore _store;
-    private readonly PlayerStateManager _players;
-    private readonly BroadcastService _broadcast;
+    private readonly IWorldNotifier _notifier;
     private readonly IWorldEventStateRepository _repo;
     private readonly ILogger<WorldEventService> _logger;
     private readonly SemaphoreSlim _gate = new(1, 1);
@@ -92,8 +92,7 @@ public sealed class WorldEventService : BackgroundService
         IWorldEventStateRepository repo, ILogger<WorldEventService> logger)
     {
         _store = store;
-        _players = players;
-        _broadcast = broadcast;
+        _notifier = new WorldEventNotifier(store, players, broadcast);
         _repo = repo;
         _logger = logger;
     }
@@ -109,9 +108,7 @@ public sealed class WorldEventService : BackgroundService
         try
         {
             var states = await LoadLockedAsync(ct);
-            stages = states is null
-                ? WorldEventSelectors.InitialStages(t.Main)
-                : states.Values.OrderBy(s => s.Id).Select(s => (s.Id, s.Stage)).ToList();
+            stages = WorldEventUseCase.EntryStages(states?.Values.Select(WorldEventMachine.ToState).ToList(), t);
         }
         finally
         {
@@ -141,25 +138,20 @@ public sealed class WorldEventService : BackgroundService
                     count, itemTemplate, npcTemplate);
                 return;
             }
-            foreach (var current in states.Values.OrderBy(s => s.Id).ToList())
+            var decision = WorldEventUseCase.Offer(states.Values.Select(WorldEventMachine.ToState).ToList(), t,
+                npcTemplate, itemTemplate, count, DateTime.UtcNow);
+            if (decision is not null)
             {
-                var next = current.Clone();
-                var result = WorldEventMachine.AddOffering(next, t, npcTemplate, itemTemplate, count);
-                if (!result.Counted) continue;
-                var now = DateTime.UtcNow;
-                next.UpdatedUtc = now;
-                var counts = string.Join("/", next.Counts);
-                if (result.NextStage is { } stage)
-                {
-                    next = WorldEventMachine.Enter(current.Id, stage, now, t);
+                var current = decision.Previous;
+                var next = WorldEventMachine.ToDocument(decision.Stored);
+                var counts = string.Join("/", decision.CountsAfterOffering);
+                if (decision.NextStage is { } stage)
                     changed = (current.Id, stage);
-                }
                 states[current.Id] = next;
                 await SaveAsync(next, ct);
                 _logger.LogInformation("World event {Event} stage {Stage}: offering {Count}x {Item} to NPC {Npc} counted ({Counts}){Moved}",
                     current.Id, current.Stage, count, itemTemplate, npcTemplate, counts,
-                    result.NextStage is { } moved ? $" -> stage {moved}" : "");
-                break; 
+                    decision.NextStage is { } moved ? $" -> stage {moved}" : "");
             }
         }
         finally
@@ -199,27 +191,23 @@ public sealed class WorldEventService : BackgroundService
     private async Task<TimeSpan> RunTimeoutsAsync(CancellationToken ct)
     {
         var t = WorldEventTables.From(_store);
-        var wait = MaxWait;
+        TimeSpan wait;
         var changes = new List<(uint Id, byte Stage)>();
         await _gate.WaitAsync(ct);
         try
         {
             var states = await LoadLockedAsync(ct);
             if (states is null) return MaxWait;
-            var now = DateTime.UtcNow;
-            foreach (var current in states.Values.OrderBy(s => s.Id).ToList())
+            var decision = WorldEventUseCase.RunTimeouts(states.Values.Select(WorldEventMachine.ToState).ToList(), t,
+                DateTime.UtcNow, MaxWait);
+            wait = decision.Wait;
+            foreach (var transition in decision.Transitions)
             {
-                var doc = current;
-                if (WorldEventMachine.TimedOut(doc, t, now) is { } back)
-                {
-                    doc = WorldEventMachine.Enter(doc.Id, back, now, t);
-                    states[doc.Id] = doc;
-                    await SaveAsync(doc, ct);
-                    changes.Add((doc.Id, back));
-                    _logger.LogInformation("World event {Event}: stage {From} timed out -> stage {To}", doc.Id, current.Stage, back);
-                }
-                if (WorldEventMachine.Deadline(doc, t) is { } deadline && deadline - now < wait)
-                    wait = deadline - now;
+                var doc = WorldEventMachine.ToDocument(transition.Entered);
+                states[doc.Id] = doc;
+                await SaveAsync(doc, ct);
+                changes.Add((doc.Id, doc.Stage));
+                _logger.LogInformation("World event {Event}: stage {From} timed out -> stage {To}", doc.Id, transition.Previous.Stage, doc.Stage);
             }
         }
         finally
@@ -237,29 +225,8 @@ public sealed class WorldEventService : BackgroundService
  /// </summary>
     private async Task PushStageChangeAsync(uint eventId, byte stage, CancellationToken ct)
     {
-        var t = WorldEventTables.From(_store);
-        var rows = t.Stage(eventId, stage) is { } row ? t.EventRows(row) : Array.Empty<WorldEventEventGroup>();
-        var sent = 0;
-        foreach (var player in _players.GetAllPlayers().ToList())
-        {
-            var session = _broadcast.GetSession(player.SessionId);
-            if (session is null) continue;
-            try
-            {
-                foreach (var body in WorldEventPackets.BuildStageChangePush(eventId, stage, rows, player.MapId))
-                    await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyWorldEventTrigger, body, ct);
-                sent++;
-            }
-            catch (OperationCanceledException) when (ct.IsCancellationRequested)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                
-                _logger.LogDebug(ex, "3030 stage push failed for session {Id}", player.SessionId);
-            }
-        }
+        var sent = await WorldEventUseCase.PushStageChangeAsync(_notifier, eventId, stage,
+            (recipient, ex) => _logger.LogDebug(ex, "3030 stage push failed for session {Id}", recipient.SessionId), ct);
         _logger.LogInformation("World event {Event} now at stage {Stage}: 3030 pushed to {Count} player(s)", eventId, stage, sent);
     }
 
@@ -276,12 +243,11 @@ public sealed class WorldEventService : BackgroundService
             var states = new Dictionary<uint, WorldEventStateDocument>();
             foreach (var (id, initial) in WorldEventSelectors.InitialStages(t.Main))
             {
-                var doc = stored.FirstOrDefault(d => d.Id == id) is { } s ? WorldEventMachine.Normalize(s, t) : null;
-                if (doc is null)
-                {
-                    doc = WorldEventMachine.Enter(id, initial, now, t);
+                var found = stored.FirstOrDefault(d => d.Id == id);
+                var (state, needsStore) = WorldEventUseCase.Load(found is null ? null : WorldEventMachine.ToState(found), id, initial, now, t);
+                var doc = WorldEventMachine.ToDocument(state);
+                if (needsStore)
                     await _repo.SaveAsync(doc, ct);
-                }
                 states[id] = doc;
             }
             _states = states;
@@ -308,5 +274,40 @@ public sealed class WorldEventService : BackgroundService
             
             _logger.LogWarning(ex, "World event {Event} stage {Stage} could not be stored", doc.Id, doc.Stage);
         }
+    }
+}
+
+/// <summary>
+/// Host adapter of <see cref="IWorldNotifier"/> over the live player registry, the broadcast service and the player
+/// sessions. It builds the 3030 stage-change bodies and sends them with the same opcode and order as before.
+/// </summary>
+internal sealed class WorldEventNotifier : IWorldNotifier
+{
+    private readonly GameDataStore _store;
+    private readonly PlayerStateManager _players;
+    private readonly BroadcastService _broadcast;
+
+    public WorldEventNotifier(GameDataStore store, PlayerStateManager players, BroadcastService broadcast)
+    {
+        _store = store;
+        _players = players;
+        _broadcast = broadcast;
+    }
+
+    public IReadOnlyList<WorldRecipient> OnlinePlayers()
+        => _players.GetAllPlayers().Select(p => new WorldRecipient(p.SessionId, p.MapId)).ToList();
+
+ /// <summary>
+ /// Players on a map of the stage receive its records for that map. Everyone else receives a stage-0 notice.
+ /// </summary>
+    public async Task<bool> SendStageChangeAsync(WorldRecipient recipient, uint eventId, byte stage, CancellationToken ct)
+    {
+        var session = _broadcast.GetSession(recipient.SessionId);
+        if (session is null) return false;
+        var t = WorldEventTables.From(_store);
+        var rows = t.Stage(eventId, stage) is { } row ? t.EventRows(row) : Array.Empty<WorldEventEventGroup>();
+        foreach (var body in WorldEventPackets.BuildStageChangePush(eventId, stage, rows, recipient.MapId))
+            await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyWorldEventTrigger, body, ct);
+        return true;
     }
 }

@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Plural namespace (RO2.Worlds.Application) so it cannot shadow a type, as RO2.Combats/RO2.Worlds.Domain do. -->
+    <RootNamespace>RO2.Worlds.Application</RootNamespace>
+  </PropertyGroup>
+
+  <!-- World bounded context: Application holds the use-case flows and the flow-facing ports they consume.
+       References its own Domain, the shared GameData kernel, BuildingBlocks and the foundational Combat/Character
+       Domains; the live registries and sessions are reached through ports (IWorldNotifier) the host implements. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.World.Domain\RO2.World.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Combat\RO2.Combat.Domain\RO2.Combat.Domain.csproj" />
+    <ProjectReference Include="..\..\Character\RO2.Character.Domain\RO2.Character.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
