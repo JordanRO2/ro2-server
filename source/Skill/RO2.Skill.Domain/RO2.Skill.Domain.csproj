@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Plural namespace: a namespace "RO2.Skill" would shadow a type Skill in RO2.* files (CS0118), as with Character. -->
+    <RootNamespace>RO2.Skills.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Skill bounded context: Domain references ONLY RO2.BuildingBlocks + the shared RO2.GameData kernel. -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+  </ItemGroup>
+
+</Project>

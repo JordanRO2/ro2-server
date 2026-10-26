@@ -1,4 +1,5 @@
-using System.Buffers.Binary;
+﻿using System.Buffers.Binary;
+using RO2.Skills.Domain;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using RO2.Application.Interfaces;

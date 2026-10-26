@@ -1,4 +1,5 @@
-using RO2.Economy.Domain;
+﻿using RO2.Economy.Domain;
+using RO2.Skills.Domain;
 using RO2.Domain.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -340,7 +341,7 @@ public class LoginPCHandler : NetworkZoneRmiBase
         }
 
         // Load learned skills from DB and populate runtime state
-        IReadOnlyList<RO2.Domain.Entities.CharacterSkill>? learnedSkills = null;
+        IReadOnlyList<RO2.Skills.Domain.CharacterSkill>? learnedSkills = null;
         try
         {
             var skillRepo = services.GetRequiredService<ISkillRepository>();
@@ -373,23 +374,23 @@ public class LoginPCHandler : NetworkZoneRmiBase
             var starterGroups = StatService.StarterSkillGroups(store, character.Job);
             if (starterGroups.Length > 0)
             {
-                var known = new HashSet<uint>((learnedSkills ?? Array.Empty<RO2.Domain.Entities.CharacterSkill>())
+                var known = new HashSet<uint>((learnedSkills ?? Array.Empty<RO2.Skills.Domain.CharacterSkill>())
                     .Select(s => s.SkillId));
-                var seeded = new List<RO2.Domain.Entities.CharacterSkill>();
+                var seeded = new List<RO2.Skills.Domain.CharacterSkill>();
                 foreach (var grp in starterGroups)
                 {
                     if (!known.Add(grp))
                         continue;
                     await skillRepo.LearnSkillAsync(characterId, grp, 1);
-                    seeded.Add(new RO2.Domain.Entities.CharacterSkill
+                    seeded.Add(new RO2.Skills.Domain.CharacterSkill
                     { CharacterId = characterId, SkillId = grp, Level = 1 });
                 }
                 if (seeded.Count > 0)
                 {
                     playerStateSkills?.OverlayLearnedSkills(seeded.Select(s => (s.SkillId, s.Level)));
                     // Fold the newly-seeded skills into the list handed to the world-entry 2488 send.
-                    var merged = new List<RO2.Domain.Entities.CharacterSkill>(
-                        learnedSkills ?? Array.Empty<RO2.Domain.Entities.CharacterSkill>());
+                    var merged = new List<RO2.Skills.Domain.CharacterSkill>(
+                        learnedSkills ?? Array.Empty<RO2.Skills.Domain.CharacterSkill>());
                     merged.AddRange(seeded);
                     learnedSkills = merged;
                     Logger.LogInformation("Session {Id}: granted {N} starter skill(s) for job {Job} to {Name}",
@@ -669,9 +670,9 @@ public class LoginPCHandler : NetworkZoneRmiBase
     /// clears the quick-slot cells that hold them, then returns the skills that are left. Only for a row whose
     /// class was healed at this login; a storage error is logged and the list returned unchanged.
     /// </summary>
-    private async Task<IReadOnlyList<RO2.Domain.Entities.CharacterSkill>> DropSkillsOutsideClassAsync(
+    private async Task<IReadOnlyList<RO2.Skills.Domain.CharacterSkill>> DropSkillsOutsideClassAsync(
         IServiceProvider services, GameDataStore store, uint characterId, byte job,
-        IReadOnlyList<RO2.Domain.Entities.CharacterSkill> learned, uint sessionId)
+        IReadOnlyList<RO2.Skills.Domain.CharacterSkill> learned, uint sessionId)
     {
         var dropped = TalentGroupsOutsideClass(store, job, learned.Select(s => s.SkillId));
         if (dropped.Length == 0) return learned;

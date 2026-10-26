@@ -1,4 +1,5 @@
-using System.Buffers.Binary;
+﻿using System.Buffers.Binary;
+using RO2.Skills.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using RO2.Application.Interfaces;

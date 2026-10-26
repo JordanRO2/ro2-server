@@ -20,6 +20,7 @@
 <ProjectReference Include="..\..\Character\RO2.Character.Infrastructure.Postgres\RO2.Character.Infrastructure.Postgres.csproj" />
 <ProjectReference Include="..\..\Character\RO2.Character.Infrastructure.Mongo\RO2.Character.Infrastructure.Mongo.csproj" />
 <ProjectReference Include="..\..\Character\RO2.Character.Domain\RO2.Character.Domain.csproj" />
+    <ProjectReference Include="..\..\Skill\RO2.Skill.Domain\RO2.Skill.Domain.csproj" />
 <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
 <ProjectReference Include="..\..\Game\RO2.Domain\RO2.Domain.csproj" />
     <ProjectReference Include="..\..\Game\RO2.Application\RO2.Application.csproj" />

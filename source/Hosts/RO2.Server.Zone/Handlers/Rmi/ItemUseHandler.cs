@@ -1,4 +1,5 @@
-using RO2.Economy.Domain;
+﻿using RO2.Economy.Domain;
+using RO2.Skills.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;

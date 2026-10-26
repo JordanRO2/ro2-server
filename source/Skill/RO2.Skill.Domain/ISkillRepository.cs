@@ -1,9 +1,9 @@
-using RO2.Domain.Entities;
+namespace RO2.Skills.Domain;
 
-namespace RO2.Application.Interfaces;
-
+/// <summary>Persistence of a character's learned skills (one row per character + skill group).</summary>
 public interface ISkillRepository
 {
+    /// <summary>The character's learned skills.</summary>
     Task<IReadOnlyList<CharacterSkill>> GetSkillsAsync(uint characterId);
 
     /// <summary>
@@ -11,6 +11,8 @@ public interface ISkillRepository
     /// Idempotent and upsert-safe, so two writers racing for the same (character, skill) end with one row.
     /// </summary>
     Task LearnSkillAsync(uint characterId, uint skillId, byte level);
+
+    /// <summary>Sets the skill to <paramref name="newLevel"/> unconditionally (no raise-only guard, no insert).</summary>
     Task UpdateSkillLevelAsync(uint characterId, uint skillId, byte newLevel);
 
     /// <summary>

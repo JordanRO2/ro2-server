@@ -1,4 +1,5 @@
-using Npgsql;
+﻿using Npgsql;
+using RO2.Skills.Domain;
 using NpgsqlTypes;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;

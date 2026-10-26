@@ -1,4 +1,5 @@
-using System.Text;
+﻿using System.Text;
+using RO2.Skills.Domain;
 using Microsoft.Extensions.Logging;
 using RO2.Domain.Entities;
 using RO2.GameData;
