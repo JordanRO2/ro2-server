@@ -286,7 +286,7 @@ public static class WorldEntryService
             await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyRankingTopList, EmptyCountedList());
 
         
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.OnReceiveMapLoad, BuildMapLoad2311(entityId, mapId, posX, posY, posZ));
+        await session.SendInternalRmiAsync(ZoneS2COpcodes.OnReceiveMapLoad, WorldEntryPackets.BuildMapLoad2311(entityId, mapId, posX, posY, posZ));
         logger.LogDebug("Session {Id}: Sent OnReceiveMapLoad (INT 2311) for map {MapId}", session.SessionId, mapId);
 
         
@@ -618,14 +618,6 @@ public static class WorldEntryService
  /// <summary>Value of the f32 at blob offset 68 in the trait initialization message.</summary>
     private const float PcInitTraitScale68 = 1.0f;
 
- /// <summary>Fixed first byte of the map-load body.</summary>
-    private const byte MapLoadLeadByte = 0x01;
- /// <summary>Fixed u16 at offset 1 of the map-load body.</summary>
-    private const ushort MapLoadMarkerA = 0x2B2B;
- /// <summary>Fixed u16 at offset 4 of the map-load body.</summary>
-    private const ushort MapLoadMarkerB = 0xE294;
- /// <summary>Last byte of the map-load body (offset 44). This value is known to spawn the client; the byte is not otherwise identified.</summary>
-    private const byte MapLoadTrailerByte = 0xAB;
 
  /// <summary>
  /// Byte offsets of the fields in the 205-byte head of the 2310 message, counted from the start of the message body
@@ -1742,35 +1734,6 @@ public static class WorldEntryService
         w.WriteUInt16((ushort)ids.Count);          
         foreach (var id in ids) w.WriteUInt16(id); 
         return w.ToArray();
-    }
-
- /// <summary>Body length of the map-load message, in bytes.</summary>
-    internal const int MapLoad2311Length = 45;
-
- /// <summary>
- /// Builds the 45-byte map-load body that puts the client on a map at a position.
- /// </summary>
- /// <remarks>
- /// Layout: a fixed header (offsets 0 to 5), the actor handle at offset 6, the map id as a u32 at offset 10, 12 zero bytes, the X, Y and Z position as three floats at offset 26, two zero bytes, the actor handle again at offset 40, and a trailer byte at offset 44.
- /// </remarks>
-    internal static byte[] BuildMapLoad2311(uint actorHandle, uint mapId, float x, float y, float z)
-    {
-        using var tw = new PacketWriter();
-        tw.WriteByte(MapLoadLeadByte);  // [0] fixed
-        tw.WriteUInt16(MapLoadMarkerA);  // [1] fixed
-        tw.WriteByte(0x00);  // [3] fixed zero
-        tw.WriteUInt16(MapLoadMarkerB);  // [4] fixed
-        tw.WriteUInt32(actorHandle);  // [6] actor handle
-        tw.WriteUInt32(mapId);  // [10] map id
-                                            
-        tw.WriteZeros(12);  // [14] zeros
-        tw.WriteSingle(x);  // [26] position X
-        tw.WriteSingle(y);  // [30] position Y
-        tw.WriteSingle(z);  // [34] position Z
-        tw.WriteUInt16(0);  // [38] zeros
-        tw.WriteUInt32(actorHandle);  // [40] actor handle again
-        tw.WriteByte(MapLoadTrailerByte);  // [44] trailer byte
-        return tw.ToArray();
     }
 
  /// <summary>

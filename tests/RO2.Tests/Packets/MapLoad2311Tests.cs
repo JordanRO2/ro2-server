@@ -25,13 +25,13 @@ public class MapLoad2311Tests
     private const uint MapId = 1101u;
 
     private static byte[] Build() =>
-        WorldEntryService.BuildMapLoad2311(Handle, MapId, 769f, 982f, 1.5f);
+        WorldEntryPackets.BuildMapLoad2311(Handle, MapId, 769f, 982f, 1.5f);
 
     [Fact]
     public void Body_Is45Bytes_AsInEveryRetailFrame()
     {
         Assert.Equal(45, Build().Length);
-        Assert.Equal(WorldEntryService.MapLoad2311Length, Build().Length);
+        Assert.Equal(WorldEntryPackets.MapLoad2311Length, Build().Length);
     }
 
     [Fact]

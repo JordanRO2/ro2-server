@@ -184,7 +184,7 @@ public static class WarpEntryBurst
         float x, float y, float z, ulong charUid, IReadOnlyList<CharacterQuickSlot> quickSlots,
         IReadOnlyList<OwnedVehicle> vehicles, double nowOle) =>
     [
-        (ZoneS2COpcodes.OnReceiveMapLoad, WorldEntryService.BuildMapLoad2311(selfHandle, mapId, x, y, z)),
+        (ZoneS2COpcodes.OnReceiveMapLoad, WorldEntryPackets.BuildMapLoad2311(selfHandle, mapId, x, y, z)),
         (ZoneS2COpcodes.OnQuickSlotSaveData, GuildSkillBarRefresh.BuildQuickSlotSaveData2472(charUid, quickSlots)),
         (ZoneS2COpcodes.OnVehicleQuickSlot, VehiclePackets.BuildVehicleQuickSlot2523Empty()),
         (ZoneS2COpcodes.OnAllVehicleList, VehiclePackets.BuildAllVehicleList2522(vehicles, nowOle)),

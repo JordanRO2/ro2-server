@@ -150,7 +150,7 @@ public static class WarpService
         
         player.MapLoaded = false;
         await session.SendInternalRmiAsync(ZoneS2COpcodes.OnReceiveMapLoad,
-            WorldEntryService.BuildMapLoad2311(entityId, mapId, x, y, z));
+            WorldEntryPackets.BuildMapLoad2311(entityId, mapId, x, y, z));
 
         
         

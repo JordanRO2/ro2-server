@@ -168,7 +168,7 @@ public class WarpDepartureTests
  /// 2558 2743 2595 2498 2669, then 2311 to Position_Info 350 (map 1100 at 725, 796, 55.5). The request is the
  /// reference body with the gate handle allocated by this server placed at body+10. The 2498s are compared on opcode
  /// and length, the 2595 on the 64 bytes the reference keeps, the 2669 on length (clock), and the 2311 up to byte 44
- /// (see WorldEntryService.BuildMapLoad2311). All other bodies must match byte for byte. The 2311 is followed by
+ /// (see WorldEntryPackets.BuildMapLoad2311). All other bodies must match byte for byte. The 2311 is followed by
  /// 2472 2523 2522 and the collection trio.
  /// </summary>
     [Fact]
