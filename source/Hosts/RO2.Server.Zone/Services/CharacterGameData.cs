@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using RO2.Characters.Application;
 using RO2.GameData;
@@ -8,4 +9,6 @@ namespace RO2.Server.Zone.Services;
 internal sealed class CharacterGameData(GameDataStore store) : ICharacterGameData
 {
     public bool UnionExists(uint unionId) => store.UnionInfo.Any(u => u.Union_ID == unionId);
+
+    public IReadOnlyDictionary<byte, ExpTableEntry> ExpTable => store.ExpTable;
 }
