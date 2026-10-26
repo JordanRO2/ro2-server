@@ -1,5 +1,6 @@
 ﻿using System.Buffers.Binary;
 using RO2.Skills.Domain;
+using RO2.Combats.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.GameData;
@@ -154,7 +155,7 @@ public class SkillStartHandler : ZoneRmiHandlerBase<SkillStartHandler>
         bool cooldownExempt = skillId >= 2_000_000u || skillGroup == 9216u;
         var cooldown = cooldownExempt
             ? tableCooldown
-            : StatService.EffectiveCooldown(tableCooldown, player.Level, player.CombatVigor);
+            : CooldownRules.EffectiveCooldown(tableCooldown, player.Level, player.CombatVigor);
 
         // ---- SP COST (the live cast path) --------------------------------------------------------------
         // SP is spent here, at cast start (1508), on the path players actually use; the older 1364 ReqSkill

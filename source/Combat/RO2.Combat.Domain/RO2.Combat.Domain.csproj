@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Plural namespace (RO2.Combats.Domain) so it cannot shadow a type, as RO2.Characters/RO2.Skills do. -->
+    <RootNamespace>RO2.Combats.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Combat bounded context: Domain references ONLY RO2.BuildingBlocks + the shared RO2.GameData kernel. -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+  </ItemGroup>
+
+</Project>

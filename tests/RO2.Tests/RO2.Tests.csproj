@@ -23,6 +23,7 @@
     <ProjectReference Include="..\..\source\Skill\RO2.Skill.Domain\RO2.Skill.Domain.csproj" />
     <ProjectReference Include="..\..\source\Skill\RO2.Skill.Infrastructure.Mongo\RO2.Skill.Infrastructure.Mongo.csproj" />
     <ProjectReference Include="..\..\source\Skill\RO2.Skill.Infrastructure.Postgres\RO2.Skill.Infrastructure.Postgres.csproj" />
+    <ProjectReference Include="..\..\source\Combat\RO2.Combat.Domain\RO2.Combat.Domain.csproj" />
 <ProjectReference Include="..\..\source\Shared\RO2.GameData\RO2.GameData.csproj" />
 <ProjectReference Include="..\..\source\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
     <ProjectReference Include="..\..\source\Platform\RO2.Network\RO2.Network.csproj" />

@@ -234,24 +234,7 @@ public static class StatService
         return def * (1.0 - penPct / 100.0);
     }
 
-    /// <summary>
-    /// The REAL skill cooldown after Vigor reduction — the value the server must both SEND to the client
-    /// (2715 AnsUseSkillStart, which the client stores verbatim: it is the sole authority for the enforced
-    /// cooldown) and enforce itself. AoV model:
-    ///   cooldown = tableCooldown · (1 − VigorPct/100),  VigorPct = min(75, Vigor/(0.005·Vigor + 0.2·Level + 10)).
-    /// (The AoV expression is already a percentage — asymptote 1/0.005 = 200 — so there is no extra ×100.)
-    /// The 75% cap is a HARD floor of 0.25·table; the result is clamped to [0.25·table, table] so uncertainty in
-    /// the interior constants can never push it past those bounds. A naked character (Vigor 0) gets no reduction
-    /// (= table).
-    /// </summary>
-    public static float EffectiveCooldown(float tableCooldown, int level, int vigor)
-    {
-        if (tableCooldown <= 0f) return 0f;
-        int v = Math.Max(0, vigor);
-        double vigorPct = Math.Min(75.0, v / (0.005 * v + 0.2 * Math.Max(1, level) + 10.0));
-        double reduced = tableCooldown * (1.0 - vigorPct / 100.0);
-        return (float)Math.Clamp(reduced, tableCooldown * 0.25, tableCooldown);
-    }
+    // EffectiveCooldown moved to RO2.Combats.Domain.CooldownRules (Combat context, B4 S1).
 
     /// <summary>
     /// The GEAR-ADJUSTED MaxHP/MaxSP for a character — the SAME value the 2498 sheet shows the client.
