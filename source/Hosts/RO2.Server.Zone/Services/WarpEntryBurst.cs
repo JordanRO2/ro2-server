@@ -10,6 +10,7 @@ using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Models;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
+using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -112,11 +113,18 @@ public static class WarpEntryBurst
  /// <summary>
  /// The two departure frames, in order: the departure marker (2938) and the self despawn (2505) listing the mover as its own subject.
  /// </summary>
-    internal static IReadOnlyList<(ushort Opcode, byte[] Body)> DepartureFrames(uint selfHandle) =>
-    [
-        (ZoneS2COpcodes.AnsSiegeArmsUseEnd, SessionExitPackets.Ack2938),
-        (ZoneS2COpcodes.OnPC_Out, PlayerSpawnService.BuildActorOutList(selfHandle, new[] { selfHandle })),
-    ];
+    internal static IReadOnlyList<(ushort Opcode, byte[] Body)> DepartureFrames(uint selfHandle)
+    {
+        var frames = new List<(ushort Opcode, byte[] Body)>();
+        foreach (var step in WorldEntryPlan.Departure)
+            frames.Add((WorldEntryStepOpcodes.Of(step), step switch
+            {
+                WorldEntryStep.DepartureMarker => SessionExitPackets.Ack2938,
+                WorldEntryStep.SelfDespawn => PlayerSpawnService.BuildActorOutList(selfHandle, new[] { selfHandle }),
+                _ => throw new InvalidOperationException($"world-entry step {step} is not a departure step"),
+            }));
+        return frames;
+    }
 
  /// <summary>
  /// Sends the departure and the warp burst to the given map and position, then moves the player there.
@@ -182,13 +190,20 @@ public static class WarpEntryBurst
  /// </summary>
     internal static IReadOnlyList<(ushort Opcode, byte[] Body)> InPlaceMapLoadFrames(uint selfHandle, uint mapId,
         float x, float y, float z, ulong charUid, IReadOnlyList<CharacterQuickSlot> quickSlots,
-        IReadOnlyList<OwnedVehicle> vehicles, double nowOle) =>
-    [
-        (ZoneS2COpcodes.OnReceiveMapLoad, WorldEntryPackets.BuildMapLoad2311(selfHandle, mapId, x, y, z)),
-        (ZoneS2COpcodes.OnQuickSlotSaveData, GuildSkillBarRefresh.BuildQuickSlotSaveData2472(charUid, quickSlots)),
-        (ZoneS2COpcodes.OnVehicleQuickSlot, VehiclePackets.BuildVehicleQuickSlot2523Empty()),
-        (ZoneS2COpcodes.OnAllVehicleList, VehiclePackets.BuildAllVehicleList2522(vehicles, nowOle)),
-    ];
+        IReadOnlyList<OwnedVehicle> vehicles, double nowOle)
+    {
+        var frames = new List<(ushort Opcode, byte[] Body)>();
+        foreach (var step in WorldEntryPlan.InPlaceMapLoad)
+            frames.Add((WorldEntryStepOpcodes.Of(step), step switch
+            {
+                WorldEntryStep.MapLoad => WorldEntryPackets.BuildMapLoad2311(selfHandle, mapId, x, y, z),
+                WorldEntryStep.QuickSlots => GuildSkillBarRefresh.BuildQuickSlotSaveData2472(charUid, quickSlots),
+                WorldEntryStep.VehicleQuickSlot => VehiclePackets.BuildVehicleQuickSlot2523Empty(),
+                WorldEntryStep.AllVehicleList => VehiclePackets.BuildAllVehicleList2522(vehicles, nowOle),
+                _ => throw new InvalidOperationException($"world-entry step {step} is not an in-place map-load step"),
+            }));
+        return frames;
+    }
 
  /// <summary>
  /// Moves the player to a position on its own map without the departure sequence or the cross-map burst.

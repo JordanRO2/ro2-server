@@ -122,281 +122,141 @@ public static class WorldEntryService
         
         await SendPreMapLoadBurstAsync(session, character, entityId, keyConfig, pcTraitEntry);
 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        if (!isWarp && CharacterSerializer.WireProJob(character).Id == 0
-            && gameData is not null
-            && CraftRecipeStore.BuildNotifyCraftIndex2535(gameData.CraftItemList, CharacterHeadRules.CreationProfessionByte(character), learnedCraftRecipes) is { } craftIndex)
-            await session.SendInternalRmiAsync(ZoneS2COpcodes.OnNotifyCraftIndex, craftIndex);
-
-        
-        
-        
-        
-        
-        
-        
-        var learnedPairs = (learnedSkills ?? (IReadOnlyList<CharacterSkill>)Array.Empty<CharacterSkill>())
-            .Select(s => (s.SkillId, s.Level));
-        byte talentRemaining = gameData is null
-            ? (byte)Math.Clamp((character.Level - 1) - learnedPairs.Sum(p => (int)p.Level), 0, 255)
-            : TalentRules.TalentPointsRemaining(gameData, character.Job, character.Level, learnedPairs);
-
-        
-        
-        
-        
-        
-        IReadOnlyList<(uint Group, byte Level)> loginSkills = useSkillList ?? learnedPairs.ToArray();
-
-        if (!isWarp)
+        // The login-only values (talent points, skill list) are computed on first use: only the login steps read them.
+        (byte Talent, IReadOnlyList<(uint Group, byte Level)> Skills)? loginData = null;
+        (byte Talent, IReadOnlyList<(uint Group, byte Level)> Skills) LoginData()
         {
-            
-            
-            var vitals = TraitPackets.VitalsOf(pcTraitEntry);
-            await session.SendRmiAsync(ZoneS2COpcodes.OnCharacterDetailACK, writer =>
+            if (loginData is { } ready) return ready;
+            var learnedPairs = (learnedSkills ?? (IReadOnlyList<CharacterSkill>)Array.Empty<CharacterSkill>())
+                .Select(s => (s.SkillId, s.Level));
+            byte talentRemaining = gameData is null
+                ? (byte)Math.Clamp((character.Level - 1) - learnedPairs.Sum(p => (int)p.Level), 0, 255)
+                : TalentRules.TalentPointsRemaining(gameData, character.Job, character.Level, learnedPairs);
+            IReadOnlyList<(uint Group, byte Level)> loginSkills = useSkillList ?? learnedPairs.ToArray();
+            loginData = (talentRemaining, loginSkills);
+            return loginData.Value;
+        }
+
+        var plan = WorldEntryPlan.For(isWarp ? WorldEntryMode.Warp : WorldEntryMode.Login);
+        foreach (var step in plan.AfterPreMapLoad)
+        {
+            var opcode = WorldEntryStepOpcodes.Of(step);
+            switch (step)
             {
-                WorldEntryPackets.WriteCharacterDetail(writer, character, charUid, entityId, inventoryItems, mapId, posX, posY, posZ, activeQuests, talentRemaining, gameData,
-                    vitals: vitals, skillList: loginSkills);
-            });
-            logger.LogDebug("Session {Id}: Sent OnCharacterDetailACK (RMI 2310) ENCRYPTED", session.SessionId);
-        }
+                case WorldEntryStep.CraftIndex:
+                    if (CharacterSerializer.WireProJob(character).Id == 0
+                        && gameData is not null
+                        && CraftRecipeStore.BuildNotifyCraftIndex2535(gameData.CraftItemList, CharacterHeadRules.CreationProfessionByte(character), learnedCraftRecipes) is { } craftIndex)
+                        await session.SendInternalRmiAsync(opcode, craftIndex);
+                    break;
 
-        
-        
-        
-        
-        
-        if (!isWarp)
-        {
-            
-            
-            
-            
-            
-            await session.SendInternalRmiAsync(
-                ZoneS2COpcodes.OnPcTrait, TraitPackets.BuildPcTrait2498FromDonor(TraitPackets.PcTrait2498Donor, character, equipDerived, gameData));
-        }
+                case WorldEntryStep.CharacterDetail:
+                {
+                    var (talentRemaining, loginSkills) = LoginData();
+                    var vitals = TraitPackets.VitalsOf(pcTraitEntry);
+                    await session.SendRmiAsync(opcode, writer =>
+                    {
+                        WorldEntryPackets.WriteCharacterDetail(writer, character, charUid, entityId, inventoryItems, mapId, posX, posY, posZ, activeQuests, talentRemaining, gameData,
+                            vitals: vitals, skillList: loginSkills);
+                    });
+                    logger.LogDebug("Session {Id}: Sent OnCharacterDetailACK (RMI 2310) ENCRYPTED", session.SessionId);
+                    break;
+                }
 
-        
-        
-        
-        
-        
-        
-        
-        {
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            if (!isWarp)
-                await SendUseSkillList2488Async(session, loginSkills);
-        }
+                case WorldEntryStep.LoginPcTrait:
+                    await session.SendInternalRmiAsync(
+                        opcode, TraitPackets.BuildPcTrait2498FromDonor(TraitPackets.PcTrait2498Donor, character, equipDerived, gameData));
+                    break;
 
-        
-        
-        
-        
-        
-        
-        
-        
-        if (!isWarp && cardBookChargedUntil is { } chargedUntil)
-            await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyCardBookChargedTime,
-                CardBookChargeStore.Build2793(chargedUntil, DateTime.Now));
+                case WorldEntryStep.UseSkillList:
+                    await SendUseSkillList2488Async(session, LoginData().Skills);
+                    break;
 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        if (!isWarp)
-            await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyRankingTopList, WorldEntryPackets.EmptyCountedList());
+                case WorldEntryStep.CardBookCharge:
+                    if (cardBookChargedUntil is { } chargedUntil)
+                        await session.SendInternalRmiAsync(opcode, CardBookChargeStore.Build2793(chargedUntil, DateTime.Now));
+                    break;
 
-        
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.OnReceiveMapLoad, WorldEntryPackets.BuildMapLoad2311(entityId, mapId, posX, posY, posZ));
-        logger.LogDebug("Session {Id}: Sent OnReceiveMapLoad (INT 2311) for map {MapId}", session.SessionId, mapId);
+                case WorldEntryStep.RankingTopList:
+                    await session.SendInternalRmiAsync(opcode, WorldEntryPackets.EmptyCountedList());
+                    break;
 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        {
-            var slots = quickSlots ?? Array.Empty<RO2.Characters.Domain.CharacterQuickSlot>();
-            using var tw = new PacketWriter();
-            tw.WriteUInt32((uint)(QuickSlotListHeaderLength + QuickSlotRecordLength * slots.Count));
-            tw.WriteUInt64(charUid);
-            tw.WriteUInt16((ushort)slots.Count);
-            foreach (var s in slots)
-            {
-                tw.WriteByte(s.Page);
-                tw.WriteByte(s.Slot);
-                tw.WriteByte(s.EntryType);
-                tw.WriteByte(0);
-                tw.WriteUInt32(s.EntryId);
-                tw.WriteUInt32(s.Amount);
-                tw.WriteUInt64(s.ItemUid);
+                case WorldEntryStep.MapLoad:
+                    await session.SendInternalRmiAsync(opcode, WorldEntryPackets.BuildMapLoad2311(entityId, mapId, posX, posY, posZ));
+                    logger.LogDebug("Session {Id}: Sent OnReceiveMapLoad (INT 2311) for map {MapId}", session.SessionId, mapId);
+                    break;
+
+                case WorldEntryStep.QuickSlots:
+                {
+                    var slots = quickSlots ?? Array.Empty<RO2.Characters.Domain.CharacterQuickSlot>();
+                    using var tw = new PacketWriter();
+                    tw.WriteUInt32((uint)(QuickSlotListHeaderLength + QuickSlotRecordLength * slots.Count));
+                    tw.WriteUInt64(charUid);
+                    tw.WriteUInt16((ushort)slots.Count);
+                    foreach (var s in slots)
+                    {
+                        tw.WriteByte(s.Page);
+                        tw.WriteByte(s.Slot);
+                        tw.WriteByte(s.EntryType);
+                        tw.WriteByte(0);
+                        tw.WriteUInt32(s.EntryId);
+                        tw.WriteUInt32(s.Amount);
+                        tw.WriteUInt64(s.ItemUid);
+                    }
+                    await session.SendInternalRmiAsync(opcode, tw.GetWrittenMemory());
+                    logger.LogDebug("Session {Id}: restored {Count} quick slot(s)",
+                        session.SessionId, slots.Count);
+                    break;
+                }
+
+                case WorldEntryStep.VehicleQuickSlot:
+                    await session.SendInternalRmiAsync(opcode, VehiclePackets.BuildVehicleQuickSlot2523Empty());
+                    break;
+
+                case WorldEntryStep.AllVehicleList:
+                    VehicleClientList.Record(session.SessionId, vehicles ?? Array.Empty<OwnedVehicle>());
+                    await session.SendInternalRmiAsync(opcode,
+                        VehiclePackets.BuildAllVehicleList2522(vehicles ?? Array.Empty<OwnedVehicle>(), VehiclePackets.NowOle()));
+                    break;
+
+                case WorldEntryStep.MonsterCollection:
+                    await session.SendInternalRmiAsync(opcode,
+                        CollectionPackets.BuildNfyMCollection2913(collection?.RegisteredMonsterIds.Count ?? 0, gameData));
+                    break;
+
+                case WorldEntryStep.PetCollection:
+                    await session.SendInternalRmiAsync(opcode,
+                        CollectionPackets.BuildNfyPCollection(collection?.RegisteredPetIds.Count ?? 0));
+                    break;
+
+                case WorldEntryStep.ActivePet:
+                    await session.SendInternalRmiAsync(opcode, collection is { ActivePetId: not 0 }
+                        ? CollectionPackets.BuildAnsPCollectionSetActivePet(collection.ActivePetId, collection.ActivePetFlag, 0)
+                        : CollectionPackets.BuildAnsPCollectionSetActivePet(0, 0, PCollectionNoActivePetResult));
+                    break;
+
+                case WorldEntryStep.RegisterCardBook:
+                    if (inventoryItems is not null && gameData is not null)
+                        foreach (var cardId in CardRegistrationNotifier.HeldMvpCards(inventoryItems, gameData))
+                            await session.SendRmiAsync(opcode, CardPackets.BuildRegistCardBook2588(cardId));
+                    break;
+
+                case WorldEntryStep.MoveSpeed:
+                    await session.SendInternalRmiAsync(
+                        opcode, TraitPackets.BuildActorMoveSpeed2497(entityId, TraitPackets.PcModalWorldEntrySpeed));
+                    logger.LogDebug("Session {Id}: Sent OnChangeActorMoveSpeed (INT 2497) speed={Speed}",
+                        session.SessionId, TraitPackets.PcModalWorldEntrySpeed);
+                    break;
+
+                case WorldEntryStep.ZenyBalance:
+                    await session.SendInternalRmiAsync(opcode,
+                        ActorVitalsPackets.BuildZenyChange2435(entityId, character.Gold));
+                    logger.LogDebug("Session {Id}: Sent gold balance {Gold} (2435)", session.SessionId, character.Gold);
+                    break;
+
+                default:
+                    throw new InvalidOperationException($"world-entry step {step} is not a step of the entry burst");
             }
-            await session.SendInternalRmiAsync(ZoneS2COpcodes.OnQuickSlotSaveData, tw.GetWrittenMemory());
-            logger.LogDebug("Session {Id}: restored {Count} quick slot(s)",
-                session.SessionId, slots.Count);
-        }
-
-        
-        
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.OnVehicleQuickSlot, VehiclePackets.BuildVehicleQuickSlot2523Empty());
-
-        
-        
-        
-        
-        
-        
-        VehicleClientList.Record(session.SessionId, vehicles ?? Array.Empty<OwnedVehicle>());
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.OnAllVehicleList,
-            VehiclePackets.BuildAllVehicleList2522(vehicles ?? Array.Empty<OwnedVehicle>(), VehiclePackets.NowOle()));
-
-        
-        
-        
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyMCollection,
-            CollectionPackets.BuildNfyMCollection2913(collection?.RegisteredMonsterIds.Count ?? 0, gameData));
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyPCollection,
-            CollectionPackets.BuildNfyPCollection(collection?.RegisteredPetIds.Count ?? 0));
-        
-        
-        
-        
-        
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsPCollectionSetActivePet, collection is { ActivePetId: not 0 }
-            ? CollectionPackets.BuildAnsPCollectionSetActivePet(collection.ActivePetId, collection.ActivePetFlag, 0)
-            : CollectionPackets.BuildAnsPCollectionSetActivePet(0, 0, PCollectionNoActivePetResult));
-
-        
-        
-        
-        
-        
-        
-        
-        if (inventoryItems is not null && gameData is not null)
-            foreach (var cardId in CardRegistrationNotifier.HeldMvpCards(inventoryItems, gameData))
-                await session.SendRmiAsync(ZoneS2COpcodes.AnsRegistCardBook, CardPackets.BuildRegistCardBook2588(cardId));
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        if (!isWarp)
-        {
-            await session.SendInternalRmiAsync(
-                ZoneS2COpcodes.OnChangeActorMoveSpeed, TraitPackets.BuildActorMoveSpeed2497(entityId, TraitPackets.PcModalWorldEntrySpeed));
-            logger.LogDebug("Session {Id}: Sent OnChangeActorMoveSpeed (INT 2497) speed={Speed}",
-                session.SessionId, TraitPackets.PcModalWorldEntrySpeed);
-        }
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        if (!isWarp)
-        {
-            await session.SendInternalRmiAsync(ZoneS2COpcodes.OnZenyChange,
-                ActorVitalsPackets.BuildZenyChange2435(entityId, character.Gold));
-            logger.LogDebug("Session {Id}: Sent gold balance {Gold} (2435)", session.SessionId, character.Gold);
         }
 
         logger.LogInformation("Session {Id}: World entry packets sent for '{Name}'",
@@ -475,11 +335,30 @@ public static class WorldEntryService
     internal static async Task SendPreMapLoadBurstAsync(ProudSession session, Character character, uint entityId,
         KeyConfigDocument? keyConfig, byte[] pcTrait2498)
     {
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.Notify_ZSCLN_DB_ACCOUNT_CONFIG, KeyConfigCodec.BuildAccountConfig2558(entityId, keyConfig));
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.OnSendDependentDungeonInfo, DungeonFinderPackets.BuildDependentDungeonInfo2743());
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.OnPcInitTrait, TraitPackets.BuildPcInitTrait2595(character, pcTrait2498));
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.OnPcTrait, pcTrait2498);
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyServerTimeToLoginPC, WorldEntryPackets.BuildServerTimeToLoginPC2669(ServerWallClock.Now()));
+        foreach (var step in WorldEntryPlan.PreMapLoad)
+        {
+            var opcode = WorldEntryStepOpcodes.Of(step);
+            switch (step)
+            {
+                case WorldEntryStep.AccountConfig:
+                    await session.SendInternalRmiAsync(opcode, KeyConfigCodec.BuildAccountConfig2558(entityId, keyConfig));
+                    break;
+                case WorldEntryStep.DependentDungeonInfo:
+                    await session.SendInternalRmiAsync(opcode, DungeonFinderPackets.BuildDependentDungeonInfo2743());
+                    break;
+                case WorldEntryStep.PcInitTrait:
+                    await session.SendInternalRmiAsync(opcode, TraitPackets.BuildPcInitTrait2595(character, pcTrait2498));
+                    break;
+                case WorldEntryStep.PcTrait:
+                    await session.SendInternalRmiAsync(opcode, pcTrait2498);
+                    break;
+                case WorldEntryStep.ServerTime:
+                    await session.SendInternalRmiAsync(opcode, WorldEntryPackets.BuildServerTimeToLoginPC2669(ServerWallClock.Now()));
+                    break;
+                default:
+                    throw new InvalidOperationException($"world-entry step {step} is not a pre-map-load step");
+            }
+        }
     }
 
  /// <summary>
