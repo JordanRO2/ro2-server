@@ -339,7 +339,7 @@ public class Reaudit_B0_Tests
 
         Assert.Equal(RetailBurst.Length, burst.Count);
         for (int i = 0; i < burst.Count; i++)
-            Assert.Equal(RetailBurst[i], Convert.ToHexString(WorldEntryService.BuildUseSkillList2488(burst[i])).ToLowerInvariant());
+            Assert.Equal(RetailBurst[i], Convert.ToHexString(SkillPackets.BuildUseSkillList2488(burst[i])).ToLowerInvariant());
     }
 
     [Fact]
@@ -354,6 +354,6 @@ public class Reaudit_B0_Tests
         Assert.Empty(UseSkillListLedger.PlanGuildLinkBurst(OwnThree, null, lines, GuildTable.Value));
         
         var burst = UseSkillListLedger.PlanGuildLinkBurst(OwnThree, new Dictionary<uint, byte>(OwnThree), lines, GuildTable.Value);
-        Assert.Equal(WorldEntryService.BuildUseSkillList2488(login), WorldEntryService.BuildUseSkillList2488(burst[^1]));
+        Assert.Equal(SkillPackets.BuildUseSkillList2488(login), SkillPackets.BuildUseSkillList2488(burst[^1]));
     }
 }

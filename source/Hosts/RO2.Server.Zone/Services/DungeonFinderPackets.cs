@@ -159,4 +159,9 @@ public static class DungeonFinderPackets
         pw.WriteByte(state);
         return pw.ToArray();
     }
+
+ /// <summary>
+ /// The dependent dungeon info message for a character with no dependent dungeon progress.
+ /// </summary>
+    internal static byte[] BuildDependentDungeonInfo2743() => WorldEntryPackets.EmptyCountedList();
 }

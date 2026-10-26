@@ -163,7 +163,7 @@ public class GuildDisbandRetailFramesTests
 
             
             Assert.Equal(SkillsInGuild04396557,
-                ToHex(WorldEntryService.BuildUseSkillList2488(GuildSkillBookLearn.SkillListFor(player, store))));
+                ToHex(SkillPackets.BuildUseSkillList2488(GuildSkillBookLearn.SkillListFor(player, store))));
 
             Assert.Equal(GuildDelPossibleHandler.ResultAllowed,
                 await GuildService.Instance.TryDisbandAsync(g, x => GuildDelPossibleHandler.DisbandRefusal(x, charId)));

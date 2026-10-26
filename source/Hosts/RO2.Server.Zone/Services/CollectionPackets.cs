@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using RO2.Network.Packets;
+using RO2.GameData;
 
 namespace RO2.Server.Zone.Services;
 
@@ -209,6 +210,28 @@ public static class CollectionPackets
         w.WriteUInt32(id);
         w.WriteByte(flag);
         w.WriteUInt16(result);
+        return w.ToArray();
+    }
+
+ /// <summary>Length of the monster-book summary: tier, maximum skill level, registered count and skill cooldown.</summary>
+    private const int MonsterBookSummaryLength = sizeof(byte) + sizeof(byte) + sizeof(uint) + sizeof(uint);
+
+ /// <summary>
+ /// Builds the monster-book summary: the tier, maximum skill level and skill cooldown for the registered monster count.
+ /// </summary>
+ /// <remarks>
+ /// The tier row is the one whose starting count the registered count has reached.
+ /// </remarks>
+    internal static byte[] BuildNfyMCollection2913(int registeredCount, GameDataStore? gameData)
+    {
+        var tier = gameData?.CollectRate
+            .Where(r => registeredCount >= r.Num_Start)
+            .MaxBy(r => r.Num_Start);
+        using var w = new PacketWriter(MonsterBookSummaryLength);
+        w.WriteByte(tier?.Index ?? 0);
+        w.WriteByte(tier?.Skill_Max ?? 0);
+        w.WriteUInt32((uint)Math.Max(0, registeredCount));
+        w.WriteUInt32(tier?.Skill_Cooltime ?? 0);
         return w.ToArray();
     }
 }

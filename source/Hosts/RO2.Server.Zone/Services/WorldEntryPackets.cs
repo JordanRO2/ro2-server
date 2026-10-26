@@ -1,4 +1,5 @@
 using RO2.Network.Packets;
+using RO2.Network.Protocol;
 
 namespace RO2.Server.Zone.Services;
 
@@ -44,5 +45,30 @@ internal static class WorldEntryPackets
         tw.WriteUInt32(actorHandle);  // [40] actor handle again
         tw.WriteByte(MapLoadTrailerByte);  // [44] trailer byte
         return tw.ToArray();
+    }
+
+ /// <summary>
+ /// A length-prefixed counted list with no entries: the u32 length word (2) followed by a u16 count of 0.
+ /// </summary>
+    internal static byte[] EmptyCountedList()
+    {
+        using var pw = new PacketWriter();
+        pw.WriteUInt32(sizeof(ushort));   // u32 length: the bytes after it, only the count
+        pw.WriteUInt16(0);                // u16 entry count
+        return pw.ToArray();
+    }
+
+ /// <summary>
+ /// Builds the server time message: the local wall-clock time as microseconds from the client's epoch, eight bytes.
+ /// </summary>
+ /// <remarks>
+ /// The client's time reader rejects an invalid instant, so the value must be a real clock reading. The time is the server's local time, not UTC.
+ /// </remarks>
+    internal static byte[] BuildServerTimeToLoginPC2669(DateTimeOffset localNow)
+    {
+        var body = new byte[8];
+        System.Buffers.Binary.BinaryPrimitives.WriteUInt64LittleEndian(
+            body, ServerTimeCodec.ToClientMicroseconds(localNow));
+        return body;
     }
 }

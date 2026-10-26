@@ -168,7 +168,7 @@ public class GuildSkillBookRetailFrameTests
             "0284008400b3e3000000001e000000f541060059420600bd420600ea430600b3440600c9490600594b0600b38f06001a900600" +
             "79900600e1900600d29206003d93060065940600ce9406002b9506004ea1060001093d0067093d00cd093d00950a3d00fb0a3d00" +
             "5f0b3d00c30b3d00270c3d008d0c3d00f20c3d00560d3d00ba0d3d0083e74c00";
-        Assert.Equal(retail2488, Hex(WorldEntryService.BuildUseSkillList2488(list)));
+        Assert.Equal(retail2488, Hex(SkillPackets.BuildUseSkillList2488(list)));
     }
 
     private static async Task<List<GuildSkillLevel>> GuildSkillLevelsAsync()

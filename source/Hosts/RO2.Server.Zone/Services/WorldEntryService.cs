@@ -179,7 +179,7 @@ public static class WorldEntryService
         
         if (!isWarp && CharacterSerializer.WireProJob(character).Id == 0
             && gameData is not null
-            && BuildNotifyCraftIndex2535(gameData.CraftItemList, CharacterHeadRules.CreationProfessionByte(character), learnedCraftRecipes) is { } craftIndex)
+            && CraftRecipeStore.BuildNotifyCraftIndex2535(gameData.CraftItemList, CharacterHeadRules.CreationProfessionByte(character), learnedCraftRecipes) is { } craftIndex)
             await session.SendInternalRmiAsync(ZoneS2COpcodes.OnNotifyCraftIndex, craftIndex);
 
         
@@ -283,7 +283,7 @@ public static class WorldEntryService
         
         
         if (!isWarp)
-            await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyRankingTopList, EmptyCountedList());
+            await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyRankingTopList, WorldEntryPackets.EmptyCountedList());
 
         
         await session.SendInternalRmiAsync(ZoneS2COpcodes.OnReceiveMapLoad, WorldEntryPackets.BuildMapLoad2311(entityId, mapId, posX, posY, posZ));
@@ -341,7 +341,7 @@ public static class WorldEntryService
         
         
         await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyMCollection,
-            BuildNfyMCollection2913(collection?.RegisteredMonsterIds.Count ?? 0, gameData));
+            CollectionPackets.BuildNfyMCollection2913(collection?.RegisteredMonsterIds.Count ?? 0, gameData));
         await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyPCollection,
             CollectionPackets.BuildNfyPCollection(collection?.RegisteredPetIds.Count ?? 0));
         
@@ -518,9 +518,6 @@ public static class WorldEntryService
     private const uint DonorVec1Skill1 = 111001;
     private const uint DonorVec1Skill2 = 114401;
 
- /// <summary>A skill id on the wire is the skill group times this factor plus the skill level.</summary>
-    private const uint SkillIdGroupFactor = 100u;
-
  /// <summary>Result code of the active-pet answer when no pet is active (0x7531).</summary>
     private const ushort PCollectionNoActivePetResult = 30001;
 
@@ -528,16 +525,6 @@ public static class WorldEntryService
     private const int QuickSlotListHeaderLength = sizeof(ulong) + sizeof(ushort);
  /// <summary>Length of one quick-slot record: page, slot, entry type, a zero byte, entry id, amount and item uid.</summary>
     private const int QuickSlotRecordLength = 20;
-
- /// <summary>Length of a counted list header: the u32 length word and the u16 count.</summary>
-    private const int CountedListHeaderLength = sizeof(uint) + sizeof(ushort);
- /// <summary>Length of the monster-book summary: tier, maximum skill level, registered count and skill cooldown.</summary>
-    private const int MonsterBookSummaryLength = sizeof(byte) + sizeof(byte) + sizeof(uint) + sizeof(uint);
-
- /// <summary>Length of the skill list header counted in its self length: self length, message tag, a zero u32 and the count.</summary>
-    private const int UseSkillListHeaderLength = 2 + 2 + 4 + 4;
-
-
 
  /// <summary>
  /// Byte offsets of the fields in the 205-byte head of the 2310 message, counted from the start of the message body
@@ -646,7 +633,7 @@ public static class WorldEntryService
         
         if (skillList is not null)
         {
-            var ids = skillList.Select(s => s.Group * SkillIdGroupFactor + s.Level).Distinct().Order().ToArray();
+            var ids = skillList.Select(s => s.Group * SkillPackets.SkillIdGroupFactor + s.Level).Distinct().Order().ToArray();
             writer.WriteUInt16((ushort)ids.Length);
             foreach (var id in ids)
                 writer.WriteUInt32(id);
@@ -943,9 +930,6 @@ public static class WorldEntryService
         writer.WriteAt(lengthPos, (uint)(writer.Length - dataStart));
     }
 
- /// <summary>Message tag of the skill list message.</summary>
-    internal const ushort MsgTagUseSkillList = 0xE3B3; 
-
  /// <summary>
  /// Sends the messages that precede a map-load message when the map changes: key config, dependent dungeon info, trait initialization, the trait message and the server time.
  /// </summary>
@@ -958,97 +942,10 @@ public static class WorldEntryService
         KeyConfigDocument? keyConfig, byte[] pcTrait2498)
     {
         await session.SendInternalRmiAsync(ZoneS2COpcodes.Notify_ZSCLN_DB_ACCOUNT_CONFIG, KeyConfigCodec.BuildAccountConfig2558(entityId, keyConfig));
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.OnSendDependentDungeonInfo, BuildDependentDungeonInfo2743());
+        await session.SendInternalRmiAsync(ZoneS2COpcodes.OnSendDependentDungeonInfo, DungeonFinderPackets.BuildDependentDungeonInfo2743());
         await session.SendInternalRmiAsync(ZoneS2COpcodes.OnPcInitTrait, TraitPackets.BuildPcInitTrait2595(character, pcTrait2498));
         await session.SendInternalRmiAsync(ZoneS2COpcodes.OnPcTrait, pcTrait2498);
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyServerTimeToLoginPC, BuildServerTimeToLoginPC2669(ServerWallClock.Now()));
-    }
-
- /// <summary>
- /// The dependent dungeon info message for a character with no dependent dungeon progress.
- /// </summary>
-    internal static byte[] BuildDependentDungeonInfo2743() => EmptyCountedList();
-
- /// <summary>
- /// A length-prefixed counted list with no entries: the u32 length word (2) followed by a u16 count of 0.
- /// </summary>
-    private static byte[] EmptyCountedList()
-    {
-        using var pw = new PacketWriter();
-        pw.WriteUInt32(sizeof(ushort));   // u32 length: the bytes after it, only the count
-        pw.WriteUInt16(0);                // u16 entry count
-        return pw.ToArray();
-    }
-
- /// <summary>
- /// Builds the server time message: the local wall-clock time as microseconds from the client's epoch, eight bytes.
- /// </summary>
- /// <remarks>
- /// The client's time reader rejects an invalid instant, so the value must be a real clock reading. The time is the server's local time, not UTC.
- /// </remarks>
-    internal static byte[] BuildServerTimeToLoginPC2669(DateTimeOffset localNow)
-    {
-        var body = new byte[8];
-        System.Buffers.Binary.BinaryPrimitives.WriteUInt64LittleEndian(
-            body, ServerTimeCodec.ToClientMicroseconds(localNow));
-        return body;
-    }
-
- /// <summary>
- /// Builds the craft index message listing the first-level recipes of a profession, plus any recipes the character has learned.
- /// </summary>
- /// <remarks>
- /// Returns null when there are no recipes, since an empty message is not sent.
- /// </remarks>
-    internal static byte[]? BuildNotifyCraftIndex2535(IEnumerable<RO2.GameData.Tables.CraftItemList> recipes, byte proType,
-        IEnumerable<ushort>? learned = null)
-    {
-        var ids = CraftRecipeStore.KnownRecipeIds(recipes, proType, learned);
-        if (ids.Count == 0) return null;
-
-        using var w = new PacketWriter(CountedListHeaderLength + sizeof(ushort) * ids.Count);
-        w.WriteUInt32((uint)(sizeof(ushort) + sizeof(ushort) * ids.Count)); 
-        w.WriteUInt16((ushort)ids.Count);          
-        foreach (var id in ids) w.WriteUInt16(id); 
-        return w.ToArray();
-    }
-
- /// <summary>
- /// Builds the skill list body sent at world entry: the learned skills, each as a four-byte id.
- /// </summary>
- /// <remarks>
- /// The length follows the number of skills, so an empty list is encoded with a zero count.
- /// </remarks>
-    internal static byte[] BuildUseSkillList2488(IReadOnlyList<(uint Group, byte Level)> skills)
-    {
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        var selfLen = UseSkillListHeaderLength + sizeof(uint) * skills.Count;
-        using var tw = new PacketWriter();
-        tw.WriteCompactLength(selfLen);      
-        tw.WriteUInt16((ushort)selfLen);     
-        tw.WriteUInt16(MsgTagUseSkillList);  
-        tw.WriteUInt32(0);                   
-        tw.WriteUInt32((uint)skills.Count);  
-        
-        
-        
-        
-        foreach (var (group, level) in skills.OrderBy(s => s.Group).ThenBy(s => s.Level))
-            tw.WriteUInt32(group * SkillIdGroupFactor + level); 
-        return tw.ToArray();
+        await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyServerTimeToLoginPC, WorldEntryPackets.BuildServerTimeToLoginPC2669(ServerWallClock.Now()));
     }
 
  /// <summary>
@@ -1060,36 +957,9 @@ public static class WorldEntryService
     internal static async Task SendUseSkillList2488Async(ProudSession session, IReadOnlyList<(uint Group, byte Level)> skills)
     {
         if (skills.Count == 0) return;
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.OnUseSkillList, BuildUseSkillList2488(skills));
+        await session.SendInternalRmiAsync(ZoneS2COpcodes.OnUseSkillList, SkillPackets.BuildUseSkillList2488(skills));
         
         UseSkillListLedger.Record(session, skills);
     }
 
- /// <summary>
- /// Builds the monster-book summary: the tier, maximum skill level and skill cooldown for the registered monster count.
- /// </summary>
- /// <remarks>
- /// The tier row is the one whose starting count the registered count has reached.
- /// </remarks>
-    internal static byte[] BuildNfyMCollection2913(int registeredCount, GameDataStore? gameData)
-    {
-        var tier = gameData?.CollectRate
-            .Where(r => registeredCount >= r.Num_Start)
-            .MaxBy(r => r.Num_Start);
-        using var w = new PacketWriter(MonsterBookSummaryLength);
-        w.WriteByte(tier?.Index ?? 0);
-        w.WriteByte(tier?.Skill_Max ?? 0);
-        w.WriteUInt32((uint)Math.Max(0, registeredCount));
-        w.WriteUInt32(tier?.Skill_Cooltime ?? 0);
-        return w.ToArray();
-    }
-
-    
-    
-    
-    
-    
-    
-    
-    
 }

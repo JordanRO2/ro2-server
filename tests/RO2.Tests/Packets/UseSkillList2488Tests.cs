@@ -26,7 +26,7 @@ public class UseSkillList2488Tests
     public void ThreeSkills_ReproducesTheRetailPrefixByteForByte()
     {
         
-        var body = WorldEntryService.BuildUseSkillList2488(
+        var body = SkillPackets.BuildUseSkillList2488(
             new (uint, byte)[] { (4101u, 1), (4103u, 1), (4108u, 1) });
         Assert.Equal(Convert.FromHexString("011818" + "00b3e3" + "00000000" + "03000000"),
             body.AsSpan(0, 14).ToArray());
@@ -38,7 +38,7 @@ public class UseSkillList2488Tests
     {
         
         
-        var body = WorldEntryService.BuildUseSkillList2488(
+        var body = SkillPackets.BuildUseSkillList2488(
             new (uint, byte)[] { (4101u, 1), (4103u, 1), (4108u, 1), (6101u, 1) });
         Assert.Equal(Convert.FromHexString("011c1c" + "00b3e3" + "00000000" + "04000000"),
             body.AsSpan(0, 14).ToArray());
@@ -48,10 +48,10 @@ public class UseSkillList2488Tests
     [Fact]
     public void MsgTag_IsAtBlobPlus2_AndIsNotAnEntityId()
     {
-        var body = WorldEntryService.BuildUseSkillList2488(new (uint, byte)[] { (4101u, 1) });
+        var body = SkillPackets.BuildUseSkillList2488(new (uint, byte)[] { (4101u, 1) });
         
         Assert.Equal(0xE3B3, BinaryPrimitives.ReadUInt16LittleEndian(body.AsSpan(4)));
-        Assert.Equal(WorldEntryService.MsgTagUseSkillList,
+        Assert.Equal(SkillPackets.MsgTagUseSkillList,
             BinaryPrimitives.ReadUInt16LittleEndian(body.AsSpan(4)));
         
         Assert.Equal(0u, BinaryPrimitives.ReadUInt32LittleEndian(body.AsSpan(6)));
@@ -61,7 +61,7 @@ public class UseSkillList2488Tests
     public void EmptyList_StillDeclaresItsRealLength()
     {
         
-        var body = WorldEntryService.BuildUseSkillList2488(Array.Empty<(uint, byte)>());
+        var body = SkillPackets.BuildUseSkillList2488(Array.Empty<(uint, byte)>());
         Assert.Equal(14, body.Length);
         Assert.Equal(12, body[1]);
         Assert.Equal(12, BinaryPrimitives.ReadUInt16LittleEndian(body.AsSpan(2)));
@@ -85,7 +85,7 @@ public class UseSkillList2488Tests
         
         
         var skills = Enumerable.Range(1, count).Select(i => ((uint)(4100 + i), (byte)1)).ToArray();
-        var body = WorldEntryService.BuildUseSkillList2488(skills);
+        var body = SkillPackets.BuildUseSkillList2488(skills);
         Assert.Equal(expectedTotal, body.Length);
 
         
@@ -106,7 +106,7 @@ public class UseSkillList2488Tests
     {
         
         
-        var body = WorldEntryService.BuildUseSkillList2488(
+        var body = SkillPackets.BuildUseSkillList2488(
             new (uint, byte)[] { (4101u, 1), (4103u, 1) });
         Assert.Equal(410101u, BinaryPrimitives.ReadUInt32LittleEndian(body.AsSpan(14)));
         Assert.Equal(410301u, BinaryPrimitives.ReadUInt32LittleEndian(body.AsSpan(18)));

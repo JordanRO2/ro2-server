@@ -162,7 +162,7 @@ public class CraftLearn1348Tests
     public void LoginCraftIndex2535_CarriesTheLearnedRecipes()
     {
         
-        var body = WorldEntryService.BuildNotifyCraftIndex2535(Recipes.Value, 3, new ushort[] { 10 });
+        var body = CraftRecipeStore.BuildNotifyCraftIndex2535(Recipes.Value, 3, new ushort[] { 10 });
         Assert.Equal("0A00000004000100020003000A00", Convert.ToHexString(body!));
     }
 

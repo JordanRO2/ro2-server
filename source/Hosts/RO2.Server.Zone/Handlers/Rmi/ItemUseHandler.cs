@@ -440,7 +440,7 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
         // below counts the character's own skills only.
         var skills = player.LearnedSkills.OrderBy(kv => kv.Key).Select(kv => (kv.Key, kv.Value)).ToArray();
         await session.SendInternalRmiAsync(ZoneS2COpcodes.OnUseSkillList,
-            WorldEntryService.BuildUseSkillList2488(GuildSkillBookLearn.SkillListFor(player, store)));
+            SkillPackets.BuildUseSkillList2488(GuildSkillBookLearn.SkillListFor(player, store)));
 
         var pool = TalentRules.TalentPointsRemaining(store, job, player.Level, skills);
         await session.SendRmiAsync(ZoneS2COpcodes.OnInitTalentPoint,

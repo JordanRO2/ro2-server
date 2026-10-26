@@ -194,7 +194,7 @@ public static class WarpService
             logger.LogError(ex, "{Name} warp: could not load the collection state", player.Name);
         }
         await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyMCollection,
-            WorldEntryService.BuildNfyMCollection2913(collection?.RegisteredMonsterIds.Count ?? 0, data));
+            CollectionPackets.BuildNfyMCollection2913(collection?.RegisteredMonsterIds.Count ?? 0, data));
         await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyPCollection,
             CollectionPackets.BuildNfyPCollection(collection?.RegisteredPetIds.Count ?? 0));
         await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsPCollectionSetActivePet, collection is { ActivePetId: not 0 }

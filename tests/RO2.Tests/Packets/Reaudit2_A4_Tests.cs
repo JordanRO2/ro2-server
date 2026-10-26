@@ -202,7 +202,7 @@ public class Reaudit2_A4_Tests
             lock (g.Gate) g.Skills.AddRange(guildSkills);
             await GuildService.Instance.AddMemberAsync(g, member, "Leaver", 40, 3);
             Assert.NotEqual(LeaveSkills7448b82e,
-                Hex(WorldEntryService.BuildUseSkillList2488(GuildSkillBookLearn.SkillListFor(player, store))));
+                Hex(SkillPackets.BuildUseSkillList2488(GuildSkillBookLearn.SkillListFor(player, store))));
 
             Assert.NotNull(await GuildService.Instance.RemoveMemberByCharIdAsync(g, member));
             var (uid, bar) = ParseBar(FromHex(LeaveBar7448b82e));

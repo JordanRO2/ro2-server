@@ -94,4 +94,26 @@ public static class CraftRecipeStore
         BinaryPrimitives.WriteUInt16LittleEndian(body.AsSpan(4), code); 
         return body;                                                  
     }
+
+ /// <summary>Length of a counted list header: the u32 length word and the u16 count.</summary>
+    private const int CountedListHeaderLength = sizeof(uint) + sizeof(ushort);
+
+ /// <summary>
+ /// Builds the craft index message listing the first-level recipes of a profession, plus any recipes the character has learned.
+ /// </summary>
+ /// <remarks>
+ /// Returns null when there are no recipes, since an empty message is not sent.
+ /// </remarks>
+    internal static byte[]? BuildNotifyCraftIndex2535(IEnumerable<RO2.GameData.Tables.CraftItemList> recipes, byte proType,
+        IEnumerable<ushort>? learned = null)
+    {
+        var ids = CraftRecipeStore.KnownRecipeIds(recipes, proType, learned);
+        if (ids.Count == 0) return null;
+
+        using var w = new PacketWriter(CountedListHeaderLength + sizeof(ushort) * ids.Count);
+        w.WriteUInt32((uint)(sizeof(ushort) + sizeof(ushort) * ids.Count)); 
+        w.WriteUInt16((ushort)ids.Count);          
+        foreach (var id in ids) w.WriteUInt16(id); 
+        return w.ToArray();
+    }
 }

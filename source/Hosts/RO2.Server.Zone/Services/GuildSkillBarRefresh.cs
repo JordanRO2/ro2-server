@@ -55,7 +55,7 @@ internal static class GuildSkillBarRefresh
         ulong charUid, IReadOnlyList<CharacterQuickSlot>? bar, IReadOnlyList<(uint Group, byte Level)> skills)
     {
         var quickSlots = bar is null ? null : BuildQuickSlotSaveData2472(charUid, bar);
-        var skillList = skills.Count == 0 ? null : WorldEntryService.BuildUseSkillList2488(skills);
+        var skillList = skills.Count == 0 ? null : SkillPackets.BuildUseSkillList2488(skills);
         var burst = new List<(ushort, byte[])>(4);
         for (var copy = 0; copy < 2; copy++)
         {

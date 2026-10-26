@@ -136,4 +136,51 @@ public static class SkillPackets
         pw.WriteUInt32(skillId);    
         return pw.ToArray();        
     }
+
+ /// <summary>A skill id on the wire is the skill group times this factor plus the skill level.</summary>
+    internal const uint SkillIdGroupFactor = 100u;
+
+ /// <summary>Length of the skill list header counted in its self length: self length, message tag, a zero u32 and the count.</summary>
+    private const int UseSkillListHeaderLength = 2 + 2 + 4 + 4;
+
+ /// <summary>Message tag of the skill list message.</summary>
+    internal const ushort MsgTagUseSkillList = 0xE3B3; 
+
+ /// <summary>
+ /// Builds the skill list body sent at world entry: the learned skills, each as a four-byte id.
+ /// </summary>
+ /// <remarks>
+ /// The length follows the number of skills, so an empty list is encoded with a zero count.
+ /// </remarks>
+    internal static byte[] BuildUseSkillList2488(IReadOnlyList<(uint Group, byte Level)> skills)
+    {
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        var selfLen = UseSkillListHeaderLength + sizeof(uint) * skills.Count;
+        using var tw = new PacketWriter();
+        tw.WriteCompactLength(selfLen);      
+        tw.WriteUInt16((ushort)selfLen);     
+        tw.WriteUInt16(MsgTagUseSkillList);  
+        tw.WriteUInt32(0);                   
+        tw.WriteUInt32((uint)skills.Count);  
+        
+        
+        
+        
+        foreach (var (group, level) in skills.OrderBy(s => s.Group).ThenBy(s => s.Level))
+            tw.WriteUInt32(group * SkillIdGroupFactor + level); 
+        return tw.ToArray();
+    }
 }

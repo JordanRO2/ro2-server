@@ -26,7 +26,7 @@ public class MapLoadBurstBuildersTests
     [InlineData(4, "0e00000006008e008f009000910092009300")]
     public void CraftIndex2535_IsTheProfessionsLevel1Set_ByteForByte(byte proType, string retailHex)
     {
-        var body = WorldEntryService.BuildNotifyCraftIndex2535(Recipes.Value, proType);
+        var body = CraftRecipeStore.BuildNotifyCraftIndex2535(Recipes.Value, proType);
         Assert.NotNull(body);
         Assert.Equal(retailHex.ToUpperInvariant(), Convert.ToHexString(body!));
     }
@@ -37,7 +37,7 @@ public class MapLoadBurstBuildersTests
     public void CraftIndex2535_NoRecipes_SendsNothing(byte proType)
     {
         
-        Assert.Null(WorldEntryService.BuildNotifyCraftIndex2535(Recipes.Value, proType));
+        Assert.Null(CraftRecipeStore.BuildNotifyCraftIndex2535(Recipes.Value, proType));
     }
 
     [Fact]
@@ -45,7 +45,7 @@ public class MapLoadBurstBuildersTests
     {
         
         
-        var body = WorldEntryService.BuildUseSkillList2488(new (uint, byte)[] { (4103u, 1), (4108u, 1), (4101u, 1) });
+        var body = SkillPackets.BuildUseSkillList2488(new (uint, byte)[] { (4103u, 1), (4108u, 1), (4101u, 1) });
         Assert.Equal("011818" + "00B3E3" + "00000000" + "03000000" + "F5410600" + "BD420600" + "B1440600",
             Convert.ToHexString(body));
     }
@@ -56,7 +56,7 @@ public class MapLoadBurstBuildersTests
         
         
         const ulong retailMicros = 212649800652731329UL;
-        var body = WorldEntryService.BuildServerTimeToLoginPC2669(ServerTimeCodec.FromClientMicroseconds(retailMicros));
+        var body = WorldEntryPackets.BuildServerTimeToLoginPC2669(ServerTimeCodec.FromClientMicroseconds(retailMicros));
         Assert.Equal(8, body.Length);
         Assert.Equal(retailMicros / 1000UL, BitConverter.ToUInt64(body, 0) / 1000UL);
         Assert.Equal("76F5DD7BF302", Convert.ToHexString(body.AsSpan(2).ToArray()));
@@ -66,7 +66,7 @@ public class MapLoadBurstBuildersTests
     public void DependentDungeonInfo2743_IsRetailsEmptyForm()
     {
         
-        Assert.Equal("020000000000", Convert.ToHexString(WorldEntryService.BuildDependentDungeonInfo2743()));
+        Assert.Equal("020000000000", Convert.ToHexString(DungeonFinderPackets.BuildDependentDungeonInfo2743()));
     }
 
  /// <summary>
