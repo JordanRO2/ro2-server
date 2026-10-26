@@ -62,12 +62,6 @@ public class ChangeProJobIDHandler : ZoneRmiHandlerBase<ChangeProJobIDHandler>
  /// <summary>Body length: u64 item uid + u8 profession (9 bytes).</summary>
     private const int BodyLength = ProfessionOffset + sizeof(byte);
 
- /// <summary>Profession id 0: no profession. Never a valid target of a change.</summary>
-    private const byte NoProfession = 0;
-
- /// <summary>Inventory <c>StorageType</c> of the character's bag (1 = worn equipment, 2 = bank).</summary>
-    private const byte BagStorageType = 0;
-
  /// <summary>Offset of the u8 stack count in a 126-byte item record: <c>[u64 uid @0][u32 itemId @8][u16 durability @12][u8 count @14]</c>.</summary>
     private const int ItemRecordCountOffset = 14;
 
@@ -182,32 +176,25 @@ public class ChangeProJobIDHandler : ZoneRmiHandlerBase<ChangeProJobIDHandler>
  /// in progress) name conditions this server does not track, so they are never sent.</remarks>
     internal static byte ChangeResult(IEnumerable<ProJobType> professions, IEnumerable<ProJobChange> changeItems,
         uint characterId, byte current, byte target, InventoryItem? item)
+        => Code(ProJobRules.ChangeResult(professions, changeItems, characterId, current, target,
+            item is { } it ? (it.CharacterId, it.StorageType, it.Count, it.ItemId) : null));
+
+ /// <summary>Maps a profession-change outcome to its 2683/2680 wire result byte.</summary>
+    private static byte Code(ChangeProJobOutcome o) => o switch
     {
-        if (target == NoProfession || !professions.Any(r => r.ID == target))
-            return QuestProgressPackets.ChangeProJobUnknownProfession;
-        if (target == current)
-            return QuestProgressPackets.ChangeProJobSameProfession;
-        if (item is null || item.CharacterId != characterId || item.StorageType != BagStorageType || item.Count < 1
-            || !changeItems.Any(r => r.ItemID == item.ItemId))
-            return QuestProgressPackets.ChangeProJobMissingItem;
-        return QuestProgressPackets.ChangeProJobApplied;
-    }
+        ChangeProJobOutcome.Applied => QuestProgressPackets.ChangeProJobApplied,
+        ChangeProJobOutcome.UnknownProfession => QuestProgressPackets.ChangeProJobUnknownProfession,
+        ChangeProJobOutcome.SameProfession => QuestProgressPackets.ChangeProJobSameProfession,
+        ChangeProJobOutcome.MissingItem => QuestProgressPackets.ChangeProJobMissingItem,
+        _ => QuestProgressPackets.ChangeProJobMissingItem,
+    };
 
  /// <summary>
  /// The pairs (old guide quest, new guide quest) of a change from <paramref name="from"/> to <paramref name="to"/>:
  /// ProJob_Type Guide_Quest_ID1..3 of the two rows, column by column, leaving out a column empty on either side.
  /// </summary>
     internal static List<(uint Old, uint New)> GuideQuestPairs(IEnumerable<ProJobType> professions, byte from, byte to)
-    {
-        var pairs = new List<(uint, uint)>(3);
-        var a = professions.FirstOrDefault(r => r.ID == from);
-        var b = professions.FirstOrDefault(r => r.ID == to);
-        if (a is null || b is null) return pairs;
-        foreach (var (o, n) in new[] { (a.Guide_Quest_ID1, b.Guide_Quest_ID1), (a.Guide_Quest_ID2, b.Guide_Quest_ID2),
-                     (a.Guide_Quest_ID3, b.Guide_Quest_ID3) })
-            if (o != 0 && n != 0 && o != n) pairs.Add((o, n));
-        return pairs;
-    }
+        => ProJobRules.GuideQuestPairs(professions, from, to);
 
  /// <summary>
  /// Replaces each old-profession guide quest the character holds (in progress) with the new profession's quest of
