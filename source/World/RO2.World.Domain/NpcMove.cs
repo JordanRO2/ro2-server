@@ -1,15 +1,16 @@
-namespace RO2.Server.Zone.Services;
+namespace RO2.Worlds.Domain;
 
 /// <summary>
 /// The walk an NPC was last sent on: origin, destination, speed and start time of its 2318 OnMoveNPC.
-/// Stored on <see cref="NpcRuntimeState.LastMove"/> so that a 2319 OnNPCViewData sent mid-walk reports the
-/// NPC at its current position on that walk rather than at the destination.
+/// Stored on the host NpcRuntimeState.LastMove so that a 2319 OnNPCViewData sent mid-walk reports the NPC at its
+/// current position on that walk rather than at the destination. Foundational World value: the host NPC runtime
+/// (and the B6 Monster chase) interpolate position through it.
 /// </summary>
 /// <remarks>
 /// <para>
-/// <see cref="NpcMovementService"/> updates <see cref="NpcRuntimeState.PosX"/> and <see cref="NpcRuntimeState.PosY"/>
-/// to the destination when it sends the 2318. The position reported mid-walk is interpolated continuously:
-/// <c>From + (To - From) x min(1, speed x elapsed / distance)</c>, so it stays on the same segment at the same speed.
+/// The host NpcMovementService updates the NPC's PosX/PosY to the destination when it sends the 2318. The position
+/// reported mid-walk is interpolated continuously: <c>From + (To - From) x min(1, speed x elapsed / distance)</c>,
+/// so it stays on the same segment at the same speed.
 /// </para>
 /// </remarks>
 /// <param name="FromX">World X at the start of the walk.</param>

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using RO2.GameData;
 using RO2.Network.Protocol;
 using RO2.Server.Zone.Models;
+using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Services;
 
