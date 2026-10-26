@@ -4,6 +4,7 @@ using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.Server.Zone.Services;
 using RO2.Characters.Domain;
+using RO2.Combats.Domain;
 
 namespace RO2.Server.Zone.Models;
 
@@ -524,29 +525,26 @@ public class PlayerState : IWallet
     public Dictionary<uint, DateTime> RecentSkillStart { get; } = new();
 
     /// <summary>Skill id 0: no channelled skill in progress.</summary>
-    private const uint NoChannelSkillId = 0;
-
-    private uint _activeChannelSkillId;
+    private readonly ChannelSlot _channel = new();
 
     /// <summary>
     /// The channelled skill this PC is casting right now, 0 when none: set by an accepted 1508 of a
     /// Skill_Duration skill (SkillStartHandler), ended by the caster's 1440 cancel or 1609 complete
     /// (SkillChannelingCancelHandler, SkillChannelingCompleteHandler). The 1609 answer 2897 reports it: result
     /// 0 when the completing skill is still the one channelled, 1 when it no longer is (see
-    /// SkillChannelingPackets). Runtime-only, like the cooldowns.
+    /// SkillChannelingPackets). Runtime-only, like the cooldowns. Backed by the Domain <see cref="ChannelSlot"/>.
     /// </summary>
-    public uint ActiveChannelSkillId => Volatile.Read(ref _activeChannelSkillId);
+    public uint ActiveChannelSkillId => _channel.Active;
 
     /// <summary>Records <paramref name="skillId"/> as the channel in progress, replacing any earlier one.</summary>
-    public void BeginChannel(uint skillId) => Volatile.Write(ref _activeChannelSkillId, skillId);
+    public void BeginChannel(uint skillId) => _channel.Begin(skillId);
 
     /// <summary>
     /// Ends the channel of <paramref name="skillId"/> if it is the one in progress and says whether it was.
     /// A request naming another skill (or 0) leaves the channel in progress untouched. Atomic, so two requests
     /// racing for the same channel cannot both see it active.
     /// </summary>
-    public bool TryEndChannel(uint skillId)
-        => skillId != NoChannelSkillId && Interlocked.CompareExchange(ref _activeChannelSkillId, NoChannelSkillId, skillId) == skillId;
+    public bool TryEndChannel(uint skillId) => _channel.TryEnd(skillId);
 
     // Learned skills: skill_id → learned level, loaded from DB on login
     // The reference is replaced, never grown in place, by the 1310 talent spend (OverlayLearnedSkills): readers on
