@@ -12,4 +12,10 @@ public sealed class GameDataWorldCatalog : IWorldCatalog
 
     /// <inheritdoc />
     public MapData? GetMap(uint mapIndex) => _data.GetMap(mapIndex);
+
+    /// <inheritdoc />
+    public PositionData? GetPosition(uint positionId) => _data.Positions.TryGetValue(positionId, out var p) ? p : null;
+
+    /// <inheritdoc />
+    public NpcData? GetNpc(uint npcId) => _data.Npcs.TryGetValue(npcId, out var n) ? n : null;
 }

@@ -6,6 +6,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -129,17 +130,5 @@ public class TeleportSavePointHandler : ZoneRmiHandlerBase<TeleportSavePointHand
     /// </remarks>
     internal static (uint MapId, float X, float Y, float Z, string Source) ResolveSavePoint(
         PlayerState player, GameDataStore data)
-    {
-        var current = data.GetMap(player.MapId);
-        if (current is { Map_ID: not 0 } && data.GetMap(current.Map_ID) is not null)
-            return (current.Map_ID, current.x, current.y, current.z, $"Map_List {player.MapId} return point");
-
-        if (player.BindIndex != 0
-            && data.Positions.TryGetValue(player.BindIndex, out var bind)
-            && data.GetMap(bind.Area_ID) is not null)
-            return (bind.Area_ID, bind.Position_X, bind.Position_Y, bind.Position_Z, $"bind {player.BindIndex}");
-
-        return (WorldEntryService.DefaultMapId, WorldEntryService.DefaultX, WorldEntryService.DefaultY,
-            WorldEntryService.DefaultZ, "no bind: new-character spawn");
-    }
+        => WarpDestinationRules.ResolveSavePoint(player.MapId, player.BindIndex, new GameDataWorldCatalog(data));
 }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using RO2.GameData;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
+using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -20,17 +21,18 @@ namespace RO2.Server.Zone.Services;
 internal static class ItemWarpSkills
 {
  /// <summary>Butterfly Wing: returns to the bind point (<see cref="ButterflyWingDestination"/>).</summary>
-    internal const uint ButterflyWing = 9100101;
+    internal const uint ButterflyWing = WarpDestinationRules.ButterflyWing;
  /// <summary>Dungeon Wing: leaves the current map for its Map_List return point (<see cref="DungeonWingDestination"/>).</summary>
-    internal const uint DungeonWing = 9110001;
+    internal const uint DungeonWing = WarpDestinationRules.DungeonWing;
  /// <summary>Town warp scrolls with a fixed destination (<see cref="TownWarpDestination"/>).</summary>
-    internal const uint PronteraWarp = 9100201, AlbertaWarp = 9100301, MorrocWarp = 9100701, TrainingGroundWarp = 9100801,
-        JawaiiWarp = 9101001;
+    internal const uint PronteraWarp = WarpDestinationRules.PronteraWarp, AlbertaWarp = WarpDestinationRules.AlbertaWarp,
+        MorrocWarp = WarpDestinationRules.MorrocWarp, TrainingGroundWarp = WarpDestinationRules.TrainingGroundWarp,
+        JawaiiWarp = WarpDestinationRules.JawaiiWarp;
 
  /// <summary>Map_Type of an instanced dungeon map.</summary>
-    internal const byte MapTypeInstance = 1;
+    internal const byte MapTypeInstance = WarpDestinationRules.MapTypeInstance;
  /// <summary>Map_Type of an open field or town map.</summary>
-    internal const byte MapTypeField = 0;
+    internal const byte MapTypeField = WarpDestinationRules.MapTypeField;
 
  /// <summary>When the item skill's move takes effect.</summary>
     internal enum MoveKind
@@ -55,68 +57,52 @@ internal static class ItemWarpSkills
 
  /// <summary>
  /// Fixed destination of a town warp, or null for another skill or when the target map or Position_Info row is not loaded.
+ /// Delegates to <see cref="WarpDestinationRules.TownWarpDestination"/>.
  /// </summary>
     internal static Destination? TownWarpDestination(uint skillId, Func<uint, MapData?> mapOf,
         IReadOnlyDictionary<uint, PositionData> positions)
-    {
-        Destination? dest = skillId switch
-        {
-            PronteraWarp => new Destination(1100, 798.12f, 767.1f, 57.18f),
-            AlbertaWarp => new Destination(1200, 722.76f, 547.03f, 55.32f),
-            MorrocWarp => new Destination(1300, 434f, 249f, 12f),
-            TrainingGroundWarp => FromPosition(TrainingGroundPosition, positions),
-            JawaiiWarp => FromPosition(JawaiiPosition, positions),
-            _ => null,
-        };
-        return dest is { } d && mapOf(d.MapId) is not null ? d : null;
-    }
+        => Of(WarpDestinationRules.TownWarpDestination(skillId, new TableCatalog(mapOf, positions)));
 
  /// <summary>Position_Info rows of the Training Ground and Jawaii destinations (see <see cref="TownWarpDestination"/>).</summary>
-    internal const uint TrainingGroundPosition = 294, JawaiiPosition = 410;
-
-    private static Destination? FromPosition(uint positionId, IReadOnlyDictionary<uint, PositionData> positions)
-        => positions.TryGetValue(positionId, out var p) ? new Destination(p.Area_ID, p.Position_X, p.Position_Y, p.Position_Z) : null;
+    internal const uint TrainingGroundPosition = WarpDestinationRules.TrainingGroundPosition,
+        JawaiiPosition = WarpDestinationRules.JawaiiPosition;
 
  /// <summary>
  /// Destination of the Dungeon Wing: the current map's Map_List return point, or null when the wing is refused there.
+ /// Delegates to <see cref="WarpDestinationRules.DungeonWingDestination"/>.
  /// </summary>
- /// <remarks>
- /// The wing is refused on a Map_Type 0 map, on a map with Map_ID 0, and when the return map is not in Map_List.
- /// </remarks>
     internal static Destination? DungeonWingDestination(MapData? current, Func<uint, MapData?> mapOf)
-    {
-        if (current is null || current.Map_Type == MapTypeField || current.Map_ID == 0 || mapOf(current.Map_ID) is null)
-            return null;
-        return new Destination(current.Map_ID, current.x, current.y, current.z);
-    }
+        => Of(WarpDestinationRules.DungeonWingDestination(current, new TableCatalog(mapOf, null)));
 
  /// <summary>
  /// Destination of the Butterfly Wing: the bind point when its map is loaded, otherwise the new-character spawn.
+ /// Delegates to <see cref="WarpDestinationRules.ButterflyWingDestination"/>.
  /// </summary>
- /// <remarks>
- /// Uses the save point and revival rules of TeleportSavePointHandler.ResolveSavePoint, excluding its first rule
- /// (the current map's return point).
- /// </remarks>
     internal static Destination ButterflyWingDestination(ushort bindIndex, Func<uint, MapData?> mapOf,
         IReadOnlyDictionary<uint, PositionData> positions)
-    {
-        if (bindIndex != 0 && positions.TryGetValue(bindIndex, out var bind) && mapOf(bind.Area_ID) is not null)
-            return new Destination(bind.Area_ID, bind.Position_X, bind.Position_Y, bind.Position_Z);
-        return new Destination(WorldEntryService.DefaultMapId, WorldEntryService.DefaultX, WorldEntryService.DefaultY,
-            WorldEntryService.DefaultZ);
-    }
+        => Of(WarpDestinationRules.ButterflyWingDestination(bindIndex, new TableCatalog(mapOf, positions)));
 
  /// <summary>
  /// Destination of an <see cref="MoveKind.OnAnswer"/> skill from the player's current map, or null when it does not move.
  /// </summary>
-    internal static Destination? AnswerDestination(uint skillId, PlayerState player, GameDataStore data) => skillId switch
-    {
-        ButterflyWing => ButterflyWingDestination(player.BindIndex, data.GetMap, data.Positions),
-        DungeonWing => DungeonWingDestination(data.GetMap(player.MapId), data.GetMap),
-        _ => null,
-    };
+    internal static Destination? AnswerDestination(uint skillId, PlayerState player, GameDataStore data)
+        => Of(WarpDestinationRules.AnswerDestination(skillId, player.BindIndex, player.MapId, new GameDataWorldCatalog(data)));
 
-    
+    private static Destination Of(WarpDestination d) => new(d.MapId, d.X, d.Y, d.Z);
+
+    private static Destination? Of(WarpDestination? d) => d is { } x ? Of(x) : null;
+
+ /// <summary>The map and position tables a warp rule reads, as the callers hold them (a map lookup and the Position_Info rows).</summary>
+    private sealed class TableCatalog(Func<uint, MapData?> mapOf, IReadOnlyDictionary<uint, PositionData>? positions) : IWorldCatalog
+    {
+        public MapData? GetMap(uint mapIndex) => mapOf(mapIndex);
+
+        public PositionData? GetPosition(uint positionId)
+            => positions is not null && positions.TryGetValue(positionId, out var p) ? p : null;
+
+        public NpcData? GetNpc(uint npcId) => null;
+    }
+
  /// <summary>Time window in which a town warp's landing (1509) still moves the player.</summary>
     internal static readonly TimeSpan LandingWindow = TimeSpan.FromSeconds(5);
 
@@ -166,7 +152,7 @@ internal static class ItemWarpSkills
  /// Whether a move to <paramref name="dest"/> stays on the player's current map and does not start from an instance.
  /// </summary>
     internal static bool IsInPlace(PlayerState player, Destination dest, GameDataStore data)
-        => dest.MapId == player.MapId && data.GetMap(player.MapId) is not { Map_Type: MapTypeInstance };
+        => WarpDestinationRules.IsInPlace(player.MapId, dest.MapId, new GameDataWorldCatalog(data));
 
  /// <summary>
  /// Moves <paramref name="player"/> to <paramref name="dest"/> in the form matching the source map. Returns false, with

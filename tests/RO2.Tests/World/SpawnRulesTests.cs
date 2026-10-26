@@ -13,6 +13,8 @@ public class SpawnRulesTests
         private readonly Dictionary<uint, MapData> _maps = new();
         public FakeCatalog Add(uint id, float x, float y, float z) { _maps[id] = new MapData { Map_Index = id, x = x, y = y, z = z }; return this; }
         public MapData? GetMap(uint mapIndex) => _maps.TryGetValue(mapIndex, out var m) ? m : null;
+        public PositionData? GetPosition(uint positionId) => null;
+        public NpcData? GetNpc(uint npcId) => null;
     }
 
     private static readonly (uint, float, float, float) Default =

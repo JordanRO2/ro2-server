@@ -5,6 +5,7 @@ using RO2.Network.Packets;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Worlds.Domain;
 using RO2.Network.Protocol;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
@@ -89,9 +90,6 @@ public class MultiTeleportNpcHandler : ZoneRmiHandlerBase<MultiTeleportNpcHandle
     /// </summary>
     private const int RequestLength = 4 + 4 + 1;
 
-    /// <summary>Slots are numbered from 1: the slot is the dialogue's Select_ID, and slot n selects entry n-1 of a group.</summary>
-    private const int FirstSlot = 1;
-
     /// <summary>2905 result: accepted.</summary>
     internal const ushort ResultAccepted = 0;
 
@@ -104,7 +102,7 @@ public class MultiTeleportNpcHandler : ZoneRmiHandlerBase<MultiTeleportNpcHandle
     internal const ushort ResultRefused = 24323;
 
     /// <summary>NPCInfo Function_Type of the multi-destination teleporter; its Function_ID is the group.</summary>
-    internal const int MultiTeleportFunctionType = 39;
+    internal const int MultiTeleportFunctionType = WarpDestinationRules.MultiTeleportFunctionType;
 
     /// <summary>
     /// Destination group (NPCInfo Function_ID of the type-39 function) → Position_Info id per 1-based
@@ -121,14 +119,7 @@ public class MultiTeleportNpcHandler : ZoneRmiHandlerBase<MultiTeleportNpcHandle
     /// The order also matches Position_Info's own labels (group 1: interior, east, west, south
     /// fortress; group 12: the 7, 6, 9 and 3 o'clock entrances).
     /// </summary>
-    internal static readonly IReadOnlyDictionary<uint, uint[]> MeasuredDestinations = new Dictionary<uint, uint[]>
-    {
-        [1] = new uint[] { 274, 325, 326, 327 },
-        [2] = new uint[] { 275, 276 },
-        [7] = new uint[] { 370, 371, 372 },
-        [8] = new uint[] { 378, 365 },
-        [12] = new uint[] { 381, 383, 384, 385 },
-    };
+    internal static readonly IReadOnlyDictionary<uint, uint[]> MeasuredDestinations = WarpDestinationRules.MeasuredDestinations;
 
     public MultiTeleportNpcHandler(IServiceScopeFactory s, ILogger<MultiTeleportNpcHandler> l, PlayerStateManager pm, BroadcastService bc) : base(s, l, pm, bc) { }
 
@@ -190,29 +181,7 @@ public class MultiTeleportNpcHandler : ZoneRmiHandlerBase<MultiTeleportNpcHandle
     /// when any link is missing, including a destination map absent from Map_List.
     /// </summary>
     internal static bool TryResolveDestination(GameDataStore data, uint npcId, byte slot, out PositionData destination)
-    {
-        destination = null!;
-        if (!data.Npcs.TryGetValue(npcId, out var info)) return false;
-
-        uint? group = null;
-        foreach (var (type, id) in new[]
-                 {
-                     (info.Function_Type_1, info.Function_ID_1),
-                     (info.Function_Type_2, info.Function_ID_2),
-                     (info.Function_Type_3, info.Function_ID_3),
-                 })
-        {
-            if (type == MultiTeleportFunctionType) { group = id; break; }
-        }
-
-        if (group is not uint g || !MeasuredDestinations.TryGetValue(g, out var slots)) return false;
-        if (slot < FirstSlot || slot > slots.Length) return false;
-        if (!data.Positions.TryGetValue(slots[slot - FirstSlot], out var pos)) return false;
-        if (data.GetMap(pos.Area_ID) is null) return false;
-
-        destination = pos;
-        return true;
-    }
+        => WarpDestinationRules.TryResolveMultiTeleportDestination(new GameDataWorldCatalog(data), npcId, slot, out destination);
 
     /// <summary>AnsMultiTeleportNpc 2905 — bare 2-byte [u16 result].</summary>
     private static Task AckAsync(ProudSession session, ushort result)

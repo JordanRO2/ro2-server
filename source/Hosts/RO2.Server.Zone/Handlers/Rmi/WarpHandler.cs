@@ -9,6 +9,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -282,24 +283,7 @@ public class WarpHandler : ZoneRmiHandlerBase<WarpHandler>
     /// </summary>
     internal static bool TryResolveFunctionId(GameDataStore data, uint npcId, uint functionType,
         out uint functionId)
-    {
-        functionId = 0;
-        if (!data.Npcs.TryGetValue(npcId, out var npc)) return false;
-        foreach (var (type, id) in new[]
-                 {
-                     (npc.Function_Type_1, npc.Function_ID_1),
-                     (npc.Function_Type_2, npc.Function_ID_2),
-                     (npc.Function_Type_3, npc.Function_ID_3),
-                 })
-        {
-            if ((long)type == functionType)
-            {
-                functionId = id;
-                return true;
-            }
-        }
-        return false;
-    }
+        => WarpDestinationRules.TryResolveFunctionId(new GameDataWorldCatalog(data), npcId, functionType, out functionId);
 
     /// <summary>
     /// Resolves the Position_Info row an NPC's function of type <paramref name="functionType"/> points at
@@ -309,22 +293,5 @@ public class WarpHandler : ZoneRmiHandlerBase<WarpHandler>
     /// </summary>
     internal static bool TryResolveFunctionPosition(GameDataStore data, uint npcId, uint functionType,
         out PositionData position)
-    {
-        position = null!;
-        if (!data.Npcs.TryGetValue(npcId, out var npc)) return false;
-        foreach (var (type, id) in new[]
-                 {
-                     (npc.Function_Type_1, npc.Function_ID_1),
-                     (npc.Function_Type_2, npc.Function_ID_2),
-                     (npc.Function_Type_3, npc.Function_ID_3),
-                 })
-        {
-            if ((long)type == functionType && data.Positions.TryGetValue(id, out var p))
-            {
-                position = p;
-                return true;
-            }
-        }
-        return false;
-    }
+        => WarpDestinationRules.TryResolveFunctionPosition(new GameDataWorldCatalog(data), npcId, functionType, out position);
 }
