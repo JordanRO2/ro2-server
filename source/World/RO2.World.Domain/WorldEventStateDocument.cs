@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Worlds.Domain;
 
 /// <summary>
 /// Live state of one world event: its stage, when that stage began, and the offering count of each row
@@ -22,6 +22,7 @@ public sealed class WorldEventStateDocument
  /// </summary>
     public List<uint> Counts { get; set; } = new();
 
+    /// <summary>When the state last changed (UTC).</summary>
     public DateTime UpdatedUtc { get; set; }
 
  /// <summary>Returns a deep copy, so a caller can change it without touching the published state.</summary>

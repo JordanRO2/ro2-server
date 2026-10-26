@@ -1,4 +1,5 @@
 using RO2.Domain.Entities;
+using RO2.Worlds.Domain;
 using RO2.Server.Zone.Services;
 using RO2.Tests.Packets;
 using Xunit;

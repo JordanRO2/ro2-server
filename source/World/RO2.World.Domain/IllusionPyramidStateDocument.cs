@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Worlds.Domain;
 
 /// <summary>
 /// A character's Illusion Pyramid state: its Mystical and Bright Phantom Stone balances and its top record, the tail
@@ -14,9 +14,14 @@ namespace RO2.Domain.Entities;
 /// </remarks>
 public sealed class IllusionPyramidStateDocument
 {
+    /// <summary>Character id (Mongo <c>_id</c>).</summary>
     public uint Id { get; set; }
+    /// <summary>Mystical Phantom Stone balance.</summary>
     public int Mystical { get; set; }
+    /// <summary>Bright Phantom Stone balance.</summary>
     public int Bright { get; set; }
+    /// <summary>Highest floor whose result the character fetched.</summary>
     public byte TopRecord { get; set; }
+    /// <summary>When the state was last saved (UTC).</summary>
     public DateTime UpdatedUtc { get; set; }
 }

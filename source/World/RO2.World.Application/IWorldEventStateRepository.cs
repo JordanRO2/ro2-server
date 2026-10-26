@@ -1,6 +1,6 @@
-using RO2.Domain.Entities;
+using RO2.Worlds.Domain;
 
-namespace RO2.Application.Interfaces;
+namespace RO2.Worlds.Application;
 
 /// <summary>
 /// Persistence for the world events' server-wide live state (one <see cref="WorldEventStateDocument"/> per

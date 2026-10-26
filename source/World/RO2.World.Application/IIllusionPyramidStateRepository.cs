@@ -1,6 +1,6 @@
-using RO2.Domain.Entities;
+using RO2.Worlds.Domain;
 
-namespace RO2.Application.Interfaces;
+namespace RO2.Worlds.Application;
 
 /// <summary>
 /// Document persistence for a character's Illusion Pyramid state (one <see cref="IllusionPyramidStateDocument"/> per

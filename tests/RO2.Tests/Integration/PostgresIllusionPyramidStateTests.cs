@@ -1,4 +1,5 @@
 using RO2.Domain.Entities;
+using RO2.Worlds.Domain;
 using RO2.Persistence.Postgres.Repositories;
 using Xunit;
 
