@@ -22,4 +22,7 @@ public interface IPlayerSessionGateway
 
     /// <summary>The session's character name (mirrored on a rename so live reads see the new name at once).</summary>
     string Name { get; set; }
+
+    /// <summary>The session's gender, mirrored on an appearance change (write-only; the snapshot carries the read).</summary>
+    byte Gender { set; }
 }

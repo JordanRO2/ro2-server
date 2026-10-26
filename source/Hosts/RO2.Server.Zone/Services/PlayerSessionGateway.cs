@@ -24,4 +24,9 @@ internal sealed class PlayerSessionGateway(PlayerState player) : IPlayerSessionG
         get => player.Name;
         set => player.Name = value;
     }
+
+    public byte Gender
+    {
+        set => player.Gender = value;
+    }
 }

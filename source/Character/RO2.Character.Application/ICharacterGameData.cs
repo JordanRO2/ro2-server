@@ -22,4 +22,10 @@ public interface ICharacterGameData
 
     /// <summary>The seed HP/SP and primary stats for a new character of <paramref name="job"/>, or null when the class has no base row.</summary>
     (int hp, int mp, int str, int agi, int intel, int wis, int vit, int luk)? SeedStats(byte job);
+
+    /// <summary>True when the item is an Appearance Change Ticket (ItemInfo Item_Type 72).</summary>
+    bool IsAppearanceTicket(uint itemId);
+
+    /// <summary>The item's gender requirement (Require_Sex), or 0 when the item is unknown or unrestricted.</summary>
+    byte RequireSex(uint itemId);
 }

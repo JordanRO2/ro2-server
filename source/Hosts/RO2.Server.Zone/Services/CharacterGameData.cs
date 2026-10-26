@@ -23,4 +23,9 @@ internal sealed class CharacterGameData(GameDataStore store) : ICharacterGameDat
         var bs = StatService.ComputeBaseStats(store, job, 1, bp.str, bp.agi, bp.intel, bp.wis, bp.vit, bp.luk);
         return bs.MaxHp > 0 ? ((int)bs.MaxHp, bs.MaxSp, bp.str, bp.agi, bp.intel, bp.wis, bp.vit, bp.luk) : null;
     }
+
+    public bool IsAppearanceTicket(uint itemId)
+        => store.GetItem(itemId)?.Item_Type == AppearanceChangePackets.AppearanceTicketItemType;
+
+    public byte RequireSex(uint itemId) => store.GetItem(itemId)?.Require_Sex ?? 0;
 }
