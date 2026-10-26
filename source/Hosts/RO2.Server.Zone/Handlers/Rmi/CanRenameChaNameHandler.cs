@@ -1,11 +1,13 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using RO2.GameData;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Inventory.Domain;
+using RO2.Characters.Domain;
+using RO2.Characters.Application;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -30,10 +32,12 @@ public class CanRenameChaNameHandler : ZoneRmiHandlerBase<CanRenameChaNameHandle
         }
         else
         {
-            var (r, _, reason) = await CharacterRename.CheckAsync(player, request, services);
-            result = r;
+            var check = await RenameCheckFlow.CheckAsync(player.Name, player.CharacterId, request.ScrollUid, request.NewName,
+                services.GetRequiredService<INameFilter>(), services.GetRequiredService<ICharacterGameData>(),
+                services.GetRequiredService<IInventoryRepository>(), services.GetRequiredService<ICharacterRepository>());
+            result = CharacterRename.Code(check.Refusal);
             Logger.LogInformation("{Name} asks to rename to '{New}' (scroll {Uid}): {Result}{Reason}",
-                player.Name, request.NewName, request.ScrollUid, r, reason is null ? "" : $" ({reason})");
+                player.Name, request.NewName, request.ScrollUid, result, check.Reason is null ? "" : $" ({check.Reason})");
         }
 
         

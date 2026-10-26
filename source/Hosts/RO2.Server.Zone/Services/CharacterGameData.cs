@@ -28,4 +28,7 @@ internal sealed class CharacterGameData(GameDataStore store) : ICharacterGameDat
         => store.GetItem(itemId)?.Item_Type == AppearanceChangePackets.AppearanceTicketItemType;
 
     public byte RequireSex(uint itemId) => store.GetItem(itemId)?.Require_Sex ?? 0;
+
+    public bool IsNameChangeScroll(uint itemId)
+        => store.GetItem(itemId)?.Item_Type == CharacterRename.NameChangeScrollItemType;
 }

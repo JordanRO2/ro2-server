@@ -43,11 +43,14 @@ public class RenameChaNameHandler : ZoneRmiHandlerBase<RenameChaNameHandler>
         
         
         
-        var (result, scroll, reason) = await CharacterRename.CheckAsync(player, request, services);
-        if (result != 0 || scroll is null)
+        var check = await RenameCheckFlow.CheckAsync(player.Name, player.CharacterId, request.ScrollUid, request.NewName,
+            services.GetRequiredService<INameFilter>(), services.GetRequiredService<ICharacterGameData>(),
+            services.GetRequiredService<IInventoryRepository>(), services.GetRequiredService<ICharacterRepository>());
+        var scroll = check.Scroll;
+        if (check.Refusal != RenameNameRefusal.None || scroll is null)
         {
-            uint code = result == 0 ? CharacterRename.ResultRefused : result;
-            Logger.LogInformation("{Name} rename to '{New}' refused: {Code} ({Reason})", player.Name, request.NewName, code, reason);
+            uint code = check.Refusal == RenameNameRefusal.None ? CharacterRename.ResultRefused : CharacterRename.Code(check.Refusal);
+            Logger.LogInformation("{Name} rename to '{New}' refused: {Code} ({Reason})", player.Name, request.NewName, code, check.Reason);
             await session.SendRmiAsync(ZoneS2COpcodes.AnsCanRenameChaName, writer => writer.WriteUInt32(code), ct);
             return;
         }

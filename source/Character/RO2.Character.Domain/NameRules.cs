@@ -15,6 +15,17 @@ public enum NameRefusal
     Prohibited,
 }
 
+/// <summary>Reason a RENAME is refused, grouped by the two rename result codes (15402 vs 15403).</summary>
+public enum RenameNameRefusal
+{
+    /// <summary>The new name passes the rename rules.</summary>
+    None = 0,
+    /// <summary>Too short, the character's current name, no scroll, or a name already taken (result 15402).</summary>
+    TakenOrShort,
+    /// <summary>Invalid characters, a prohibited name, or over the rename length limit (result 15403).</summary>
+    NotAllowed,
+}
+
 /// <summary>
 /// Pure character-name validation (format + prohibited list) shared by the name check, creation and the rename
 /// scroll, over the name_filter rows passed in. No database, no game-data store, no wire.
@@ -31,6 +42,9 @@ public static partial class NameRules
 
     /// <summary>Longest accepted name length (also used by character creation).</summary>
     public const int MaxLength = 16;
+
+    /// <summary>Longest name a rename accepts; separate from <see cref="MaxLength"/>, which also applies to creation.</summary>
+    public const int MaxRenameLength = 14;
 
     /// <summary>Name_filter rows that also refuse a name when they appear inside it (case-sensitive on the NFKC form).</summary>
     internal static readonly string[] ContainedRows = ["GM"];
@@ -69,6 +83,31 @@ public static partial class NameRules
             return (NameRefusal.Prohibited, $"contains the prohibited word \"{word}\" (name_filter)");
 
         return (NameRefusal.None, null);
+    }
+
+    /// <summary>
+    /// The rename-specific name check: too short or the character's own name give <see cref="RenameNameRefusal.TakenOrShort"/>;
+    /// invalid characters, a prohibited name, or a name over <see cref="MaxRenameLength"/> give
+    /// <see cref="RenameNameRefusal.NotAllowed"/>. The scroll and uniqueness checks are the Application flow's.
+    /// </summary>
+    /// <returns>The rename refusal (<see cref="RenameNameRefusal.None"/> when the name itself passes) and a log reason.</returns>
+    public static (RenameNameRefusal refusal, string? reason) CheckRename(string newName, string currentName,
+        IReadOnlyList<NameFilterRow>? filter)
+    {
+        if (newName.Length < MinLength)
+            return (RenameNameRefusal.TakenOrShort, $"too short (min {MinLength})");
+
+        var (refusal, reason) = Check(newName, filter);
+        if (refusal != NameRefusal.None)
+            return (RenameNameRefusal.NotAllowed, reason);
+
+        if (newName.Length > MaxRenameLength)
+            return (RenameNameRefusal.NotAllowed, $"too long for a rename (max {MaxRenameLength})");
+
+        if (string.Equals(newName, currentName, StringComparison.Ordinal))
+            return (RenameNameRefusal.TakenOrShort, "same name");
+
+        return (RenameNameRefusal.None, null);
     }
 
     private static bool IsProhibited(string name, IReadOnlyList<NameFilterRow>? filter)

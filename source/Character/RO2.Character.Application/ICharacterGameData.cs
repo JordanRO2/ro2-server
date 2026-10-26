@@ -28,4 +28,7 @@ public interface ICharacterGameData
 
     /// <summary>The item's gender requirement (Require_Sex), or 0 when the item is unknown or unrestricted.</summary>
     byte RequireSex(uint itemId);
+
+    /// <summary>True when the item is a name-change scroll (ItemInfo Item_Type 108).</summary>
+    bool IsNameChangeScroll(uint itemId);
 }

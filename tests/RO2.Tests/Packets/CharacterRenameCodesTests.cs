@@ -10,6 +10,7 @@ using Xunit;
 using NameFilterRow = RO2.GameData.Tables.NameFilter;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
+using RO2.Characters.Application;
 
 namespace RO2.Tests.Packets;
 
@@ -51,8 +52,8 @@ public class CharacterRenameCodesTests
     public void NameRules_GiveRetailsAnswer(string requestHex, string playerName, string retail2814Hex)
     {
         Assert.True(CharacterRename.TryParse(Convert.FromHexString(requestHex), out var request));
-        var (result, _) = CharacterRename.CheckName(request.NewName, playerName, Filter);
-        Assert.Equal(retail2814Hex, Hex(result));
+        var (refusal, _) = NameRules.CheckRename(request.NewName, playerName, Filter);
+        Assert.Equal(retail2814Hex, Hex(CharacterRename.Code(refusal)));
     }
 
     [Fact]
@@ -62,9 +63,9 @@ public class CharacterRenameCodesTests
         
         var body = Convert.FromHexString("0000000000000000020100020108610073007100310032007a007a006a00");
         Assert.True(CharacterRename.TryParse(body, out var request));
-        var (result, scroll, _) = await CharacterRename.CheckAsync(Player("lOMEGAl"), request, await ServicesAsync());
-        Assert.Equal("2a3c0000", Hex(result));
-        Assert.Null(scroll);
+        var check = await CheckAsync("lOMEGAl", request, await ServicesAsync());
+        Assert.Equal("2a3c0000", Hex(CharacterRename.Code(check.Refusal)));
+        Assert.Null(check.Scroll);
     }
 
     [Fact]
@@ -75,11 +76,11 @@ public class CharacterRenameCodesTests
         var body = Convert.FromHexString(
             "5c8dd18ba73d040e02010a4b00610079006100740065004e006f007600610002010e4d006f006f006e006c006900670068007400440061006e0063006500");
         Assert.True(CharacterRename.TryParse(body, out var request));
-        Assert.Equal(0u, CharacterRename.CheckName(request.NewName, "KayateNova", Filter).result);
+        Assert.Equal(RenameNameRefusal.None, NameRules.CheckRename(request.NewName, "KayateNova", Filter).refusal);
         var services = await ServicesAsync(taken: "MoonlightDance", Scroll(request.ScrollUid, RenameScroll));
-        var (result, scroll, _) = await CharacterRename.CheckAsync(Player("KayateNova"), request, services);
-        Assert.Equal("2a3c0000", Hex(result));
-        Assert.Null(scroll);
+        var check = await CheckAsync("KayateNova", request, services);
+        Assert.Equal("2a3c0000", Hex(CharacterRename.Code(check.Refusal)));
+        Assert.Null(check.Scroll);
     }
 
     [Fact]
@@ -90,9 +91,9 @@ public class CharacterRenameCodesTests
             "34ebace2a73d040e0201076c004f004d004500470041006c0002010d4200720061006e006400690073006800530074006f0072006d00");
         Assert.True(CharacterRename.TryParse(body, out var request));
         var services = await ServicesAsync(taken: null, Scroll(request.ScrollUid, RenameScroll));
-        var (result, scroll, _) = await CharacterRename.CheckAsync(Player("lOMEGAl"), request, services);
-        Assert.Equal("00000000", Hex(result));
-        Assert.Equal(request.ScrollUid, scroll?.Id);
+        var check = await CheckAsync("lOMEGAl", request, services);
+        Assert.Equal("00000000", Hex(CharacterRename.Code(check.Refusal)));
+        Assert.Equal(request.ScrollUid, check.Scroll?.Id);
     }
 
     [Fact]
@@ -102,9 +103,9 @@ public class CharacterRenameCodesTests
             "34ebace2a73d040e0201076c004f004d004500470041006c0002010d4200720061006e006400690073006800530074006f0072006d00");
         Assert.True(CharacterRename.TryParse(body, out var request));
         var services = await ServicesAsync(taken: null, Scroll(request.ScrollUid, NotAScroll));
-        var (result, scroll, _) = await CharacterRename.CheckAsync(Player("lOMEGAl"), request, services);
-        Assert.Equal(CharacterRename.ResultRefused, result);
-        Assert.Null(scroll);
+        var check = await CheckAsync("lOMEGAl", request, services);
+        Assert.Equal(CharacterRename.ResultRefused, CharacterRename.Code(check.Refusal));
+        Assert.Null(check.Scroll);
     }
 
     [Fact]
@@ -123,7 +124,20 @@ public class CharacterRenameCodesTests
         return Convert.ToHexString(wire).ToLowerInvariant();
     }
 
-    private static PlayerState Player(string name) => new() { CharacterId = Me, Name = name };
+    /// <summary>Runs the carved Application rename check against the fakes in <paramref name="services"/>.</summary>
+    private static Task<RenameCheckFlow.RenameCheckResult> CheckAsync(string currentName, CharacterRename.Request request, IServiceProvider services)
+    {
+        var store = services.GetRequiredService<GameDataStore>();
+        return RenameCheckFlow.CheckAsync(currentName, Me, request.ScrollUid, request.NewName,
+            new FilterFrom(store), new CharacterGameData(store),
+            services.GetRequiredService<IInventoryRepository>(), services.GetRequiredService<ICharacterRepository>());
+    }
+
+    /// <summary>An <see cref="INameFilter"/> backed by a specific store (the test store, not the loaded one).</summary>
+    private sealed class FilterFrom(GameDataStore store) : INameFilter
+    {
+        public IReadOnlyList<NameFilterRow>? Rows => store.NameFilter;
+    }
 
     private static InventoryItem Scroll(ulong uid, uint itemId) =>
         new() { Id = uid, CharacterId = Me, ItemId = itemId, Count = 1, StorageType = 0, Slot = 22 };

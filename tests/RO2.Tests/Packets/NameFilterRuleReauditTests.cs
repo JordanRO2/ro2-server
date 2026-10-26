@@ -27,8 +27,8 @@ public class NameFilterRuleReauditTests
     [InlineData("iRO2Warrior", 0u)]
     public void RenameCheck_WithTheRealNameFilter_GivesRetailsAnswer(string newName, uint retail)
     {
-        var (result, _) = CharacterRename.CheckName(newName, "lOMEGAl", LoadNameFilter());
-        Assert.Equal(retail, result);
+        var (refusal, _) = NameRules.CheckRename(newName, "lOMEGAl", LoadNameFilter());
+        Assert.Equal(retail, CharacterRename.Code(refusal));
     }
 
     [Theory]
