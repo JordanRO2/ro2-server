@@ -7,6 +7,7 @@ using RO2.Persistence.Mongo.Persistence;
 using RO2.Persistence.Mongo.Repositories;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Worlds.Domain;
 using Xunit;
 using Xunit.Abstractions;
 using RO2.Inventory.Domain;

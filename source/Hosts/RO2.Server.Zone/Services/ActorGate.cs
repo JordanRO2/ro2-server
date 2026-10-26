@@ -1,49 +1,15 @@
 using RO2.GameData;
 using RO2.Server.Zone.Models;
+using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Services;
 
-/// <summary>Why <see cref="ActorGate.CanAct"/> refused an action.</summary>
-public enum ActorRefusal
-{
-    None = 0,
-    /// <summary>The actor itself is dead.</summary>
-    ActorDead,
-    /// <summary>The target handle did not resolve to a live entity record.</summary>
-    TargetNotFound,
-    /// <summary>The target is dead (and the action needs a living one).</summary>
-    TargetDead,
-    CrossMap,
-    /// <summary>A position or the reach is not finite, or the horizontal distance exceeds the reach.</summary>
-    OutOfRange,
-    /// <summary>The caller gave no reach: the action's range is not available as data. Refused, never assumed.</summary>
-    RangeUnknown,
-    /// <summary>The skill group is not in the actor's learned skills (or is learned at level 0).</summary>
-    SkillNotLearned,
-    /// <summary>The item the action spends is not owned.</summary>
-    ItemNotOwned,
-}
-
-/// <summary>Where and how an actor stands: the facts <see cref="ActorGate"/> reads from a PlayerState.</summary>
-public readonly record struct GateActor(uint MapId, float X, float Y, bool IsDead,
-    IReadOnlyDictionary<uint, byte>? LearnedSkills);
-
-/// <summary>The resolved target: a null <see cref="GateTarget"/> passed to the gate means it did not resolve.</summary>
-public readonly record struct GateTarget(uint MapId, float X, float Y, bool IsDead);
-
 /// <summary>
-/// What the action needs. <see cref="Reach"/> is the full distance allowed (range plus tolerance); null refuses as
-/// <see cref="ActorRefusal.RangeUnknown"/>, and an action with no spatial limit passes
-/// <see cref="float.PositiveInfinity"/> explicitly. <see cref="SkillGroup"/> / <see cref="ItemOwned"/> are checked
-/// only when set.
-/// </summary>
-public readonly record struct GateContext(float? Reach, uint? SkillGroup = null, bool? ItemOwned = null,
-    bool TargetMustBeAlive = true);
-
-/// <summary>
-/// Pure shared preconditions for a combat, skill or item action (SP0-ACTORGATE): liveness, same map, in range,
-/// ownership. State in, reason out; no DB, no sockets, no clock. Cooldown and rate belong to SP0-RATE and the
-/// pending-cast ledger (<see cref="SkillCastLandings"/>), not here. Nothing calls it yet.
+/// Host adapter over <see cref="ActorGateRules"/> (RO2.World.Domain): resolves the live PlayerState /
+/// NpcRuntimeState into the pure <see cref="GateActor"/> / <see cref="GateTarget"/> records and supplies the
+/// data-driven reach, then defers the precondition itself (liveness, same map, in range, ownership) to
+/// <see cref="ActorGateRules.CanAct"/>. The pure rule and its result types moved to World.Domain so Combat (its
+/// damage/function gates) and Economy (its transaction gate) can both build on it.
 /// </summary>
 /// <remarks>
 /// Distance is horizontal (X, Y), as <see cref="AutoAttackState.InRange"/> measures it. The reach is the caller's:
@@ -55,25 +21,9 @@ public readonly record struct GateContext(float? Reach, uint? SkillGroup = null,
 /// </remarks>
 public static class ActorGate
 {
+    /// <summary>The pure precondition, over the primitive records (<see cref="ActorGateRules.CanAct"/>).</summary>
     public static ActorRefusal CanAct(in GateActor actor, in GateTarget? target, in GateContext ctx)
-    {
-        if (actor.IsDead) return ActorRefusal.ActorDead;
-        if (target is not { } t) return ActorRefusal.TargetNotFound;
-        if (ctx.TargetMustBeAlive && t.IsDead) return ActorRefusal.TargetDead;
-        if (t.MapId != actor.MapId) return ActorRefusal.CrossMap;
-        if (ctx.Reach is not { } reach) return ActorRefusal.RangeUnknown;
-
-        var dx = t.X - actor.X;
-        var dy = t.Y - actor.Y;
-        // Written so that NaN positions or a NaN reach fail the comparison and are refused.
-        if (!(MathF.Sqrt(dx * dx + dy * dy) <= reach)) return ActorRefusal.OutOfRange;
-
-        if (ctx.SkillGroup is { } group
-            && !(actor.LearnedSkills is { } learned && learned.TryGetValue(group, out var level) && level > 0))
-            return ActorRefusal.SkillNotLearned;
-        if (ctx.ItemOwned is false) return ActorRefusal.ItemNotOwned;
-        return ActorRefusal.None;
-    }
+        => ActorGateRules.CanAct(actor, target, ctx);
 
     /// <summary>
     /// Precondition of an economy action done at an NPC or another anchor (shop, storage, mail box, auction, cash

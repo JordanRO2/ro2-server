@@ -8,6 +8,7 @@ using RO2.Network.Protocol;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Worlds.Domain;
 using Xunit;
 using static RO2.Tests.Packets.ReauditShared;
 using RO2.Inventory.Domain;

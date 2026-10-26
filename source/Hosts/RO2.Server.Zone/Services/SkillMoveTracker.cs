@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using RO2.Server.Zone.Models;
 using RO2.Combats.Domain;
+using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Services;
 
