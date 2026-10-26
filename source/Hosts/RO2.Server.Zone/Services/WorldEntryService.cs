@@ -179,7 +179,7 @@ public static class WorldEntryService
         
         if (!isWarp && CharacterSerializer.WireProJob(character).Id == 0
             && gameData is not null
-            && BuildNotifyCraftIndex2535(gameData.CraftItemList, CreationProfessionByte(character), learnedCraftRecipes) is { } craftIndex)
+            && BuildNotifyCraftIndex2535(gameData.CraftItemList, CharacterHeadRules.CreationProfessionByte(character), learnedCraftRecipes) is { } craftIndex)
             await session.SendInternalRmiAsync(ZoneS2COpcodes.OnNotifyCraftIndex, craftIndex);
 
         
@@ -471,13 +471,6 @@ public static class WorldEntryService
  /// <summary>Default SP written to the 2310 head and stat block when no vitals are supplied: 15, a level-1 character's maximum.</summary>
     private const uint DefaultSp = 0x0000000F;
 
- /// <summary>Combat class (job id) sent for a character that has none.</summary>
-    private const byte NoClassFallbackJob = 0x01;
-
- /// <summary>Offset of the combat class picked at creation, inside the stored 23-byte creation block. The 2310 head carries it at <see cref="HeadOffset.CombatClass"/>.</summary>
-    private const int CreateClassOffset = 19;
- /// <summary>Offset of the profession picked at creation, inside the stored 23-byte creation block. The 2310 head carries it at <see cref="HeadOffset.CreationProfession"/>.</summary>
-    private const int CreateProfessionOffset = 21;
 
  /// <summary>Fixed byte at <see cref="HeadOffset.Constant120"/>, sent unchanged to every client. Its meaning is not identified.</summary>
     private const byte HeadConstByte120 = 0x49;
@@ -544,10 +537,6 @@ public static class WorldEntryService
  /// <summary>Length of the skill list header counted in its self length: self length, message tag, a zero u32 and the count.</summary>
     private const int UseSkillListHeaderLength = 2 + 2 + 4 + 4;
 
- /// <summary>Facing byte of the 2310 head: one step is this many degrees.</summary>
-    private const double FacingStepDegrees = 2.0;
- /// <summary>Facing byte of the 2310 head: the number of steps in a full turn.</summary>
-    private const int FacingStepCount = 180;
 
  /// <summary>Largest stack count an item record carries.</summary>
     private const int MaxRecordStackCount = 255;
@@ -840,7 +829,7 @@ public static class WorldEntryService
 
         
         WriteTentativeBaseExp(writer, character);  // +70 base experience (u64)
-        writer.WriteByte(CombatJobByte(character));  // +78 combat class (job id)
+        writer.WriteByte(CharacterHeadRules.CombatJobByte(character));  // +78 combat class (job id)
         writer.WriteUInt16(0);  // +79 zeros
 
         
@@ -880,7 +869,7 @@ public static class WorldEntryService
         
         writer.WriteUInt16(character.BindIndex);  // +105 save-point bind index (0 = none)
         
-        writer.WriteByte(FacingByte(character.FacingYaw));  // +107 facing, 2-degree steps
+        writer.WriteByte(CharacterHeadRules.FacingByte(character.FacingYaw));  // +107 facing, 2-degree steps
         writer.WriteZeros(4);  // +108 zeros
         writer.WriteUInt64((ulong)Math.Max(0, character.Gold));  // +112 zeny wallet
         writer.WriteByte(HeadConstByte120);  // +120 fixed byte
@@ -928,7 +917,7 @@ public static class WorldEntryService
         
         
         
-        var (bonus5, unspentBonusPoints) = BonusStatBlock(character);
+        var (bonus5, unspentBonusPoints) = CharacterHeadRules.BonusStatBlock(character);
         for (int i = 0; i < bonus5.Length; i++)
             writer.WriteAt(blobStart + HeadOffset.BonusStats + 2 * i, bonus5[i]);  // +151 allocated bonus STR..VIT
         writer.WriteUInt16(0);  // +161 zeros
@@ -957,7 +946,7 @@ public static class WorldEntryService
         
         
         
-        writer.WriteUInt64(JobMasteryPoints(character));  // +191 job-mastery point total
+        writer.WriteUInt64(CharacterHeadRules.JobMasteryPoints(character));  // +191 job-mastery point total
         
         
         
@@ -971,46 +960,6 @@ public static class WorldEntryService
     }
 
  /// <summary>
- /// Converts a facing yaw in radians to the facing byte of the 2310 head: 0 to 179 in 2-degree steps. A non-finite yaw gives 0.
- /// </summary>
-    internal static byte FacingByte(float yawRadians)
-    {
-        if (!float.IsFinite(yawRadians))
-            return 0;
-        double deg = yawRadians * (180.0 / Math.PI) % 360.0;
-        if (deg < 0) deg += 360.0;
-        return (byte)((int)Math.Round(deg / FacingStepDegrees, MidpointRounding.AwayFromZero) % FacingStepCount);
-    }
-
- /// <summary>
- /// The allocated bonus STR, AGI, INT, WIS and VIT, and the unspent bonus points. Shared by the stat sheet and the character head so they agree.
- /// </summary>
-    internal static (ushort[] Bonus5, ushort Unspent) BonusStatBlock(Character character)
-    {
-        int earned = CharacterStats.BonusStatPointsEarned(character.Level);
-        int spent = character.BonusStr + character.BonusAgi + character.BonusInt
-                  + character.BonusWis + character.BonusVit + character.BonusLuk;
-        var unspent = (ushort)Math.Clamp(earned - spent, 0, ushort.MaxValue);
-        var bonus5 = new ushort[]
-        {
-            (ushort)Math.Clamp(character.BonusStr, 0, ushort.MaxValue),
-            (ushort)Math.Clamp(character.BonusAgi, 0, ushort.MaxValue),
-            (ushort)Math.Clamp(character.BonusInt, 0, ushort.MaxValue),
-            (ushort)Math.Clamp(character.BonusWis, 0, ushort.MaxValue),
-            (ushort)Math.Clamp(character.BonusVit, 0, ushort.MaxValue),
-        };
-        return (bonus5, unspent);
-    }
-
- /// <summary>
- /// The character's job-mastery point total. Always 0, because the server does not store mastery points yet.
- /// </summary>
- /// <remarks>
- /// When mastery points are persisted, return them here. The total is shared with the job-mastery point change message, so both must read it from this method.
- /// </remarks>
-    internal static ulong JobMasteryPoints(Character? character) => 0;
-
- /// <summary>
  /// Writes the base experience field of the character head. Stays zero until the character's experience is stored.
  /// </summary>
     private static void WriteTentativeBaseExp(PacketWriter writer, Character character)
@@ -1018,90 +967,6 @@ public static class WorldEntryService
         writer.WriteUInt64(character.Exp);          
     }
 
- /// <summary>
- /// Returns the combat class of the character: its job id, as the client reads it for the class name and job requirements.
- /// </summary>
- /// <remarks>
- /// Before any job change this is the class chosen at creation. After a job change it is the new class stored on the character.
- /// A zero is never sent. A character with no class sends the previous default.
- /// </remarks>
-    internal static byte CombatJobByte(Character character)
-    {
-        var create = CreateBlock(character);
-        if (create != null && create[CreateClassOffset] != 0 && character.Job == create[CreateProfessionOffset])
-            return create[CreateClassOffset];
-        return character.Job != 0 ? character.Job : NoClassFallbackJob;
-    }
-
- /// <summary>
- /// Corrects the job of a character row stored before the creation class was kept separately.
- /// </summary>
- /// <remarks>
- /// Changes the stored job only when it still equals the creation profession and the stored creation class differs from it.
- /// Returns true when the row changed, so the caller can persist it. Runs at most once per row.
- /// </remarks>
-    internal static bool TryHealStoredCombatClass(Character character)
-    {
-        var create = CreateBlock(character);
-        if (create is null) return false;
-        byte cls = create[CreateClassOffset], profession = create[CreateProfessionOffset];
-        if (cls == 0 || cls == profession || character.Job != profession) return false;
-        character.Job = cls;
-        return true;
-    }
-
- /// <summary>
- /// Returns the profession the character picked at creation, which the client reads from the character head.
- /// </summary>
- /// <remarks>
- /// A job change does not alter it. The value is read from the stored creation block, or from the character's job when there is none.
- /// </remarks>
-    internal static byte CreationProfessionByte(Character character)
-    {
-        var create = CreateBlock(character);
-        return create != null && create[CreateProfessionOffset] != 0 ? create[CreateProfessionOffset] : character.Job;
-    }
-
- /// <summary>
- /// Sets the character's creation profession in the stored creation block. Returns the previous appearance data so a caller can restore it if its save fails.
- /// </summary>
- /// <remarks>
- /// Call <see cref="TryHealStoredCombatClass"/> first, so that the class is not read from the profession field of an older row.
- /// A stored block shorter than 23 bytes is padded with zeros.
- /// </remarks>
-    internal static string? SetCreationProfession(Character character, byte profession)
-    {
-        var previous = character.AppearanceJson;
-        var ap = CharacterSerializer.ParseAppearancePublic(previous);
-        var raw = ap.RawBytes ?? [];
-        if (raw.Length <= CreateProfessionOffset)
-        {
-            var padded = new byte[CreateBlockLength];
-            Buffer.BlockCopy(raw, 0, padded, 0, raw.Length);
-            raw = padded;
-        }
-        else
-        {
-            raw = (byte[])raw.Clone();
-        }
-        raw[CreateProfessionOffset] = profession;
-        ap.RawBytes = raw;
-        ap.BaseClass = profession;   
-        character.AppearanceJson = CharacterSerializer.ToJson(ap);
-        return previous;
-    }
-
- /// <summary>Length of the creation block that is kept verbatim from character creation.</summary>
-    private const int CreateBlockLength = 23;
-
- /// <summary>
- /// The stored creation block when it holds the profession byte, otherwise null. Rows made by character creation always carry all 23 bytes.
- /// </summary>
-    private static byte[]? CreateBlock(Character character)
-    {
-        var raw = CharacterSerializer.ParseAppearancePublic(character.AppearanceJson).RawBytes;
-        return raw is { Length: > CreateProfessionOffset } ? raw : null;
-    }
 
  /// <summary>
  /// Writes the job block of the character head: profession, job level, job experience and the equipment-hide flags.
@@ -1111,7 +976,7 @@ public static class WorldEntryService
  /// </remarks>
     private static void WriteTentativeJobBlock(PacketWriter writer, Character character)
     {
-        writer.WriteByte(CreationProfessionByte(character));  // +130 profession picked at creation
+        writer.WriteByte(CharacterHeadRules.CreationProfessionByte(character));  // +130 profession picked at creation
         writer.WriteByte(character.JobLevel);  // +131 job level
         writer.WriteUInt64(character.JobExp);  // +132 job experience
         
@@ -1630,7 +1495,7 @@ public static class WorldEntryService
         
         
         
-        var (bonus5, unspentStatPoints) = BonusStatBlock(character);
+        var (bonus5, unspentStatPoints) = CharacterHeadRules.BonusStatBlock(character);
 
         var (hpRegen, spRegen) = RegenAmounts(store, character.Job, primary[4], primary[3], equip);
 

@@ -285,7 +285,7 @@ public class PlayerState : IWallet
     /// <summary>
     /// The facing the client last reported, in RADIANS: the f32 at body+68 of its C2S 1526 ViewGroupPCMoveTo
     /// (ViewGroupMoveHandler, finite values only). The 2310-family head carries it at head+107 as 2-degree steps
-    /// (WorldEntryService.FacingByte). Persistent, so a relog spawns the character facing that way.
+    /// (CharacterHeadRules.FacingByte). Persistent, so a relog spawns the character facing that way.
     /// </summary>
     /// <remarks>
     /// Kept apart from <see cref="Rotation"/>, the yaw the 2504 OnPC_In advertises at +61: that slot may use a

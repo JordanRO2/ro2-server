@@ -192,13 +192,13 @@ public class LoginPCHandler : NetworkZoneRmiBase
 
         // A row stored before CharacterCreateHandler kept the class holds the creation PROFESSION (create[21])
         // in Character.Job; rewrite it to the class (create[19]) before anything below reads Job as the class.
-        // The condition and why it is safe and one-shot: WorldEntryService.TryHealStoredCombatClass. The client
+        // The condition and why it is safe and one-shot: CharacterHeadRules.TryHealStoredCombatClass. The client
         // is told the same class before and after (CombatJobByte already read create[19] for such a row); what
         // changes is the server: base primaries, PCBaseStatus row, starter skills and talent pool, quest job
         // checks. Persisted by the save below, with the recomputed stats. The previous job is kept to drop the
         // skills learned for it (after the skill load).
         byte jobBeforeHeal = character.Job;
-        bool classHealed = WorldEntryService.TryHealStoredCombatClass(character);
+        bool classHealed = CharacterHeadRules.TryHealStoredCombatClass(character);
         if (classHealed)
             Logger.LogInformation("Session {Id}: '{Name}' stored its creation profession {Old} as the class; class is now {New} (create[19])",
                 session.SessionId, character.Name, jobBeforeHeal, character.Job);

@@ -61,7 +61,7 @@ internal static class PcSaveDataPackets
         
         
         BinaryPrimitives.WriteUInt16LittleEndian(span[HeadBindIndexOffset..], player.BindIndex);
-        head[HeadFacingOffset] = WorldEntryService.FacingByte(player.FacingYaw);
+        head[HeadFacingOffset] = CharacterHeadRules.FacingByte(player.FacingYaw);
         return head;
     }
 }

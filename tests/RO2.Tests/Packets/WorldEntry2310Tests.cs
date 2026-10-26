@@ -160,7 +160,7 @@ public class WorldEntry2310Tests
         ulong masteryTotal = System.Buffers.Binary.BinaryPrimitives.ReadUInt64LittleEndian(built.AsSpan(4 + 191, 8));
 
         Assert.Equal((ulong)gold, wallet);
-        Assert.Equal((ulong)WorldEntryService.JobMasteryPoints(c), masteryTotal);
+        Assert.Equal((ulong)CharacterHeadRules.JobMasteryPoints(c), masteryTotal);
 
         
         Assert.Equal(DonorLengthWithoutKhara(), built.Length);
@@ -187,7 +187,7 @@ public class WorldEntry2310Tests
         
         Assert.Equal(RetailDualStabUserHead69To80, built.AsSpan(4 + 69, 12).ToArray());
         Assert.Equal(13, built[4 + 78]);
-        Assert.Equal(13, WorldEntryService.CombatJobByte(c));
+        Assert.Equal(13, CharacterHeadRules.CombatJobByte(c));
         
         Assert.Equal(DonorLengthWithoutKhara(), built.Length);
     }
@@ -254,8 +254,8 @@ public class WorldEntry2310Tests
 
         Assert.Equal(16, built[4 + 78]);
         Assert.Equal(4, built[4 + 130]);
-        Assert.Equal(16, WorldEntryService.CombatJobByte(c));
-        Assert.Equal(4, WorldEntryService.CreationProfessionByte(c));
+        Assert.Equal(16, CharacterHeadRules.CombatJobByte(c));
+        Assert.Equal(4, CharacterHeadRules.CreationProfessionByte(c));
     }
 
     [Fact]

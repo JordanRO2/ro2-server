@@ -40,7 +40,7 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 /// NfyCraftSaleShopItemBuy right after the buyer's 2660, matching on craftId and on the buyer's handle, with its
 /// wallet raised by exactly the price (PrivateShopCraftPackets.BuildCraftSaleShopItemBuy2654). The seller
 /// gets no 2435 either. It also gets a 2986 with each 2654 (the job-mastery gain for the crafter); this server
-/// has no job-mastery points (WorldEntryService.JobMasteryPoints is 0), so none is sent, as in CraftItemHandler.
+/// has no job-mastery points (CharacterHeadRules.JobMasteryPoints is 0), so none is sent, as in CraftItemHandler.
 /// </para>
 /// <para>
 /// Refusals: the 2660 has a result code (a non-zero one goes to SysMsg_ShowResultCode_23000_23059 on the

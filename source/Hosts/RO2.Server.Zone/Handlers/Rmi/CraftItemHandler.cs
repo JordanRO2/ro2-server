@@ -188,7 +188,7 @@ public class CraftItemHandler : ZoneRmiHandlerBase<CraftItemHandler>
             var learned = await services.GetRequiredService<RO2.Economy.Domain.ICraftRecipeRepository>()
                 .GetAsync(player.CharacterId, ct);
             var known = CraftRecipeStore.KnownRecipeIds(store.CraftItemList,
-                WorldEntryService.CreationProfessionByte(character), learned);
+                CharacterHeadRules.CreationProfessionByte(character), learned);
             var inventory = services.GetRequiredService<IInventoryRepository>();
             var bag = await inventory.GetByCharacterAsync(player.CharacterId);
 

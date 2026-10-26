@@ -30,7 +30,7 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 /// quests), 2686 and 2858, then 2683 (result 0, the new profession, level and exp unchanged: profession at blob+8, level at
 /// blob+9, exp 0) and 2682 with the changer's own handle. The client then asks for its skill list (1367 -> 2488).
 /// The next 2310 of each character carries the new profession at body[130] and the same level and exp
-/// (WorldEntryService.SetCreationProfession). ProJob_Change.ProJobLevel_And_Exp is 0 on every row, which fits
+/// (CharacterHeadRules.SetCreationProfession). ProJob_Change.ProJobLevel_And_Exp is 0 on every row, which fits
 /// keeping them: a character at profession level 50 is still at 50 after the change.
 /// </para>
 /// <para>
@@ -85,7 +85,7 @@ public class ChangeProJobIDHandler : ZoneRmiHandlerBase<ChangeProJobIDHandler>
         var store = services.GetRequiredService<GameDataStore>();
         var inventory = services.GetRequiredService<IInventoryRepository>();
         var item = await inventory.GetByIdAsync(itemUid);
-        byte current = WorldEntryService.CreationProfessionByte(c);
+        byte current = CharacterHeadRules.CreationProfessionByte(c);
 
         byte result = ChangeResult(store.ProJobType, store.ProJobChange, player.CharacterId, current, target, item);
         if (result != QuestProgressPackets.ChangeProJobApplied)
@@ -103,8 +103,8 @@ public class ChangeProJobIDHandler : ZoneRmiHandlerBase<ChangeProJobIDHandler>
         // The host prepares the in-memory change (serializer); the flow persists it (rolling back on failure) and
         // consumes the item. Everything else here is wire or live-registry work that stays host.
         byte jobBefore = c.Job;
-        bool healed = WorldEntryService.TryHealStoredCombatClass(c);
-        var previousAppearance = WorldEntryService.SetCreationProfession(c, target);
+        bool healed = CharacterHeadRules.TryHealStoredCombatClass(c);
+        var previousAppearance = CharacterHeadRules.SetCreationProfession(c, target);
         var commit = await ChangeProJobCommitFlow.CommitAsync(c, healed ? c.Job : null, jobBefore, previousAppearance,
             item!, services.GetRequiredService<ICharacterRepository>(), inventory, ct);
         if (commit.SaveError is not null)

@@ -161,8 +161,8 @@ public static class RankingService
         }
 
         
-        byte classId = character is null ? player.Job : WorldEntryService.CombatJobByte(character);
-        byte profession = character is null ? (byte)0 : WorldEntryService.CreationProfessionByte(character);
+        byte classId = character is null ? player.Job : CharacterHeadRules.CombatJobByte(character);
+        byte profession = character is null ? (byte)0 : CharacterHeadRules.CreationProfessionByte(character);
         return Unranked(classId, profession, score, player.Name);
     }
 
@@ -409,7 +409,7 @@ public static class RankingService
         {
             if (!byId.TryGetValue(charId, out var c)) continue; 
             standings.Add(new Standing(charId, score, reached, c.Name,
-                WorldEntryService.CombatJobByte(c), WorldEntryService.CreationProfessionByte(c),
+                CharacterHeadRules.CombatJobByte(c), CharacterHeadRules.CreationProfessionByte(c),
                 GuildService.Instance.GetByCharId(charId)?.Name ?? string.Empty));
         }
 

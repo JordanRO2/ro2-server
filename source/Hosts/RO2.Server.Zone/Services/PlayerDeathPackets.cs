@@ -269,7 +269,7 @@ public static class PlayerDeathPackets
         BinaryPrimitives.WriteUInt64LittleEndian(head.AsSpan(HeadWalletOffset), (ulong)Math.Max(0, victim.Gold));
         // The live save-point bind and facing direction.
         BinaryPrimitives.WriteUInt16LittleEndian(head.AsSpan(HeadBindIndexOffset), victim.BindIndex);
-        head[HeadFacingOffset] = WorldEntryService.FacingByte(victim.FacingYaw);
+        head[HeadFacingOffset] = CharacterHeadRules.FacingByte(victim.FacingYaw);
         return head;
     }
 }

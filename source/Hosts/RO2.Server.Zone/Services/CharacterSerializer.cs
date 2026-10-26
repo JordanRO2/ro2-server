@@ -123,15 +123,15 @@ public static class CharacterSerializer
         writer.WriteByte(0);                         // [63] = create[13] padding
         writer.WriteByte(appearance.HairStyle);      // [64] = create[14] hair style
         // [65] combat class (JobInfo id). It is the same byte the world-entry character record carries, so both
-        // come from WorldEntryService.CombatJobByte; it follows a quest job change, unlike the class picked at creation.
-        writer.WriteByte(WorldEntryService.CombatJobByte(character)); // [65] combat class (JobInfo.ID)
+        // come from CharacterHeadRules.CombatJobByte; it follows a quest job change, unlike the class picked at creation.
+        writer.WriteByte(CharacterHeadRules.CombatJobByte(character)); // [65] combat class (JobInfo.ID)
         writer.WriteByte(character.Level);           // [66] level
         writer.WriteUInt32(character.MapId != 0 ? character.MapId : FallbackMapId); // [67-70] map id
         writer.WriteZeros(2);                        // [71-72] padding
 
         // [73] creation profession, a ProJob_Type id; the same byte the world-entry character record carries
-        // (WorldEntryService.CreationProfessionByte).
-        writer.WriteByte(WorldEntryService.CreationProfessionByte(character));
+        // (CharacterHeadRules.CreationProfessionByte).
+        writer.WriteByte(CharacterHeadRules.CreationProfessionByte(character));
         // [74] job level (not the base level): the "<Job> Lv N" the character-select shows.
         writer.WriteByte(character.JobLevel);
         // [75-76] equipment hide flag: the per-slot "hide equipment" bits, toggled by the client's costume-flag

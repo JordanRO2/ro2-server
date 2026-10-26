@@ -62,14 +62,14 @@ public class Reaudit2_B0_Tests
     {
         // (deg(yaw) mod 360) / 2, rounded, mod 180: the value never reaches 180. Rounding is used rather than
         // flooring, as it matches the wire values more closely.
-        Assert.Equal(expected, WorldEntryService.FacingByte(yaw));
+        Assert.Equal(expected, CharacterHeadRules.FacingByte(yaw));
     }
 
     [Fact]
     public void FacingByte_NeverReaches180()
     {
         for (int i = -4000; i <= 4000; i++)
-            Assert.InRange(WorldEntryService.FacingByte(i * 0.00314159f), (byte)0, (byte)179);
+            Assert.InRange(CharacterHeadRules.FacingByte(i * 0.00314159f), (byte)0, (byte)179);
     }
 
     // ---- 2310 head: bind index, facing, bonus block ---------------------------------------------------------------

@@ -269,9 +269,9 @@ public class ChangeProJob1494Tests
     {
         
         var c = Created("0202060dff0006000000060eff00010000000010000200", job: 16);
-        WorldEntryService.SetCreationProfession(c, 4);
-        Assert.Equal(4, WorldEntryService.CreationProfessionByte(c));
-        Assert.Equal(16, WorldEntryService.CombatJobByte(c));
+        CharacterHeadRules.SetCreationProfession(c, 4);
+        Assert.Equal(4, CharacterHeadRules.CreationProfessionByte(c));
+        Assert.Equal(16, CharacterHeadRules.CombatJobByte(c));
         var raw = CharacterSerializer.ParseAppearancePublic(c.AppearanceJson).RawBytes!;
         Assert.Equal("0202060DFF0006000000060EFF00010000000010000400", Convert.ToHexString(raw));
     }
@@ -281,19 +281,19 @@ public class ChangeProJob1494Tests
     {
         
         var c = Created("02010703ff00050000000603ff00010000000010000400", job: 4);
-        Assert.True(WorldEntryService.TryHealStoredCombatClass(c));
-        WorldEntryService.SetCreationProfession(c, 2);
-        Assert.Equal(16, WorldEntryService.CombatJobByte(c));
-        Assert.Equal(2, WorldEntryService.CreationProfessionByte(c));
+        Assert.True(CharacterHeadRules.TryHealStoredCombatClass(c));
+        CharacterHeadRules.SetCreationProfession(c, 2);
+        Assert.Equal(16, CharacterHeadRules.CombatJobByte(c));
+        Assert.Equal(2, CharacterHeadRules.CreationProfessionByte(c));
     }
 
     [Fact]
     public void StoredProfession_WithoutACreateBlock_IsPaddedAndStored()
     {
         var c = new Character { Id = 3, Name = "T", Job = 6 };
-        WorldEntryService.SetCreationProfession(c, 3);
-        Assert.Equal(3, WorldEntryService.CreationProfessionByte(c));
-        Assert.Equal(6, WorldEntryService.CombatJobByte(c));
+        CharacterHeadRules.SetCreationProfession(c, 3);
+        Assert.Equal(3, CharacterHeadRules.CreationProfessionByte(c));
+        Assert.Equal(6, CharacterHeadRules.CombatJobByte(c));
     }
 }
 

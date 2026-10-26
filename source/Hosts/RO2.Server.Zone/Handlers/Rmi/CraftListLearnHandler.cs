@@ -69,7 +69,7 @@ public class CraftListLearnHandler : ZoneRmiHandlerBase<CraftListLearnHandler>
 
         var table = services.GetRequiredService<GameDataStore>().CraftItemList;
         var recipes = services.GetRequiredService<RO2.Economy.Domain.ICraftRecipeRepository>();
-        byte profession = WorldEntryService.CreationProfessionByte(c);
+        byte profession = CharacterHeadRules.CreationProfessionByte(c);
         var learned = await recipes.GetAsync(player.CharacterId, ct);
         var row = table.FirstOrDefault(r => r.ID == recipeId);
 

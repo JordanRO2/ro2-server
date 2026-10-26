@@ -1224,14 +1224,14 @@ public class PartyService
         var c = p.Character;
         var record = PartyStatePackets.BuildPartyMemberRecord(
             SynthPcHandle(memberSessionId), MemberGid(p), p.Name,
-            p.Level, c != null ? WorldEntryService.CombatJobByte(c) : p.Job,
+            p.Level, c != null ? CharacterHeadRules.CombatJobByte(c) : p.Job,
             (uint)Math.Max(0, p.Hp), (uint)Math.Max(0, p.MaxHp),
             (uint)Math.Max(0, p.Mp), (uint)Math.Max(0, p.MaxMp),
             p.MapId, p.X, p.Y, p.Z,
             frameSlot);
         var (proJobLevel, proJobId) = c != null ? CharacterSerializer.WireProJob(c) : ((byte)0, (byte)0);
         PartyNotifyPackets.ApplyMemberState(record, online,
-            c != null ? WorldEntryService.CreationProfessionByte(c) : (byte)0,
+            c != null ? CharacterHeadRules.CreationProfessionByte(c) : (byte)0,
             proJobLevel, proJobId,
             GuildService.Instance.GetByCharId(p.CharacterId)?.Name);
         record[HelperPackets.RecHelperFlagOff] = helperFlag;

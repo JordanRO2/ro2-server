@@ -266,10 +266,10 @@ public sealed class TrainingRoomQueue
 
  /// <summary>
  /// The member's class byte, the same one its party roster record carries at rec+16 (PartyService builds it
- /// from WorldEntryService.CombatJobByte, or PlayerState.Job without a Character snapshot).
+ /// from CharacterHeadRules.CombatJobByte, or PlayerState.Job without a Character snapshot).
  /// </summary>
     public static byte ClassOf(PlayerState member)
-        => member.Character is { } c ? WorldEntryService.CombatJobByte(c) : member.Job;
+        => member.Character is { } c ? CharacterHeadRules.CombatJobByte(c) : member.Job;
 
  /// <summary>
  /// Builds NfyTRoomPartyState (2972): <c>[u32 mapId][CompactLen n][n × u8 class]</c>, without envelope.

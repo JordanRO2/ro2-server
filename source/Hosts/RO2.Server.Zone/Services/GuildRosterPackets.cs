@@ -79,7 +79,7 @@ public static class GuildRosterPackets
         }
         var proJob = CharacterSerializer.WireProJob(c);
         return new MemberView(m, p?.Level ?? c.Level,
-            WorldEntryService.CombatJobByte(c), WorldEntryService.CreationProfessionByte(c), c.JobLevel,
+            CharacterHeadRules.CombatJobByte(c), CharacterHeadRules.CreationProfessionByte(c), c.JobLevel,
             proJob.Level, proJob.Id, p?.MapId ?? 0);
     }
 

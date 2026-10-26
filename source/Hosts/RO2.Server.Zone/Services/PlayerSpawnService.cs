@@ -387,8 +387,8 @@ public class PlayerSpawnService
 
         // jobBits: bits 21-26 character level, 16-20 combat class, 12-15 creation profession, 6-11 job level.
         uint jobBits = ((uint)(character.Level & JobBitsLevelMask) << JobBitsLevelShift)
-                     | ((uint)(WorldEntryService.CombatJobByte(character) & JobBitsClassMask) << JobBitsClassShift)
-                     | ((uint)(WorldEntryService.CreationProfessionByte(character) & JobBitsProfessionMask) << JobBitsProfessionShift)
+                     | ((uint)(CharacterHeadRules.CombatJobByte(character) & JobBitsClassMask) << JobBitsClassShift)
+                     | ((uint)(CharacterHeadRules.CreationProfessionByte(character) & JobBitsProfessionMask) << JobBitsProfessionShift)
                      | ((uint)(character.JobLevel & JobBitsJobLevelMask) << JobBitsJobLevelShift);
         body.WriteUInt32(jobBits);
 

@@ -240,7 +240,7 @@ public class AnsMapLoadingHandler : Base1304
             
             
             
-            ulong masteryTotal = WorldEntryService.JobMasteryPoints(player.Character);
+            ulong masteryTotal = CharacterHeadRules.JobMasteryPoints(player.Character);
 
             
             

@@ -82,7 +82,7 @@ public class TransModeStartHandler : ZoneRmiHandlerBase<TransModeStartHandler>
         var character = player.Character;
         if (character is null)
             return null;
-        byte profession = WorldEntryService.CreationProfessionByte(character);
+        byte profession = CharacterHeadRules.CreationProfessionByte(character);
         IReadOnlyList<uint> completed;
         try
         {

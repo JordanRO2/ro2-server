@@ -69,7 +69,7 @@ internal static class CraftScrollLearning
             logger.LogWarning("{Name} used blueprint {Item} with no character snapshot: not consumed", player.Name, itemId);
             return false;
         }
-        byte profession = WorldEntryService.CreationProfessionByte(c);
+        byte profession = CharacterHeadRules.CreationProfessionByte(c);
         if (recipe.ProType_ID != profession)
         {
             logger.LogInformation("{Name} used blueprint {Item} for recipe {Recipe} of profession {Pro}, not theirs ({Own}): not consumed",

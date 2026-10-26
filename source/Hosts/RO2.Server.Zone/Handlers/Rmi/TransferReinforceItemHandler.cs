@@ -201,7 +201,7 @@ public class TransferReinforceItemHandler : ZoneRmiHandlerBase<TransferReinforce
 
         terms = RefineTransferRules.Compute(rule, source.Refine, target.Refine, targetLv, sourceLv, config);
         // A DISC_RATE-0 ticket (70000889, 60000802, 22402007) charges job-mastery points. This server keeps none
-        // (WorldEntryService.JobMasteryPoints is 0), and the client enables its start button only when the points
+        // (CharacterHeadRules.JobMasteryPoints is 0), and the client enables its start button only when the points
         // / 1000 cover the fee, so it cannot send one; refuse rather than transfer for free.
         if (terms.Fee > 0)
             return $"ticket {ticketId} charges {terms.Fee} mastery points, which this server does not keep";

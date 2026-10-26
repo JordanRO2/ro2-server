@@ -216,7 +216,7 @@ public class ViewGroupMoveHandler : ZoneRmiHandlerBase<ViewGroupMoveHandler>
 
     /// <summary>
     /// Keeps the PC's facing: the f32 at payload+68 into <see cref="PlayerState.FacingYaw"/> (persisted) and into the
-    /// world-entry snapshot, which the 2310-family heads are written from (WorldEntryService.FacingByte, head+107).
+    /// world-entry snapshot, which the 2310-family heads are written from (CharacterHeadRules.FacingByte, head+107).
     /// A short payload or a non-finite value changes nothing.
     /// </summary>
     /// <remarks>

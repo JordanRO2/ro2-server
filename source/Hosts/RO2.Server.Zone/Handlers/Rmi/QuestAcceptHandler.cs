@@ -149,7 +149,7 @@ public class QuestAcceptHandler : ZoneRmiHandlerBase<QuestAcceptHandler>
         if (QuestAcceptGates.Of(questId) is { } gates && player.Character is { } character)
         {
             var refusal = QuestAcceptGates.Refusal(gates,
-                WorldEntryService.CombatJobByte(character), WorldEntryService.CreationProfessionByte(character),
+                CharacterHeadRules.CombatJobByte(character), CharacterHeadRules.CreationProfessionByte(character),
                 player.Level, CharacterSerializer.WireProJob(character).Level);
             if (refusal is { } code)
             {

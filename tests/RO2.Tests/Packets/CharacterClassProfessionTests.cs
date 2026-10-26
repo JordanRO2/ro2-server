@@ -55,10 +55,10 @@ public class CharacterClassProfessionTests
     {
         var c = Created(Jordan1Create, job: 4);
 
-        Assert.True(WorldEntryService.TryHealStoredCombatClass(c));
+        Assert.True(CharacterHeadRules.TryHealStoredCombatClass(c));
         Assert.Equal(16, c.Job);
         
-        Assert.False(WorldEntryService.TryHealStoredCombatClass(c));
+        Assert.False(CharacterHeadRules.TryHealStoredCombatClass(c));
         Assert.Equal(16, c.Job);
     }
 
@@ -66,13 +66,13 @@ public class CharacterClassProfessionTests
     public void Heal_DoesNotMoveWhatTheClientIsTold()
     {
         var c = Created(Jordan1Create, job: 4);
-        byte classBefore = WorldEntryService.CombatJobByte(c), professionBefore = WorldEntryService.CreationProfessionByte(c);
+        byte classBefore = CharacterHeadRules.CombatJobByte(c), professionBefore = CharacterHeadRules.CreationProfessionByte(c);
         var listBefore = CharListHeader(c);
 
-        WorldEntryService.TryHealStoredCombatClass(c);
+        CharacterHeadRules.TryHealStoredCombatClass(c);
 
-        Assert.Equal(classBefore, WorldEntryService.CombatJobByte(c));
-        Assert.Equal(professionBefore, WorldEntryService.CreationProfessionByte(c));
+        Assert.Equal(classBefore, CharacterHeadRules.CombatJobByte(c));
+        Assert.Equal(professionBefore, CharacterHeadRules.CreationProfessionByte(c));
         Assert.Equal(listBefore, CharListHeader(c));
         Assert.Equal(16, classBefore);
         Assert.Equal(4, professionBefore);
@@ -85,7 +85,7 @@ public class CharacterClassProfessionTests
     public void Heal_LeavesJobChangedCurrentAndSameByteRowsAlone(string createHex, int job)
     {
         var c = Created(createHex, (byte)job);
-        Assert.False(WorldEntryService.TryHealStoredCombatClass(c));
+        Assert.False(CharacterHeadRules.TryHealStoredCombatClass(c));
         Assert.Equal(job, c.Job);
     }
 
@@ -93,7 +93,7 @@ public class CharacterClassProfessionTests
     public void Heal_LeavesARowWithoutACreateBlockAlone()
     {
         var c = new Character { Name = "T", Job = 4 };
-        Assert.False(WorldEntryService.TryHealStoredCombatClass(c));
+        Assert.False(CharacterHeadRules.TryHealStoredCombatClass(c));
         Assert.Equal(4, c.Job);
     }
 
@@ -151,7 +151,7 @@ public class CharacterClassProfessionTests
         c.JobExp = 0x0102030405060708UL;
 
         var body = QuestProgressPackets.BuildChangeProJobInfo2683(
-            WorldEntryService.CreationProfessionByte(c), c.JobLevel, c.JobExp);
+            CharacterHeadRules.CreationProfessionByte(c), c.JobLevel, c.JobExp);
 
         Assert.Equal("0113130039e40000000002320807060504030201" + "00", Convert.ToHexString(body).ToLowerInvariant());
     }

@@ -1030,11 +1030,11 @@ public static class KharaService
 
  /// <summary>The character's profession for the auto-accept check, or 0 when there is no character snapshot.</summary>
     private static byte ProfessionOf(PlayerState player) =>
-        player.Character is { } c ? WorldEntryService.CreationProfessionByte(c) : (byte)0;
+        player.Character is { } c ? CharacterHeadRules.CreationProfessionByte(c) : (byte)0;
 
  /// <summary>The character's combat class for the class-mask check, or 0 when there is no character snapshot.</summary>
     private static byte CombatClassOf(PlayerState player) =>
-        player.Character is { } c ? WorldEntryService.CombatJobByte(c) : (byte)0;
+        player.Character is { } c ? CharacterHeadRules.CombatJobByte(c) : (byte)0;
 
  /// <summary>Character facts for the auto-accept check that need no database reads.</summary>
     private static KharaFacts CheapFactsOf(PlayerState player) => new()

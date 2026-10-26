@@ -63,7 +63,7 @@ public static class PartyMatchingDetailPackets
         var c = p.Character;
         return new Member(
             p.Level,
-            c != null ? WorldEntryService.CombatJobByte(c) : p.Job,
+            c != null ? CharacterHeadRules.CombatJobByte(c) : p.Job,
             c != null ? CharacterSerializer.WireProJob(c).Level : (byte)0,
             p.Name);
     }
