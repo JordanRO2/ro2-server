@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using RO2.Combats.Domain;
 using Xunit;
 
@@ -25,4 +27,43 @@ public class CooldownRulesTests
     [Fact]
     public void NegativeVigor_IsClampedToZero_NoReduction()
         => Assert.Equal(10f, CooldownRules.EffectiveCooldown(10f, 20, -50));
+
+    private static DateTime T(int ms) => new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(ms);
+
+    [Fact]
+    public void TryEnd_RemovesACoolingGroup_LeavesALapsedOrAbsentOne()
+    {
+        var cooldowns = new Dictionary<uint, DateTime> { [4101] = T(1000), [4102] = T(500) };
+
+        Assert.True(CooldownRules.TryEnd(cooldowns, 4101, T(0)));   // still cooling -> removed
+        Assert.False(cooldowns.ContainsKey(4101));
+
+        Assert.False(CooldownRules.TryEnd(cooldowns, 4102, T(500))); // expiry == now is not cooling (strict >) -> kept
+        Assert.True(cooldowns.ContainsKey(4102));
+
+        Assert.False(CooldownRules.TryEnd(cooldowns, 9999, T(0)));   // absent
+    }
+
+    [Fact]
+    public void TakeResettable_TakesCoolingOtherAcceptedGroups_Ascending()
+    {
+        var cooldowns = new Dictionary<uint, DateTime>
+        {
+            [4312] = T(1000),  // the cast's own group — never taken
+            [4101] = T(1000),  // cooling + resettable -> taken
+            [4121] = T(1000),  // cooling but NOT resettable -> kept
+            [2010] = T(100),   // already lapsed at now -> kept
+            [3230] = T(1000),  // cooling + resettable -> taken
+        };
+        var resettable = new HashSet<uint> { 4101, 3230, 4312 };
+
+        var taken = CooldownRules.TakeResettable(cooldowns, 4312, T(500), resettable.Contains);
+
+        Assert.Equal(new uint[] { 3230, 4101 }, taken.ToArray());  // ascending order
+        Assert.False(cooldowns.ContainsKey(4101));
+        Assert.False(cooldowns.ContainsKey(3230));
+        Assert.True(cooldowns.ContainsKey(4312));   // own group stays
+        Assert.True(cooldowns.ContainsKey(4121));   // not resettable stays
+        Assert.True(cooldowns.ContainsKey(2010));   // lapsed stays
+    }
 }

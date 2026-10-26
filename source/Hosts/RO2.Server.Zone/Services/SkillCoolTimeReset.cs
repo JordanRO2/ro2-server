@@ -4,6 +4,7 @@ using System.Text.Json;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
+using RO2.Combats.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -64,15 +65,11 @@ public static class SkillCoolTimeReset
     }
 
  /// <summary>
- /// Removes <paramref name="group"/> from <paramref name="cooldowns"/> when it is still cooling.
+ /// Removes <paramref name="group"/> from <paramref name="cooldowns"/> when it is still cooling
+ /// (<see cref="CooldownRules.TryEnd"/>).
  /// </summary>
     internal static bool TryEndCooldown(Dictionary<uint, DateTime> cooldowns, uint group, DateTime nowUtc)
-    {
-        if (!cooldowns.TryGetValue(group, out var expiry) || expiry <= nowUtc)
-            return false;
-        cooldowns.Remove(group);
-        return true;
-    }
+        => CooldownRules.TryEnd(cooldowns, group, nowUtc);
 
     
     
@@ -127,16 +124,7 @@ public static class SkillCoolTimeReset
  /// </remarks>
     internal static List<uint> TakeResettableGroups(Dictionary<uint, DateTime> cooldowns, uint castGroup,
         DateTime nowUtc, Func<uint, bool> isResettable)
-    {
-        var groups = new List<uint>();
-        foreach (var (group, expiry) in cooldowns)
-            if (group != castGroup && expiry > nowUtc && isResettable(group))
-                groups.Add(group);
-        groups.Sort();
-        foreach (var group in groups)
-            cooldowns.Remove(group);
-        return groups;
-    }
+        => CooldownRules.TakeResettable(cooldowns, castGroup, nowUtc, isResettable);
 
  /// <summary>
  /// The Skill_Group of every level-1 Skill_Table_SkillLevel row whose String_Skill_Description text

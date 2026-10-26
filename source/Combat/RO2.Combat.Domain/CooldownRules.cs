@@ -18,4 +18,35 @@ public static class CooldownRules
         double reduced = tableCooldown * (1.0 - vigorPct / 100.0);
         return (float)Math.Clamp(reduced, tableCooldown * 0.25, tableCooldown);
     }
+
+    /// <summary>
+    /// Ends <paramref name="group"/>'s cooldown in <paramref name="cooldowns"/> (a per-group expiry map) when it
+    /// is still cooling at <paramref name="nowUtc"/>; false, and nothing removed, when it was absent or already
+    /// lapsed.
+    /// </summary>
+    public static bool TryEnd(Dictionary<uint, DateTime> cooldowns, uint group, DateTime nowUtc)
+    {
+        if (!cooldowns.TryGetValue(group, out var expiry) || expiry <= nowUtc)
+            return false;
+        cooldowns.Remove(group);
+        return true;
+    }
+
+    /// <summary>
+    /// The groups a reset-all cast clears, in ascending order, removed from <paramref name="cooldowns"/>: every
+    /// group still cooling at <paramref name="nowUtc"/>, other than <paramref name="castGroup"/> (the cast's own),
+    /// that <paramref name="isResettable"/> accepts.
+    /// </summary>
+    public static List<uint> TakeResettable(Dictionary<uint, DateTime> cooldowns, uint castGroup, DateTime nowUtc,
+        Func<uint, bool> isResettable)
+    {
+        var groups = new List<uint>();
+        foreach (var (group, expiry) in cooldowns)
+            if (group != castGroup && expiry > nowUtc && isResettable(group))
+                groups.Add(group);
+        groups.Sort();
+        foreach (var group in groups)
+            cooldowns.Remove(group);
+        return groups;
+    }
 }
