@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using RO2.Network.Protocol;
 using RO2.Server.Zone.Models;
+using RO2.Combats.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -31,12 +32,6 @@ public sealed class PcCombatStateService : ITickable
     private readonly PlayerStateManager _players;
     private readonly BroadcastService _broadcast;
     private readonly ILogger<PcCombatStateService> _logger;
-
-    /// <summary>How long after a player's last combat action it drops out of battle mode.</summary>
-    private static readonly TimeSpan LeaveTimeout = TimeSpan.FromSeconds(5);
-
-    /// <summary>Minimum gap between two 0x0C re-pulses for one player, so a fast fight does not flood the map.</summary>
-    private static readonly TimeSpan RepulseInterval = TimeSpan.FromMilliseconds(1500);
 
     /// <summary>How often the leave sweep runs, independent of the loop's tick rate.</summary>
     private static readonly TimeSpan Interval = TimeSpan.FromSeconds(1);
@@ -84,14 +79,15 @@ public sealed class PcCombatStateService : ITickable
         var now = DateTime.UtcNow;
         player.LastCombatActionAt = now;
 
-        var entering = !player.InBattleMode;
-        if (entering || now - player.LastBattleStateSentAt >= RepulseInterval)
+        var pulse = BattleStateRules.OnCombatAction(player.InBattleMode, player.LastBattleStateSentAt, now);
+        if (pulse != BattleStateRules.Pulse.None)
         {
             player.InBattleMode = true;
             player.LastBattleStateSentAt = now;
             // The enter frame carries blob+14 = 1; re-pulses carry 0. The client's 2398 handler branches on
             // blob+14, and the enter's 1 is what drives the combat-mode entry ("Battle Start" message and combat BGM).
-            _ = SendStateAsync(player, CombatPackets.ActorState.PcCombat, entering ? CombatFlagEnter : CombatFlagNone);
+            _ = SendStateAsync(player, CombatPackets.ActorState.PcCombat,
+                pulse == BattleStateRules.Pulse.Enter ? CombatFlagEnter : CombatFlagNone);
         }
     }
 
@@ -126,7 +122,7 @@ public sealed class PcCombatStateService : ITickable
                     player.InBattleMode = false;
                     continue;
                 }
-                if (now - player.LastCombatActionAt >= LeaveTimeout)
+                if (BattleStateRules.ShouldLeave(player.LastCombatActionAt, now))
                 {
                     player.InBattleMode = false;
                     await SendStateAsync(player, CombatPackets.ActorState.PcNormal, CombatFlagNone);
