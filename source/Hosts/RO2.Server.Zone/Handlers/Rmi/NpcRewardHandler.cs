@@ -7,6 +7,8 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Worlds.Application;
+using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -42,12 +44,6 @@ public class NpcRewardHandler : ZoneRmiHandlerBase<NpcRewardHandler>
 
     /// <summary>Template id 0: the target has no function-object template (a portal, an NPC or an unknown handle).</summary>
     private const uint NoTemplate = 0;
-
-    /// <summary>
-    /// Fraction of an object's Casting that must have run since its control began before a 1412 ends it. Half, not the
-    /// whole: the client's bar clock can run ahead of wall time, so a genuine 1412 may arrive slightly early.
-    /// </summary>
-    private const double MinCastingFraction = 0.5;
 
     /// <summary>The u32 that precedes the target handle in the 2521 body; always 0.</summary>
     private const uint FuncObjectEndLeadField = 0;
@@ -91,9 +87,9 @@ public class NpcRewardHandler : ZoneRmiHandlerBase<NpcRewardHandler>
             // of the control its 1410 began, once half the object's Casting has run since then: the control is what
             // stops a repeat. Anything else gets nothing. A too-early one leaves the control running, so the 1411 or
             // 1410 the client sends next still finds it.
-            var ended = FuncObjectControlState.TryEndAfter(player, targetHandle, TimeSpan.FromMilliseconds(castingMs * MinCastingFraction),
+            var ended = FuncObjectControlState.TryEndAfter(player, targetHandle, FuncObjectControlUseCase.RewardMinElapsed(castingMs),
                 Stopwatch.GetTimestamp(), out var control, out var elapsed);
-            if (ended != FuncObjectControlEnd.Ended || control.State is null)
+            if (!FuncObjectControlUseCase.AnswersReward(ended, control))
             {
                 Logger.LogWarning("Session {Id}: {Name} sent a 1412 on {Target:X8} ({Template}, Casting {Casting} ms) with no control of it that has run half its Casting ({End}, {Elapsed} ms since its 1410, pose {State}): not answered",
                     session.SessionId, player.Name, targetHandle, templateId, castingMs, ended,
@@ -113,9 +109,8 @@ public class NpcRewardHandler : ZoneRmiHandlerBase<NpcRewardHandler>
         PositionData? destination = null;
         if (action.Kind == FuncObjectActionKind.Portal)
         {
-            if (data.Positions.TryGetValue(action.Value, out var pos) && data.GetMap(pos.Area_ID) is not null)
-                destination = pos;
-            else
+            destination = FuncObjectControlUseCase.PortalDestination(new GameDataWorldCatalog(data), action.Value);
+            if (destination is null)
                 Logger.LogWarning("Portal {Target:X8} ({Template}) names Position_Info {Pos}, which is missing or off Map_List: not moved",
                     targetHandle, templateId, action.Value);
         }

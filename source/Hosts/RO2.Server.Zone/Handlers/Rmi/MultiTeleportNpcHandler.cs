@@ -5,6 +5,7 @@ using RO2.Network.Packets;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Worlds.Application;
 using RO2.Worlds.Domain;
 using RO2.Network.Protocol;
 
@@ -88,10 +89,10 @@ public class MultiTeleportNpcHandler : ZoneRmiHandlerBase<MultiTeleportNpcHandle
     /// <summary>
     /// Length of a 1615 request: the VarBlob32 length prefix (4), the NPC handle (4) and the slot (1). A shorter body is refused.
     /// </summary>
-    private const int RequestLength = 4 + 4 + 1;
+    private const int RequestLength = MultiTeleportUseCase.RequestLength;
 
     /// <summary>2905 result: accepted.</summary>
-    internal const ushort ResultAccepted = 0;
+    internal const ushort ResultAccepted = MultiTeleportUseCase.ResultAccepted;
 
     /// <summary>
     /// 2905 result 24323 (0x5F03): string_ui 11109 "Only usable by the
@@ -99,7 +100,7 @@ public class MultiTeleportNpcHandler : ZoneRmiHandlerBase<MultiTeleportNpcHandle
     /// (0x5F01, 11108 "Entrance is not granted while you are a member of a party."), is not sent here (see THE AGIT
     /// GROUPS).
     /// </summary>
-    internal const ushort ResultRefused = 24323;
+    internal const ushort ResultRefused = MultiTeleportUseCase.ResultRefused;
 
     /// <summary>NPCInfo Function_Type of the multi-destination teleporter; its Function_ID is the group.</summary>
     internal const int MultiTeleportFunctionType = WarpDestinationRules.MultiTeleportFunctionType;
@@ -125,54 +126,64 @@ public class MultiTeleportNpcHandler : ZoneRmiHandlerBase<MultiTeleportNpcHandle
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
-        if (payload.Length < RequestLength) { await AckAsync(session, ResultRefused); return; }
-        var reader = new PacketReader(payload.Span);
-        reader.ReadUInt32();                 // VarBlob32 length (5)
-        var npcHandle = reader.ReadUInt32(); // the teleporter NPC's actor handle
-        var slot = reader.ReadByte();        // dialog Select_ID, 1-based
-
-        // A dead PC is refused (24323).
-        if (player.IsDead)
+        var catalog = new GameDataWorldCatalog(services.GetRequiredService<GameDataStore>());
+        var npcHandle = 0u;
+        byte slot = 0;
+        NpcRuntimeState? npc = null;
+        if (payload.Length >= RequestLength)
         {
-            Logger.LogInformation("{Name} used teleporter {Handle:X8} slot {Slot} while dead; refused", player.Name, npcHandle, slot);
-            await AckAsync(session, ResultRefused);
-            return;
+            var reader = new PacketReader(payload.Span);
+            reader.ReadUInt32();             // VarBlob32 length (5)
+            npcHandle = reader.ReadUInt32(); // the teleporter NPC's actor handle
+            slot = reader.ReadByte();        // dialog Select_ID, 1-based
+            npc = services.GetRequiredService<NpcStateManager>().GetNpc(npcHandle);
         }
 
-        var npc = services.GetRequiredService<NpcStateManager>().GetNpc(npcHandle);
         // The NPC must be one this server tracks on the player's map (hard gate). The distance part of
         // GateInReach is a loose guard: the interaction radius is not enforced strictly.
         // Siege-holder / party refusal stays unimplemented (no siege system; see the class).
-        if (npc is null || npc.MapId != player.MapId)
+        var decision = MultiTeleportUseCase.Decide(catalog, payload.Length, player.IsDead, player.MapId,
+            npc is null ? null : new MultiTeleportUseCase.NpcRef(npc.NpcId, npc.MapId), slot);
+
+        // A dead PC is refused (24323).
+        switch (decision.Why)
         {
-            Logger.LogInformation("{Name} used teleporter {Handle:X8} slot {Slot}, which is not an NPC on map {Map}; refused",
-                player.Name, npcHandle, slot, player.MapId);
-            await AckAsync(session, ResultRefused);
-            return;
+            case MultiTeleportUseCase.Refusal.ShortRequest:
+                await AckAsync(session, decision.Result);
+                return;
+            case MultiTeleportUseCase.Refusal.PlayerDead:
+                Logger.LogInformation("{Name} used teleporter {Handle:X8} slot {Slot} while dead; refused", player.Name, npcHandle, slot);
+                await AckAsync(session, decision.Result);
+                return;
+            case MultiTeleportUseCase.Refusal.NotNpcOnMap:
+                Logger.LogInformation("{Name} used teleporter {Handle:X8} slot {Slot}, which is not an NPC on map {Map}; refused",
+                    player.Name, npcHandle, slot, player.MapId);
+                await AckAsync(session, decision.Result);
+                return;
         }
-        if (!NpcInteraction.GateInReach(player, npc, NpcInteraction.DefaultInteractRadius))
+        if (!NpcInteraction.GateInReach(player, npc!, NpcInteraction.DefaultInteractRadius))
             Logger.LogDebug("{Name} used teleporter {Handle:X8} slot {Slot} from beyond the unverified interaction radius; allowed",
                 player.Name, npcHandle, slot);
 
-        var data = services.GetRequiredService<GameDataStore>();
-        if (!TryResolveDestination(data, npc.NpcId, slot, out var dest))
+        if (!decision.Accepted)
         {
             Logger.LogInformation("{Name} used teleporter NPC {NpcId} slot {Slot}: no measured destination for it; refused",
-                player.Name, npc.NpcId, slot);
-            await AckAsync(session, ResultRefused);
+                player.Name, npc!.NpcId, slot);
+            await AckAsync(session, decision.Result);
             return;
         }
+        var dest = decision.Destination!;
 
         // Ack first, then the departure, then the warp: the 2905 precedes everything else of an accepted
         // request, and the departure (the Warp_Handling 0 removals, the ride drop, the pyramid close, 2938 [01 00], the
         // self 2505 and the kept-effect runs) comes before the 2558 burst and the 2311 WarpAsync sends (see the class).
-        await AckAsync(session, ResultAccepted);
+        await AckAsync(session, decision.Result);
         await WarpDeparture.DepartAsync(session, player, services, Logger, ct);
         var ok = await WarpService.WarpAsync(session, player,
             dest.Area_ID, dest.Position_X, dest.Position_Y, dest.Position_Z, services);
 
         Logger.LogInformation("{Name} teleporter NPC {NpcId} slot {Slot} -> Position_Info {Pos} (map {Map} {X:F1},{Y:F1},{Z:F1}): warped={Ok}",
-            player.Name, npc.NpcId, slot, dest.Position_ID, dest.Area_ID, dest.Position_X, dest.Position_Y, dest.Position_Z, ok);
+            player.Name, npc!.NpcId, slot, dest.Position_ID, dest.Area_ID, dest.Position_X, dest.Position_Y, dest.Position_Z, ok);
     }
 
     /// <summary>

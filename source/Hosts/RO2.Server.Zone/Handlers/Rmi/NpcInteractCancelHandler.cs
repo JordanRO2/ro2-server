@@ -6,6 +6,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Worlds.Application;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -73,7 +74,7 @@ public class NpcInteractCancelHandler : ZoneRmiHandlerBase<NpcInteractCancelHand
         
         
         
-        if (FuncObjectControlState.TryEnd(player, targetHandle, out var control) && control.State is not null)
+        if (FuncObjectControlUseCase.ResetsStateOnCancel(FuncObjectControlState.TryEnd(player, targetHandle, out var control), control))
         {
             var reset = FuncObjectControlPackets.BuildControlReset2398(player.EntityId, targetHandle);
             await session.SendRmiAsync(ZoneS2COpcodes.OnChangeState, writer => writer.WriteBytes(reset));

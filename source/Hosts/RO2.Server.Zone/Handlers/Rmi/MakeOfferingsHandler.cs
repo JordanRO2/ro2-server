@@ -8,6 +8,7 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Inventory.Domain;
+using RO2.Worlds.Application;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -46,9 +47,6 @@ public class MakeOfferingsHandler : ZoneRmiHandlerBase<MakeOfferingsHandler>
  /// <summary>Use source in the 2329 reply for an offering (3; a plain item use carries 1).</summary>
     private const byte UseSourceOffering = 3;
 
- /// <summary>WorldEvent_Check_Group.Check_Type of the "offer item X to NPC Y" rows.</summary>
-    private const byte CheckTypeOffering = 2;
-
     public override ushort Opcode => ZoneC2SOpcodes.ReqMakeOfferings;
     public override string Name => "MakeOfferings";
 
@@ -80,7 +78,7 @@ public class MakeOfferingsHandler : ZoneRmiHandlerBase<MakeOfferingsHandler>
         
         var inventory = services.GetRequiredService<IInventoryRepository>();
         var item = await inventory.GetByIdAsync(itemUid);
-        if (item is null || item.CharacterId != player.CharacterId || item.StorageType != 0 || item.Count < count)
+        if (item is null || !OfferingUseCase.CanOffer(item.CharacterId, item.StorageType, item.Count, player.CharacterId, count))
         {
             Logger.LogWarning("{Name}: 1693 offering of uid {Uid} x{Count} refused (item {Item}, stack {Stack}, storage {Storage})",
                 player.Name, itemUid, count, item?.ItemId, item?.Count, item?.StorageType);
@@ -94,14 +92,12 @@ public class MakeOfferingsHandler : ZoneRmiHandlerBase<MakeOfferingsHandler>
         if (flat < 20) { bagIx = 1; slotIx = (byte)(50 + flat); }
         else { var i = flat - 20; bagIx = (byte)Math.Clamp(2 + i / 35, 2, 4); slotIx = (byte)(i % 35); }
 
-        var remaining = item.Count - count;
-        if (remaining <= 0) { await inventory.RemoveItemAsync(item.Id); remaining = 0; }
+        var (remaining, removeStack) = OfferingUseCase.After(item.Count, count);
+        if (removeStack) await inventory.RemoveItemAsync(item.Id);
         else { item.Count = remaining; await inventory.UpdateItemAsync(item); }
 
         var store = services.GetRequiredService<GameDataStore>();
-        var row = store.WorldEventCheckGroup.FirstOrDefault(r =>
-            r.Check_Type == CheckTypeOffering && r.Type_Data_1 == npc.NpcId && r.Type_Data_2 == item.ItemId);
-        ushort messageStringId = row is null ? (ushort)0 : row.Type_Data_4;
+        ushort messageStringId = OfferingUseCase.MessageStringId(store.WorldEventCheckGroup, npc.NpcId, item.ItemId);
 
         Logger.LogInformation("{Name} offers {Count}x item {Item} to NPC {Npc} (left {Left}, message {Msg})",
             player.Name, count, item.ItemId, npc.NpcId, remaining, messageStringId);

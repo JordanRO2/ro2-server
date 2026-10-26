@@ -6,6 +6,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Worlds.Application;
 using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
@@ -53,7 +54,7 @@ public class TeleportSavePointHandler : ZoneRmiHandlerBase<TeleportSavePointHand
     {
         // HSV MV-10: gate first so a refusal does not consume the cooldown. Dead, in combat or trading: ignored.
         // No refusal is sent for these states; the request is ignored.
-        if (player.IsDead || player.IsInCombat || TradeSessionService.Instance.Get(player.SessionId) is not null)
+        if (TeleportSavePointUseCase.IsIgnored(player.IsDead, player.IsInCombat, TradeSessionService.Instance.Get(player.SessionId) is not null))
         {
             Logger.LogDebug("{Name} /escape ignored (dead={Dead}, combat={Combat}, or trading)", player.Name, player.IsDead, player.IsInCombat);
             return;
@@ -73,7 +74,8 @@ public class TeleportSavePointHandler : ZoneRmiHandlerBase<TeleportSavePointHand
             return;
         }
 
-        var (mapId, x, y, z, source) = ResolveSavePoint(player, data);
+        var decision = TeleportSavePointUseCase.Decide(new GameDataWorldCatalog(data), player.MapId, player.BindIndex);
+        var (mapId, x, y, z, source) = (decision.MapId, decision.X, decision.Y, decision.Z, decision.Source);
 
         Logger.LogDebug("{Name} teleports to save point: map {Map} ({X}, {Y}, {Z}) from {Source}",
             player.Name, mapId, x, y, z, source);
@@ -83,7 +85,7 @@ public class TeleportSavePointHandler : ZoneRmiHandlerBase<TeleportSavePointHand
         {
             // Checked before anything goes out: the departure frames without a move would take the player off its
             // own client for nothing.
-            if (data.GetMap(mapId) is null)
+            if (!decision.MapKnown)
             {
                 Logger.LogWarning("{Name}: save point map {Map} is not in Map_List; not teleported", player.Name, mapId);
                 return;
@@ -98,7 +100,7 @@ public class TeleportSavePointHandler : ZoneRmiHandlerBase<TeleportSavePointHand
             }
             // From the first frame on, the escape has happened and the cooldown stands.
             warped = true;
-            if (mapId != player.MapId)
+            if (!TeleportSavePointUseCase.IsInPlace(mapId, player.MapId))
                 await WarpEntryBurst.SendAsync(session, player, loaded, mapId, x, y, z, services, Logger, ct);
             else
                 await WarpEntryBurst.SendInPlaceAsync(session, player, loaded, x, y, z, services, Logger, ct);

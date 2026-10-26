@@ -1,5 +1,6 @@
 using RO2.Server.Zone.Models;
 using RO2.Characters.Domain;
+using RO2.Worlds.Application;
 
 namespace RO2.Server.Zone.Services;
 
@@ -15,7 +16,7 @@ internal static class LiveLevelSync
  /// </summary>
     internal static void Apply(PlayerState player, Character? character)
     {
-        if (character is not null && player.Level != 0 && character.Level != player.Level)
-            character.Level = player.Level;
+        if (character is not null && MapLoadUseCase.LiveLevelOverride(character.Level, player.Level) is { } level)
+            character.Level = level;
     }
 }

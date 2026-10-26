@@ -5,6 +5,7 @@ using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Services;
+using RO2.Worlds.Application;
 using RO2.Worlds.Domain;
 using AccountGift = RO2.Domain.Entities.AccountGift;
 
@@ -247,10 +248,9 @@ public class AnsMapLoadingHandler : Base1304
             async Task SendMoveSpeedAndMasteryAsync(uint handle)
             {
                 await SendMoveSpeedAsync(handle);
-                if (masteryTotal > 0)
+                if (MapLoadUseCase.MasteryNotification(masteryTotal) is { } masteryPoints)
                     await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyJobMasteryPointChange,
-                        TraitPackets.BuildJobMasteryPointChange2986(delta: 0,
-                            totalPoints: (uint)System.Math.Min(masteryTotal, uint.MaxValue)));
+                        TraitPackets.BuildJobMasteryPointChange2986(delta: 0, totalPoints: masteryPoints));
             }
 
             
@@ -305,14 +305,15 @@ public class AnsMapLoadingHandler : Base1304
                 
                 
                 
-                if (character is not null)
+                var viewDataSource = MapLoadUseCase.GliderViewData(character is not null, prebuiltViewData is not null);
+                if (viewDataSource == MapLoadUseCase.GliderViewDataSource.Character)
                 {
-                    var viewData = ActorStatePackets.BuildOnPCViewData2315(player, character, equipped, services.GetRequiredService<IGuildEmblemRepository>());
+                    var viewData = ActorStatePackets.BuildOnPCViewData2315(player, character!, equipped, services.GetRequiredService<IGuildEmblemRepository>());
                     await session.SendRmiAsync(ZoneS2COpcodes.OnPCViewData, writer => writer.WriteBytes(viewData));
                 }
-                else if (prebuiltViewData is not null)
+                else if (viewDataSource == MapLoadUseCase.GliderViewDataSource.Prebuilt)
                 {
-                    await session.SendRmiAsync(ZoneS2COpcodes.OnPCViewData, writer => writer.WriteBytes(prebuiltViewData));
+                    await session.SendRmiAsync(ZoneS2COpcodes.OnPCViewData, writer => writer.WriteBytes(prebuiltViewData!));
                 }
                 
                 
@@ -401,7 +402,7 @@ public class AnsMapLoadingHandler : Base1304
 
             
             
-            if (!moveSpeedSent)
+            if (MapLoadUseCase.NeedsMoveSpeedFallback(moveSpeedSent))
                 await SendMoveSpeedAndMasteryAsync(PlayerStateManager.BuildActorHandle(session.SessionId));
 
             
@@ -479,7 +480,7 @@ public class AnsMapLoadingHandler : Base1304
         
         
         
-        if (!moveSpeedSent)
+        if (MapLoadUseCase.NeedsMoveSpeedFallback(moveSpeedSent))
             await SendMoveSpeedAsync(PlayerStateManager.BuildActorHandle(session.SessionId));
 
         
