@@ -77,22 +77,12 @@ public class CombatService
         if (npcTarget != null)
             rawDamage = DefenseRules.Mitigate(rawDamage, npcTarget.Def, attacker.CombatPen, attacker.Level);
 
-        // No random variance: normal-attack damage is deterministic per hit for fixed conditions. Back-to-back
-        // same-target swings differ only by slow drift from changing state, not by an independent roll, so no
-        // random jitter is applied.
-        var damage = Math.Max(1, rawDamage);
-
-        // CRITICAL HIT — the ATTACKER's Crit stat (trait 60) rolls a crit that DOUBLES the final damage and
-        // flags the hit as kind 4 (the client renders it in the crit colour): flat ×2.0 on the displayed number.
-        // Rate = Crit/(0.02·Crit + 40 + 0.8·(DefLv−AtkLv)), capped 90% (AoV). A naked character's Crit is small
-        // (crits rare); gear raises it. NPCs carry no Crit stat, so NPC→player crits do not occur here (that path
-        // lives in NpcCombatService).
-        byte kind = DamageKindNormal;
-        if (Rolls(CombatRateRules.CritRatePct(attacker.CombatCrit, defenderLevel, attacker.Level)))
-        {
-            damage = Math.Max(1, damage * 2);
-            kind = DamageKindCrit;
-        }
+        // No random variance: normal-attack damage is deterministic per hit for fixed conditions. The damage-kind
+        // resolution (floor at 1, then the attacker's Crit ×2, kind 4; no parry in PvE) is the pure
+        // HitResolution.ResolvePveHit; NPCs carry no Crit so NPC→player crits live in NpcCombatService.
+        var (damage, hitKind) = HitResolution.ResolvePveHit(
+            rawDamage, attacker.CombatCrit, defenderLevel, attacker.Level, SharedRoller.Instance);
+        byte kind = MapKind(hitKind);
 
         // NOT SENT. 2718 NfySkillDamage is for SKILL damage, and broadcasting it on every damage
         // application was wrong twice over: a normal attack's damage is carried by 2696
@@ -141,20 +131,25 @@ public class CombatService
     /// </remarks>
     public (int Damage, byte Kind) ResolvePvpHit(PlayerState attacker, PlayerState victim, uint skillId)
     {
-        var damage = DefenseRules.Mitigate(CalculateBaseDamage(attacker, skillId), victim.CombatDefense,
-            attacker.CombatPen, attacker.Level);
-        if (Rolls(CombatRateRules.CritRatePct(attacker.CombatCrit, victim.Level, attacker.Level)))
-            return (Math.Max(1, damage * 2), DamageKindCrit);
-        if (Rolls(CombatRateRules.ParryRatePct(victim.CombatParry, victim.Level, attacker.Level)))
-            return (Math.Max(1, (int)Math.Round(damage * 0.5)), DamageKindGuard);
-        return (damage, DamageKindNormal);
+        var (damage, hitKind) = HitResolution.ResolvePvpHit(
+            CalculateBaseDamage(attacker, skillId), victim.CombatDefense, attacker.CombatPen, attacker.Level,
+            victim.Level, attacker.CombatCrit, victim.CombatParry, SharedRoller.Instance);
+        return (damage, MapKind(hitKind));
     }
 
-    // MitigateByDefense moved to RO2.Combats.Domain.DefenseRules.Mitigate (Combat context, B4 S2).
+    /// <summary>Maps a Domain <see cref="HitKind"/> to the wire DamageKind byte (1 normal, 3 guard, 4 crit).</summary>
+    private static byte MapKind(HitKind kind) => kind switch
+    {
+        HitKind.Crit => DamageKindCrit,
+        HitKind.Guard => DamageKindGuard,
+        _ => DamageKindNormal,
+    };
+
+    // MitigateByDefense moved to RO2.Combats.Domain.DefenseRules.Mitigate; Crit/ParryRatePct to CombatRateRules;
+    // the hit-kind resolution to HitResolution; Rolls to SharedRoller (Combat context, B4 S2-S4).
 
     // CritRatePct / ParryRatePct moved to RO2.Combats.Domain.CombatRateRules (Combat context, B4 S3).
 
-    private static bool Rolls(double pct) => pct > 0 && Random.Shared.NextDouble() * 100.0 < pct;
 
     /// <summary>
     /// Grant EXP to a player. A grant that crosses one or more level boundaries is answered with ONE level-up
