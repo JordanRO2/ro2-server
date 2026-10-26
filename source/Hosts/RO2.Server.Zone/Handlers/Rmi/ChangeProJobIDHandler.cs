@@ -1,18 +1,17 @@
 using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using MongoDB.Driver;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.GameData;
 using RO2.GameData.Tables;
-using RO2.Persistence.Mongo.Persistence;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
+using RO2.Characters.Application;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -101,39 +100,25 @@ public class ChangeProJobIDHandler : ZoneRmiHandlerBase<ChangeProJobIDHandler>
         
         
         
+        // The host prepares the in-memory change (serializer); the flow persists it (rolling back on failure) and
+        // consumes the item. Everything else here is wire or live-registry work that stays host.
         byte jobBefore = c.Job;
         bool healed = WorldEntryService.TryHealStoredCombatClass(c);
         var previousAppearance = WorldEntryService.SetCreationProfession(c, target);
-        try
+        var commit = await ChangeProJobCommitFlow.CommitAsync(c, healed ? c.Job : null, jobBefore, previousAppearance,
+            item!, services.GetRequiredService<ICharacterRepository>(), inventory, ct);
+        if (commit.SaveError is not null)
         {
-            await services.GetRequiredService<ICharacterRepository>()
-                .UpdateAppearanceAndJobAsync(c.Id, c.AppearanceJson, healed ? c.Job : null, ct);
-        }
-        catch (Exception ex)
-        {
-            c.AppearanceJson = previousAppearance;
-            c.Job = jobBefore;
-            Logger.LogWarning(ex, "{Name}: could not store the profession change; nothing consumed or sent", player.Name);
+            Logger.LogWarning(commit.SaveError, "{Name}: could not store the profession change; nothing consumed or sent", player.Name);
             return;
         }
         if (healed) player.Job = c.Job;
 
-        
-        
-        int left = item!.Count - 1;
-        byte[] record;
-        if (left <= 0)
-        {
-            record = WorldEntryService.BuildItemRecord126(item);
+
+
+        var record = WorldEntryService.BuildItemRecord126(item!);
+        if (commit.Removed)
             record[ItemRecordCountOffset] = 0;   // count 0 empties the cell on the client (the record writer clamps to >= 1)
-            await inventory.RemoveItemAsync(item.Id);
-        }
-        else
-        {
-            item.Count = left;
-            await inventory.UpdateItemAsync(item);
-            record = WorldEntryService.BuildItemRecord126(item);
-        }
         await session.SendRmiAsync(ZoneS2COpcodes.OnDestroyItem,
             writer => writer.WriteBytes(ShopItemPackets.BuildDestroyItem2379(player.EntityId, record)));
 
@@ -163,7 +148,7 @@ public class ChangeProJobIDHandler : ZoneRmiHandlerBase<ChangeProJobIDHandler>
         await Broadcast.BroadcastToNearbyAsync(player, ZoneS2COpcodes.NfyChangeProJob, writer => writer.WriteBytes(notify));
 
         Logger.LogInformation("{Name} changed profession {Current} -> {Target} with item {Item} (uid {Uid})",
-            player.Name, current, target, item.ItemId, itemUid);
+            player.Name, current, target, item!.ItemId, itemUid);
     }
 
  /// <summary>
