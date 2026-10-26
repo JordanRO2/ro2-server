@@ -181,7 +181,7 @@ public class UseTalentPointHandler : ZoneRmiHandlerBase<UseTalentPointHandler>
             // The point budget is not a hard gate (the earned pool this server models is known to undercount
             // for some characters, see StatService.IsTalentAllocationLegal), so an over-spend is only logged;
             // the pool reported to the client is already clamped to zero by TalentPointsRemaining.
-            int spent = StatService.TalentPointsSpent(store, player.Job, tree);
+            int spent = TalentRules.TalentPointsSpent(store, player.Job, tree);
             int earned = Math.Max(0, player.Level - 1);
             if (spent > earned)
                 Logger.LogWarning("{Name}: talent tree costs {Spent} points, over the earned {Earned} at level {Level}",

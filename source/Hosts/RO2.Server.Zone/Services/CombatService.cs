@@ -1,4 +1,5 @@
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using RO2.Skills.Domain;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
@@ -447,7 +448,7 @@ public class CombatService
         var level = (byte)(skillId % 100u);
         if (skillId < SkillDamageHandler.FirstNonClassSkillId)
             level = Math.Min(level, attacker.LearnedSkills.GetValueOrDefault(group));
-        if (StatService.TryGetSkillLevelLimit(data, group, out var max))
+        if (TalentRules.TryGetSkillLevelLimit(data, group, out var max))
             level = Math.Min(level, max);
         return level;
     }

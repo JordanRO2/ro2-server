@@ -1,4 +1,5 @@
-using RO2.GameData;
+﻿using RO2.GameData;
+using RO2.Skills.Domain;
 using RO2.Server.Zone.Services;
 using Xunit;
 
@@ -24,7 +25,7 @@ public class TalentPointsTests
         
         var store = await LoadShippedTalentTableAsync();
 
-        Assert.Equal(expected, StatService.StarterSkillGroups(store, (byte)job));
+        Assert.Equal(expected, TalentRules.StarterSkillGroups(store, (byte)job));
     }
 
     [Theory]
@@ -61,7 +62,7 @@ public class TalentPointsTests
         foreach (var (group, level) in vector1310)
             learned[group] = level;
 
-        Assert.Equal(69, StatService.TalentPointsSpent(store, 6, learned.Select(kv => (kv.Key, kv.Value))));
+        Assert.Equal(69, TalentRules.TalentPointsSpent(store, 6, learned.Select(kv => (kv.Key, kv.Value))));
     }
 
  /// <summary>Converts 2488 skill ids, each a group times 100 plus a level, to group and level pairs.</summary>

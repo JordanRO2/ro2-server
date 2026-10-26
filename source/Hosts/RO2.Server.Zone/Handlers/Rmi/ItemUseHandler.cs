@@ -384,7 +384,7 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
 
     /// <summary>
     /// A skill reset to <paramref name="job"/>: every talent-tree skill goes back to the class's starter skills
-    /// at level 1 (<see cref="StatService.StarterSkillGroups"/>), the skills come off the quick-slot bar (2685),
+    /// at level 1 (<see cref="TalentRules.StarterSkillGroups"/>), the skills come off the quick-slot bar (2685),
     /// and the new list (2488) and talent pool (2544) are sent, in that order. Sent for a skill-reset scroll
     /// (ItemInfo Item_Type 26) and for a quest job change whose JobChange_Table row has Talent_Reset 1
     /// (QuestPrizeHandler.ApplyQuestJobChangeAsync, with the NEW job).
@@ -401,7 +401,7 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
     /// [110201, 111001, 114401, 5030003]: the Swordsman rows back at level 1 and 50300, a Blacksmith profession
     /// skill that has no Talent_Table row, kept at level 3; the job-master skill 1200 goes. Job changes work the
     /// same way: Ranger (10) [310401, 310701, 312401, 5030001] and Crescentia (17) [610101, 610401,
-    /// 611101]. All are StatService.StarterSkillGroups of the character's job (the current job for a scroll,
+    /// 611101]. All are TalentRules.StarterSkillGroups of the character's job (the current job for a scroll,
     /// the new Job_ID for a job change). Talent_Table rows outside that set are deleted from
     /// character_skills; skills with no Talent_Table row are kept at their level.
     /// </para>
@@ -413,8 +413,8 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
     internal static async Task<byte> ResetSkillsAsync(ProudSession session, PlayerState player, byte job,
         GameDataStore store, IServiceProvider services, ILogger logger)
     {
-        var starters = StatService.StarterSkillGroups(store, job);
-        var talentGroups = StatService.TalentSkillGroups(store);
+        var starters = TalentRules.StarterSkillGroups(store, job);
+        var talentGroups = TalentRules.TalentSkillGroups(store);
         var dropped = player.LearnedSkills.Keys
             .Where(g => talentGroups.Contains(g) && Array.IndexOf(starters, g) < 0)
             .ToArray();

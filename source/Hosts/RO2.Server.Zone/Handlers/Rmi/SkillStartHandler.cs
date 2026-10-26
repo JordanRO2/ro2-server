@@ -1,4 +1,5 @@
-using System.Buffers.Binary;
+﻿using System.Buffers.Binary;
+using RO2.Skills.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.GameData;
@@ -129,12 +130,12 @@ public class SkillStartHandler : ZoneRmiHandlerBase<SkillStartHandler>
         // the silent illegitimate-skill-action answer: a 2715 carrying 20152 (the 1509 refusal's, SkillDamageHandler
         // .RefuseUnauthorizedAsync) echoing the request's target/vec/variant, and nothing else.
         //  - a dead caster casts nothing;
-        //  - a TALENT class skill (a Talent_Table group below FirstNonClassSkillId, StatService.TryGetSkillLevelLimit) must be
+        //  - a TALENT class skill (a Talent_Table group below FirstNonClassSkillId, TalentRules.TryGetSkillLevelLimit) must be
         //    learned (LearnedSkills[group] > 0) and have a Skill_Table_SkillLevel row for the exact id. Non-talent, guild,
         //    item and monster skills are exempt: they are never in LearnedSkills, and the 1561 path already vouches for
         //    the item ones above. A raw 1508 of any other id with no table row still gets cooldown 0 / SP 0 here.
         var notLearnedTalent = skillId < SkillDamageHandler.FirstNonClassSkillId
-            && StatService.TryGetSkillLevelLimit(store, skillGroup, out _)
+            && TalentRules.TryGetSkillLevelLimit(store, skillGroup, out _)
             && (levelData is null || player.LearnedSkills.GetValueOrDefault(skillGroup) == 0);
         if (player.IsDead || notLearnedTalent)
         {

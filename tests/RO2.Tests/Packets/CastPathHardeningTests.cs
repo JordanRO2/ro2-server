@@ -1,4 +1,5 @@
-using System.Buffers.Binary;
+﻿using System.Buffers.Binary;
+using RO2.Skills.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using RO2.Domain.Entities;
@@ -73,11 +74,11 @@ public class CastPathHardeningTests
     public async Task TryGetSkillLevelLimit_ReadsTheTalentTable_AndClampCastLevelUsesIt()
     {
         var store = await LoadStoreAsync("Talent_Table.json");
-        Assert.True(StatService.TryGetSkillLevelLimit(store, TalentGroup, out var max));
+        Assert.True(TalentRules.TryGetSkillLevelLimit(store, TalentGroup, out var max));
         Assert.Equal(5, max);
-        Assert.False(StatService.TryGetSkillLevelLimit(store, 92_016u, out var none));   // no Talent_Table row
+        Assert.False(TalentRules.TryGetSkillLevelLimit(store, 92_016u, out var none));   // no Talent_Table row
         Assert.Equal(0, none);
-        Assert.False(StatService.TryGetSkillLevelLimit(store, 9_000_211u, out _));        // beyond ushort
+        Assert.False(TalentRules.TryGetSkillLevelLimit(store, 9_000_211u, out _));        // beyond ushort
 
         // learned 1, id says 10 -> 1; learned 10 -> table max 5; never learned -> 0 (no skill rate)
         PlayerState Hero(byte learned) => new() { LearnedSkills = new Dictionary<uint, byte> { [TalentGroup] = learned } };

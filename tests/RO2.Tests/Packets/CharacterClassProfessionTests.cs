@@ -1,4 +1,5 @@
-using RO2.Domain.Entities;
+﻿using RO2.Domain.Entities;
+using RO2.Skills.Domain;
 using RO2.GameData;
 using RO2.Network.Packets;
 using RO2.Server.Zone.Handlers.Rmi;
@@ -103,7 +104,7 @@ public class CharacterClassProfessionTests
         
         
         var store = await LoadShippedTalentTableAsync();
-        var alterStarters = StatService.StarterSkillGroups(store, 16);
+        var alterStarters = TalentRules.StarterSkillGroups(store, 16);
         Assert.Equal(new uint[] { 6101, 6104, 6111 }, alterStarters);
 
         var learned = new uint[] { 4101, 4103, 4108, 50300 }.Concat(alterStarters).ToArray();

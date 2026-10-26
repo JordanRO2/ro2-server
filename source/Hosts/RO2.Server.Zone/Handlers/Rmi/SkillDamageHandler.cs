@@ -1,4 +1,5 @@
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using RO2.Skills.Domain;
 using Microsoft.Extensions.Logging;
 using RO2.GameData;
 using RO2.Persistence.Mongo.Persistence;
@@ -285,7 +286,7 @@ public class SkillDamageHandler : ZoneRmiHandlerBase<SkillDamageHandler>
                 ? ActorGate.TargetOf(primaryNpc)
                 : (GateTarget?)null;
             var gateData = services.GetRequiredService<GameDataStore>();
-            byte? levelLimit = StatService.TryGetSkillLevelLimit(gateData, skillId / SkillGroupDivisor, out var talentMax) ? talentMax : null;
+            byte? levelLimit = TalentRules.TryGetSkillLevelLimit(gateData, skillId / SkillGroupDivisor, out var talentMax) ? talentMax : null;
             var gateRefusal = EvaluateDamageGate(ActorGate.ActorOf(player), skillId, gateTarget,
                 ActorGate.SkillReach(skillId / SkillGroupDivisor), levelLimit);
             if (gateRefusal != ActorRefusal.None)
@@ -632,7 +633,7 @@ public class SkillDamageHandler : ZoneRmiHandlerBase<SkillDamageHandler>
 
         // The cast level is the id's own (id % 100) and the client's to choose, so it must lie in
         // [1, learned level of the group] and within the group's Max_Skill_Level when the caller has one
-        // (StatService.TryGetSkillLevelLimit). Learned >= 1 is established above, so the lookup holds.
+        // (TalentRules.TryGetSkillLevelLimit). Learned >= 1 is established above, so the lookup holds.
         var castLevel = skillId % SkillGroupDivisor;
         var learnedLevel = actor.LearnedSkills![group];
         return castLevel >= 1 && castLevel <= learnedLevel && (maxSkillLevel is not { } max || castLevel <= max)

@@ -1,4 +1,4 @@
-using RO2.Economy.Application;
+﻿using RO2.Economy.Application;
 using RO2.Economy.Domain;
 using System;
 using System.Buffers.Binary;
@@ -513,7 +513,7 @@ public static partial class AuctionPackets
     /// <summary>
     /// The class filter of the public search (<see cref="AuctionService.SearchAsync"/>): a template passes
     /// when its ItemInfo Require_Job is 0 (any class) or has bit (job - 1) set, the job-bit convention of
-    /// StatService.StarterSkillGroups. A <paramref name="job"/> that is not a filter (<see cref="IsJobFilter"/>)
+    /// TalentRules.StarterSkillGroups. A <paramref name="job"/> that is not a filter (<see cref="IsJobFilter"/>)
     /// passes everything.
     /// </summary>
     public static bool PassesJobFilter(long requireJob, byte job)
@@ -1024,7 +1024,7 @@ public sealed partial class AuctionService
     /// <see cref="AuctionItemCatalog"/>.
     /// The class checkbox (<see cref="AuctionPackets.SearchRequest.JobFilter"/>, blob+14) keeps a template
     /// whose ItemInfo Require_Job is 0 or has bit (job - 1) set, the job-bit convention of
-    /// StatService.StarterSkillGroups (<c>1u &lt;&lt; (job - 1)</c>; see <see cref="AuctionPackets.TryParseSearch"/>).
+    /// TalentRules.StarterSkillGroups (<c>1u &lt;&lt; (job - 1)</c>; see <see cref="AuctionPackets.TryParseSearch"/>).
     /// </summary>
     public async Task<(long total, List<AuctionArticle> page)> SearchAsync(AuctionPackets.SearchRequest req, GameDataStore store)
     {

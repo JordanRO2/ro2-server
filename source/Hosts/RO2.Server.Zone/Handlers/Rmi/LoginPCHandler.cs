@@ -365,13 +365,13 @@ public class LoginPCHandler : NetworkZoneRmiBase
 
             // Grant the class's starter skills at level 1 if they are missing — self-healing, so a character
             // created before this existed, or one that just job-changed, gains its basics on next login.
-            // Their first level is free (StatService.TalentPointsSpent subtracts it). Persisted like any
+            // Their first level is free (TalentRules.TalentPointsSpent subtracts it). Persisted like any
             // learned skill (SkillId == Skill_Group), so they flow into the 2488 skill-list send unchanged.
-            // The set is StatService.StarterSkillGroups, the one a skill reset leaves (ItemUseHandler), so a
+            // The set is TalentRules.StarterSkillGroups, the one a skill reset leaves (ItemUseHandler), so a
             // relog seeds exactly what the reset kept. GameDataStore.GetStarterSkillGroups groups the table by
             // Job_ID instead: it gives jobs 6-15 their job-master row (6 -> 1200, 10 -> 3200), which the
             // job-6 reset drops, and Crescentia (17) nothing.
-            var starterGroups = StatService.StarterSkillGroups(store, character.Job);
+            var starterGroups = TalentRules.StarterSkillGroups(store, character.Job);
             if (starterGroups.Length > 0)
             {
                 var known = new HashSet<uint>((learnedSkills ?? Array.Empty<RO2.Skills.Domain.CharacterSkill>())
@@ -648,7 +648,7 @@ public class LoginPCHandler : NetworkZoneRmiBase
     /// <summary>
     /// The talent-tree skill groups in <paramref name="learnedGroups"/> that <paramref name="job"/> cannot use:
     /// groups with a Talent_Table row, none of whose rows carries bit <c>job-1</c> of <c>Require_Job</c> (the
-    /// mask StatService.StarterSkillGroups reads). Skills with no Talent_Table row (the profession skills, e.g.
+    /// mask TalentRules.StarterSkillGroups reads). Skills with no Talent_Table row (the profession skills, e.g.
     /// 50300) are never in it. Ascending.
     /// </summary>
     internal static uint[] TalentGroupsOutsideClass(GameDataStore store, byte job, IEnumerable<uint> learnedGroups)
