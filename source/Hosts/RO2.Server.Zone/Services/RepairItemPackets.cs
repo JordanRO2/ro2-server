@@ -1,4 +1,5 @@
-using System.Buffers.Binary;
+﻿using System.Buffers.Binary;
+using RO2.Skills.Domain;
 using RO2.GameData;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
@@ -55,7 +56,7 @@ internal static class RepairItemPackets
         if (player.Character is { } ch)
         {
             AnsMapLoadingHandler.SyncLiveLevel(player, ch);
-            var talentPoints = StatService.TalentPointsRemaining(store, player.Job, player.Level,
+            var talentPoints = TalentRules.TalentPointsRemaining(store, player.Job, player.Level,
                 player.LearnedSkills.Select(kv => (kv.Key, kv.Value)));
             return PcSaveDataPackets.BuildLiveHead205(player, ch, talentPoints);
         }

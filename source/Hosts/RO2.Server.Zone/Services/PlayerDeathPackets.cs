@@ -1,4 +1,5 @@
-using System.Buffers.Binary;
+﻿using System.Buffers.Binary;
+using RO2.Skills.Domain;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.GameData;
@@ -228,7 +229,7 @@ public static class PlayerDeathPackets
         }
 
         // head+142 carries the live remaining talent points, computed as in the 2487 heads.
-        var talentPoints = StatService.TalentPointsRemaining(gameData, victim.Job, victim.Level,
+        var talentPoints = TalentRules.TalentPointsRemaining(gameData, victim.Job, victim.Level,
             victim.LearnedSkills.Select(kv => (kv.Key, kv.Value)));
         await session.SendInternalRmiAsync(ZoneS2COpcodes.OnDeadMe, BuildOnDeadMe2391(victim, records, talentPoints), ct);
         await session.SendInternalRmiAsync(ZoneS2COpcodes.NfySpinelRevivalInfo, SpinelRevivalNone2836, ct);

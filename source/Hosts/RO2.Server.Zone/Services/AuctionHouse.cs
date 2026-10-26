@@ -1,4 +1,5 @@
 ﻿using RO2.Economy.Application;
+using RO2.Skills.Domain;
 using RO2.Economy.Domain;
 using System;
 using System.Buffers.Binary;

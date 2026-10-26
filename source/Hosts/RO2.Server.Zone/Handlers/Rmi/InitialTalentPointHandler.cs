@@ -1,4 +1,5 @@
-using System.Buffers.Binary;
+﻿using System.Buffers.Binary;
+using RO2.Skills.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.GameData;
@@ -16,7 +17,7 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 /// The request is a compact envelope around a 12-byte blob holding the own PC handle and a u32 value at blob offset 8. The value is read for logging only.
 /// </para>
 /// <para>
-/// The shipped client has no path that sends this request. The reply carries <see cref="StatService.TalentPointsRemaining"/> over the stored talent tree, the same pool that the skill reset and the login talent packets report. No talent is reset here: a free reset would only be reachable from a modified client. The real reset paths are the Item_Type 26 scroll and the Talent_Reset job change.
+/// The shipped client has no path that sends this request. The reply carries <see cref="TalentRules.TalentPointsRemaining"/> over the stored talent tree, the same pool that the skill reset and the login talent packets report. No talent is reset here: a free reset would only be reachable from a modified client. The real reset paths are the Item_Type 26 scroll and the Talent_Reset job change.
 /// </para>
 /// </remarks>
 public class InitialTalentPointHandler : ZoneRmiHandlerBase<InitialTalentPointHandler>
@@ -39,7 +40,7 @@ public class InitialTalentPointHandler : ZoneRmiHandlerBase<InitialTalentPointHa
             : null;
 
         var store = services.GetRequiredService<GameDataStore>();
-        byte pool = StatService.TalentPointsRemaining(store, player.Job, player.Level,
+        byte pool = TalentRules.TalentPointsRemaining(store, player.Job, player.Level,
             player.LearnedSkills.Select(kv => (kv.Key, kv.Value)));
 
         Logger.LogWarning(

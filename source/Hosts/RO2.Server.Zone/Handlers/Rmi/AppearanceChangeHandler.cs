@@ -1,4 +1,5 @@
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using RO2.Skills.Domain;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
@@ -121,7 +122,7 @@ public class AppearanceChangeHandler : ZoneRmiHandlerBase<AppearanceChangeHandle
                 (byte)Math.Clamp(remaining, 0, byte.MaxValue), useSource: AppearanceChangePackets.UseSourceAppearanceTicket)), ct);
 
         AnsMapLoadingHandler.SyncLiveLevel(player, ch);
-        var talentPoints = StatService.TalentPointsRemaining(services.GetRequiredService<GameDataStore>(), player.Job, player.Level,
+        var talentPoints = TalentRules.TalentPointsRemaining(services.GetRequiredService<GameDataStore>(), player.Job, player.Level,
             player.LearnedSkills.Select(kv => (kv.Key, kv.Value)));
         await session.SendRmiAsync(ZoneS2COpcodes.OnUpdatePCSaveData,
             PcSaveDataPackets.BuildOnUpdatePCSaveData2487(player.EntityId, PcSaveDataPackets.BuildLiveHead205(player, ch, talentPoints)), ct);

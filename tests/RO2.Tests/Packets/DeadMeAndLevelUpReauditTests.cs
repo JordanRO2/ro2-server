@@ -1,4 +1,5 @@
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using RO2.Skills.Domain;
 using Microsoft.Extensions.Logging.Abstractions;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
@@ -29,7 +30,7 @@ public class DeadMeAndLevelUpReauditTests
     
  /// <summary>
  /// The remaining talent pool is not always zero: it equals the session's last 2310 value. A level-50
- /// victim with no talent skill learned carries 49 (StatService.TalentPointsRemaining). The frame keeps
+ /// victim with no talent skill learned carries 49 (TalentRules.TalentPointsRemaining). The frame keeps
  /// len = body - 4 and n = 0 when no gear is worn.
  /// </summary>
     [Fact]
@@ -40,7 +41,7 @@ public class DeadMeAndLevelUpReauditTests
             CharacterUid = 0x0DE0B6B3A7000077UL, Level = 50, MapId = 1100,
             Character = new Character { Id = 77, Name = "Victim", Level = 50 } };
         var store = new GameDataStore();
-        Assert.Equal(49, StatService.TalentPointsRemaining(store, victim.Job, victim.Level, []));
+        Assert.Equal(49, TalentRules.TalentPointsRemaining(store, victim.Job, victim.Level, []));
 
         Assert.True(await PlayerDeathPackets.SendDeadMeAsync(net.Sessions[0], victim, new GearInventory([]), store));
         var (op, body) = await net.Readers[0].NextAsync();

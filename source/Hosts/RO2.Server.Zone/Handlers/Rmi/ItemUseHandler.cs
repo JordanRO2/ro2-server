@@ -406,7 +406,7 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
     /// character_skills; skills with no Talent_Table row are kept at their level.
     /// </para>
     /// <para>
-    /// The 2544's blob+10 is the pool after the reset, <see cref="StatService.TalentPointsRemaining"/>: with only
+    /// The 2544's blob+10 is the pool after the reset, <see cref="TalentRules.TalentPointsRemaining"/>: with only
     /// starters left in the tree it is level - 1. Returned so the caller can log it.
     /// </para>
     /// </remarks>
@@ -457,7 +457,7 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
         await session.SendInternalRmiAsync(ZoneS2COpcodes.OnUseSkillList,
             WorldEntryService.BuildUseSkillList2488(GuildSkillBookLearn.SkillListFor(player, store)));
 
-        var pool = StatService.TalentPointsRemaining(store, job, player.Level, skills);
+        var pool = TalentRules.TalentPointsRemaining(store, job, player.Level, skills);
         await session.SendRmiAsync(ZoneS2COpcodes.OnInitTalentPoint,
             writer => writer.WriteBytes(QuestProgressPackets.BuildInitTalentPoint2544(player.EntityId, pool)));
 

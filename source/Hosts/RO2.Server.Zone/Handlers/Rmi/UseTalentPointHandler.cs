@@ -50,7 +50,7 @@ public class UseTalentPointHandler : ZoneRmiHandlerBase<UseTalentPointHandler>
     /// <summary>
     /// Checks a 1310 body before any work is done on it and reads it: the msgTag at body+4 must be
     /// <see cref="MsgTag"/>, the self PC handle at body+6 must be <paramref name="selfHandle"/> (the sender's own
-    /// entity id), the declared element count at body+11 at most <see cref="StatService.MaxTalentAllocations"/>
+    /// entity id), the declared element count at body+11 at most <see cref="TalentRules.MaxTalentAllocations"/>
     /// and every declared {u32 id, u8 lvl} element present. <paramref name="allocations"/> comes back deduplicated by
     /// group (the last entry of a group wins) with the zero-group and zero-level entries dropped, which is exactly
     /// the set that is validated, persisted and echoed in the 2543.
@@ -70,7 +70,7 @@ public class UseTalentPointHandler : ZoneRmiHandlerBase<UseTalentPointHandler>
         reader.Skip(EnvelopeLength); // marker/env(6) + self handle(4)
         cost = reader.ReadByte();    // points the client says the change costs
         count = reader.ReadUInt32(); // element count k
-        if (count > StatService.MaxTalentAllocations) return RequestError.TooManyElements;
+        if (count > TalentRules.MaxTalentAllocations) return RequestError.TooManyElements;
         if (reader.Remaining < (long)AllocationElementSize * count) return RequestError.Truncated;
 
         var raw = new List<(uint Id, byte Level)>((int)count);
@@ -145,7 +145,7 @@ public class UseTalentPointHandler : ZoneRmiHandlerBase<UseTalentPointHandler>
             // All-or-nothing: on any illegal entry, nothing is persisted and no 2543 is sent (the stored tree
             // is unchanged and the next world-entry 2488 rebuilds from it).
             if (allocations.Count > 0
-                && !StatService.IsTalentAllocationLegal(store, player.Job, player.Level, allocations,
+                && !TalentRules.IsTalentAllocationLegal(store, player.Job, player.Level, allocations,
                     player.SnapshotLearnedSkills(), out var reason))
             {
                 Logger.LogWarning("{Name}: illegal 1310 talent allocation refused ({Reason}); nothing persisted",
@@ -172,14 +172,14 @@ public class UseTalentPointHandler : ZoneRmiHandlerBase<UseTalentPointHandler>
 
             // The client's 2543 handler SETS its counter to blob+10, so this is the pool left after the
             // change. It comes from the whole stored tree, as the relog 2310 body[142] and the reset 2544 do
-            // (StatService.TalentPointsRemaining): level - 1 less the Talent_Table levels held, the starters'
+            // (TalentRules.TalentPointsRemaining): level - 1 less the Talent_Table levels held, the starters'
             // first level free. Summing only the vector's levels would ignore everything bought before, and sending 0
             // would empty the pool after one spend.
             var tree = player.SnapshotLearnedSkills().Select(kv => (kv.Key, kv.Value)).ToArray();
-            remaining = StatService.TalentPointsRemaining(store, player.Job, player.Level, tree);
+            remaining = TalentRules.TalentPointsRemaining(store, player.Job, player.Level, tree);
 
             // The point budget is not a hard gate (the earned pool this server models is known to undercount
-            // for some characters, see StatService.IsTalentAllocationLegal), so an over-spend is only logged;
+            // for some characters, see TalentRules.IsTalentAllocationLegal), so an over-spend is only logged;
             // the pool reported to the client is already clamped to zero by TalentPointsRemaining.
             int spent = TalentRules.TalentPointsSpent(store, player.Job, tree);
             int earned = Math.Max(0, player.Level - 1);

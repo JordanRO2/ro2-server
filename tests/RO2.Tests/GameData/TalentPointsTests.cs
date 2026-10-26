@@ -40,7 +40,7 @@ public class TalentPointsTests
         
         var store = await LoadShippedTalentTableAsync();
 
-        Assert.Equal(retailPool, StatService.TalentPointsRemaining(store, (byte)job, level, FromWire(wireSkillIds)));
+        Assert.Equal(retailPool, TalentRules.TalentPointsRemaining(store, (byte)job, level, FromWire(wireSkillIds)));
     }
 
     [Fact]

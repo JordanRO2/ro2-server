@@ -16,7 +16,7 @@ namespace RO2.Tests.Packets;
 
 /// <summary>
 /// CP-G4..G7: the 1310 ReqPCUseTalentPoint handler. Every decision sits in a pure helper (<c>TryParse</c>,
-/// <c>DedupKeepLast</c>, <c>StatService.IsTalentAllocationLegal</c>); the loopback tests pin the two outcomes:
+/// <c>DedupKeepLast</c>, <c>TalentRules.IsTalentAllocationLegal</c>); the loopback tests pin the two outcomes:
 /// refused -> nothing persisted, nothing applied, no 2543; accepted -> exactly one batch, the mirror applied, one 2543.
 /// Job 6 (Swordsman) rows of the shipped Talent_Table: 1102 (no parent), 1117 (needs 1102), 1108 (needs 1117), 1110.
 /// </summary>
@@ -180,7 +180,7 @@ public sealed class UseTalentPointHandlerTests
         Assert.Equal(new Dictionary<uint, byte> { [1102] = 1, [1117] = 1, [1108] = 1 }, rig.Player.LearnedSkills);
 
         var tree = rig.Player.LearnedSkills.Select(kv => (kv.Key, kv.Value));
-        var remaining = StatService.TalentPointsRemaining(rig.Store, 6, 50, tree);
+        var remaining = TalentRules.TalentPointsRemaining(rig.Store, 6, 50, tree);
         Assert.Equal(QuestProgressPackets.BuildUseTalentPoint2543(sent.Select(s => (s.Item1, s.Item2)).ToList(), remaining), body);
     }
 
