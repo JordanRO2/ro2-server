@@ -6,6 +6,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Combats.Application;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -104,13 +105,14 @@ public class SkillCastingStartHandler : ZoneRmiHandlerBase<SkillCastingStartHand
         // Not checked here: a 1506 rate cap and a learned-skill check (a 1506 precedes the 1508 that
         // carries the learned / cooldown rules, and item skills have no learned entry).
         var data = services.GetService<GameDataStore>();
-        if (!player.MapLoaded || player.IsDead)
+        var startCheck = CastBarFlow.CheckStart(player.MapLoaded, player.IsDead, x, y, z);
+        if (startCheck == CastBarFlow.StartOutcome.CasterNotReady)
         {
             Logger.LogDebug("{Name}: 1506 skill {SkillId} ignored, caster {State}", player.Name, skillId,
                 player.IsDead ? "is dead" : "has not loaded the map");
             return;
         }
-        if (!float.IsFinite(x) || !float.IsFinite(y) || !float.IsFinite(z))
+        if (startCheck == CastBarFlow.StartOutcome.NonFinitePosition)
         {
             Logger.LogWarning("{Name}: ReqSkillCastingStart for skill {SkillId} with a non-finite position; ignored",
                 player.Name, skillId);
