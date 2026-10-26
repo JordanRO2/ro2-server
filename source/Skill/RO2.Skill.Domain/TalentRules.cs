@@ -86,6 +86,25 @@ public static class TalentRules
     }
 
     /// <summary>
+    /// The learned groups a character of <paramref name="job"/> cannot use: talent-tree groups that are not in the
+    /// job's <c>Require_Job</c> mask. Dropped at login for a row whose class was healed (it was seeded as another
+    /// class). Distinct, ascending.
+    /// </summary>
+    public static uint[] GroupsOutsideClass(GameDataStore store, byte job, IEnumerable<uint> learnedGroups)
+    {
+        if (job is 0 or > 32) return [];
+        var bit = 1u << (job - 1);
+        var tree = new HashSet<uint>();
+        var usable = new HashSet<uint>();
+        foreach (var r in store.TalentTable)
+        {
+            tree.Add(r.Skill_Group_ID);
+            if ((r.Require_Job & bit) != 0) usable.Add(r.Skill_Group_ID);
+        }
+        return learnedGroups.Where(g => tree.Contains(g) && !usable.Contains(g)).Distinct().OrderBy(g => g).ToArray();
+    }
+
+    /// <summary>
     /// True when <paramref name="skillGroup"/> is a talent skill (any <c>Talent_Table</c> row of any class names it),
     /// with <paramref name="max"/> the highest <c>Max_Skill_Level</c> among its rows. A group whose rows all carry
     /// <c>Max_Skill_Level</c> 0 (no cap recorded) reports <see cref="byte.MaxValue"/>, so <c>level &lt;= max</c> is a

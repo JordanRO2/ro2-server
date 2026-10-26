@@ -1,5 +1,6 @@
 ﻿using RO2.Economy.Domain;
 using RO2.Skills.Domain;
+using RO2.Skills.Application;
 using RO2.Domain.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -356,46 +357,19 @@ public class LoginPCHandler : NetworkZoneRmiBase
                 learnedSkills = await DropSkillsOutsideClassAsync(services, store, characterId, character.Job,
                     learnedSkills, session.SessionId);
 
-            var playerStateSkills = playerManager.GetPlayer(session.SessionId);
-            if (playerStateSkills != null && learnedSkills != null)
+            // Mirror the loaded rows and seed the class's missing starter skills at level 1 (self-healing, so a
+            // character made before this, or one that just job-changed, gains its basics on relog). The seeded set
+            // is TalentRules.StarterSkillGroups, the one a skill reset leaves (ItemUseHandler); the flow persists
+            // each and folds them into the list handed to the world-entry 2488 send.
+            if (playerManager.GetPlayer(session.SessionId) is { } skillOwner && learnedSkills is not null)
             {
-                playerStateSkills.OverlayLearnedSkills(
-                    learnedSkills.Select(sk => (sk.SkillId, sk.Level)));
-            }
-
-            // Grant the class's starter skills at level 1 if they are missing — self-healing, so a character
-            // created before this existed, or one that just job-changed, gains its basics on next login.
-            // Their first level is free (TalentRules.TalentPointsSpent subtracts it). Persisted like any
-            // learned skill (SkillId == Skill_Group), so they flow into the 2488 skill-list send unchanged.
-            // The set is TalentRules.StarterSkillGroups, the one a skill reset leaves (ItemUseHandler), so a
-            // relog seeds exactly what the reset kept. GameDataStore.GetStarterSkillGroups groups the table by
-            // Job_ID instead: it gives jobs 6-15 their job-master row (6 -> 1200, 10 -> 3200), which the
-            // job-6 reset drops, and Crescentia (17) nothing.
-            var starterGroups = TalentRules.StarterSkillGroups(store, character.Job);
-            if (starterGroups.Length > 0)
-            {
-                var known = new HashSet<uint>((learnedSkills ?? Array.Empty<RO2.Skills.Domain.CharacterSkill>())
-                    .Select(s => s.SkillId));
-                var seeded = new List<RO2.Skills.Domain.CharacterSkill>();
-                foreach (var grp in starterGroups)
-                {
-                    if (!known.Add(grp))
-                        continue;
-                    await skillRepo.LearnSkillAsync(characterId, grp, 1);
-                    seeded.Add(new RO2.Skills.Domain.CharacterSkill
-                    { CharacterId = characterId, SkillId = grp, Level = 1 });
-                }
-                if (seeded.Count > 0)
-                {
-                    playerStateSkills?.OverlayLearnedSkills(seeded.Select(s => (s.SkillId, s.Level)));
-                    // Fold the newly-seeded skills into the list handed to the world-entry 2488 send.
-                    var merged = new List<RO2.Skills.Domain.CharacterSkill>(
-                        learnedSkills ?? Array.Empty<RO2.Skills.Domain.CharacterSkill>());
-                    merged.AddRange(seeded);
-                    learnedSkills = merged;
+                var before = learnedSkills.Count;
+                learnedSkills = await SeedStarterSkillsFlow.SeedAsync(
+                    new LearnedSkillsSession(skillOwner), skillRepo, store, character.Job, characterId, learnedSkills);
+                var granted = learnedSkills.Count - before;
+                if (granted > 0)
                     Logger.LogInformation("Session {Id}: granted {N} starter skill(s) for job {Job} to {Name}",
-                        session.SessionId, seeded.Count, character.Job, character.Name);
-                }
+                        session.SessionId, granted, character.Job, character.Name);
             }
         }
         catch (Exception ex) { Logger.LogDebug(ex, "Skill load/seed skipped"); }
@@ -646,27 +620,7 @@ public class LoginPCHandler : NetworkZoneRmiBase
     private const byte SkillQuickSlotEntryType = 2;
 
     /// <summary>
-    /// The talent-tree skill groups in <paramref name="learnedGroups"/> that <paramref name="job"/> cannot use:
-    /// groups with a Talent_Table row, none of whose rows carries bit <c>job-1</c> of <c>Require_Job</c> (the
-    /// mask TalentRules.StarterSkillGroups reads). Skills with no Talent_Table row (the profession skills, e.g.
-    /// 50300) are never in it. Ascending.
-    /// </summary>
-    internal static uint[] TalentGroupsOutsideClass(GameDataStore store, byte job, IEnumerable<uint> learnedGroups)
-    {
-        if (job is 0 or > MaxJobInRequireMask) return [];
-        var bit = 1u << (job - 1);
-        var tree = new HashSet<uint>();
-        var usable = new HashSet<uint>();
-        foreach (var r in store.TalentTable)
-        {
-            tree.Add(r.Skill_Group_ID);
-            if ((r.Require_Job & bit) != 0) usable.Add(r.Skill_Group_ID);
-        }
-        return learnedGroups.Where(g => tree.Contains(g) && !usable.Contains(g)).Distinct().OrderBy(g => g).ToArray();
-    }
-
-    /// <summary>
-    /// Deletes the learned skills <paramref name="job"/> cannot use (<see cref="TalentGroupsOutsideClass"/>) and
+    /// Deletes the learned skills <paramref name="job"/> cannot use (<see cref="TalentRules.GroupsOutsideClass"/>) and
     /// clears the quick-slot cells that hold them, then returns the skills that are left. Only for a row whose
     /// class was healed at this login; a storage error is logged and the list returned unchanged.
     /// </summary>
@@ -674,7 +628,7 @@ public class LoginPCHandler : NetworkZoneRmiBase
         IServiceProvider services, GameDataStore store, uint characterId, byte job,
         IReadOnlyList<RO2.Skills.Domain.CharacterSkill> learned, uint sessionId)
     {
-        var dropped = TalentGroupsOutsideClass(store, job, learned.Select(s => s.SkillId));
+        var dropped = TalentRules.GroupsOutsideClass(store, job, learned.Select(s => s.SkillId));
         if (dropped.Length == 0) return learned;
         try
         {

@@ -108,9 +108,9 @@ public class CharacterClassProfessionTests
         Assert.Equal(new uint[] { 6101, 6104, 6111 }, alterStarters);
 
         var learned = new uint[] { 4101, 4103, 4108, 50300 }.Concat(alterStarters).ToArray();
-        Assert.Equal(new uint[] { 4101, 4103, 4108 }, LoginPCHandler.TalentGroupsOutsideClass(store, 16, learned));
-        
-        Assert.Equal(new uint[] { 6101, 6104, 6111 }, LoginPCHandler.TalentGroupsOutsideClass(store, 4, learned));
+        Assert.Equal(new uint[] { 4101, 4103, 4108 }, TalentRules.GroupsOutsideClass(store, 16, learned));
+
+        Assert.Equal(new uint[] { 6101, 6104, 6111 }, TalentRules.GroupsOutsideClass(store, 4, learned));
     }
 
     [Fact]
