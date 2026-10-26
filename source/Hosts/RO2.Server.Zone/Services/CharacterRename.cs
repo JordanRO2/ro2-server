@@ -21,7 +21,7 @@ namespace RO2.Server.Zone.Services;
 /// Result codes returned to the client: 15401 is a server-side failure of the rename, 15402 means the name is taken or too short (or no scroll is present), 15403 means the name is not allowed, and 0 means the name may be used.
 /// </para>
 /// <para>
-/// Names under <see cref="NameValidator.MinLength"/> characters, names with invalid characters, names longer than <see cref="MaxRenameLength"/> and names matching the name filter are refused. Names that are already taken are refused with 15402.
+/// Names under <see cref="NameRules.MinLength"/> characters, names with invalid characters, names longer than <see cref="MaxRenameLength"/> and names matching the name filter are refused. Names that are already taken are refused with 15402.
 /// </para>
 /// </remarks>
 public static class CharacterRename
@@ -39,7 +39,7 @@ public static class CharacterRename
     public const uint ResultNotAllowed = 15403;
 
  /// <summary>
- /// The longest new name the rename accepts. It is kept separate from <see cref="NameValidator.MaxLength"/>, which also applies to character creation.
+ /// The longest new name the rename accepts. It is kept separate from <see cref="NameRules.MaxLength"/>, which also applies to character creation.
  /// </summary>
     public const int MaxRenameLength = 14;
 
@@ -69,9 +69,9 @@ public static class CharacterRename
  /// </remarks>
     public static (uint result, string? reason) CheckName(string newName, string currentName, IReadOnlyList<NameFilterRow>? filter)
     {
-        if (newName.Length < NameValidator.MinLength)
-            return (ResultRefused, $"too short (min {NameValidator.MinLength})");
-        var (refusal, reason) = NameValidator.Check(newName, filter);
+        if (newName.Length < NameRules.MinLength)
+            return (ResultRefused, $"too short (min {NameRules.MinLength})");
+        var (refusal, reason) = NameRules.Check(newName, filter);
         if (refusal != NameRefusal.None)
             return (ResultNotAllowed, reason);
         if (newName.Length > MaxRenameLength)

@@ -11,6 +11,7 @@ using System.Net;
 using System.Text.Json;
 using Xunit;
 using static RO2.Tests.Packets.ReauditShared;
+using RO2.Characters.Domain;
 
 namespace RO2.Tests.Packets;
 
@@ -37,13 +38,13 @@ public class NameFilterRuleReauditTests
     [InlineData("xGMx", NameRefusal.Prohibited)]
     [InlineData("admin", NameRefusal.Prohibited)]
     public void NameRule_WithTheRealNameFilter(string name, NameRefusal expected)
-        => Assert.Equal(expected, NameValidator.Check(name, LoadNameFilter()).refusal);
+        => Assert.Equal(expected, NameRules.Check(name, LoadNameFilter()).refusal);
 
     [Fact]
     public void ContainedGmRule_NeedsTheNameFilterRow()
     {
         
-        Assert.Equal(NameRefusal.None, NameValidator.Check("iRO2GM", [new NameFilterRow { name = "RO2" }]).refusal);
+        Assert.Equal(NameRefusal.None, NameRules.Check("iRO2GM", [new NameFilterRow { name = "RO2" }]).refusal);
         Assert.Contains(LoadNameFilter(), r => r.name == "GM");
     }
 

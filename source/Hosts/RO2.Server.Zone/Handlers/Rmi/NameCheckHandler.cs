@@ -61,7 +61,7 @@ public class NameCheckHandler : NetworkZoneRmiBase
         Logger.LogInformation("Session {SessionId}: NameCheck for '{Name}'", session.SessionId, characterName);
 
         
-        var (refusal, reason) = NameValidator.Check(characterName, services.GetService<GameDataStore>()?.NameFilter);
+        var (refusal, reason) = NameRules.Check(characterName, services.GetService<GameDataStore>()?.NameFilter);
         var result = ResultFor(refusal);
 
         

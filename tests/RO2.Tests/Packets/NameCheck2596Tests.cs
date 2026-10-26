@@ -2,6 +2,7 @@ using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Services;
 using Xunit;
 using NameFilterRow = RO2.GameData.Tables.NameFilter;
+using RO2.Characters.Domain;
 
 namespace RO2.Tests.Packets;
 
@@ -45,7 +46,7 @@ public class NameCheck2596Tests
     [InlineData("GM", NameRefusal.Format)]            
     [InlineData("Assassin", NameRefusal.None)]        
     public void Check_ClassifiesTheRefusal(string name, NameRefusal expected)
-        => Assert.Equal(expected, NameValidator.Check(name, Filter).refusal);
+        => Assert.Equal(expected, NameRules.Check(name, Filter).refusal);
 
     [Fact]
     public void Refusals_MapToTheClientCodes()
