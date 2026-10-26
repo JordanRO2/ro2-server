@@ -7,6 +7,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Worlds.Application;
 using RO2.Worlds.Domain;
 using RO2.Characters.Domain;
 
@@ -56,11 +57,11 @@ public class ViewGroupMoveHandler : ZoneRmiHandlerBase<ViewGroupMoveHandler>
         // Only the canonical frame is a movement report. Any other length is malformed (or a different transport
         // path, see CanonicalPayloadLength): relaying it would send a mis-sized 2750 to the whole map, which crashes or
         // culls clients, so it is dropped and the last good position/pin is kept.
-        if (!IsCanonicalLength(payload.Length)) return;
-
         // A 1526 that arrives before the client acked its map (1304) or inside a glider re-entry window is the OLD
         // map's position: taking it would overwrite the new map's spawn. Dropped; nothing is stored or relayed.
-        if (!AcceptsMoves(player)) return;
+        if (MoveRequestFlow.Admit(IsCanonicalLength(payload.Length), player.MapLoaded, player.PendingGliderDismount)
+            == MoveRequestFlow.Admission.Drop)
+            return;
 
         var reader = new PacketReader(payload.Span);
 
@@ -88,10 +89,11 @@ public class ViewGroupMoveHandler : ZoneRmiHandlerBase<ViewGroupMoveHandler>
         // are compared. The position held for the PC stays the pin, so these positions are not taken either.
         // The rule is "relay only at the pin", never "always relay at the pin". Without this the corpse slid on every
         // onlooker's screen, and the 2504 a newcomer gets and the saved position drifted off the spot.
-        if (player.IsDead)
+        var dead = MoveRequestFlow.DecideDead(player.IsDead, IsAtDeadPoint(player, curX, curY));
+        if (dead != MoveRequestFlow.DeadOutcome.Alive)
         {
             player.LastActivity = DateTime.UtcNow;
-            if (!IsAtDeadPoint(player, curX, curY))
+            if (dead == MoveRequestFlow.DeadOutcome.DropOffPin)
                 return;
             var pinned = BuildMoveBody(player.EntityId, payload.Span);
             // Same no-self-echo policy as the live path below.
@@ -121,11 +123,10 @@ public class ViewGroupMoveHandler : ZoneRmiHandlerBase<ViewGroupMoveHandler>
 
         // Accepted: player.X/Y/Z now hold (curX, curY, curZ). A move ends an immovable channel
         // (SkillChannelingPackets.CancelsOnMove), decided against the previous accepted point captured above.
-        var channelToCancel = player.ActiveChannelSkillId;
-        if (channelToCancel == 0
-            || !DisplacesChannel(lastX, lastY, curX, curY, destX, destY)
-            || !SkillChannelingPackets.CancelsOnMove(channelToCancel)
-            || !player.TryEndChannel(channelToCancel))
+        var accepted = MoveRequestFlow.DecideAccepted(lastX, lastY, curX, curY, destX, destY,
+            player.ActiveChannelSkillId, SkillChannelingPackets.CancelsOnMove);
+        var channelToCancel = accepted.ChannelToEnd;
+        if (channelToCancel != 0 && !player.TryEndChannel(channelToCancel))
             channelToCancel = 0;
 
         TrackFacing(player, payload.Span);
@@ -136,8 +137,7 @@ public class ViewGroupMoveHandler : ZoneRmiHandlerBase<ViewGroupMoveHandler>
         // Tracking this accurately matters for combat: the attack-start grant (2694) must reach the
         // attacker only once he is settled, never mid-approach (see NormalAttackStartHandler).
         var wasMoving = player.IsMoving;
-        var arrived = MathF.Abs(destX - curX) < ChannelMoveEpsilon && MathF.Abs(destY - curY) < ChannelMoveEpsilon;
-        player.IsMoving = !arrived;
+        player.IsMoving = accepted.IsMoving;
         player.LastActivity = DateTime.UtcNow;
 
         if (!wasMoving)
@@ -209,7 +209,7 @@ public class ViewGroupMoveHandler : ZoneRmiHandlerBase<ViewGroupMoveHandler>
     /// False while the PC has not acked its current map (<see cref="PlayerState.MapLoaded"/>, 1304) or is inside a glider
     /// re-entry (<see cref="PlayerState.PendingGliderDismount"/>): a 1526 then carries the previous map's coordinates.
     /// </summary>
-    internal static bool AcceptsMoves(PlayerState player) => player.MapLoaded && !player.PendingGliderDismount;
+    internal static bool AcceptsMoves(PlayerState player) => MoveRequestRules.AcceptsMoves(player.MapLoaded, player.PendingGliderDismount);
 
     /// <summary>Offset of the facing f32 (yaw, radians) in the 1526 payload, the same offset in the 2750 relay.</summary>
     internal const int FacingYawOffset = 68;
@@ -237,17 +237,13 @@ public class ViewGroupMoveHandler : ZoneRmiHandlerBase<ViewGroupMoveHandler>
             snapshot.FacingYaw = yaw;
     }
 
-    /// <summary>Displacement (x/y, per axis) below which a 1526 is not a move; the same 0.1 the arrival test uses.</summary>
-    internal const float ChannelMoveEpsilon = 0.1f;
-
     /// <summary>
     /// True when a 1526 displaces the PC: its destination differs from its current point, or its current point
     /// from the last one the server held. A 1526 that only turns the avatar (destination == current == last
     /// point) is not a move, so it must not cancel a channel.
     /// </summary>
     internal static bool DisplacesChannel(float lastX, float lastY, float curX, float curY, float destX, float destY)
-        => MathF.Abs(destX - curX) >= ChannelMoveEpsilon || MathF.Abs(destY - curY) >= ChannelMoveEpsilon
-           || MathF.Abs(curX - lastX) >= ChannelMoveEpsilon || MathF.Abs(curY - lastY) >= ChannelMoveEpsilon;
+        => MoveRequestRules.DisplacesChannel(lastX, lastY, curX, curY, destX, destY);
 
     /// <summary>
     /// True when a dead PC's 1526 reports the point it is pinned at: its current x/y (payload +40/+44)
@@ -256,8 +252,7 @@ public class ViewGroupMoveHandler : ZoneRmiHandlerBase<ViewGroupMoveHandler>
     /// floats verbatim, and the off-pin ones differ from them.
     /// </summary>
     internal static bool IsAtDeadPoint(PlayerState player, float curX, float curY)
-        => BitConverter.SingleToInt32Bits(curX) == BitConverter.SingleToInt32Bits(player.X)
-           && BitConverter.SingleToInt32Bits(curY) == BitConverter.SingleToInt32Bits(player.Y);
+        => MoveRequestRules.IsAtDeadPoint(curX, curY, player.X, player.Y);
 
     /// <summary>
     /// Builds the S2C 2750 ViewGroupPCMoveTo body from an inbound C2S 1526 payload:
