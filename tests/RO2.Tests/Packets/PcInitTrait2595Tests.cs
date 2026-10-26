@@ -8,7 +8,7 @@ namespace RO2.Tests.Packets;
 
 /// <summary>
 /// Tests the 2595 OnPcInitTrait builder (TraitPackets.BuildPcInitTrait2595) and the 205-byte 2310 head writer
-/// (WorldEntryService.WriteCharacterHead205), checked against reference frames.
+/// (WorldEntryPackets.WriteCharacterHead205), checked against reference frames.
 /// </summary>
 public class PcInitTrait2595Tests
 {
@@ -73,10 +73,10 @@ public class PcInitTrait2595Tests
             MasterLevel = 2, Gold = 4_000_000_000L, MapId = 1100,
         };
         using var full = new PacketWriter();
-        WorldEntryService.WriteCharacterDetail(full, c, 0x0DE0B6B3A7F07304UL, 0x0137B811u, null, 1100u, 10f, 20f, 30f,
+        WorldEntryPackets.WriteCharacterDetail(full, c, 0x0DE0B6B3A7F07304UL, 0x0137B811u, null, 1100u, 10f, 20f, 30f,
             talentPointsRemaining: 7);
         using var head = new PacketWriter();
-        WorldEntryService.WriteCharacterHead205(head, c, 0x0DE0B6B3A7F07304UL, 0x0137B811u, 1100u, 10f, 20f, 30f, 7);
+        WorldEntryPackets.WriteCharacterHead205(head, c, 0x0DE0B6B3A7F07304UL, 0x0137B811u, 1100u, 10f, 20f, 30f, 7);
 
         Assert.Equal(205, head.Length);
         Assert.Equal(full.ToArray().AsSpan(4, 205).ToArray(), head.ToArray());   

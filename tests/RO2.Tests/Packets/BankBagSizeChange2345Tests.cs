@@ -100,7 +100,7 @@ public class BankBagSizeChange2345Tests
     internal static byte[] Head(Character c)
     {
         using var w = new PacketWriter();
-        WorldEntryService.WriteCharacterHead205(w, c, 0x0DE0B6B3A7640001UL, 0x0011A6E2u, 1100u, 0f, 0f, 0f, 0);
+        WorldEntryPackets.WriteCharacterHead205(w, c, 0x0DE0B6B3A7640001UL, 0x0011A6E2u, 1100u, 0f, 0f, 0f, 0);
         return w.ToArray();
     }
 

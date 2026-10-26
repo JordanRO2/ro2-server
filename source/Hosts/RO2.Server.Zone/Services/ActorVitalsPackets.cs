@@ -129,7 +129,7 @@ public static class ActorVitalsPackets
     /// Builds RMI 2435 OnZenyChange, the player's money changed. This is the main zeny-wallet update opcode
     /// (not a siege-only message, despite the siege-named client helpers): the u64 at blob+8 is stored as the
     /// player's zeny balance, which the client's affordability checks read. The initial balance arrives
-    /// inside the 2310 head at body+112 (see WorldEntryService.WriteCharacterDetail); 2435 keeps it in sync
+    /// inside the 2310 head at body+112 (see WorldEntryPackets.WriteCharacterDetail); 2435 keeps it in sync
     /// afterwards.
     /// </summary>
     /// <remarks>

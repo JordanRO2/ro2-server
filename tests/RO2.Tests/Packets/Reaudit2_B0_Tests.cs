@@ -25,7 +25,7 @@ namespace RO2.Tests.Packets;
 /// the warp burst without 2497 / 2435; and a lethal DoT tick on a player running the death sequence.
 /// </summary>
 /// <remarks>
-/// The reasoning behind each field is documented on the writers (WorldEntryService.WriteCharacterHead205 /
+/// The reasoning behind each field is documented on the writers (WorldEntryPackets.WriteCharacterHead205 /
 /// FacingByte / BuildPcTrait2498FromDonor, EffectService.KillByDotAsync).
 /// The head and death-sequence tests pin this server's layout and order; they are not byte comparisons with a retail
 /// frame, except where a retail body is quoted.
@@ -85,7 +85,7 @@ public class Reaudit2_B0_Tests
     private static byte[] Head(Character c)
     {
         using var w = new PacketWriter(256);
-        WorldEntryService.WriteCharacterHead205(w, c, 0x0DE0B6B3A7640101UL, 0x0011A6E2u, 1200u, 728f, 537f, 57f, 0);
+        WorldEntryPackets.WriteCharacterHead205(w, c, 0x0DE0B6B3A7640101UL, 0x0011A6E2u, 1200u, 728f, 537f, 57f, 0);
         return w.ToArray();
     }
 

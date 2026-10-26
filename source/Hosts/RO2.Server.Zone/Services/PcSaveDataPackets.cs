@@ -48,7 +48,7 @@ internal static class PcSaveDataPackets
     internal static byte[] BuildLiveHead205(PlayerState player, Character character, byte talentPointsRemaining)
     {
         using var writer = new PacketWriter(CharacterHeadLength + 16);
-        WorldEntryService.WriteCharacterHead205(writer, character, player.CharacterUid, player.EntityId,
+        WorldEntryPackets.WriteCharacterHead205(writer, character, player.CharacterUid, player.EntityId,
             player.MapId, player.X, player.Y, player.Z, talentPointsRemaining);
         var head = writer.ToArray();
         var span = head.AsSpan();

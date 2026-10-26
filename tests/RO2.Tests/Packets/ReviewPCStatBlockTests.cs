@@ -41,7 +41,7 @@ public class ReviewPCStatBlockTests
     {
         var character = new Character { Id = 915_301, Name = "Reviewed", Job = 9, Level = 40 };
         using var w = new PacketWriter();
-        WorldEntryService.WriteCharacterDetail(w, character, 0x0DE0B6B3A7F07304UL, 0x0137B811u, null, 1100u, 10f, 20f, 30f);
+        WorldEntryPackets.WriteCharacterDetail(w, character, 0x0DE0B6B3A7F07304UL, 0x0137B811u, null, 1100u, 10f, 20f, 30f);
         var detail = w.ToArray();
 
         var stats = ReviewPCHandler.BuildStatBlock(Blob(5000, 500), 4000, 300);

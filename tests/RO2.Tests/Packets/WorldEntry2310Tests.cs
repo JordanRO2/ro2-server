@@ -8,7 +8,7 @@ using RO2.Characters.Domain;
 namespace RO2.Tests.Packets;
 
 /// <summary>
-/// Byte-identity gate for the 2310 OnCharacterDetail builder. <see cref="WorldEntryService.WriteCharacterDetail"/>
+/// Byte-identity gate for the 2310 OnCharacterDetail builder. <see cref="WorldEntryPackets.WriteCharacterDetail"/>
 /// must produce exactly the bytes of the reference template <see cref="WriteCharacterDetailRaw"/>
 /// for identical inputs. A single wrong byte on this spawn path breaks the client.
 /// </summary>
@@ -75,7 +75,7 @@ public class WorldEntry2310Tests
     private static byte[] BuildViaFieldByField(Character c)
     {
         using var w = new PacketWriter();
-        WorldEntryService.WriteCharacterDetail(w, c, DonorCharUid, DonorEntityId, null, DonorMapId, DonorPosX, DonorPosY, DonorPosZ);
+        WorldEntryPackets.WriteCharacterDetail(w, c, DonorCharUid, DonorEntityId, null, DonorMapId, DonorPosX, DonorPosY, DonorPosZ);
         return w.ToArray();
     }
 

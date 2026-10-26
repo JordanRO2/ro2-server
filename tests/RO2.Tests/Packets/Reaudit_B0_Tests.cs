@@ -125,7 +125,7 @@ public class Reaudit_B0_Tests
     private static byte[] Build2310(Character c, (uint, ushort, uint, ushort)? vitals, IReadOnlyList<(uint, byte)>? skills)
     {
         using var w = new PacketWriter();
-        WorldEntryService.WriteCharacterDetail(w, c, 0x0DE0B6B3A7F07304UL, 0x0137B811u, null, 1100u, 10f, 20f, 30f,
+        WorldEntryPackets.WriteCharacterDetail(w, c, 0x0DE0B6B3A7F07304UL, 0x0137B811u, null, 1100u, 10f, 20f, 30f,
             vitals: vitals, skillList: skills);
         return w.ToArray();
     }

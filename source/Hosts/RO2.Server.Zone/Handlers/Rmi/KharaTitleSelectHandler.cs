@@ -31,7 +31,7 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 /// <para>
 /// The stored pair also reaches the character records, as TITLE ids (KharaTitleStore.TitleOf): an accepted select
 /// publishes it (KharaTitleStore.Publish) and every login does (KharaTitleStore.PreloadAsync in LoginPCHandler), and
-/// the 2310 head (blob+143 A timer, +147 title A, +185 title B; WorldEntryService.WriteCharacterHead205) and the PC
+/// the 2310 head (blob+143 A timer, +147 title A, +185 title B; WorldEntryPackets.WriteCharacterHead205) and the PC
 /// record (optMask 0x0008 / 0x0010; PlayerSpawnService.WriteBaseBlock) read it from there.
 /// </para>
 /// </remarks>

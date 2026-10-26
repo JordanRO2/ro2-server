@@ -252,7 +252,7 @@ public static class PlayerDeathPackets
         if (victim.Character is { } ch)
         {
             using var scratch = new PacketWriter(2048);
-            WorldEntryService.WriteCharacterDetail(scratch, ch, victim.CharacterUid, victim.EntityId,
+            WorldEntryPackets.WriteCharacterDetail(scratch, ch, victim.CharacterUid, victim.EntityId,
                 items: null, victim.MapId, victim.X, victim.Y, victim.Z, talentPointsRemaining: talentPoints);
             scratch.GetWrittenSpan().Slice(InnerLengthPrefixSize, CharacterHeadLength).CopyTo(head);   // skip the 2310's u32 innerLen
         }
