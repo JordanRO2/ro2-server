@@ -7,14 +7,13 @@
   </PropertyGroup>
 
   <!-- World bounded context: Application holds the use-case flows and the flow-facing ports they consume.
-       References its own Domain, the shared GameData kernel, BuildingBlocks and the foundational Combat/Character
-       Domains; the live registries and sessions are reached through ports (IWorldNotifier) the host implements. -->
+       References its own Domain, the shared GameData kernel and BuildingBlocks; the live registries and sessions are
+       reached through ports (IWorldNotifier) the host implements. Foundational sibling Domains (Combat/Character) are
+       added by the first use-case slice that actually consumes them, not ahead of need. -->
   <ItemGroup>
     <ProjectReference Include="..\RO2.World.Domain\RO2.World.Domain.csproj" />
     <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
     <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
-    <ProjectReference Include="..\..\Combat\RO2.Combat.Domain\RO2.Combat.Domain.csproj" />
-    <ProjectReference Include="..\..\Character\RO2.Character.Domain\RO2.Character.Domain.csproj" />
   </ItemGroup>
 
 </Project>
