@@ -1,5 +1,6 @@
 using RO2.GameData.Tables;
 using RO2.Network.Packets;
+using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -27,18 +28,6 @@ internal static class WorldEventPackets
 
  /// <summary>Length of one record, in bytes.</summary>
     internal const int RecordLength = 13;
-
- /// <summary>Event type of a red system notice. The data value is a string id.</summary>
-    internal const byte EventTypeNotice = 3;
-
- /// <summary>Event type of a background music change. The data value is the music file number.</summary>
-    internal const byte EventTypeBgm = 4;
-
- /// <summary>Event type of a map effect.</summary>
-    internal const byte EventTypeMapEffect = 5;
-
- /// <summary>Event type of a yellow announcement. The data value is a string id.</summary>
-    internal const byte EventTypeAnnouncement = 6;
 
  /// <summary>Stage level sent to a player who is not on any map of the event.</summary>
     internal const byte OffMapStage = 0;
@@ -85,50 +74,6 @@ internal static class WorldEventPackets
     }
 
  /// <summary>
- /// Each world event with its initial stage, ordered by event id.
- /// </summary>
- /// <remarks>
- /// The initial stage is the row with a return stage of 0. It is the only row without a fallback stage, and it waits on its check group instead of timing out.
- /// </remarks>
-    public static IReadOnlyList<(uint WorldEventId, byte StageLevel)> InitialStages(IEnumerable<WorldEventMain> rows)
-        => rows.Where(r => r.Return_Stage == 0)
-               .GroupBy(r => r.World_Event_ID)
-               .OrderBy(g => g.Key)
-               .Select(g => (WorldEventId: g.Key, StageLevel: g.Select(r => r.Stage_Level).Min()))
-               .ToList();
-
- /// <summary>
- /// The records a world entry onto a map carries for one event: that map's announcement rows, then its music rows, in table order.
- /// </summary>
- /// <remarks>
- /// Returns an empty list off the event's maps. Notices of other types appear only in a stage change.
- /// </remarks>
-    public static IReadOnlyList<WorldEventEventGroup> WorldEntryRecords(IEnumerable<WorldEventEventGroup> stageRows, uint mapId)
-    {
-        var rows = stageRows.Where(r => r.Map_Index == mapId).ToList();
-        return rows.Where(r => r.Event_Type == EventTypeAnnouncement)
-            .Concat(rows.Where(r => r.Event_Type == EventTypeBgm))
-            .ToList();
-    }
-
- /// <summary>
- /// The announcement rows of the stage that name a map other than <paramref name="mapId"/>. A player off that map still receives them after the world-entry passes.
- /// </summary>
-    public static IReadOnlyList<WorldEventEventGroup> OffMapAnnouncements(IEnumerable<WorldEventEventGroup> stageRows, uint mapId)
-        => stageRows.Where(r => r.Event_Type == EventTypeAnnouncement && r.Map_Index != mapId).ToList();
-
- /// <summary>
- /// The records a stage change sends to a player on <paramref name="mapId"/>: that map's rows of the new stage, in table order.
- /// </summary>
- /// <remarks>
- /// Returns an empty list when the stage names nothing for that map. Types 1 and 2 are not sent.
- /// </remarks>
-    public static IReadOnlyList<WorldEventEventGroup> StageChangeRecords(IEnumerable<WorldEventEventGroup> stageRows, uint mapId)
-        => stageRows.Where(r => r.Map_Index == mapId
-                && r.Event_Type is EventTypeNotice or EventTypeBgm or EventTypeMapEffect or EventTypeAnnouncement)
-            .ToList();
-
- /// <summary>
  /// The 3030 bodies of one world-entry burst onto a map, in send order.
  /// </summary>
  /// <param name="events">Each event's id, live stage and the stage's rows, in ascending id order.</param>
@@ -145,12 +90,12 @@ internal static class WorldEventPackets
             foreach (var (id, stage, rows) in events)
             {
                 bodies.Add(BuildWorldEventTrigger3030(id, stage));
-                var onMap = WorldEntryRecords(rows, mapId);
+                var onMap = WorldEventSelectors.WorldEntryRecords(rows, mapId);
                 if (onMap.Count > 0) bodies.Add(BuildWorldEventRecords3030(id, stage, onMap));
             }
         foreach (var (id, stage, rows) in events)
         {
-            var notices = OffMapAnnouncements(rows, mapId);
+            var notices = WorldEventSelectors.OffMapAnnouncements(rows, mapId);
             if (notices.Count > 0) bodies.Add(BuildWorldEventRecords3030(id, stage, notices));
         }
         return bodies;
@@ -165,7 +110,7 @@ internal static class WorldEventPackets
     public static IReadOnlyList<byte[]> BuildStageChangePush(uint worldEventId, byte stageLevel,
         IEnumerable<WorldEventEventGroup> stageRows, uint mapId)
     {
-        var records = StageChangeRecords(stageRows, mapId);
+        var records = WorldEventSelectors.StageChangeRecords(stageRows, mapId);
         if (records.Count == 0) return new[] { BuildWorldEventTrigger3030(worldEventId, OffMapStage) };
         return new[]
         {

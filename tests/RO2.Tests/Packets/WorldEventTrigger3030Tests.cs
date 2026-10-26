@@ -3,6 +3,7 @@ using System.Text.Json;
 using RO2.GameData;
 using RO2.GameData.Tables;
 using RO2.Server.Zone.Services;
+using RO2.Worlds.Domain;
 using Xunit;
 
 namespace RO2.Tests.Packets;
@@ -63,7 +64,7 @@ public class WorldEventTrigger3030Tests
             new WorldEventMain { World_Event_ID = 110001, Stage_Level = 1, Return_Stage = 0 },
         };
 
-        var stages = WorldEventPackets.InitialStages(rows);
+        var stages = WorldEventSelectors.InitialStages(rows);
 
         Assert.Equal(new[] { (110001u, (byte)1), (122101u, (byte)1) }, stages.ToArray());
     }

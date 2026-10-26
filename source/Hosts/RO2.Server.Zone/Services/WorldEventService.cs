@@ -5,6 +5,7 @@ using RO2.Domain.Entities;
 using RO2.GameData;
 using RO2.GameData.Tables;
 using RO2.Network.Protocol;
+using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -168,7 +169,7 @@ public sealed class WorldEventService : BackgroundService
         {
             var states = await LoadLockedAsync(ct);
             stages = states is null
-                ? WorldEventPackets.InitialStages(t.Main)
+                ? WorldEventSelectors.InitialStages(t.Main)
                 : states.Values.OrderBy(s => s.Id).Select(s => (s.Id, s.Stage)).ToList();
         }
         finally
@@ -332,7 +333,7 @@ public sealed class WorldEventService : BackgroundService
             var stored = await _repo.GetAllAsync(ct);
             var now = DateTime.UtcNow;
             var states = new Dictionary<uint, WorldEventStateDocument>();
-            foreach (var (id, initial) in WorldEventPackets.InitialStages(t.Main))
+            foreach (var (id, initial) in WorldEventSelectors.InitialStages(t.Main))
             {
                 var doc = stored.FirstOrDefault(d => d.Id == id) is { } s ? WorldEventMachine.Normalize(s, t) : null;
                 if (doc is null)
