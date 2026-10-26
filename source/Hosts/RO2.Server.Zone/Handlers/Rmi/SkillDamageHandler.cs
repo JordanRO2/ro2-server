@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using RO2.Skills.Domain;
+using RO2.Combats.Domain;
 using Microsoft.Extensions.Logging;
 using RO2.GameData;
 using RO2.Persistence.Mongo.Persistence;
@@ -395,7 +396,7 @@ public class SkillDamageHandler : ZoneRmiHandlerBase<SkillDamageHandler>
             for (var r = 0; r < records; r++)
             {
                 var (fullHit, kind) = await combat.ApplyDamageAsync(player, targetHandle, skillId, 0);
-                var recordDamage = SkillLevelColumns.RecordDamage(fullHit, records);
+                var recordDamage = SkillDamageRules.RecordDamage(fullHit, records);
                 effects[r] = new SkillHitEffect(kind, recordDamage);   // kind 1 normal / 4 crit (x2)
                 damage += recordDamage;
             }

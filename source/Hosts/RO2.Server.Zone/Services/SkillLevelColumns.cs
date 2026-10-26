@@ -1,5 +1,7 @@
 using System.Collections.Frozen;
 using System.Text.Json;
+using RO2.Combats.Domain;
+using Row = RO2.Combats.Domain.SkillDamageRules.SkillLevelRow;
 
 namespace RO2.Server.Zone.Services;
 
@@ -19,12 +21,6 @@ namespace RO2.Server.Zone.Services;
 internal static class SkillLevelColumns
 {
  /// <summary>
- /// The two columns of one Skill_Table_SkillLevel row, as the table holds them (0 not yet raised to
- /// 1).
- /// </summary>
-    internal readonly record struct Row(int NormalInfluences, int DamageQuantity);
-
- /// <summary>
  /// The file GameDataStore loads Skill_Table_SkillLevel from, resolved against the same working
  /// directory (Program.cs hands <c>LoadAsync</c> the relative directory "data"; SkillDamagePackets
  /// reads Skill_Table_Base the same way).
@@ -40,34 +36,15 @@ internal static class SkillLevelColumns
  /// How many damage records each NPC element of this skill's 2718 carries: max(1,
  /// Number_Of_Normal_Influences), or 1 for a skill the table does not know (see the class remarks).
  /// </summary>
-    internal static int NormalInfluencesOf(uint skillId) => NormalInfluencesOf(Shipped.Value.Rows, skillId);
-
- /// <inheritdoc cref="NormalInfluencesOf(uint)"/>
-    internal static int NormalInfluencesOf(IReadOnlyDictionary<uint, Row> rows, uint skillId)
-        => rows.TryGetValue(skillId, out var row) ? Math.Max(1, row.NormalInfluences) : 1;
+    internal static int NormalInfluencesOf(uint skillId) => SkillDamageRules.NormalInfluencesOf(Shipped.Value.Rows, skillId);
 
  /// <summary>
  /// The most NPCs one cast of this skill may damage: max(1, Skill_Damage_Quantity), or null for a
  /// skill the table does not know.
  /// </summary>
-    internal static int? DamageQuantityOf(uint skillId) => DamageQuantityOf(Shipped.Value.Rows, skillId);
+    internal static int? DamageQuantityOf(uint skillId) => SkillDamageRules.DamageQuantityOf(Shipped.Value.Rows, skillId);
 
- /// <inheritdoc cref="DamageQuantityOf(uint)"/>
-    internal static int? DamageQuantityOf(IReadOnlyDictionary<uint, Row> rows, uint skillId)
-        => rows.TryGetValue(skillId, out var row) ? Math.Max(1, row.DamageQuantity) : null;
-
- /// <summary>
- /// One damage record's amount when a cast's full damage is split over <paramref name="records"/>
- /// records: <c>max(1, round(full / records))</c>, so the element's records together carry the
- /// skill's DamageRate once.
- /// </summary>
- /// <remarks>
- /// Each record does NOT carry the full rate. CombatService's defence mitigation is proportional and
- /// its crit doubles, so dividing the mitigated (and possibly doubled) hit equals dividing the base
- /// up to rounding.
- /// </remarks>
-    internal static int RecordDamage(int fullDamage, int records)
-        => Math.Max(1, (int)Math.Round((double)fullDamage / Math.Max(1, records), MidpointRounding.AwayFromZero));
+ // Row model, the (rows,id) lookups and RecordDamage moved to RO2.Combats.Domain.SkillDamageRules (B4 S7).
 
  /// <summary>
  /// Skill_Table_Base.Influence_Target_Type of the Detection skills, whose hit damages nothing.

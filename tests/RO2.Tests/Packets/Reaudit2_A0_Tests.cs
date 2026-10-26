@@ -1,4 +1,5 @@
-using System.Buffers.Binary;
+﻿using System.Buffers.Binary;
+using RO2.Combats.Domain;
 using System.Net;
 using System.Net.Sockets;
 using Microsoft.Extensions.DependencyInjection;
@@ -138,18 +139,18 @@ public class Reaudit2_A0_Tests
     {
         var rows = SkillLevelColumns.Parse(File.ReadAllBytes(Path.Combine(RequireDataDirectory(), "Skill_Table_SkillLevel.json")));
         Assert.Equal(6551, rows.Count);
-        Assert.Equal(2, SkillLevelColumns.NormalInfluencesOf(rows, 410101));
-        Assert.Equal(3, SkillLevelColumns.NormalInfluencesOf(rows, 120210));
-        Assert.Equal(5, SkillLevelColumns.NormalInfluencesOf(rows, 521010));
-        Assert.Equal(1, SkillLevelColumns.NormalInfluencesOf(rows, 111001));
+        Assert.Equal(2, SkillDamageRules.NormalInfluencesOf(rows, 410101));
+        Assert.Equal(3, SkillDamageRules.NormalInfluencesOf(rows, 120210));
+        Assert.Equal(5, SkillDamageRules.NormalInfluencesOf(rows, 521010));
+        Assert.Equal(1, SkillDamageRules.NormalInfluencesOf(rows, 111001));
         Assert.Equal(0, rows[114401].NormalInfluences);
-        Assert.Equal(1, SkillLevelColumns.NormalInfluencesOf(rows, 114401));   
-        Assert.Equal(1, SkillLevelColumns.NormalInfluencesOf(rows, 999999));   
-        Assert.Equal(5, SkillLevelColumns.DamageQuantityOf(rows, 620305));
-        Assert.Equal(4, SkillLevelColumns.DamageQuantityOf(rows, 510203));
+        Assert.Equal(1, SkillDamageRules.NormalInfluencesOf(rows, 114401));   
+        Assert.Equal(1, SkillDamageRules.NormalInfluencesOf(rows, 999999));   
+        Assert.Equal(5, SkillDamageRules.DamageQuantityOf(rows, 620305));
+        Assert.Equal(4, SkillDamageRules.DamageQuantityOf(rows, 510203));
         Assert.Equal(0, rows[410601].DamageQuantity);
-        Assert.Equal(1, SkillLevelColumns.DamageQuantityOf(rows, 410601));     
-        Assert.Null(SkillLevelColumns.DamageQuantityOf(rows, 999999));
+        Assert.Equal(1, SkillDamageRules.DamageQuantityOf(rows, 410601));     
+        Assert.Null(SkillDamageRules.DamageQuantityOf(rows, 999999));
     }
 
  /// <summary>
@@ -163,7 +164,7 @@ public class Reaudit2_A0_Tests
     [InlineData(1, 5, 1)]
     [InlineData(500, 0, 500)]     
     public void RecordDamage_IsTheFullHitOverTheRecordCount(int full, int records, int expected)
-        => Assert.Equal(expected, SkillLevelColumns.RecordDamage(full, records));
+        => Assert.Equal(expected, SkillDamageRules.RecordDamage(full, records));
 
  /// <summary>Whatever the count, the records of one element add up to the full hit within rounding, never N times it.</summary>
     [Fact]
@@ -171,7 +172,7 @@ public class Reaudit2_A0_Tests
     {
         foreach (var full in new[] { 10, 999, 3905, 23592, 100000 })
             for (var n = 1; n <= 5; n++)
-                Assert.InRange(SkillLevelColumns.RecordDamage(full, n) * n, full - n, full + n);
+                Assert.InRange(SkillDamageRules.RecordDamage(full, n) * n, full - n, full + n);
     }
 
  /// <summary>
@@ -265,7 +266,7 @@ public class Reaudit2_A0_Tests
     {
         var request = SkillDamageHandler.ParseRequest(Convert.FromHexString(requestHex));
         var rows = SkillLevelColumns.Parse(File.ReadAllBytes(Path.Combine(RequireDataDirectory(), "Skill_Table_SkillLevel.json")));
-        var records = SkillLevelColumns.NormalInfluencesOf(rows, request.SkillId);
+        var records = SkillDamageRules.NormalInfluencesOf(rows, request.SkillId);
         Assert.Equal(kindDamage.Length / 2, records);
 
         var npcs = LiveNpcs(request.PrimaryTarget);
