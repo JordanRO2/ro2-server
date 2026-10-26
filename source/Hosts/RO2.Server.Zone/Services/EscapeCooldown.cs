@@ -1,5 +1,5 @@
-using System.Globalization;
 using RO2.GameData.Tables;
+using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -18,23 +18,14 @@ namespace RO2.Server.Zone.Services;
 /// </remarks>
 public static class EscapeCooldown
 {
- /// <summary>Config_Def type of the escape cooldown length, in minutes.</summary>
-    internal const ushort ConfigEscapeAvailableTime = 81;
-
     private static readonly Lock Gate = new();
     private static readonly Dictionary<uint, long> LastEscapeUnix = new();
 
  /// <summary>
- /// The cooldown length from Config_Def type 81, in minutes. <see cref="TimeSpan.Zero"/> (no cooldown) when the row is
- /// absent or unparseable.
+ /// The cooldown length from Config_Def type 81, in minutes (<see cref="EscapeCooldownRule.Length"/>).
+ /// <see cref="TimeSpan.Zero"/> (no cooldown) when the row is absent or unparseable.
  /// </summary>
-    internal static TimeSpan Length(IReadOnlyList<ConfigDef> config)
-    {
-        var row = config.FirstOrDefault(c => c.type == ConfigEscapeAvailableTime);
-        return row != null && int.TryParse(row.Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var minutes) && minutes > 0
-            ? TimeSpan.FromMinutes(minutes)
-            : TimeSpan.Zero;
-    }
+    internal static TimeSpan Length(IReadOnlyList<ConfigDef> config) => EscapeCooldownRule.Length(config);
 
  /// <summary>
  /// Claims an escape for <paramref name="characterId"/> at <paramref name="nowUnix"/>. Returns true and records the escape
@@ -51,9 +42,8 @@ public static class EscapeCooldown
         lock (Gate)
         {
             previous = LastEscapeUnix.TryGetValue(characterId, out var last) ? last : null;
-            remainingSeconds = previous is { } p ? p + (long)length.TotalSeconds - nowUnix : 0;
+            remainingSeconds = EscapeCooldownRule.RemainingSeconds(previous, length, nowUnix);
             if (remainingSeconds > 0) return false;
-            remainingSeconds = 0;
             LastEscapeUnix[characterId] = nowUnix;
             return true;
         }
@@ -67,7 +57,8 @@ public static class EscapeCooldown
     {
         lock (Gate)
         {
-            if (!LastEscapeUnix.TryGetValue(characterId, out var last) || last != claimedUnix) return;
+            var last = LastEscapeUnix.TryGetValue(characterId, out var l) ? (long?)l : null;
+            if (!EscapeCooldownRule.IsClaim(last, claimedUnix)) return;
             if (previous is { } p) LastEscapeUnix[characterId] = p;
             else LastEscapeUnix.Remove(characterId);
         }
