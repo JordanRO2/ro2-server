@@ -1,16 +1,12 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using MongoDB.Driver;
-using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
-using RO2.GameData;
-using RO2.Persistence.Mongo.Persistence;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Characters.Domain;
+using RO2.Characters.Application;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -41,40 +37,28 @@ public class AllowAnyoneReviewMeHandler : ZoneRmiHandlerBase<AllowAnyoneReviewMe
             Logger.LogWarning("{Name}: empty 1697 body (retail is 1 byte)", player.Name);
             return;
         }
-        bool allow = payload.Span[0] != 0;   
-
-        
-        
-        
-        if (player.Character is { } snapshot)
-            snapshot.AllowAnyoneReview = allow;
+        bool allow = payload.Span[0] != 0;
 
         Logger.LogDebug("{Name} sets allow-anyone-review = {Allow}", player.Name, allow);
 
         byte flag = allow ? (byte)1 : (byte)0;
         void Write(PacketWriter w)
         {
-            w.WriteUInt32(player.EntityId); 
-            w.WriteByte(flag);              
+            w.WriteUInt32(player.EntityId);
+            w.WriteByte(flag);
         }
 
-        
-        
-        await session.SendRmiAsync(ZoneS2COpcodes.AnsAllowAnyoneReviewMe, Write);
-        await Broadcast.BroadcastToNearbyAsync(player, ZoneS2COpcodes.AnsAllowAnyoneReviewMe, Write);
-
-        
-        
-        
-        try
+        // Mirror onto the snapshot, reply and broadcast, then persist: the flow keeps that order so a failing
+        // write never delays the client's own confirmation.
+        var gateway = new PlayerSessionGateway(player);
+        var repo = services.GetRequiredService<ICharacterRepository>();
+        var ex = await SetAllowAnyoneReviewFlow.ExecuteAsync(repo, gateway, player.CharacterId, allow, async () =>
         {
-            await services.GetRequiredService<ICharacterRepository>()
-                .UpdateAllowAnyoneReviewAsync(player.CharacterId, allow, ct);
-        }
-        catch (Exception ex)
-        {
+            await session.SendRmiAsync(ZoneS2COpcodes.AnsAllowAnyoneReviewMe, Write);
+            await Broadcast.BroadcastToNearbyAsync(player, ZoneS2COpcodes.AnsAllowAnyoneReviewMe, Write);
+        }, ct);
+        if (ex is not null)
             Logger.LogWarning(ex, "{Name}: could not persist allow-anyone-review = {Allow}", player.Name, allow);
-        }
     }
 }
 

@@ -7,6 +7,7 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Characters.Domain;
+using RO2.Characters.Application;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -76,12 +77,11 @@ public class SetBindIndexHandler : ZoneRmiHandlerBase<SetBindIndexHandler>
             return;
         }
 
-        var previousBindIndex = player.BindIndex;
-        player.BindIndex = bindIndex;
-        // The world-entry snapshot carries the bind too, so every in-world head built from it
-        // (2391 OnDeadMe, 2336 OnRepairItem, 2487 OnUpdatePCSaveData) reports the new bind at head+105.
-        if (player.Character is { } snapshot)
-            snapshot.BindIndex = bindIndex;
+        // The flow records the bind on the session and mirrors it onto the world-entry snapshot, so every
+        // in-world head built from it (2391 OnDeadMe, 2336 OnRepairItem, 2487 OnUpdatePCSaveData) reports the
+        // new bind at head+105. It issues no write: the bind reaches the DB through the autosave path.
+        var gateway = new PlayerSessionGateway(player);
+        var previousBindIndex = BindPointFlow.Set(gateway, bindIndex);
 
         Logger.LogDebug("Session {Id}: SetBindIndex {Prev} -> {Next}",
             session.SessionId, previousBindIndex, bindIndex);
