@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using RO2.Skills.Domain;
 using RO2.Combats.Domain;
+using RO2.Combats.Application;
 using Microsoft.Extensions.Logging;
 using RO2.GameData;
 using RO2.Persistence.Mongo.Persistence;
@@ -678,30 +679,17 @@ public class SkillDamageHandler : ZoneRmiHandlerBase<SkillDamageHandler>
         return false;
     }
 
+    /// <summary>
+    /// The monsters an attack skill damages from the ones a 1509 named (see
+    /// <see cref="SkillVictimSelection.SelectNpcVictims"/>): resolves the live NPC state through
+    /// <see cref="NpcCombatantView"/> and supplies the host caps and actor-handle conventions.
+    /// </summary>
     internal static List<uint> SelectNpcVictims(SkillDamageRequest request, uint casterHandle,
         Func<uint, NpcRuntimeState?> npcOf, int? damageQuantity)
-    {
-        var victims = new List<uint>();
-        if (request.HasTarget != 0 && request.PrimaryTarget != 0)
-        {
-            if (npcOf(request.PrimaryTarget) is not null)
-            {
-                victims.Add(request.PrimaryTarget);
-                return victims;
-            }
-            if ((request.PrimaryTarget & ActorTagMask) == PlayerStateManager.PcActorTag && request.PrimaryTarget != casterHandle)
-                return victims;
-        }
-
-        var cap = Math.Min(MaxHits, damageQuantity ?? MaxHits);
-        foreach (var handle in request.Targets)
-        {
-            if (victims.Count >= cap) break;
-            if (npcOf(handle) is not { } npc || npc.IsDead || npc.EntityOid != handle || npc.Camp <= NpcSpawnService.CampFriendly) continue;
-            if (!victims.Contains(handle)) victims.Add(handle);
-        }
-        return victims;
-    }
+        => SkillVictimSelection.SelectNpcVictims(request.HasTarget, request.PrimaryTarget, request.Targets,
+            casterHandle, new NpcCombatantView(npcOf), damageQuantity,
+            new SkillVictimSelection.VictimSelectionRules(MaxHits, PlayerStateManager.PcActorTag, ActorTagMask,
+                NpcSpawnService.CampFriendly));
 
     /// <summary>
     /// One skill hit on the caster's started-duel opponent (FieldPvPCombat): the damage resolved against the
