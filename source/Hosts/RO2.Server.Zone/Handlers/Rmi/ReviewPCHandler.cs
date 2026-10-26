@@ -10,6 +10,7 @@ using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
+using RO2.Characters.Application;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -69,11 +70,15 @@ public class ReviewPCHandler : ZoneRmiHandlerBase<ReviewPCHandler>
             return;
         }
 
+        var decision = await ReviewPcFlow.DecideAsync(target.CharacterId,
+            services.GetRequiredService<IOnlineCharacterView>(),
+            services.GetRequiredService<IInventoryRepository>());
+
         byte[]? data = null;
-        if (!ReviewPermission.IsAllowed(target.CharacterId))
+        if (!decision.Allowed)
             Logger.LogDebug("{Name} reviews {Target}: reviews not allowed", player.Name, target.Name);
         else
-            data = await BuildReviewDataAsync(target, services);
+            data = BuildReviewData(target, decision.Worn, services);
 
         var body = BuildAnsReviewPC3033(data);
         await session.SendRmiAsync(ZoneS2COpcodes.AnsReviewPC, writer => writer.WriteBytes(body));
@@ -134,29 +139,28 @@ public class ReviewPCHandler : ZoneRmiHandlerBase<ReviewPCHandler>
         stats[StatBlockFinalTailOffset + 5] = ActorStatePackets.DetailTailModelClass;
         uint maxHp = BinaryPrimitives.ReadUInt32LittleEndian(pcTraitBlob[TraitPackets.PcTraitMaxHpOffset..]);
         ushort maxSp = BinaryPrimitives.ReadUInt16LittleEndian(pcTraitBlob[TraitPackets.PcTraitMaxSpOffset..]);
-        BinaryPrimitives.WriteUInt32LittleEndian(stats.AsSpan(52), (uint)Math.Clamp(hp, 0, maxHp));
-        BinaryPrimitives.WriteUInt16LittleEndian(stats.AsSpan(58), (ushort)Math.Clamp(mp, 0, maxSp));
+        var (clampedHp, clampedSp) = ReviewRules.ClampVitals(hp, mp, maxHp, maxSp);
+        BinaryPrimitives.WriteUInt32LittleEndian(stats.AsSpan(52), clampedHp);
+        BinaryPrimitives.WriteUInt16LittleEndian(stats.AsSpan(58), clampedSp);
         return stats;
     }
 
- /// <summary>Builds the data part of a full 3033 reply for a target, or null when it cannot be built.</summary>
-    private async Task<byte[]?> BuildReviewDataAsync(PlayerState target, IServiceProvider services)
+ /// <summary>Builds the data part of a full 3033 reply for a target from its worn gear, or null when it cannot be built.</summary>
+    private byte[]? BuildReviewData(PlayerState target, IReadOnlyList<InventoryItem> worn, IServiceProvider services)
     {
         var character = target.Character!;
-        var worn = await services.GetRequiredService<IInventoryRepository>().GetEquipmentAsync(target.CharacterId);
-        var store = services.GetRequiredService<GameDataStore>();
 
-        
-        
-        
-        
+
+
+
+
         using var rec = new PacketWriter();
         PlayerSpawnService.WriteBaseBlock(rec, target, character, services.GetRequiredService<IGuildEmblemRepository>(), mountId: null);
 
-        
-        
+
+
         var trait = services.GetRequiredService<EffectService>().BuildInWorldPcTrait(target, character, worn);
-        var blob = trait.AsSpan(3); 
+        var blob = trait.AsSpan(3);
         if (blob.Length < TraitPackets.PcTraitBlobLen)
         {
             Logger.LogError("ReviewPC: 2498 blob is {Len} bytes, expected {Want}", blob.Length, TraitPackets.PcTraitBlobLen);
@@ -165,8 +169,8 @@ public class ReviewPCHandler : ZoneRmiHandlerBase<ReviewPCHandler>
 
         var stats = BuildStatBlock(blob, target.Hp, target.Mp);
 
-        
-        var gear = worn.Where(i => i.StorageType == 1).Select(WorldEntryService.BuildItemRecord126).ToList();
+
+        var gear = worn.Where(i => ReviewRules.IsWornForDisplay(i.StorageType)).Select(WorldEntryService.BuildItemRecord126).ToList();
         return AssembleReviewData(rec.GetWrittenSpan(), target, gear, stats, DateTime.UtcNow);
     }
 }

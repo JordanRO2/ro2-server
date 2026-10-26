@@ -25,9 +25,6 @@ public class AllowAnyoneReviewMeHandler : ZoneRmiHandlerBase<AllowAnyoneReviewMe
 
     public AllowAnyoneReviewMeHandler(IServiceScopeFactory s, ILogger<AllowAnyoneReviewMeHandler> l, PlayerStateManager pm, BroadcastService bc) : base(s, l, pm, bc)
     {
-        
-        
-        ReviewPermission.Bind(pm);
     }
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
@@ -60,23 +57,4 @@ public class AllowAnyoneReviewMeHandler : ZoneRmiHandlerBase<AllowAnyoneReviewMe
         if (ex is not null)
             Logger.LogWarning(ex, "{Name}: could not persist allow-anyone-review = {Allow}", player.Name, allow);
     }
-}
-
-/// <summary>
-/// Per-character "anyone may review me" setting, written by <see cref="AllowAnyoneReviewMeHandler"/> and read
-/// by the review handler (<see cref="ReviewPCHandler"/>).
-/// </summary>
-/// <remarks>
-/// The default is allowed. The value is read from the online character's snapshot. Targets without an online
-/// snapshot are answered as unknown players before this check is reached.
-/// </remarks>
-internal static class ReviewPermission
-{
-    private static PlayerStateManager? _players;
-
- /// <summary>Binds the player state manager. Called once by the handler constructor at startup.</summary>
-    public static void Bind(PlayerStateManager players) => _players = players;
-
-    public static bool IsAllowed(uint characterId) =>
-        _players?.GetPlayerByCharacterId(characterId)?.Character?.AllowAnyoneReview ?? true;
 }
