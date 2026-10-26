@@ -1,4 +1,4 @@
-namespace RO2.Server.Zone.Services;
+namespace RO2.Worlds.Domain;
 
 /// <summary>A position in world units.</summary>
 public readonly record struct MovePos(float X, float Y, float Z);
@@ -6,6 +6,7 @@ public readonly record struct MovePos(float X, float Y, float Z);
 /// <summary>Reason <see cref="MovementValidator.Validate"/> refused a step.</summary>
 public enum MoveRefusal
 {
+    /// <summary>The step is accepted.</summary>
     None = 0,
  /// <summary>A coordinate, elapsed time or speed is not a finite number, or the time or speed is negative.</summary>
     NonFinite,
@@ -20,12 +21,14 @@ public enum MoveRefusal
 /// <summary>Axis-aligned map extent in world units, inclusive. X and Y are the ground plane.</summary>
 public readonly record struct MoveBounds(float MinX, float MaxX, float MinY, float MaxY)
 {
+    /// <summary>True when <paramref name="p"/> lies within this extent on the X/Y ground plane (inclusive).</summary>
     public bool Contains(MovePos p) => p.X >= MinX && p.X <= MaxX && p.Y >= MinY && p.Y <= MaxY;
 }
 
 /// <summary>Answers whether a world position is walkable. Returns null when the map has no data.</summary>
 public interface IWalkableSurface
 {
+    /// <summary>True/false when <paramref name="mapId"/> has navmesh data, null when it has none.</summary>
     bool? IsWalkable(uint mapId, MovePos pos);
 }
 
@@ -53,6 +56,7 @@ public static class MovementValidator
  /// <summary>Maximum allowed step length, in world units, for the given speed and elapsed time.</summary>
     public static double MaxStep(float speed, float dt) => (double)speed * dt * Slack + FixedTolerance(speed);
 
+ /// <summary>Validates a claimed movement step; returns <see cref="MoveRefusal.None"/> when it is plausible.</summary>
  /// <param name="mapId">Map the destination is on (only used for the walkable lookup).</param>
  /// <param name="current">Last accepted position.</param>
  /// <param name="destination">Claimed new position.</param>
@@ -75,7 +79,7 @@ public static class MovementValidator
 
         double dx = (double)destination.X - current.X;
         double dy = (double)destination.Y - current.Y;
-        
+
         double len = Math.Sqrt(dx * dx + dy * dy);
         if (!serverGrantedExemption && len > MaxStep(speed, dt))
             return MoveRefusal.TooFast;

@@ -1,4 +1,5 @@
 using RO2.Server.Zone.Services;
+using RO2.Worlds.Domain;
 using Xunit;
 
 namespace RO2.Tests.Validation;
