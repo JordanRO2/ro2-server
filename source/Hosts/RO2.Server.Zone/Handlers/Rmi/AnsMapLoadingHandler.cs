@@ -5,6 +5,7 @@ using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Services;
+using RO2.Worlds.Domain;
 using AccountGift = RO2.Domain.Entities.AccountGift;
 
 using Base1304 = RO2.Network.Handlers.ZoneRmiHandlerBase<RO2.Server.Zone.Handlers.Rmi.AnsMapLoadingHandler>;
