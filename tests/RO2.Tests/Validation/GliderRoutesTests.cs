@@ -1,4 +1,5 @@
 using RO2.Server.Zone.Services;
+using RO2.Worlds.Domain;
 using Xunit;
 
 namespace RO2.Tests.Validation;
@@ -27,7 +28,7 @@ public class GliderRoutesTests
         (139, 1101, 1314f, 680f, 54f), (140, 1101, 502f, 248f, 37f), (141, 1101, 502f, 248f, 37f),
     ];
 
-    private static GliderRoutes.RouteTable Table()
+    private static GliderRouteTable Table()
     {
         var dir = new DirectoryInfo(AppContext.BaseDirectory);
         while (dir is not null && !File.Exists(Path.Combine(dir.FullName, "data", "spline.json")))
@@ -47,7 +48,7 @@ public class GliderRoutesTests
         foreach (var (station, map, x, y, z) in OldTable)
         {
             Assert.True(t.TryGet(station, out var dest), $"station {station}");
-            Assert.Equal(new GliderRoutes.Dest(map, x, y, z), dest);
+            Assert.Equal(new GliderDest(map, x, y, z), dest);
         }
     }
 
@@ -68,11 +69,11 @@ public class GliderRoutesTests
     {
         var t = Table();
         // spline row 1: smap 1101, start (460, 292)
-        Assert.True(t.IsNearStart(1, 1101, 460f, 292f));
-        Assert.True(t.IsNearStart(1, 1101, 460f + GliderRoutes.NearStartRadius - 1f, 292f));
-        Assert.False(t.IsNearStart(1, 1101, 460f + GliderRoutes.NearStartRadius + 1f, 292f));
-        Assert.False(t.IsNearStart(1, 1100, 460f, 292f));       // other map
-        Assert.False(t.IsNearStart(1, 1101, float.NaN, 292f));  // NaN-safe
-        Assert.False(t.IsNearStart(60000, 1101, 460f, 292f));   // unknown row
+        Assert.True(t.IsNearStart(1, 1101, 460f, 292f, GliderRoutes.NearStartRadius));
+        Assert.True(t.IsNearStart(1, 1101, 460f + GliderRoutes.NearStartRadius - 1f, 292f, GliderRoutes.NearStartRadius));
+        Assert.False(t.IsNearStart(1, 1101, 460f + GliderRoutes.NearStartRadius + 1f, 292f, GliderRoutes.NearStartRadius));
+        Assert.False(t.IsNearStart(1, 1100, 460f, 292f, GliderRoutes.NearStartRadius));       // other map
+        Assert.False(t.IsNearStart(1, 1101, float.NaN, 292f, GliderRoutes.NearStartRadius));  // NaN-safe
+        Assert.False(t.IsNearStart(60000, 1101, 460f, 292f, GliderRoutes.NearStartRadius));   // unknown row
     }
 }
