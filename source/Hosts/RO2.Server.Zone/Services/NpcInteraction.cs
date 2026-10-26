@@ -1,4 +1,5 @@
 using RO2.Server.Zone.Models;
+using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -21,11 +22,5 @@ public static class NpcInteraction
     /// NaN radius fails the comparison and answers false. Liveness is not asked (callers gate dead players).
     /// </summary>
     public static bool GateInReach(PlayerState player, NpcRuntimeState npc, float radius)
-    {
-        if (player.MapId != npc.MapId) return false;
-        var dx = npc.PosX - player.X;
-        var dy = npc.PosY - player.Y;
-        // Written so that NaN positions or a NaN radius fail the comparison and are refused.
-        return MathF.Sqrt(dx * dx + dy * dy) <= radius;
-    }
+        => NpcInteractionRules.InReach(player.MapId, player.X, player.Y, npc.MapId, npc.PosX, npc.PosY, radius);
 }
