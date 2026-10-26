@@ -1,5 +1,6 @@
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Combats.Domain;
 using Xunit;
 
 namespace RO2.Tests.Validation;
@@ -42,17 +43,17 @@ public class SkillMoveTrackerCapTests
         var caster = new PlayerState();
         Assert.Equal(0, SkillMoveTracker.MoveCount(caster));
         for (uint i = 0; i < 10_000; i++)
-            SkillMoveTracker.Record(caster, 700000 + i, new SkillMoveTracker.SkillMove(1, 9, 0f, 0f, 0f));
+            SkillMoveTracker.Record(caster, 700000 + i, new SkillMoveLedger.SkillMove(1, 9, 0f, 0f, 0f));
         Assert.Equal(SkillMoveTracker.MaxMovesPerCaster, SkillMoveTracker.MoveCount(caster));
 
         // A held skill is still replaced at the cap; a new one is refused.
-        Assert.True(SkillMoveTracker.Record(caster, 700000, new SkillMoveTracker.SkillMove(2, 9, 1f, 1f, 1f)));
-        Assert.False(SkillMoveTracker.Record(caster, 999999, new SkillMoveTracker.SkillMove(3, 9, 0f, 0f, 0f)));
+        Assert.True(SkillMoveTracker.Record(caster, 700000, new SkillMoveLedger.SkillMove(2, 9, 1f, 1f, 1f)));
+        Assert.False(SkillMoveTracker.Record(caster, 999999, new SkillMoveLedger.SkillMove(3, 9, 0f, 0f, 0f)));
         Assert.True(SkillMoveTracker.TryTake(caster, 700000, out var move));
         Assert.Equal(2u, move.MovedHandle);
 
         // Taking one frees a slot; another caster is unaffected.
-        Assert.True(SkillMoveTracker.Record(caster, 999999, new SkillMoveTracker.SkillMove(3, 9, 0f, 0f, 0f)));
+        Assert.True(SkillMoveTracker.Record(caster, 999999, new SkillMoveLedger.SkillMove(3, 9, 0f, 0f, 0f)));
         Assert.Equal(0, SkillMoveTracker.MoveCount(new PlayerState()));
     }
 }

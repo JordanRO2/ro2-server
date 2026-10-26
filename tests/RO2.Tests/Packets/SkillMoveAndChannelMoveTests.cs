@@ -3,6 +3,7 @@ using RO2.GameData;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Combats.Domain;
 using Xunit;
 
 namespace RO2.Tests.Packets;
@@ -61,12 +62,12 @@ public class SkillMoveAndChannelMoveTests
     public void SkillMoveTracker_GivesTheMovedActorToTheEndOnce()
     {
         var caster = new PlayerState { EntityId = 0x00100111u };
-        SkillMoveTracker.Record(caster, 630410, new SkillMoveTracker.SkillMove(0x00205D13u, 0x0E, 1f, 2f, 3f));
-        SkillMoveTracker.Record(caster, 630410, new SkillMoveTracker.SkillMove(0x00205D13u, 0x0E, 4f, 5f, 6f)); // a later step replaces it
+        SkillMoveTracker.Record(caster, 630410, new SkillMoveLedger.SkillMove(0x00205D13u, 0x0E, 1f, 2f, 3f));
+        SkillMoveTracker.Record(caster, 630410, new SkillMoveLedger.SkillMove(0x00205D13u, 0x0E, 4f, 5f, 6f)); // a later step replaces it
 
         Assert.False(SkillMoveTracker.TryTake(caster, 630405, out _)); // another skill
         Assert.True(SkillMoveTracker.TryTake(caster, 630410, out var move));
-        Assert.Equal(new SkillMoveTracker.SkillMove(0x00205D13u, 0x0E, 4f, 5f, 6f), move);
+        Assert.Equal(new SkillMoveLedger.SkillMove(0x00205D13u, 0x0E, 4f, 5f, 6f), move);
         Assert.False(SkillMoveTracker.TryTake(caster, 630410, out _)); // taken by the 1525
         Assert.False(SkillMoveTracker.TryTake(new PlayerState(), 630410, out _));
     }

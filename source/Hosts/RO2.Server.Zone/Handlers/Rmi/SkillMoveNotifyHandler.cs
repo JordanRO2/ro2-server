@@ -5,6 +5,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Combats.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -80,7 +81,7 @@ public class SkillMoveNotifyHandler : ZoneRmiHandlerBase<SkillMoveNotifyHandler>
         // 1525 carries no handle, so the moved actor is remembered for it (SkillMoveEndHandler), refused or not:
         // the 1525 then puts its end point through the same checks instead of mistaking a refused NPC drag for
         // the caster's own move and teleporting the caster to the monster's end point.
-        SkillMoveTracker.Record(player, skillId, new SkillMoveTracker.SkillMove(movedHandle, moveKind, x, y, z));
+        SkillMoveTracker.Record(player, skillId, new SkillMoveLedger.SkillMove(movedHandle, moveKind, x, y, z));
         return Task.CompletedTask;
     }
 

@@ -1,13 +1,15 @@
-using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
 using RO2.Server.Zone.Models;
+using RO2.Combats.Domain;
 
 namespace RO2.Server.Zone.Services;
 
 /// <summary>
-/// Per-caster state of the ground-object skill moves: the target of the caster's accepted cast of each skill, which
-/// actor each skill is dragging and where 1523 ReqSkillMoveNotify last put it. 1525 ReqSkillMoveEnd takes the
-/// move entry, so it knows which actor the move ends on.
+/// Host facade over one <see cref="SkillMoveLedger"/> per PlayerState: the per-caster state of the ground-object
+/// skill moves (the cast target that lets a 1523 move an actor, and the actor each skill is dragging). The ledger
+/// logic and its locking live in <see cref="SkillMoveLedger"/> (Combat.Domain); this maps player → ledger through
+/// a <see cref="ConditionalWeakTable{TKey,TValue}"/> (so an entry lives exactly as long as the session's player
+/// object and a logout leaves nothing behind) and owns the reach table that bounds how far a move may reach.
 /// </summary>
 /// <remarks>
 /// <para>
@@ -24,37 +26,19 @@ namespace RO2.Server.Zone.Services;
 /// the handle a legitimate 1523 names is always the +16 target of the 1508 that started the cast, for the
 /// same skill id (group*100 + level on both sides), and a newer cast replaces it on the client as it does
 /// here.
-/// The server keeps one cast per caster per skill id (a cast of another skill does not evict it), capped at <see cref="MaxCastsPerCaster"/>; <see cref="IsCastTarget"/> is what lets a 1523 move a
-/// monster at all.
-/// </para>
-/// <para>
-/// Keyed by the caster's <see cref="PlayerState"/> through <see cref="ConditionalWeakTable{TKey,TValue}"/>s, so
-/// an entry lives exactly as long as the session's player object and a logout leaves nothing behind.
-/// Runtime-only, like the cooldowns. No DI registration.
 /// </para>
 /// </remarks>
 internal static class SkillMoveTracker
 {
-    /// <summary>The actor a skill is moving, the move kind and the last position 1523 reported.</summary>
-    internal readonly record struct SkillMove(uint MovedHandle, byte MoveKind, float X, float Y, float Z);
+    /// <summary>The most casts held per caster; see <see cref="SkillMoveLedger.MaxCastsPerCaster"/>.</summary>
+    internal const int MaxCastsPerCaster = SkillMoveLedger.MaxCastsPerCaster;
 
-    /// <summary>An accepted 1508: its skill id, its +16 target, the map it was cast on and when (only to bound the dictionary).</summary>
-    internal readonly record struct Cast(uint MapId, uint SkillId, uint TargetHandle, DateTime AtUtc);
+    /// <summary>The most moves held per caster; see <see cref="SkillMoveLedger.MaxMovesPerCaster"/>.</summary>
+    internal const int MaxMovesPerCaster = SkillMoveLedger.MaxMovesPerCaster;
 
-    private sealed class CastHolder
-    {
-        public readonly ConcurrentDictionary<uint, Cast> BySkill = new();
-    }
+    private static readonly ConditionalWeakTable<PlayerState, SkillMoveLedger> Store = new();
 
-    /// <summary>
-    /// The most casts held per caster. A 1508 names a skill by a client u32, so without a cap a client could grow the
-    /// dictionary for ever; past it the oldest cast (by <see cref="Cast.AtUtc"/>) is evicted.
-    /// A server-side bound: the number of distinct skills one PC casts inside a move's lifetime is not data-driven.
-    /// </summary>
-    internal const int MaxCastsPerCaster = 64;
-
-    private static readonly ConditionalWeakTable<PlayerState, ConcurrentDictionary<uint, SkillMove>> Moves = new();
-    private static readonly ConditionalWeakTable<PlayerState, CastHolder> Casts = new();
+    private static SkillMoveLedger LedgerOf(PlayerState caster) => Store.GetValue(caster, _ => new SkillMoveLedger());
 
     /// <summary>
     /// Records the accepted 1508 ReqSkillStart of <paramref name="skillId"/> on <paramref name="targetHandle"/>
@@ -64,26 +48,14 @@ internal static class SkillMoveTracker
     /// Handle_SkillEndCasting), so it starts no ground effect.
     /// </summary>
     internal static void RecordCast(PlayerState caster, uint mapId, uint skillId, uint targetHandle)
-    {
-        var bySkill = Casts.GetValue(caster, _ => new CastHolder()).BySkill;
-        bySkill[skillId] = new Cast(mapId, skillId, targetHandle, DateTime.UtcNow);
-        while (bySkill.Count > MaxCastsPerCaster)
-        {
-            var oldest = bySkill.MinBy(kv => kv.Value.AtUtc).Key;
-            bySkill.TryRemove(oldest, out _);
-        }
-    }
+        => LedgerOf(caster).RecordCast(mapId, skillId, targetHandle, DateTime.UtcNow);
 
     /// <summary>
     /// Whether <paramref name="handle"/> is the target of <paramref name="caster"/>'s accepted cast of exactly
     /// <paramref name="skillId"/>, made on <paramref name="mapId"/>. A zero handle never is.
     /// </summary>
     internal static bool IsCastTarget(PlayerState caster, uint mapId, uint skillId, uint handle)
-    {
-        return handle != 0 && Casts.TryGetValue(caster, out var holder)
-            && holder.BySkill.TryGetValue(skillId, out var cast)
-            && cast.MapId == mapId && cast.TargetHandle == handle;
-    }
+        => Store.TryGetValue(caster, out var l) && l.IsCastTarget(mapId, skillId, handle);
 
     /// <summary>
     /// Whether <paramref name="caster"/> has an accepted cast of exactly <paramref name="skillId"/> made on
@@ -91,44 +63,25 @@ internal static class SkillMoveTracker
     /// the caster and the 1508 target is not the handle).
     /// </summary>
     internal static bool IsCastSkill(PlayerState caster, uint mapId, uint skillId)
-    {
-        return Casts.TryGetValue(caster, out var holder)
-            && holder.BySkill.TryGetValue(skillId, out var cast) && cast.MapId == mapId;
-    }
-
-    /// <summary>
-    /// The most moves held per caster: the 32 of <see cref="SkillCastLandings.MaxPendingPerPlayer"/>. A 1523 names a
-    /// skill by a client u32, and only a 1525 removes the entry, so without a cap a client could grow it for ever.
-    /// A server-side bound: the number of ground-object skills one PC has moving at once is not data-driven.
-    /// </summary>
-    internal const int MaxMovesPerCaster = SkillCastLandings.MaxPendingPerPlayer;
+        => Store.TryGetValue(caster, out var l) && l.IsCastSkill(mapId, skillId);
 
     /// <summary>How many moves <paramref name="caster"/> holds.</summary>
     internal static int MoveCount(PlayerState caster)
-        => Moves.TryGetValue(caster, out var bySkill) ? bySkill.Count : 0;
+        => Store.TryGetValue(caster, out var l) ? l.MoveCount() : 0;
 
     /// <summary>
     /// Records (or replaces) the move of <paramref name="skillId"/> cast by <paramref name="caster"/>. A skill already
     /// held is always replaced; a new one is refused (false, nothing stored) once the caster holds
     /// <see cref="MaxMovesPerCaster"/>.
     /// </summary>
-    internal static bool Record(PlayerState caster, uint skillId, SkillMove move)
-    {
-        var bySkill = Moves.GetOrCreateValue(caster);
-        lock (bySkill)
-        {
-            if (!bySkill.ContainsKey(skillId) && bySkill.Count >= MaxMovesPerCaster)
-                return false;
-            bySkill[skillId] = move;
-            return true;
-        }
-    }
+    internal static bool Record(PlayerState caster, uint skillId, SkillMoveLedger.SkillMove move)
+        => LedgerOf(caster).Record(skillId, move);
 
     /// <summary>Removes and returns the move of <paramref name="skillId"/>; false when no 1523 recorded one.</summary>
-    internal static bool TryTake(PlayerState caster, uint skillId, out SkillMove move)
+    internal static bool TryTake(PlayerState caster, uint skillId, out SkillMoveLedger.SkillMove move)
     {
         move = default;
-        return Moves.TryGetValue(caster, out var bySkill) && bySkill.TryRemove(skillId, out move);
+        return Store.TryGetValue(caster, out var l) && l.TryTake(skillId, out move);
     }
 
     // ---- Reach ---------------------------------------------------------------------------------------------
@@ -140,7 +93,7 @@ internal static class SkillMoveTracker
     /// </summary>
     /// <remarks>The kind is the client's claim, carried in the same request: this is a consistency check, not
     /// proof. The server holds no copy of the move kind (it is no column of Skill_Table_Base).</remarks>
-    internal static bool IsTargetMoveKind(byte moveKind) => moveKind is 9 or 14 or 17 or 20 or 22;
+    internal static bool IsTargetMoveKind(byte moveKind) => SkillMoveLedger.IsTargetMoveKind(moveKind);
 
     /// <summary>The Skill_Table_Base columns SkillData does not carry.</summary>
     private sealed record SkillReachRow(uint Skill_Group, float Skill_Range, float Influence_Bound_Length);
