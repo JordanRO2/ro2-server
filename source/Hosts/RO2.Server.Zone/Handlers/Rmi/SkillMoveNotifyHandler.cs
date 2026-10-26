@@ -6,6 +6,7 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Combats.Domain;
+using RO2.Combats.Application;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -161,18 +162,22 @@ public class SkillMoveNotifyHandler : ZoneRmiHandlerBase<SkillMoveNotifyHandler>
     /// </remarks>
     internal static string? SelfMoveRefusal(PlayerState caster, uint skillId, byte moveKind, float x, float y)
     {
-        if (!SkillMoveTracker.IsCastSkill(caster, caster.MapId, skillId))
-            return "caster has no accepted cast of this skill on this map";
-        if (SkillMoveTracker.IsTargetMoveKind(moveKind)
-            && !SkillMoveTracker.IsCastTarget(caster, caster.MapId, skillId, caster.EntityId))
-            return $"move kind {moveKind} stores a cast target and the caster's cast did not target itself";
         // How far a self-move may carry its caster is not defined by data; the skill's own Skill_Range +
         // Influence_Bound_Length is the conservative bound.
-        if (SkillMoveTracker.ReachFor(skillId / 100u) is not { } reach)
-            return "skill group has no Skill_Table_Base row";
-        if (!Within(caster.X, caster.Y, x, y, reach))
-            return $"end point is farther than {reach} from the caster";
-        return null;
+        var reach = SkillMoveTracker.ReachFor(skillId / 100u);
+        var refusal = SkillMoveAuthorization.SelfMove(
+            hasCastOfSkill: SkillMoveTracker.IsCastSkill(caster, caster.MapId, skillId),
+            moveKindStoresTarget: SkillMoveTracker.IsTargetMoveKind(moveKind),
+            castTargetedSelf: SkillMoveTracker.IsCastTarget(caster, caster.MapId, skillId, caster.EntityId),
+            reach, caster.X, caster.Y, x, y);
+        return refusal switch
+        {
+            SkillMoveAuthorization.MoveRefusal.None => null,
+            SkillMoveAuthorization.MoveRefusal.NoAcceptedCast => "caster has no accepted cast of this skill on this map",
+            SkillMoveAuthorization.MoveRefusal.SelfNotCastTarget => $"move kind {moveKind} stores a cast target and the caster's cast did not target itself",
+            SkillMoveAuthorization.MoveRefusal.NoReachRow => "skill group has no Skill_Table_Base row",
+            _ => $"end point is farther than {reach} from the caster",
+        };
     }
 
     /// <summary>Why a 1523/1525 may not move NPC <paramref name="handle"/>, or null when it may (see
@@ -181,28 +186,29 @@ public class SkillMoveNotifyHandler : ZoneRmiHandlerBase<SkillMoveNotifyHandler>
         uint handle, float x, float y, out NpcRuntimeState? npc)
     {
         npc = null;
-        if (!npcs.IsNpcEntity(handle) || npcs.GetNpc(handle) is not { } found)
-            return "neither the caster nor a tracked NPC";
-        if (found.IsDead || found.MapId != caster.MapId || found.Camp <= 1)
-            return "not a live monster of the caster's map";
-        if (!SkillMoveTracker.IsCastTarget(caster, caster.MapId, skillId, handle))
-            return "not the target of the caster's latest accepted cast of this skill";
-        if (!SkillMoveTracker.IsTargetMoveKind(moveKind))
-            return $"move kind {moveKind} never stores a cast target";
-        if (SkillMoveTracker.ReachFor(skillId / 100u) is not { } reach)
-            return "skill group has no Skill_Table_Base row";
-        if (!Within(caster.X, caster.Y, found.PosX, found.PosY, reach))
-            return $"monster stands farther than {reach} from the caster";
-        if (!Within(caster.X, caster.Y, x, y, reach))
-            return $"reported point is farther than {reach} from the caster";
-        npc = found;
-        return null;
-    }
-
-    private static bool Within(float ax, float ay, float bx, float by, float reach)
-    {
-        var dx = bx - ax;
-        var dy = by - ay;
-        return dx * dx + dy * dy <= reach * reach;
+        var found = npcs.IsNpcEntity(handle) ? npcs.GetNpc(handle) : null;
+        var moved = found is { } f
+            ? new SkillMoveAuthorization.MovedNpc(true, f.IsDead, f.MapId == caster.MapId, f.Camp, f.PosX, f.PosY)
+            : default;
+        var reach = SkillMoveTracker.ReachFor(skillId / 100u);
+        var refusal = SkillMoveAuthorization.NpcMove(moved,
+            isCastTarget: SkillMoveTracker.IsCastTarget(caster, caster.MapId, skillId, handle),
+            moveKindStoresTarget: SkillMoveTracker.IsTargetMoveKind(moveKind),
+            reach, caster.X, caster.Y, x, y);
+        if (refusal == SkillMoveAuthorization.MoveRefusal.None)
+        {
+            npc = found;
+            return null;
+        }
+        return refusal switch
+        {
+            SkillMoveAuthorization.MoveRefusal.NotTrackedNpc => "neither the caster nor a tracked NPC",
+            SkillMoveAuthorization.MoveRefusal.NotLiveMonster => "not a live monster of the caster's map",
+            SkillMoveAuthorization.MoveRefusal.NotCastTarget => "not the target of the caster's latest accepted cast of this skill",
+            SkillMoveAuthorization.MoveRefusal.MoveKindStoresNoTarget => $"move kind {moveKind} never stores a cast target",
+            SkillMoveAuthorization.MoveRefusal.NoReachRow => "skill group has no Skill_Table_Base row",
+            SkillMoveAuthorization.MoveRefusal.MonsterOutOfReach => $"monster stands farther than {reach} from the caster",
+            _ => $"reported point is farther than {reach} from the caster",
+        };
     }
 }
