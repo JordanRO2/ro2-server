@@ -11,4 +11,9 @@ internal sealed class CharacterGameData(GameDataStore store) : ICharacterGameDat
     public bool UnionExists(uint unionId) => store.UnionInfo.Any(u => u.Union_ID == unionId);
 
     public IReadOnlyDictionary<byte, ExpTableEntry> ExpTable => store.ExpTable;
+
+    public (int str, int agi, int intel, int wis, int vit, int luk)? ClassBasePrimaries(byte job)
+        => StatService.ClassBasePrimaries(store, job);
+
+    public int BonusStatCost(int currentStatValue) => StatService.BonusStatCost(store, currentStatValue);
 }

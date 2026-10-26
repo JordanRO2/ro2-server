@@ -12,6 +12,7 @@ using Xunit;
 using static RO2.Tests.Packets.ReauditShared;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
+using RO2.Characters.Application;
 
 namespace RO2.Tests.Packets;
 
@@ -49,13 +50,17 @@ public class UseBonusStatPointPersistFirstTests
 
     private static int One(int _) => 1;
 
+    /// <summary>Builds a parsed allocation request (count = number of entries) for the pure pricing tests.</summary>
+    private static BonusRequest Req(params (byte Stat, int Amount)[] entries)
+        => new(entries.Length, entries.Select(e => new BonusEntry(e.Stat, e.Amount)).ToList());
+
     [Fact]
     public void Price_RequestThatFits_IsOk_AndLeavesTheInputUntouched()
     {
         int[] current = [0, 0, 0, 0, 0, 0];
-        var plan = UseBonusStatPointHandler.Price(Request((0, 3), (4, 2)), 2, current, unspent: 5, One);
+        var plan = BonusStatRules.Price(Req((0, 3), (4, 2)), current, unspent: 5, One);
 
-        Assert.Equal(QuestProgressPackets.BonusStatResultOk, plan.Result);
+        Assert.Equal(BonusStatOutcome.Ok, plan.Outcome);
         Assert.Equal(5, plan.TotalCost);
         Assert.Equal(new[] { 3, 0, 0, 0, 2, 0 }, plan.Bonus);
         Assert.Equal(new[] { 0, 0, 0, 0, 0, 0 }, current);
@@ -65,19 +70,18 @@ public class UseBonusStatPointPersistFirstTests
     public void Price_PastThePool_IsTooFewPoints_ShortVectorIsBadState_BadStatOrZeroCostIsOverCap()
     {
         int[] none = [0, 0, 0, 0, 0, 0];
-        Assert.Equal(QuestProgressPackets.BonusStatResultTooFewPoints,
-            UseBonusStatPointHandler.Price(Request((0, 3), (1, 3)), 2, none, unspent: 5, One).Result);
+        Assert.Equal(BonusStatOutcome.TooFewPoints,
+            BonusStatRules.Price(Req((0, 3), (1, 3)), none, unspent: 5, One).Outcome);
 
-        // count says 2 but only one entry is in the body
-        var shortBody = Request((0, 1));
-        shortBody[13] = 2;
-        Assert.Equal(QuestProgressPackets.BonusStatResultBadState,
-            UseBonusStatPointHandler.Price(shortBody.AsSpan(0, 17), 2, none, unspent: 9, One).Result);
+        // count says 2 but only one entry is present
+        var shortVector = new BonusRequest(2, [new BonusEntry(0, 1)]);
+        Assert.Equal(BonusStatOutcome.BadState,
+            BonusStatRules.Price(shortVector, none, unspent: 9, One).Outcome);
 
-        Assert.Equal(QuestProgressPackets.BonusStatResultOverCap,
-            UseBonusStatPointHandler.Price(Request((6, 1)), 1, none, unspent: 9, One).Result);
-        Assert.Equal(QuestProgressPackets.BonusStatResultOverCap,
-            UseBonusStatPointHandler.Price(Request((0, 1)), 1, none, unspent: 9, static _ => 0).Result);
+        Assert.Equal(BonusStatOutcome.OverCap,
+            BonusStatRules.Price(Req((6, 1)), none, unspent: 9, One).Outcome);
+        Assert.Equal(BonusStatOutcome.OverCap,
+            BonusStatRules.Price(Req((0, 1)), none, unspent: 9, static _ => 0).Outcome);
     }
 
     [Fact]
@@ -85,7 +89,7 @@ public class UseBonusStatPointPersistFirstTests
     {
         var c = NewCharacter();
         var seen = new List<int>();
-        var error = await UseBonusStatPointHandler.PersistAsync(c, (10, 5, 0, 7, 3, 0), [3, 0, 0, 0, 0, 0],
+        var error = await BonusStatAllocationFlow.PersistAsync(c, (10, 5, 0, 7, 3, 0), [3, 0, 0, 0, 0, 0],
             saved => { seen.Add(saved.BonusStr); throw new IOException("db down"); });
 
         Assert.IsType<IOException>(error);
@@ -97,7 +101,7 @@ public class UseBonusStatPointPersistFirstTests
     public async Task Persist_SaveSucceeds_WritesBonusAndEffectivePrimaries()
     {
         var c = NewCharacter();
-        var error = await UseBonusStatPointHandler.PersistAsync(c, (10, 5, 0, 7, 3, 0), [3, 0, 0, 0, 2, 0],
+        var error = await BonusStatAllocationFlow.PersistAsync(c, (10, 5, 0, 7, 3, 0), [3, 0, 0, 0, 2, 0],
             _ => Task.CompletedTask);
 
         Assert.Null(error);
