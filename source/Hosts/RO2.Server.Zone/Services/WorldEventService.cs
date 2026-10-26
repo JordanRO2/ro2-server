@@ -9,71 +9,22 @@ using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Services;
 
-/// <summary>The three world-event tables the stage rules read.</summary>
-public sealed record WorldEventTables(
-    IReadOnlyList<WorldEventMain> Main,
-    IReadOnlyList<WorldEventCheckGroup> Checks,
-    IReadOnlyList<WorldEventEventGroup> Groups)
-{
- /// <summary>Check type of the rows that require offering an item to an NPC.</summary>
-    public const byte CheckTypeOffering = 2;
-
-    public static WorldEventTables From(GameDataStore store)
-        => new(store.WorldEventMain, store.WorldEventCheckGroup, store.WorldEventEventGroup);
-
- /// <summary>The main-table row of an event at the given stage.</summary>
-    public WorldEventMain? Stage(uint eventId, byte stage)
-        => Main.FirstOrDefault(r => r.World_Event_ID == eventId && r.Stage_Level == stage);
-
- /// <summary>The offering rows of the stage's first check group, in index order. Empty when the group id is 0.</summary>
-    public IReadOnlyList<WorldEventCheckGroup> OfferingRows(WorldEventMain stage)
-        => stage.Check_Group_ID_1 == 0
-            ? Array.Empty<WorldEventCheckGroup>()
-            : Checks.Where(c => c.Check_Group_ID == stage.Check_Group_ID_1 && c.Check_Type == CheckTypeOffering)
-                .OrderBy(c => c.INDEX).ToList();
-
- /// <summary>The event-group rows of the stage, in table order.</summary>
-    public IReadOnlyList<WorldEventEventGroup> EventRows(WorldEventMain stage)
-        => Groups.Where(g => g.Event_Group_ID == stage.Event_Group_ID).ToList();
-}
-
 /// <summary>
-/// World-event stage rules, free of storage and network access so they can be tested in isolation.
+/// World-event stage rules over the persisted <see cref="WorldEventStateDocument"/>. The rules themselves are the pure
+/// <see cref="WorldEventStageRules"/> in World.Domain. This host delegator keeps the document-based signatures and applies
+/// the one in-place change (<see cref="AddOffering"/>) to the document.
 /// </summary>
-/// <remarks>
-/// Each stage completes when every offering row of its check group is met. Each row counts separately and the counts restart at each stage.
-/// A stage that has a duration returns to its return stage when the duration elapses.
-/// </remarks>
 public static class WorldEventMachine
 {
  /// <summary>A new state for an event entering a stage at the given time.</summary>
     public static WorldEventStateDocument Enter(uint eventId, byte stage, DateTime nowUtc, WorldEventTables t)
-    {
-        var row = t.Stage(eventId, stage);
-        var rows = row is null ? 0 : t.OfferingRows(row).Count;
-        return new WorldEventStateDocument
-        {
-            Id = eventId,
-            Stage = stage,
-            StageEnteredUtc = nowUtc,
-            Counts = Enumerable.Repeat(0u, rows).ToList(),
-            UpdatedUtc = nowUtc,
-        };
-    }
+        => ToDocument(WorldEventStageRules.Enter(eventId, stage, nowUtc, t));
 
  /// <summary>
  /// The stored state adjusted to the tables, with one count per offering row of its stage, or null when its stage no longer exists.
  /// </summary>
     public static WorldEventStateDocument? Normalize(WorldEventStateDocument stored, WorldEventTables t)
-    {
-        var row = t.Stage(stored.Id, stored.Stage);
-        if (row is null) return null;
-        var doc = stored.Clone();
-        var rows = t.OfferingRows(row).Count;
-        if (doc.Counts.Count > rows) doc.Counts.RemoveRange(rows, doc.Counts.Count - rows);
-        while (doc.Counts.Count < rows) doc.Counts.Add(0);
-        return doc;
-    }
+        => WorldEventStageRules.Normalize(ToState(stored), t) is { } state ? ToDocument(state) : null;
 
  /// <summary>Result of an offering: whether it counted, and the stage it completed, if any.</summary>
     public readonly record struct OfferingResult(bool Counted, byte? NextStage);
@@ -81,45 +32,35 @@ public static class WorldEventMachine
  /// <summary>
  /// Counts an offering of items to an NPC toward the current stage. Changes <paramref name="doc"/> in place.
  /// </summary>
- /// <remarks>
- /// The offering counts only when the item and NPC pair is a row of the current stage's first check group.
- /// The next stage is reported once every row in the group has reached its required count.
- /// </remarks>
     public static OfferingResult AddOffering(WorldEventStateDocument doc, WorldEventTables t, uint npcTemplate,
         uint itemTemplate, int count)
     {
-        if (count <= 0) return default;
-        var row = t.Stage(doc.Id, doc.Stage);
-        if (row is null) return default;
-        var rows = t.OfferingRows(row);
-        int i = -1;
-        for (int k = 0; k < rows.Count; k++)
-            if (rows[k].Type_Data_1 == npcTemplate && rows[k].Type_Data_2 == itemTemplate) { i = k; break; }
-        if (i < 0) return default;
-
-        while (doc.Counts.Count < rows.Count) doc.Counts.Add(0);
-        doc.Counts[i] = (uint)Math.Min((ulong)doc.Counts[i] + (ulong)count, uint.MaxValue);
-
-        for (int k = 0; k < rows.Count; k++)
-            if (doc.Counts[k] < rows[k].Type_Data_3) return new OfferingResult(true, null);
-        return t.Stage(doc.Id, row.Next_Stage) is null
-            ? new OfferingResult(true, null)
-            : new OfferingResult(true, row.Next_Stage);
+        var result = WorldEventStageRules.AddOffering(ToState(doc), t, npcTemplate, itemTemplate, count);
+        if (!result.Counted) return default;
+        doc.Counts.Clear();
+        doc.Counts.AddRange(result.Counts);
+        return new OfferingResult(true, result.NextStage);
     }
 
  /// <summary>When the current stage times out, or null when it does not.</summary>
     public static DateTime? Deadline(WorldEventStateDocument doc, WorldEventTables t)
-        => t.Stage(doc.Id, doc.Stage) is { Stage_Duration_Time: > 0 } row
-            ? doc.StageEnteredUtc.AddMinutes(row.Stage_Duration_Time)
-            : null;
+        => WorldEventStageRules.Deadline(ToState(doc), t);
 
  /// <summary>The return stage the event falls back to at the given time, or null while the stage is still running.</summary>
     public static byte? TimedOut(WorldEventStateDocument doc, WorldEventTables t, DateTime nowUtc)
+        => WorldEventStageRules.TimedOut(ToState(doc), t, nowUtc);
+
+    private static WorldEventState ToState(WorldEventStateDocument doc)
+        => new(doc.Id, doc.Stage, doc.StageEnteredUtc, doc.Counts, doc.UpdatedUtc);
+
+    private static WorldEventStateDocument ToDocument(WorldEventState state) => new()
     {
-        if (Deadline(doc, t) is not { } deadline || nowUtc < deadline) return null;
-        var row = t.Stage(doc.Id, doc.Stage)!;
-        return t.Stage(doc.Id, row.Return_Stage) is null ? null : row.Return_Stage;
-    }
+        Id = state.Id,
+        Stage = state.Stage,
+        StageEnteredUtc = state.StageEnteredUtc,
+        Counts = new List<uint>(state.Counts),
+        UpdatedUtc = state.UpdatedUtc,
+    };
 }
 
 /// <summary>
