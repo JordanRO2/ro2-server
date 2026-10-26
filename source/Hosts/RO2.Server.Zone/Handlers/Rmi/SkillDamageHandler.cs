@@ -615,33 +615,7 @@ public class SkillDamageHandler : ZoneRmiHandlerBase<SkillDamageHandler>
     /// </summary>
     internal static ActorRefusal EvaluateDamageGate(in GateActor actor, uint skillId, in GateTarget? npcTarget,
         float? reach, byte? maxSkillLevel = null)
-    {
-        // Item skills are validated by POSSESSION, not by a learned check. An item skill
-        // (>= FirstNonClassSkillId) is never in LearnedSkills, so a learned check would refuse a legitimate damaging
-        // item skill (item held, cast through the 1561 path that already verified ownership and consumed the item,
-        // leaving the pending cast that TryGovern below matches). Skip the learned check for it, exactly as
-        // EvaluateFunctionGate does; only a class skill is learned-gated. The possession proof is the pending cast
-        // the 1561 path recorded: a forged item-skill 1509 with no such cast finds none at TryGovern and is refused.
-        uint? learnedGroup = skillId < FirstNonClassSkillId ? skillId / SkillGroupDivisor : null;
-        var refusal = npcTarget is { } target
-            ? ActorGate.CanAct(actor, target, new GateContext(reach, SkillGroup: learnedGroup))
-            : learnedGroup is not null
-                ? (actor.LearnedSkills is { } known && known.TryGetValue(learnedGroup.Value, out var knownLevel) && knownLevel > 0
-                    ? ActorRefusal.None
-                    : ActorRefusal.SkillNotLearned)
-                : ActorRefusal.None;
-        if (refusal != ActorRefusal.None || learnedGroup is not { } group)
-            return refusal;
-
-        // The cast level is the id's own (id % 100) and the client's to choose, so it must lie in
-        // [1, learned level of the group] and within the group's Max_Skill_Level when the caller has one
-        // (TalentRules.TryGetSkillLevelLimit). Learned >= 1 is established above, so the lookup holds.
-        var castLevel = skillId % SkillGroupDivisor;
-        var learnedLevel = actor.LearnedSkills![group];
-        return castLevel >= 1 && castLevel <= learnedLevel && (maxSkillLevel is not { } max || castLevel <= max)
-            ? ActorRefusal.None
-            : ActorRefusal.SkillNotLearned;
-    }
+        => SkillActionGate.EvaluateDamageGate(actor, skillId, npcTarget, reach, maxSkillLevel);
 
     /// <summary>
     /// Refuses a 1509 that the actor gate rejects or that no accepted cast governs, the way an
@@ -657,7 +631,7 @@ public class SkillDamageHandler : ZoneRmiHandlerBase<SkillDamageHandler>
 
     /// <summary>First skill id that is not a class skill: the 2,000,000+ ids are item, guild and monster skills, which
     /// are never in <see cref="PlayerState.LearnedSkills"/> (SkillStartHandler uses the same boundary).</summary>
-    internal const uint FirstNonClassSkillId = 2_000_000u;
+    internal const uint FirstNonClassSkillId = SkillActionGate.FirstNonClassSkillId;
 
     /// <summary>
     /// The pre-effect precondition of the non-damage 1509 functions (revival, emergency call, the warp
@@ -669,17 +643,7 @@ public class SkillDamageHandler : ZoneRmiHandlerBase<SkillDamageHandler>
     /// </summary>
     internal static ActorRefusal EvaluateFunctionGate(in GateActor actor, uint skillId, in GateTarget? target,
         bool targeted, float? reach, bool targetMustBeAlive)
-    {
-        uint? learnedGroup = skillId < FirstNonClassSkillId ? skillId / SkillGroupDivisor : null;
-        if (targeted)
-            return ActorGate.CanAct(actor, target,
-                new GateContext(reach, SkillGroup: learnedGroup, TargetMustBeAlive: targetMustBeAlive));
-        if (actor.IsDead) return ActorRefusal.ActorDead;
-        return learnedGroup is { } group
-            && !(actor.LearnedSkills is { } learned && learned.TryGetValue(group, out var level) && level > 0)
-            ? ActorRefusal.SkillNotLearned
-            : ActorRefusal.None;
-    }
+        => SkillActionGate.EvaluateFunctionGate(actor, skillId, target, targeted, reach, targetMustBeAlive);
 
     /// <summary>
     /// Runs <see cref="EvaluateFunctionGate"/>, then spends the governing pending cast (<see cref="SkillCastLandings.TryGovern"/>,

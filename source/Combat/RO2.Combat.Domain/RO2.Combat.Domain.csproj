@@ -6,10 +6,12 @@
     <RootNamespace>RO2.Combats.Domain</RootNamespace>
   </PropertyGroup>
 
-  <!-- Combat bounded context: Domain references ONLY RO2.BuildingBlocks + the shared RO2.GameData kernel. -->
+  <!-- Combat bounded context: Domain references RO2.BuildingBlocks + the shared RO2.GameData kernel, plus the
+       foundational RO2.World.Domain for the shared ActorGate precondition the skill-action gates build on. -->
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
     <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+    <ProjectReference Include="..\..\World\RO2.World.Domain\RO2.World.Domain.csproj" />
   </ItemGroup>
 
 </Project>
