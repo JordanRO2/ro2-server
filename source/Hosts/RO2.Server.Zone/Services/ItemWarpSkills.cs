@@ -104,7 +104,7 @@ internal static class ItemWarpSkills
     }
 
  /// <summary>Time window in which a town warp's landing (1509) still moves the player.</summary>
-    internal static readonly TimeSpan LandingWindow = TimeSpan.FromSeconds(5);
+    internal static readonly TimeSpan LandingWindow = LandingGrantRule.Window;
 
  /// <summary>A player's pending landing. Guarded by its own lock.</summary>
     private sealed class PendingLanding
@@ -140,7 +140,7 @@ internal static class ItemWarpSkills
         if (!Pending.TryGetValue(player, out var p)) return false;
         lock (p.Gate)
         {
-            if (p.SkillId == 0 || p.SkillId != skillId || p.MapId != mapId || nowUtc < p.At || nowUtc - p.At > LandingWindow)
+            if (!LandingGrantRule.CanTake(p.SkillId, p.MapId, p.At, skillId, mapId, nowUtc))
                 return false;
             p.SkillId = 0;
             return true;
