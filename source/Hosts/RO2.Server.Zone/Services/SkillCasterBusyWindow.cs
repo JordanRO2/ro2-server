@@ -2,12 +2,17 @@ using System.Collections.Frozen;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using RO2.Server.Zone.Models;
+using RO2.Combats.Domain;
 
 namespace RO2.Server.Zone.Services;
 
 /// <summary>
-/// SkillStartHandler's cooldown refusal asks <see cref="RefusalCode"/>, and its accepted path calls
-/// <see cref="RecordAccepted"/>.
+/// Host facade over one <see cref="CasterBusyWindow"/> per PlayerState: the caster's last accepted cast, which
+/// SkillStartHandler's cooldown refusal reads through <see cref="RefusalCode"/> and its accepted path records
+/// through <see cref="RecordAccepted"/>. The window logic and its lock live in <see cref="CasterBusyWindow"/>
+/// (Combat.Domain); this maps player → window through a <see cref="ConditionalWeakTable{TKey,TValue}"/> (so it
+/// leaves with the player and a relog starts empty), supplies the catalog-fed cast durations
+/// (<see cref="CastDuration"/>), and maps the idle/busy verdict to the wire result code.
 /// </summary>
 /// <remarks>
 /// Not modelled, named so nobody reads this as complete: 22900, 22303 and 20119 have no discriminator
@@ -22,16 +27,9 @@ internal static class SkillCasterBusyWindow
  /// </summary>
     internal const ushort SkillResultNotEnoughTime = 20032;
 
-    private sealed class LastCast
-    {
-        internal readonly Lock Gate = new();
-        internal DateTime StartedAt;
-        internal TimeSpan Duration;
-    }
-
     private sealed record CastTimeRow(uint ID, float Casting_Time, float Excution_Time);
 
-    private static readonly ConditionalWeakTable<PlayerState, LastCast> Last = new();
+    private static readonly ConditionalWeakTable<PlayerState, CasterBusyWindow> Last = new();
 
     private static readonly Lazy<FrozenDictionary<uint, TimeSpan>> Shipped =
         new(() => LoadDurations(FindShippedTable()));
@@ -69,28 +67,15 @@ internal static class SkillCasterBusyWindow
  /// <summary>
  /// Stores the caster's last accepted cast: its start and its Casting_Time + Excution_Time.
  /// </summary>
-    internal static void Record(PlayerState player, DateTime startedAtUtc, TimeSpan duration)
-    {
-        var last = Last.GetValue(player, static _ => new LastCast());
-        lock (last.Gate)
-        {
-            last.StartedAt = startedAtUtc;
-            last.Duration = duration;
-        }
-    }
+    internal static void Record(PlayerState player, DateTime startedAtUtc, TimeSpan duration) =>
+        Last.GetValue(player, static _ => new CasterBusyWindow()).Record(startedAtUtc, duration);
 
  /// <summary>
  /// True when the caster's last accepted cast began more than its duration before <paramref
  /// name="nowUtc"/>, or when there is none.
  /// </summary>
-    internal static bool IsIdle(PlayerState player, DateTime nowUtc)
-    {
-        if (!Last.TryGetValue(player, out var last)) return true;
-        lock (last.Gate)
-        {
-            return nowUtc - last.StartedAt > last.Duration;
-        }
-    }
+    internal static bool IsIdle(PlayerState player, DateTime nowUtc) =>
+        !Last.TryGetValue(player, out var last) || last.IsIdle(nowUtc);
 
  /// <summary>
  /// The code of a cooldown refusal: <see cref="SkillResultNotEnoughTime"/> when idle, else <see
