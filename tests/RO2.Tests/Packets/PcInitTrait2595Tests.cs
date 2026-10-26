@@ -7,7 +7,7 @@ using RO2.Characters.Domain;
 namespace RO2.Tests.Packets;
 
 /// <summary>
-/// Tests the 2595 OnPcInitTrait builder (WorldEntryService.BuildPcInitTrait2595) and the 205-byte 2310 head writer
+/// Tests the 2595 OnPcInitTrait builder (TraitPackets.BuildPcInitTrait2595) and the 205-byte 2310 head writer
 /// (WorldEntryService.WriteCharacterHead205), checked against reference frames.
 /// </summary>
 public class PcInitTrait2595Tests
@@ -35,7 +35,7 @@ public class PcInitTrait2595Tests
     public void NoBonusAndLevelOneVitals_ReproduceTheOldLoginDonor()
     {
         
-        var built = WorldEntryService.BuildPcInitTrait2595(new Character { Name = "T" }, Trait2498(224, 15));
+        var built = TraitPackets.BuildPcInitTrait2595(new Character { Name = "T" }, Trait2498(224, 15));
         Assert.Equal(LoginDonor, built);
     }
 
@@ -49,7 +49,7 @@ public class PcInitTrait2595Tests
             "00000000000000000000000000000000000000000000000000803ff45c01003324000000000000000000000000000000" +
             "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
         var c = new Character { Name = "T", BonusVit = 375 };
-        Assert.Equal(retail, WorldEntryService.BuildPcInitTrait2595(c, Trait2498(89332, 9267)));
+        Assert.Equal(retail, TraitPackets.BuildPcInitTrait2595(c, Trait2498(89332, 9267)));
     }
 
     [Fact]
@@ -61,7 +61,7 @@ public class PcInitTrait2595Tests
             "00000000000000000000000000000000000000000000000000803fe6e90000f825000000000000000000000000000000" +
             "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
         var c = new Character { Name = "T", BonusStr = 375 };
-        Assert.Equal(retail, WorldEntryService.BuildPcInitTrait2595(c, Trait2498(59878, 9720)));
+        Assert.Equal(retail, TraitPackets.BuildPcInitTrait2595(c, Trait2498(59878, 9720)));
     }
 
     [Fact]

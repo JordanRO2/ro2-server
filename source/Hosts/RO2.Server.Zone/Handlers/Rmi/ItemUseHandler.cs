@@ -275,7 +275,7 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
         // empties and the unspent pool restores to the full level curve automatically (pool is derived).
         // The scroll is answered 1323 -> 2595 -> 2498 -> 2329, with nothing in between. The 2595 carries
         // 1,1,1,1,1 at blob+14..+22 and the 2498 a zeroed bonus block (blob+26..+36), and the 2595's blob+72/+76
-        // equal that 2498's current HP/SP. WorldEntryService.BuildPcInitTrait2595 of the reset character and the
+        // equal that 2498's current HP/SP. TraitPackets.BuildPcInitTrait2595 of the reset character and the
         // sheet sent after it is exactly that: 1 + a bonus of 0 per primary, and the 2498's vitals. So the pair
         // goes out here, ahead of the 2329, as it does for an accepted 1493.
         if (itemData is { Item_Type: StatResetScrollItemType } && player.Character is { } c
@@ -293,7 +293,7 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
             // EffectService.RefreshPcTraitSheet does all three from one sheet, active effects included.
             var resetTrait = services.GetRequiredService<EffectService>().RefreshPcTraitSheet(player, c, equipped);
             await session.SendInternalRmiAsync(ZoneS2COpcodes.OnPcInitTrait,
-                WorldEntryService.BuildPcInitTrait2595(c, resetTrait));
+                TraitPackets.BuildPcInitTrait2595(c, resetTrait));
             await session.SendInternalRmiAsync(ZoneS2COpcodes.OnPcTrait, resetTrait);
             Logger.LogInformation("{Name} used a stat-reset scroll: bonus points refunded", player.Name);
         }

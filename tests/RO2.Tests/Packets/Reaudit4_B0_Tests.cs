@@ -111,8 +111,8 @@ public sealed class Reaudit4_B0_Tests
         var c = Hero(4_400_002);
         c.Level = 27;
         var gear = new EquipStats(new Dictionary<byte, int> { [94] = 50 }, new Dictionary<byte, float>());
-        var donor = WorldEntryService.BuildFullPcTrait2498(c, null, null, 100, 10);
-        var body = WorldEntryService.BuildPcTrait2498FromDonor(donor, c, gear, store, (100, 10));
+        var donor = TraitPackets.BuildFullPcTrait2498(c, null, null, 100, 10);
+        var body = TraitPackets.BuildPcTrait2498FromDonor(donor, c, gear, store, (100, 10));
         Assert.Equal(50, U16(body, PcTraitRates.PenConstOffset));
         Assert.Equal(319, U16(body, PcTraitRates.PenRateOffset));
         Assert.Equal(0, U16(body, PcTraitRates.CritRateOffset));
@@ -149,7 +149,7 @@ public sealed class Reaudit4_B0_Tests
         try
         {
             KharaTitleStore.Publish(id, new KharaTitleState(0, 556, null, null), store.KharaInfo);
-            var body = WorldEntryService.BuildFullPcTrait2498(c, store, Array.Empty<InventoryItem>(), 1, 1);
+            var body = TraitPackets.BuildFullPcTrait2498(c, store, Array.Empty<InventoryItem>(), 1, 1);
             for (int i = 0; i < 5; i++)
                 Assert.Equal(U16(retail, TraitPackets.PcTraitPrimaryStatsOffset + 2 * i), U16(body, TraitPackets.PcTraitPrimaryStatsOffset + 2 * i));
             Assert.Equal(U16(retail, TraitPackets.PcTraitMaxSpOffset), U16(body, TraitPackets.PcTraitMaxSpOffset));
@@ -170,15 +170,15 @@ public sealed class Reaudit4_B0_Tests
         const uint id = 4_400_004;
         var c = Hero(id);
         var pc = store.PcBaseStatus[c.Job];
-        var bare = WorldEntryService.BuildFullPcTrait2498(c, store, Array.Empty<InventoryItem>(), 1, 1);
+        var bare = TraitPackets.BuildFullPcTrait2498(c, store, Array.Empty<InventoryItem>(), 1, 1);
         try
         {
             KharaTitleStore.Publish(id, new KharaTitleState(0, 619, null, null), store.KharaInfo);
-            var with237 = WorldEntryService.BuildFullPcTrait2498(c, store, Array.Empty<InventoryItem>(), 1, 1);
+            var with237 = TraitPackets.BuildFullPcTrait2498(c, store, Array.Empty<InventoryItem>(), 1, 1);
             Assert.Equal(pc.WisSPValue * 150 + 200, U16(with237, TraitPackets.PcTraitMaxSpOffset) - U16(bare, TraitPackets.PcTraitMaxSpOffset));
 
             KharaTitleStore.Publish(id, new KharaTitleState(0, 616, null, null), store.KharaInfo);
-            var with234 = WorldEntryService.BuildFullPcTrait2498(c, store, Array.Empty<InventoryItem>(), 1, 1);
+            var with234 = TraitPackets.BuildFullPcTrait2498(c, store, Array.Empty<InventoryItem>(), 1, 1);
             Assert.Equal(pc.VitHPValue * 200 + 1000, (long)U32(with234, TraitPackets.PcTraitMaxHpOffset) - U32(bare, TraitPackets.PcTraitMaxHpOffset));
             var combat = StatService.EffectivePlayerStats(store, c, Array.Empty<InventoryItem>());
             Assert.Equal(U32(with234, TraitPackets.PcTraitMaxHpOffset), combat.MaxHp);
@@ -186,8 +186,8 @@ public sealed class Reaudit4_B0_Tests
 
             KharaTitleStore.Publish(id, new KharaTitleState(0, 556, null, null), store.KharaInfo);
             var gear = new EquipStats(new Dictionary<byte, int>(), new Dictionary<byte, float> { [0] = 10f });
-            var donor = WorldEntryService.BuildFullPcTrait2498(c, null, null, 1, 1);
-            var body = WorldEntryService.BuildPcTrait2498FromDonor(donor, c, gear, store, (1, 1));
+            var donor = TraitPackets.BuildFullPcTrait2498(c, null, null, 1, 1);
+            var body = TraitPackets.BuildPcTrait2498FromDonor(donor, c, gear, store, (1, 1));
             Assert.Equal(89, U16(body, TraitPackets.PcTraitPrimaryStatsOffset));
         }
         finally
@@ -238,7 +238,7 @@ public sealed class Reaudit4_B0_Tests
             Assert.Equal((ZoneS2COpcodes.NfyKharaTitleChange, Hex(KharaTitleSelectPackets.Build2592(0x0785EC11u, accepted))), (f1.Op, Hex(f1.Body)));
             var f2 = await net.Reader.NextAsync();
             Assert.Equal(ZoneS2COpcodes.OnPcTrait, f2.Op);
-            Assert.Equal(Hex(WorldEntryService.BuildFullPcTrait2498(c, store, Array.Empty<InventoryItem>(), 1, 1)), Hex(f2.Body));
+            Assert.Equal(Hex(TraitPackets.BuildFullPcTrait2498(c, store, Array.Empty<InventoryItem>(), 1, 1)), Hex(f2.Body));
             Assert.Equal(81, U16(f2.Body, TraitPackets.PcTraitPrimaryStatsOffset));      
             var f3 = await net.Reader.NextAsync();
             Assert.Equal((ZoneS2COpcodes.AnsKharaTitleSelect, Hex(KharaTitleSelectPackets.Build2582(0, 556, accepted))), (f3.Op, Hex(f3.Body)));

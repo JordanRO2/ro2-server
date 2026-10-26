@@ -76,7 +76,7 @@ public class UseBonusStatPointHandler : ZoneRmiHandlerBase<UseBonusStatPointHand
             // the max and the combat cache keep the active effects (EffectService.RefreshPcTraitSheet).
             var trait = services.GetRequiredService<EffectService>().RefreshPcTraitSheet(player, character, equipped);
             await session.SendInternalRmiAsync(
-                ZoneS2COpcodes.OnPcInitTrait, WorldEntryService.BuildPcInitTrait2595(character, trait));
+                ZoneS2COpcodes.OnPcInitTrait, TraitPackets.BuildPcInitTrait2595(character, trait));
             await session.SendInternalRmiAsync(ZoneS2COpcodes.OnPcTrait, trait);
 
             Logger.LogInformation("{Name} allocated bonus points ({Count} entries, cost {Cost}): STR/AGI/INT/WIS/VIT/LUK bonus now {S}/{A}/{I}/{W}/{V}/{L} ({Left} left)",

@@ -68,7 +68,7 @@ public static class StatService
     /// <summary>
     /// Sums the worn (StorageType==1) items' bonuses by stat id, keeping FLAT (Kind 1) and PERCENT (Kind 2)
     /// separate: innate per-item <c>TraitInfo</c> PLUS <c>SetTrait</c> set bonuses (added when enough set
-    /// members are worn). The result feeds <c>WorldEntryService.BuildPcTrait2498FromDonor</c>. These belong
+    /// members are worn). The result feeds <c>TraitPackets.BuildPcTrait2498FromDonor</c>. These belong
     /// to the Basic side of the sheet (effective primaries + derived), never the allocated-Bonus column.
     /// (Socketed runes/cards would fold in here too once per-instance socket content is tracked.)
     /// </summary>
@@ -198,7 +198,7 @@ public static class StatService
     /// effective STR/INT feed AP/MA. Defense (trait 26) is the naked <c>VitDefenseValue·VIT</c> PLUS the
     /// worn gear's flat armour (trait-26 Kind-1), exactly as <c>WorldEntryService</c> merges them onto the
     /// sheet — so combat DEF equals the DEF the player sees. Mirrors
-    /// <c>WorldEntryService.BuildPcTrait2498FromDonor</c>'s primary→ComputeBaseStats path.
+    /// <c>TraitPackets.BuildPcTrait2498FromDonor</c>'s primary→ComputeBaseStats path.
     /// </summary>
     public static EffectiveStats EffectivePlayerStats(
         GameDataStore store, Character c, IEnumerable<InventoryItem> equipped)

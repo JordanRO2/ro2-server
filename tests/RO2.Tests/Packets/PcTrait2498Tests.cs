@@ -46,7 +46,7 @@ public class PcTrait2498Tests
     [Fact]
     public void TheFourVitalsLandInTheSlotsTheClientsSettersRead()
     {
-        var body = WorldEntryService.BuildPcTrait2498FromDonor(
+        var body = TraitPackets.BuildPcTrait2498FromDonor(
             DonorBody(), new Character { Hp = 9000, MaxHp = 12500, Mp = 1200, MaxMp = 3400 });
 
         Assert.Equal(TraitPackets.PcTraitBodyLen, body.Length);
@@ -67,7 +67,7 @@ public class PcTrait2498Tests
     [Fact]
     public void CurrentVitalsNeverExceedTheMaxima()
     {
-        var body = WorldEntryService.BuildPcTrait2498FromDonor(
+        var body = TraitPackets.BuildPcTrait2498FromDonor(
             DonorBody(), new Character { Hp = 9000, MaxHp = 12500, Mp = 1200, MaxMp = 3400 });
 
         var maxHp = BinaryPrimitives.ReadUInt32LittleEndian(body.AsSpan(MaxHpBodyOffset));
@@ -111,7 +111,7 @@ public class PcTrait2498Tests
         
         BinaryPrimitives.WriteSingleLittleEndian(donor.AsSpan(71), 1.0f);
 
-        var after = WorldEntryService.BuildPcTrait2498FromDonor(
+        var after = TraitPackets.BuildPcTrait2498FromDonor(
             donor, new Character { Hp = 700, MaxHp = 9999, Mp = 100, MaxMp = 777 });
 
         for (var i = 0; i < donor.Length; i++)
@@ -135,7 +135,7 @@ public class PcTrait2498Tests
     {
         
         
-        var body = WorldEntryService.BuildPcTrait2498FromDonor(
+        var body = TraitPackets.BuildPcTrait2498FromDonor(
             DonorBody(), new Character { Hp = 1, MaxHp = 1, Mp = 1, MaxMp = 70000 });
         Assert.Equal(ushort.MaxValue, BinaryPrimitives.ReadUInt16LittleEndian(body.AsSpan(MaxSpBodyOffset)));
     }
@@ -147,7 +147,7 @@ public class PcTrait2498Tests
     [Fact]
     public void AZeroStoredHpEntersTheWorldAtFull()
     {
-        var body = WorldEntryService.BuildPcTrait2498FromDonor(
+        var body = TraitPackets.BuildPcTrait2498FromDonor(
             DonorBody(), new Character { Hp = 0, MaxHp = 5000, Mp = 0, MaxMp = 900 });
         Assert.Equal(5000u, BinaryPrimitives.ReadUInt32LittleEndian(body.AsSpan(CurHpBodyOffset)));
         Assert.Equal(900, BinaryPrimitives.ReadUInt16LittleEndian(body.AsSpan(CurSpBodyOffset)));
@@ -167,7 +167,7 @@ public class PcTrait2498Tests
     [Fact]
     public void EnvelopeIsTheWidthTwoMarkerRetailUses()
     {
-        var body = WorldEntryService.BuildPcTrait2498FromDonor(
+        var body = TraitPackets.BuildPcTrait2498FromDonor(
             DonorBody(), new Character { Hp = 10, MaxHp = 20, Mp = 5, MaxMp = 10 });
 
         

@@ -67,7 +67,7 @@ public sealed class LevelUpTraitBurstTests
         Assert.True(curHp < maxHp); 
 
         Assert.Equal(Convert.FromHexString(Retail2595),
-            WorldEntryService.BuildPcInitTrait2595(new Character { Name = "T" }, trait));
+            TraitPackets.BuildPcInitTrait2595(new Character { Name = "T" }, trait));
         Assert.Equal(Convert.FromHexString(Retail2394),
             CombatPackets.BuildLevelUp2394(RetailHandle, 23, 25806, maxHp, maxHp, maxSp, maxSp,
                 CombatPackets.StatPointsForLevelUp(18, 23)));
@@ -121,8 +121,8 @@ public sealed class LevelUpTraitBurstTests
         Assert.True(maxHp > 300);
 
         Assert.Equal(23, character.Level); 
-        Assert.Equal(WorldEntryService.BuildFullPcTrait2498(character, store, Array.Empty<InventoryItem>(), 300, 20), trait);
-        Assert.Equal(WorldEntryService.BuildPcInitTrait2595(character, trait), initTrait);
+        Assert.Equal(TraitPackets.BuildFullPcTrait2498(character, store, Array.Empty<InventoryItem>(), 300, 20), trait);
+        Assert.Equal(TraitPackets.BuildPcInitTrait2595(character, trait), initTrait);
         Assert.Equal(CombatPackets.BuildLevelUp2394(player.EntityId, 23, 7, maxHp, maxHp, maxSp, maxSp,
             CombatPackets.StatPointsForLevelUp(20, 23)), levelUp);
         Assert.Equal(CombatPackets.BuildLevelUpNotify2395(player.EntityId, 23), notify);
@@ -180,14 +180,14 @@ public sealed class LevelUpTraitBurstTests
     private const string ResetRetail2329 = "01161600a6e21115f00600003901e811840da83d040e0001";
 
  /// <summary>
- /// The 2595 built by WorldEntryService.BuildPcInitTrait2595 for a reset character (no unallocated points, one per primary stat),
+ /// The 2595 built by TraitPackets.BuildPcInitTrait2595 for a reset character (no unallocated points, one per primary stat),
  /// the 2498 sent after it with current HP and SP restored, and the 2329 naming the used scroll's cell.
  /// </summary>
     [Fact]
     public void RetailStatReset_2595IsBuiltFromTheResetSheet()
     {
         Assert.Equal(Convert.FromHexString(ResetRetail2595),
-            WorldEntryService.BuildPcInitTrait2595(new Character { Name = "T" }, Convert.FromHexString(ResetRetail2498)));
+            TraitPackets.BuildPcInitTrait2595(new Character { Name = "T" }, Convert.FromHexString(ResetRetail2498)));
         Assert.Equal(Convert.FromHexString(ResetRetail2329),
             CombatPackets.BuildUseItem2329(0x06F01511u, slotIndex: 57, bagId: 1, itemUid: 0x0E043DA80D8411E8UL,
                 remainingCount: 0, useSource: 1));
@@ -228,7 +228,7 @@ public sealed class LevelUpTraitBurstTests
         Assert.Equal(new byte[] { 0x5A }, marker);
 
         Assert.Equal(0, character.BonusStr);                     
-        Assert.Equal(WorldEntryService.BuildPcInitTrait2595(character, trait), initTrait);
+        Assert.Equal(TraitPackets.BuildPcInitTrait2595(character, trait), initTrait);
         for (int i = 0; i < 5; i++)                              
             Assert.Equal(1, BinaryPrimitives.ReadUInt16LittleEndian(initTrait.AsSpan(3 + 14 + 2 * i)));
         Assert.Equal(trait.AsSpan(3 + 72, 6).ToArray(), initTrait.AsSpan(3 + 72, 6).ToArray());

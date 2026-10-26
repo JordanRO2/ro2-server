@@ -149,7 +149,7 @@ public class PcTraitEffectFold2498Tests
         var body = EffectService.BuildPcTraitSheet(character, store, EquipStats.Empty, 700, 40,
             EffectService.EffectSheetModifiers.None);
 
-        Assert.Equal(WorldEntryService.BuildFullPcTrait2498(character, store, null, 700, 40), body);
+        Assert.Equal(TraitPackets.BuildFullPcTrait2498(character, store, null, 700, 40), body);
     }
 
  /// <summary>

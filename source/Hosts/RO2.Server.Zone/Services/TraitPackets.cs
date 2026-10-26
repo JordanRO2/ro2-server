@@ -1,6 +1,8 @@
 ﻿using System.Buffers.Binary;
 using RO2.Network.Packets;
 using RO2.Worlds.Domain;
+using RO2.Characters.Domain;
+using RO2.GameData;
 
 namespace RO2.Server.Zone.Services;
 
@@ -350,5 +352,361 @@ public static class TraitPackets
         pw.WriteUInt32(totalPoints);       // blob+8    counter after the change
         pw.WriteUInt32(Reserved);          // blob+12   always zero
         return pw.ToArray();
+    }
+
+    // ================= trait builders (moved from WorldEntryService, B5 Phase-0 S3) ============
+
+ /// <summary>Number of decimals the class regeneration coefficients are rounded to before they are multiplied.</summary>
+    private const int RegenCoefficientDecimals = 6;
+
+ /// <summary>Trait ids of the primary stats, in the order of their slots.</summary>
+    private const byte TraitStr = 0, TraitAgi = 1, TraitInt = 2, TraitWis = 3, TraitVit = 4, TraitLuk = 5;
+ /// <summary>Trait id of the flat maximum HP bonus.</summary>
+    private const byte TraitMaxHp = 21;
+ /// <summary>Trait id of the flat maximum SP bonus.</summary>
+    private const byte TraitMaxSp = 22;
+ /// <summary>Trait id of the flat HP regeneration bonus.</summary>
+    private const byte TraitHpRestore = 28;
+ /// <summary>Trait id of the flat SP regeneration bonus.</summary>
+    private const byte TraitSpRestore = 29;
+ /// <summary>Trait id of the auto-attack range of the equipped weapon.</summary>
+    private const byte TraitAutoAttackRange = 42;
+ /// <summary>The auto-attack reach sent in the trait message is this base plus the weapon's auto-attack range.</summary>
+    private const float AutoAttackReachBase = 1f;
+
+ /// <summary>Maximum HP estimate when no class stat row exists: this base plus <see cref="FallbackMaxHpPerLevel"/> per level.</summary>
+    private const int FallbackMaxHpBase = 100;
+ /// <summary>Maximum HP added per level in the no-class-row estimate.</summary>
+    private const int FallbackMaxHpPerLevel = 50;
+ /// <summary>Maximum SP estimate when no class stat row exists: this base plus <see cref="FallbackMaxSpPerLevel"/> per level.</summary>
+    private const int FallbackMaxSpBase = 50;
+ /// <summary>Maximum SP added per level in the no-class-row estimate.</summary>
+    private const int FallbackMaxSpPerLevel = 20;
+
+ /// <summary>Length of the compact length prefix in front of the 140-byte trait blob: the marker byte 2 and a u16 length.</summary>
+    private const int PcTraitPrefixLen = TraitPackets.PcTraitBodyLen - TraitPackets.PcTraitBlobLen;
+ /// <summary>Value of each primary stat slot of the trait initialization message before the allocated bonus is added.</summary>
+    private const int PcInitPrimaryStatBase = 1;
+ /// <summary>Value of the f32 at blob offset 68 in the trait initialization message.</summary>
+    private const float PcInitTraitScale68 = 1.0f;
+
+ /// <summary>
+ /// Donor body of the 2498 trait message: a 143-byte frame whose stat fields are replaced with the character's own values.
+ /// </summary>
+ /// <remarks>
+ /// Layout, as byte offsets into the frame: 0 to 2 is the compact length prefix (marker 2, u16 140, see <see cref="PcTraitPrefixLen"/>).
+ /// The 140-byte blob starts at 3 with a u16 self length and the u16 message tag <see cref="TraitPackets.MsgTagPcTrait"/>.
+ /// Within the blob: u32 maximum HP at 8, u16 maximum SP at 12, six u16 primary stats from 14, f32 at 68 (the weapon's auto-attack reach),
+ /// u32 current HP at 72, u16 current SP at 76 and the u16 HP and SP regeneration amounts at 78 and 80 (see the <c>TraitPackets.PcTrait*Offset</c> constants).
+ /// The donor holds a level-1 character's values: 224 HP, 15 SP, every primary stat 1 except LUK 0, and reach 1.0.
+ /// Bytes that no builder overlays keep the donor's values.
+ /// </remarks>
+    internal static readonly byte[] PcTrait2498Donor = BuildPcTrait2498Default();
+
+ /// <summary>Maximum HP of the donor, a level-1 character's value.</summary>
+    private const uint DonorMaxHp = 224;
+ /// <summary>Maximum SP of the donor.</summary>
+    private const ushort DonorMaxSp = 15;
+ /// <summary>Value of each of the donor's STR, AGI, INT, WIS and VIT.</summary>
+    private const ushort DonorPrimaryStat = 1;
+ /// <summary>Value of the donor's LUK.</summary>
+    private const ushort DonorLuk = 0;
+ /// <summary>Physical attack (trait 23) of the donor.</summary>
+    private const ushort DonorPhysicalAttack = 2;
+ /// <summary>Value of the u16 at blob offset 54, whose meaning is undetermined; the donor keeps 1.</summary>
+    private const ushort DonorUnnamedWord54 = 1;
+ /// <summary>HP regeneration amount of the donor.</summary>
+    private const ushort DonorHpRegen = 2;
+ /// <summary>SP regeneration amount of the donor.</summary>
+    private const ushort DonorSpRegen = 1;
+ /// <summary>Precision (trait 58) of the donor.</summary>
+    private const ushort DonorPrecision = 4;
+ /// <summary>Evade (trait 59) of the donor.</summary>
+    private const ushort DonorEvade = 2;
+ /// <summary>Critical (trait 60) of the donor.</summary>
+    private const ushort DonorCritical = 1;
+ /// <summary>Guard (trait 61) of the donor.</summary>
+    private const ushort DonorGuard = 1;
+
+ /// <summary>Blob offset of the physical attack u16 (trait 23).</summary>
+    private const int PcTraitPhysicalAttackOffset = 40;
+ /// <summary>Blob offset of the u16 whose meaning is undetermined.</summary>
+    private const int PcTraitUnnamedWord54Offset = 54;
+ /// <summary>Blob offset of the precision u16 (trait 58). Evade, critical and guard (traits 59 to 61) follow at two-byte steps.</summary>
+    private const int PcTraitPrecisionOffset = 88;
+
+ /// <summary>
+ /// Writes the default bytes of <see cref="PcTrait2498Donor"/> field by field. Every blob field not written here is zero.
+ /// </summary>
+    private static byte[] BuildPcTrait2498Default()
+    {
+        using var pw = new PacketWriter();
+        pw.WriteCompactBABody(p =>
+        {
+            // The payload starts at blob offset 2, right after the u16 self length. GoTo zero-fills up to a blob offset.
+            void GoTo(int blobOffset) => p.WriteZeros(blobOffset - TraitPackets.BlobMsgTagOffset - p.Length);
+
+            p.WriteUInt16(TraitPackets.MsgTagPcTrait);                    // blob+2    msgTag
+            p.WriteUInt32(TraitPackets.Reserved);                         // blob+4    always zero
+            p.WriteUInt32(DonorMaxHp);                                    // blob+8    max HP
+            p.WriteUInt16(DonorMaxSp);                                    // blob+12   max SP
+
+            // blob+14..25: STR, AGI, INT, WIS, VIT, LUK.
+            for (int i = 0; i < TraitPackets.PcTraitPrimaryStatCount - 1; i++)
+                p.WriteUInt16(DonorPrimaryStat);
+            p.WriteUInt16(DonorLuk);
+
+            // blob+26..35: allocated bonus STR, AGI, INT, WIS, VIT, all zero.
+            for (int i = 0; i < TraitPackets.PcTraitBonusStatCount; i++)
+                p.WriteUInt16(0);
+
+            GoTo(TraitPackets.PcTraitStatPointsOffset);
+            p.WriteUInt16(0);                                             // blob+38   unspent bonus stat points
+
+            GoTo(PcTraitPhysicalAttackOffset);
+            p.WriteUInt16(DonorPhysicalAttack);                           // blob+40   physical attack
+
+            GoTo(PcTraitUnnamedWord54Offset);
+            p.WriteUInt16(DonorUnnamedWord54);                            // blob+54   undetermined
+
+            GoTo(TraitPackets.PcTraitScale68Offset);
+            p.WriteSingle(AutoAttackReachBase);                           // blob+68   auto-attack reach
+            p.WriteUInt32(DonorMaxHp);                                    // blob+72   current HP
+            p.WriteUInt16(DonorMaxSp);                                    // blob+76   current SP
+            p.WriteUInt16(DonorHpRegen);                                  // blob+78   HP regeneration
+            p.WriteUInt16(DonorSpRegen);                                  // blob+80   SP regeneration
+
+            GoTo(PcTraitPrecisionOffset);
+            p.WriteUInt16(DonorPrecision);                                // blob+88   precision
+            p.WriteUInt16(DonorEvade);                                    // blob+90   evade
+            p.WriteUInt16(DonorCritical);                                 // blob+92   critical
+            p.WriteUInt16(DonorGuard);                                    // blob+94   guard
+
+            GoTo(TraitPackets.PcTraitBlobLen);                            // blob+96..139 zero (vitality, acceleration, PvP rates, penetration, casting speed, ...)
+        });
+        return pw.ToArray();
+    }
+
+ /// <summary>
+ /// Builds the 2498 trait message for a character already in the world, with its gear-based stats and current HP and SP.
+ /// </summary>
+ /// <remarks>
+ /// Current HP and SP come from the live player state, not the login snapshot, so a re-sent message does not reset them.
+ /// Current values are clamped to the computed maximums.
+ /// Callers that include active effects go through the effect service instead of calling this directly.
+ /// </remarks>
+    internal static byte[] BuildFullPcTrait2498(
+        Character character, GameDataStore? gameData, IReadOnlyList<RO2.Inventory.Domain.InventoryItem>? equipped,
+        int currentHp, int currentSp)
+    {
+        EquipStats? derived = gameData is not null && equipped is not null
+            ? StatService.ComputeEquipmentStats(gameData, equipped)
+            : null;
+        return BuildPcTrait2498FromDonor(PcTrait2498Donor, character, derived, gameData, (currentHp, currentSp));
+    }
+
+ /// <summary>
+ /// The current and maximum HP and SP carried by a 143-byte trait message, or null when the body has another length.
+ /// </summary>
+    internal static (uint CurHp, ushort CurSp, uint MaxHp, ushort MaxSp)? VitalsOf(ReadOnlySpan<byte> pcTrait2498)
+    {
+        if (pcTrait2498.Length != TraitPackets.PcTraitBodyLen) return null;
+        var blob = pcTrait2498[PcTraitPrefixLen..];   
+        return (System.Buffers.Binary.BinaryPrimitives.ReadUInt32LittleEndian(blob[TraitPackets.PcTraitCurHpOffset..]),
+            System.Buffers.Binary.BinaryPrimitives.ReadUInt16LittleEndian(blob[TraitPackets.PcTraitCurSpOffset..]),
+            System.Buffers.Binary.BinaryPrimitives.ReadUInt32LittleEndian(blob[TraitPackets.PcTraitMaxHpOffset..]),
+            System.Buffers.Binary.BinaryPrimitives.ReadUInt16LittleEndian(blob[TraitPackets.PcTraitMaxSpOffset..]));
+    }
+
+ /// <summary>Message tag of the trait initialization message.</summary>
+    private const ushort MsgTagPcInitTrait = 0xE396; 
+
+ /// <summary>
+ /// Builds the 143-byte trait initialization message sent before a trait message at world entry and after a stat allocation.
+ /// </summary>
+ /// <remarks>
+ /// Only the primary stats, the bonus fields and the current HP and SP are filled in. All other bytes are zero.
+ /// </remarks>
+ /// <param name="followingPcTrait2498">The trait message sent right after this one. Its current HP and SP are copied here. A body of another length leaves them zero.</param>
+    internal static byte[] BuildPcInitTrait2595(Character character, ReadOnlySpan<byte> followingPcTrait2498)
+    {
+        var blob = new byte[TraitPackets.PcTraitBlobLen];
+        var b = blob.AsSpan();
+        System.Buffers.Binary.BinaryPrimitives.WriteUInt16LittleEndian(b, TraitPackets.PcTraitBlobLen); 
+        System.Buffers.Binary.BinaryPrimitives.WriteUInt16LittleEndian(b[2..], MsgTagPcInitTrait);      
+        
+        int[] bonus5 = { character.BonusStr, character.BonusAgi, character.BonusInt, character.BonusWis, character.BonusVit };
+        for (int i = 0; i < bonus5.Length; i++)
+            System.Buffers.Binary.BinaryPrimitives.WriteUInt16LittleEndian(
+                b[(TraitPackets.PcTraitPrimaryStatsOffset + 2 * i)..],
+                (ushort)Math.Min(PcInitPrimaryStatBase + Math.Clamp(bonus5[i], 0, ushort.MaxValue), ushort.MaxValue));
+        System.Buffers.Binary.BinaryPrimitives.WriteSingleLittleEndian(b[TraitPackets.PcTraitScale68Offset..], PcInitTraitScale68);
+        if (followingPcTrait2498.Length == TraitPackets.PcTraitBodyLen)
+        {
+            var trait = followingPcTrait2498[PcTraitPrefixLen..];   
+            trait.Slice(TraitPackets.PcTraitCurHpOffset, sizeof(uint)).CopyTo(b[TraitPackets.PcTraitCurHpOffset..]);
+            trait.Slice(TraitPackets.PcTraitCurSpOffset, sizeof(ushort)).CopyTo(b[TraitPackets.PcTraitCurSpOffset..]);
+        }
+
+        using var pw = new PacketWriter();
+        pw.WriteCompactLength(TraitPackets.PcTraitBlobLen);   
+        pw.WriteBytes(blob);
+        return pw.ToArray();
+    }
+
+ /// <param name="liveVitals">The live current HP and SP of the player. Null derives them from the stored character, which is correct only at world entry.</param>
+    internal static byte[] BuildPcTrait2498FromDonor(ReadOnlySpan<byte> donorBody, Character character,
+        EquipStats? equip = null, GameDataStore? store = null, (int Hp, int Sp)? liveVitals = null)
+    {
+        
+        var template = donorBody[PcTraitPrefixLen..];
+
+        
+        
+        
+        
+        if (store is not null)
+            equip = KharaTitleTraits.Fold(equip, store, character.Id);
+
+        
+        
+        
+        
+        
+        
+        ushort P(int baseStat, byte traitType)
+            => (ushort)Math.Clamp(equip?.Apply(traitType, baseStat) ?? baseStat, 0, ushort.MaxValue);
+        ushort[] primary = {
+            P(character.Str, TraitStr), P(character.Agi, TraitAgi), P(character.Int, TraitInt),
+            P(character.Wis, TraitWis), P(character.Vit, TraitVit), P(character.Luk, TraitLuk),
+        };
+
+        
+        
+        
+        
+        var baseStats = store is not null
+            ? StatService.ComputeBaseStats(store, character.Job, character.Level,
+                primary[0], primary[1], primary[2], primary[3], primary[4], primary[5])
+            : default;
+        bool haveBase = baseStats.MaxHp > 0;
+
+        
+        
+        
+        
+        
+        
+        var maxHp = haveBase ? (uint)Math.Clamp((long)baseStats.MaxHp + (equip?.FlatOf(TraitMaxHp) ?? 0), 0, uint.MaxValue)
+            : (uint)Math.Max(0, character.MaxHp > 0 ? character.MaxHp : FallbackMaxHpBase + character.Level * FallbackMaxHpPerLevel);
+        
+        var maxSp = haveBase ? (ushort)Math.Clamp(baseStats.MaxSp + (equip?.FlatOf(TraitMaxSp) ?? 0), 0, ushort.MaxValue)
+            : (ushort)Math.Clamp(character.MaxMp > 0 ? character.MaxMp : FallbackMaxSpBase + character.Level * FallbackMaxSpPerLevel, 0, ushort.MaxValue);
+
+        
+        
+        
+        
+        
+        
+        
+        
+        uint curHp;
+        ushort curSp;
+        if (liveVitals is { } live)
+        {
+            curHp = (uint)Math.Min((uint)Math.Max(0, live.Hp), maxHp);
+            curSp = (ushort)Math.Min(Math.Max(0, live.Sp), maxSp);
+        }
+        else
+        {
+            bool fullHp = character.Hp <= 0 || character.Hp >= character.MaxHp;
+            bool fullSp = character.Mp <= 0 || character.Mp >= character.MaxMp;
+            curHp = fullHp ? maxHp : (uint)Math.Min((uint)character.Hp, maxHp);
+            curSp = fullSp ? maxSp : (ushort)Math.Min(character.Mp, maxSp);
+        }
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        var scaleAtBlob68 = equip is { } worn
+            ? AutoAttackReachBase + worn.FlatOf(TraitAutoAttackRange)
+            : System.Buffers.Binary.BinaryPrimitives.ReadSingleLittleEndian(template[TraitPackets.PcTraitScale68Offset..]);
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        IReadOnlyDictionary<byte, int>? derived = equip?.Flat;
+        if (haveBase)
+        {
+            var merged = new Dictionary<byte, int>(baseStats.Derived);
+            if (equip is { } e)
+                foreach (var kv in e.Flat)
+                    merged[kv.Key] = merged.GetValueOrDefault(kv.Key) + kv.Value;
+            derived = merged;
+        }
+
+        
+        
+        
+        
+        
+        
+        
+        var (bonus5, unspentStatPoints) = CharacterHeadRules.BonusStatBlock(character);
+
+        var (hpRegen, spRegen) = RegenAmounts(store, character.Job, primary[4], primary[3], equip);
+
+        var body = TraitPackets.BuildPcTrait2498(
+            maxHp, maxSp, curHp, curSp, scaleAtBlob68, template,
+            derivedByStatId: derived, primaryStats6: primary, bonusStatPoints: unspentStatPoints,
+            bonusStats5: bonus5, hpRegen78: hpRegen, spRegen80: spRegen);
+
+        
+        
+        
+        
+        if (store is not null)
+            PcTraitRates.Stamp(body, character.Level, null);
+        return body;
+    }
+
+ /// <summary>
+ /// Regeneration amounts for HP and SP, from the class's base stat row and the effective VIT and WIS.
+ /// </summary>
+ /// <remarks>
+ /// Returns null for both when there is no game data or no matching row, and the template values are kept.
+ /// </remarks>
+    internal static (ushort? Hp, ushort? Sp) RegenAmounts(GameDataStore? store, byte job, int vit, int wis,
+        EquipStats? equip)
+        => RegenAmounts(store is not null && store.PcBaseStatus.TryGetValue(job, out var row) ? row : null, vit, wis, equip);
+
+ /// <summary>Regeneration amounts for the given base stat row. Null for both when the row is missing.</summary>
+    internal static (ushort? Hp, ushort? Sp) RegenAmounts(RO2.GameData.Tables.PCBaseStatus? pc, int vit, int wis,
+        EquipStats? equip)
+    {
+        if (pc is null) return (null, null);
+        static decimal Coef(float c) => decimal.Round((decimal)(double)c, RegenCoefficientDecimals, MidpointRounding.ToEven);
+        long hp = (long)decimal.Floor(Math.Max(0, vit) * Coef(pc.AutoHpRestorePerVit)) + pc.BaseHpRestoreAdd + (equip?.FlatOf(TraitHpRestore) ?? 0);
+        long sp = (long)decimal.Floor(Math.Max(0, wis) * Coef(pc.AutoSpRestorePerWis)) + pc.BaseSpRestoreAdd + (equip?.FlatOf(TraitSpRestore) ?? 0);
+        return ((ushort)Math.Clamp(hp, 0, ushort.MaxValue), (ushort)Math.Clamp(sp, 0, ushort.MaxValue));
     }
 }

@@ -162,7 +162,7 @@ public class CombatService
     /// <item>The two frames right before the 2394 are 2595 OnPcInitTrait then 2498 OnPcTrait.</item>
     /// <item>That 2498 is the sheet at the NEW level: its max HP/SP (blob+8/+12) equal the 2394's max HP/SP. Its
     /// current HP (blob+72) is the live one from before the level-up, not a refill. The 2595's blob+72/+76 equal
-    /// that 2498's current HP/SP, which is what WorldEntryService.BuildPcInitTrait2595 copies.</item>
+    /// that 2498's current HP/SP, which is what TraitPackets.BuildPcInitTrait2595 copies.</item>
     /// <item>The 2394 then carries current == max for HP and SP: the level-up refills.</item>
     /// <item>After it come the leveler's OWN 2395, carrying its own handle at blob+8, then one 2542, and 2726 for a
     /// guilded leveler.</item>
@@ -367,7 +367,7 @@ public class CombatService
         }
 
         var trait = effects.RefreshPcTraitSheet(player, character, equipped);
-        return (WorldEntryService.BuildPcInitTrait2595(character, trait), trait);
+        return (TraitPackets.BuildPcInitTrait2595(character, trait), trait);
     }
 
     /// <summary>

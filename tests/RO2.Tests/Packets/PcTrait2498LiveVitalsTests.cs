@@ -7,7 +7,7 @@ using RO2.Characters.Domain;
 namespace RO2.Tests.Packets;
 
 /// <summary>
-/// Tests the in-world 2498 re-push (WorldEntryService.BuildFullPcTrait2498 with currentHp and currentSp).
+/// Tests the in-world 2498 re-push (TraitPackets.BuildFullPcTrait2498 with currentHp and currentSp).
 /// The client applies blob+72 and blob+76 as the current HP and SP on every 2498, and the server re-sends it on each
 /// map load and gear change, so the re-push must carry the live PlayerState values, not the login snapshot.
 /// </summary>
@@ -34,7 +34,7 @@ public class PcTrait2498LiveVitalsTests
     [Fact]
     public void TheLiveCurrentVitalsAreSentNotTheSnapshots()
     {
-        var body = WorldEntryService.BuildFullPcTrait2498(LoggedInAtFull(), null, null, 500, 50);
+        var body = TraitPackets.BuildFullPcTrait2498(LoggedInAtFull(), null, null, 500, 50);
 
         var (maxHp, maxSp, curHp, curSp) = Vitals(body);
         Assert.Equal(1000u, maxHp);
@@ -47,7 +47,7 @@ public class PcTrait2498LiveVitalsTests
     [Fact]
     public void LiveVitalsAboveTheSheetMaxAreCutBack()
     {
-        var body = WorldEntryService.BuildFullPcTrait2498(LoggedInAtFull(), null, null, 80000, 9000);
+        var body = TraitPackets.BuildFullPcTrait2498(LoggedInAtFull(), null, null, 80000, 9000);
 
         var (maxHp, maxSp, curHp, curSp) = Vitals(body);
         Assert.Equal(maxHp, curHp);
@@ -61,7 +61,7 @@ public class PcTrait2498LiveVitalsTests
     [Fact]
     public void ADeadPcStaysAtZero()
     {
-        var body = WorldEntryService.BuildFullPcTrait2498(LoggedInAtFull(), null, null, 0, 0);
+        var body = TraitPackets.BuildFullPcTrait2498(LoggedInAtFull(), null, null, 0, 0);
 
         var (_, _, curHp, curSp) = Vitals(body);
         Assert.Equal(0u, curHp);

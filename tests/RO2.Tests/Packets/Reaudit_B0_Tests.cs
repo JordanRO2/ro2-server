@@ -62,7 +62,7 @@ public class Reaudit_B0_Tests
     {
         foreach (var row in PcBase.Value)
         {
-            var (h, s) = WorldEntryService.RegenAmounts(row, vit, wis, null);
+            var (h, s) = TraitPackets.RegenAmounts(row, vit, wis, null);
             Assert.Equal((ushort)hp, h);
             Assert.Equal((ushort)sp, s);
         }
@@ -72,7 +72,7 @@ public class Reaudit_B0_Tests
     public void Regen_DecimalCoefficient_DoesNotFloorOneLowOnAWholeProduct()
     {
         
-        var (h, _) = WorldEntryService.RegenAmounts(PcBase.Value[0], 50, 1, null);
+        var (h, _) = TraitPackets.RegenAmounts(PcBase.Value[0], 50, 1, null);
         Assert.Equal((ushort)5, h);
     }
 
@@ -80,10 +80,10 @@ public class Reaudit_B0_Tests
     public void Regen_AddsTheWornHpAndSpRestoreTraits()
     {
         var gear = new EquipStats(new Dictionary<byte, int> { [28] = 40, [29] = 7 }, new Dictionary<byte, float>());
-        var (h, s) = WorldEntryService.RegenAmounts(PcBase.Value[0], 251, 251, gear);
+        var (h, s) = TraitPackets.RegenAmounts(PcBase.Value[0], 251, 251, gear);
         Assert.Equal((ushort)(17 + 40), h);
         Assert.Equal((ushort)(12 + 7), s);
-        Assert.Equal(((ushort?)null, (ushort?)null), WorldEntryService.RegenAmounts((PCBaseStatus?)null, 251, 251, gear));
+        Assert.Equal(((ushort?)null, (ushort?)null), TraitPackets.RegenAmounts((PCBaseStatus?)null, 251, 251, gear));
     }
 
     [Fact]
@@ -105,7 +105,7 @@ public class Reaudit_B0_Tests
         int wis = BinaryPrimitives.ReadUInt16LittleEndian(blob.AsSpan(20)), vit = BinaryPrimitives.ReadUInt16LittleEndian(blob.AsSpan(22));
         blob.AsSpan(TraitPackets.PcTraitHpRegenOffset, 4).Clear();
 
-        var (h, s) = WorldEntryService.RegenAmounts(PcBase.Value[0], vit, wis, null);
+        var (h, s) = TraitPackets.RegenAmounts(PcBase.Value[0], vit, wis, null);
         var built = TraitPackets.BuildPcTrait2498(maxHp, maxSp, curHp, curSp, range, blob,
             bonusStatPoints: points, hpRegen78: h, spRegen80: s);
 
@@ -197,8 +197,8 @@ public class Reaudit_B0_Tests
     public void VitalsOf_ReadsTheBurst2498()
     {
         var sheet = TraitPackets.BuildPcTrait2498(6698, 4718, 6000, 4000);
-        Assert.Equal((6000u, (ushort)4000, 6698u, (ushort)4718), WorldEntryService.VitalsOf(sheet));
-        Assert.Null(WorldEntryService.VitalsOf(new byte[10]));
+        Assert.Equal((6000u, (ushort)4000, 6698u, (ushort)4718), TraitPackets.VitalsOf(sheet));
+        Assert.Null(TraitPackets.VitalsOf(new byte[10]));
     }
 
     

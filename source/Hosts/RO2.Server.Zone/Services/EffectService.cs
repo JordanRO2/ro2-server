@@ -687,7 +687,7 @@ public sealed class EffectService : BackgroundService
     /// The 2498 OnPcTrait of <paramref name="player"/> in world: the worn
     /// <paramref name="equipped"/> gear, the live HP/SP and the sheet rows of every effect in
     /// <c>PlayerState.ActiveEffects</c> (<see cref="BuildPcTraitSheet"/>; with no sheet row active it is byte for
-    /// byte <see cref="WorldEntryService.BuildFullPcTrait2498"/>). Changes nothing on the player: for a sheet
+    /// byte <see cref="TraitPackets.BuildFullPcTrait2498"/>). Changes nothing on the player: for a sheet
     /// shown to someone else (the 3033 review) or sent ahead of a map change whose 1304 settles the server state.
     /// A PC's own re-push goes through <see cref="RefreshPcTraitSheet"/>.
     /// </summary>
@@ -772,7 +772,7 @@ public sealed class EffectService : BackgroundService
 
         var combat = StatService.EffectivePlayerStats(_data, character, equipped);
         if (!modifiers.IsEmpty)
-            combat = WithSheetDelta(combat, WorldEntryService.BuildFullPcTrait2498(character, _data, equipped, hp, sp), body);
+            combat = WithSheetDelta(combat, TraitPackets.BuildFullPcTrait2498(character, _data, equipped, hp, sp), body);
         player.CacheCombatStats(combat);
         return body;
     }
@@ -781,7 +781,7 @@ public sealed class EffectService : BackgroundService
     private byte[] BuildSheet(Character character, IReadOnlyList<InventoryItem> equipped, int hp, int sp,
         EffectSheetModifiers modifiers)
         => modifiers.IsEmpty
-            ? WorldEntryService.BuildFullPcTrait2498(character, _data, equipped, hp, sp)
+            ? TraitPackets.BuildFullPcTrait2498(character, _data, equipped, hp, sp)
             : BuildPcTraitSheet(character, _data, StatService.ComputeEquipmentStats(_data, equipped), hp, sp, modifiers);
 
     private static ActiveEffect[] ActiveEffectsOf(PlayerState player)
@@ -1076,7 +1076,7 @@ public sealed class EffectService : BackgroundService
     /// same bucket as the gear (so they flow into max HP/SP and the derived stats through the class
     /// formula, as a gear primary does); max HP/SP and the derived stats then get
     /// <see cref="FoldSheetModifiers"/>. With no modifier it equals
-    /// <c>WorldEntryService.BuildFullPcTrait2498</c> over the same gear.
+    /// <c>TraitPackets.BuildFullPcTrait2498</c> over the same gear.
     /// </summary>
     /// <remarks>
     /// <para>
@@ -1089,7 +1089,7 @@ public sealed class EffectService : BackgroundService
     /// whole, so a cascaded value can differ by one.
     /// </para>
     /// <para>
-    /// THE FRAME. WorldEntryService keeps its donor frame private. BuildFullPcTrait2498 with no store
+    /// THE FRAME. TraitPackets keeps its donor frame internal. BuildFullPcTrait2498 with no store
     /// and no gear returns that frame with only the fields that BuildPcTrait2498FromDonor rewrites on every
     /// call changed (the vitals, the primaries, the bonus columns and point pool, blob+68 from the donor), so it
     /// is used as the donor here, and every other byte is the donor's, as in the plain sheet.
@@ -1113,8 +1113,8 @@ public sealed class EffectService : BackgroundService
                 percent[trait] = percent.GetValueOrDefault(trait) + (float)(value / CharacterStats.PercentTraitDivisor);
         }
 
-        var frame = WorldEntryService.BuildFullPcTrait2498(character, null, null, currentHp, currentSp);
-        var sheet = WorldEntryService.BuildPcTrait2498FromDonor(frame, character,
+        var frame = TraitPackets.BuildFullPcTrait2498(character, null, null, currentHp, currentSp);
+        var sheet = TraitPackets.BuildPcTrait2498FromDonor(frame, character,
             new EquipStats(flat, percent), store, (currentHp, currentSp));
         var folded = FoldSheetModifiers(sheet, modifiers, currentHp, currentSp);
         // The rate slots again, now from the consts the fold moved and with the Trait_Kind 3 rate lines added

@@ -116,7 +116,7 @@ public class Reaudit2_B0_Tests
         // head[163..164] == blob+38.
         var c = Hero();
         var head = Head(c);
-        var sheet = WorldEntryService.BuildFullPcTrait2498(c, null, null, 100, 10);
+        var sheet = TraitPackets.BuildFullPcTrait2498(c, null, null, 100, 10);
         var blob = sheet.AsSpan(3);
         Assert.Equal(Hex(blob[26..40].ToArray()), Hex(head[151..165]));
 
@@ -207,7 +207,7 @@ public class Reaudit2_B0_Tests
         var flat = new Dictionary<byte, int>();
         if (range > 0) flat[42] = range;
         var equip = new EquipStats(flat, new Dictionary<byte, float>());
-        var body = WorldEntryService.BuildPcTrait2498FromDonor(template, Hero(), equip);
+        var body = TraitPackets.BuildPcTrait2498FromDonor(template, Hero(), equip);
         Assert.Equal(expected, BinaryPrimitives.ReadSingleLittleEndian(body.AsSpan(3 + 68)));
     }
 
@@ -216,7 +216,7 @@ public class Reaudit2_B0_Tests
     {
         var template = Convert.FromHexString(Retail2498);
         Assert.Equal(3.0f, BinaryPrimitives.ReadSingleLittleEndian(template.AsSpan(71)));
-        var body = WorldEntryService.BuildPcTrait2498FromDonor(template, Hero(), equip: null);
+        var body = TraitPackets.BuildPcTrait2498FromDonor(template, Hero(), equip: null);
         Assert.Equal(3.0f, BinaryPrimitives.ReadSingleLittleEndian(body.AsSpan(71)));
     }
 

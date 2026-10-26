@@ -54,7 +54,7 @@ public class PcTraitInWorldSheetTests
     {
         var (effects, store) = await ServiceAsync();
         var c = Character();
-        var plain = WorldEntryService.BuildFullPcTrait2498(c, store, NoGear, 300, 20);
+        var plain = TraitPackets.BuildFullPcTrait2498(c, store, NoGear, 300, 20);
         var player = Player(c, 300, 1, 20, 1);
 
         var body = effects.RefreshPcTraitSheet(player, c, NoGear);
@@ -72,7 +72,7 @@ public class PcTraitInWorldSheetTests
     {
         var (effects, store) = await ServiceAsync();
         var c = Character();
-        uint plainMax = MaxHpOf(WorldEntryService.BuildFullPcTrait2498(c, store, NoGear, 300, 20));
+        uint plainMax = MaxHpOf(TraitPackets.BuildFullPcTrait2498(c, store, NoGear, 300, 20));
         var player = Player(c, 300, (int)plainMax, 20, 40, (40011, 10));
 
         var body = effects.RefreshPcTraitSheet(player, c, NoGear);
@@ -113,7 +113,7 @@ public class PcTraitInWorldSheetTests
     {
         var (effects, store) = await ServiceAsync();
         var c = Character();
-        int plainMax = (int)MaxHpOf(WorldEntryService.BuildFullPcTrait2498(c, store, NoGear, 1, 1));
+        int plainMax = (int)MaxHpOf(TraitPackets.BuildFullPcTrait2498(c, store, NoGear, 1, 1));
         var mapLoad = Player(c, plainMax, plainMax, 40, 40, (40011, 10));
         var swap = Player(c, plainMax, plainMax, 40, 40, (40011, 10));
 
@@ -131,7 +131,7 @@ public class PcTraitInWorldSheetTests
     {
         var (effects, store) = await ServiceAsync();
         var c = Character();
-        int plainMax = (int)MaxHpOf(WorldEntryService.BuildFullPcTrait2498(c, store, NoGear, 1, 1));
+        int plainMax = (int)MaxHpOf(TraitPackets.BuildFullPcTrait2498(c, store, NoGear, 1, 1));
         var player = Player(c, plainMax + 50, plainMax + 50, 40, 40);   
 
         effects.RefreshPcTraitSheet(player, c, NoGear);

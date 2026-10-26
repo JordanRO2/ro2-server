@@ -808,7 +808,7 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
             
             var equipped = await services.GetRequiredService<IInventoryRepository>().GetEquipmentAsync(c.Id);
             var trait = services.GetRequiredService<EffectService>().RefreshPcTraitSheet(player, c, equipped);
-            var initTrait = WorldEntryService.BuildPcInitTrait2595(c, trait);
+            var initTrait = TraitPackets.BuildPcInitTrait2595(c, trait);
             
             
             
