@@ -125,6 +125,7 @@ public static class Program
         services.AddSingleton<ICharacterGameData, CharacterGameData>();
         services.AddSingleton<IUnionMembershipPublisher, UnionMembershipPublisher>();
         services.AddSingleton<IGuildMembershipView, GuildMembershipView>();
+        services.AddSingleton<INameFilter, GameDataNameFilter>();
         services.AddSingleton<PlayTimeRewardStore>();
         services.AddProviderRepository<ICardRegistryRepository, RO2.Persistence.Mongo.Repositories.CardRegistryRepository, RO2.Persistence.Postgres.Repositories.CardRegistryRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IGameMallListRepository, RO2.Economy.Infrastructure.Mongo.GameMallListRepository, RO2.Economy.Infrastructure.Postgres.GameMallListRepository>(config.Database.Provider, ServiceLifetime.Singleton);

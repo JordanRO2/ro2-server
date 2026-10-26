@@ -16,4 +16,11 @@ internal sealed class CharacterGameData(GameDataStore store) : ICharacterGameDat
         => StatService.ClassBasePrimaries(store, job);
 
     public int BonusStatCost(int currentStatValue) => StatService.BonusStatCost(store, currentStatValue);
+
+    public (int hp, int mp, int str, int agi, int intel, int wis, int vit, int luk)? SeedStats(byte job)
+    {
+        if (StatService.ClassBasePrimaries(store, job) is not { } bp) return null;
+        var bs = StatService.ComputeBaseStats(store, job, 1, bp.str, bp.agi, bp.intel, bp.wis, bp.vit, bp.luk);
+        return bs.MaxHp > 0 ? ((int)bs.MaxHp, bs.MaxSp, bp.str, bp.agi, bp.intel, bp.wis, bp.vit, bp.luk) : null;
+    }
 }

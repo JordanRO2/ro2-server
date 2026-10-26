@@ -19,4 +19,7 @@ public interface ICharacterGameData
 
     /// <summary>The points one more allocation costs for a stat currently at <paramref name="currentStatValue"/>; 0 = cannot be raised.</summary>
     int BonusStatCost(int currentStatValue);
+
+    /// <summary>The seed HP/SP and primary stats for a new character of <paramref name="job"/>, or null when the class has no base row.</summary>
+    (int hp, int mp, int str, int agi, int intel, int wis, int vit, int luk)? SeedStats(byte job);
 }

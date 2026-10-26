@@ -1,6 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using RO2.Application.Interfaces;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
@@ -8,6 +7,7 @@ using RO2.Server.Zone.Services;
 
 using NetworkZoneRmiBase = RO2.Network.Handlers.ZoneRmiHandlerBase<RO2.Server.Zone.Handlers.Rmi.CharacterCreateHandler>;
 using RO2.Characters.Domain;
+using RO2.Characters.Application;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -49,88 +49,65 @@ public class CharacterCreateHandler : NetworkZoneRmiBase
 
         var reader = new PacketReader(payload.Span);
 
-        
+
         reader.Skip(10);
 
-        
-        
-        
+
+
+
         var characterName = reader.ReadWideStringFixed(21);
 
-        
-        var (validName, nameReason) = NameValidator.ValidateFormat(characterName);
-        if (!validName)
+        // Name check runs BEFORE the appearance parse: a short payload can throw in ParseCreateAppearance, and a
+        // rejected name must never reach it.
+        var (refusal, nameReason) = CreateCharacterFlow.CheckName(
+            characterName, services.GetRequiredService<INameFilter>());
+        if (refusal != NameRefusal.None)
         {
             Logger.LogWarning("Session {SessionId}: Name rejected: {Reason}", session.SessionId, nameReason);
             await SendCreateResult(session, 1);
             return;
         }
 
-        
-        
-        
+
+
+
         var appearance = CharacterSerializer.ParseCreateAppearance(reader);
 
-        
-        
-        
-        
-        
-        
-        
-        
-        var job = appearance.EyeColor; 
+
+
+
+
+
+
+
+
+        var job = appearance.EyeColor;
         var gender = appearance.Gender;
 
         Logger.LogInformation(
             "Session {SessionId}: Creating '{Name}' - Job={Job}, Gender={Gender}, Face={Face}, Hair={Hair}",
             session.SessionId, characterName, job, gender, appearance.Face, appearance.HairStyle);
 
-        
+
         var appearanceJson = CharacterSerializer.ToJson(appearance);
 
-        
-        
-        
-        var store = services.GetRequiredService<RO2.GameData.GameDataStore>();
-        (int, int, int, int, int, int, int, int)? seedStats = null;
-        if (StatService.ClassBasePrimaries(store, job) is { } bp)
-        {
-            var bs = StatService.ComputeBaseStats(
-                store, job, 1, bp.str, bp.agi, bp.intel, bp.wis, bp.vit, bp.luk);
-            if (bs.MaxHp > 0)
-                seedStats = ((int)bs.MaxHp, bs.MaxSp, bp.str, bp.agi, bp.intel, bp.wis, bp.vit, bp.luk);
-        }
+        var data = new CharacterGameData(services.GetRequiredService<RO2.GameData.GameDataStore>());
+        var repo = services.GetRequiredService<ICharacterRepository>();
+        var result = await CreateCharacterFlow.CreateAsync(session.AccountId.Value, characterName, job, gender,
+            appearanceJson, appearance.Race, data, repo);
 
-        
-        var characters = services.GetRequiredService<ICharacterRepository>();
-        var (character, error) = await characters.CreateCharacterAsync(
-            session.AccountId.Value,
-            characterName,
-            job,
-            gender,
-            appearanceJson,
-            seedStats);
-
-        if (character == null)
+        if (result.Outcome == CreateCharacterFlow.CreateOutcome.Failed)
         {
             Logger.LogWarning("Session {SessionId}: Character creation failed: {Error}",
-                session.SessionId, error);
-            await SendCreateResult(session, 1); 
+                session.SessionId, result.Error);
+            await SendCreateResult(session, 1);
             return;
         }
 
-        
-        
-        
-        
-        character.Race = appearance.Race; 
-        await characters.SaveCharacterAsync(character);
-
         Logger.LogInformation("Session {SessionId}: Character '{Name}' created (ID: {Id})",
-            session.SessionId, characterName, character.Id);
+            session.SessionId, characterName, result.Id);
 
-        
+
         await SendCreateResult(session, 0);
     }
 
