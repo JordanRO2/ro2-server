@@ -130,11 +130,11 @@ public class FieldPvPCombatTests
         Assert.Equal(500, DefenseRules.Mitigate(1000, 870, 0, 0));         // 870/(870+870) = 50%
         Assert.Equal(250, DefenseRules.Mitigate(1000, 1_000_000, 0, 0));  // capped at 75%
         Assert.Equal(1, DefenseRules.Mitigate(1, 1_000_000, 0, 0));       // never below 1
-        Assert.Equal(0, CombatService.CritRatePct(0, 10, 10));
-        Assert.Equal(0, CombatService.ParryRatePct(0, 10, 10));
+        Assert.Equal(0, CombatRateRules.CritRatePct(0, 10, 10));
+        Assert.Equal(0, CombatRateRules.ParryRatePct(0, 10, 10));
         // Crit/(0.02*Crit + 40 + 0.8*(DefLv - AtkLv)): 100/(2 + 40 + 0) and, for a victim 10 levels above, 100/(2 + 40 + 8).
-        Assert.Equal(100.0 / 42.0, CombatService.CritRatePct(100, 10, 10), 9);
-        Assert.Equal(2.0, CombatService.ParryRatePct(100, 20, 10), 9);
+        Assert.Equal(100.0 / 42.0, CombatRateRules.CritRatePct(100, 10, 10), 9);
+        Assert.Equal(2.0, CombatRateRules.ParryRatePct(100, 20, 10), 9);
     }
 
     // ---- the fought-out end on the wire ------------------------------------------------------------

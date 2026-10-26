@@ -88,7 +88,7 @@ public class CombatService
         // (crits rare); gear raises it. NPCs carry no Crit stat, so NPC→player crits do not occur here (that path
         // lives in NpcCombatService).
         byte kind = DamageKindNormal;
-        if (Rolls(CritRatePct(attacker.CombatCrit, defenderLevel, attacker.Level)))
+        if (Rolls(CombatRateRules.CritRatePct(attacker.CombatCrit, defenderLevel, attacker.Level)))
         {
             damage = Math.Max(1, damage * 2);
             kind = DamageKindCrit;
@@ -126,8 +126,8 @@ public class CombatService
     /// <item>base damage: <see cref="CalculateBaseDamage"/> (a skill id resolves its DamageRate, 0 is a normal attack);</item>
     /// <item>defence: the victim's effective Defense (PlayerState.CombatDefense, the 2498 sheet's trait 26) through
     /// <see cref="MitigateByDefense"/>, with the attacker's level and Penetration, capped 75%;</item>
-    /// <item>crit: the attacker's Crit against the VICTIM's level (<see cref="CritRatePct"/>), x2, kind 4;</item>
-    /// <item>parry: the victim's Parry against the attacker's level (<see cref="ParryRatePct"/>, the NPC-to-PC rule
+    /// <item>crit: the attacker's Crit against the VICTIM's level (<see cref="CombatRateRules.CritRatePct"/>), x2, kind 4;</item>
+    /// <item>parry: the victim's Parry against the attacker's level (<see cref="CombatRateRules.ParryRatePct"/>, the NPC-to-PC rule
     /// of NpcCombatService), x0.5, kind 3.</item>
     /// </list>
     /// The original game's PvP hits carry all of these kinds: 4 (crit), 3 (guard), 1 (normal) and 2 (miss). Kind 2,
@@ -143,22 +143,16 @@ public class CombatService
     {
         var damage = DefenseRules.Mitigate(CalculateBaseDamage(attacker, skillId), victim.CombatDefense,
             attacker.CombatPen, attacker.Level);
-        if (Rolls(CritRatePct(attacker.CombatCrit, victim.Level, attacker.Level)))
+        if (Rolls(CombatRateRules.CritRatePct(attacker.CombatCrit, victim.Level, attacker.Level)))
             return (Math.Max(1, damage * 2), DamageKindCrit);
-        if (Rolls(ParryRatePct(victim.CombatParry, victim.Level, attacker.Level)))
+        if (Rolls(CombatRateRules.ParryRatePct(victim.CombatParry, victim.Level, attacker.Level)))
             return (Math.Max(1, (int)Math.Round(damage * 0.5)), DamageKindGuard);
         return (damage, DamageKindNormal);
     }
 
     // MitigateByDefense moved to RO2.Combats.Domain.DefenseRules.Mitigate (Combat context, B4 S2).
 
-    /// <summary>Crit chance in percent: Crit/(0.02·Crit + 40 + 0.8·(DefLv−AtkLv)), capped 90% (AoV); 0 without Crit.</summary>
-    internal static double CritRatePct(int crit, int defenderLevel, int attackerLevel)
-        => crit <= 0 ? 0 : Math.Min(90.0, crit / (0.02 * crit + 40.0 + 0.8 * (defenderLevel - attackerLevel)));
-
-    /// <summary>Parry chance in percent: Parry/(0.02·Parry + 40 + 0.8·(DefLv−AtkLv)), capped 70% (AoV); 0 without Parry.</summary>
-    internal static double ParryRatePct(int parry, int defenderLevel, int attackerLevel)
-        => parry <= 0 ? 0 : Math.Min(70.0, parry / (0.02 * parry + 40.0 + 0.8 * (defenderLevel - attackerLevel)));
+    // CritRatePct / ParryRatePct moved to RO2.Combats.Domain.CombatRateRules (Combat context, B4 S3).
 
     private static bool Rolls(double pct) => pct > 0 && Random.Shared.NextDouble() * 100.0 < pct;
 
