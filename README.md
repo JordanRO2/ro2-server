@@ -21,7 +21,7 @@ Ragnarok Online 2 server emulator written in C# 15 / .NET 11.0.
 
 ## Requirements
 
-- .NET 11.0 SDK (11.0.100-rc.1 or later until the November 2026 GA)
+- .NET 11.0 SDK (11.0.100-rc.3 or later until the November 2026 GA — the build gate blocks SDKs with known CVEs)
 - MongoDB (running on `localhost:27017` by default)
 - PostgreSQL and Redis are optional (alternative persistence providers)
 
@@ -64,32 +64,30 @@ Edit `config.json`:
 
 ## Architecture
 
+A **modular monolith** organized by DDD bounded contexts over a shared kernel. See
+[ARCHITECTURE.md](ARCHITECTURE.md) for the layering, port, and dependency rules.
+
 ```
 source/
-  Shared/
-    RO2.BuildingBlocks/        # Shared primitives
-    RO2.BuildingBlocks.Bus/    # In-process message bus
-  Game/
-    RO2.Domain/                # Entities, enums, value objects, game-data models
-    RO2.Application/           # Use cases, repository interfaces
-  Platform/
-    RO2.Infrastructure/        # Cross-cutting infrastructure wiring
-    RO2.Network/               # ProudNet protocol, RMI handlers, packets
-    RO2.Persistence.Mongo/     # MongoDB persistence provider (default)
-    RO2.Persistence.Postgres/  # PostgreSQL persistence provider
-    RO2.Persistence.Redis/     # Redis persistence provider
-  Identity/                    # Identity bounded context (DDD): Domain / Application /
-                               #   Infrastructure + Mongo and Postgres implementations
-  Hosts/
-    RO2.Server.Login/          # Login server  (7101)
-    RO2.Server.Zone/           # Zone server   (7201)
-    RO2.Server.Chat/           # Chat server   (7401)
+  Shared/          RO2.BuildingBlocks, RO2.BuildingBlocks.Bus, RO2.GameData (game-data kernel)
+  Identity/        Account / auth context       — Domain / Application / Infrastructure(+Mongo,+Postgres)
+  Economy/         Mall, craft, auction, shop    — Domain / Application / Infrastructure.{Mongo,Postgres}
+  Inventory/       Bags, items, sockets          — Domain / Application / Infrastructure.{Mongo,Postgres}
+  Character/       Character, stats, progression — Domain / Application / Infrastructure.{Mongo,Postgres}
+  Skill/           Learned skills, talents       — Domain / Application / Infrastructure.{Mongo,Postgres}
+  Combat/          Cast path, formulas, gates    — Domain / Application (pure, no persistence)
+  World/           Movement, warp, NPC runtime   — Domain (Application as flows are carved)
+  Game/            RO2.Domain + RO2.Application — the remaining core still being carved into contexts
+  Platform/        RO2.Network (wire), RO2.Persistence.{Mongo,Postgres,Redis}, RO2.Infrastructure (composition)
+  Hosts/           RO2.Server.Login (7101), RO2.Server.Zone (7201), RO2.Server.Chat (7401)
 tests/
-  RO2.Tests/                   # Unit + integration tests
+  RO2.Tests/       unit + integration (Testcontainers) tests
 ```
 
-Game data is **not hardcoded** — it is generated from the client's `.tbl`/XLSX tables into
-JSON under `data/` (and `data/strings/`) by the `data-pipeline/` project.
+Each carved context keeps its own `Domain` (entities, rules, its repository port) and `Application` (use-case
+flows + the ports they consume); persistence lives in `Infrastructure.{Mongo,Postgres}`; the wire layer, DI and
+live state stay in the hosts. Game data is **not hardcoded** — it is generated from the client's `.tbl`/XLSX
+tables into JSON under `data/` (and `data/strings/`) by the `data-pipeline/` project.
 
 ## Documentation
 
