@@ -38,18 +38,16 @@
 
       TreatWarningsAsErrors does NOT cover these codes. They are MSBuild task warnings, not
       compiler warnings, so on their own they print and the build still succeeds (verified on
-      11.0.100-rc.1 with a forged cache). That is why the EOL code is listed here to block:
+      11.0.100-rc.1 with a forged cache). That is why the two that must block are listed here:
         NETSDK1238  the SDK has known vulnerabilities (CVEs fixed in a later release of its channel)
         NETSDK1239  the SDK is end of life
       Setting MSBuildWarningsAsErrors stops Common.targets from defaulting it to WarningsAsErrors,
       which is harmless because that list is kept empty above. The fix is to update the SDK (CI
       installs the latest 11.0.x). Do not NoWarn these.
 
-      OVERRIDE (2026-10-26, by owner decision): NETSDK1238 is DEMOTED to a non-blocking warning
-      (removed from the error list below) rather than updating the SDK. A vulnerability-cache refresh
-      flagged the pinned 11.0.100-rc.2 with CVE-2026-111497/70197/102870/114148, which blocked every
-      build. The advisory still PRINTS (not NoWarn'd, per the rule above); it just no longer fails the
-      build. Re-promote it to an error once the SDK is updated to 11.0.100-rc.3 (or later) / in CI.
+      History: on 2026-10-26 a vulnerability-cache refresh flagged the then-pinned 11.0.100-rc.2
+      (CVE-2026-111497/70197/102870/114148) and NETSDK1238 was briefly demoted to unblock builds; the
+      SDK was then updated to 11.0.100-rc.3.26522.148, which clears it, and the gate was restored here.
 
       NETSDK1240 ("no newer release in its feature band") stays a plain warning on purpose. It does
       not mean the band is dead. The SDK raises it whenever its own feature band has no newer SDK AND
@@ -60,7 +58,7 @@
       a correct, supported build with "Update to version 11.0.2xx". As a warning it is still seen.
     -->
     <CheckSdkVulnerabilities>true</CheckSdkVulnerabilities>
-    <MSBuildWarningsAsErrors>$(MSBuildWarningsAsErrors);NETSDK1239</MSBuildWarningsAsErrors>
+    <MSBuildWarningsAsErrors>$(MSBuildWarningsAsErrors);NETSDK1238;NETSDK1239</MSBuildWarningsAsErrors>
   </PropertyGroup>
 
 </Project>
