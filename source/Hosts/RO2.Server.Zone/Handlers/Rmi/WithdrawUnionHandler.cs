@@ -1,12 +1,12 @@
 using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using RO2.Persistence.Mongo.Persistence;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Characters.Domain;
+using RO2.Characters.Application;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -36,21 +36,17 @@ public class WithdrawUnionHandler : ZoneRmiHandlerBase<WithdrawUnionHandler>
         }
         uint unionId = BinaryPrimitives.ReadUInt32LittleEndian(payload.Span);
 
-        var memberships = services.GetRequiredService<RO2.Characters.Domain.IUnionMembershipRepository>();
-        var membership = await memberships.GetAsync(player.CharacterId, ct);
-        ushort result = UnionRules.WithdrawResult(membership, unionId, DateTimeOffset.UtcNow.ToUnixTimeSeconds());
-
-        
-        
-        bool deleted = result == UnionRules.ResultOk && membership is not null
-            && await memberships.WithdrawAsync(player.CharacterId, unionId, ct);
+        // The flow reads the membership, deletes it when the withdraw is accepted, and clears the head mirror on
+        // success. The host keeps the id read, the log (after the mirror clear) and the 2850 reply.
+        var repo = services.GetRequiredService<IUnionMembershipRepository>();
+        var publisher = services.GetRequiredService<IUnionMembershipPublisher>();
+        var (outcome, deleted, stored) = await WithdrawUnionFlow.WithdrawAsync(
+            repo, publisher, player.CharacterId, unionId, TimeProvider.System, ct);
+        ushort result = UnionRules.Code(outcome);
 
         Logger.LogInformation("{Name} withdraws from union {Union}: result {Result} (stored {Stored}, deleted {Deleted})",
-            player.Name, unionId, result, membership is { } m ? $"{m.UnionId} since {m.JoinedAtUnix}" : "none", deleted);
+            player.Name, unionId, result, stored is { } m ? $"{m.UnionId} since {m.JoinedAtUnix}" : "none", deleted);
 
-        
-        
-        if (result == UnionRules.ResultOk) UnionMembershipStore.Publish(player.CharacterId, null);
         await session.SendRmiAsync(ZoneS2COpcodes.AnsWithdrawUnion, writer => writer.WriteUInt16(result));
     }
 }

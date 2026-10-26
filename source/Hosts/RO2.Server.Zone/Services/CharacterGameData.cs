@@ -1,0 +1,11 @@
+using System.Linq;
+using RO2.Characters.Application;
+using RO2.GameData;
+
+namespace RO2.Server.Zone.Services;
+
+/// <summary>Backs <see cref="ICharacterGameData"/> with the host's loaded game-data tables.</summary>
+internal sealed class CharacterGameData(GameDataStore store) : ICharacterGameData
+{
+    public bool UnionExists(uint unionId) => store.UnionInfo.Any(u => u.Union_ID == unionId);
+}

@@ -1,14 +1,12 @@
 using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
-using RO2.GameData;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Characters.Domain;
+using RO2.Characters.Application;
 
 namespace RO2.Server.Zone.Services;
 
@@ -57,7 +55,7 @@ public static class UnionRules
         => Code(UnionPolicy.JoinResult(current, requestedUnionId, unionExists, level));
 
  /// <summary>Maps a join outcome to its 2849 wire result code.</summary>
-    private static ushort Code(JoinUnionOutcome o) => o switch
+    internal static ushort Code(JoinUnionOutcome o) => o switch
     {
         JoinUnionOutcome.Ok => ResultOk,
         JoinUnionOutcome.UnknownUnion => ResultUnknownUnion,
@@ -78,7 +76,7 @@ public static class UnionRules
         => Code(UnionPolicy.WithdrawResult(membership, requestedUnionId, nowUnix));
 
  /// <summary>Maps a withdraw outcome to its 2850 wire result code.</summary>
-    private static ushort Code(WithdrawUnionOutcome o) => o switch
+    internal static ushort Code(WithdrawUnionOutcome o) => o switch
     {
         WithdrawUnionOutcome.Ok => ResultOk,
         WithdrawUnionOutcome.NotInUnion => ResultNotInUnion,
@@ -110,31 +108,19 @@ public static class UnionRules
             return;
         }
         uint unionId = BinaryPrimitives.ReadUInt32LittleEndian(payload.Span);
-        bool unionExists = services.GetRequiredService<GameDataStore>().UnionInfo.Any(u => u.Union_ID == unionId);
 
-        var memberships = services.GetRequiredService<IUnionMembershipRepository>();
-        var current = await memberships.GetAsync(player.CharacterId, ct);
-        ushort result = JoinResult(current, unionId, unionExists, player.Level);
-
-        long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-        if (result == ResultOk && current is null)
-        {
-            if (await memberships.JoinAsync(player.CharacterId, unionId, now, ct))
-                current = new UnionMembership(unionId, now);
-            else
-            {
-                
-                current = await memberships.GetAsync(player.CharacterId, ct);
-                result = current is { } stored && stored.UnionId == unionId ? ResultOk : ResultAlreadyJoined;
-            }
-        }
+        var repo = services.GetRequiredService<IUnionMembershipRepository>();
+        var data = services.GetRequiredService<ICharacterGameData>();
+        var (outcome, stored) = await JoinUnionFlow.JoinAsync(
+            repo, data, player.CharacterId, player.Level, unionId, TimeProvider.System, ct);
+        ushort result = Code(outcome);
 
         logger.LogInformation("{Name} joins union {Union}: result {Result} (stored {Stored})",
-            player.Name, unionId, result, current is { } c ? $"{c.UnionId} since {c.JoinedAtUnix}" : "none");
+            player.Name, unionId, result, stored is { } c ? $"{c.UnionId} since {c.JoinedAtUnix}" : "none");
 
         await session.SendRmiAsync(ZoneS2COpcodes.AnsJoinUnion, writer =>
         {
-            if (result == ResultOk && current is { } joined)
+            if (outcome == JoinUnionOutcome.Ok && stored is { } joined)
                 WriteAnsJoinUnion(writer, joined.UnionId, (ulong)joined.JoinedAtUnix, ResultOk);
             else
                 WriteAnsJoinUnion(writer, unionId, NoJoinTime, result);

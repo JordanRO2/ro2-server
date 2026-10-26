@@ -1,11 +1,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using RO2.Persistence.Mongo.Persistence;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Characters.Domain;
+using RO2.Characters.Application;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -31,10 +31,13 @@ public class JoinUnionHandler : ZoneRmiHandlerBase<JoinUnionHandler>
     {
         await UnionRules.AnswerJoinAsync(session, payload, player, services, Logger, ct);
 
-        
+        // Refresh the head mirror from the stored membership, so the next 2310 carries the new union.
         try
         {
-            await UnionMembershipStore.PreloadAsync(player.CharacterId, services.GetRequiredService<RO2.Characters.Domain.IUnionMembershipRepository>(), ct);
+            await UnionMirrorRefresh.RefreshAsync(
+                services.GetRequiredService<IUnionMembershipRepository>(),
+                services.GetRequiredService<IUnionMembershipPublisher>(),
+                player.CharacterId, ct);
         }
         catch (Exception ex)
         {
