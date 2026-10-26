@@ -2,6 +2,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RO2.Network.Protocol;
 using RO2.Server.Zone.Models;
+using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -35,8 +36,7 @@ public class RegenService : BackgroundService
     // flat percentage of the maximum (about 0.30% of MaxHp and 0.24% of MaxSp) with a floor of 1; the exact
     // stat/level formula behind that amount is not carried by 2401, so it is approximated this way.
     private const int RegenIntervalMs = 1000;    // 1 second
-    private const float HpRegenPercent = 0.003f; // ~0.3% of MaxHp per 1s tick
-    private const float MpRegenPercent = 0.0024f; // ~0.24% of MaxSp per 1s tick
+    // HP/SP per-tick regen amount moved to RO2.Characters.Domain.VitalsRules (Combat carve B4 S6; regen is vitals maintenance).
 
     public RegenService(PlayerStateManager playerManager, BroadcastService broadcast, ILogger<RegenService> logger)
     {
@@ -133,10 +133,10 @@ public class RegenService : BackgroundService
             var mpBefore = player.Mp;
 
             if (player.Hp < player.MaxHp)
-                player.ApplyHpDelta(Math.Max(1, (int)(player.MaxHp * HpRegenPercent)));
+                player.ApplyHpDelta(VitalsRules.HpRegenDelta(player.MaxHp));
 
             if (player.Mp < player.MaxMp)
-                player.ApplySpDelta(Math.Max(1, (int)(player.MaxMp * MpRegenPercent)));
+                player.ApplySpDelta(VitalsRules.SpRegenDelta(player.MaxMp));
 
             // Only send update if values changed
             return player.Hp != hpBefore || player.Mp != mpBefore;
