@@ -184,15 +184,18 @@ public class SkillStartHandler : ZoneRmiHandlerBase<SkillStartHandler>
         // (SkillCastLandings). Landed: it is refused like any in-cooldown cast. Still in flight: it is answered
         // with nothing, no 2715, no 2962 and no 2716, and never with a second accept; a second accepting 2715 and
         // a second 2716 would be wrong.
-        if (player.SkillCooldowns.TryGetValue(skillGroup, out var cdExpiry) && cdExpiry > nowUtc)
+        var onCooldown = player.SkillCooldowns.TryGetValue(skillGroup, out var cdExpiry) && cdExpiry > nowUtc;
+        // hasLanded is consulted only when on cooldown, so skip the ledger read otherwise (|| short-circuits).
+        var outcome = StartSkillFlow.Decide(onCooldown, isBurstDuplicate,
+            hasLanded: !onCooldown || SkillCastLandings.HasLanded(player, skillGroup));
+        if (outcome == StartSkillFlow.Outcome.BurstDropNoAnswer)
         {
-            if (isBurstDuplicate && !SkillCastLandings.HasLanded(player, skillGroup))
-            {
-                Logger.LogDebug("{Name} skill {SkillId}: burst duplicate before the cast landed, not answered",
-                    player.Name, skillId);
-                return;
-            }
-
+            Logger.LogDebug("{Name} skill {SkillId}: burst duplicate before the cast landed, not answered",
+                player.Name, skillId);
+            return;
+        }
+        if (outcome == StartSkillFlow.Outcome.CooldownRefusal)
+        {
             var refusalCode = SkillCasterBusyWindow.RefusalCode(player, nowUtc);
             await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsUseSkillStart,
                 SkillPackets.BuildUseSkillStartAck2715(skillId, targetHandle, 0f, posX, posY, posZ,
