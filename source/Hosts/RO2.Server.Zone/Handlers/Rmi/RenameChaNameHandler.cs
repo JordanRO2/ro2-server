@@ -1,10 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using MongoDB.Driver;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.GameData;
-using RO2.Persistence.Mongo.Persistence;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
@@ -12,6 +10,7 @@ using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
+using RO2.Characters.Application;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -56,29 +55,22 @@ public class RenameChaNameHandler : ZoneRmiHandlerBase<RenameChaNameHandler>
         string oldName = player.Name;
         string newName = request.NewName;
 
-        
-        
-        var renamed = await services.GetRequiredService<ICharacterRepository>()
-            .RenameAsync(player.CharacterId, oldName, newName, ct);
-        if (!renamed)
+        // The flow persists the new name (guarded on oldName), mirrors it onto the session, and consumes the
+        // scroll. The host keeps the wire: the 2487/2315/2329 heads and the final 2813(0) below.
+        var repo = services.GetRequiredService<ICharacterRepository>();
+        var inventory = services.GetRequiredService<IInventoryRepository>();
+        var rename = await RenameCharacterFlow.ApplyAsync(player.CharacterId, oldName, newName, scroll,
+            new PlayerSessionGateway(player), repo, inventory, ct);
+        if (!rename.Renamed)
         {
             Logger.LogWarning("{Name} rename to '{New}': character row not updated", oldName, newName);
             await SendResultAsync(session, CharacterRename.ResultFailed, ct);
             return;
         }
-        player.Name = newName;
-        if (player.Character is { } live) live.Name = newName;
-
-        
-        
-        var inventory = services.GetRequiredService<IInventoryRepository>();
-        int remaining = scroll.Count - 1;
-        if (remaining <= 0) { await inventory.RemoveItemAsync(scroll.Id); remaining = 0; }
-        else { scroll.Count = remaining; await inventory.UpdateItemAsync(scroll); }
+        int remaining = rename.Remaining;
         var (bag, slot) = ClientBagSlot(scroll);
 
-        var ch = player.Character
-            ?? await services.GetRequiredService<ICharacterRepository>().GetByIdAsync(player.CharacterId);
+        var ch = player.Character ?? await repo.GetByIdAsync(player.CharacterId);
         if (ch is not null)
         {
             ch.Name = newName;

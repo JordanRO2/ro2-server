@@ -18,4 +18,10 @@ internal sealed class PlayerSessionGateway(PlayerState player) : IPlayerSessionG
         get => player.BindIndex;
         set => player.BindIndex = value;
     }
+
+    public string Name
+    {
+        get => player.Name;
+        set => player.Name = value;
+    }
 }

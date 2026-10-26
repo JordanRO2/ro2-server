@@ -19,4 +19,7 @@ public interface IPlayerSessionGateway
 
     /// <summary>The session's respawn bind index (the save-point the player last chose).</summary>
     ushort BindIndex { get; set; }
+
+    /// <summary>The session's character name (mirrored on a rename so live reads see the new name at once).</summary>
+    string Name { get; set; }
 }
