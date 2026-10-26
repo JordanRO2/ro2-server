@@ -170,6 +170,7 @@ public static class Program
         // (account, character, target channel) across the reconnect. It MUST be a singleton: a scoped
         // or transient store would resolve fine and then lose every ticket, stranding the player.
         services.AddSingleton<ChannelMoveTicketStore>();
+        services.AddSingleton<RO2.Worlds.Application.IChannelMoveTicketStore>(sp => sp.GetRequiredService<ChannelMoveTicketStore>());
         // Durability wear (RMI 2503). Event-driven per hit, so a plain singleton — NOT hosted. The
         // weapon path is resolved from the per-message scope by NormalAttackDamageHandler; the armour
         // path (hit taken) is injected into NpcCombatService below, so this must stay a singleton.
