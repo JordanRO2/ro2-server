@@ -566,7 +566,7 @@ public static class GuildPackets
             AbilityValue = it.AbilityValue,
             StorageType = VaultStagingStorageType, Slot = it.StorageSlot,
         };
-        var rec = WorldEntryService.BuildItemRecord126(transient);
+        var rec = ItemPackets.BuildItemRecord126(transient);
         if (rec.Length != ItemPackets.ItemRecordLength) Array.Resize(ref rec, ItemPackets.ItemRecordLength);
         rec[ItemRecContainerOff] = GuildStorageBag;        // container = guild vault
         rec[ItemRecSlotOff] = it.StorageSlot;              // slot

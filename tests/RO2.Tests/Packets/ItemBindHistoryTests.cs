@@ -45,8 +45,8 @@ public class ItemBindHistoryTests
             Assert.Equal(1, body[RecordAt + 0x0F]); 
         }
 
-        Assert.Equal(bound[RecordAt + 0x1B], WorldEntryService.RecordBindFlags(1, 0, everWorn: true));
-        Assert.Equal(unbound[RecordAt + 0x1B], WorldEntryService.RecordBindFlags(1, 0, everWorn: false));
+        Assert.Equal(bound[RecordAt + 0x1B], ItemPackets.RecordBindFlags(1, 0, everWorn: true));
+        Assert.Equal(unbound[RecordAt + 0x1B], ItemPackets.RecordBindFlags(1, 0, everWorn: false));
         Assert.Equal(0, bound[RecordAt + 0x1C]);
     }
 
@@ -59,10 +59,10 @@ public class ItemBindHistoryTests
             Id = 0x0E043DA7F5347BB6UL, ItemId = 22310889, Count = 1, Slot = 4, StorageType = 0,
             Durability = 10000, Refine = 3, Bound = true,
         };
-        var record = WorldEntryService.BuildItemRecord126(card);
+        var record = ItemPackets.BuildItemRecord126(card);
         
         
-        record[0x1B] = WorldEntryService.RecordBindFlags(BindTypeOf(card.ItemId), card.StorageType, card.Bound);
+        record[0x1B] = ItemPackets.RecordBindFlags(BindTypeOf(card.ItemId), card.StorageType, card.Bound);
 
         var body = ShopItemPackets.BuildCardEnforceItem2899(0x09F28F11u, 0, 2, record);
 
@@ -86,19 +86,19 @@ public class ItemBindHistoryTests
         Assert.Equal(1, bindType);
 
         var card = new InventoryItem { ItemId = 22310832, StorageType = 0, Slot = 20 + 2 * 35 + 6 };
-        Assert.Equal(before[0x1B], WorldEntryService.RecordBindFlags(bindType, card.StorageType, card.Bound));
+        Assert.Equal(before[0x1B], ItemPackets.RecordBindFlags(bindType, card.StorageType, card.Bound));
 
         var (flat, storage) = ItemSwapHandler.ClientToPos(after[0x0F], after[0x10]);
         card.Slot = (short)flat;
         card.StorageType = storage;
         Assert.True(ItemSwapHandler.BindOnWear(card, bindType));
-        Assert.Equal(after[0x1B], WorldEntryService.RecordBindFlags(bindType, card.StorageType, card.Bound));
+        Assert.Equal(after[0x1B], ItemPackets.RecordBindFlags(bindType, card.StorageType, card.Bound));
 
         
         card.StorageType = 0;
         card.Slot = 0;
         Assert.False(ItemSwapHandler.BindOnWear(card, bindType));
-        Assert.Equal(WorldEntryService.RecordBoundFlag, WorldEntryService.RecordBindFlags(bindType, card.StorageType, card.Bound));
+        Assert.Equal(ItemPackets.RecordBoundFlag, ItemPackets.RecordBindFlags(bindType, card.StorageType, card.Bound));
     }
 
     [Theory]

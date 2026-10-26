@@ -147,7 +147,7 @@ public class SellItemHandler : ZoneRmiHandlerBase<SellItemHandler>
     /// </summary>
     internal static byte[] SoldRecordOf(ShopSaleLine line, uint characterId)
     {
-        var rec = WorldEntryService.BuildItemRecord126(InventoryEscrowAdapter.ToInventoryItem(line.Row, characterId));
+        var rec = ItemPackets.BuildItemRecord126(InventoryEscrowAdapter.ToInventoryItem(line.Row, characterId));
         rec[ItemRecordCountOffset] = RecordCount(line.NewCount);
         return rec;
     }

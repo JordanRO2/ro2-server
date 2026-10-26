@@ -170,7 +170,7 @@ public class ReviewPCHandler : ZoneRmiHandlerBase<ReviewPCHandler>
         var stats = BuildStatBlock(blob, target.Hp, target.Mp);
 
 
-        var gear = worn.Where(i => ReviewRules.IsWornForDisplay(i.StorageType)).Select(WorldEntryService.BuildItemRecord126).ToList();
+        var gear = worn.Where(i => ReviewRules.IsWornForDisplay(i.StorageType)).Select(ItemPackets.BuildItemRecord126).ToList();
         return AssembleReviewData(rec.GetWrittenSpan(), target, gear, stats, DateTime.UtcNow);
     }
 }

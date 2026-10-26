@@ -192,7 +192,7 @@ internal static class ItemChangeExchange
             await inventory.AddItemAsync(stack);   // stamps the uid; the slot is kept
         }
 
-        var body = BuildPerformed2851(row.Change_Type, aLeft, a.Id, b.Id, bLeft, WorldEntryService.BuildItemRecord126(stack));
+        var body = BuildPerformed2851(row.Change_Type, aLeft, a.Id, b.Id, bLeft, ItemPackets.BuildItemRecord126(stack));
         return new Outcome(ResultOk, body, row.Change_Type, drawn.Item, quantity);
     }
 

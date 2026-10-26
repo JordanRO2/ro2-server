@@ -30,7 +30,7 @@ internal static class EmptiedItemRecord
     /// </summary>
     public static byte[] Build(InventoryItem item)
     {
-        var full = WorldEntryService.BuildItemRecord126(item);
+        var full = ItemPackets.BuildItemRecord126(item);
         var rec = new byte[ItemPackets.ItemRecordLength];
         full.AsSpan(0, IdentityLength).CopyTo(rec);   // +0x00 uid, +0x08 template
         rec[BagOffset] = full[BagOffset];             // +0x0F bag

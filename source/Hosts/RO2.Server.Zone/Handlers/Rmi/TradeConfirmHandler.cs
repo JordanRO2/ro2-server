@@ -234,7 +234,7 @@ public class TradeConfirmHandler : ZoneRmiHandlerBase<TradeConfirmHandler>
     private static async Task<List<byte[]>> FullInventoryRecordsAsync(IInventoryRepository inventory, uint characterId)
     {
         var all = await inventory.GetByCharacterAsync(characterId);
-        return all.Select(WorldEntryService.BuildItemRecord126)
+        return all.Select(ItemPackets.BuildItemRecord126)
                   .OrderBy(r => r[15]).ThenBy(r => r[16])
                   .ToList();
     }

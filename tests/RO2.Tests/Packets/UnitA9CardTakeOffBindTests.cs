@@ -31,11 +31,11 @@ public class UnitA9CardTakeOffBindTests
         Assert.Equal((byte)10, bound.Refine);
         Assert.Equal(1, bound.Count);
         Assert.Equal((short)-1, bound.Slot);
-        Assert.Equal((byte)2, WorldEntryService.RecordBindFlags(CardTemplate.Bind_Type, bound.StorageType, bound.Bound));
+        Assert.Equal((byte)2, ItemPackets.RecordBindFlags(CardTemplate.Bind_Type, bound.StorageType, bound.Bound));
 
         var unbound = CardService.TakenOffRow(Owner, Card, 10, kind: 0);
         Assert.False(unbound.Bound);
-        Assert.Equal((byte)0, WorldEntryService.RecordBindFlags(CardTemplate.Bind_Type, unbound.StorageType, unbound.Bound));
+        Assert.Equal((byte)0, ItemPackets.RecordBindFlags(CardTemplate.Bind_Type, unbound.StorageType, unbound.Bound));
     }
 
     [Fact]
@@ -65,12 +65,12 @@ public class UnitA9CardTakeOffBindTests
         
         
         const string retail64 = "000002005d2b740ea83d040eb06f540110270201320000000000000000000002000a000000000000000000000000000000000000000000000000000000000000";
-        var body = LootNotifyPackets.BuildPickupItem2333(WorldEntryService.BuildItemRecord126(join), pickupKind: 2);
+        var body = LootNotifyPackets.BuildPickupItem2333(ItemPackets.BuildItemRecord126(join), pickupKind: 2);
         var ours = Hex(body)[..128];
         Assert.Equal(retail64[..(2 * (4 + 0x1B))], ours[..(2 * (4 + 0x1B))]);
         Assert.Equal(retail64[(2 * (4 + 0x1C))..], ours[(2 * (4 + 0x1C))..]);
         Assert.Equal("02", retail64.Substring(2 * (4 + 0x1B), 2));
-        Assert.Equal((byte)2, WorldEntryService.RecordBindFlags(CardTemplate.Bind_Type, join.StorageType, join.Bound));
+        Assert.Equal((byte)2, ItemPackets.RecordBindFlags(CardTemplate.Bind_Type, join.StorageType, join.Bound));
 
         
         Assert.Equal("0c00000000000100b06f540101030a01",

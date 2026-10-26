@@ -114,7 +114,7 @@ internal static class ItemWorkbench
  /// <summary>Returns the item record with its runehole block filled in.</summary>
     public static byte[] RecordWithRuneholes(InventoryItem item, GameDataStore store)
     {
-        var rec = WorldEntryService.BuildItemRecord126(item);
+        var rec = ItemPackets.BuildItemRecord126(item);
         ApplyRuneholes(rec, item, store);
         return rec;
     }

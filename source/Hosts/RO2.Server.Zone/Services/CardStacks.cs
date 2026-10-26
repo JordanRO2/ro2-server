@@ -27,11 +27,11 @@ internal static class CardStacks
         byte grade, bool bound)
     {
         if (template is null || template.Stack_Max <= 1) return null;
-        byte wanted = WorldEntryService.RecordBindFlags(template.Bind_Type, 0, bound);
+        byte wanted = ItemPackets.RecordBindFlags(template.Bind_Type, 0, bound);
         return owned
             .Where(i => i.StorageType == 0 && i.Slot >= 0 && i.ItemId == cardId && i.Refine == grade
                         && i.Count > 0 && i.Count + 1 <= template.Stack_Max
-                        && WorldEntryService.RecordBindFlags(template.Bind_Type, 0, i.Bound) == wanted)
+                        && ItemPackets.RecordBindFlags(template.Bind_Type, 0, i.Bound) == wanted)
             .OrderBy(i => i.Slot)
             .FirstOrDefault();
     }

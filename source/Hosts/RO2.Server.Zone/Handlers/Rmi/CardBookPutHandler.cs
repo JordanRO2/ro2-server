@@ -61,7 +61,7 @@ public class CardBookPutHandler : ZoneRmiHandlerBase<CardBookPutHandler>
         {
             var item = await services.GetRequiredService<IInventoryRepository>().GetByIdAsync(itemUid);
             if (item is not null && item.CharacterId == player.CharacterId)
-                removedRecord = WorldEntryService.BuildItemRecord126(item);
+                removedRecord = ItemPackets.BuildItemRecord126(item);
         }
 
         

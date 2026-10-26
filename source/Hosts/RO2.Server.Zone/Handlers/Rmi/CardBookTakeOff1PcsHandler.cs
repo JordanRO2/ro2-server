@@ -120,7 +120,7 @@ public class CardBookTakeOff1PcsHandler : ZoneRmiHandlerBase<CardBookTakeOff1Pcs
         // stack with its new count, or the new row.
         if (observed.Added is { } added)
         {
-            var pickup = LootNotifyPackets.BuildPickupItem2333(WorldEntryService.BuildItemRecord126(added),
+            var pickup = LootNotifyPackets.BuildPickupItem2333(ItemPackets.BuildItemRecord126(added),
                 pickupKind: PickupKindTakeOff);
             await session.SendRmiAsync(ZoneS2COpcodes.OnPickupItem, w => w.WriteBytes(pickup), ct);
         }

@@ -241,7 +241,7 @@ public class LootService
                 foreach (var stack in landed)
                 {
                     var pickupBody = LootNotifyPackets.BuildPickupItem2333(
-                        WorldEntryService.BuildItemRecord126(stack));
+                        ItemPackets.BuildItemRecord126(stack));
                     await killerSession.SendRmiAsync(ZoneS2COpcodes.OnPickupItem,
                         writer => writer.WriteBytes(pickupBody));
                 }

@@ -142,7 +142,7 @@ public class CardCompositionHandler : ZoneRmiHandlerBase<CardCompositionHandler>
                 };
                 await inventory.AddItemAsync(resultRow);   
             }
-            resultRecord = WorldEntryService.BuildItemRecord126(resultRow);
+            resultRecord = ItemPackets.BuildItemRecord126(resultRow);
         }
 
         var removedRecords = new List<byte[]>(consumed.Count);
@@ -158,7 +158,7 @@ public class CardCompositionHandler : ZoneRmiHandlerBase<CardCompositionHandler>
             else
             {
                 await inventory.UpdateItemAsync(it);
-                removedRecords.Add(WorldEntryService.BuildItemRecord126(it));
+                removedRecords.Add(ItemPackets.BuildItemRecord126(it));
             }
         }
 

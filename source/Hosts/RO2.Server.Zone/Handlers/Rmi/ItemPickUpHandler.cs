@@ -411,7 +411,7 @@ public class ItemPickUpHandler : ZoneRmiHandlerBase<ItemPickUpHandler>
 
         foreach (var stack in landed)
             await session.SendRmiAsync(ZoneS2COpcodes.OnPickupItem,
-                LootNotifyPackets.BuildPickupItem2333(WorldEntryService.BuildItemRecord126(stack)));
+                LootNotifyPackets.BuildPickupItem2333(ItemPackets.BuildItemRecord126(stack)));
 
         // Source-inclusive: the picker's own client strikes the entry from its loot window with it.
         var notify = PickupNotifyPackets.BuildPickupItemNotify2334(player.EntityId, lootUid, itemTemplateId);

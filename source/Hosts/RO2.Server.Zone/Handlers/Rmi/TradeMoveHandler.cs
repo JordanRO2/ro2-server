@@ -100,7 +100,7 @@ public class TradeMoveHandler : ZoneRmiHandlerBase<TradeMoveHandler>
         int stack = Math.Max(1, item.Count);
         int offered = requested >= 1 && requested < stack ? requested : stack;
         var shown = offered == stack ? item : TradeOfferQuantities.WithCount(item, offered);
-        var record = WorldEntryService.BuildItemRecord126(shown);
+        var record = ItemPackets.BuildItemRecord126(shown);
 
         // The item as the window shows it is frozen with the quantity (E-H4): the swap re-reads the row under
         // this uid and moves nothing unless it is still exactly this.
@@ -143,7 +143,7 @@ public class TradeMoveHandler : ZoneRmiHandlerBase<TradeMoveHandler>
     /// <summary>
     /// True when a bag item offered by 1353 gets the 2384 <see cref="TradePackets.DragItemNotTradeable"/> answer
     /// instead of entering the trade window: its template is flagged untradeable (ItemInfo Is_Trade 0), or the
-    /// instance is BOUND, i.e. its record+0x1B carries <see cref="WorldEntryService.RecordBoundFlag"/>
+    /// instance is BOUND, i.e. its record+0x1B carries <see cref="ItemPackets.RecordBoundFlag"/>
     /// (ItemInfo Bind_Type 2, or Bind_Type 1 once worn, <see cref="InventoryItem.Bound"/>).
     /// </summary>
     /// <remarks>

@@ -32,7 +32,7 @@ public sealed record ItemData
     public byte Bind_Type { get; init; }
     public uint Durability { get; init; }
     // ItemInfo Abili_val: the base ability value every item record carries at record+69 (u32), see
-    // WorldEntryService.RecordAbilityValue.
+    // ItemPackets.RecordAbilityValue.
     public int Abili_val { get; init; }
     public uint Set_ID { get; init; }
     public uint Socket_GroupID { get; init; }

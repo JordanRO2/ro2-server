@@ -131,7 +131,7 @@ public class TransferReinforceItemHandler : ZoneRmiHandlerBase<TransferReinforce
             // break-down 2379 (ShopItemPackets.BuildDestroyItem2379).
             source.Count = sourceLeft;
             await inventory.UpdateItemAsync(source);
-            sourceRecord = WorldEntryService.BuildItemRecord126(source);
+            sourceRecord = ItemPackets.BuildItemRecord126(source);
         }
         await session.SendRmiAsync(ZoneS2COpcodes.OnDestroyItem,
             writer => writer.WriteBytes(ShopItemPackets.BuildDestroyItem2379(player.EntityId, sourceRecord)));
@@ -215,7 +215,7 @@ public class TransferReinforceItemHandler : ZoneRmiHandlerBase<TransferReinforce
     /// </summary>
     internal static byte[] DestroyedSourceRecord(InventoryItem source)
     {
-        var full = WorldEntryService.BuildItemRecord126(source);
+        var full = ItemPackets.BuildItemRecord126(source);
         var record = new byte[ItemPackets.ItemRecordLength];
         full.AsSpan(RecordUidOffset, RecordUidAndTemplateLength).CopyTo(record);   // +0x00 uid, +0x08 template
         record[RecordContainerOffset] = full[RecordContainerOffset];               // +0x0F bag

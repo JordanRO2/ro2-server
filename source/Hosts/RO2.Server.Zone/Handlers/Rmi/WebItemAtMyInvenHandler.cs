@@ -81,7 +81,7 @@ public class WebItemAtMyInvenHandler : ZoneRmiHandlerBase<WebItemAtMyInvenHandle
                 if (landed.Count == 0) break;
                 foreach (var stack in landing.NewStacks)
                     if (landed.Contains(stack)) owned.Add(stack); 
-                records.Add(WorldEntryService.BuildItemRecord126(landed[0]));
+                records.Add(ItemPackets.BuildItemRecord126(landed[0]));
             }
         }
         catch (Exception ex) when (ex is not OperationCanceledException)

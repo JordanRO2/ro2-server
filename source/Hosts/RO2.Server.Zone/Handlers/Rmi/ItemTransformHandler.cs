@@ -114,7 +114,7 @@ public class ItemTransformHandler : ZoneRmiHandlerBase<ItemTransformHandler>
 
         // 2329: consume one source. (slot, bag) are taken from the record the client was given for it, so they are
         // the cell the client shows; remaining = count after, 0 clears the cell.
-        var sourceRecord = WorldEntryService.BuildItemRecord126(source);
+        var sourceRecord = ItemPackets.BuildItemRecord126(source);
         byte bag = sourceRecord[ItemRecordBagOffset], slot = sourceRecord[ItemRecordSlotOffset];
         int remaining = source.Count - SourceUnitsConsumed;
         if (remaining <= 0) { await inventory.RemoveItemAsync(source.Id); remaining = 0; }
@@ -127,7 +127,7 @@ public class ItemTransformHandler : ZoneRmiHandlerBase<ItemTransformHandler>
             row.TargetItemID, row.TargetItemCount, stackMax);
         foreach (var p in placed)
         {
-            var body = BuildCreateItem2335(player.EntityId, WorldEntryService.BuildItemRecord126(p.Stack));
+            var body = BuildCreateItem2335(player.EntityId, ItemPackets.BuildItemRecord126(p.Stack));
             await session.SendRmiAsync(ZoneS2COpcodes.OnCreateItem, writer => writer.WriteBytes(body));
         }
 

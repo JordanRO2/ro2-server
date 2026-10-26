@@ -140,7 +140,7 @@ public class GuildStorageItemPutHandler : ZoneRmiHandlerBase<GuildStorageItemPut
             
             
             await session.SendRmiAsync(ZoneS2COpcodes.OnPickupItem, (ReadOnlyMemory<byte>)LootNotifyPackets.BuildPickupItem2333(
-                WorldEntryService.BuildItemRecord126(item), resultCode: PickupResultOk, pickupKind: PickupKindGuildReturn));
+                ItemPackets.BuildItemRecord126(item), resultCode: PickupResultOk, pickupKind: PickupKindGuildReturn));
         }
 
         

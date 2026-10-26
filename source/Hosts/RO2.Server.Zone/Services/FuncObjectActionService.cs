@@ -83,7 +83,7 @@ public static class FuncObjectActionService
             await KharaService.OnHeldItemChangedAsync(session, player, itemId, services, logger, ct);
             foreach (var stack in landed)
                 await session.SendRmiAsync(ZoneS2COpcodes.OnPickupItem,
-                    LootNotifyPackets.BuildPickupItem2333(WorldEntryService.BuildItemRecord126(stack)), ct);
+                    LootNotifyPackets.BuildPickupItem2333(ItemPackets.BuildItemRecord126(stack)), ct);
             logger.LogInformation("{Name} gathered {Count}x {Item} from function object {Template}",
                 player.Name, count, itemId, templateId);
         }

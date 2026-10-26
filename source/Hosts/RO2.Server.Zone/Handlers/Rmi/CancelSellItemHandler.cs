@@ -87,7 +87,7 @@ public class CancelSellItemHandler : ZoneRmiHandlerBase<CancelSellItemHandler>
             return;
         }
 
-        var record = WorldEntryService.BuildItemRecord126(InventoryEscrowAdapter.ToInventoryItem(restored, player.CharacterId));
+        var record = ItemPackets.BuildItemRecord126(InventoryEscrowAdapter.ToInventoryItem(restored, player.CharacterId));
         await SendAsync(session, Build2377(player.EntityId, 0, player.Gold, record, uid), ct);
     }
 

@@ -96,7 +96,7 @@ public sealed class ShopInventoryAdapter(IInventoryRepository inventory, IReadOn
                         StorageType = BagStorageType,
                         Durability = durability,
                         // record+69 = 0, not the template's Abili_val: a bought stack's 2375 record carries 0 there
-                        // (see WorldEntryService.RecordAbilityValue).
+                        // (see ItemPackets.RecordAbilityValue).
                         AbilityValue = 0,
                     };
                     undo.Add(async () =>

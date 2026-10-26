@@ -603,7 +603,7 @@ public sealed class TradeEconomyHardeningTests
         await ExpectFrameAsync(w.ReaderA, ZoneS2COpcodes.OnDelTradePC, TradePackets.BuildOnDelTradePC(HandleA, new byte[126]));
 
         await w.Del.HandleAsync(w.SessA, Del1354(offered.Id));
-        var real = TradePackets.BuildOnDelTradePC(HandleA, WorldEntryService.BuildItemRecord126(w.Row(offered.Id)));
+        var real = TradePackets.BuildOnDelTradePC(HandleA, ItemPackets.BuildItemRecord126(w.Row(offered.Id)));
         await ExpectFrameAsync(w.ReaderB, ZoneS2COpcodes.OnDelTradePC, real);
         w.Close();
     }

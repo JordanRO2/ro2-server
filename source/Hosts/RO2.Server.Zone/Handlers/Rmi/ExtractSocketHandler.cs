@@ -181,7 +181,7 @@ public class ExtractSocketHandler : ZoneRmiHandlerBase<ExtractSocketHandler>
             };
             await inventory.AddItemAsync(placed);
         }
-        var extractedRecord = WorldEntryService.BuildItemRecord126(placed);
+        var extractedRecord = ItemPackets.BuildItemRecord126(placed);
 
         // AnsExtractSocket (2787): fixed 254-byte body =
         // [u16 result][126-byte target record][126-byte record of the extracted item's stack].

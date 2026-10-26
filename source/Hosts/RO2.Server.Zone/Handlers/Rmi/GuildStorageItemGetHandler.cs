@@ -92,7 +92,7 @@ public class GuildStorageItemGetHandler : ZoneRmiHandlerBase<GuildStorageItemGet
         if (result == 0 && added != null)
         {
             
-            var rec = WorldEntryService.BuildItemRecord126(added);
+            var rec = ItemPackets.BuildItemRecord126(added);
             await session.SendRmiAsync(ZoneS2COpcodes.OnPickupItem,
                 w => w.WriteBytes(LootNotifyPackets.BuildPickupItem2333(rec, resultCode: 0, pickupKind: PickupKindGuildWithdraw)));
         }

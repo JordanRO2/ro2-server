@@ -82,7 +82,7 @@ public static class CharacterSerializer
             writer.WriteUInt16((ushort)equipCount);
             if (worn != null)
                 foreach (var item in worn)
-                    writer.WriteBytes(WorldEntryService.BuildItemRecord126(item));
+                    writer.WriteBytes(ItemPackets.BuildItemRecord126(item));
         }
 
         writer.WriteAt(lengthPos, (uint)(writer.Length - dataStart));

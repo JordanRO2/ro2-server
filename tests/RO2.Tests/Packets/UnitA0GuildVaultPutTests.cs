@@ -95,7 +95,7 @@ public class UnitA0GuildVaultPutTests
         Assert.All(ours2379.AsSpan(64).ToArray(), b => Assert.Equal(0, b));   
 
         
-        var ours2333 = LootNotifyPackets.BuildPickupItem2333(WorldEntryService.BuildItemRecord126(item),
+        var ours2333 = LootNotifyPackets.BuildPickupItem2333(ItemPackets.BuildItemRecord126(item),
             resultCode: 0, pickupKind: GuildStorageItemPutHandler.PickupKindGuildReturn);
         Assert.Equal(130, ours2333.Length);
         Assert.Equal(retail2333, Hex(ours2333.AsSpan(0, 64)));

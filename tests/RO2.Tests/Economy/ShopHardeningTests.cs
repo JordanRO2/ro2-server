@@ -512,7 +512,7 @@ public sealed class ShopHardeningTests
 
     private static byte[] WithCount(InventoryItem row, byte count)
     {
-        var record = WorldEntryService.BuildItemRecord126(row);
+        var record = ItemPackets.BuildItemRecord126(row);
         record[14] = count;
         return record;
     }
@@ -532,7 +532,7 @@ public sealed class ShopHardeningTests
         Assert.Equal(8, live.Count);   // the live row was mutated, no second row appeared
         Assert.Single(rig.Fx.Inventory.Rows, r => r.ItemId == Stocked);
         Assert.Equal(Hex(ShopItemPackets.BuildBuyItem2375(rig.Player.EntityId, StartZeny - 120, Stocked,
-            new List<byte[]> { WorldEntryService.BuildItemRecord126(live) })), Hex(body));
+            new List<byte[]> { ItemPackets.BuildItemRecord126(live) })), Hex(body));
         Assert.Equal(existing.Id, BinaryPrimitives.ReadUInt64LittleEndian(body.AsSpan(body.Length - 126)));
         Assert.Equal(StartZeny - 120, StoredGold(rig));   // persisted, not only in the live wallet
     }
@@ -628,7 +628,7 @@ public sealed class ShopHardeningTests
         var back = Assert.Single(rig.Fx.Inventory.Rows);
         Assert.Equal((Stocked, 2, (short)0), (back.ItemId, back.Count, back.Slot));
         Assert.Equal(Hex(CancelSellItemHandler.Build2377(rig.Player.EntityId, 0, StartZeny - 20,
-            WorldEntryService.BuildItemRecord126(back), 900)), Hex(body));
+            ItemPackets.BuildItemRecord126(back), 900)), Hex(body));
         Assert.Equal(StartZeny - 20, StoredGold(rig));
         Assert.Empty(BuyBackLedger.UidsOf(rig.Player));   // a uid is bought back once
     }
@@ -647,7 +647,7 @@ public sealed class ShopHardeningTests
         Assert.NotEqual(900UL, back.Id);
         Assert.Contains(rig.Fx.Inventory.Rows, r => r.Id == 900 && r.ItemId == NoSell && r.Count == 1);   // the other stack is untouched
         Assert.Equal(Hex(CancelSellItemHandler.Build2377(rig.Player.EntityId, 0, StartZeny - 20,
-            WorldEntryService.BuildItemRecord126(back), 900)), Hex(body));
+            ItemPackets.BuildItemRecord126(back), 900)), Hex(body));
         Assert.Equal(900UL, BinaryPrimitives.ReadUInt64LittleEndian(body.AsSpan(3 + 144)));   // +144 echoes the request
         Assert.Equal(back.Id, BinaryPrimitives.ReadUInt64LittleEndian(body.AsSpan(3 + 18)));  // the record carries the new uid
     }

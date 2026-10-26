@@ -41,7 +41,7 @@ public class TradeDelHandler : ZoneRmiHandlerBase<TradeDelHandler>
             var inventory = services.GetRequiredService<IInventoryRepository>();
             var item = await inventory.GetByIdAsync(itemUid);
             if (item is not null && item.CharacterId == player.CharacterId)
-                record = WorldEntryService.BuildItemRecord126(item);
+                record = ItemPackets.BuildItemRecord126(item);
         }
         var body = TradePackets.BuildOnDelTradePC(trade.HandleFor(player.SessionId), record);
         foreach (var sid in new[] { trade.SessionA, trade.SessionB })

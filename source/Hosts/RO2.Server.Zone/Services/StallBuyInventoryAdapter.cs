@@ -36,7 +36,7 @@ internal sealed class StallBuyInventoryAdapter(IInventoryRepository inventory, I
     /// <summary>The seller's sold stacks as they now stand, as 126-byte records in listing order (one 2379 each). Built on
     /// demand, after <see cref="ApplyAsync"/>.</summary>
     public List<byte[]> BuildSellerRecords() => _soldRows.Select(row => _leavingWhole.TryGetValue(row, out var gone)
-        ? gone : WorldEntryService.BuildItemRecord126(row)).ToList();
+        ? gone : ItemPackets.BuildItemRecord126(row)).ToList();
 
     /// <inheritdoc />
     public async Task<IReadOnlyList<StallLiveListing>> ResolveLiveAsync(uint sellerCharacterId, IReadOnlyList<StallListing> picked)
@@ -70,7 +70,7 @@ internal sealed class StallBuyInventoryAdapter(IInventoryRepository inventory, I
             var row = _soldRows[i];
             if (sold[i].Listing.Count >= row.Count)
             {
-                var record = WorldEntryService.BuildItemRecord126(row);
+                var record = ItemPackets.BuildItemRecord126(row);
                 record[14] = 0;
                 _leavingWhole[row] = record;
             }

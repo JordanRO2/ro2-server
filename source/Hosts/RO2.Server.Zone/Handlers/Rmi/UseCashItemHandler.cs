@@ -97,7 +97,7 @@ public class UseCashItemHandler : ZoneRmiHandlerBase<UseCashItemHandler>
         byte[] record;
         if (left <= 0)
         {
-            record = WorldEntryService.BuildItemRecord126(item);
+            record = ItemPackets.BuildItemRecord126(item);
             record[14] = 0;   
             await inventory.RemoveItemAsync(item.Id);
         }
@@ -105,7 +105,7 @@ public class UseCashItemHandler : ZoneRmiHandlerBase<UseCashItemHandler>
         {
             item.Count = left;
             await inventory.UpdateItemAsync(item);
-            record = WorldEntryService.BuildItemRecord126(item);
+            record = ItemPackets.BuildItemRecord126(item);
         }
         await session.SendRmiAsync(ZoneS2COpcodes.OnDestroyItem,
             writer => writer.WriteBytes(ShopItemPackets.BuildDestroyItem2379(player.EntityId, record)));

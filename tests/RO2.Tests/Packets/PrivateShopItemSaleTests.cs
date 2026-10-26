@@ -195,7 +195,7 @@ public class PrivateShopItemSaleTests
         Assert.Equal(2, BitConverter.ToUInt16(blob, 58 + 9));             
         Assert.Equal(item.Id, BitConverter.ToUInt64(blob, 58 + 11));      
         Assert.Equal(777UL, BitConverter.ToUInt64(blob, 58 + 19));        
-        Assert.Equal(WorldEntryService.BuildItemRecord126(item), blob[(58 + 27)..]);
+        Assert.Equal(ItemPackets.BuildItemRecord126(item), blob[(58 + 27)..]);
     }
 
     [Fact]

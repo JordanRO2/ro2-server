@@ -506,7 +506,7 @@ public class ChatHandler : ZoneRmiHandlerBase<ChatHandler>
                 catch {   }
             }
 
-            var body = LootNotifyPackets.BuildPickupItem2333(WorldEntryService.BuildItemRecord126(newItem));
+            var body = LootNotifyPackets.BuildPickupItem2333(ItemPackets.BuildItemRecord126(newItem));
             await targetSession.SendRmiAsync(ZoneS2COpcodes.OnPickupItem, w => w.WriteBytes(body));
 
             remaining -= count;
@@ -531,7 +531,7 @@ public class ChatHandler : ZoneRmiHandlerBase<ChatHandler>
             if (it.StorageType != BagStorageType) continue;   
 
             
-            var rec = WorldEntryService.BuildItemRecord126(it);
+            var rec = ItemPackets.BuildItemRecord126(it);
             rec[ItemRecordCountOffset] = 0;
             await session.SendRmiAsync(ZoneS2COpcodes.OnDestroyItem,
                 w => w.WriteBytes(QuestProgressPackets.BuildItemRemoved2379(player.EntityId, rec)));

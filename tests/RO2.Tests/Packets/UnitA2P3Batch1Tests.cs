@@ -175,7 +175,7 @@ public class UnitA2P3Batch1Tests
         
         
         var item = new InventoryItem { Id = 0x0E043DA7E01BCC84UL, CharacterId = Owner, ItemId = 11304311, StorageType = 1, Slot = 3 };
-        var record = WorldEntryService.BuildItemRecord126(item);
+        var record = ItemPackets.BuildItemRecord126(item);
         var body = OutfitDivideReleaseItemHandler.BuildAnswer3038(0, 0x0E043DA8128B882CUL, record);
         Assert.Equal(136, body.Length);
         Assert.Equal((ushort)0, BinaryPrimitives.ReadUInt16LittleEndian(body));

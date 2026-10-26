@@ -155,7 +155,7 @@ public class PCollectionCombinEggBlankHandler : ZoneRmiHandlerBase<PCollectionCo
         
         foreach (var stack in placed)
         {
-            var body2333 = LootNotifyPackets.BuildPickupItem2333(WorldEntryService.BuildItemRecord126(stack), resultCode: 0, pickupKind: 0);
+            var body2333 = LootNotifyPackets.BuildPickupItem2333(ItemPackets.BuildItemRecord126(stack), resultCode: 0, pickupKind: 0);
             await session.SendRmiAsync(ZoneS2COpcodes.OnPickupItem, writer => writer.WriteBytes(body2333));
         }
 

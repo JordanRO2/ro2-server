@@ -34,7 +34,7 @@ internal static class PrivateShopItemListPackets
  /// </remarks>
     internal static Entry BuyerEntry(PrivateShopRegistry.Listing listing, InventoryItem item)
     {
-        var record = WorldEntryService.BuildItemRecord126(item);
+        var record = ItemPackets.BuildItemRecord126(item);
         record[14] = (byte)Math.Min((int)listing.Count, byte.MaxValue); 
         return new(listing.Index, item.ItemId, 0, 0, listing.Count, item.Id, listing.Price, record);
     }
@@ -44,7 +44,7 @@ internal static class PrivateShopItemListPackets
     {
         var (bag, slot) = ItemWorkbench.ClientBagSlot(item);
         return new(listing.Index, item.ItemId, bag, slot, listing.Count, item.Id, listing.Price,
-            WorldEntryService.BuildItemRecord126(item));
+            ItemPackets.BuildItemRecord126(item));
     }
 
  /// <summary>Writes one 153-byte entry.</summary>

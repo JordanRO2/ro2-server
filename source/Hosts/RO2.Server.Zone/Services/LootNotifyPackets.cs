@@ -22,7 +22,7 @@ public static class LootNotifyPackets
  /// Builds the 2333 OnPickupItem message, sent only to the picker, carrying the full item record of the picked-up item.
  /// </summary>
  /// <param name="itemRecord126">
- /// The 126-byte item record, as written by <c>WorldEntryService.BuildItemRecord126(InventoryItem)</c>.
+ /// The 126-byte item record, as written by <c>ItemPackets.BuildItemRecord126(InventoryItem)</c>.
  /// </param>
  /// <param name="resultCode">Result code. Must be 0 for the pickup to be accepted. A non-zero value is shown as an error.</param>
  /// <param name="pickupKind">Message selector for the pickup text. 0 is an ordinary pickup.</param>

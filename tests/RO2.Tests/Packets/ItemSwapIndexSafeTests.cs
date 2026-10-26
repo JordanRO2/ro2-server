@@ -57,8 +57,8 @@ public sealed class ItemSwapIndexSafeTests
     /// PRIMARY = source item at its new cell, VecU16(1) { DEST item at its new cell } }.</summary>
     private static byte[] ExpectedSwap2327(InventoryItem primaryAtNewCell, InventoryItem vectorAtNewCell)
     {
-        var p = WorldEntryService.BuildItemRecord126(primaryAtNewCell);
-        var v = WorldEntryService.BuildItemRecord126(vectorAtNewCell);
+        var p = ItemPackets.BuildItemRecord126(primaryAtNewCell);
+        var v = ItemPackets.BuildItemRecord126(vectorAtNewCell);
         var body = new List<byte>();
         body.AddRange(BitConverter.GetBytes((uint)(2 + p.Length + 2 + v.Length)));  // VarBlob32 length (LE)
         body.AddRange(BitConverter.GetBytes((ushort)0));                            // result = success

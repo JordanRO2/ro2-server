@@ -43,7 +43,7 @@ public class ReqPCBankDataHandler : Base1340
             i => i.Slot));
         var records = new System.Collections.Generic.List<byte[]>(bank.Count);
         foreach (var it in bank)
-            records.Add(RO2.Server.Zone.Services.WorldEntryService.BuildItemRecord126(it));
+            records.Add(RO2.Server.Zone.Services.ItemPackets.BuildItemRecord126(it));
         await session.SendRmiAsync(ZoneS2COpcodes.OnBankData,
             w => w.WriteBytes(RO2.Server.Zone.Services.BankPackets.BuildBankData2338(
                 player.EntityId, player.BankGold, records)));

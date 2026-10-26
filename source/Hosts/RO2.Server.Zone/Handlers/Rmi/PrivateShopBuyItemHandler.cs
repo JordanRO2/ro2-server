@@ -70,7 +70,7 @@ public class PrivateShopBuyItemHandler : ZoneRmiHandlerBase<PrivateShopBuyItemHa
             
             foreach (var stack in sale.BuyerStacks)
                 await session.SendRmiAsync(ZoneS2COpcodes.OnPickupItem,
-                    LootNotifyPackets.BuildPickupItem2333(WorldEntryService.BuildItemRecord126(stack)), ct);
+                    LootNotifyPackets.BuildPickupItem2333(ItemPackets.BuildItemRecord126(stack)), ct);
             
             
             await session.SendRmiAsync(ZoneS2COpcodes.AnsBuyPrivateShopItem,

@@ -116,7 +116,7 @@ public class ChangeProJobIDHandler : ZoneRmiHandlerBase<ChangeProJobIDHandler>
 
 
 
-        var record = WorldEntryService.BuildItemRecord126(item!);
+        var record = ItemPackets.BuildItemRecord126(item!);
         if (commit.Removed)
             record[ItemRecordCountOffset] = 0;   // count 0 empties the cell on the client (the record writer clamps to >= 1)
         await session.SendRmiAsync(ZoneS2COpcodes.OnDestroyItem,

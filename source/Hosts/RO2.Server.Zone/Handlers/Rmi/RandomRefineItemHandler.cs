@@ -105,7 +105,7 @@ public class RandomRefineItemHandler : ZoneRmiHandlerBase<RandomRefineItemHandle
         
         
         
-        var record = owned ? WorldEntryService.BuildItemRecord126(target!) : DescriptorEcho(targetUid, targetCount, targetBag, targetSlot);
+        var record = owned ? ItemPackets.BuildItemRecord126(target!) : DescriptorEcho(targetUid, targetCount, targetBag, targetSlot);
         var randomRefineBody = ShopItemPackets.BuildRandomRefineItem3009(player.EntityId, ResultCannotReroll, record);
         await session.SendRmiAsync(ZoneS2COpcodes.OnRandomRefineItem,
             writer => writer.WriteBytes(randomRefineBody));

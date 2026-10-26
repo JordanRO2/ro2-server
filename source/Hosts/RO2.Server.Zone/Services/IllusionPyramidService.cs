@@ -622,7 +622,7 @@ public static class IllusionPyramidService
             AttachedItemDurability = template is null ? DurabilityUnset : (short)Math.Min(template.Durability, (uint)short.MaxValue),
         };
         await mails.AddAsync(mail);
-        var record = WorldEntryService.BuildItemRecord126(MailService.AttachmentAsBagRow(mail, player.CharacterId, mail.AttachedItemUid, MailedItemSlot));
+        var record = ItemPackets.BuildItemRecord126(MailService.AttachmentAsBagRow(mail, player.CharacterId, mail.AttachedItemUid, MailedItemSlot));
         record[ItemRecordBagOffset] = MailedItemBag;
         record[ItemRecordSlotOffset] = MailedItemSlot;
         await session.SendRmiAsync(ZoneS2COpcodes.OnPickupItem,
@@ -744,7 +744,7 @@ public static class IllusionPyramidService
         await KharaService.OnHeldItemChangedAsync(session, player, reward.ItemId, services, logger, ct);
         foreach (var stack in landed)
             await session.SendRmiAsync(ZoneS2COpcodes.OnPickupItem,
-                LootNotifyPackets.BuildPickupItem2333(WorldEntryService.BuildItemRecord126(stack)), ct);
+                LootNotifyPackets.BuildPickupItem2333(ItemPackets.BuildItemRecord126(stack)), ct);
         logger.LogInformation("{Name}: illusion pyramid pays {Count}x {Item} (floor {Floor} slot {Slot})",
             player.Name, reward.Count, reward.ItemId, reward.Floor, reward.Slot);
         await CardRegistrationNotifier.NotifyArrivedAsync(session, player.CharacterId, new[] { reward.ItemId }, services, logger);

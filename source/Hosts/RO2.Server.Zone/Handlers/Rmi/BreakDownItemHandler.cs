@@ -176,7 +176,7 @@ public class BreakDownItemHandler : ZoneRmiHandlerBase<BreakDownItemHandler>
             byte[] stoneRecord;
             if (left <= 0)
             {
-                stoneRecord = WorldEntryService.BuildItemRecord126(stack);
+                stoneRecord = ItemPackets.BuildItemRecord126(stack);
                 stoneRecord[ItemRecordCountOffset] = 0;   // count 0 -> the client empties the cell (the record writer clamps to >= 1)
                 await inventory.RemoveItemAsync(stack.Id);
             }
@@ -184,7 +184,7 @@ public class BreakDownItemHandler : ZoneRmiHandlerBase<BreakDownItemHandler>
             {
                 stack.Count = left;
                 await inventory.UpdateItemAsync(stack);
-                stoneRecord = WorldEntryService.BuildItemRecord126(stack);
+                stoneRecord = ItemPackets.BuildItemRecord126(stack);
             }
             var stoneBody = ShopItemPackets.BuildDestroyItem2379(player.EntityId, stoneRecord);
             await session.SendRmiAsync(ZoneS2COpcodes.OnDestroyItem, writer => writer.WriteBytes(stoneBody));
@@ -206,7 +206,7 @@ public class BreakDownItemHandler : ZoneRmiHandlerBase<BreakDownItemHandler>
             if (item == 0 || num <= 0 || rng.Next(RateScale) >= rate) continue;
             var placed = await InventoryStacking.AddAsync(inventory, player.CharacterId, item, num,
                 store.GetItem(item)?.Stack_Max ?? DefaultStackMax);
-            foreach (var p in placed) records.Add(WorldEntryService.BuildItemRecord126(p.Stack));
+            foreach (var p in placed) records.Add(ItemPackets.BuildItemRecord126(p.Stack));
         }
 
         // OnBreakDownItem (2417): result 0, then the request's slot/bag/uid/remaining echo and the output

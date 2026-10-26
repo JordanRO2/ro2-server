@@ -343,7 +343,7 @@ public class CraftItemHandler : ZoneRmiHandlerBase<CraftItemHandler>
                     foreach (var stack in placed)
                     {
                         var info = ShopItemPackets.BuildAckMakeCraftItemInfo2541(player.EntityId, sp,
-                            WorldEntryService.BuildItemRecord126(stack));
+                            ItemPackets.BuildItemRecord126(stack));
                         await session.SendRmiAsync(ZoneS2COpcodes.OnAckMakeCraftItemInfo, w => w.WriteBytes(info));
                     }
                 }
@@ -434,7 +434,7 @@ public class CraftItemHandler : ZoneRmiHandlerBase<CraftItemHandler>
         var records = new List<byte[]>();
         foreach (var stack in await TakeMaterialAsync(inventory, bag, itemId, count))
         {
-            var record = WorldEntryService.BuildItemRecord126(stack);
+            var record = ItemPackets.BuildItemRecord126(stack);
             
             if (stack.Count <= 0) record[ItemRecordCountOffset] = 0;   // count 0 -> the client empties the cell
             records.Add(record);

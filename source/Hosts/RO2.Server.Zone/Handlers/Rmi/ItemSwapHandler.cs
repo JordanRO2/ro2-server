@@ -174,19 +174,19 @@ public class ItemSwapHandler : ZoneRmiHandlerBase<ItemSwapHandler>
             int srcNew = srcItem.Count - moved;                        // remainder left in the source
             dstItem.Count = dstNew;
             await inventory.UpdateItemAsync(dstItem);
-            var dstRec = WorldEntryService.BuildItemRecord126(dstItem); // dest cell, new capped count
+            var dstRec = ItemPackets.BuildItemRecord126(dstItem); // dest cell, new capped count
             byte[] srcRec;
             if (srcNew <= 0)
             {
                 await inventory.RemoveItemAsync(srcItem.Id);           // source fully absorbed
-                srcRec = WorldEntryService.BuildItemRecord126(srcItem);
+                srcRec = ItemPackets.BuildItemRecord126(srcItem);
                 srcRec[RecordCountOffset] = 0;                                        // count 0 -> clear the source cell
             }
             else
             {
                 srcItem.Count = srcNew;
                 await inventory.UpdateItemAsync(srcItem);
-                srcRec = WorldEntryService.BuildItemRecord126(srcItem);
+                srcRec = ItemPackets.BuildItemRecord126(srcItem);
             }
             await SendSwap2327(session, srcRec, dstRec);
             Logger.LogInformation("{Name} merged {Moved} of uid {Src} into {Dst}: dst {Dc}, src {Sc} (max {Max})",
@@ -223,8 +223,8 @@ public class ItemSwapHandler : ZoneRmiHandlerBase<ItemSwapHandler>
             await inventory.AddItemAsync(newItem);                     // assigns a fresh uid
             srcItem.Count -= qty;
             await inventory.UpdateItemAsync(srcItem);
-            var srcRec = WorldEntryService.BuildItemRecord126(srcItem); // source cell, reduced count
-            var newRec = WorldEntryService.BuildItemRecord126(newItem); // dest cell, split-off count
+            var srcRec = ItemPackets.BuildItemRecord126(srcItem); // source cell, reduced count
+            var newRec = ItemPackets.BuildItemRecord126(newItem); // dest cell, split-off count
             await SendSwap2327(session, srcRec, newRec);
             Logger.LogInformation("{Name} split {Qty} of uid {Src} into new uid {New} at bag {Bag}/slot {Slot}",
                 player.Name, qty, srcUid, newItem.Id, dstBag, dstSlot);
@@ -278,7 +278,7 @@ public class ItemSwapHandler : ZoneRmiHandlerBase<ItemSwapHandler>
         // item-list path — so without an explicit clear the paperdoll keeps the item while the bag also
         // shows it. (Equip/unequip are 1324 ReqPCItemSwap, msgTag 0xE2A8; the client
         // sent the same uid at two positions after an unequip, i.e. its own state had duplicated.)
-        var clearOld = WorldEntryService.BuildItemRecord126(srcItem);
+        var clearOld = ItemPackets.BuildItemRecord126(srcItem);
         clearOld[RecordCountOffset] = 0;                       // count 0 -> UpdateBagSlot clears the cell
         // The clear record's UID (record[0..7]) must be NON-ZERO but must NOT match any equipped item.
         // The 2327 consumer runs each record through the bag-UI updater and the model dresser. The bag-UI updater
@@ -293,7 +293,7 @@ public class ItemSwapHandler : ZoneRmiHandlerBase<ItemSwapHandler>
         // with the item TEMPLATE id (record[8..11]) and stack count (record[14]) zeroed, but the REAL uid kept.
         // That empties the source bag-window cell: NOT a sentinel uid, and NO separate 2333.
         // Built before the move so it carries the OLD source cell.
-        var bagClearSource = WorldEntryService.BuildItemRecord126(srcItem);
+        var bagClearSource = ItemPackets.BuildItemRecord126(srcItem);
         Array.Clear(bagClearSource, RecordItemIdOffset, sizeof(uint));                       // template id = 0
         bagClearSource[RecordCountOffset] = 0;                                                              // stack count = 0
 
@@ -349,15 +349,15 @@ public class ItemSwapHandler : ZoneRmiHandlerBase<ItemSwapHandler>
         if (srcStorage == StorageBagWindow || dstStorage == StorageBagWindow)
         {
             primary = dstItem is not null
-                ? WorldEntryService.BuildItemRecord126(dstItem)   // swap: partner now at the source cell
+                ? ItemPackets.BuildItemRecord126(dstItem)   // swap: partner now at the source cell
                 : bagClearSource;                                 // plain move: source cell cleared (real uid, tid 0, count 0)
-            secondary = WorldEntryService.BuildItemRecord126(srcItem); // moved item at its destination cell
+            secondary = ItemPackets.BuildItemRecord126(srcItem); // moved item at its destination cell
         }
         else
         {
-            primary = WorldEntryService.BuildItemRecord126(srcItem);
+            primary = ItemPackets.BuildItemRecord126(srcItem);
             secondary = dstItem is not null
-                ? WorldEntryService.BuildItemRecord126(dstItem)
+                ? ItemPackets.BuildItemRecord126(dstItem)
                 : clearOld;
         }
         await session.SendRmiAsync(ZoneS2COpcodes.OnSwapItem, writer =>

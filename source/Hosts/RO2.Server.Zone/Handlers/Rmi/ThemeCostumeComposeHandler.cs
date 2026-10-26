@@ -113,7 +113,7 @@ public class ThemeCostumeComposeHandler : ZoneRmiHandlerBase<ThemeCostumeCompose
         
         var stackMax = store.GetItem(resultId)?.Stack_Max ?? (byte)1;
         var placed = await InventoryStacking.AddAsync(inventory, player.CharacterId, resultId, 1, stackMax);
-        var record = placed.Count > 0 ? WorldEntryService.BuildItemRecord126(placed[0].Stack) : null;
+        var record = placed.Count > 0 ? ItemPackets.BuildItemRecord126(placed[0].Stack) : null;
 
         Logger.LogInformation("{Name}: theme costume compose -> {Result} (theme {Theme}, slot type {Type}, socket {Socket}; keep appearance {KA}, keep runes {KR})",
             player.Name, resultId, row.Theme_Type, row.Type, socket, plan.KeepAppearance, plan.KeepRunes);

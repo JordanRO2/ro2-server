@@ -130,11 +130,11 @@ public class CardBookTakeOffHandler : ZoneRmiHandlerBase<CardBookTakeOffHandler>
         if (amount > Math.Max(stackMax, 1)) return null;
 
         byte bindType = template?.Bind_Type ?? 0;
-        byte wanted = WorldEntryService.RecordBindFlags(bindType, 0, bound);
+        byte wanted = ItemPackets.RecordBindFlags(bindType, 0, bound);
         bool CanJoin(InventoryItem i) =>
             stackMax > 1 && i.StorageType == 0 && i.Slot >= 0 && i.ItemId == cardId && i.Refine == grade
             && i.Count > 0 && i.Count + amount <= stackMax
-            && WorldEntryService.RecordBindFlags(bindType, 0, i.Bound) == wanted;
+            && ItemPackets.RecordBindFlags(bindType, 0, i.Bound) == wanted;
 
         var free = BagCapacity.FreeCells(owned, items);
         if (requestedFlat >= 0)
@@ -206,7 +206,7 @@ public class CardBookTakeOffHandler : ZoneRmiHandlerBase<CardBookTakeOffHandler>
         // 2333 OnPickupItem: the row that now holds the cards, silent kind.
         if (observed.Added is { } added)
         {
-            var pickup = LootNotifyPackets.BuildPickupItem2333(WorldEntryService.BuildItemRecord126(added),
+            var pickup = LootNotifyPackets.BuildPickupItem2333(ItemPackets.BuildItemRecord126(added),
                 pickupKind: PickupKindTakeOff);
             await session.SendRmiAsync(ZoneS2COpcodes.OnPickupItem, w => w.WriteBytes(pickup), ct);
         }

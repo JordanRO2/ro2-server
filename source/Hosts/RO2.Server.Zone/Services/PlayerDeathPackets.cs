@@ -200,7 +200,7 @@ public static class PlayerDeathPackets
         => equipment
             .Where(i => i.StorageType == StorageTypeEquipped)
             .OrderBy(i => i.Slot)
-            .Select(WorldEntryService.BuildItemRecord126)
+            .Select(ItemPackets.BuildItemRecord126)
             .ToList();
 
  /// <summary>

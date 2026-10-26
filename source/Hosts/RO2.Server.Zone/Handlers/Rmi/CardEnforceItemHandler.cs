@@ -274,7 +274,7 @@ public class CardEnforceItemHandler : ZoneRmiHandlerBase<CardEnforceItemHandler>
         // blob+10 and the card's record AFTER the roll at blob+11. The record's uid is non-zero so the client
         // finds the card; blob+10 against the record's level byte selects the success or failure text.
         var cardBody = ShopItemPackets.BuildCardEnforceItem2899(player.EntityId, ResultRolled, (byte)grade,
-            WorldEntryService.BuildItemRecord126(target));
+            ItemPackets.BuildItemRecord126(target));
         await session.SendRmiAsync(ZoneS2COpcodes.OnCardEnforceItem,
             writer => writer.WriteBytes(cardBody));
 

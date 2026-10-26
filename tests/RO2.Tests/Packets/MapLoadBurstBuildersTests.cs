@@ -88,7 +88,7 @@ public class MapLoadBurstBuildersTests
         var bindType = BindTypeOf(templateId);
         bool worn = record[0x0F] == 0;
         Assert.Equal(worn, storageType == 1);
-        Assert.Equal(record[0x1B], WorldEntryService.RecordBindFlags(bindType, storageType));
+        Assert.Equal(record[0x1B], ItemPackets.RecordBindFlags(bindType, storageType));
     }
 
     [Fact]
@@ -100,7 +100,7 @@ public class MapLoadBurstBuildersTests
         var record = Convert.FromHexString(
             "a43db9eda73d040e67dbfe00102701041c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000023d5000060000c00c3fc8c3eaffdbb36a901bb3699febb3603ff00000000000000000000000000000000000000000000000000000000000000");
         Assert.Equal(1, BindTypeOf(BitConverter.ToUInt32(record, 8)));
-        Assert.Equal(record[0x1B], WorldEntryService.RecordBindFlags(1, 0));
+        Assert.Equal(record[0x1B], ItemPackets.RecordBindFlags(1, 0));
     }
 
     private static byte BindTypeOf(uint templateId)

@@ -450,8 +450,8 @@ public sealed class MailService
                         && i.FxEnchantIndex == mail.AttachedItemFxEnchantIndex
                         && i.EnchantReinforceId == mail.AttachedItemEnchantReinforceId
                         && i.EnchantSeconds == mail.AttachedItemEnchantSeconds
-                        && WorldEntryService.RecordAbilityValue(i)
-                           == WorldEntryService.RecordAbilityValue(mail.AttachedItemId, mail.AttachedItemAbilityValue)
+                        && ItemPackets.RecordAbilityValue(i)
+                           == ItemPackets.RecordAbilityValue(mail.AttachedItemId, mail.AttachedItemAbilityValue)
                         && SameJson(i.CardsJson, mail.AttachedItemCardsJson)
                         && SameJson(i.SocketPunchersJson, mail.AttachedItemSocketPunchersJson))
             .OrderBy(i => i.Slot)

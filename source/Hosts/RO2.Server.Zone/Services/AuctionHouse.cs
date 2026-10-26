@@ -652,7 +652,7 @@ public static partial class AuctionPackets
         };
         var item = store != null
             ? ItemWorkbench.RecordWithRuneholes(snapshot, store)
-            : WorldEntryService.BuildItemRecord126(snapshot);
+            : ItemPackets.BuildItemRecord126(snapshot);
         item[ItemRecordContainerOffset] = ItemContainer;
         item[ItemRecordSlotOffset] = ItemSlot;
 
@@ -969,7 +969,7 @@ public sealed partial class AuctionService
 
         var article = result.Article!;
         // The slot the client knows the item by: 2458 blob+236 is the listed item's slot.
-        byte bagSlot = WorldEntryService.BuildItemRecord126(
+        byte bagSlot = ItemPackets.BuildItemRecord126(
             InventoryEscrowAdapter.ToInventoryItem(result.Taken!, seller.CharacterId))[AuctionPackets.ItemRecordSlotOffset];
 
         await characters.UpdateGoldAsync(seller.CharacterId, seller.Gold);

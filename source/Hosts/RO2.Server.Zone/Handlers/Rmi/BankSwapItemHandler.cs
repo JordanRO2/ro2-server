@@ -194,8 +194,8 @@ public class BankSwapItemHandler : ZoneRmiHandlerBase<BankSwapItemHandler>
             await inv.UpdateItemAsync(src);     // (2) source -> freed destination cell
             dst.Slot = dstFinalSlot;
             await inv.UpdateItemAsync(dst);     // (3) destination -> freed source cell
-            recA = WorldEntryService.BuildItemRecord126(dst);   // now at the source cell
-            recB = WorldEntryService.BuildItemRecord126(src);   // now at the dest cell
+            recA = ItemPackets.BuildItemRecord126(dst);   // now at the source cell
+            recB = ItemPackets.BuildItemRecord126(src);   // now at the dest cell
         }
         else
         {
@@ -269,13 +269,13 @@ public class BankSwapItemHandler : ZoneRmiHandlerBase<BankSwapItemHandler>
             // OLD-cell CLEAR record: keep the bag+slot (the 2344 selector routes by it) but zero BOTH the
             // template (+0x08) and count (+0x0E) — the inventory window clears a cell on count==0 while the
             // bank window removes on template==0, so a fully-zeroed source clears in either direction.
-            recA = WorldEntryService.BuildItemRecord126(src);
+            recA = ItemPackets.BuildItemRecord126(src);
             recA.AsSpan(RecordTemplateOffset, RecordTemplateLength).Clear();   // template 0 -> bank removes
             recA[RecordCountOffset] = 0;                                        // count 0 -> inventory clears
             src.StorageType = moveStorage;
             src.Slot = newSlot;
             await inv.UpdateItemAsync(src);
-            recB = WorldEntryService.BuildItemRecord126(src);   // moved item at its new cell
+            recB = ItemPackets.BuildItemRecord126(src);   // moved item at its new cell
         }
 
         Logger.LogInformation("{Name} bank-moved uid {Uid} -> container {C} slot {S}",
@@ -297,7 +297,7 @@ public class BankSwapItemHandler : ZoneRmiHandlerBase<BankSwapItemHandler>
             System.Linq.Enumerable.Where(await inv.GetByCharacterAsync(player.CharacterId), i => i.StorageType == StorageBank),
             i => i.Slot));
         var records = new System.Collections.Generic.List<byte[]>(bank.Count);
-        foreach (var it in bank) records.Add(WorldEntryService.BuildItemRecord126(it));
+        foreach (var it in bank) records.Add(ItemPackets.BuildItemRecord126(it));
         await session.SendRmiAsync(ZoneS2COpcodes.OnBankData,
             w => w.WriteBytes(BankPackets.BuildBankData2338(player.EntityId, player.BankGold, records)));
     }

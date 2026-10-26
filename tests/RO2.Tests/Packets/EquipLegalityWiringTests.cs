@@ -76,8 +76,8 @@ public sealed class EquipLegalityWiringTests
     /// VecU16(1) { DEST at its new cell } } — the oracle the 1c swap defined.</summary>
     private static byte[] ExpectedSwap2327(InventoryItem primaryAtNewCell, InventoryItem vectorAtNewCell)
     {
-        var p = WorldEntryService.BuildItemRecord126(primaryAtNewCell);
-        var v = WorldEntryService.BuildItemRecord126(vectorAtNewCell);
+        var p = ItemPackets.BuildItemRecord126(primaryAtNewCell);
+        var v = ItemPackets.BuildItemRecord126(vectorAtNewCell);
         var body = new List<byte>();
         body.AddRange(BitConverter.GetBytes((uint)(2 + p.Length + 2 + v.Length)));
         body.AddRange(BitConverter.GetBytes((ushort)0));

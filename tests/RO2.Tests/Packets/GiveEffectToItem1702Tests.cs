@@ -113,7 +113,7 @@ public class GiveEffectToItem1702Tests
     {
         
         var item = new InventoryItem { Id = 0x0E043DA7F8471958, ItemId = 16702360, Count = 1, StorageType = 1, Slot = 10, FxEnchantIndex = 204 };
-        var record = WorldEntryService.BuildItemRecord126(item);
+        var record = ItemPackets.BuildItemRecord126(item);
         Assert.Equal(126, record.Length);
         Assert.Equal(204u, BinaryPrimitives.ReadUInt32LittleEndian(record.AsSpan(113)));
         Assert.All(record[117..], b => Assert.Equal((byte)0, b));
@@ -130,7 +130,7 @@ public class GiveEffectToItem1702Tests
     public void AnItemWithNoLook_KeepsTheOldRecordBytes()
     {
         
-        var record = WorldEntryService.BuildItemRecord126(new InventoryItem { Id = 77, ItemId = 11100001, Count = 1, StorageType = 0, Slot = 1 });
+        var record = ItemPackets.BuildItemRecord126(new InventoryItem { Id = 77, ItemId = 11100001, Count = 1, StorageType = 0, Slot = 1 });
         foreach (var off in new[] { 0x11, 0x13, 0x17, 0x65, 0x69, 0x6D, 0x71 })
             Assert.Equal(0u, BinaryPrimitives.ReadUInt32LittleEndian(record.AsSpan(off)) & (off is 0x11 or 0x13 ? 0xFFFFu : 0xFFFFFFFFu));
     }
@@ -266,7 +266,7 @@ public class UseDyeItem1575Tests
         UseDyeItemHandler.SetDyeSlot(item, 0, 0xFFFE8C06);
         UseDyeItemHandler.SetDyeSlot(item, 1, 0xFFB8A878);
         UseDyeItemHandler.SetDyeSlot(item, 2, 0xFF550200);
-        var record = WorldEntryService.BuildItemRecord126(item);
+        var record = ItemPackets.BuildItemRecord126(item);
         Assert.Equal(0xFFFE8C06u, BinaryPrimitives.ReadUInt32LittleEndian(record.AsSpan(0x17)));
         Assert.Equal(0xFFB8A878u, BinaryPrimitives.ReadUInt32LittleEndian(record.AsSpan(0x65)));
         Assert.Equal(0xFF550200u, BinaryPrimitives.ReadUInt32LittleEndian(record.AsSpan(0x69)));

@@ -82,7 +82,7 @@ public class PCollectionCollectEggHandler : ZoneRmiHandlerBase<PCollectionCollec
         await KharaService.OnHeldItemChangedAsync(session, player, pet.Hatched_Egg_ID, services, Logger);
         foreach (var stack in landed)
             await session.SendRmiAsync(ZoneS2COpcodes.OnPickupItem,
-                LootNotifyPackets.BuildPickupItem2333(WorldEntryService.BuildItemRecord126(stack)), ct);
+                LootNotifyPackets.BuildPickupItem2333(ItemPackets.BuildItemRecord126(stack)), ct);
 
         Logger.LogInformation("{Name} collected hatched egg {Hatched} (pet {Pet}) from incubator {Inc} slot {Target}; {Charges} charge(s) left",
             player.Name, pet.Hatched_Egg_ID, pet.NPC_ID, incubatorId, target, before.Charges - 1);

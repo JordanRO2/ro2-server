@@ -57,7 +57,7 @@ public class TimedEnchant2786Tests
         var dagger = new InventoryItem { Id = 0x0E043DA8065E61CC, ItemId = 16702297, Count = 1, StorageType = 1, Slot = 6, Durability = 9452 };
         Assert.True(TimedEnchant.Fits(row, store.GetItem(dagger.ItemId)!));
         TimedEnchant.Apply(dagger, row);
-        var record = WorldEntryService.BuildItemRecord126(dagger);
+        var record = ItemPackets.BuildItemRecord126(dagger);
         Assert.Equal("cc615e06a83d040e59dbfe00ec2401000633752c01", Convert.ToHexString(record.AsSpan(0, 21)).ToLowerInvariant());
     }
 

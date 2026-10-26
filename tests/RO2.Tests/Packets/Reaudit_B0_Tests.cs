@@ -278,10 +278,10 @@ public class Reaudit_B0_Tests
         
         
         var bought = new InventoryItem { Id = 0x0E043DA812850D5C, ItemId = 13472531, Count = 1, AbilityValue = 0 };
-        Assert.Equal(0u, BinaryPrimitives.ReadUInt32LittleEndian(WorldEntryService.BuildItemRecord126(bought).AsSpan(69)));
+        Assert.Equal(0u, BinaryPrimitives.ReadUInt32LittleEndian(ItemPackets.BuildItemRecord126(bought).AsSpan(69)));
         var rolled = new InventoryItem { Id = 1, ItemId = 13472531, Count = 1, AbilityValue = 1417 };
-        Assert.Equal(1417u, BinaryPrimitives.ReadUInt32LittleEndian(WorldEntryService.BuildItemRecord126(rolled).AsSpan(69)));
-        Assert.Equal(1417u, WorldEntryService.RecordAbilityValue(13472531, 1417));
+        Assert.Equal(1417u, BinaryPrimitives.ReadUInt32LittleEndian(ItemPackets.BuildItemRecord126(rolled).AsSpan(69)));
+        Assert.Equal(1417u, ItemPackets.RecordAbilityValue(13472531, 1417));
     }
 
     [Fact]

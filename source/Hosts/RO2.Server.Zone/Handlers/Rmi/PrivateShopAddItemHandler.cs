@@ -98,7 +98,7 @@ public class PrivateShopAddItemHandler : ZoneRmiHandlerBase<PrivateShopAddItemHa
 
  /// <summary>True when the item record's bind bit is set.</summary>
     private static bool IsBound(ItemData template, InventoryItem item)
-        => WorldEntryService.RecordBindFlags(template.Bind_Type, item.StorageType, item.Bound) == WorldEntryService.RecordBoundFlag;
+        => ItemPackets.RecordBindFlags(template.Bind_Type, item.StorageType, item.Bound) == ItemPackets.RecordBoundFlag;
 
  /// <summary>The 27-byte refusal 2647: result 23006 followed by 25 zero bytes.</summary>
     internal static byte[] BuildRefused()

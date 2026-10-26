@@ -108,12 +108,12 @@ public class InventoryItem
     public bool Bound { get; set; }
 
  /// <summary>
- /// This instance's ability value, the u32 at record+69 (WorldEntryService.RecordAbilityValue), when it is not
+ /// This instance's ability value, the u32 at record+69 (ItemPackets.RecordAbilityValue), when it is not
  /// its template's ItemInfo.Abili_val; null = the template's value, which is what every row stored before this
  /// existed, and every row no path sets it on, keeps writing.
  /// </summary>
  /// <remarks>
- /// Retail fixes the value per uid (see WorldEntryService.RecordAbilityValue). A stack bought from
+ /// Retail fixes the value per uid (see ItemPackets.RecordAbilityValue). A stack bought from
  /// an NPC carries 0 there whatever its template's Abili_val: every 2375 OnBuyItem record of a template with
  /// Abili_val != 0 has 0 at record+69. BuyItemHandler sets 0 on the stacks it creates.
  /// </remarks>

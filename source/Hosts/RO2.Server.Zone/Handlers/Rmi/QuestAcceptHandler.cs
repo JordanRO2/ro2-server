@@ -602,7 +602,7 @@ public class QuestAcceptHandler : ZoneRmiHandlerBase<QuestAcceptHandler>
                 break;
             }
 
-            var record = WorldEntryService.BuildItemRecord126(granted);
+            var record = ItemPackets.BuildItemRecord126(granted);
             await session.SendRmiAsync(ZoneS2COpcodes.OnPickupItem,
                 writer => writer.WriteBytes(LootNotifyPackets.BuildPickupItem2333(record)));
 

@@ -124,7 +124,7 @@ public static class DungeonFinderReward
             await KharaService.OnHeldItemChangedAsync(session, killer, landing.ItemId, services, logger);
             foreach (var stack in landed)
                 await session.SendRmiAsync(ZoneS2COpcodes.OnPickupItem,
-                    LootNotifyPackets.BuildPickupItem2333(WorldEntryService.BuildItemRecord126(stack),
+                    LootNotifyPackets.BuildPickupItem2333(ItemPackets.BuildItemRecord126(stack),
                         pickupKind: PickupKindFinderReward));
         }
 

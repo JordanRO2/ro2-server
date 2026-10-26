@@ -247,7 +247,7 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
     /// </summary>
     internal static byte[] TokenRecordOf(ShopTokenTouch touch, uint characterId)
     {
-        var record = WorldEntryService.BuildItemRecord126(InventoryEscrowAdapter.ToInventoryItem(touch.Stack, characterId));
+        var record = ItemPackets.BuildItemRecord126(InventoryEscrowAdapter.ToInventoryItem(touch.Stack, characterId));
         if (touch.Emptied) record[ItemRecordCountOffset] = 0;
         return record;
     }
@@ -416,7 +416,7 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
         // itself for a uid it already holds (a restack); a fresh stack shows only the zeny spent.
         var records = new List<byte[]>(written.Stacks.Count);
         foreach (var st in written.Stacks)
-            records.Add(WorldEntryService.BuildItemRecord126(InventoryEscrowAdapter.ToInventoryItem(st, player.CharacterId)));
+            records.Add(ItemPackets.BuildItemRecord126(InventoryEscrowAdapter.ToInventoryItem(st, player.CharacterId)));
         var buyBody = tokenCost is null
             ? ShopItemPackets.BuildBuyItem2375(player.EntityId, player.Gold, itemId, records)
             : ShopItemPackets.BuildBuyItem2375(player.EntityId, player.Gold, itemId, records,

@@ -85,7 +85,7 @@ public class OutfitDivideReleaseItemHandler : ZoneRmiHandlerBase<OutfitDivideRel
         Logger.LogDebug("{Name} releases item {Target} ({ItemId}) with scroll {Scroll} (scroll kept)",
             player.Name, targetUid, target.ItemId, scrollUid);
 
-        var body = BuildAnswer3038(0, scrollUid, WorldEntryService.BuildItemRecord126(target));
+        var body = BuildAnswer3038(0, scrollUid, ItemPackets.BuildItemRecord126(target));
         await session.SendRmiAsync(ZoneS2COpcodes.AnsOutfitDivideReleaseItem, (ReadOnlyMemory<byte>)body, ct);
     }
 }

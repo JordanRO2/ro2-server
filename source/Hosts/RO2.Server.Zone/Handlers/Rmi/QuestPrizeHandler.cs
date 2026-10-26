@@ -483,7 +483,7 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
 
             
             
-            var record = WorldEntryService.BuildItemRecord126(stack);
+            var record = ItemPackets.BuildItemRecord126(stack);
             record[ItemRecordCountOffset] = (byte)Math.Min(left, byte.MaxValue);
 
             if (left == 0) await inventory.RemoveItemAsync(stack.Id);
@@ -533,7 +533,7 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
                     player.Name, questId, itemId);
             }
 
-            var record = WorldEntryService.BuildItemRecord126(granted);
+            var record = ItemPackets.BuildItemRecord126(granted);
             await session.SendRmiAsync(ZoneS2COpcodes.OnPickupItem,
                 writer => writer.WriteBytes(LootNotifyPackets.BuildPickupItem2333(record)));
             logger.LogInformation("{Name} quest {QuestId}: received objective-close item {Count}x {Item}",
@@ -588,7 +588,7 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
             
             await KharaService.OnHeldItemChangedAsync(session, player, rewardItemId, services, logger);
 
-            var rewardRecord = WorldEntryService.BuildItemRecord126(rewardItem);
+            var rewardRecord = ItemPackets.BuildItemRecord126(rewardItem);
             await session.SendRmiAsync(ZoneS2COpcodes.OnPickupItem,
                 writer => writer.WriteBytes(LootNotifyPackets.BuildPickupItem2333(rewardRecord)));
             logger.LogInformation("{Name} received quest reward {Count}x item {Item}",

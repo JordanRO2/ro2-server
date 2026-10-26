@@ -87,7 +87,7 @@ public class ItemInfoHandler : ZoneRmiHandlerBase<ItemInfoHandler>
         }
 
         // The same 126-byte record writer the inventory list in RMI 2310 uses for the same item.
-        var record = WorldEntryService.BuildItemRecord126(item);
+        var record = ItemPackets.BuildItemRecord126(item);
         await session.SendRmiAsync(ZoneS2COpcodes.OnItemInfo,
             writer => writer.WriteBytes(ItemPackets.BuildItemInfo2326(record)));
 

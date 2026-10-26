@@ -84,7 +84,7 @@ public class MailClaimReadTests
     public void Claim2447_KeepsTheMailItemUid_InAFreeCell()
     {
         var row = MailService.AttachmentAsBagRow(SystemMail(MailA, ItemUidA), 1, ItemUidA, C2Slot15);
-        var rec = WorldEntryService.BuildItemRecord126(row);
+        var rec = ItemPackets.BuildItemRecord126(row);
         var body = MailPackets.BuildMailGetItem2447(Owner, 0, MailA, rec, MailPackets.GetItemKeepMail);
         Assert.Equal(Claim2447A.ToUpperInvariant(), Convert.ToHexString(body));
     }
@@ -101,7 +101,7 @@ public class MailClaimReadTests
 
         
         join!.Count += mailB.AttachedItemCount;
-        var body = MailPackets.BuildMailGetItem2447(Owner, 0, MailB, WorldEntryService.BuildItemRecord126(join),
+        var body = MailPackets.BuildMailGetItem2447(Owner, 0, MailB, ItemPackets.BuildItemRecord126(join),
             MailPackets.GetItemKeepMail);
         Assert.Equal(Claim2447B.ToUpperInvariant(), Convert.ToHexString(body));
     }

@@ -84,7 +84,7 @@ public class ItemDestroyHandler : ZoneRmiHandlerBase<ItemDestroyHandler>
         }
 
         
-        var rec = WorldEntryService.BuildItemRecord126(it);
+        var rec = ItemPackets.BuildItemRecord126(it);
         rec[RecordCountOffset] = RecordCountEmpty;
 
         await inventory.RemoveItemAsync(itemUid);

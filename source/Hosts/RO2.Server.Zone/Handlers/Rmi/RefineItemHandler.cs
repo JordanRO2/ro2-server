@@ -231,7 +231,7 @@ public class RefineItemHandler : ZoneRmiHandlerBase<RefineItemHandler>
         int succ = roll.SuccChance;
         if (newLevel != cur) equip.Refine = (byte)newLevel;
         // Embedded at 2997 blob+15 so the window shows the result and sets item+562.
-        byte[] record126 = WorldEntryService.BuildItemRecord126(equip);
+        byte[] record126 = ItemPackets.BuildItemRecord126(equip);
         if (newLevel != cur) await inventory.UpdateItemAsync(equip);
 
         // ---- Reflect the result (the refine bonus is StatService-computed from the

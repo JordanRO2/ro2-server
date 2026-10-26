@@ -135,7 +135,7 @@ public class ExtendCacheChangeItem1584Tests
         
         Assert.Equal(retail.AsSpan(0, 48).ToArray(), outcome.Body.AsSpan(0, 48).ToArray());
         Assert.Equal(retail.AsSpan(49).ToArray(), outcome.Body.AsSpan(49).ToArray());
-        Assert.Equal(retail[48], WorldEntryService.RecordBindFlags(bindType: 2, storageType: 0));
+        Assert.Equal(retail[48], ItemPackets.RecordBindFlags(bindType: 2, storageType: 0));
 
         Assert.Equal(1, inv.Items.Single(i => i.Id == 0x0E043DA80E03492FUL).Count);
         Assert.DoesNotContain(inv.Items, i => i.Id == 0x0E043DA80E0BA63DUL);

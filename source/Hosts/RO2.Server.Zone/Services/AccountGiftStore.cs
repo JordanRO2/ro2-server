@@ -161,7 +161,7 @@ public static class AccountGiftClaims
 
         await session.SendRmiAsync(ZoneS2COpcodes.AnsGetAccountGift, AccountGiftPackets.Build2800(player.AccountId,
             AccountGiftPackets.ClaimOk, gid, guidBytes, gift.ItemId, gift.Count, gift.Source,
-            WorldEntryService.BuildItemRecord126(landed[0])), ct);
+            ItemPackets.BuildItemRecord126(landed[0])), ct);
         logger.LogInformation("{Name} took gift {Guid} ({Count}x {Item}) from the gift box", player.Name, guid, gift.Count, gift.ItemId);
 
         await CardRegistrationNotifier.NotifyArrivedAsync(session, player.CharacterId, new[] { gift.ItemId }, services, logger);

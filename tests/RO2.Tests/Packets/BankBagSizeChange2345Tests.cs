@@ -92,7 +92,7 @@ public class BankBagSizeChange2345Tests
     public void BankRecord_KeepsCellsBeyond59()
     {
         
-        var record = WorldEntryService.BuildItemRecord126(new InventoryItem { Id = 77, ItemId = 60000946, StorageType = 2, Slot = 75, Count = 1 });
+        var record = ItemPackets.BuildItemRecord126(new InventoryItem { Id = 77, ItemId = 60000946, StorageType = 2, Slot = 75, Count = 1 });
         Assert.Equal(5, record[15]);
         Assert.Equal(75, record[16]);
     }

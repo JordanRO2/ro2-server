@@ -96,7 +96,7 @@ public class DirectReInforceHandler : ZoneRmiHandlerBase<DirectReInforceHandler>
 
         
         
-        var rec = WorldEntryService.BuildItemRecord126(target);
+        var rec = ItemPackets.BuildItemRecord126(target);
         await session.SendRmiAsync(ZoneS2COpcodes.AnsDirectReInforce, w =>
         {
             w.WriteUInt16(0);        

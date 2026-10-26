@@ -94,7 +94,7 @@ public class RandomItemBattingHandler : ZoneRmiHandlerBase<RandomItemBattingHand
 
         
         
-        var boxRecord = WorldEntryService.BuildItemRecord126(box);
+        var boxRecord = ItemPackets.BuildItemRecord126(box);
         byte bag = boxRecord[15], slot = boxRecord[16];
         int remaining = box.Count - 1;
         if (remaining <= 0) { await inventory.RemoveItemAsync(box.Id); remaining = 0; }
@@ -113,7 +113,7 @@ public class RandomItemBattingHandler : ZoneRmiHandlerBase<RandomItemBattingHand
         }
         foreach (var stack in landed)
             await session.SendRmiAsync(ZoneS2COpcodes.OnCreateItem,
-                ItemTransformHandler.BuildCreateItem2335(player.EntityId, WorldEntryService.BuildItemRecord126(stack)), ct);
+                ItemTransformHandler.BuildCreateItem2335(player.EntityId, ItemPackets.BuildItemRecord126(stack)), ct);
 
         
         await KharaService.OnHeldItemChangedAsync(session, player, prizeId, services, Logger, ct);

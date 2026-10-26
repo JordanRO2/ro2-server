@@ -158,9 +158,9 @@ public class UnitA9CardCompositionTests
         var stone = bag[0]; stone.Count = 238;
         var source = bag[2]; source.Count = 1;
         Assert.Equal("028a008a00c7e2113c0f0700000000bdb98c0da83d040ec64554010000ee0401" + new string('0', 2 * (126 - 17)),
-            Hex(QuestProgressPackets.BuildItemRemoved2379(Handle, WorldEntryService.BuildItemRecord126(stone))));
+            Hex(QuestProgressPackets.BuildItemRemoved2379(Handle, ItemPackets.BuildItemRecord126(stone))));
         Assert.Equal("028a008a00c7e2113c0f07000000006ab98c0da83d040eaf6f5401102701021500" + new string('0', 2 * (126 - 18)),
-            Hex(QuestProgressPackets.BuildItemRemoved2379(Handle, WorldEntryService.BuildItemRecord126(source))));
+            Hex(QuestProgressPackets.BuildItemRemoved2379(Handle, ItemPackets.BuildItemRecord126(source))));
     }
 
     [Fact]
@@ -179,7 +179,7 @@ public class UnitA9CardCompositionTests
         
         join.Count += 1;
         Assert.Equal("00000000c0b98c0da83d040ed76f540110270b030a" + new string('0', 2 * (126 - 17)),
-            Hex(LootNotifyPackets.BuildPickupItem2333(WorldEntryService.BuildItemRecord126(join))));
+            Hex(LootNotifyPackets.BuildPickupItem2333(ItemPackets.BuildItemRecord126(join))));
     }
 
     [Fact]

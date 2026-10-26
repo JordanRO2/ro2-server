@@ -98,7 +98,7 @@ public class InitGrindingOptHandler : ZoneRmiHandlerBase<InitGrindingOptHandler>
         var voucher = material!;   
 
         
-        var record = WorldEntryService.BuildItemRecord126(target);
+        var record = ItemPackets.BuildItemRecord126(target);
         uint abilityValue = BinaryPrimitives.ReadUInt32LittleEndian(record.AsSpan(AbilityValueOffset));
         long? price = ItemPricing.TryGetValue(target.ItemId, out var pricing)
             ? ResetPrice(pricing.AbiliVal, pricing.ItemValueLv, abilityValue, store.GrindingInfo, resetRow.DISC_RATE)
