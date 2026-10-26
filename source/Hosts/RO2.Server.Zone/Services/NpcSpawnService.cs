@@ -3,6 +3,7 @@ using RO2.GameData;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
+using RO2.Worlds.Application;
 using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Services;
@@ -107,8 +108,10 @@ public class NpcSpawnService
         foreach (var spawn in spawns)
         {
             var npcRuntime = _npcState.GetNpc(_npcState.AllocateHandle(mapId, spawn.Index));
-            if (npcRuntime == null || npcRuntime.IsDead) continue;
-            if (!HasClientTemplate(spawn.AssetIndex)) { noTemplate++; continue; }
+            if (npcRuntime == null) continue;
+            var announcement = SpawnVisibilityUseCase.ClassifyAnnouncement(npcRuntime.IsDead, HasClientTemplate(spawn.AssetIndex));
+            if (announcement == NpcAnnouncement.Skip) continue;
+            if (announcement == NpcAnnouncement.NoTemplate) { noTemplate++; continue; }
             if (npcRuntime.Camp != CampFriendly) monsterCount++;   // Camp 1 = friendly NPC, 2 = monster
             alive.Add(npcRuntime);
         }

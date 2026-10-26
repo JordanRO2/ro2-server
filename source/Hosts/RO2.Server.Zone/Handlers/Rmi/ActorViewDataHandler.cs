@@ -6,6 +6,8 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Worlds.Application;
+using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -64,7 +66,9 @@ public class ActorViewDataHandler : ZoneRmiHandlerBase<ActorViewDataHandler>
 
         var npcState = services.GetRequiredService<NpcStateManager>();
         var npc = npcState.GetNpc(targetEntityId);
-        if (npc is null)
+        var reply = SpawnVisibilityUseCase.DecideViewData(npc is not null,
+            () => services.GetRequiredService<GameDataStore>().Npcs.ContainsKey(npc!.NpcId));
+        if (reply == ViewDataReply.UnknownActor || npc is null)   // npc is null is implied by the reply; it only lets the compiler see it
         {
             
             
@@ -80,7 +84,7 @@ public class ActorViewDataHandler : ZoneRmiHandlerBase<ActorViewDataHandler>
         
         
         var data = services.GetRequiredService<GameDataStore>();
-        if (!data.Npcs.ContainsKey(npc.NpcId))
+        if (reply == ViewDataReply.NoClientTemplate)
         {
             Logger.LogWarning(
                 "Session {Id}: ActorViewData for {Target:X8} asset {Asset} has no NPCInfo row; not replying. "

@@ -11,6 +11,8 @@ using RO2.Network.Protocol;
 using RO2.Server.Zone.Models;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
+using RO2.Worlds.Application;
+using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -54,8 +56,9 @@ public class PlayerSpawnService
  /// </summary>
     public async Task NotifyPlayerSpawnAsync(PlayerState newPlayer)
     {
-        var existingPlayers = _playerManager.GetPlayersOnMap(newPlayer.MapId)
-            .Where(p => p.SessionId != newPlayer.SessionId)
+        var audience = SpawnVisibilityUseCase.AudienceOf(newPlayer.MapId, newPlayer.SessionId);
+        var existingPlayers = SpawnVisibilityUseCase
+            .Observers(audience, _playerManager.GetPlayersOnMap(newPlayer.MapId), p => p.MapId, p => p.SessionId)
             .ToList();
 
         using var scope = _scopeFactory.CreateScope();
@@ -76,41 +79,62 @@ public class PlayerSpawnService
             var newcomerSpeed = newSession != null
                 ? ActorMoveSpeed.BuildFor(newSession, newPlayer, store)
                 : TraitPackets.BuildActorMoveSpeed2497(newPlayer.EntityId, TraitPackets.PcModalWorldEntrySpeed);
+            var newcomerSteps = SpawnVisibilityUseCase.ExchangeSteps(newcomerViewInfo != null);
             foreach (var existing in existingPlayers)
             {
                 var existingSession = _broadcast.GetSession(existing.SessionId);
                 if (existingSession == null) continue;
-                await existingSession.SendInternalRmiAsync(ZoneS2COpcodes.OnPC_In, newcomerBlob);
-                await existingSession.SendInternalRmiAsync(ZoneS2COpcodes.OnPCViewData, newcomerViewData);
-                await existingSession.SendInternalRmiAsync(ZoneS2COpcodes.OnChangeActorMoveSpeed, newcomerSpeed);
-                if (newcomerViewInfo != null)
-                    await existingSession.SendInternalRmiAsync(ZoneS2COpcodes.NfyPCViewInfoUpdate, newcomerViewInfo);
+                foreach (var step in newcomerSteps)
+                {
+                    var body = step switch
+                    {
+                        SpawnViewStep.PcIn => newcomerBlob,
+                        SpawnViewStep.PcViewData => newcomerViewData,
+                        SpawnViewStep.MoveSpeed => newcomerSpeed,
+                        _ => newcomerViewInfo!,
+                    };
+                    await existingSession.SendInternalRmiAsync(OpcodeOf(step), body);
+                }
             }
         }
 
         if (newSession != null)
         {
+            var existingSteps = SpawnVisibilityUseCase.ExchangeSteps(guildsReady);
             foreach (var existing in existingPlayers)
             {
                 if (await BuildSpawnBlobAsync(existing, invRepo) is not { } spawn)
                     continue;
-                await newSession.SendInternalRmiAsync(ZoneS2COpcodes.OnPC_In, spawn.Blob);
-                await newSession.SendInternalRmiAsync(ZoneS2COpcodes.OnPCViewData,
-                    ActorStatePackets.BuildOnPCViewData2315(existing, spawn.Character, spawn.Equipment, _emblems));
-
-                var speed = _broadcast.GetSession(existing.SessionId) is { } existingSession
-                    ? ActorMoveSpeed.BuildFor(existingSession, existing, store)
-                    : TraitPackets.BuildActorMoveSpeed2497(existing.EntityId, TraitPackets.PcModalWorldEntrySpeed);
-                await newSession.SendInternalRmiAsync(ZoneS2COpcodes.OnChangeActorMoveSpeed, speed);
-                if (guildsReady)
-                    await newSession.SendInternalRmiAsync(ZoneS2COpcodes.NfyPCViewInfoUpdate,
-                        PcViewInfoPackets.BuildFor(existing, _emblems));
+                // Each body is built right before its send, as the original sequence did.
+                foreach (var step in existingSteps)
+                {
+                    var body = step switch
+                    {
+                        SpawnViewStep.PcIn => spawn.Blob,
+                        SpawnViewStep.PcViewData =>
+                            ActorStatePackets.BuildOnPCViewData2315(existing, spawn.Character, spawn.Equipment, _emblems),
+                        SpawnViewStep.MoveSpeed => _broadcast.GetSession(existing.SessionId) is { } existingSession
+                            ? ActorMoveSpeed.BuildFor(existingSession, existing, store)
+                            : TraitPackets.BuildActorMoveSpeed2497(existing.EntityId, TraitPackets.PcModalWorldEntrySpeed),
+                        _ => PcViewInfoPackets.BuildFor(existing, _emblems),
+                    };
+                    await newSession.SendInternalRmiAsync(OpcodeOf(step), body);
+                }
             }
         }
 
         _logger.LogInformation("Player '{Name}' (eid 0x{Eid:X8}) spawned on map {MapId}; exchanged OnPC_In with {Count} existing players.",
             newPlayer.Name, newPlayer.EntityId, newPlayer.MapId, existingPlayers.Count);
     }
+
+ /// <summary>The opcode of one message of the spawn exchange; the step order comes from the World spawn-visibility rule.</summary>
+    private static ushort OpcodeOf(SpawnViewStep step) => step switch
+    {
+        SpawnViewStep.PcIn => ZoneS2COpcodes.OnPC_In,
+        SpawnViewStep.PcViewData => ZoneS2COpcodes.OnPCViewData,
+        SpawnViewStep.MoveSpeed => ZoneS2COpcodes.OnChangeActorMoveSpeed,
+        _ => ZoneS2COpcodes.NfyPCViewInfoUpdate,
+    };
 
  /// <summary>
  /// Loads the guild service and the emblem repository if they are not loaded yet. Returns false when either load fails.
@@ -140,8 +164,9 @@ public class PlayerSpawnService
     public async Task NotifyPlayerDespawnAsync(PlayerState player)
     {
         var body = BuildActorOutList(player.EntityId, new[] { player.EntityId });
-        await _broadcast.BroadcastToMapAsync(player.MapId, ZoneS2COpcodes.OnPC_Out,
-            writer => writer.WriteBytes(body), excludeSessionId: player.SessionId);
+        var audience = SpawnVisibilityUseCase.AudienceOf(player.MapId, player.SessionId);
+        await _broadcast.BroadcastToMapAsync(audience.MapId, ZoneS2COpcodes.OnPC_Out,
+            writer => writer.WriteBytes(body), excludeSessionId: audience.ExcludedSessionId);
 
         _logger.LogDebug("Player '{Name}' (eid 0x{Eid:X8}) despawned from map {MapId}.",
             player.Name, player.EntityId, player.MapId);
