@@ -14,6 +14,8 @@ internal sealed class LearnedSkillsSession(PlayerState player) : ILearnedSkillsS
 
     public void Overlay(IEnumerable<(uint Group, byte Level)> changes) => player.OverlayLearnedSkills(changes);
 
+    public void ResetLearnedSkills(IEnumerable<uint> dropped, IEnumerable<uint> starters) => player.ResetLearnedSkills(dropped, starters);
+
     public async Task<T> WithWriteGateAsync<T>(Func<Task<T>> body, CancellationToken ct = default)
     {
         await player.LearnedSkillsWriteGate.WaitAsync(ct);

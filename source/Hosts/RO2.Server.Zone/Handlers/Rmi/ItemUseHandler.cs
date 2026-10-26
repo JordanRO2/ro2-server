@@ -1,5 +1,6 @@
 ﻿using RO2.Economy.Domain;
 using RO2.Skills.Domain;
+using RO2.Skills.Application;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
@@ -413,27 +414,11 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
     internal static async Task<byte> ResetSkillsAsync(ProudSession session, PlayerState player, byte job,
         GameDataStore store, IServiceProvider services, ILogger logger)
     {
-        var starters = TalentRules.StarterSkillGroups(store, job);
-        var talentGroups = TalentRules.TalentSkillGroups(store);
-        var dropped = player.LearnedSkills.Keys
-            .Where(g => talentGroups.Contains(g) && Array.IndexOf(starters, g) < 0)
-            .ToArray();
-
-        // Stored first: if a write throws, nothing is sent (a scroll is then not consumed: no 2329 goes out),
-        // and the next login re-seeds any starter that is missing (LoginPCHandler).
-        if (dropped.Length > 0)
-        {
-            await services.GetRequiredService<ISkillRepository>().DeleteSkillsAsync(player.CharacterId, dropped);
-        }
-        var skillRepo = services.GetRequiredService<ISkillRepository>();
-        foreach (var group in starters)
-        {
-            if (!player.LearnedSkills.TryGetValue(group, out var level))
-                await skillRepo.LearnSkillAsync(player.CharacterId, group, 1);
-            else if (level != 1)
-                await skillRepo.UpdateSkillLevelAsync(player.CharacterId, group, 1);
-        }
-        player.ResetLearnedSkills(dropped, starters);
+        // The flow persists the reset (delete non-starter talent groups, put each starter back at level 1) and
+        // mirrors it; the host keeps the quick-slot clear, the 2488/2544 sends, the effect drop and the log.
+        var reset = await ResetTalentsFlow.ResetAsync(
+            new LearnedSkillsSession(player), services.GetRequiredService<ISkillRepository>(), store, job, player.CharacterId);
+        var dropped = reset.Dropped;
 
         // Every skill cell of the bar, starters included (see JobChangePackets.BuildDelQuickSlots2685), also
         // cleared from the stored bar so the next world-entry 2472 leaves them out. A 2685 with no cells is

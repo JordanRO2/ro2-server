@@ -74,6 +74,18 @@ public static class TalentRules
     }
 
     /// <summary>
+    /// The learned groups a skill reset drops: the talent-tree groups the character holds that are not among the
+    /// job's starter set. Skills with no <c>Talent_Table</c> row (profession skills, e.g. 50300) are not talent
+    /// groups, so they are kept. The <paramref name="learnedGroups"/> enumeration order is preserved.
+    /// </summary>
+    public static uint[] GroupsDroppedByReset(GameDataStore store, byte job, IEnumerable<uint> learnedGroups)
+    {
+        var starters = StarterSkillGroups(store, job);
+        var talentGroups = TalentSkillGroups(store);
+        return learnedGroups.Where(g => talentGroups.Contains(g) && Array.IndexOf(starters, g) < 0).ToArray();
+    }
+
+    /// <summary>
     /// True when <paramref name="skillGroup"/> is a talent skill (any <c>Talent_Table</c> row of any class names it),
     /// with <paramref name="max"/> the highest <c>Max_Skill_Level</c> among its rows. A group whose rows all carry
     /// <c>Max_Skill_Level</c> 0 (no cap recorded) reports <see cref="byte.MaxValue"/>, so <c>level &lt;= max</c> is a
