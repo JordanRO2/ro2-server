@@ -226,4 +226,13 @@ public static class WarpDestinationRules
         return (SpawnRules.DefaultMapId, SpawnRules.DefaultX, SpawnRules.DefaultY, SpawnRules.DefaultZ,
             "no bind: new-character spawn");
     }
+
+ /// <summary>
+ /// The entry point of a warp to <paramref name="map"/>: the requested position, or the map's own default entry point when
+ /// the request is all zeros and the map has a non-zero one.
+ /// </summary>
+    public static (float X, float Y, float Z) DefaultEntryPoint(MapData map, float x, float y, float z)
+        => x == 0f && y == 0f && z == 0f && (map.x != 0f || map.y != 0f || map.z != 0f)
+            ? (map.x, map.y, map.z)
+            : (x, y, z);
 }

@@ -11,6 +11,8 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
+using RO2.Worlds.Application;
+using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -36,7 +38,7 @@ public static class WarpService
         uint mapId, float x, float y, float z, IServiceProvider services)
     {
         var data = services.GetRequiredService<GameDataStore>();
-        if (data.GetMap(mapId) is null) return false;
+        if (!WarpUseCase.CanCommitClientMapChange(new GameDataWorldCatalog(data), mapId)) return false;
 
         var spawnSvc = services.GetRequiredService<PlayerSpawnService>();
         await spawnSvc.NotifyPlayerDespawnAsync(player);   
@@ -59,18 +61,14 @@ public static class WarpService
         float x, float y, float z, IServiceProvider services)
     {
         var data = services.GetRequiredService<GameDataStore>();
-        var mapData = data.GetMap(mapId);
-        if (mapData is null) return false;
+        if (WarpUseCase.Decide(new GameDataWorldCatalog(data), mapId, x, y, z, player.MapId) is not { } decision)
+            return false;
 
-        
-        if (x == 0f && y == 0f && z == 0f && (mapData.x != 0f || mapData.y != 0f || mapData.z != 0f))
-        {
-            x = mapData.x; y = mapData.y; z = mapData.z;
-        }
+        x = decision.X; y = decision.Y; z = decision.Z;
 
         var spawnSvc    = services.GetRequiredService<PlayerSpawnService>();
         var logger      = services.GetService<ILoggerFactory>()?.CreateLogger(nameof(WarpService)) ?? NullLogger.Instance;
-        bool changesMap = mapId != player.MapId;
+        bool changesMap = decision.ChangesMap;
 
         
         
@@ -148,67 +146,74 @@ public static class WarpService
         
         
         
-        player.MapLoaded = false;
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.OnReceiveMapLoad,
-            WorldEntryPackets.BuildMapLoad2311(entityId, mapId, x, y, z));
-
-        
-        
-        
-        
-        {
-            using var qs = new PacketWriter();
-            qs.WriteUInt32(10);
-            qs.WriteUInt64(charUid);
-            qs.WriteUInt16(0);
-            await session.SendInternalRmiAsync(ZoneS2COpcodes.OnQuickSlotSaveData, qs.GetWrittenMemory());
-        }
+        // The messages from the map-load trigger on, in the plan's order. The vehicle and collection loads run
+        // just before the first message that reads them, so a load error falls back to the empty form at the same point.
         IReadOnlyList<OwnedVehicle> vehicles = Array.Empty<OwnedVehicle>();
-        try
-        {
-            vehicles = await services.GetRequiredService<IVehicleRepository>().GetAsync(player.CharacterId);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "{Name} warp: could not load owned vehicles", player.Name);
-        }
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.OnVehicleQuickSlot, VehiclePackets.BuildVehicleQuickSlot2523Empty());
-        
-        
-        VehicleClientList.Record(session.SessionId, vehicles);
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.OnAllVehicleList,
-            VehiclePackets.BuildAllVehicleList2522(vehicles, VehiclePackets.NowOle()));
-
-        
-        
-        
-        
-        
         CollectionDocument? collection = null;
-        try
+        foreach (var step in decision.MapLoadSteps)
         {
-            collection = await CollectionService.From(services, logger).GetStateAsync(player.CharacterId);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "{Name} warp: could not load the collection state", player.Name);
-        }
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyMCollection,
-            CollectionPackets.BuildNfyMCollection2913(collection?.RegisteredMonsterIds.Count ?? 0, data));
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyPCollection,
-            CollectionPackets.BuildNfyPCollection(collection?.RegisteredPetIds.Count ?? 0));
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsPCollectionSetActivePet, collection is { ActivePetId: not 0 }
-            ? CollectionPackets.BuildAnsPCollectionSetActivePet(collection.ActivePetId, collection.ActivePetFlag, 0)
-            : CollectionPackets.BuildAnsPCollectionSetActivePet(0, 0, 30001));
+            var opcode = WorldEntryStepOpcodes.Of(step);
+            switch (step)
+            {
+                case WorldEntryStep.MapLoad:
+                    player.MapLoaded = false;
+                    await session.SendInternalRmiAsync(opcode,
+                        WorldEntryPackets.BuildMapLoad2311(entityId, mapId, x, y, z));
+                    break;
 
-        
-        
-        
-        
-        
-        
-        
-        
+                case WorldEntryStep.QuickSlots:
+                    // An empty bar: [u32 10][u64 charUid][u16 0].
+                    await session.SendInternalRmiAsync(opcode,
+                        GuildSkillBarRefresh.BuildQuickSlotSaveData2472(charUid, Array.Empty<CharacterQuickSlot>()));
+                    break;
+
+                case WorldEntryStep.VehicleQuickSlot:
+                    try
+                    {
+                        vehicles = await services.GetRequiredService<IVehicleRepository>().GetAsync(player.CharacterId);
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.LogError(ex, "{Name} warp: could not load owned vehicles", player.Name);
+                    }
+                    await session.SendInternalRmiAsync(opcode, VehiclePackets.BuildVehicleQuickSlot2523Empty());
+                    break;
+
+                case WorldEntryStep.AllVehicleList:
+                    VehicleClientList.Record(session.SessionId, vehicles);
+                    await session.SendInternalRmiAsync(opcode,
+                        VehiclePackets.BuildAllVehicleList2522(vehicles, VehiclePackets.NowOle()));
+                    break;
+
+                case WorldEntryStep.MonsterCollection:
+                    try
+                    {
+                        collection = await CollectionService.From(services, logger).GetStateAsync(player.CharacterId);
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.LogError(ex, "{Name} warp: could not load the collection state", player.Name);
+                    }
+                    await session.SendInternalRmiAsync(opcode,
+                        CollectionPackets.BuildNfyMCollection2913(collection?.RegisteredMonsterIds.Count ?? 0, data));
+                    break;
+
+                case WorldEntryStep.PetCollection:
+                    await session.SendInternalRmiAsync(opcode,
+                        CollectionPackets.BuildNfyPCollection(collection?.RegisteredPetIds.Count ?? 0));
+                    break;
+
+                case WorldEntryStep.ActivePet:
+                    await session.SendInternalRmiAsync(opcode, collection is { ActivePetId: not 0 }
+                        ? CollectionPackets.BuildAnsPCollectionSetActivePet(collection.ActivePetId, collection.ActivePetFlag, 0)
+                        : CollectionPackets.BuildAnsPCollectionSetActivePet(0, 0, 30001));
+                    break;
+
+                default:
+                    throw new InvalidOperationException($"world-entry step {step} is not a step of a warp");
+            }
+        }
+
         player.MapId = mapId; player.X = x; player.Y = y; player.Z = z;
 
         
