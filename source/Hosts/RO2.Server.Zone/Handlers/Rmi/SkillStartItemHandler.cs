@@ -7,6 +7,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Combats.Application;
 using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
@@ -203,46 +204,40 @@ public class SkillStartItemHandler : ZoneRmiHandlerBase<SkillStartItemHandler>
         // Ownership guard: uids are global, so only the owner may consume the item. And the item must be
         // the one that carries this skill, otherwise any cheap item could
         // cast any item skill.
+        // Ownership, bag, skill-match and warp-destination are decided together (ItemCastGate), in that order; each
+        // refusal is the same lone 2711, nothing consumed. Only an item in the BAG may be used: StorageType 0 is the
+        // bag; 1 is worn, 2 the bank and 3 the extra-bag items themselves (slots 70..72), none of which a consumable
+        // is used from. A warp item that moves on this answer needs a destination (ItemWarpSkills): a Dungeon Wing
+        // with nowhere to go (a Map_Type 0 map, or no return point) is refused before anything is consumed.
         var used = await inventory.GetByIdAsync(itemUid);
-        if (used is null || used.CharacterId != player.CharacterId)
-        {
-            Logger.LogDebug("{Name}: item skill {SkillId} refused, uid {Uid} is not the caster's",
-                player.Name, skillId, itemUid);
-            await SendRefusalAsync(session, casterHandle, skillId);
-            return;
-        }
-        // Only an item in the BAG may be used. StorageType 0 is the bag; 1 is worn, 2 the bank and 3 the extra-bag
-        // items themselves (slots 70..72, ClientBagSlot), none of which a consumable is used from: a worn or banked
-        // uid must not be consumed straight out of its slot.
-        if (used.StorageType != StorageTypeBag)
-        {
-            Logger.LogDebug("{Name}: item skill {SkillId} refused, uid {Uid} is in storage {Storage}, not the bag",
-                player.Name, skillId, itemUid, used.StorageType);
-            await SendRefusalAsync(session, casterHandle, skillId);
-            return;
-        }
-        var itemData = store.GetItem(used.ItemId);
-        if (itemData is null || itemData.Skill_ID_1 != skillId)
-        {
-            Logger.LogDebug("{Name}: item skill {SkillId} refused, item {ItemId} carries skill {ItemSkill}",
-                player.Name, skillId, used.ItemId, itemData?.Skill_ID_1);
-            await SendRefusalAsync(session, casterHandle, skillId);
-            return;
-        }
-
-        // A warp item that moves at this answer, and where to (ItemWarpSkills). A Dungeon Wing with nowhere to go (a
-        // Map_Type 0 map, or no return point) is refused with the lone 2711 before anything is consumed.
+        var itemData = used is { } owned ? store.GetItem(owned.ItemId) : null;
         var warpKind = ItemWarpSkills.KindOf(skillId);
         ItemWarpSkills.Destination? answerMove = warpKind == ItemWarpSkills.MoveKind.OnAnswer
             ? ItemWarpSkills.AnswerDestination(skillId, player, store)
             : null;
-        if (warpKind == ItemWarpSkills.MoveKind.OnAnswer && answerMove is null)
+        var itemGate = ItemCastGate.Check(
+            ownedByCaster: used is not null && used.CharacterId == player.CharacterId,
+            inBag: used is not null && used.StorageType == StorageTypeBag,
+            skillMatches: itemData is not null && itemData.Skill_ID_1 == skillId,
+            warpDestinationRequired: warpKind == ItemWarpSkills.MoveKind.OnAnswer,
+            warpDestinationResolved: answerMove is not null);
+        if (itemGate != ItemCastGate.Decision.Allowed)
         {
-            Logger.LogDebug("{Name}: item skill {SkillId} refused, map {Map} has no return point", player.Name, skillId,
-                player.MapId);
+            Logger.LogDebug("{Name}: item skill {SkillId} refused ({Why}, uid {Uid})", player.Name, skillId,
+                itemGate switch
+                {
+                    ItemCastGate.Decision.NotOwned => "not the caster's",
+                    ItemCastGate.Decision.NotInBag => $"in storage {used?.StorageType}, not the bag",
+                    ItemCastGate.Decision.SkillMismatch => $"item {used?.ItemId} carries skill {itemData?.Skill_ID_1}",
+                    _ => $"map {player.MapId} has no return point",
+                }, itemUid);
             await SendRefusalAsync(session, casterHandle, skillId);
             return;
         }
+        // An Allowed gate guarantees the item resolved and carries the skill; this only narrows the nullability for
+        // the consume path below (unreachable, since NotOwned / SkillMismatch would have refused above).
+        if (used is null || itemData is null)
+            return;
 
         // Answered: this request starts the repeat window for every item skill (only here, after the ownership and
         // skill checks passed).
