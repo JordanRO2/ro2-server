@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Plural namespace (RO2.Skills.Application) so it cannot shadow a Skill/CharacterSkill type. -->
+    <RootNamespace>RO2.Skills.Application</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Skill bounded context: Application holds the skill use-case flows and the ports they consume.
+       References its own Domain, BuildingBlocks, and the shared RO2.GameData kernel (the talent rules read it). -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Skill.Domain\RO2.Skill.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+  </ItemGroup>
+
+</Project>

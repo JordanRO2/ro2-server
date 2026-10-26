@@ -1,5 +1,6 @@
 ﻿using System.Buffers.Binary;
 using RO2.Skills.Domain;
+using RO2.Skills.Application;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using RO2.Application.Interfaces;
@@ -132,66 +133,31 @@ public class UseTalentPointHandler : ZoneRmiHandlerBase<UseTalentPointHandler>
         // InitialTalentPointHandler answers the current pool.)
         var store = services.GetRequiredService<GameDataStore>();
 
-        // Validate-all, write once, then apply: the legality check, the single batched write and the memory mirror
-        // run under the player's gate so two requests cannot validate against the same stale tree.
-        byte remaining;
-        await player.LearnedSkillsWriteGate.WaitAsync(ct);
-        try
+        // The flow validates-all, writes once, then mirrors, under the player's gate so two requests cannot
+        // validate against the same stale tree. The host keeps the wire parse above and the 2543 reply below.
+        var result = await UseTalentPointFlow.ApplyAsync(
+            new LearnedSkillsSession(player), services.GetRequiredService<ISkillRepository>(),
+            store, player.Job, player.Level, player.CharacterId, allocations, ct);
+
+        switch (result.Outcome)
         {
-            // Validate the requested allocation against the authoritative Talent_Table BEFORE persisting any
-            // of it. A modified client could otherwise learn a skill outside its class's tree (junk or another
-            // class's ids), raise one past its cap, take one below the level it unlocks at, buy one without its
-            // prerequisite or lower a held one — all for free.
-            // All-or-nothing: on any illegal entry, nothing is persisted and no 2543 is sent (the stored tree
-            // is unchanged and the next world-entry 2488 rebuilds from it).
-            if (allocations.Count > 0
-                && !TalentRules.IsTalentAllocationLegal(store, player.Job, player.Level, allocations,
-                    player.SnapshotLearnedSkills(), out var reason))
-            {
+            case UseTalentPointFlow.UseTalentOutcome.IllegalRefused:
+                // All-or-nothing: an illegal entry persists nothing and sends no 2543 (the next 2488 rebuilds from the stored tree).
                 Logger.LogWarning("{Name}: illegal 1310 talent allocation refused ({Reason}); nothing persisted",
-                    player.Name, reason);
+                    player.Name, result.Reason);
                 return;
-            }
-
-            if (allocations.Count > 0)
-            {
-                // ONE batched upsert (at most MaxTalentAllocations rows). The memory mirror is applied only after it
-                // returns, so a failed write leaves LearnedSkills as it was and no 2543 goes out.
-                try
-                {
-                    await services.GetRequiredService<ISkillRepository>()
-                        .UpsertSkillsAsync(player.CharacterId, allocations, ct);
-                }
-                catch (Exception ex) when (ex is not OperationCanceledException)
-                {
-                    Logger.LogError(ex, "{Name}: 1310 talent batch write failed; nothing applied, no reply", player.Name);
-                    return;
-                }
-                player.OverlayLearnedSkills(allocations);
-            }
-
-            // The client's 2543 handler SETS its counter to blob+10, so this is the pool left after the
-            // change. It comes from the whole stored tree, as the relog 2310 body[142] and the reset 2544 do
-            // (TalentRules.TalentPointsRemaining): level - 1 less the Talent_Table levels held, the starters'
-            // first level free. Summing only the vector's levels would ignore everything bought before, and sending 0
-            // would empty the pool after one spend.
-            var tree = player.SnapshotLearnedSkills().Select(kv => (kv.Key, kv.Value)).ToArray();
-            remaining = TalentRules.TalentPointsRemaining(store, player.Job, player.Level, tree);
-
-            // The point budget is not a hard gate (the earned pool this server models is known to undercount
-            // for some characters, see TalentRules.IsTalentAllocationLegal), so an over-spend is only logged;
-            // the pool reported to the client is already clamped to zero by TalentPointsRemaining.
-            int spent = TalentRules.TalentPointsSpent(store, player.Job, tree);
-            int earned = Math.Max(0, player.Level - 1);
-            if (spent > earned)
-                Logger.LogWarning("{Name}: talent tree costs {Spent} points, over the earned {Earned} at level {Level}",
-                    player.Name, spent, earned, player.Level);
-        }
-        finally
-        {
-            player.LearnedSkillsWriteGate.Release();
+            case UseTalentPointFlow.UseTalentOutcome.WriteFailed:
+                Logger.LogError(result.WriteError, "{Name}: 1310 talent batch write failed; nothing applied, no reply", player.Name);
+                return;
         }
 
+        // The point budget is not a hard gate (the earned pool this server models is known to undercount for some
+        // characters), so an over-spend is only logged; TalentPointsRemaining already clamps the reported pool to zero.
+        if (result.Spent > result.Earned)
+            Logger.LogWarning("{Name}: talent tree costs {Spent} points, over the earned {Earned} at level {Level}",
+                player.Name, result.Spent, result.Earned, player.Level);
+
+        byte remaining = result.Remaining;
         Logger.LogDebug("{Name} uses talent point: count={Count}, cost={Cost}, remaining={Remaining}",
             player.Name, count, cost, remaining);
 
