@@ -513,10 +513,7 @@ public class AnsMapLoadingHandler : Base1304
  /// cross-map 2498.
  /// </remarks>
     internal static void SyncLiveLevel(RO2.Server.Zone.Models.PlayerState player, RO2.Characters.Domain.Character? character)
-    {
-        if (character is not null && player.Level != 0 && character.Level != player.Level)
-            character.Level = player.Level;
-    }
+        => RO2.Server.Zone.Services.LiveLevelSync.Apply(player, character);
 
  /// <summary>
  /// The server notifies retail puts in every map-load reply after the 2498, in its order:

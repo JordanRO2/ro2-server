@@ -9,6 +9,8 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
+using RO2.Worlds.Application;
+using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -30,16 +32,8 @@ public static class WarpDeparture
  /// True when the effect table says a warp ends <paramref name="effectId"/>. Unknown ids are kept.
  /// </summary>
     internal static bool IsDroppedOnWarp(GameDataStore store, uint effectId)
-        => DroppedOnWarpByStore.GetValue(store, static s =>
-        {
-            var ids = new HashSet<uint>();
-            foreach (var row in s.EffectTable)
-            {
-                if (row.Warp_Handling == 0)
-                    ids.Add(row.ID);
-            }
-            return ids;
-        }).Contains(effectId);
+        => DroppedOnWarpByStore.GetValue(store, static s => WarpEffectRules.EndsOnWarpIds(s.EffectTable))
+            .Contains(effectId);
 
  /// <summary>
  /// Runs the full departure for a request that is answered with a 2938 before the map-load burst.
@@ -58,9 +52,8 @@ public static class WarpDeparture
         await RidingService.DropAsync(session, player, services);
         await IllusionPyramidService.CloseOnDepartureAsync(session, player, services, logger, ct);
 
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsSiegeArmsUseEnd, SessionExitPackets.Ack2938);
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.OnPC_Out,
-            PlayerSpawnService.BuildActorOutList(player.EntityId, new[] { player.EntityId }));
+        foreach (var (opcode, body) in WarpEntryBurst.DepartureFrames(player.EntityId))
+            await session.SendInternalRmiAsync(opcode, body);
 
         if (!HasKeptEffectLines(player, store, effects))
             return;
@@ -73,7 +66,7 @@ public static class WarpDeparture
                 player.Name, player.CharacterId);
             return;
         }
-        RO2.Server.Zone.Handlers.Rmi.AnsMapLoadingHandler.SyncLiveLevel(player, character);
+        LiveLevelSync.Apply(player, character);
         var equipped = await services.GetRequiredService<IInventoryRepository>().GetEquipmentAsync(player.CharacterId);
         await SendKeptEffectLinesAsync(session, player, store, effects, character, equipped);
     }
@@ -86,15 +79,10 @@ public static class WarpDeparture
  /// </remarks>
     public static async Task DropWarpEffectsAsync(PlayerState player, GameDataStore store, EffectService effects)
     {
-        var dropped = new List<uint>();
+        List<uint> dropped;
         lock (player.ActiveEffects)
-        {
-            foreach (var e in player.ActiveEffects)
-            {
-                if (IsDroppedOnWarp(store, e.EffectId) && !dropped.Contains(e.EffectId))
-                    dropped.Add(e.EffectId);
-            }
-        }
+            dropped = WarpDepartureUseCase.DroppedEffectIds(player.ActiveEffects, e => e.EffectId,
+                id => IsDroppedOnWarp(store, id));
 
         foreach (var id in dropped)
             await effects.RemovePlayerEffectAsync(player, id);
@@ -112,7 +100,7 @@ public static class WarpDeparture
         foreach (var effect in KeptEffects(player, store))
         {
             var lines = effects.BuildTraitChangeLines(effect.EffectId, effect.EffectLevel);
-            if (lines.Count == 0)
+            if (!WarpDepartureUseCase.SendsKeptRun(lines.Count))
                 continue;
             foreach (var line in lines)
                 await session.SendInternalRmiAsync(ZoneS2COpcodes.OnPcTraitChange, line);
@@ -122,26 +110,13 @@ public static class WarpDeparture
     }
 
     private static bool HasKeptEffectLines(PlayerState player, GameDataStore store, EffectService effects)
-    {
-        foreach (var effect in KeptEffects(player, store))
-        {
-            if (effects.BuildTraitChangeLines(effect.EffectId, effect.EffectLevel).Count > 0)
-                return true;
-        }
-        return false;
-    }
+        => WarpDepartureUseCase.HasKeptRun(KeptEffects(player, store),
+            effect => effects.BuildTraitChangeLines(effect.EffectId, effect.EffectLevel).Count);
 
     private static List<ActiveEffect> KeptEffects(PlayerState player, GameDataStore store)
     {
-        var kept = new List<ActiveEffect>();
         lock (player.ActiveEffects)
-        {
-            foreach (var e in player.ActiveEffects)
-            {
-                if (!IsDroppedOnWarp(store, e.EffectId))
-                    kept.Add(e);
-            }
-        }
-        return kept;
+            return WarpDepartureUseCase.KeptEffects(player.ActiveEffects, e => e.EffectId,
+                id => IsDroppedOnWarp(store, id));
     }
 }

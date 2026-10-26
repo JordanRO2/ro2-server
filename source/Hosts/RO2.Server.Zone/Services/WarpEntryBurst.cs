@@ -164,7 +164,7 @@ public static class WarpEntryBurst
         
         
         var character = loaded.Character;
-        AnsMapLoadingHandler.SyncLiveLevel(player, character);
+        LiveLevelSync.Apply(player, character);
         await WarpDeparture.SendKeptEffectLinesAsync(session, player, store, effects, character, loaded.Equipped);
 
         
