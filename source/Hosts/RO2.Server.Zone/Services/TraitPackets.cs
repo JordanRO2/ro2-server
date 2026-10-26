@@ -1,5 +1,6 @@
 ﻿using System.Buffers.Binary;
 using RO2.Network.Packets;
+using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -40,7 +41,7 @@ public static class TraitPackets
     /// <summary>
     /// Movement speed sent at world entry when no class or mount speed source exists. Defaults to 6.0, the most common run speed.
     /// </summary>
-    internal const float PcModalWorldEntrySpeed = 6.0f;
+    internal const float PcModalWorldEntrySpeed = ActorMoveSpeedRules.PcModalWorldEntrySpeed;
 
     /// <summary>
     /// Builds RMI 2497 OnChangeActorMoveSpeed, which sets an actor's movement speed.

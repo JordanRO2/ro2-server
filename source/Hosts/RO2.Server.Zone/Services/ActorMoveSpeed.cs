@@ -1,6 +1,7 @@
 using RO2.GameData;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
+using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -38,6 +39,7 @@ public static class ActorMoveSpeed
 
     private static float SpeedOn(MountService.MountState? ride, PlayerState player, GameDataStore store)
     {
+        float? mountedSpeed = null;
         if (ride is not null)
         {
             ActiveEffect[] active;
@@ -45,10 +47,9 @@ public static class ActorMoveSpeed
                 active = player.ActiveEffects.ToArray();
             
             
-            if (RidingService.MountedSpeed(store, ride.PetActorHandle, active) is float mounted)
-                return mounted;
+            mountedSpeed = RidingService.MountedSpeed(store, ride.PetActorHandle, active);
         }
-        return TraitPackets.PcModalWorldEntrySpeed;
+        return ActorMoveSpeedRules.SpeedOf(mountedSpeed);
     }
 
  /// <summary>The 2497 that restates <paramref name="player"/>'s speed to a viewer.</summary>
