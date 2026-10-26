@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>RO2.Skills.Infrastructure.Postgres</RootNamespace>
+  </PropertyGroup>
+
+  <!-- PostgreSQL persistence for the Skill bounded context, sibling of RO2.Skill.Infrastructure.Mongo. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Skill.Domain\RO2.Skill.Domain.csproj" />
+    <ProjectReference Include="..\..\Platform\RO2.Persistence.Postgres\RO2.Persistence.Postgres.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+</Project>

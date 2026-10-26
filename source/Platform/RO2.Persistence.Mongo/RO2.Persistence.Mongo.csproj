@@ -14,7 +14,6 @@
 <ProjectReference Include="..\..\Game\RO2.Domain\RO2.Domain.csproj" />
     <ProjectReference Include="..\..\Game\RO2.Application\RO2.Application.csproj" />
     <ProjectReference Include="..\..\Inventory\RO2.Inventory.Domain\RO2.Inventory.Domain.csproj" />
-    <ProjectReference Include="..\..\Skill\RO2.Skill.Domain\RO2.Skill.Domain.csproj" />
   </ItemGroup>
 
 </Project>

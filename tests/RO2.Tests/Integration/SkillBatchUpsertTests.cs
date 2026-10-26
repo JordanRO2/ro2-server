@@ -3,8 +3,8 @@ using RO2.Skills.Domain;
 using RO2.Domain.Entities;
 using RO2.Persistence.Mongo.Persistence;
 using Xunit;
-using MongoSkillRepository = RO2.Persistence.Mongo.Repositories.SkillRepository;
-using PgSkillRepository = RO2.Persistence.Postgres.Repositories.SkillRepository;
+using MongoSkillRepository = RO2.Skills.Infrastructure.Mongo.SkillRepository;
+using PgSkillRepository = RO2.Skills.Infrastructure.Postgres.SkillRepository;
 
 namespace RO2.Tests.Integration;
 

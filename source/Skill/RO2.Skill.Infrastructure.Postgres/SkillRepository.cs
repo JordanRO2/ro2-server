@@ -1,10 +1,9 @@
 ﻿using Npgsql;
 using RO2.Skills.Domain;
+using RO2.Persistence.Postgres;
 using NpgsqlTypes;
-using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
 
-namespace RO2.Persistence.Postgres.Repositories;
+namespace RO2.Skills.Infrastructure.Postgres;
 
 /// <summary>
 /// PostgreSQL implementation of <see cref="ISkillRepository"/>: the learned-skill rows of each character in the

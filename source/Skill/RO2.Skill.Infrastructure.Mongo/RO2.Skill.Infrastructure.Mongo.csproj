@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>RO2.Skills.Infrastructure.Mongo</RootNamespace>
+  </PropertyGroup>
+
+  <!-- MongoDB persistence for the Skill bounded context. References RO2.Persistence.Mongo for MongoDbContext
+       (skill rows live in the same database as the game data, not db-per-service). -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Skill.Domain\RO2.Skill.Domain.csproj" />
+    <ProjectReference Include="..\..\Platform\RO2.Persistence.Mongo\RO2.Persistence.Mongo.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+</Project>
