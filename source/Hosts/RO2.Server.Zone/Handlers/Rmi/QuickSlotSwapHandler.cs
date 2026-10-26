@@ -8,6 +8,7 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Characters.Domain;
+using RO2.Characters.Application;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -38,16 +39,10 @@ public class QuickSlotSwapHandler : ZoneRmiHandlerBase<QuickSlotSwapHandler>
 
         if (TryReadPositions(payload.Span, out var pageA, out var slotA, out var pageB, out var slotB))
         {
-            try
-            {
-                var repo = services.GetRequiredService<IQuickSlotRepository>();
-                await repo.SwapAsync(player.CharacterId, pageA, slotA, pageB, slotB);
-            }
-            catch (Exception ex)
-            {
-                
+            var repo = services.GetRequiredService<IQuickSlotRepository>();
+            var ex = await QuickSlotFlows.SwapAsync(repo, player.CharacterId, pageA, slotA, pageB, slotB);
+            if (ex is not null)
                 Logger.LogError(ex, "Session {Id}: could not persist quick slot swap", session.SessionId);
-            }
 
             Logger.LogDebug("{Name} swaps quick slot p{PageA}s{SlotA} <-> p{PageB}s{SlotB}",
                 player.Name, pageA, slotA, pageB, slotB);

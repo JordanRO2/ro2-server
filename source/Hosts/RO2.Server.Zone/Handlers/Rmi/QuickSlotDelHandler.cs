@@ -7,6 +7,7 @@ using RO2.Server.Zone.Models;
 using RO2.Application.Interfaces;
 using RO2.Server.Zone.Services;
 using RO2.Characters.Domain;
+using RO2.Characters.Application;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -26,15 +27,10 @@ public class QuickSlotDelHandler : ZoneRmiHandlerBase<QuickSlotDelHandler>
             return;
         }
 
-        try
-        {
-            var repo = services.GetRequiredService<IQuickSlotRepository>();
-            await repo.ClearAsync(player.CharacterId, req.Page, req.Slot);
-        }
-        catch (Exception ex)
-        {
+        var repo = services.GetRequiredService<IQuickSlotRepository>();
+        var ex = await QuickSlotFlows.ClearAsync(repo, player.CharacterId, req.Page, req.Slot);
+        if (ex is not null)
             Logger.LogError(ex, "Session {Id}: could not clear quick slot", session.SessionId);
-        }
 
         await session.SendRmiAsync(ZoneS2COpcodes.OnDelQuickSlot,
             writer => writer.WriteBytes(

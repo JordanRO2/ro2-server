@@ -8,6 +8,7 @@ using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.Server.Zone.Services;
 using RO2.Characters.Domain;
+using RO2.Characters.Application;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -33,25 +34,19 @@ public class QuickSlotAddHandler : ZoneRmiHandlerBase<QuickSlotAddHandler>
         
         
         
-        try
+        var repo = services.GetRequiredService<IQuickSlotRepository>();
+        var ex = await QuickSlotFlows.SetAsync(repo, new CharacterQuickSlot
         {
-            var repo = services.GetRequiredService<IQuickSlotRepository>();
-            await repo.SetAsync(new CharacterQuickSlot
-            {
-                CharacterId = player.CharacterId,
-                Page = req.Page,
-                Slot = req.Slot,
-                EntryType = req.EntryType,
-                EntryId = req.EntryId,
-                Amount = req.Amount,
-                ItemUid = req.ItemUid,
-            });
-        }
-        catch (Exception ex)
-        {
-            
+            CharacterId = player.CharacterId,
+            Page = req.Page,
+            Slot = req.Slot,
+            EntryType = req.EntryType,
+            EntryId = req.EntryId,
+            Amount = req.Amount,
+            ItemUid = req.ItemUid,
+        });
+        if (ex is not null)
             Logger.LogError(ex, "Session {Id}: could not persist quick slot", session.SessionId);
-        }
 
         Logger.LogDebug("{Name} sets quick slot p{Page}s{Slot} = type {Type} id {Id}",
             player.Name, req.Page, req.Slot, req.EntryType, req.EntryId);
