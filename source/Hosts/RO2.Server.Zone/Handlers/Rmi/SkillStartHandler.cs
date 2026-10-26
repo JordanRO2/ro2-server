@@ -1,6 +1,6 @@
 ﻿using System.Buffers.Binary;
-using RO2.Skills.Domain;
 using RO2.Combats.Domain;
+using RO2.Combats.Application;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.GameData;
@@ -106,47 +106,38 @@ public class SkillStartHandler : ZoneRmiHandlerBase<SkillStartHandler>
         // Vigor and enforce the SAME value below, so client and server agree by construction.
         var store = services.GetRequiredService<GameDataStore>();
 
-        // Item skills never start through a raw 1508. An item skill (ItemInfo.Skill_ID_1 >= 2,000,000:
-        // the potions, warp/revival wings and town scrolls the 1561 path casts) is authorised only by RMI 1561
-        // ReqSkillStart_Item, which verifies the caster owns the item that carries the skill and consumes it before
-        // recording the pending cast that its 1509 then lands. A forged 1508 for such a skill id would otherwise
-        // record a FREE pending cast (no item held, no item consumed), which a forged 1509 lands for the effect:
-        // revival, a consumable, or damage. Refuse it the way an illegitimate skill action is refused (a silent 2715
-        // carrying 20152, echoing the request's target/vec/variant), before any pending cast, SP spend or cooldown
-        // arm, and stop. Guild (4,000,10x) and monster skills are not ItemInfo.Skill_ID_1, so they still start here.
-        if (store.IsItemSkill(skillId))
-        {
-            await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsUseSkillStart,
-                SkillPackets.BuildUseSkillStartAck2715(skillId, targetHandle, 0f, posX, posY, posZ,
-                    variant: variant, resultCode: SkillPackets.SkillResultOnCooldown));
-            Logger.LogDebug("{Name}: raw 1508 for item skill {SkillId} refused; item skills start only through 1561",
-                player.Name, skillId);
-            return;
-        }
-
         uint skillGroup = skillId / 100u;
-        store.SkillLevels.TryGetValue(skillId, out var levelData);
 
-        // Preconditions, before any pending cast, SP spend, cooldown arm or RecentSkillStart write. A refusal is
-        // the silent illegitimate-skill-action answer: a 2715 carrying 20152 (the 1509 refusal's, SkillDamageHandler
-        // .RefuseUnauthorizedAsync) echoing the request's target/vec/variant, and nothing else.
+        // Preconditions, before any pending cast, SP spend, cooldown arm or RecentSkillStart write (CastGate):
+        //  - an ITEM skill (ItemInfo.Skill_ID_1 >= 2,000,000) never starts through a raw 1508. It is authorised only
+        //    by RMI 1561 ReqSkillStart_Item, which verifies the caster owns the item that carries the skill and
+        //    consumes it before recording the pending cast that its 1509 then lands. A forged 1508 would otherwise
+        //    record a FREE pending cast (no item held/consumed), which a forged 1509 lands for the effect. Guild
+        //    (4,000,10x) and monster skills are not ItemInfo.Skill_ID_1, so they still start here.
         //  - a dead caster casts nothing;
-        //  - a TALENT class skill (a Talent_Table group below FirstNonClassSkillId, TalentRules.TryGetSkillLevelLimit) must be
-        //    learned (LearnedSkills[group] > 0) and have a Skill_Table_SkillLevel row for the exact id. Non-talent, guild,
-        //    item and monster skills are exempt: they are never in LearnedSkills, and the 1561 path already vouches for
-        //    the item ones above. A raw 1508 of any other id with no table row still gets cooldown 0 / SP 0 here.
-        var notLearnedTalent = skillId < SkillDamageHandler.FirstNonClassSkillId
-            && TalentRules.TryGetSkillLevelLimit(store, skillGroup, out _)
-            && (levelData is null || player.LearnedSkills.GetValueOrDefault(skillGroup) == 0);
-        if (player.IsDead || notLearnedTalent)
+        //  - a TALENT class skill (a Talent_Table group below FirstNonClassSkillId, HasTalentLimit) must be learned
+        //    (LearnedSkills[group] > 0) and have a Skill_Table_SkillLevel row for the exact id. Non-talent, guild, item
+        //    and monster skills are exempt: never in LearnedSkills, and the 1561 path vouches for the item ones. A raw
+        //    1508 of any other id with no table row still gets cooldown 0 / SP 0 here.
+        // Every refusal is the silent illegitimate-skill-action answer: a 2715 carrying 20152 (the 1509 refusal's,
+        // SkillDamageHandler.RefuseUnauthorizedAsync) echoing the request's target/vec/variant, and nothing else.
+        var gate = CastGate.Check(new SkillCatalog(store), skillId, player.IsDead,
+            player.LearnedSkills.GetValueOrDefault(skillGroup));
+        if (gate != CastGate.Decision.Allowed)
         {
             await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsUseSkillStart,
                 SkillPackets.BuildUseSkillStartAck2715(skillId, targetHandle, 0f, posX, posY, posZ,
                     variant: variant, resultCode: SkillPackets.SkillResultOnCooldown));
-            Logger.LogDebug("{Name}: 1508 skill {SkillId} refused ({Why})",
-                player.Name, skillId, player.IsDead ? "caster is dead" : "talent skill not learned or no table row");
+            Logger.LogDebug("{Name}: 1508 skill {SkillId} refused ({Why})", player.Name, skillId, gate switch
+            {
+                CastGate.Decision.ItemSkill => "item skill; starts only through 1561",
+                CastGate.Decision.Dead => "caster is dead",
+                _ => "talent skill not learned or no table row",
+            });
             return;
         }
+
+        store.SkillLevels.TryGetValue(skillId, out var levelData);
 
         var tableCooldown = levelData?.Cooldown_Time ?? 0f;
         // Exempt classes that do not follow the Vigor combat reduction: 9000xxx/9216 skills are

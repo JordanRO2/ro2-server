@@ -23,6 +23,7 @@
     <ProjectReference Include="..\..\Skill\RO2.Skill.Domain\RO2.Skill.Domain.csproj" />
     <ProjectReference Include="..\..\Skill\RO2.Skill.Application\RO2.Skill.Application.csproj" />
     <ProjectReference Include="..\..\Combat\RO2.Combat.Domain\RO2.Combat.Domain.csproj" />
+    <ProjectReference Include="..\..\Combat\RO2.Combat.Application\RO2.Combat.Application.csproj" />
     <ProjectReference Include="..\..\World\RO2.World.Domain\RO2.World.Domain.csproj" />
 <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
 <ProjectReference Include="..\..\Game\RO2.Domain\RO2.Domain.csproj" />

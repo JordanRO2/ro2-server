@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Plural namespace (RO2.Combats.Application) so it cannot shadow a type. -->
+    <RootNamespace>RO2.Combats.Application</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Combat bounded context: Application holds the cast-path use-case flows and the ports they consume.
+       References its own Domain + BuildingBlocks only; the catalog (GameDataStore) and the Combat->Skill talent
+       check are reached through the ISkillCatalog port, whose host adapter owns those references. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Combat.Domain\RO2.Combat.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+  </ItemGroup>
+
+</Project>
