@@ -5,6 +5,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Combats.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -79,15 +80,17 @@ public class NormalAttackStartHandler : ZoneRmiHandlerBase<NormalAttackStartHand
         //
         // The 4-unit reach describes where impacts land, not where a swing may be requested. It is
         // enforced at 1499, once the client has arrived, in NormalAttackDamageHandler.
-        var refused =
-            npc is null ? "not a known actor" :
-            npc.IsDead ? "target is dead" :
-            npc.Camp <= 1 ? "target is not hostile" :
-            null;
+        var verdict = SwingVerdict.ForTarget(npc is not null, npc?.IsDead ?? false, npc?.Camp ?? 0);
 
-        if (refused is not null)
+        if (verdict != SwingVerdict.Verdict.Grant)
         {
             AutoAttackState.Disengage(player);
+            var refused = verdict switch
+            {
+                SwingVerdict.Verdict.NotKnownActor => "not a known actor",
+                SwingVerdict.Verdict.TargetDead => "target is dead",
+                _ => "target is not hostile",
+            };
             var dist = npc is null ? -1f
                 : MathF.Sqrt((npc.PosX - player.X) * (npc.PosX - player.X)
                            + (npc.PosY - player.Y) * (npc.PosY - player.Y));
