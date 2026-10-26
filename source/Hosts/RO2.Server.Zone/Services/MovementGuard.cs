@@ -51,20 +51,15 @@ public sealed class MovementGuard
     private MoveRefusal Apply(PlayerState player, MovePos dest, float speed, bool serverGrantedExemption,
         MoveBounds? bounds, IWalkableSurface? surface)
     {
-        var now = _clock.UtcNow;
-        var since = player.LastValidatedMoveAtUtc ?? now;
-        var dt = (float)(now - since).TotalSeconds;
-        if (dt < 0f) dt = 0f; 
+        var subject = new MoveSubject(player.MapId, player.X, player.Y, player.Z, player.LastValidatedMoveAtUtc);
+        var result = MoveGuardRule.Apply(subject, dest, speed, serverGrantedExemption, bounds, surface, _clock.UtcNow);
+        if (result.Refusal != MoveRefusal.None)
+            return result.Refusal;
 
-        var current = new MovePos(player.X, player.Y, player.Z);
-        var refusal = MovementValidator.Validate(player.MapId, current, dest, dt, speed, bounds, surface, serverGrantedExemption);
-        if (refusal != MoveRefusal.None)
-            return refusal;
-
-        player.X = dest.X;
-        player.Y = dest.Y;
-        player.Z = dest.Z;
-        player.LastValidatedMoveAtUtc = now;
+        player.X = result.Subject.X;
+        player.Y = result.Subject.Y;
+        player.Z = result.Subject.Z;
+        player.LastValidatedMoveAtUtc = result.Subject.LastValidatedMoveAtUtc;
         return MoveRefusal.None;
     }
 }
