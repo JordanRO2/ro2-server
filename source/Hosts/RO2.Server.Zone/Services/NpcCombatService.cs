@@ -1,4 +1,5 @@
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
+using RO2.Combats.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -329,8 +330,8 @@ public class NpcCombatService : ITickable
             //   Defense% = 100·Def / (Def + 870 + AttackerLv·35), capped 75%.
             // This replaces the earlier invented curve that used the player's RAW VIT and ignored armour.
             int def = Math.Max(0, victim.CombatDefense);
-            double defEff = StatService.PenetratedDef(def, NoPenetration, Math.Max(0, npc.Level));  // NPCs carry no Pen (no-op)
-            double defPct = Math.Min(MaxDefensePercent, PercentScale * defEff / (defEff + StatService.DefenseRateAdd + Math.Max(0, npc.Level) * StatService.DefenseRateMulti));
+            double defEff = DefenseRules.PenetratedDef(def, NoPenetration, Math.Max(0, npc.Level));  // NPCs carry no Pen (no-op)
+            double defPct = Math.Min(MaxDefensePercent, PercentScale * defEff / (defEff + DefenseRules.DefenseRateAdd + Math.Max(0, npc.Level) * DefenseRules.DefenseRateMulti));
             var damage = Math.Max(MinHitDamage, (int)Math.Round(npc.Atk * (1.0 - defPct / PercentScale)));
 
             // A PC whose active effects add Miss_Rate +100% (trait 35, Trait_Kind 4: the map-move buff 60205 that

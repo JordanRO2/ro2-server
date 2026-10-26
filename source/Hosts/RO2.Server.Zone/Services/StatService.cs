@@ -35,13 +35,7 @@ namespace RO2.Server.Zone.Services;
 public static class StatService
 {
 
-    /// <summary>AoV DefenseRate denominator terms: Defense% = 100·Def/(Def + <see cref="DefenseRateAdd"/> +
-    /// AttackerLv·<see cref="DefenseRateMulti"/>), capped 75%. Backed by data/PCBaseStatus.json fields
-    /// DefenseAdd (870.0) and DefenseMulti (35.0), uniform across all class + monster rows, so there is one global
-    /// pair — a per-row lookup would add zero fidelity. Named here (not inline literals) so their provenance is
-    /// explicit and NpcCombatService, which has no GameDataStore, can share them.</summary>
-    public const int DefenseRateAdd = 870;
-    public const int DefenseRateMulti = 35;
+    // DefenseRateAdd / DefenseRateMulti moved to RO2.Combats.Domain.DefenseRules (Combat context, B4 S2).
 
 
     private static readonly Lock Lock = new();
@@ -216,25 +210,7 @@ public static class StatService
         return CharacterStats.EffectivePlayerStats(c, eq, store.PcBaseStatus.GetValueOrDefault(c.Job));
     }
 
-    /// <summary>
-    /// The DEFENDER's effective armour after the attacker's Penetration (trait 94) chews through it, fed to
-    /// the AoV DefenseRate. <c>Def_eff = Def · (1 − PenPct/100)</c>, <c>PenPct = min(50, Pen/(0.005·Pen +
-    /// 0.2·AttackerLv + 10))</c> — the AoV expression is ALREADY a percentage (asymptote 1/0.005 = 200), so
-    /// there is no extra ×100 (same scale convention as the Crit/Parry rates). The 50% ceiling is the data
-    /// clamp (PCBaseStatus PenLimitValue = 0.5). Pen 0 (every naked character, and all NPCs, which carry no
-    /// Pen) returns the armour unchanged — a strict no-op, so behaviour is byte-identical until Pen gear is worn.
-    /// </summary>
-    /// <remarks>The fold shape (reduce Def before DefenseRate) is the standard AoV armour-pen form but is
-    /// not data-verified: it only becomes observable once Pen gear exists, and it cannot regress anything at Pen 0.</remarks>
-    public static double PenetratedDef(int def, int pen, int attackerLevel)
-    {
-        if (pen <= 0 || def <= 0) return Math.Max(0, def);
-        // The 0.005 / 0.2 / 10.0 constants are an AoV-style fold chosen here, not read from a data table.
-        double penPct = Math.Min(50.0, pen / (0.005 * pen + 0.2 * Math.Max(1, attackerLevel) + 10.0));
-        return def * (1.0 - penPct / 100.0);
-    }
-
-    // EffectiveCooldown moved to RO2.Combats.Domain.CooldownRules (Combat context, B4 S1).
+    // PenetratedDef and EffectiveCooldown moved to RO2.Combats.Domain (DefenseRules, CooldownRules; Combat context, B4 S1-S2).
 
     /// <summary>
     /// The GEAR-ADJUSTED MaxHP/MaxSP for a character — the SAME value the 2498 sheet shows the client.

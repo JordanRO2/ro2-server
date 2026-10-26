@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using RO2.Combats.Domain;
 using RO2.Skills.Domain;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
@@ -74,7 +75,7 @@ public class CombatService
 
         int defenderLevel = npcTarget?.Level ?? attacker.Level;
         if (npcTarget != null)
-            rawDamage = MitigateByDefense(rawDamage, npcTarget.Def, attacker.CombatPen, attacker.Level);
+            rawDamage = DefenseRules.Mitigate(rawDamage, npcTarget.Def, attacker.CombatPen, attacker.Level);
 
         // No random variance: normal-attack damage is deterministic per hit for fixed conditions. Back-to-back
         // same-target swings differ only by slow drift from changing state, not by an independent roll, so no
@@ -140,7 +141,7 @@ public class CombatService
     /// </remarks>
     public (int Damage, byte Kind) ResolvePvpHit(PlayerState attacker, PlayerState victim, uint skillId)
     {
-        var damage = MitigateByDefense(CalculateBaseDamage(attacker, skillId), victim.CombatDefense,
+        var damage = DefenseRules.Mitigate(CalculateBaseDamage(attacker, skillId), victim.CombatDefense,
             attacker.CombatPen, attacker.Level);
         if (Rolls(CritRatePct(attacker.CombatCrit, victim.Level, attacker.Level)))
             return (Math.Max(1, damage * 2), DamageKindCrit);
@@ -149,17 +150,7 @@ public class CombatService
         return (damage, DamageKindNormal);
     }
 
-    /// <summary>
-    /// The AoV DefenseRate mitigation: Defense% = 100·Def_eff / (Def_eff + 870 +
-    /// AttackerLv·35), capped 75%, where Def_eff is the defence left after the attacker's Penetration
-    /// (StatService.PenetratedDef, a no-op at Pen 0). Never below 1.
-    /// </summary>
-    internal static int MitigateByDefense(int rawDamage, int defense, int attackerPen, int attackerLevel)
-    {
-        double defEff = StatService.PenetratedDef(Math.Max(0, defense), attackerPen, attackerLevel);
-        double defPct = Math.Min(75.0, 100.0 * defEff / (defEff + StatService.DefenseRateAdd + attackerLevel * StatService.DefenseRateMulti));
-        return Math.Max(1, (int)Math.Round(rawDamage * (1.0 - defPct / 100.0)));
-    }
+    // MitigateByDefense moved to RO2.Combats.Domain.DefenseRules.Mitigate (Combat context, B4 S2).
 
     /// <summary>Crit chance in percent: Crit/(0.02·Crit + 40 + 0.8·(DefLv−AtkLv)), capped 90% (AoV); 0 without Crit.</summary>
     internal static double CritRatePct(int crit, int defenderLevel, int attackerLevel)

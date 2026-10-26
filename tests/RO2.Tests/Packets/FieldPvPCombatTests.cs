@@ -1,4 +1,5 @@
-using System.Buffers.Binary;
+﻿using System.Buffers.Binary;
+using RO2.Combats.Domain;
 using System.Net;
 using System.Net.Sockets;
 using Microsoft.Extensions.DependencyInjection;
@@ -126,9 +127,9 @@ public class FieldPvPCombatTests
     [Fact]
     public void Characterization_MitigateByDefense_AoVRateCappedAt75_UnverifiedAoV()
     {
-        Assert.Equal(500, CombatService.MitigateByDefense(1000, 870, 0, 0));         // 870/(870+870) = 50%
-        Assert.Equal(250, CombatService.MitigateByDefense(1000, 1_000_000, 0, 0));  // capped at 75%
-        Assert.Equal(1, CombatService.MitigateByDefense(1, 1_000_000, 0, 0));       // never below 1
+        Assert.Equal(500, DefenseRules.Mitigate(1000, 870, 0, 0));         // 870/(870+870) = 50%
+        Assert.Equal(250, DefenseRules.Mitigate(1000, 1_000_000, 0, 0));  // capped at 75%
+        Assert.Equal(1, DefenseRules.Mitigate(1, 1_000_000, 0, 0));       // never below 1
         Assert.Equal(0, CombatService.CritRatePct(0, 10, 10));
         Assert.Equal(0, CombatService.ParryRatePct(0, 10, 10));
         // Crit/(0.02*Crit + 40 + 0.8*(DefLv - AtkLv)): 100/(2 + 40 + 0) and, for a victim 10 levels above, 100/(2 + 40 + 8).
