@@ -426,11 +426,10 @@ public class CombatService
     {
         var group = skillId / 100u;
         var level = (byte)(skillId % 100u);
-        if (skillId < SkillDamageHandler.FirstNonClassSkillId)
-            level = Math.Min(level, attacker.LearnedSkills.GetValueOrDefault(group));
-        if (TalentRules.TryGetSkillLevelLimit(data, group, out var max))
-            level = Math.Min(level, max);
-        return level;
+        bool isClassSkill = skillId < SkillDamageHandler.FirstNonClassSkillId;
+        byte learned = attacker.LearnedSkills.GetValueOrDefault(group);
+        byte? limit = TalentRules.TryGetSkillLevelLimit(data, group, out var max) ? max : null;
+        return CastLevelRules.Clamp(level, isClassSkill, learned, limit);
     }
 
     private int CalculateBaseDamage(PlayerState attacker, uint skillId)
@@ -475,10 +474,6 @@ public class CombatService
         int str = attacker.CombatStr > 0 ? attacker.CombatStr : attacker.Str;
         int intel = attacker.CombatInt > 0 ? attacker.CombatInt : attacker.Int;
         var pc = _data.PcBaseStatus.GetValueOrDefault(attacker.Job);
-        // UNVERIFIED: the str * 2 term for a class with no PcBaseStatus row is a placeholder.
-        int physAtk = pc is not null ? pc.APValue * str : str * 2;
-        int magAtk  = pc is not null ? pc.MAValue * intel : 0;
-        int attack  = Math.Max(1, Math.Max(physAtk, magAtk));
 
         // SKILL MODIFIER — the per-level DamageRate is the skill's damage multiple (Charge Arrow
         // L1 = 3.3, L2 = 3.9, L3 = 4.5, i.e. the "330/390/450 %" the tooltip shows). A normal attack
@@ -491,19 +486,10 @@ public class CombatService
                 skillMod = levelData.DamageRate;
         }
 
-        // PHYSICAL/MAGIC SKILL EFFECT (PSE) — the AoV formula:
-        //   PSE    = Attack × 0.095 + (WeaponMin + WeaponMax) / 2      (weapon damage dominates)
-        //   Damage = (PSE + RefineBonus) × SkillModifier               (RefineBonus = 0, not wired yet)
-        // Weapon min/max are TraitInfo trait 96/97, cached on the player where the equipment sheet is
-        // recomputed (login, equip swap, socket). With no weapon worn (0/0) the PSE weapon term is 0 and
-        // Attack×0.095 alone is tiny, so bare-fisted attacks fall back to Attack × SkillModifier so
-        // unarmed damage stays sane.
-        int wMin = attacker.WeaponMinDamage;
-        int wMax = attacker.WeaponMaxDamage;
-        double baseEffect = (wMin > 0 || wMax > 0)
-            ? attack * 0.095 + (wMin + wMax) / 2.0   // PSE with the equipped weapon
-            : attack;                                // no weapon: keep the raw attack as the base effect
-
-        return Math.Max(1, (int)Math.Round(baseEffect * skillMod));
+        // Attack (APValue·STR vs MAValue·INT, str·2 fallback with no PcBaseStatus row) and the PSE/skill-mod fold
+        // are the pure DamageFormulas.BaseDamage; the host keeps the skill-id decode, the DamageRate lookup and the
+        // gear-adjusted stat reads above.
+        return DamageFormulas.BaseDamage(pc is not null, pc?.APValue ?? 0, pc?.MAValue ?? 0, str, intel,
+            attacker.WeaponMinDamage, attacker.WeaponMaxDamage, skillMod);
     }
 }
