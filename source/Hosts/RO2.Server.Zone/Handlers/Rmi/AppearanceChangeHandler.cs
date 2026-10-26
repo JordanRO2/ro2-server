@@ -113,7 +113,7 @@ public class AppearanceChangeHandler : ZoneRmiHandlerBase<AppearanceChangeHandle
             ? r[AppearanceChangePackets.GenderIndex] : stored.Race;
         byte newGender = newRaw[AppearanceChangePackets.GenderIndex];
         var worn = items.Where(i => i.StorageType == StorageEquipped).ToList();
-        if (AppearanceChangePackets.GenderChangeBlockedByWornItems(oldGender, newGender,
+        if (AppearanceRules.GenderChangeBlockedByWornItems(oldGender, newGender,
                 worn.Select(i => store.GetItem(i.ItemId)?.Require_Sex ?? (byte)0)))
         {
             Logger.LogInformation("{Name}: appearance change refused, gender {Old} -> {New} under a gender-specific worn item",

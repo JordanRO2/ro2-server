@@ -110,20 +110,4 @@ internal static class AppearanceChangePackets
         return request.ToArray();
     }
 
- /// <summary>
- /// Whether a change must be refused because it alters the gender while a worn item is made for one gender only.
- /// </summary>
- /// <remarks>
- /// Items with a sex requirement value 1 or 2 block the change when the new gender differs from the required one. A requirement value 3 applies to both genders, and 0 applies to none.
- /// </remarks>
- /// <param name="oldGender">Current gender value.</param>
- /// <param name="newGender">Requested gender value.</param>
- /// <param name="wornRequireSex">Sex requirement of each worn item.</param>
-    internal static bool GenderChangeBlockedByWornItems(byte oldGender, byte newGender, IEnumerable<byte> wornRequireSex)
-    {
-        if (oldGender == newGender) return false;
-        foreach (var sex in wornRequireSex)
-            if (sex is 1 or 2 && sex != newGender) return true;
-        return false;
-    }
 }

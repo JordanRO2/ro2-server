@@ -1,6 +1,7 @@
 using RO2.Network.Packets;
 using RO2.Server.Zone.Services;
 using Xunit;
+using RO2.Characters.Domain;
 
 namespace RO2.Tests.Packets;
 
@@ -135,6 +136,6 @@ public class AppearanceChange1705Tests
     [InlineData(1, 2, new byte[0], false)]         
     public void GenderChange_IsBlockedOnlyByAWornItemOfTheOtherGender(byte oldGender, byte newGender, byte[] worn, bool blocked)
     {
-        Assert.Equal(blocked, AppearanceChangePackets.GenderChangeBlockedByWornItems(oldGender, newGender, worn));
+        Assert.Equal(blocked, AppearanceRules.GenderChangeBlockedByWornItems(oldGender, newGender, worn));
     }
 }
