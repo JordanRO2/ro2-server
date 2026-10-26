@@ -12,6 +12,8 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Configuration;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Worlds.Application;
+using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -26,10 +28,10 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 public class ChannelMoveHandler : ZoneRmiHandlerBase<ChannelMoveHandler>
 {
  /// <summary>2556 result code: the requested channel is the account's current channel.</summary>
-    internal const ushort ResultCurrentChannel = 1018;
+    internal const ushort ResultCurrentChannel = ChannelMoveRules.ResultCurrentChannel;
 
  /// <summary>2556 result code: the requested channel does not exist.</summary>
-    internal const ushort ResultNoSuchChannel = 1014;
+    internal const ushort ResultNoSuchChannel = ChannelMoveRules.ResultNoSuchChannel;
 
  /// <summary>Host address field of the 2556 body: a wide string of 16 characters at offset 22.</summary>
     private const int TargetHostFieldBytes = 32;
@@ -58,7 +60,8 @@ public class ChannelMoveHandler : ZoneRmiHandlerBase<ChannelMoveHandler>
         
         
         var currentChannel = await RecordedChannelAsync(services, accountId, ct);
-        if (RefusalCode(requestedChannel, currentChannel, config.World) is ushort refusal)
+        var decision = ChannelMoveUseCase.Decide(requestedChannel, currentChannel, ChannelIds(config.World));
+        if (decision.RefusalCode is ushort refusal)
         {
             Logger.LogInformation("{Name} channel move to 0x{Handle:X8} refused with {Code} (current 0x{Current:X8})",
                 player.Name, requestedChannel, refusal, currentChannel ?? 0);
@@ -73,7 +76,7 @@ public class ChannelMoveHandler : ZoneRmiHandlerBase<ChannelMoveHandler>
         
         
         
-        var targetChannel = requestedChannel;
+        var targetChannel = decision.TargetChannel;
 
         
         
@@ -172,13 +175,13 @@ public class ChannelMoveHandler : ZoneRmiHandlerBase<ChannelMoveHandler>
  /// <paramref name="current"/> is the account's recorded channel, or null when there is none.
  /// </summary>
     internal static ushort? RefusalCode(uint requested, uint? current, WorldConfig world)
+        => ChannelMoveUseCase.Decide(requested, current, ChannelIds(world)).RefusalCode;
+
+ /// <summary>The handles of the channels this world advertises, in channel order (the wire handle layout stays here).</summary>
+    private static IEnumerable<uint> ChannelIds(WorldConfig world)
     {
-        if (current is uint c && c != 0 && requested == c)
-            return ResultCurrentChannel;
         for (int ch = 1; ch <= world.ChannelCount; ch++)
-            if (ZoneChannelList.ChannelId(world, ch) == requested)
-                return null;
-        return ResultNoSuchChannel;
+            yield return ZoneChannelList.ChannelId(world, ch);
     }
 
  /// <summary>

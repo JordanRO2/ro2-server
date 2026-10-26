@@ -7,6 +7,7 @@ using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Services;
+using RO2.Worlds.Application;
 
 using NetworkZoneRmiBase = RO2.Network.Handlers.ZoneRmiHandlerBase<RO2.Server.Zone.Handlers.Rmi.ChannelMoveLoginHandler>;
 
@@ -63,8 +64,8 @@ public class ChannelMoveLoginHandler : NetworkZoneRmiBase
         // Read both fields before anything is awaited (payload.Span is a ref struct and cannot survive one).
         var accountId = BinaryPrimitives.ReadUInt32LittleEndian(payload.Span.Slice(ChannelMoveTicketStore.TokenBytes, 4));
         var tokenHex = Convert.ToHexString(payload.Span.Slice(0, ChannelMoveTicketStore.TokenBytes));
-        var ticket = services.GetRequiredService<ChannelMoveTicketStore>()
-            .Consume(payload.Span.Slice(0, ChannelMoveTicketStore.TokenBytes), accountId);
+        var ticket = ChannelMoveUseCase.Redeem(services.GetRequiredService<ChannelMoveTicketStore>(),
+            payload.Span.Slice(0, ChannelMoveTicketStore.TokenBytes), accountId).Ticket;
 
         if (ticket is null)
         {
