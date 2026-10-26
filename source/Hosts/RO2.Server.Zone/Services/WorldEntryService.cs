@@ -8,6 +8,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
+using RO2.Worlds.Application;
 using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Services;
@@ -76,10 +77,16 @@ public static class WorldEntryService
         
         
         
-        if (isWarp && warpSpawn is { } w)
-        {
-            mapId = w.MapId; posX = w.X; posY = w.Y; posZ = w.Z;
-        }
+        var decision = WorldEntryUseCase.Decide(new WorldEntryUseCase.EntryRequest(
+            isWarp,
+            new WorldEntryUseCase.EntrySpawn(mapId, posX, posY, posZ),
+            warpSpawn is { } w ? new WorldEntryUseCase.EntrySpawn(w.MapId, w.X, w.Y, w.Z) : null,
+            warpPcTrait2498 is { Length: TraitPackets.PcTraitBodyLen },
+            gameData is not null,
+            inventoryItems is not null,
+            CharacterSerializer.WireProJob(character).Id == 0,
+            cardBookChargedUntil is not null));
+        (mapId, posX, posY, posZ) = (decision.Spawn.MapId, decision.Spawn.X, decision.Spawn.Y, decision.Spawn.Z);
 
         
         
@@ -116,8 +123,8 @@ public static class WorldEntryService
         
         
         
-        if (isWarp && warpPcTrait2498 is { Length: TraitPackets.PcTraitBodyLen })
-            pcTraitEntry = warpPcTrait2498;
+        if (decision.UseWarpTraitSheet)
+            pcTraitEntry = warpPcTrait2498!;
 
         
         await SendPreMapLoadBurstAsync(session, character, entityId, keyConfig, pcTraitEntry);
@@ -130,15 +137,14 @@ public static class WorldEntryService
             var learnedPairs = (learnedSkills ?? (IReadOnlyList<CharacterSkill>)Array.Empty<CharacterSkill>())
                 .Select(s => (s.SkillId, s.Level));
             byte talentRemaining = gameData is null
-                ? (byte)Math.Clamp((character.Level - 1) - learnedPairs.Sum(p => (int)p.Level), 0, 255)
+                ? WorldEntryUseCase.TalentPointsWithoutCatalog(character.Level, learnedPairs.Sum(p => (int)p.Level))
                 : TalentRules.TalentPointsRemaining(gameData, character.Job, character.Level, learnedPairs);
             IReadOnlyList<(uint Group, byte Level)> loginSkills = useSkillList ?? learnedPairs.ToArray();
             loginData = (talentRemaining, loginSkills);
             return loginData.Value;
         }
 
-        var plan = WorldEntryPlan.For(isWarp ? WorldEntryMode.Warp : WorldEntryMode.Login);
-        foreach (var step in plan.AfterPreMapLoad)
+        foreach (var step in decision.AfterPreMapLoad)
         {
             var opcode = WorldEntryStepOpcodes.Of(step);
             switch (step)
