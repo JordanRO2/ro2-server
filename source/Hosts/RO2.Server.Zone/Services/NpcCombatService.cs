@@ -972,14 +972,17 @@ public class NpcCombatService : ITickable
     internal PlayerState? SelectVictim(NpcRuntimeState npc, PlayerState? iterating)
     {
         var aggro = ResolvePlayer(npc.AggroTargetHandle);
-        if (aggro is not null && !aggro.IsDead && aggro.MapId == npc.MapId && InNpcReach(npc, aggro))
-            return aggro;
-
-        if (iterating is not null && iterating.MapId == npc.MapId && InNpcReach(npc, iterating))
-            return iterating;
-
-        return null;
+        var pick = SwingReachRules.Select(npc.PosX, npc.PosY, npc.AttackReach, Candidate(npc, aggro), Candidate(npc, iterating));
+        return pick switch
+        {
+            SwingVictim.Aggro => aggro,
+            SwingVictim.Iterating => iterating,
+            _ => null,
+        };
     }
+
+    private static SwingCandidate? Candidate(NpcRuntimeState npc, PlayerState? p)
+        => p is null ? null : new SwingCandidate(p.IsDead, p.MapId == npc.MapId, p.X, p.Y);
 
     /// <summary>Whether <paramref name="player"/> stands within the monster's horizontal <see cref="NpcRuntimeState.AttackReach"/>
     /// (the melee <see cref="Reach"/> for a state with none), plus the same <see cref="AutoAttackState.AttackRangeTolerance"/>
@@ -990,12 +993,7 @@ public class NpcCombatService : ITickable
     /// the client considers in range. Whether the same tolerance applies to an NPC's own hit distance is unconfirmed.
     /// </remarks>
     internal static bool InNpcReach(NpcRuntimeState npc, PlayerState player)
-    {
-        float dx = player.X - npc.PosX;
-        float dy = player.Y - npc.PosY;
-        float reach = (npc.AttackReach > 0f ? npc.AttackReach : Reach) + AutoAttackState.AttackRangeTolerance;
-        return MathF.Sqrt(dx * dx + dy * dy) <= reach;
-    }
+        => SwingReachRules.InReach(npc.PosX, npc.PosY, npc.AttackReach, player.X, player.Y);
 
     /// <summary>Threat seated when a monster acquires a player by proximity: one point, enough to make that
     /// player its target. A real hit then banks its threat on top (<see cref="NpcStateManager.AddThreat"/>).</summary>

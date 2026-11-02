@@ -6,10 +6,11 @@
   </PropertyGroup>
 
   <!-- Monster bounded context: Domain references ONLY RO2.BuildingBlocks + the shared RO2.GameData kernel
-       (World.Domain / Combat.Domain are added by the slices that need a type from them). -->
+       + the foundational RO2.Combat.Domain for the shared melee reach consts (World.Domain is added by the slice that needs it). -->
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
     <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+    <ProjectReference Include="..\..\Combat\RO2.Combat.Domain\RO2.Combat.Domain.csproj" />
   </ItemGroup>
 
 </Project>

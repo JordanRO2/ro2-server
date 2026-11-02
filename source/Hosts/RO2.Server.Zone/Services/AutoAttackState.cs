@@ -1,3 +1,4 @@
+using RO2.Combats.Domain;
 using System.Runtime.CompilerServices;
 using RO2.Server.Zone.Models;
 
@@ -47,7 +48,7 @@ public static class AutoAttackState
     /// 4 is the smallest round value that admits every such attack; 3 would refuse some legitimate ones.
     /// </para>
     /// </remarks>
-    public const float MaxAttackRange = 4f;
+    public const float MaxAttackRange = MeleeReach.MaxAttackRange;
 
     /// <summary>
     /// Records that the client asked to attack a target, and was granted it. This also ARMS the swing: the next
@@ -167,7 +168,7 @@ public static class AutoAttackState
     /// 3.890625 (= 249/64, exact in a float) is the client's constant. Not modelled: the client also adds the
     /// target's size term for large targets, so for a large target this reach is tighter than the client's.
     /// </summary>
-    public const float AttackRangeTolerance = 3.890625f;
+    public const float AttackRangeTolerance = MeleeReach.AttackRangeTolerance;
 
     /// <summary>
     /// Whether the player is close enough to the target position to attack, using the EQUIPPED WEAPON's
