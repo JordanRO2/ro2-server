@@ -2,7 +2,7 @@ using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Skills.Domain;
 using Microsoft.Extensions.Logging;
-using RO2.Domain.Entities;
+using RO2.Quests.Domain;
 using RO2.GameData;
 using RO2.Network.ProudNet;
 using RO2.Inventory.Domain;
@@ -217,7 +217,7 @@ internal static class WorldEntryPackets
  /// <param name="skillList">Usable skills as (group, level) pairs. Null writes the default three ids.</param>
     internal static void WriteCharacterDetail(PacketWriter writer, Character character, ulong charUid, uint entityId,
         IReadOnlyList<RO2.Inventory.Domain.InventoryItem>? items, uint mapId, float posX, float posY, float posZ,
-        IReadOnlyList<RO2.Domain.Entities.CharacterQuest>? activeQuests = null,
+        IReadOnlyList<RO2.Quests.Domain.CharacterQuest>? activeQuests = null,
         byte talentPointsRemaining = 0,
         GameDataStore? gameData = null,
         (uint CurHp, ushort CurSp, uint MaxHp, ushort MaxSp)? vitals = null,
@@ -274,7 +274,7 @@ internal static class WorldEntryPackets
         
         
         
-        var qv = activeQuests ?? System.Array.Empty<RO2.Domain.Entities.CharacterQuest>();
+        var qv = activeQuests ?? System.Array.Empty<RO2.Quests.Domain.CharacterQuest>();
         writer.WriteUInt16((ushort)qv.Count);
         foreach (var q in qv)
             QuestProgressStore.WriteLoginElement(writer, q, gameData, allItems);

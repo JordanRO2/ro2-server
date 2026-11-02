@@ -11,11 +11,13 @@
     <PackageReference Include="xunit.runner.visualstudio" />
     <PackageReference Include="Testcontainers.PostgreSql" />
     <PackageReference Include="Testcontainers.Redis" />
+    <PackageReference Include="Testcontainers.MongoDb" />
     <!-- Pins out Docker.DotNet's vulnerable transitive SSH.NET 2024.1.0; see Directory.Packages.props. -->
     <PackageReference Include="SSH.NET" />
   </ItemGroup>
 
   <ItemGroup>
+                        <ProjectReference Include="..\..\source\Quest\RO2.Quest.Domain\RO2.Quest.Domain.csproj" />
                         <ProjectReference Include="..\..\source\Character\RO2.Character.Application\RO2.Character.Application.csproj" />
 <ProjectReference Include="..\..\source\Character\RO2.Character.Infrastructure.Postgres\RO2.Character.Infrastructure.Postgres.csproj" />
 <ProjectReference Include="..\..\source\Character\RO2.Character.Infrastructure.Mongo\RO2.Character.Infrastructure.Mongo.csproj" />

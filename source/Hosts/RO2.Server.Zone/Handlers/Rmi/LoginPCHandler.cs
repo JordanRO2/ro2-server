@@ -3,6 +3,7 @@ using RO2.Guilds.Domain;
 using RO2.Skills.Domain;
 using RO2.Skills.Application;
 using RO2.Domain.Entities;
+using RO2.Quests.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
@@ -376,7 +377,7 @@ public class LoginPCHandler : NetworkZoneRmiBase
         catch (Exception ex) { Logger.LogDebug(ex, "Skill load/seed skipped"); }
 
         // Load active quests from DB and populate runtime state
-        IReadOnlyList<RO2.Domain.Entities.CharacterQuest>? activeQuests = null;
+        IReadOnlyList<RO2.Quests.Domain.CharacterQuest>? activeQuests = null;
         int completedQuestCount = 0;
         try
         {

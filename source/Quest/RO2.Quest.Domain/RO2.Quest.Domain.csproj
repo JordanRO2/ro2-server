@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Plural namespace: a namespace "RO2.Quest" would shadow any future Quest type in every RO2.* file (CS0118), as RO2.Guilds.Domain does for Guild. -->
+    <RootNamespace>RO2.Quests.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Quest bounded context: Domain references ONLY RO2.BuildingBlocks (no Mongo, no ProudNet, no host).
+       The entity is persistence-agnostic and default-mappable; later slices add the GameData / Inventory.Domain refs. -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+  </ItemGroup>
+
+</Project>

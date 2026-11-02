@@ -1,4 +1,4 @@
-namespace RO2.Domain.Enums;
+namespace RO2.Quests.Domain;
 
 public enum QuestStatus : byte
 {

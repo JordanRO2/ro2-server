@@ -1,4 +1,4 @@
-using RO2.Domain.Entities;
+using RO2.Quests.Domain;
 
 namespace RO2.Application.Interfaces;
 

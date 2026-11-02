@@ -1,5 +1,5 @@
 using System.Buffers.Binary;
-using RO2.Domain.Entities;
+using RO2.Quests.Domain;
 using RO2.GameData;
 using RO2.Inventory.Domain;
 using RO2.Network.Packets;

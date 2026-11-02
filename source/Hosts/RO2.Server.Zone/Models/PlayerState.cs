@@ -1,7 +1,7 @@
 using RO2.BuildingBlocks;
 using System.Numerics;
 using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
+using RO2.Quests.Domain;
 using RO2.Server.Zone.Services;
 using RO2.Characters.Domain;
 using RO2.Combats.Domain;

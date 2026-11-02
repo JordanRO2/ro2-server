@@ -1,6 +1,4 @@
-using RO2.Domain.Enums;
-
-namespace RO2.Domain.Entities;
+namespace RO2.Quests.Domain;
 
 /// <summary>
 /// Character quest progress domain entity
