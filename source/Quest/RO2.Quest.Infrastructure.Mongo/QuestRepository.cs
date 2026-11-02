@@ -2,7 +2,7 @@ using MongoDB.Driver;
 using RO2.Quests.Domain;
 using RO2.Persistence.Mongo.Persistence;
 
-namespace RO2.Persistence.Mongo.Repositories;
+namespace RO2.Quests.Infrastructure.Mongo;
 
 public class QuestRepository : IQuestRepository
 {

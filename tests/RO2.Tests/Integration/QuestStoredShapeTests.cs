@@ -5,7 +5,7 @@ using RO2.Quests.Domain;
 using RO2.Persistence.Mongo.Persistence;
 using Testcontainers.MongoDb;
 using Xunit;
-using MongoQuestRepository = RO2.Persistence.Mongo.Repositories.QuestRepository;
+using MongoQuestRepository = RO2.Quests.Infrastructure.Mongo.QuestRepository;
 using PgQuestRepository = RO2.Persistence.Postgres.Repositories.QuestRepository;
 
 namespace RO2.Tests.Integration;
