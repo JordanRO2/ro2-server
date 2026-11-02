@@ -1,11 +1,10 @@
 using System.Diagnostics;
-using System.Reflection;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using RO2.Mails.Domain;
 using RO2.Persistence.Mongo.Persistence;
-using RO2.Persistence.Mongo.Repositories;
+using RO2.Mails.Infrastructure.Mongo;
 using Testcontainers.MongoDb;
 using Xunit;
 using Xunit.Abstractions;
@@ -340,11 +339,9 @@ public sealed class MongoMailStoredShapeTests
     public async Task The_two_mail_indexes_are_a_receiver_newest_first_compound_and_a_unique_uid()
     {
         Assert.True(_fx.Available, _fx.StartupError);
-        // The repository ensures its indexes once per process (a static flag), in its constructor; reset it so the index build
-        // lands on THIS database whatever ran first.
-        typeof(MailRepository).GetField("_indexesEnsured", BindingFlags.Static | BindingFlags.NonPublic)!.SetValue(null, 0);
+        // The host builds the indexes through EnsureIndexesAsync (never the constructor).
         var db = "ro2_it_mail_idx";
-        _ = new MailRepository(new MongoDbContext(_fx.ConnectionString, db));
+        Assert.True(await new MailRepository(new MongoDbContext(_fx.ConnectionString, db)).EnsureIndexesAsync());
 
         var idx = (await _fx.Client!.GetDatabase(db).GetCollection<BsonDocument>("mails").Indexes.ListAsync()).ToList();
         var byName = idx.ToDictionary(d => d["name"].AsString);

@@ -95,6 +95,18 @@ public static class Program
             catch (Exception ex) { Serilog.Log.Warning(ex, "Skill index creation failed (best-effort)."); }
         });
 
+        // Create the mail indexes (receiver + newest first, unique uid) off the boot path: a synchronous build in the
+        // repository ctor stalls the boot when Mongo is down. The mail queries are correct without them.
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                if (!await host.Services.GetRequiredService<IMailRepository>().EnsureIndexesAsync())
+                    Serilog.Log.Warning("Mail indexes not created (best-effort).");
+            }
+            catch (Exception ex) { Serilog.Log.Warning(ex, "Mail index creation failed (best-effort)."); }
+        });
+
         await host.RunAsync();
     }
 
@@ -144,7 +156,7 @@ public static class Program
         services.AddProviderRepository<IKeyConfigRepository, RO2.Characters.Infrastructure.Mongo.KeyConfigRepository, RO2.Characters.Infrastructure.Postgres.KeyConfigRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IAccountGiftRepository, RO2.Persistence.Mongo.Repositories.AccountGiftRepository, RO2.Persistence.Postgres.Repositories.AccountGiftRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IPresentPasswordRepository, RO2.Persistence.Mongo.Repositories.PresentPasswordRepository, RO2.Persistence.Postgres.Repositories.PresentPasswordRepository>(config.Database.Provider, ServiceLifetime.Singleton);
-        services.AddProviderRepository<IMailRepository, RO2.Persistence.Mongo.Repositories.MailRepository, RO2.Persistence.Postgres.Repositories.MailRepository>(config.Database.Provider, ServiceLifetime.Singleton);
+        services.AddProviderRepository<IMailRepository, RO2.Mails.Infrastructure.Mongo.MailRepository, RO2.Mails.Infrastructure.Postgres.MailRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IDungeonEntryCountRepository, RO2.Persistence.Mongo.Repositories.DungeonEntryCountRepository, RO2.Persistence.Postgres.Repositories.DungeonEntryCountRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<ICraftRecipeRepository, RO2.Economy.Infrastructure.Mongo.CraftRecipeRepository, RO2.Economy.Infrastructure.Postgres.CraftRecipeRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<ICardBookChargeRepository, RO2.Persistence.Mongo.Repositories.CardBookChargeRepository, RO2.Persistence.Postgres.Repositories.CardBookChargeRepository>(config.Database.Provider, ServiceLifetime.Singleton);

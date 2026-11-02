@@ -78,4 +78,7 @@ public interface IMailRepository
     /// never delete an item or zeny still waiting on it. False when nothing was deleted.
     /// </summary>
     Task<bool> DeleteIfSpentAsync(uint receiverCharId, ulong uid, CancellationToken ct = default);
+
+    /// <summary>Creates the store's mail indexes off the boot path; false when the build failed. No-op by default.</summary>
+    Task<bool> EnsureIndexesAsync() => Task.FromResult(true);
 }

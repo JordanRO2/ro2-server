@@ -1,8 +1,9 @@
 using Npgsql;
 using NpgsqlTypes;
 using RO2.Mails.Domain;
+using RO2.Persistence.Postgres;
 
-namespace RO2.Persistence.Postgres.Repositories;
+namespace RO2.Mails.Infrastructure.Postgres;
 
 /// <summary>
 /// PostgreSQL implementation of <see cref="IMailRepository"/> over the <c>mail_messages</c> table and the

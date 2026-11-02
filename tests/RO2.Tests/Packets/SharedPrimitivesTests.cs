@@ -3,6 +3,7 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using RO2.Mails.Domain;
 using RO2.Persistence.Mongo.Persistence;
+using RO2.Mails.Infrastructure.Mongo;
 using RO2.Persistence.Mongo.Repositories;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;

@@ -3,13 +3,13 @@ using MongoDB.Driver;
 using RO2.Mails.Domain;
 using RO2.Persistence.Mongo.Persistence;
 
-namespace RO2.Persistence.Mongo.Repositories;
+namespace RO2.Mails.Infrastructure.Mongo;
 
 /// <summary>
 /// MongoDB implementation of <see cref="IMailRepository"/> over the <c>mails</c> collection and the
 /// <c>mail_counters</c> sequence doc (<c>_id</c> "mailId"). Stateless apart from its collection handles, so a DI
 /// singleton over the process-wide <see cref="MongoDbContext"/>. The two mail indexes (receiver + newest first,
-/// unique uid) are ensured once per process, in the constructor, as the store it replaces did.
+/// unique uid) are built by <see cref="EnsureIndexesAsync"/>, which the host calls off the boot path (never in the constructor).
 /// </summary>
 public sealed class MailRepository : IMailRepository
 {
@@ -31,21 +31,19 @@ public sealed class MailRepository : IMailRepository
     private readonly IMongoCollection<MailMessage> _mails;
     private readonly IMongoCollection<BsonDocument> _counters;
 
-    private static int _indexesEnsured; // 0 = not yet
-
     public MailRepository(MongoDbContext context)
     {
         _mails = context.GetCollection<MailMessage>(MailsCollection);
         _counters = context.GetCollection<BsonDocument>(CountersCollection);
-        EnsureIndexes();
+        // No index creation here: a synchronous CreateMany in the constructor stalls the whole boot when Mongo is down.
     }
 
-    private void EnsureIndexes()
+    /// <summary>Creates the receiver+newest-first index and the unique uid index (idempotent); false if the build failed.</summary>
+    public async Task<bool> EnsureIndexesAsync()
     {
-        if (Interlocked.Exchange(ref _indexesEnsured, 1) != 0) return;
         try
         {
-            _mails.Indexes.CreateMany(new[]
+            await _mails.Indexes.CreateManyAsync(new[]
             {
                 new CreateIndexModel<MailMessage>(
                     Builders<MailMessage>.IndexKeys.Ascending(m => m.ReceiverCharId).Descending(m => m.SentAt)),
@@ -53,11 +51,11 @@ public sealed class MailRepository : IMailRepository
                     Builders<MailMessage>.IndexKeys.Ascending(m => m.Uid),
                     new CreateIndexOptions { Unique = true }),
             });
+            return true;
         }
-        catch
+        catch (Exception ex) when (ex is MongoException or TimeoutException)
         {
-            // A racing/duplicate index build is harmless; never let index setup take the server down.
-            Interlocked.Exchange(ref _indexesEnsured, 0);
+            return false; // a racing/duplicate index build is harmless; never let index setup take the server down
         }
     }
 

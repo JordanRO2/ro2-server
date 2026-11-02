@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Plural namespace, as RO2.Mails.Domain. -->
+    <RootNamespace>RO2.Mails.Infrastructure.Postgres</RootNamespace>
+  </PropertyGroup>
+
+  <!-- PostgreSQL persistence for the Mail bounded context, sibling of the Mongo one (S4). References the shared
+       RO2.Persistence.Postgres for PostgresDbContext and the mail_messages and mail_counters tables DDL (PostgresSchema). -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Mail.Domain\RO2.Mail.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Platform\RO2.Persistence.Postgres\RO2.Persistence.Postgres.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+</Project>

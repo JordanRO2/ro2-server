@@ -1,5 +1,6 @@
 using Npgsql;
 using RO2.Mails.Domain;
+using RO2.Mails.Infrastructure.Postgres;
 using RO2.Persistence.Postgres.Repositories;
 using Xunit;
 using RO2.Inventory.Domain;

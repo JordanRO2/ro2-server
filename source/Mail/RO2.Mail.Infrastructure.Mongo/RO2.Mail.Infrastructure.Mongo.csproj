@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Plural namespace, as RO2.Mails.Domain. -->
+    <RootNamespace>RO2.Mails.Infrastructure.Mongo</RootNamespace>
+  </PropertyGroup>
+
+  <!-- MongoDB persistence for the Mail bounded context, sibling of the Postgres one (S4). References the shared
+       RO2.Persistence.Mongo for MongoDbContext: mail data lives in the same database as the game data. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Mail.Domain\RO2.Mail.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Platform\RO2.Persistence.Mongo\RO2.Persistence.Mongo.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+</Project>
