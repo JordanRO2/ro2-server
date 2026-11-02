@@ -28,7 +28,7 @@ namespace RO2.Server.Zone.Services;
 /// <c>byLevel</c> only.
 /// </para>
 /// </remarks>
-public sealed class NpcAggression
+public sealed class NpcAggression : INpcAggressionTable
 {
     /// <summary>The custom table, relative to the server's working directory (custom/ overlays data/).</summary>
     public static readonly string ShippedPath = Path.Combine("custom", "data", "NpcAggression.json");
@@ -55,12 +55,16 @@ public sealed class NpcAggression
     /// always, <see cref="NpcAggressionMode.ByLevel"/> while the player is at most <paramref name="levelGap"/> levels
     /// above the monster, <see cref="NpcAggressionMode.None"/> never.
     /// </summary>
-    public static bool Acquires(NpcAggressionMode mode, int levelGap, int npcLevel, int playerLevel) => mode switch
+    public static bool Acquires(NpcAggressionMode mode, int levelGap, int npcLevel, int playerLevel) =>
+        NpcAggressionRules.Acquires(mode, levelGap, npcLevel, playerLevel);
+
+    /// <summary>The Domain port over this table.</summary>
+    bool INpcAggressionTable.TryGet(uint asset, out NpcAggressionMode mode, out int levelGap)
     {
-        NpcAggressionMode.Always => true,
-        NpcAggressionMode.ByLevel => playerLevel - npcLevel <= levelGap,
-        _ => false,
-    };
+        var found = TryGet(asset, out var row);
+        (mode, levelGap) = (row.Mode, row.LevelGap);
+        return found;
+    }
 
     private static readonly Lazy<NpcAggression?> s_shipped = new(() => TryLoad(ShippedPath));
 

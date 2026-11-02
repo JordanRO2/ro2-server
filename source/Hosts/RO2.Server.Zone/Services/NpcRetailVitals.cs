@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using RO2.Monster.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -13,7 +14,7 @@ namespace RO2.Server.Zone.Services;
 /// computed vitals (see <c>NpcStateManager.ResolveVitals</c>).
 /// </para>
 /// </remarks>
-public sealed class NpcRetailVitals
+public sealed class NpcRetailVitals : IMonsterVitalsCatalog
 {
  /// <summary>Path of the shipped table, relative to the working directory like the other data tables.</summary>
     public static readonly string ShippedPath = Path.Combine("data", "npc", "NpcRetailVitals.json");

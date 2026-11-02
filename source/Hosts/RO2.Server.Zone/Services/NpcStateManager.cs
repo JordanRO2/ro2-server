@@ -216,7 +216,7 @@ public class NpcStateManager
     /// Highest camp value of a friendly NPC. A camp above it is a monster: only monsters take damage, keep a
     /// threat table and aggro.
     /// </summary>
-    private const int MaxFriendlyCamp = 1;
+    private const int MaxFriendlyCamp = NpcAggressionRules.MaxFriendlyCamp;
 
     /// <summary>How long after a reset a monster stays invulnerable while it runs home (hits miss);
     /// <see cref="NpcRuntimeState.ReturningUntil"/> is stamped with it by the leash reset only.</summary>
@@ -284,15 +284,8 @@ public class NpcStateManager
     /// clamped to 16 bits.
     /// </para>
     /// </remarks>
-    internal (int MaxHp, int MaxSp) ResolveVitals(uint asset, int level, int tableHp)
-    {
-        var table = RetailVitals;
-        if (table is not null && table.TryGet(asset, level, out var hp, out var sp))
-            return (hp, sp);
-        if (table is not null && table.TryGetLevelMaxSp(level, out var levelSp) && levelSp > 0)
-            return (tableHp, levelSp);
-        return (tableHp, Math.Clamp(tableHp, 0, ushort.MaxValue));
-    }
+    internal (int MaxHp, int MaxSp) ResolveVitals(uint asset, int level, int tableHp) =>
+        MonsterVitalsRules.Resolve(RetailVitals, asset, level, tableHp);
 
     /// <summary>
     /// Initialize all NPC states for a map. Called when a player enters a map
@@ -343,8 +336,7 @@ public class NpcStateManager
             // Aggression is the custom table's rule for this asset, but only a monster (Camp > 1) ever aggros;
             // a friendly NPC stays passive whatever the table says. The sight radius and leash come from the
             // shipped NPCInfo (Reaction_Bound / Trace_Bound).
-            var aggroRow = camp > MaxFriendlyCamp && AggressionTable is { } table && table.TryGet(spawn.AssetIndex, out var ar)
-                ? ar : default;
+            var (aggroMode, aggroGap) = NpcAggressionRules.Resolve(AggressionTable, camp, spawn.AssetIndex);
             // The table's vitals for this asset when it has them, else the stated fallback (see
             // ResolveVitals): NpcServerInfo.HP is synthetic.
             var (hp, sp) = ResolveVitals(spawn.AssetIndex, level, npcStats?.HP ?? DefaultHp);
@@ -369,8 +361,8 @@ public class NpcStateManager
                 NavCell = _data.GetNavCell(mapId, spawn.Index),
                 PosX = spawn.PosX,
                 PosY = spawn.PosY,
-                Aggression = aggroRow.Mode,
-                AggressionLevelGap = aggroRow.LevelGap,
+                Aggression = aggroMode,
+                AggressionLevelGap = aggroGap,
                 SightRadius = npcInfo?.Reaction_Bound ?? 0f,
                 LeashBound = npcInfo?.Trace_Bound ?? 0f,
             };
