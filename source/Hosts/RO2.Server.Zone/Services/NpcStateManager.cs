@@ -215,10 +215,6 @@ public class NpcStateManager
     /// </summary>
     private const int MaxFriendlyCamp = NpcAggressionRules.MaxFriendlyCamp;
 
-    /// <summary>How long after a reset a monster stays invulnerable while it runs home (hits miss);
-    /// <see cref="NpcRuntimeState.ReturningUntil"/> is stamped with it by the leash reset only.</summary>
-    private static readonly TimeSpan ReturnInvulnDuration = TimeSpan.FromSeconds(3);
-
     // ---- Threat / aggro (ThreatAggro system) ------------------------------------------------
 
     /// <summary>
@@ -526,13 +522,12 @@ public class NpcStateManager
         {
             if (state.IsDead || state.EntityOid != entityOid)
                 return false;
-            bool hadThreat;
+            LeashResetResult reset;
             lock (state.ThreatLock)
-                hadThreat = state.ThreatTable.Clear();
-            bool changed = hadThreat || state.Hp < state.MaxHp;
-            state.Vitals = state.Vitals.RestoreHp();
-            state.ReturningUntil = DateTime.UtcNow + ReturnInvulnDuration;   // invulnerable while it runs home
-            return changed;
+                reset = MonsterLeashRules.Reset(state.Vitals, state.ThreatTable, state.Ai, DateTime.UtcNow);
+            state.Vitals = reset.Vitals;
+            state.Ai = reset.Ai;   // ReturningUntil = now + 3 s: invulnerable while it runs home
+            return reset.Changed;
         }
     }
 
