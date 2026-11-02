@@ -1,3 +1,5 @@
+using RO2.Guilds.Domain;
+
 namespace RO2.Server.Zone.Services;
 
 /// <summary>
@@ -16,7 +18,7 @@ public static class GuildBribePackets
  /// The 2726 amount for one level-up: <paramref name="expToCompleteLevel"/> (the <c>Base_Exp_Next</c> of the
  /// level just completed) divided by 100, rounded down.
  /// </summary>
-    public static ulong LevelUpBribeAmount(ulong expToCompleteLevel) => expToCompleteLevel / 100UL;
+    public static ulong LevelUpBribeAmount(ulong expToCompleteLevel) => GuildProgression.LevelUpBribeAmount(expToCompleteLevel);
 
  /// <summary>Builds the 2726 body: <c>[u64 amount]</c>, little-endian.</summary>
     public static byte[] BuildNfyGuildBribePCLevelUp(ulong amount)
@@ -30,7 +32,7 @@ public static class GuildBribePackets
  /// The 2725 amount: <c>floor(prizeExp × percent / 100)</c>, where <paramref name="prizeExp"/> is the quest
  /// prize's EXP and <paramref name="percent"/> the member's donation rate.
  /// </summary>
-    public static ulong HuntingBribeAmount(ulong prizeExp, byte percent) => prizeExp * percent / 100UL;
+    public static ulong HuntingBribeAmount(ulong prizeExp, byte percent) => GuildProgression.HuntingBribeAmount(prizeExp, percent);
 
  /// <summary>Builds the 2725 body: <c>[u64 amount]</c>, little-endian.</summary>
     public static byte[] BuildNfyGuildBribeHunting(ulong amount)

@@ -215,18 +215,7 @@ public static class GuildRosterPackets
  /// Level 0 is returned only when the table cannot be read.
  /// </summary>
     public static (byte Level, ulong Exp) GuildLevelOf(ulong lifetimeExp, IReadOnlyList<RO2.GameData.Tables.GuildExpTable>? table)
-    {
-        if (table is not { Count: > 0 }) return (0, lifetimeExp);
-        var rows = table.OrderBy(r => r.Guild_Base_Level).ToArray();
-        var rest = lifetimeExp;
-        var i = 0;
-        while (i < rows.Length - 1 && rows[i].Guild_Base_Exp_Next > 0 && rest >= rows[i].Guild_Base_Exp_Next)
-        {
-            rest -= rows[i].Guild_Base_Exp_Next;
-            i++;
-        }
-        return (rows[i].Guild_Base_Level, rest);
-    }
+        => GuildProgression.GuildLevelOf(lifetimeExp, table);
 
  /// <summary>
  /// Returns the guild's unspent skill points, the same value the guild skill learn handler spends, so a later

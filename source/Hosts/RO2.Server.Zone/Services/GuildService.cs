@@ -600,14 +600,7 @@ public sealed class GuildService
     public async Task<(ulong Before, ulong After)> AddExpAsync(Guild g, ulong amount)
     {
         ulong before, after;
-        lock (g.Gate)
-        {
-            
-            const ulong Cap = long.MaxValue;
-            before = g.Exp;
-            after = before >= Cap || amount > Cap - before ? Cap : before + amount;
-            g.Exp = after;
-        }
+        lock (g.Gate) (before, after) = GuildProgression.CreditExp(g, amount);
         if (after != before) await PersistAsync(g);
         return (before, after);
     }
@@ -622,24 +615,13 @@ public sealed class GuildService
     public async Task<(ulong Before, ulong After)> CreditMemberExpAsync(Guild g, uint charId, ulong amount)
     {
         ulong before, after;
-        lock (g.Gate)
-        {
-            const ulong Cap = long.MaxValue;   
-            before = g.Exp;
-            after = before >= Cap || amount > Cap - before ? Cap : before + amount;
-            g.Exp = after;
-            if (g.Members.FirstOrDefault(x => x.CharId == charId) is { } m)
-            {
-                var credit = (long)Math.Min(amount, (ulong)long.MaxValue);
-                m.ContribPoints = m.ContribPoints > long.MaxValue - credit ? long.MaxValue : m.ContribPoints + credit;
-            }
-        }
+        lock (g.Gate) (before, after) = GuildProgression.CreditMemberExp(g, charId, amount);
         if (amount > 0) await PersistAsync(g);
         return (before, after);
     }
 
  /// <summary>The highest donation rate a member may set, in percent.</summary>
-    public const byte MaxBribePercent = 50;
+    public const byte MaxBribePercent = GuildProgression.MaxBribePercent;
 
  /// <summary>
  /// Stores a member's donation rate, capped at <see cref="MaxBribePercent"/>. Returns the stored rate, or null when the
@@ -647,22 +629,17 @@ public sealed class GuildService
  /// </summary>
     public async Task<byte?> SetBribePercentAsync(Guild g, uint charId, byte percent)
     {
-        byte stored;
-        lock (g.Gate)
-        {
-            if (g.Members.FirstOrDefault(x => x.CharId == charId) is not { } m) return null;
-            stored = Math.Min(percent, MaxBribePercent);
-            if (m.BribePercent == stored) return stored;
-            m.BribePercent = stored;
-        }
-        await PersistAsync(g);
+        byte? stored;
+        bool changed;
+        lock (g.Gate) stored = GuildProgression.SetBribePercent(g, charId, percent, out changed);
+        if (changed) await PersistAsync(g);
         return stored;
     }
 
  /// <summary>Returns a member's donation rate, or 0 for a non-member.</summary>
     public static byte BribePercentOf(Guild g, uint charId)
     {
-        lock (g.Gate) return g.Members.FirstOrDefault(x => x.CharId == charId)?.BribePercent ?? 0;
+        lock (g.Gate) return GuildProgression.BribePercentOf(g, charId);
     }
 
  /// <summary>
