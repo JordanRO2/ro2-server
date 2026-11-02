@@ -33,7 +33,7 @@ public class SaveQuestTraceHandler : ZoneRmiHandlerBase<SaveQuestTraceHandler>
             if (off + 4 > span.Length) break;
             ids.Add(System.Buffers.Binary.BinaryPrimitives.ReadUInt32LittleEndian(span.Slice(off)));
         }
-        ids.RemoveWhere(q => !player.ActiveQuests.Contains(q));   
+        ids = RO2.Quests.Domain.TraceRules.Normalize(ids, player.ActiveQuests);
         player.TracedQuests = ids;
         await services.GetRequiredService<RO2.Application.Interfaces.IQuestRepository>()
             .SetQuestsTracedAsync(player.CharacterId, ids);

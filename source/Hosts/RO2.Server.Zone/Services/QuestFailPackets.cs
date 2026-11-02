@@ -1,6 +1,6 @@
 using System.Buffers.Binary;
-using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
+using RO2.Quests.Domain;
 using RO2.Server.Zone.Models;
 
 namespace RO2.Server.Zone.Services;
@@ -46,16 +46,16 @@ internal static class QuestFailPackets
 /// </remarks>
 internal static class QuestFailState
 {
-    private static readonly ConditionalWeakTable<PlayerState, ConcurrentDictionary<uint, byte>> Failed = new();
+    private static readonly ConditionalWeakTable<PlayerState, QuestFailedSet> Failed = new();
 
     internal static void MarkFailed(PlayerState player, uint questId)
-        => Failed.GetValue(player, _ => new ConcurrentDictionary<uint, byte>()).TryAdd(questId, 0);
+        => Failed.GetValue(player, _ => new QuestFailedSet()).MarkFailed(questId);
 
     internal static bool IsFailed(PlayerState player, uint questId)
-        => Failed.TryGetValue(player, out var set) && set.ContainsKey(questId);
+        => Failed.TryGetValue(player, out var set) && set.IsFailed(questId);
 
     internal static void Clear(PlayerState player, uint questId)
     {
-        if (Failed.TryGetValue(player, out var set)) set.TryRemove(questId, out _);
+        if (Failed.TryGetValue(player, out var set)) set.Clear(questId);
     }
 }

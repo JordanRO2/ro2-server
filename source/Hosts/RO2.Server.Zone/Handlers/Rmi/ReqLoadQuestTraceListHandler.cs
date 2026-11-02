@@ -40,7 +40,7 @@ public class ReqLoadQuestTraceListHandler : Base1541
         var ids = player is null
             ? System.Array.Empty<uint>()
             : System.Linq.Enumerable.ToArray(
-                System.Linq.Enumerable.Where(player.TracedQuests, q => player.ActiveQuests.Contains(q)));
+                RO2.Quests.Domain.TraceRules.Normalize(player.TracedQuests, player.ActiveQuests));
 
         await session.SendRmiAsync(ZoneS2COpcodes.AnsLoadQuestTraceList, writer =>
         {
