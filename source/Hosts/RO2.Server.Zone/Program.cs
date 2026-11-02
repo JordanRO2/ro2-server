@@ -149,6 +149,9 @@ public static class Program
         services.AddSingleton<RO2.Quests.Application.IGuildDonationView, GuildDonationView>();
         services.AddScoped<RO2.Quests.Application.QuestPrizeUseCase>();
 
+        // Mail.Application: the 1393 send decisions (scoped, it holds the scoped ICharacterRepository).
+        services.AddScoped<RO2.Mails.Application.MailSendUseCase>();
+
         // Instance stores over the singleton MongoDbContext (DB Phase 0, pass 2b). Stateless apart from their
         // collection handles, so singletons; handlers resolve them from the per-message scope, never into a field.
         services.AddProviderRepository<ICashMallRepository, RO2.Economy.Infrastructure.Mongo.CashMallRepository, RO2.Economy.Infrastructure.Postgres.CashMallRepository>(config.Database.Provider, ServiceLifetime.Singleton);

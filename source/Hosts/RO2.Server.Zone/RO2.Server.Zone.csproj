@@ -20,6 +20,7 @@
     <ProjectReference Include="..\..\Quest\RO2.Quest.Domain\RO2.Quest.Domain.csproj" />
     <ProjectReference Include="..\..\Mail\RO2.Mail.Infrastructure.Mongo\RO2.Mail.Infrastructure.Mongo.csproj" />
     <ProjectReference Include="..\..\Mail\RO2.Mail.Infrastructure.Postgres\RO2.Mail.Infrastructure.Postgres.csproj" />
+    <ProjectReference Include="..\..\Mail\RO2.Mail.Application\RO2.Mail.Application.csproj" />
     <ProjectReference Include="..\..\Mail\RO2.Mail.Domain\RO2.Mail.Domain.csproj" />
                         <ProjectReference Include="..\..\Character\RO2.Character.Application\RO2.Character.Application.csproj" />
 <ProjectReference Include="..\..\Character\RO2.Character.Infrastructure.Postgres\RO2.Character.Infrastructure.Postgres.csproj" />

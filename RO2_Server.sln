@@ -135,6 +135,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Mail.Infrastructure.Mon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Mail.Infrastructure.Postgres", "source\Mail\RO2.Mail.Infrastructure.Postgres\RO2.Mail.Infrastructure.Postgres.csproj", "{9A7E819C-EC5A-43D6-B6BB-68A0593B1D79}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Mail.Application", "source\Mail\RO2.Mail.Application\RO2.Mail.Application.csproj", "{B62D832E-F015-4D77-82AF-60CAFFCA333E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -769,6 +771,18 @@ Global
 		{9A7E819C-EC5A-43D6-B6BB-68A0593B1D79}.Release|x64.Build.0 = Release|Any CPU
 		{9A7E819C-EC5A-43D6-B6BB-68A0593B1D79}.Release|x86.ActiveCfg = Release|Any CPU
 		{9A7E819C-EC5A-43D6-B6BB-68A0593B1D79}.Release|x86.Build.0 = Release|Any CPU
+		{B62D832E-F015-4D77-82AF-60CAFFCA333E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B62D832E-F015-4D77-82AF-60CAFFCA333E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B62D832E-F015-4D77-82AF-60CAFFCA333E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B62D832E-F015-4D77-82AF-60CAFFCA333E}.Debug|x64.Build.0 = Debug|Any CPU
+		{B62D832E-F015-4D77-82AF-60CAFFCA333E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B62D832E-F015-4D77-82AF-60CAFFCA333E}.Debug|x86.Build.0 = Debug|Any CPU
+		{B62D832E-F015-4D77-82AF-60CAFFCA333E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B62D832E-F015-4D77-82AF-60CAFFCA333E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B62D832E-F015-4D77-82AF-60CAFFCA333E}.Release|x64.ActiveCfg = Release|Any CPU
+		{B62D832E-F015-4D77-82AF-60CAFFCA333E}.Release|x64.Build.0 = Release|Any CPU
+		{B62D832E-F015-4D77-82AF-60CAFFCA333E}.Release|x86.ActiveCfg = Release|Any CPU
+		{B62D832E-F015-4D77-82AF-60CAFFCA333E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -812,5 +826,6 @@ Global
 		{A8D3F5B1-7C42-4E9A-B6D0-2F1E94C7A853} = {292D93AF-781D-EAE2-E3E4-541231A1BD07}
 		{3998E5DA-54B2-43F0-B6E3-28288D1BF16C} = {7D2B4C11-3A5E-4F68-9B10-6E8C2A9D4F51}
 		{9A7E819C-EC5A-43D6-B6BB-68A0593B1D79} = {7D2B4C11-3A5E-4F68-9B10-6E8C2A9D4F51}
+		{B62D832E-F015-4D77-82AF-60CAFFCA333E} = {7D2B4C11-3A5E-4F68-9B10-6E8C2A9D4F51}
 	EndGlobalSection
 EndGlobal

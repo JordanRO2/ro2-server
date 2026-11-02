@@ -9,6 +9,7 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Inventory.Domain;
+using RO2.Mails.Application;
 using RO2.Mails.Domain;
 using RO2.Characters.Domain;
 
@@ -22,9 +23,6 @@ public class MailSendHandler : ZoneRmiHandlerBase<MailSendHandler>
 
     /// <summary>Config_Def type 92 "메일로 보낼 수 있는 최대 금액 (단위 루피)": the most zeny one mail may carry.</summary>
     private const ushort ConfigMaxMailZeny = 92;
-
-    /// <summary>InventoryItem.StorageType 0: the item sits in a bag (the only place an attachment may come from).</summary>
-    private const byte StorageBag = 0;
 
     /// <summary>1393 item uid meaning "no attachment".</summary>
     private const ulong NoAttachment = 0;
@@ -47,7 +45,8 @@ public class MailSendHandler : ZoneRmiHandlerBase<MailSendHandler>
         // sender: the checks here, then the unknown recipient and the full mailbox inside it. A refused
         // send moves nothing and costs nothing (see MailPackets.PostageZeny), and its 2445 stops
         // the client at the result code.
-        if (!MailRules.IsAttachableZeny(req.Gold, MaxMailZeny(services)))
+        var fee = MailSendUseCase.DecideCharge(req.Gold, MaxMailZeny(services));
+        if (fee.Verdict == MailSendVerdict.SystemError)
         {
             Logger.LogWarning("{Name} tried to mail {Gold} zeny (over the Config_Def 92 cap)", player.Name, req.Gold);
             await RefuseAsync(session, player, MailPackets.SendSystemError);
@@ -56,31 +55,29 @@ public class MailSendHandler : ZoneRmiHandlerBase<MailSendHandler>
         // Postage + attached zeny are TAKEN here, atomically (TryDebit), not just compared: the mail is stored
         // and its item taken further down, and a check followed by a later clamped deduct would let a concurrent
         // spender drain the same funds in between. Every refusal below hands the charge back.
-        if (!MailRules.TryTotalCharge(req.Gold, out long charged) || !player.TryDebit(charged))
+        if (fee.Verdict != MailSendVerdict.Accepted || !player.TryDebit(fee.Charge))
         {
             await RefuseAsync(session, player, MailPackets.SendNotEnoughZeny);
             return;
         }
+        long charged = fee.Charge;
 
         var inv = services.GetService<IInventoryRepository>();
         InventoryItem? attached = null;
         if (req.ItemUid != NoAttachment)
         {
             // The same ownership test SendMailAsync applies before it takes the item. Without it a stale
-            // uid silently sent the mail without its attachment.
+            // uid silently sent the mail without its attachment. An untradeable (Is_Trade 0) or bound item is
+            // not mailed. This is defensive. 16208 is a code the client already renders (string_ui 2307 "Item is empty.").
             attached = inv == null ? null : await inv.GetByIdAsync(req.ItemUid);
-            if (attached == null || attached.CharacterId != player.CharacterId || attached.StorageType != StorageBag)
+            ItemData? template = null;
+            if (attached != null) services.GetService<GameDataStore>()?.Items.TryGetValue(attached.ItemId, out template);
+            var verdict = MailSendUseCase.DecideAttachment(req.ItemUid, attached, player.CharacterId, template);
+            if (verdict != MailSendVerdict.Accepted)
             {
-                player.Credit(charged);
-                await RefuseAsync(session, player, MailPackets.SendItemEmpty);
-                return;
-            }
-            // An untradeable (Is_Trade 0) or bound item is not mailed. This is defensive. 16208 is a code the
-            // client already renders (string_ui 2307 "Item is empty.").
-            if (RefusesAttachment(services.GetService<GameDataStore>()?.Items, attached))
-            {
-                Logger.LogInformation("{Name} tried to mail untradeable or bound item {ItemId} (uid {Uid}, bound {Bound})",
-                    player.Name, attached.ItemId, attached.Id, attached.Bound);
+                if (verdict == MailSendVerdict.ItemNotTradeable)
+                    Logger.LogInformation("{Name} tried to mail untradeable or bound item {ItemId} (uid {Uid}, bound {Bound})",
+                        player.Name, attached!.ItemId, attached.Id, attached.Bound);
                 player.Credit(charged);
                 await RefuseAsync(session, player, MailPackets.SendItemEmpty);
                 return;
@@ -137,10 +134,10 @@ public class MailSendHandler : ZoneRmiHandlerBase<MailSendHandler>
             MailPackets.BuildMailSend2445(player.EntityId, player.Gold, sentUid, slot, container, left));
     }
 
-    /// <summary>True when the attached item must not be mailed: its template is known and <see cref="TradeGate"/>
-    /// refuses it. An item whose template is unknown to the data is not refused here (as TradeMoveHandler).</summary>
+    /// <summary>True when the attached item must not be mailed: its template is known and
+    /// <see cref="MailSendUseCase.RefusesAttachment"/> refuses it. An item whose template is unknown to the data is not refused here (as TradeMoveHandler).</summary>
     internal static bool RefusesAttachment(IReadOnlyDictionary<uint, ItemData>? items, InventoryItem attached)
-        => items != null && items.TryGetValue(attached.ItemId, out var template) && TradeGate.RefusedAsNotTradeable(template, attached);
+        => MailSendUseCase.RefusesAttachment(items != null && items.TryGetValue(attached.ItemId, out var template) ? template : null, attached);
 
     private static Task RefuseAsync(ProudSession session, PlayerState player, ushort result) =>
         session.SendRmiAsync(ZoneS2COpcodes.OnMailSend, MailPackets.BuildMailSendFailed2445(player.EntityId, result));

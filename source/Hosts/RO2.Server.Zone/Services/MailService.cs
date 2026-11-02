@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using RO2.Mails.Application;
 using RO2.Mails.Domain;
 using RO2.Persistence.Mongo.Persistence;
 using RO2.Application;
@@ -34,9 +35,6 @@ public sealed class MailService
     /// <summary>InventoryItem.StorageType of a row in the character's bag, as opposed to worn gear or a bank.</summary>
     private const byte StorageBag = 0;
 
-    /// <summary>Sender name stored on a mail whose sender has no name.</summary>
-    private const string UnknownSenderName = "Unknown";
-
     /// <summary>Id given to a refunded row: the repository assigns a fresh uid.</summary>
     private const ulong NewRowId = 0;
 
@@ -44,15 +42,16 @@ public sealed class MailService
     private const short UnplacedSlot = -1;
 
     private readonly IMailRepository _repo;
-    private readonly ICharacterRepository _characters;
+    private readonly MailSendUseCase _send;
     private readonly PlayerStateManager _players;
     private readonly BroadcastService _broadcast;
     private readonly ILogger _log;
 
-    public MailService(IMailRepository repo, ICharacterRepository characters, PlayerStateManager players, BroadcastService broadcast, ILogger log)
+    public MailService(IMailRepository repo, ICharacterRepository characters, PlayerStateManager players, BroadcastService broadcast, ILogger log,
+        MailSendUseCase? send = null)
     {
         _repo = repo;
-        _characters = characters;
+        _send = send ?? new MailSendUseCase(characters, repo);
         _players = players;
         _broadcast = broadcast;
         _log = log;
@@ -62,7 +61,7 @@ public sealed class MailService
     public static MailService From(IServiceProvider services, PlayerStateManager players, BroadcastService broadcast, ILogger log)
     {
         return new MailService(services.GetRequiredService<IMailRepository>(), services.GetRequiredService<ICharacterRepository>(),
-            players, broadcast, log);
+            players, broadcast, log, services.GetService<MailSendUseCase>());
     }
 
     public Task<IReadOnlyList<MailMessage>> GetInboxAsync(uint receiverCharId) => _repo.GetInboxAsync(receiverCharId);
@@ -99,10 +98,9 @@ public sealed class MailService
     {
         try
         {
-            if (string.IsNullOrWhiteSpace(req.RecipientName)) return (SendResult.InvalidRequest, null);
-
-            var recipient = await ResolveCharacterByNameAsync(req.RecipientName);
-            if (recipient == null) return (SendResult.RecipientNotFound, null);
+            var resolved = await _send.ResolveRecipientAsync(req.RecipientName);
+            if (resolved.Verdict == MailSendVerdict.SystemError) return (SendResult.InvalidRequest, null);
+            if (resolved.Recipient is not { } recipient) return (SendResult.RecipientNotFound, null);
 
             var gate = s_recipientGates.GetOrAdd(recipient.Id, static _ => new SemaphoreSlim(1, 1));
             await gate.WaitAsync();
@@ -112,11 +110,11 @@ public sealed class MailService
                 // and before anything is taken from the sender: a refused send moves nothing and costs nothing
                 // (MailPackets.PostageZeny). The count is the whole box, every kind, read or not, but only mails
                 // younger than the mail lifetime count (IMailRepository.CountLiveInboxAsync).
-                long held = await _repo.CountLiveInboxAsync(recipient.Id, MailRules.LiveCutoff(DateTime.UtcNow));
-                if (MailRules.IsMailboxFull(held))
+                var mailbox = await _send.DecideMailboxAsync(recipient, DateTime.UtcNow);
+                if (mailbox.Verdict == MailSendVerdict.MailboxFull)
                 {
                     _log.LogInformation("Mail {Sender} -> {Recipient}: mailbox holds {Held} (limit {Limit})",
-                        sender.Name, recipient.Name, held, MailPackets.MailboxPlayerSendLimit);
+                        sender.Name, recipient.Name, mailbox.Held, MailPackets.MailboxPlayerSendLimit);
                     return (SendResult.MailboxFull, null);
                 }
                 return await StoreAsync(sender, req, senderInventory, recipient);
@@ -171,39 +169,8 @@ public sealed class MailService
             takenCount = take.Count;
         }
 
-        var mail = new MailMessage
-        {
-            ReceiverCharId = recipient.Id,
-            ReceiverName = recipient.Name,
-            SenderCharId = sender.CharacterId,
-            SenderName = string.IsNullOrEmpty(sender.Name) ? UnknownSenderName : sender.Name,
-            Title = req.Title ?? string.Empty,
-            Body = req.Body ?? string.Empty, // 1393 request: UTF-16 body text at offset +113
-            Gold = req.Gold,                 // 1393 request: attached zeny, u64 at offset +92; MailSendHandler
-                                             // checks it against the Config_Def 92 cap and the wallet first
-            IsRead = false,
-            SentAt = DateTime.UtcNow,
-        };
-
-        if (taken != null)
-        {
-            mail.AttachedItemUid = taken.Id;
-            mail.AttachedItemId = taken.ItemId;
-            mail.AttachedItemCount = takenCount;
-            mail.AttachedItemRefine = taken.Refine;
-            mail.AttachedItemDurability = taken.Durability;
-            mail.AttachedItemCardsJson = taken.CardsJson;
-            mail.AttachedItemElement = taken.Element; // else the claim re-creates it neutral
-            mail.AttachedItemDyeColor = taken.DyeColor;
-            mail.AttachedItemSocketPunchersJson = taken.SocketPunchersJson;
-            mail.AttachedItemDyeColor2 = taken.DyeColor2;
-            mail.AttachedItemDyeColor3 = taken.DyeColor3;
-            mail.AttachedItemFxEnchantIndex = taken.FxEnchantIndex;
-            mail.AttachedItemEnchantReinforceId = taken.EnchantReinforceId;
-            mail.AttachedItemEnchantSeconds = taken.EnchantSeconds;
-            mail.AttachedItemBound = taken.Bound;
-            mail.AttachedItemAbilityValue = taken.AbilityValue;
-        }
+        var mail = MailSendUseCase.ComposeMail(recipient, sender.CharacterId, sender.Name, req.Title, req.Body, req.Gold,
+            DateTime.UtcNow, taken, takenCount);
 
         try
         {
@@ -576,18 +543,5 @@ public sealed class MailService
         {
             _log.LogWarning(ex, "OnMailNew notify failed for char {Char}", receiverCharId);
         }
-    }
-
-    // ---------------------------------------------------------------------------------------------
-    // Helpers
-    // ---------------------------------------------------------------------------------------------
-
-    private async Task<Character?> ResolveCharacterByNameAsync(string name)
-    {
-        // Exact match first (fast, index-friendly), then a case-insensitive fallback.
-        var exact = await _characters.FindByExactNameAsync(name);
-        if (exact != null) return exact;
-
-        return await _characters.FindByNameIgnoreCaseAsync(name);
     }
 }
