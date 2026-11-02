@@ -767,41 +767,12 @@ public partial class NpcCombatService : ITickable
             if (p.IsInCombat && p.TargetEntityId != 0 && !p.IsDead)
                 engaged.Add(p.TargetEntityId);
 
-        var released = new List<NpcRuntimeState>();
-        foreach (var npc in _npcState.GetAliveNpcs(victim.MapId).ToArray())
-        {
-            if (npc.Camp <= NpcSpawnService.CampFriendly)
-                continue;
-
-            bool held;
-            uint target;
-            lock (npc.ThreatLock)
-            {
-                held = npc.ThreatTable.Remove(victim.EntityId);
-                // Only losing the TARGET re-selects. A monster keeps its current target while that row
-                // is on the table (it moves only when another row passes it by more than 10%). So removing someone else must not
-                // move the target. (NpcStateManager.AddThreatCore does not apply that 10% margin: it
-                // makes the top row the target on every add, so the target is the top row and removing
-                // another row leaves it the top row anyway.)
-                if (held && npc.AggroTargetHandle == victim.EntityId)
-                    npc.ThreatTable.ReselectTop();
-                target = npc.AggroTargetHandle;
-            }
-
-            if (held)
-            {
-                // To the players whose open meter is this monster (SendAggroChangeAsync), as every 2630.
-                await SendAggroChangeAsync(npc.EntityOid, npc.MapId, AggroPackets.BuildAggroChanged2630(
-                    npc.EntityOid, target, victim.EntityId, victim.Name, 0, changeFlag: AggroEntryRemoved));
-                // The re-selected target reaches whoever has this monster selected, as any other
-                // target change does.
-                await PushTargetChangesAsync(new[] { npc.EntityOid }, CancellationToken.None);
-            }
-
-            if ((held || npc.EntityOid == killerHandle) && !engaged.Contains(npc.EntityOid))
-                released.Add(npc);
-        }
-        return released;
+        var hostileNpcs = _npcState.GetAliveNpcs(victim.MapId).ToArray()
+            .Where(n => n.Camp > NpcSpawnService.CampFriendly).ToArray();
+        var hostile = hostileNpcs.ToDictionary(n => n.EntityOid);
+        var releasedOids = await VictimDropPass.RunAsync(new VictimThreatPorts(this, victim, hostile), victim.EntityId,
+            killerHandle, hostileNpcs.Select(n => n.EntityOid), engaged);
+        return releasedOids.Select(oid => hostile[oid]).ToList();
     }
 
     /// <summary>

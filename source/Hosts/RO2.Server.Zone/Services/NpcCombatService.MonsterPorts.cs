@@ -48,4 +48,40 @@ public partial class NpcCombatService
                 await ActorVitalsBroadcast.SendNpcAutoHealAsync(owner._broadcast, npc);
         }
     }
+
+    /// <summary>
+    /// The host side of <see cref="VictimDropPass"/> for one dying player: works on the monsters of the snapshot the
+    /// caller took, so the removal and its 2630 hit the same instances the released list maps back to.
+    /// </summary>
+    private sealed class VictimThreatPorts(NpcCombatService owner, PlayerState victim,
+        IReadOnlyDictionary<uint, NpcRuntimeState> monsters) : IVictimThreatPorts
+    {
+        public VictimRemoval RemoveVictim(uint monsterOid, uint victimHandle)
+        {
+            var npc = monsters[monsterOid];
+            lock (npc.ThreatLock)
+            {
+                bool held = npc.ThreatTable.Remove(victimHandle);
+                // Only losing the TARGET re-selects. A monster keeps its current target while that row
+                // is on the table (it moves only when another row passes it by more than 10%). So removing someone else must not
+                // move the target. (NpcStateManager.AddThreatCore does not apply that 10% margin: it
+                // makes the top row the target on every add, so the target is the top row and removing
+                // another row leaves it the top row anyway.)
+                if (held && npc.AggroTargetHandle == victimHandle)
+                    npc.ThreatTable.ReselectTop();
+                return new VictimRemoval(held, npc.AggroTargetHandle);
+            }
+        }
+
+        public async Task NotifyVictimRemovedAsync(uint monsterOid, VictimRemoval removal)
+        {
+            var npc = monsters[monsterOid];
+            // To the players whose open meter is this monster (SendAggroChangeAsync), as every 2630.
+            await owner.SendAggroChangeAsync(npc.EntityOid, npc.MapId, AggroPackets.BuildAggroChanged2630(
+                npc.EntityOid, removal.Target, victim.EntityId, victim.Name, 0, changeFlag: AggroEntryRemoved));
+            // The re-selected target reaches whoever has this monster selected, as any other
+            // target change does.
+            await owner.PushTargetChangesAsync(new[] { npc.EntityOid }, CancellationToken.None);
+        }
+    }
 }
