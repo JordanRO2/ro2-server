@@ -2,8 +2,11 @@ using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Logging;
 using RO2.Network.Protocol;
+using RO2.Quests.Domain;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
+
+using PlannerFailRow = RO2.Quests.Domain.FailRow;
 
 namespace RO2.Server.Zone.Services;
 
@@ -20,13 +23,13 @@ namespace RO2.Server.Zone.Services;
 internal static class QuestFailTriggers
 {
  /// <summary>Quest_Info Fail_Type: killing the NPC Value1 Value2 times fails the quest.</summary>
-    internal const byte FailTypeKill = 2;
+    internal const byte FailTypeKill = FailPlanner.FailTypeKill;
 
  /// <summary>Quest_Info Fail_Type: the player dying fails the quest.</summary>
-    internal const byte FailTypeDeath = 26;
+    internal const byte FailTypeDeath = FailPlanner.FailTypeDeath;
 
  /// <summary>The tail of a Fail_Type 26 failure.</summary>
-    internal const uint DeathTail = 0;
+    internal const uint DeathTail = FailPlanner.DeathTail;
 
  /// <summary>The fail columns of one Quest_Info row.</summary>
     internal sealed record FailRow(uint Quest_ID, byte Fail_Type, uint Fail_Type_Value1, uint Fail_Type_Value2);
@@ -65,49 +68,31 @@ internal static class QuestFailTriggers
         }
     }
 
- /// <summary>
- /// The held quests that a death fails: those with a Fail_Type 26 row that have not already failed, ascending,
- /// each with tail <see cref="DeathTail"/>.
- /// </summary>
+ /// <summary>Forwarding shim over <see cref="FailPlanner.PlanDeathFailures"/> (maps only the held quests' rows).</summary>
     internal static List<Failure> PlanDeathFailures(IReadOnlyDictionary<uint, FailRow[]> rows,
         IEnumerable<uint> held, Func<uint, bool> alreadyFailed)
     {
-        var plan = new List<Failure>();
-        foreach (var questId in held.Distinct().OrderBy(q => q))
-        {
-            if (alreadyFailed(questId) || !rows.TryGetValue(questId, out var questRows)) continue;
-            if (questRows.Any(r => r.Fail_Type == FailTypeDeath))
-                plan.Add(new Failure(questId, FailTypeDeath, DeathTail));
-        }
-        return plan;
+        var heldIds = held.ToArray();
+        return FailPlanner.PlanDeathFailures(ToPlannerRows(rows, heldIds), heldIds, alreadyFailed)
+            .ConvertAll(f => new Failure(f.QuestId, f.FailType, f.Tail));
     }
 
- /// <summary>
- /// Counts a kill of <paramref name="npcId"/> against the held quests' Fail_Type 2 rows that name it. Returns the
- /// quests whose count reached the row's Value2 (at least 1), ascending, each with the row's Value1 as tail.
- /// <paramref name="counts"/> is the login's kill table; failed quests are not counted.
- /// </summary>
+ /// <summary>Forwarding shim over <see cref="FailPlanner.CountKill"/>; <paramref name="counts"/> is the login's kill table.</summary>
     internal static List<Failure> CountKill(IReadOnlyDictionary<uint, FailRow[]> rows, IEnumerable<uint> held,
         Func<uint, bool> alreadyFailed, ConcurrentDictionary<(uint Quest, int Row), int> counts, uint npcId)
     {
-        var plan = new List<Failure>();
-        if (npcId == 0) return plan;
-        foreach (var questId in held.Distinct().OrderBy(q => q))
-        {
-            if (alreadyFailed(questId) || !rows.TryGetValue(questId, out var questRows)) continue;
-            for (int i = 0; i < questRows.Length; i++)
-            {
-                var row = questRows[i];
-                if (row.Fail_Type != FailTypeKill || row.Fail_Type_Value1 != npcId) continue;
-                var killed = counts.AddOrUpdate((questId, i), 1, (_, n) => n + 1);
-                if (killed >= Math.Max(1u, row.Fail_Type_Value2))
-                {
-                    plan.Add(new Failure(questId, FailTypeKill, row.Fail_Type_Value1));
-                    break;   
-                }
-            }
-        }
-        return plan;
+        var heldIds = held.ToArray();
+        return FailPlanner.CountKill(ToPlannerRows(rows, heldIds), heldIds, alreadyFailed, new KillCounter(counts), npcId)
+            .ConvertAll(f => new Failure(f.QuestId, f.FailType, f.Tail));
+    }
+
+    private static Dictionary<uint, PlannerFailRow[]> ToPlannerRows(IReadOnlyDictionary<uint, FailRow[]> rows, uint[] held)
+    {
+        var mapped = new Dictionary<uint, PlannerFailRow[]>();
+        foreach (var questId in held)
+            if (!mapped.ContainsKey(questId) && rows.TryGetValue(questId, out var questRows))
+                mapped[questId] = questRows.Select(r => new PlannerFailRow(r.Fail_Type, r.Fail_Type_Value1, r.Fail_Type_Value2)).ToArray();
+        return mapped;
     }
 
  /// <summary>Forgets the kill counts of <paramref name="questId"/> (a new accept starts them over).</summary>
