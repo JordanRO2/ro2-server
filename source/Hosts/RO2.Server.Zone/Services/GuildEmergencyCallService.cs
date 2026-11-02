@@ -23,7 +23,7 @@ namespace RO2.Server.Zone.Services;
 public static class GuildEmergencyCallService
 {
  /// <summary>Skill_Table_Base.Skill_Function of the Emergency Call: group 40001 is the only row with it.</summary>
-    internal const int EmergencyCallSkillFunction = 28;
+    internal const int EmergencyCallSkillFunction = EmergencyCallRules.EmergencyCallSkillFunction;
 
  /// <summary>The file GameDataStore loads Skill_Table_Base from (same relative "data" directory).</summary>
     private static readonly string ShippedSkillTable = Path.Combine("data", "Skill_Table_Base.json");
@@ -35,56 +35,19 @@ public static class GuildEmergencyCallService
  /// <remarks>
  /// The rows are read from the shipped Skill_Table_Base data, not from a list in code.
  /// </remarks>
-    public static bool IsEmergencyCallSkill(uint skillId) => Shipped.Value.Groups.ContainsKey(skillId / 100);
+    public static bool IsEmergencyCallSkill(uint skillId) => EmergencyCallRules.IsEmergencyCallSkill(Shipped.Value.Groups, skillId);
 
  /// <summary>Why the Emergency Call rows could not be read, or null when they were.</summary>
     public static string? SkillTableError => Shipped.Value.Error;
 
  /// <summary>The maps the skill may be cast on (Skill_Table_Base.Targeting_Map_ID), empty when unknown.</summary>
-    public static IReadOnlySet<uint> TargetMapsOf(uint skillId)
-        => Shipped.Value.Groups.TryGetValue(skillId / 100, out var maps) ? maps : FrozenSet<uint>.Empty;
-
- /// <summary>
- /// Maps each Skill_Group whose Skill_Function is <see cref="EmergencyCallSkillFunction"/> to its
- /// Targeting_Map_ID set. The shipped table gives 40001 → {3101, 3201}.
- /// </summary>
-    internal static FrozenDictionary<uint, FrozenSet<uint>> ParseEmergencyCallGroups(ReadOnlySpan<byte> skillTableJson)
-    {
-        var reader = new Utf8JsonReader(skillTableJson, new JsonReaderOptions { CommentHandling = JsonCommentHandling.Skip });
-        using var doc = JsonDocument.ParseValue(ref reader);
-        var groups = new Dictionary<uint, FrozenSet<uint>>();
-        foreach (var row in doc.RootElement.EnumerateArray())
-        {
-            if (row.TryGetProperty("Skill_Function", out var fn) && fn.ValueKind == JsonValueKind.Number
-                && fn.TryGetInt32(out var function) && function == EmergencyCallSkillFunction
-                && row.TryGetProperty("Skill_Group", out var g) && g.TryGetUInt32(out var group))
-            {
-                var maps = row.TryGetProperty("Targeting_Map_ID", out var m) && m.ValueKind == JsonValueKind.String
-                    ? ParseMapList(m.GetString())
-                    : FrozenSet<uint>.Empty;
-                groups[group] = maps;
-            }
-        }
-        return groups.ToFrozenDictionary();
-    }
-
- /// <summary>Parses a Targeting_Map_ID cell such as <c>"3101,3201,"</c> (comma-separated, trailing comma).</summary>
-    internal static FrozenSet<uint> ParseMapList(string? cell)
-    {
-        if (string.IsNullOrWhiteSpace(cell))
-            return FrozenSet<uint>.Empty;
-        var maps = new HashSet<uint>();
-        foreach (var part in cell.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
-            if (uint.TryParse(part, out var id))
-                maps.Add(id);
-        return maps.ToFrozenSet();
-    }
+    public static IReadOnlySet<uint> TargetMapsOf(uint skillId) => EmergencyCallRules.TargetMapsOf(Shipped.Value.Groups, skillId);
 
     private static (FrozenDictionary<uint, FrozenSet<uint>>, string?) LoadShippedGroups()
     {
         try
         {
-            var groups = ParseEmergencyCallGroups(File.ReadAllBytes(ShippedSkillTable));
+            var groups = EmergencyCallRules.ParseEmergencyCallGroups(File.ReadAllBytes(ShippedSkillTable));
             return groups.Count > 0
                 ? (groups, null)
                 : (groups, $"{ShippedSkillTable} has no Skill_Function {EmergencyCallSkillFunction} row");
@@ -96,54 +59,10 @@ public static class GuildEmergencyCallService
     }
 
     
-    
-    
- /// <summary>Why a landed Emergency Call issues no call. <see cref="None"/> means it does.</summary>
-    public enum CastRefusal
-    {
-        None,
- /// <summary>The caster is in no guild.</summary>
-        NoGuild,
- /// <summary>The caster is not the guild's master (see the class remarks).</summary>
-        NotMaster,
- /// <summary>The guild has not learned the Guild_Skill_Level row whose Link_Skill_ID is this skill.</summary>
-        NotLearned,
- /// <summary>The caster's map is not in the skill's Targeting_Map_ID.</summary>
-        WrongMap,
-    }
-
- /// <summary>Decides whether a landed Emergency Call by <paramref name="casterCharId"/> issues a call.</summary>
- /// <remarks>
- /// <list type="bullet">
- /// <item>The caster must be the guild master.</item>
- /// <item>The guild must have learned the skill: one of its learned Guild_Skill_Level rows links to this skill.</item>
- /// <item>The caster's map must be in the skill's Targeting_Map_ID.</item>
- /// </list>
- /// </remarks>
-    internal static CastRefusal Validate(Guild? guild, uint casterCharId, uint skillId, uint casterMapId,
+ /// <summary>Decides whether a landed Emergency Call by <paramref name="casterCharId"/> issues a call (rules in <see cref="EmergencyCallRules"/>).</summary>
+    internal static EmergencyCallRefusal Validate(Guild? guild, uint casterCharId, uint skillId, uint casterMapId,
         IReadOnlySet<uint> targetMaps, IReadOnlyList<GuildSkillLevel> guildSkillLevels)
-    {
-        if (guild is null)
-            return CastRefusal.NoGuild;
-        if (guild.MasterCharId != casterCharId)
-            return CastRefusal.NotMaster;
-
-        uint[] learned;
-        lock (guild.Gate) learned = guild.Skills.ToArray();
-        var holds = false;
-        foreach (var row in guildSkillLevels)
-        {
-            if (row.Link_Skill_ID == skillId && Array.IndexOf(learned, row.Guild_Skill_ID) >= 0)
-            {
-                holds = true;
-                break;
-            }
-        }
-        if (!holds)
-            return CastRefusal.NotLearned;
-
-        return targetMaps.Contains(casterMapId) ? CastRefusal.None : CastRefusal.WrongMap;
-    }
+        => EmergencyCallRules.Validate(guild, casterCharId, skillId, casterMapId, targetMaps, guildSkillLevels);
 
     
     

@@ -65,7 +65,7 @@ public class GuildEmergencyCallTests
     [Fact]
     public void EmergencyCallRows_ComeFromTheShippedSkillTable()
     {
-        var groups = GuildEmergencyCallService.ParseEmergencyCallGroups(File.ReadAllBytes(DataFile("Skill_Table_Base.json")));
+        var groups = EmergencyCallRules.ParseEmergencyCallGroups(File.ReadAllBytes(DataFile("Skill_Table_Base.json")));
 
         var only = Assert.Single(groups);
         Assert.Equal(40001u, only.Key);
@@ -78,7 +78,7 @@ public class GuildEmergencyCallTests
     [InlineData("", new uint[0])]
     [InlineData(null, new uint[0])]
     public void TargetingMapCell_Parses(string? cell, uint[] expected)
-        => Assert.Equal(expected, GuildEmergencyCallService.ParseMapList(cell).Order().ToArray());
+        => Assert.Equal(expected, EmergencyCallRules.ParseMapList(cell).Order().ToArray());
 
     [Fact]
     public void Validate_RequiresTheMasterTheLearnedLevelAndATargetMap()
@@ -89,17 +89,29 @@ public class GuildEmergencyCallTests
         guild.Members.Add(new GuildMember { CharId = 100 });
         guild.Members.Add(new GuildMember { CharId = 101 });
 
-        Assert.Equal(GuildEmergencyCallService.CastRefusal.None,
+        Assert.Equal(EmergencyCallRefusal.None,
             GuildEmergencyCallService.Validate(guild, 100, EmergencyCallLevel3, 3201, maps, levels));
-        Assert.Equal(GuildEmergencyCallService.CastRefusal.NotMaster,
+        Assert.Equal(EmergencyCallRefusal.NotMaster,
             GuildEmergencyCallService.Validate(guild, 101, EmergencyCallLevel3, 3201, maps, levels));
-        Assert.Equal(GuildEmergencyCallService.CastRefusal.NoGuild,
+        Assert.Equal(EmergencyCallRefusal.NoGuild,
             GuildEmergencyCallService.Validate(null, 100, EmergencyCallLevel3, 3201, maps, levels));
         
-        Assert.Equal(GuildEmergencyCallService.CastRefusal.NotLearned,
+        Assert.Equal(EmergencyCallRefusal.NotLearned,
             GuildEmergencyCallService.Validate(guild, 100, 4000101, 3201, maps, levels));
-        Assert.Equal(GuildEmergencyCallService.CastRefusal.WrongMap,
+        Assert.Equal(EmergencyCallRefusal.WrongMap,
             GuildEmergencyCallService.Validate(guild, 100, EmergencyCallLevel3, 1100, maps, levels));
+    }
+
+    [Fact]
+    public void SkillLookups_UseTheGroupsPassedIn()
+    {
+        var groups = EmergencyCallRules.ParseEmergencyCallGroups(File.ReadAllBytes(DataFile("Skill_Table_Base.json")));
+
+        Assert.True(EmergencyCallRules.IsEmergencyCallSkill(groups, EmergencyCallLevel3));
+        Assert.False(EmergencyCallRules.IsEmergencyCallSkill(groups, 4000203));
+        Assert.Equal(new uint[] { 3101, 3201 }, EmergencyCallRules.TargetMapsOf(groups, EmergencyCallLevel3).Order().ToArray());
+        Assert.Empty(EmergencyCallRules.TargetMapsOf(groups, 4000203));
+        Assert.False(EmergencyCallRules.IsEmergencyCallSkill(System.Collections.Frozen.FrozenDictionary<uint, System.Collections.Frozen.FrozenSet<uint>>.Empty, EmergencyCallLevel3));
     }
 
     [Fact]

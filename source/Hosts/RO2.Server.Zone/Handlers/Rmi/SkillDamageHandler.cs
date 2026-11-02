@@ -12,6 +12,7 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Worlds.Domain;
+using RO2.Guilds.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -762,7 +763,7 @@ public class SkillDamageHandler : ZoneRmiHandlerBase<SkillDamageHandler>
         var data = services.GetRequiredService<GameDataStore>();
         var refusal = GuildEmergencyCallService.Validate(guild, caster.CharacterId, skillId, caster.MapId,
             GuildEmergencyCallService.TargetMapsOf(skillId), data.GuildSkillLevel);
-        if (refusal != GuildEmergencyCallService.CastRefusal.None || guild is null)
+        if (refusal != EmergencyCallRefusal.None || guild is null)
         {
             Logger.LogInformation("{Name} landed the guild Emergency Call {SkillId} on map {Map} but issues no call: {Refusal}",
                 caster.Name, skillId, caster.MapId, refusal);
