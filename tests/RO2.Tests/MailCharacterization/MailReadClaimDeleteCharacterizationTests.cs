@@ -1,5 +1,6 @@
 using System.Buffers.Binary;
 using Microsoft.Extensions.Logging.Abstractions;
+using RO2.Mails.Application;
 using RO2.Mails.Domain;
 using RO2.GameData;
 using RO2.Network.Protocol;
@@ -360,9 +361,9 @@ public class MailReadClaimDeleteCharacterizationTests
     [Fact]
     public void A_stored_count_of_zero_means_one_item()
     {
-        Assert.Equal(1, MailService.AttachedCount(new MailMessage { AttachedItemCount = 0 }));
-        Assert.Equal(1, MailService.AttachedCount(new MailMessage { AttachedItemCount = -3 }));
-        Assert.Equal(7, MailService.AttachedCount(new MailMessage { AttachedItemCount = 7 }));
+        Assert.Equal(1, ClaimMailItemUseCase.AttachedCount(new MailMessage { AttachedItemCount = 0 }));
+        Assert.Equal(1, ClaimMailItemUseCase.AttachedCount(new MailMessage { AttachedItemCount = -3 }));
+        Assert.Equal(7, ClaimMailItemUseCase.AttachedCount(new MailMessage { AttachedItemCount = 7 }));
     }
 
     // ---------------------------------------------------------------- 1394 list

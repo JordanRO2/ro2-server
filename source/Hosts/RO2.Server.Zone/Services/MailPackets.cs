@@ -2,6 +2,7 @@ using System;
 using System.Buffers.Binary;
 using System.Collections.Generic;
 using System.Text;
+using RO2.Mails.Application;
 using RO2.Mails.Domain;
 using RO2.Network.Packets;
 
@@ -446,7 +447,7 @@ public static class MailPackets
         if (mail.AttachedItemId == 0 || (mail.ItemClaimed && !claimedThisEntry)) return new byte[ItemRecordLength];
         // A claimed item is in the bag under its own uid now; the mail shows it without one.
         ulong uid = mail.ItemClaimed ? 0 : mail.AttachedItemUid;
-        var rec = ItemPackets.BuildItemRecord126(MailService.AttachmentAsBagRow(mail, mail.ReceiverCharId, uid, 0));
+        var rec = ItemPackets.BuildItemRecord126(ClaimMailItemUseCase.AttachmentAsBagRow(mail, mail.ReceiverCharId, uid, 0));
         rec[ItemRecordContainerOffset] = AuctionMailKind.IsAuction(mail.Kind)   // container: still in the mail, never a bag cell
             ? AuctionAttachmentContainer
             : MailAttachmentContainer;

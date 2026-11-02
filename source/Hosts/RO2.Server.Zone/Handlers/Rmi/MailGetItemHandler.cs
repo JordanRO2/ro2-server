@@ -9,6 +9,7 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Inventory.Domain;
+using RO2.Mails.Application;
 using RO2.Mails.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
@@ -58,18 +59,18 @@ public class MailGetItemHandler : ZoneRmiHandlerBase<MailGetItemHandler>
         ushort failure = ResultOk;
         short cell = NoCell;
         InventoryItem? joinStack = null;
-        if (existing == null || existing.AttachedItemId == NoAttachedItem || existing.ItemClaimed)
+        var claimable = ClaimMailItemUseCase.DecideClaimable(existing, inv != null);
+        if (claimable != MailClaimVerdict.Accepted)
         {
-            failure = MailPackets.GetItemInvalidMail;   // nothing left to claim (every re-claim)
-        }
-        else if (inv == null)
-        {
-            failure = MailPackets.GetItemSystemError;
+            // nothing left to claim (every re-claim), or no inventory repository
+            failure = claimable == MailClaimVerdict.SystemError ? MailPackets.GetItemSystemError : MailPackets.GetItemInvalidMail;
         }
         else
         {
-            var bag = await inv.GetByCharacterAsync(player.CharacterId);
-            int stackMax = store.Items.TryGetValue(existing.AttachedItemId, out var template) ? template.Stack_Max : DefaultStackMax;
+            var bag = await inv!.GetByCharacterAsync(player.CharacterId);
+            // The joinable-stack search stays here: it resolves the template's ability value and Stack_Max from the
+            // game-data store, which the Mail use case never reads.
+            int stackMax = store.Items.TryGetValue(existing!.AttachedItemId, out var template) ? template.Stack_Max : DefaultStackMax;
             joinStack = MailService.FindJoinStack(bag, existing, stackMax);
             if (joinStack == null)
             {
@@ -79,9 +80,9 @@ public class MailGetItemHandler : ZoneRmiHandlerBase<MailGetItemHandler>
                 // have (WriteItemInstance clamps past bag 4 onto an occupied cell).
                 var freeCells = BagCapacity.FreeCells(bag, store.Items);
                 cell = freeCells.Count > 0 ? freeCells[0] : NoCell;
-                if (cell < 0)
-                    failure = MailPackets.GetItemNoSpace;
             }
+            if (ClaimMailItemUseCase.DecidePlacement(joinStack != null, cell >= 0) == MailClaimVerdict.NoSpace)
+                failure = MailPackets.GetItemNoSpace;
         }
 
         if (failure != ResultOk)

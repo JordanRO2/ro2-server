@@ -1,6 +1,7 @@
 using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using RO2.Mails.Application;
 using RO2.Mails.Domain;
 using RO2.GameData;
 using RO2.Network.Protocol;
@@ -623,7 +624,7 @@ public static class IllusionPyramidService
             AttachedItemDurability = template is null ? DurabilityUnset : (short)Math.Min(template.Durability, (uint)short.MaxValue),
         };
         await mails.AddAsync(mail);
-        var record = ItemPackets.BuildItemRecord126(MailService.AttachmentAsBagRow(mail, player.CharacterId, mail.AttachedItemUid, MailedItemSlot));
+        var record = ItemPackets.BuildItemRecord126(ClaimMailItemUseCase.AttachmentAsBagRow(mail, player.CharacterId, mail.AttachedItemUid, MailedItemSlot));
         record[ItemRecordBagOffset] = MailedItemBag;
         record[ItemRecordSlotOffset] = MailedItemSlot;
         await session.SendRmiAsync(ZoneS2COpcodes.OnPickupItem,

@@ -1,5 +1,6 @@
 using System.Buffers.Binary;
 using System.Text.Json;
+using RO2.Mails.Application;
 using RO2.Mails.Domain;
 using RO2.GameData.Tables;
 using RO2.Network.Packets;
@@ -292,7 +293,7 @@ public class Reaudit_B0_Tests
         Assert.Null(new InventoryItem().CopyInstanceStateFrom(new InventoryItem()).AbilityValue);
 
         var mail = new MailMessage { AttachedItemId = 33000712, AttachedItemCount = 1, AttachedItemAbilityValue = 0 };
-        Assert.Equal(0u, MailService.AttachmentAsBagRow(mail, 7, 99, 3).AbilityValue);
+        Assert.Equal(0u, ClaimMailItemUseCase.AttachmentAsBagRow(mail, 7, 99, 3).AbilityValue);
     }
 
     

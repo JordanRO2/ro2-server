@@ -195,7 +195,7 @@ public sealed class MailService
         try
         {
             // A fresh uid and the lowest free slot.
-            await inv.AddItemAsync(AttachmentAsBagRow(mail, charId, NewRowId, UnplacedSlot));
+            await inv.AddItemAsync(ClaimMailItemUseCase.AttachmentAsBagRow(mail, charId, NewRowId, UnplacedSlot));
         }
         catch (Exception ex)
         {
@@ -253,8 +253,10 @@ public sealed class MailService
         {
             var mail = await _repo.GetByUidAsync(charId, uid);
             if (mail == null) return new ItemClaim(null, null, false);
-            if (!MailRules.HasClaimableItem(mail) || inventory == null) return new ItemClaim(mail, null, false);
-            if (joinStack == null && cell < 0) return new ItemClaim(mail, null, false);   // nowhere to put it; the caller answers 16207
+            if (ClaimMailItemUseCase.DecideClaimable(mail, inventory != null) != MailClaimVerdict.Accepted) return new ItemClaim(mail, null, false);
+            var inv = inventory!;   // DecideClaimable accepted it, so a repository is there
+            // nowhere to put it; the caller answers 16207
+            if (ClaimMailItemUseCase.DecidePlacement(joinStack != null, cell >= 0) != MailClaimVerdict.Accepted) return new ItemClaim(mail, null, false);
 
             var claimed = await _repo.TryClaimItemAsync(charId, uid);
             if (claimed == null) return new ItemClaim(mail, null, false);   // lost the race: already claimed
@@ -266,8 +268,8 @@ public sealed class MailService
             {
                 if (joinStack != null)
                 {
-                    countBefore = (await inventory.GetByIdAsync(joinStack.Id))?.Count;
-                    var merged = countBefore is null ? null : await inventory.AdjustCountAsync(joinStack.Id, charId, AttachedCount(claimed));
+                    countBefore = (await inv.GetByIdAsync(joinStack.Id))?.Count;
+                    var merged = countBefore is null ? null : await inv.AdjustCountAsync(joinStack.Id, charId, ClaimMailItemUseCase.AttachedCount(claimed));
                     if (merged is null)
                     {
                         // the stack vanished; the mail stays claimable
@@ -280,25 +282,25 @@ public sealed class MailService
                 else
                 {
                     ulong keepUid = claimed.AttachedItemUid;
-                    if (keepUid != 0 && await inventory.GetByIdAsync(keepUid) != null)
+                    if (keepUid != 0 && await inv.GetByIdAsync(keepUid) != null)
                         keepUid = 0;   // taken: AddItemAsync assigns a fresh uid for Id 0
-                    placed = addedRow = AttachmentAsBagRow(claimed, charId, keepUid, cell);
+                    placed = addedRow = ClaimMailItemUseCase.AttachmentAsBagRow(claimed, charId, keepUid, cell);
                     try
                     {
-                        await inventory.AddItemAsync(placed);
+                        await inv.AddItemAsync(placed);
                     }
                     catch (MongoWriteException ex) when (ex.WriteError?.Category == ServerErrorCategory.DuplicateKey && placed.Id != 0)
                     {
                         // Another row took the uid between the check and the insert.
                         placed.Id = 0;
-                        await inventory.AddItemAsync(placed);
+                        await inv.AddItemAsync(placed);
                     }
                 }
             }
             catch (Exception ex)
             {
                 _log.LogError(ex, "Mail {Uid:X} item placement failed for char {Char}; undoing the claim", uid, charId);
-                await UndoPlacementAsync(inventory, charId, joinStack, countBefore, addedRow, AttachedCount(claimed));
+                await UndoPlacementAsync(inv, charId, joinStack, countBefore, addedRow, ClaimMailItemUseCase.AttachedCount(claimed));
                 await UnclaimItemAsync(charId, uid);
                 throw;
             }
@@ -352,38 +354,6 @@ public sealed class MailService
         }
     }
 
-    /// <summary>The stack count a mail's item carries (a mail stored with 0 means one).</summary>
-    internal static int AttachedCount(MailMessage mail) => mail.AttachedItemCount > 0 ? mail.AttachedItemCount : 1;
-
-    /// <summary>
-    /// The mailed item as a bag row (StorageType 0) with uid <paramref name="id"/> in flat cell
-    /// <paramref name="slot"/>, carrying the snapshot the mail took of it. The single mapping from the
-    /// mail's AttachedItem* fields to an item, used by the claim and by the 2446 attachment record
-    /// (<see cref="MailPackets.BuildAttachmentRecord126"/>), so the item a mail shows is the item it gives.
-    /// </summary>
-    internal static InventoryItem AttachmentAsBagRow(MailMessage mail, uint charId, ulong id, short slot) => new()
-    {
-        Id = id,
-        CharacterId = charId,
-        ItemId = mail.AttachedItemId,
-        Count = AttachedCount(mail),
-        Slot = slot,
-        StorageType = StorageBag,
-        Refine = mail.AttachedItemRefine,
-        Durability = mail.AttachedItemDurability,
-        CardsJson = mail.AttachedItemCardsJson,
-        Element = mail.AttachedItemElement,
-        DyeColor = mail.AttachedItemDyeColor,
-        SocketPunchersJson = mail.AttachedItemSocketPunchersJson,
-        DyeColor2 = mail.AttachedItemDyeColor2,
-        DyeColor3 = mail.AttachedItemDyeColor3,
-        FxEnchantIndex = mail.AttachedItemFxEnchantIndex,
-        EnchantReinforceId = mail.AttachedItemEnchantReinforceId,
-        EnchantSeconds = mail.AttachedItemEnchantSeconds,
-        Bound = mail.AttachedItemBound,
-        AbilityValue = mail.AttachedItemAbilityValue,
-    };
-
     /// <summary>
     /// The bag stack a claim of <paramref name="mail"/>'s item joins, or null when it needs a cell of its
     /// own: a placed bag row (StorageType 0) of the same template whose count plus the mail's stays within
@@ -400,7 +370,7 @@ public sealed class MailService
     public static InventoryItem? FindJoinStack(IEnumerable<InventoryItem> bag, MailMessage mail, int stackMax)
     {
         if (mail.AttachedItemId == 0 || stackMax <= 1) return null;
-        int count = AttachedCount(mail);
+        int count = ClaimMailItemUseCase.AttachedCount(mail);
         return bag
             .Where(i => i.StorageType == StorageBag && i.Slot >= 0 && i.ItemId == mail.AttachedItemId
                         && i.Count > 0 && i.Count + count <= stackMax
