@@ -72,6 +72,8 @@ public class QuestAcceptAndPrizeReauditTests
         collection.AddSingleton(await LoadStoreAsync("Quest_Info.json", "ItemInfo.json"));
         collection.AddSingleton<IInventoryRepository>(new GearInventory(FullBag(701)));
         collection.AddSingleton<IQuestRepository>(new NoQuests());
+        collection.AddSingleton<RO2.Quests.Application.IQuestGameData, QuestGameData>();
+        collection.AddSingleton<RO2.Quests.Application.QuestAcceptUseCase>();
         await using var services = collection.BuildServiceProvider();
         var handler = new QuestAcceptHandler(services.GetRequiredService<IServiceScopeFactory>(),
             NullLogger<QuestAcceptHandler>.Instance, players, broadcast);

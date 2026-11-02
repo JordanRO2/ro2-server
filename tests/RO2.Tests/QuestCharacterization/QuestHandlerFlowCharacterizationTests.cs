@@ -80,6 +80,8 @@ public class QuestHandlerFlowCharacterizationTests
                 .AddSingleton(store)
                 .AddSingleton<IInventoryRepository>(inventory)
                 .AddSingleton<IQuestRepository>(quests)
+                .AddSingleton<RO2.Quests.Application.IQuestGameData, QuestGameData>()
+                .AddSingleton<RO2.Quests.Application.QuestAcceptUseCase>()
                 .AddSingleton(new EffectService(players, broadcast, store, npcState: null!, loot: null!, scopeFactory: null!,
                     logger: NullLogger<EffectService>.Instance, emblems: TestEmblems.Create()))
                 .BuildServiceProvider();

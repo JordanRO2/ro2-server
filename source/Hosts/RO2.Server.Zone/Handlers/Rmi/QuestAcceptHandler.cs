@@ -2,6 +2,7 @@ using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using RO2.Quests.Application;
 using RO2.Quests.Domain;
 using RO2.Domain.Entities;
 using RO2.GameData;
@@ -41,9 +42,6 @@ public class QuestAcceptHandler : ZoneRmiHandlerBase<QuestAcceptHandler>
  /// <summary>Token of the live time-limit timer for each quest a player holds; see <see cref="ObjectiveTimers"/>.</summary>
     private static readonly ConditionalWeakTable<PlayerState, ConcurrentDictionary<uint, object>> FailTimers = new();
 
- /// <summary>True when the quest is not repeatable (Quest_Frequency 0), so a character that completed it cannot take it again.</summary>
-    private static bool IsOneShot(uint questId) => QuestRepeatGate.Of(questId) is { Quest_Frequency: 0 };
-
     protected override async Task HandleAsync(
         ProudSession session,
         ReadOnlyMemory<byte> payload,
@@ -63,103 +61,54 @@ public class QuestAcceptHandler : ZoneRmiHandlerBase<QuestAcceptHandler>
         var questId = reader.ReadUInt32();
 
         var store = services.GetRequiredService<GameDataStore>();
-
-        if (!store.Quests.TryGetValue(questId, out var quest))
-        {
-            Logger.LogWarning("{Name} tried to accept unknown quest {QuestId}", player.Name, questId);
-            
-            
-            
-            await session.SendRmiAsync(ZoneS2COpcodes.OnQuestError,
-                writer => writer.WriteBytes(QuestProgressPackets.BuildQuestError2431(
-                    questId, QuestProgressPackets.QuestErrorInsertRejected)));
-            return;
-        }
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        if (player.ActiveQuests.Contains(questId))
-        {
-            Logger.LogDebug("{Name} asked again for already-active quest {QuestId}; refused", player.Name, questId);
-            await session.SendRmiAsync(ZoneS2COpcodes.OnQuestError,
-                writer => writer.WriteBytes(QuestProgressPackets.BuildQuestError2431(
-                    questId, QuestProgressPackets.QuestErrorInsertRejected)));
-            return;
-        }
-
         var questRepo = services.GetRequiredService<IQuestRepository>();
 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        if (IsOneShot(questId))
+        // Gates 1-5 (unknown, already active, one-shot done, daily done, class/profession/Job_Master) live in the use
+        // case; the host reads the player facts and maps each verdict to its wire.
+        var repeat = QuestRepeatGate.Of(questId);
+        var gate = QuestAcceptGates.Of(questId) is { } gates && player.Character is { } character
+            ? new QuestAcceptGateInput(
+                new AcceptGateColumns(gates.PC_Job, gates.PC_ProJob, gates.Job_Master_Min_Level, gates.Job_Master_Max_Level, gates.Job_Master_Quest),
+                CharacterHeadRules.CombatJobByte(character), CharacterHeadRules.CreationProfessionByte(character),
+                player.Level, CharacterSerializer.WireProJob(character).Level)
+            : (QuestAcceptGateInput?)null;
+        var decision = await services.GetRequiredService<QuestAcceptUseCase>().DecideAsync(new QuestAcceptRequest(
+            player.CharacterId, questId, player.ActiveQuests.Contains(questId),
+            repeat is { Quest_Frequency: 0 }, repeat?.Daily_Quest ?? (byte)0, DateTime.UtcNow, gate));
+
+        switch (decision.Verdict)
         {
-            var completed = await questRepo.GetCompletedQuestIdsAsync(player.CharacterId);
-            if (completed.Contains(questId))
-            {
+            case QuestAcceptVerdict.UnknownQuest:
+                Logger.LogWarning("{Name} tried to accept unknown quest {QuestId}", player.Name, questId);
+                await session.SendRmiAsync(ZoneS2COpcodes.OnQuestError,
+                    writer => writer.WriteBytes(QuestProgressPackets.BuildQuestError2431(
+                        questId, QuestProgressPackets.QuestErrorInsertRejected)));
+                return;
+            case QuestAcceptVerdict.AlreadyActive:
+                Logger.LogDebug("{Name} asked again for already-active quest {QuestId}; refused", player.Name, questId);
+                await session.SendRmiAsync(ZoneS2COpcodes.OnQuestError,
+                    writer => writer.WriteBytes(QuestProgressPackets.BuildQuestError2431(
+                        questId, QuestProgressPackets.QuestErrorInsertRejected)));
+                return;
+            case QuestAcceptVerdict.OneShotDone:
                 Logger.LogInformation("{Name} asked again for completed one-shot quest {QuestId}; ignored",
                     player.Name, questId);
                 return;
-            }
-        }
-
-        
-        
-        
-        
-        if (QuestRepeatGate.Of(questId) is { Daily_Quest: > 0 } daily
-            && QuestRepeatGate.DoneToday(await questRepo.GetLastCompletedAtAsync(player.CharacterId, questId), DateTime.UtcNow))
-        {
-            Logger.LogInformation("{Name} asked again for daily quest {QuestId}, already done since the last reset; refused",
-                player.Name, questId);
-            await session.SendRmiAsync(ZoneS2COpcodes.OnQuestError,
-                writer => writer.WriteBytes(QuestProgressPackets.BuildQuestError2431(
-                    questId, QuestProgressPackets.QuestErrorDailyDone, daily.Daily_Quest)));
-            return;
-        }
-
-        
-        
-        
-        
-        
-        
-        if (QuestAcceptGates.Of(questId) is { } gates && player.Character is { } character)
-        {
-            var refusal = QuestAcceptGates.Refusal(gates,
-                CharacterHeadRules.CombatJobByte(character), CharacterHeadRules.CreationProfessionByte(character),
-                player.Level, CharacterSerializer.WireProJob(character).Level);
-            if (refusal is { } code)
-            {
-                Logger.LogInformation("{Name} accept of quest {QuestId} refused with {Code} (class / profession / Job_Master gate)",
-                    player.Name, questId, code);
+            case QuestAcceptVerdict.DailyDone:
+                Logger.LogInformation("{Name} asked again for daily quest {QuestId}, already done since the last reset; refused",
+                    player.Name, questId);
                 await session.SendRmiAsync(ZoneS2COpcodes.OnQuestError,
-                    writer => writer.WriteBytes(QuestProgressPackets.BuildQuestError2431(questId, code)));
+                    writer => writer.WriteBytes(QuestProgressPackets.BuildQuestError2431(
+                        questId, QuestProgressPackets.QuestErrorDailyDone, decision.DailyQuest)));
                 return;
-            }
+            case QuestAcceptVerdict.GateRefused:
+                Logger.LogInformation("{Name} accept of quest {QuestId} refused with {Code} (class / profession / Job_Master gate)",
+                    player.Name, questId, decision.GateCode);
+                await session.SendRmiAsync(ZoneS2COpcodes.OnQuestError,
+                    writer => writer.WriteBytes(QuestProgressPackets.BuildQuestError2431(questId, decision.GateCode)));
+                return;
         }
+        var quest = decision.Quest!;
 
         
         
@@ -205,7 +154,7 @@ public class QuestAcceptHandler : ZoneRmiHandlerBase<QuestAcceptHandler>
         }
 
         
-        await questRepo.AcceptQuestAsync(player.CharacterId, questId);
+        await services.GetRequiredService<QuestAcceptUseCase>().AcceptAsync(player.CharacterId, questId);
         BeginRun(player, questId);
         await StoreTrackedRunStateAsync(questRepo, player, questId, store, Logger);
 
