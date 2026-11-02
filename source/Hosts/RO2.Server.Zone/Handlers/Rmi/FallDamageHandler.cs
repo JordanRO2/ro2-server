@@ -159,7 +159,8 @@ public class FallDamageHandler : ZoneRmiHandlerBase<FallDamageHandler>
         {
             var inventory = services.GetRequiredService<IInventoryRepository>();
             var gameData = services.GetRequiredService<GameDataStore>();
-            if (!await PlayerDeathPackets.SendDeadMeAsync(session, player, inventory, gameData, ct))
+            if (!await PlayerDeathPackets.SendDeadMeAsync(session, player, inventory, gameData,
+                    services.GetRequiredService<IQuestFailEvents>(), ct))
                 Logger.LogWarning("{Name} died from a fall but the worn-gear read failed; 2391 sent with no records",
                     player.Name);
         }

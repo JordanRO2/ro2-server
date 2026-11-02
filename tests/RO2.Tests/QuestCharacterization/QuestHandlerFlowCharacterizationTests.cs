@@ -93,7 +93,7 @@ public class QuestHandlerFlowCharacterizationTests
             var combat = new CombatService(players, npcs, broadcast, store, NullLogger<CombatService>.Instance);
             var party = new PartyService(players, broadcast, NullLogger<PartyService>.Instance);
             var loot = new LootService(store, broadcast, combat, npcs, party, players,
-                services.GetRequiredService<IServiceScopeFactory>(), NullLogger<LootService>.Instance);
+                services.GetRequiredService<IServiceScopeFactory>(), new QuestFailEvents(), NullLogger<LootService>.Instance);
             return new Rig
             {
                 Net = net, Players = players, Broadcast = broadcast, Store = store, Services = services, Quests = quests,

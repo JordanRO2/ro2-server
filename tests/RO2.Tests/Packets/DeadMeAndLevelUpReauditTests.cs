@@ -43,7 +43,7 @@ public class DeadMeAndLevelUpReauditTests
         var store = new GameDataStore();
         Assert.Equal(49, TalentRules.TalentPointsRemaining(store, victim.Job, victim.Level, []));
 
-        Assert.True(await PlayerDeathPackets.SendDeadMeAsync(net.Sessions[0], victim, new GearInventory([]), store));
+        Assert.True(await PlayerDeathPackets.SendDeadMeAsync(net.Sessions[0], victim, new GearInventory([]), store, new QuestFailEvents()));
         var (op, body) = await net.Readers[0].NextAsync();
 
         Assert.Equal(ZoneS2COpcodes.OnDeadMe, op);

@@ -271,7 +271,7 @@ public sealed class QuestKillProgressRelogTests
             var party = new PartyService(Players, broadcast, NullLogger<PartyService>.Instance);
             var scopes = new ServiceCollection().AddSingleton<IQuestRepository>(Quests).BuildServiceProvider()
                 .GetRequiredService<IServiceScopeFactory>();
-            Loot = new LootService(data, broadcast, combat, npcs, party, Players, scopes, NullLogger<LootService>.Instance);
+            Loot = new LootService(data, broadcast, combat, npcs, party, Players, scopes, new QuestFailEvents(), NullLogger<LootService>.Instance);
         }
 
         public PlayerState NewPlayer()

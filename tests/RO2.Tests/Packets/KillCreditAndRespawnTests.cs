@@ -265,7 +265,7 @@ public sealed class KillCreditAndRespawnTests
             var combat = new CombatService(Players, npcs, broadcast, data, NullLogger<CombatService>.Instance);
             var party = new PartyService(Players, broadcast, NullLogger<PartyService>.Instance);
             var scopes = new ServiceCollection().BuildServiceProvider().GetRequiredService<IServiceScopeFactory>();
-            Loot = new LootService(data, broadcast, combat, npcs, party, Players, scopes, NullLogger<LootService>.Instance);
+            Loot = new LootService(data, broadcast, combat, npcs, party, Players, scopes, new QuestFailEvents(), NullLogger<LootService>.Instance);
         }
 
         public static async Task<Rig> StartAsync()

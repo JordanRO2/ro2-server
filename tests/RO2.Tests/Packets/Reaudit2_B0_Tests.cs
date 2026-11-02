@@ -410,6 +410,7 @@ public class Reaudit2_B0_Tests
             collection.AddSingleton(broadcast);
             collection.AddSingleton(npcs);
             collection.AddSingleton<IInventoryRepository>(new NoGearInventory());
+            collection.AddSingleton<IQuestFailEvents, QuestFailEvents>();
             collection.AddSingleton(sp => new EffectService(players, broadcast, data, npcState: npcs, loot: null!,
                 sp.GetRequiredService<IServiceScopeFactory>(), NullLogger<EffectService>.Instance, emblems: TestEmblems.Create()));
             collection.AddSingleton(sp => new DurabilityService(data, NullLogger<DurabilityService>.Instance,

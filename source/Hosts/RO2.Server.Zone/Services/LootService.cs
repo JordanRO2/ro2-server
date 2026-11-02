@@ -30,6 +30,7 @@ public class LootService
     private readonly PartyService _party;
     private readonly PlayerStateManager _players;
     private readonly IServiceScopeFactory _scopeFactory;
+    private readonly IQuestFailEvents _questFail;
     private readonly ILogger<LootService> _logger;
 
     public LootService(
@@ -40,6 +41,7 @@ public class LootService
         PartyService party,
         PlayerStateManager players,
         IServiceScopeFactory scopeFactory,
+        IQuestFailEvents questFail,
         ILogger<LootService> logger)
     {
         _data = data;
@@ -49,6 +51,7 @@ public class LootService
         _party = party;
         _players = players;
         _scopeFactory = scopeFactory;
+        _questFail = questFail;
         _logger = logger;
     }
 
@@ -411,7 +414,7 @@ public class LootService
         
         
         
-        await QuestFailTriggers.OnNpcKilledAsync(killerSession, killer, npcId, _logger);
+        await _questFail.OnNpcKilledAsync(killerSession, killer, npcId, _logger);
         await CreditKharaKillAsync(killerSession, killer, npcId);
         await GrantKillExpAsync(killer, expReward);
         if (expReward > 0)

@@ -214,7 +214,7 @@ public static class PlayerDeathPackets
  /// </remarks>
  /// <returns><c>false</c> when the equipment read failed and the record vector was sent empty.</returns>
     public static async Task<bool> SendDeadMeAsync(ProudSession session, PlayerState victim,
-        IInventoryRepository inventory, GameDataStore gameData, CancellationToken ct = default)
+        IInventoryRepository inventory, GameDataStore gameData, IQuestFailEvents questFail, CancellationToken ct = default)
     {
         List<byte[]> records;
         bool complete = true;
@@ -237,7 +237,7 @@ public static class PlayerDeathPackets
 
         // A held quest whose Quest_Info has a Fail_Type 26 row ("Player is dead.") fails with this death: a 2434
         // [quest][21714][26][0] goes to the victim.
-        await QuestFailTriggers.OnPlayerDiedAsync(session, victim, null, ct);
+        await questFail.OnPlayerDiedAsync(session, victim, null, ct);
         return complete;
     }
 

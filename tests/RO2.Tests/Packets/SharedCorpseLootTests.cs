@@ -182,7 +182,7 @@ internal sealed class CorpseShareRig : IAsyncDisposable
     {
         _npcs = npcs;
         var combat = new CombatService(Players, npcs, Broadcast, Data, NullLogger<CombatService>.Instance);
-        return new LootService(Data, Broadcast, combat, npcs, Party, Players, ScopeFactory, NullLogger<LootService>.Instance);
+        return new LootService(Data, Broadcast, combat, npcs, Party, Players, ScopeFactory, new QuestFailEvents(), NullLogger<LootService>.Instance);
     }
 
  /// <summary>An NPC of <see cref="Spawn"/> just killed: its state manager and its handle (the corpse).</summary>

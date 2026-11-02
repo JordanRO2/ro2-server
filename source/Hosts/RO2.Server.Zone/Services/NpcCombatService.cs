@@ -614,7 +614,8 @@ public partial class NpcCombatService : ITickable
                 using var scope = _scopeFactory.CreateScope();
                 var inventory = scope.ServiceProvider.GetRequiredService<IInventoryRepository>();
                 var gameData = scope.ServiceProvider.GetRequiredService<GameDataStore>();
-                if (!await PlayerDeathPackets.SendDeadMeAsync(session, victim, inventory, gameData, ct))
+                if (!await PlayerDeathPackets.SendDeadMeAsync(session, victim, inventory, gameData,
+                    scope.ServiceProvider.GetRequiredService<IQuestFailEvents>(), ct))
                     _logger.LogWarning("{Name} died but the worn-gear read failed; 2391 sent with no records",
                         victim.Name);
 
