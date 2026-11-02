@@ -1,5 +1,6 @@
 using System.Buffers.Binary;
 using System.Text;
+using RO2.Guilds.Domain;
 using RO2.Server.Zone.Services;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
@@ -22,10 +23,10 @@ internal static class GuildRenameRules
     public const ushort NameNotUsable = 44;
 
  /// <summary>Shortest allowed guild name, in characters.</summary>
-    public const int MinChars = 2;
+    public const int MinChars = GuildNameRules.MinChars;
 
  /// <summary>Longest allowed guild name, in characters.</summary>
-    public const int MaxChars = 14;
+    public const int MaxChars = GuildNameRules.MaxChars;
 
  // Request body layout: [u32 length - 4][u64 item UID][u16 character count][count UTF-16 characters].
     private const int ItemUidOffset = 4;
@@ -34,12 +35,6 @@ internal static class GuildRenameRules
 
  /// <summary>Size of one name character on the wire (UTF-16 code unit).</summary>
     private const int BytesPerChar = sizeof(char);
-
- /// <summary>First code unit outside ASCII. A leading character below it must be a letter, digit or whitespace.</summary>
-    private const int FirstNonAscii = 0x80;
-
- /// <summary>A name may not repeat one character this many times in a row.</summary>
-    private const int MaxRepeatRun = 3;
 
  /// <summary>
  /// Parses the body shared by both requests: [u32 length - 4][u64 item UID][u16 character count][count UTF-16 characters]. Returns false when the body does not parse exactly.
@@ -59,20 +54,12 @@ internal static class GuildRenameRules
  /// <summary>
  /// Checks the text-only name rules and returns the result code: 44 for a name shorter than <see cref="MinChars"/>, one that starts with an ASCII symbol, one containing a less-than or greater-than sign, or one that repeats a character three times in a row; 16 for a name longer than <see cref="MaxChars"/>; otherwise 0.
  /// </summary>
-    public static ushort CheckFormat(string name)
+    public static ushort CheckFormat(string name) => GuildNameRules.CheckFormat(name) switch
     {
-        if (name.Length < MinChars) return NameNotUsable;
-        if (name.Length > MaxChars) return NameTooLong;
-        var first = name[0];
-        if (first < FirstNonAscii && !char.IsAsciiLetterOrDigit(first) && !char.IsWhiteSpace(first)) return NameNotUsable;
-        for (int i = 0; i < name.Length; i++)
-        {
-            var c = name[i];
-            if (c is '<' or '>') return NameNotUsable;
-            if (i >= MaxRepeatRun - 1 && c == name[i - 1] && c == name[i - 2]) return NameNotUsable;
-        }
-        return Ok;
-    }
+        GuildNameVerdict.Ok => Ok,
+        GuildNameVerdict.TooLong => NameTooLong,
+        _ => NameNotUsable,
+    };
 
  /// <summary>
  /// Returns the result code for a name check (1585). The format rules are checked first, then uniqueness.
