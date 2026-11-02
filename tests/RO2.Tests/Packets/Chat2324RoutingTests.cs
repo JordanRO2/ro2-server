@@ -162,6 +162,17 @@ public class Chat2324RoutingTests
         guild.Members.Add(new GuildMember { CharId = 6 });
         guild.Members.Add(new GuildMember { CharId = 7 });
 
-        Assert.Equal(new uint[] { 5, 6, 7 }, ChatHandler.GuildAudience(guild));
+        Assert.Equal(new uint[] { 5, 6, 7 }, ChatHandler.GuildAudience(new FakeDirectory(guild), 6));
+    }
+
+    [Fact]
+    public void GuildLineFromAPlayerWithNoGuildHasNoAudience()
+        => Assert.Empty(ChatHandler.GuildAudience(new FakeDirectory(null), 9));
+
+    private sealed class FakeDirectory(RO2.Guilds.Domain.Guild? guild) : RO2.Guilds.Application.IGuildDirectory
+    {
+        public IReadOnlyList<uint> GetGuildMemberCharIds(uint guildId)
+            => guild is { } g && g.Id == guildId ? g.Members.Select(m => m.CharId).ToArray() : [];
+        public RO2.Guilds.Domain.Guild? GetByCharId(uint charId) => guild;
     }
 }

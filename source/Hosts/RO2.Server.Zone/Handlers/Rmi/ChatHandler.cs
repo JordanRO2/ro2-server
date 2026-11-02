@@ -14,7 +14,7 @@ using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
-using RO2.Guilds.Domain;
+using RO2.Guilds.Application;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -164,15 +164,15 @@ public class ChatHandler : ZoneRmiHandlerBase<ChatHandler>
             }
             case ChatPackets.ChannelGuild:
             {
-                var guild = GuildService.Instance.GetByCharId(player.CharacterId);
-                if (guild == null)
+                var audience = GuildAudience(services.GetRequiredService<IGuildDirectory>(), player.CharacterId);
+                if (audience.Count == 0)
                 {
                     Logger.LogInformation("[Chat] {Name} spoke on the guild channel with no guild; dropped", player.Name);
                     return;
                 }
                 var body = ChatPackets.BuildOnReceiveChat2324(player.EntityId, nameUnits, channel, msgBytes,
                     innerSizeIsLength: false);
-                foreach (var charId in GuildAudience(guild))
+                foreach (var charId in audience)
                 {
                     if (PlayerManager.GetPlayerByCharacterId(charId) is { } member
                         && Broadcast.GetSession(member.SessionId) is { } memberSession)
@@ -209,11 +209,9 @@ public class ChatHandler : ZoneRmiHandlerBase<ChatHandler>
  /// <summary>The raid frame group of a 1-based frame slot; -1 for a member that holds no slot.</summary>
     internal static int FrameGroup(byte slot) => slot == 0 ? -1 : (slot - 1) / RaidGroupSize;
 
- /// <summary>The character ids of <paramref name="guild"/>'s members, the sender among them.</summary>
-    internal static uint[] GuildAudience(Guild guild)
-    {
-        lock (guild.Gate) return guild.Members.Select(m => m.CharId).ToArray();
-    }
+ /// <summary>The character ids of the members of <paramref name="senderCharId"/>'s guild, the sender among them; empty when the sender has no guild.</summary>
+    internal static IReadOnlyList<uint> GuildAudience(IGuildDirectory directory, uint senderCharId)
+        => directory.GetByCharId(senderCharId) is { } guild ? directory.GetGuildMemberCharIds(guild.Id) : [];
 
     
  /// <summary>
