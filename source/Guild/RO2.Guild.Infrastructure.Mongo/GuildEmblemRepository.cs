@@ -1,11 +1,9 @@
 using RO2.Guilds.Domain;
 using System.Collections.Concurrent;
 using MongoDB.Driver;
-using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
 using RO2.Persistence.Mongo.Persistence;
 
-namespace RO2.Persistence.Mongo.Repositories;
+namespace RO2.Guilds.Infrastructure.Mongo;
 
 /// <summary>
 /// MongoDB implementation of <see cref="IGuildEmblemRepository"/>, persisting to the <c>guild_emblems</c>

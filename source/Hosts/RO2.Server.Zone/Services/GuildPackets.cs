@@ -48,6 +48,21 @@ namespace RO2.Server.Zone.Services;
 /// </remarks>
 public static class GuildPackets
 {
+    /// <summary>
+    /// The 2570 NfyGuildKickMember body sent to a member kicked while offline, at their next world entry.
+    /// It uses the same layout as the named form, <c>[u32 L = 3 + 2n][u8 n][n UTF-16LE chars][u16 0]</c>
+    /// (a length-prefixed blob holding a WStr8 guild name and an empty WStr16), but with a fixed one-character
+    /// placeholder name (n = 1, U+0012), 9 bytes in all. It carries no real guild name; the client ignores
+    /// the body and shows the expelled notice with the player's own name.
+    /// </summary>
+    public static byte[] KickNoticeBody() =>
+    [
+        0x05, 0x00, 0x00, 0x00, // u32 L = 3 + 2n, with n = 1
+        0x01,                   // u8 n: one UTF-16LE character follows
+        0x12, 0x00,             // the placeholder "name" character, U+0012
+        0x00, 0x00,             // u16 0: empty trailing WStr16
+    ];
+
     /// <summary>Size of the u32 length prefix that opens the length-prefixed bodies; the value it holds excludes these bytes.</summary>
     private const int LengthPrefixLen = 4;
 

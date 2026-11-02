@@ -2,11 +2,9 @@ using RO2.Guilds.Domain;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
-using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
 using RO2.Persistence.Mongo.Persistence;
 
-namespace RO2.Persistence.Mongo.Repositories;
+namespace RO2.Guilds.Infrastructure.Mongo;
 
 /// <summary>
 /// MongoDB implementation of <see cref="IGuildStorageLog"/> over two collections of the existing

@@ -1,5 +1,5 @@
 using RO2.Persistence.Mongo.Persistence;
-using RO2.Persistence.Mongo.Repositories;
+using RO2.Guilds.Infrastructure.Mongo;
 using System.Buffers.Binary;
 using System.Text.Json;
 using RO2.Domain.Entities;
@@ -185,7 +185,7 @@ public class UnitA0GuildInviteDepartureTests
         
         
         
-        Assert.Equal("050000000112000000", Hex(GuildDepartureRepository.KickNoticeBody()));
+        Assert.Equal("050000000112000000", Hex(GuildPackets.KickNoticeBody()));
     }
 
     [Fact]

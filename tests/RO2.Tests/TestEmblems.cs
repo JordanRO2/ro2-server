@@ -1,7 +1,7 @@
 using RO2.Guilds.Domain;
 using RO2.Application.Interfaces;
 using RO2.Persistence.Mongo.Persistence;
-using RO2.Persistence.Mongo.Repositories;
+using RO2.Guilds.Infrastructure.Mongo;
 
 namespace RO2.Tests;
 

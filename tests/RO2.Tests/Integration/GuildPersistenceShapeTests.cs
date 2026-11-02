@@ -2,6 +2,7 @@ using System.Text.Json;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
+using RO2.Guilds.Infrastructure.Mongo;
 using RO2.Server.Zone.Services;
 using Xunit;
 using RO2.Guilds.Domain;

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Plural namespace: a namespace "RO2.Guild" would shadow the type Guild in every RO2.* file (CS0118). -->
+    <RootNamespace>RO2.Guilds.Infrastructure.Mongo</RootNamespace>
+  </PropertyGroup>
+
+  <!-- MongoDB persistence for the Guild bounded context, sibling of the Postgres one (S16). References the shared
+       RO2.Persistence.Mongo for MongoDbContext: guild data lives in the same database as the game data. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Guild.Domain\RO2.Guild.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Platform\RO2.Persistence.Mongo\RO2.Persistence.Mongo.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+</Project>

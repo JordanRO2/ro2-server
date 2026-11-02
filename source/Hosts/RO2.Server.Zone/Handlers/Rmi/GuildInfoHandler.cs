@@ -58,7 +58,7 @@ public class GuildInfoHandler : ZoneRmiHandlerBase<GuildInfoHandler>
         await departures.InitAsync();
         if (await departures.TakeKickNoticeAsync(player.CharacterId) && guild == null)
         {
-            await session.SendRmiAsync(ZoneS2COpcodes.NfyGuildKickMember, (ReadOnlyMemory<byte>)GuildDepartureRepository.KickNoticeBody());
+            await session.SendRmiAsync(ZoneS2COpcodes.NfyGuildKickMember, (ReadOnlyMemory<byte>)GuildPackets.KickNoticeBody());
             await GuildSkillBarRefresh.SendAsync(session, player, services, Logger);
             Logger.LogInformation("Session {Id}: {Player} was kicked from their guild while offline; sent the 2570 notice",
                 session.SessionId, player.Name);

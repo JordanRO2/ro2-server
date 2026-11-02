@@ -2,7 +2,7 @@ using MongoDB.Driver;
 using RO2.Guilds.Domain;
 using RO2.Persistence.Mongo.Persistence;
 
-namespace RO2.Server.Zone.Services;
+namespace RO2.Guilds.Infrastructure.Mongo;
 
 /// <summary>
 /// MongoDB persistence for guilds, implementing <see cref="IGuildRepository"/>. Each guild is stored as a
@@ -10,7 +10,7 @@ namespace RO2.Server.Zone.Services;
 /// </summary>
 /// <remarks>
 /// Uses the <c>guilds</c> collection of the <c>ro2_server</c> database. Unknown fields in stored documents
-/// are ignored. The type stays in RO2.Server.Zone because <see cref="Guild"/> is a Zone type.
+/// are ignored.
 /// </remarks>
 public sealed class GuildRepository : IGuildRepository
 {

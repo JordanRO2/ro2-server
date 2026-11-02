@@ -3,14 +3,13 @@ using MongoDB.Bson.Serialization;
 using RO2.Guilds.Domain;
 using RO2.Persistence.Mongo.Persistence;
 
-namespace RO2.Server.Zone.Services;
+namespace RO2.Guilds.Infrastructure.Mongo;
 
 /// <summary>
 /// Mongo class map of the <see cref="Guild"/> aggregate. The Domain type carries no BSON attributes, so the map
 /// states what they used to: <c>Id</c> is the document <c>_id</c>, the in-memory <c>Gate</c> lock is never stored,
 /// and unknown stored fields are ignored. Every other member maps by its own name, as before.
 /// </summary>
-/// <remarks>Moves to the Guild Mongo infrastructure project when the repository does.</remarks>
 public static class GuildBsonMap
 {
     private static readonly Lock s_gate = new();
@@ -18,7 +17,10 @@ public static class GuildBsonMap
 
     // Registers our Guild class map at Zone-assembly load, before any code can serialize a Guild and trigger a
     // default auto-map (which would keep the Gate lock and map Id, not _id). Must win the race, hence eager.
+    // CA2255 flags ModuleInitializer in a library; here it is deliberate: the map must exist before any Guild is serialized.
+#pragma warning disable CA2255
     [ModuleInitializer]
+#pragma warning restore CA2255
     internal static void Init() => Register();
 
     /// <summary>Registers the map once; safe to call more than once and after a default map may already exist.</summary>
