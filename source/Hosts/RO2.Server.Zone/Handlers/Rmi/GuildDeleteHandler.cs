@@ -7,6 +7,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Guilds.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -50,10 +51,9 @@ public class GuildDeleteHandler : ZoneRmiHandlerBase<GuildDeleteHandler>
         // 1427 can also arrive without it (or after a deposit made in between). DisbandRefusal gives 2688 codes;
         // AnsGuildDeleteResult turns them into the 2562's.
         var guild = GuildService.Instance.GetByCharId(player.CharacterId);
-        var refusal = guild == null
-            ? GuildDelPossibleHandler.DisbandRefusal(null, player.CharacterId)
-            : await GuildService.Instance.TryDisbandAsync(guild, g => GuildDelPossibleHandler.DisbandRefusal(g, player.CharacterId));
-        var result = AnsGuildDeleteResult(refusal);
+        var result = guild == null
+            ? DeleteResult(GuildDisbandRules.DisbandRefusal(null, player.CharacterId))
+            : await GuildService.Instance.TryDisbandAsync(guild, g => DeleteResult(GuildDisbandRules.DisbandRefusal(g, player.CharacterId)));
 
         Logger.LogInformation("Session {Id}: {Name} deletes guild -> result {Result}", session.SessionId, player.Name, result);
 
@@ -85,6 +85,16 @@ public class GuildDeleteHandler : ZoneRmiHandlerBase<GuildDeleteHandler>
             await emblems.RemoveAsync(guild.Guid16);
         }
     }
+
+    /// <summary>The 2562 code for a domain refusal reason; see <see cref="AnsGuildDeleteResult"/> for why the vault refusal is 41.</summary>
+    internal static ushort DeleteResult(DisbandRefusalReason r) => r switch
+    {
+        DisbandRefusalReason.None => ResultOk,
+        DisbandRefusalReason.NoGuild => GuildDelPossibleHandler.ResultNoGuild,
+        DisbandRefusalReason.NotMaster => GuildDelPossibleHandler.ResultNotMaster,
+        DisbandRefusalReason.HasOtherMembers => GuildDelPossibleHandler.ResultHasMembers,
+        _ => ResultStorageNotEmpty,
+    };
 
     /// <summary>
     /// The 2562 code for a <see cref="GuildDelPossibleHandler.DisbandRefusal"/> result (a 2688 code). The 2562

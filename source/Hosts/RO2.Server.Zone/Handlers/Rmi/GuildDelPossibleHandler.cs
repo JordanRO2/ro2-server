@@ -66,13 +66,17 @@ public class GuildDelPossibleHandler : ZoneRmiHandlerBase<GuildDelPossibleHandle
  /// </summary>
     public static ushort DisbandRefusal(Guild? g, uint charId)
     {
-        if (g == null) return ResultNoGuild;
-        lock (g.Gate)
-        {
-            if (g.MasterCharId != charId) return ResultNotMaster;
-            if (g.Members.Any(m => m.CharId != charId)) return ResultHasMembers;
-            if (g.Storage.Count > 0 || g.Gold > 0) return ResultStorageNotEmpty;
-        }
-        return ResultAllowed;
+        if (g == null) return Code(GuildDisbandRules.DisbandRefusal(null, charId));
+        lock (g.Gate) return Code(GuildDisbandRules.DisbandRefusal(g, charId));
     }
+
+    /// <summary>The 2688 code for a domain refusal reason (the vault and zeny refusals share 45).</summary>
+    private static ushort Code(DisbandRefusalReason r) => r switch
+    {
+        DisbandRefusalReason.None => ResultAllowed,
+        DisbandRefusalReason.NoGuild => ResultNoGuild,
+        DisbandRefusalReason.NotMaster => ResultNotMaster,
+        DisbandRefusalReason.HasOtherMembers => ResultHasMembers,
+        _ => ResultStorageNotEmpty,
+    };
 }
