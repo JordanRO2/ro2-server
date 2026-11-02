@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RO2.GameData;
+using RO2.Monster.Application;
 using RO2.Network.Protocol;
 
 using RO2.Worlds.Domain;
@@ -241,10 +242,7 @@ public class NpcMovementService : ITickable
 
         // The corpse does not hold the respawn back: NpcStateManager.Respawn gives the NPC a fresh handle and
         // leaves the old one to the corpse until the corpse's own 2507.
-        var ready = _npcState.GetRespawnReady()
-            .Where(n => populatedMaps.Contains(n.MapId))
-            .Take(MaxRespawnsPerTick)
-            .ToArray();
+        var ready = RespawnPass.Select(_npcState.GetRespawnReady(), populatedMaps, n => n.MapId);
 
         foreach (var npc in ready)
         {
@@ -263,7 +261,7 @@ public class NpcMovementService : ITickable
             // Same predicate the announcement path applies: without an NPCInfo row the client discards the actor
             // and never registers it, and every later 2318 for that handle triggers a 1306 the client retries
             // forever.
-            if (npc.Spawn is null || !_data.Npcs.ContainsKey(npc.Spawn.AssetIndex))
+            if (!RespawnPass.MayAnnounce(npc.Spawn is not null, npc.Spawn is not null && _data.Npcs.ContainsKey(npc.Spawn.AssetIndex)))
                 continue;
 
             // ONE respawn path. NpcSpawnService owns the 2317 and the walk-speed lookup that feeds
@@ -274,12 +272,6 @@ public class NpcMovementService : ITickable
                 return;
         }
     }
-
-    /// <summary>
-    /// Cap on respawn announcements per tick, for the same reason movement is capped: a map that
-    /// has been farmed hard should trickle back rather than emit one burst of hundreds of frames.
-    /// </summary>
-    private const int MaxRespawnsPerTick = 16;
 
     /// <summary>
     /// Picks the next wander destination: a short step, kept inside the spawn's HoverRadius.
