@@ -131,6 +131,7 @@ public static class Program
         services.AddScoped<RO2.Quests.Application.QuestAcceptUseCase>();
         services.AddScoped<RO2.Quests.Application.QuestCompleteUseCase>();
         services.AddScoped<RO2.Quests.Application.QuestGiveUpUseCase>();
+        services.AddScoped<RO2.Quests.Application.QuestSaveTraceUseCase>();
         services.AddSingleton<RO2.Quests.Application.IGuildDonationView, GuildDonationView>();
         services.AddScoped<RO2.Quests.Application.QuestPrizeUseCase>();
 

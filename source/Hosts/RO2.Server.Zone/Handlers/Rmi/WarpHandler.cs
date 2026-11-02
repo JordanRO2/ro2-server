@@ -186,7 +186,7 @@ public class WarpHandler : ZoneRmiHandlerBase<WarpHandler>
                     return;
                 }
                 if (dungeonRow.Need_Quest_ID != 0
-                    && !(await services.GetRequiredService<IQuestRepository>().GetCompletedQuestIdsAsync(player.CharacterId))
+                    && !(await services.GetRequiredService<IQuestCompletionView>().GetCompletedQuestIdsAsync(player.CharacterId))
                         .Contains(dungeonRow.Need_Quest_ID))
                 {
                     Logger.LogInformation("Player {Name} used dungeon gate NPC {NpcId}: quest {Quest} of DungeonID {Dun} not completed; ignored",

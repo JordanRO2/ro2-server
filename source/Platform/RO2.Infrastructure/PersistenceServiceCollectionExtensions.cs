@@ -58,6 +58,8 @@ public static class PersistenceServiceCollectionExtensions
         services.AddProviderRepository<IQuickSlotRepository, RO2.Characters.Infrastructure.Mongo.QuickSlotRepository, RO2.Characters.Infrastructure.Postgres.QuickSlotRepository>(provider, ServiceLifetime.Scoped);
         services.AddProviderRepository<ISkillRepository, RO2.Skills.Infrastructure.Mongo.SkillRepository, RO2.Skills.Infrastructure.Postgres.SkillRepository>(provider, ServiceLifetime.Scoped);
         services.AddProviderRepository<IQuestRepository, RO2.Quests.Infrastructure.Mongo.QuestRepository, RO2.Quests.Infrastructure.Postgres.QuestRepository>(provider, ServiceLifetime.Scoped);
+        // Narrow completion read port for other contexts: the same scoped repository instance.
+        services.AddScoped<IQuestCompletionView>(sp => sp.GetRequiredService<IQuestRepository>());
         services.AddProviderRepository<IZoneAuthTokenRepository, MongoRepos.ZoneAuthTokenRepository, PgRepos.ZoneAuthTokenRepository>(provider, ServiceLifetime.Scoped);
         services.AddProviderRepository<IAccountAccessRepository, MongoRepos.AccountAccessRepository, PgRepos.AccountAccessRepository>(provider, ServiceLifetime.Scoped);
         

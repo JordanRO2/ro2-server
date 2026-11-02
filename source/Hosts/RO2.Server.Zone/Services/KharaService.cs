@@ -1088,7 +1088,7 @@ public static class KharaService
         HashSet<uint> quests;
         try
         {
-            quests = new HashSet<uint>(await services.GetRequiredService<IQuestRepository>()
+            quests = new HashSet<uint>(await services.GetRequiredService<IQuestCompletionView>()
                 .GetCompletedQuestIdsAsync(player.CharacterId));
         }
         catch { quests = new HashSet<uint>(); }

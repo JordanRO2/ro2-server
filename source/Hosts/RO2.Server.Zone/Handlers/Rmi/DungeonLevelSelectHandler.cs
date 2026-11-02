@@ -106,7 +106,7 @@ public class DungeonLevelSelectHandler : ZoneRmiHandlerBase<DungeonLevelSelectHa
             ? await counts.GetUsedAsync(player.CharacterId, row.DungeonID, DateTime.UtcNow, ct)
             : 0;
         var questDone = row.Need_Quest_ID == 0
-            || (await services.GetRequiredService<IQuestRepository>().GetCompletedQuestIdsAsync(player.CharacterId))
+            || (await services.GetRequiredService<IQuestCompletionView>().GetCompletedQuestIdsAsync(player.CharacterId))
                 .Contains(row.Need_Quest_ID);
         
         

@@ -86,7 +86,7 @@ public class TransModeStartHandler : ZoneRmiHandlerBase<TransModeStartHandler>
         IReadOnlyList<uint> completed;
         try
         {
-            completed = await services.GetRequiredService<IQuestRepository>().GetCompletedQuestIdsAsync(player.CharacterId);
+            completed = await services.GetRequiredService<IQuestCompletionView>().GetCompletedQuestIdsAsync(player.CharacterId);
         }
         catch (Exception ex)
         {
