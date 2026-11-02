@@ -1,4 +1,5 @@
 using RO2.GameData;
+using RO2.Quests.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -16,7 +17,7 @@ namespace RO2.Server.Zone.Services;
 internal static class QuestAcceptGates
 {
  /// <summary>Quest_Info Start_Type of a quest started from an item (Start_Type_ID is the item).</summary>
-    internal const byte StartFromItem = 2;
+    internal const byte StartFromItem = QuestAcceptRules.StartFromItem;
 
  /// <summary>The Quest_Info.json gate columns. GameDataStore's QuestData does not carry PC_ProJob or the Job_Master
  /// columns.</summary>
@@ -53,28 +54,20 @@ internal static class QuestAcceptGates
     internal static Row? Of(uint questId) => Rows.Value is { } rows && rows.TryGetValue(questId, out var row) ? row : null;
 
  /// <summary>
- /// Returns the 2431 code that refuses a 1374 for the quest of <paramref name="row"/>, or null when every gate passes.
- /// Checks run in the order Job_Master, PC_Job, PC_ProJob.
+ /// Returns the 2431 code that refuses a 1374 for the quest of <paramref name="row"/>, or null when every gate passes
+ /// (see <see cref="QuestAcceptRules.Refusal"/>).
  /// </summary>
  /// <param name="combatClass">The character's class byte.</param>
  /// <param name="profession">The character's profession byte.</param>
  /// <param name="baseLevel">The live base level.</param>
  /// <param name="masterLevel">The master level.</param>
-    internal static uint? Refusal(Row row, byte combatClass, byte profession, byte baseLevel, byte masterLevel)
-    {
-        byte v = row.Job_Master_Quest == 1 ? masterLevel : baseLevel;
-        if (v < row.Job_Master_Min_Level || (row.Job_Master_Max_Level != 0 && v >= row.Job_Master_Max_Level))
-            return QuestProgressPackets.QuestErrorJobMasterLevel;
-        if (!JobAllows(row.PC_Job, combatClass)) return QuestProgressPackets.QuestErrorJobMismatch;
-        if (row.PC_ProJob != 0 && row.PC_ProJob != profession) return QuestProgressPackets.QuestErrorProJobMismatch;
-        return null;
-    }
+    internal static uint? Refusal(Row row, byte combatClass, byte profession, byte baseLevel, byte masterLevel) =>
+        QuestAcceptRules.Refusal(new AcceptGateColumns(row.PC_Job, row.PC_ProJob, row.Job_Master_Min_Level,
+            row.Job_Master_Max_Level, row.Job_Master_Quest), combatClass, profession, baseLevel, masterLevel);
 
- /// <summary>A PC_Job mask of 0 lets every class; otherwise bit (class - 1) must be set. A class outside 1..32
- /// (Novice 100, or 0 when unknown) has no bit.</summary>
-    internal static bool JobAllows(uint pcJob, byte combatClass) =>
-        pcJob == 0 || (combatClass is >= 1 and <= 32 && (pcJob & (1u << (combatClass - 1))) != 0);
+ /// <summary>A PC_Job mask of 0 lets every class; otherwise bit (class - 1) must be set.</summary>
+    internal static bool JobAllows(uint pcJob, byte combatClass) => QuestAcceptRules.JobAllows(pcJob, combatClass);
 
  /// <summary>The item a Start_Type 2 quest needs in the bag to be accepted, or 0 for any other Start_Type.</summary>
-    internal static uint StartItemOf(QuestData quest) => quest.Start_Type == StartFromItem ? quest.Start_Type_ID : 0;
+    internal static uint StartItemOf(QuestData quest) => QuestAcceptRules.StartItemOf(quest);
 }

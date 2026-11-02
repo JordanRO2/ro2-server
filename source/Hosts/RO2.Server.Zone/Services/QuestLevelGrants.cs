@@ -4,6 +4,7 @@ using RO2.Application.Interfaces;
 using RO2.GameData;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
+using RO2.Quests.Domain;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Models;
 using RO2.Characters.Domain;
@@ -23,7 +24,7 @@ namespace RO2.Server.Zone.Services;
 internal static class QuestLevelGrants
 {
  /// <summary>Quest_Info Start_Type of a quest the server starts at a base level (Start_Type_ID).</summary>
-    internal const byte LevelStartType = 4;
+    internal const byte LevelStartType = QuestLevelGrantRules.LevelStartType;
 
  /// <summary>The profession-level columns of a Quest_Info row, which QuestData does not carry.</summary>
     internal sealed record ProJobRow(uint Quest_ID, byte MIN_ProJob_Level, byte MAX_ProJob_Level);
@@ -49,16 +50,10 @@ internal static class QuestLevelGrants
         }
     }
 
- /// <summary>
- /// True when <paramref name="quest"/> is a Start_Type-4 quest whose start level, base-level range and
- /// profession-level range (<paramref name="proJob"/>) the character meets at <paramref name="level"/> and job level
- /// <paramref name="jobLevel"/>. A MAX of 0 is read as no upper bound.
- /// </summary>
+ /// <summary>True when <paramref name="quest"/> is a Start_Type-4 quest the character meets at <paramref name="level"/>
+ /// and job level <paramref name="jobLevel"/> (see <see cref="QuestLevelGrantRules.Meets"/>).</summary>
     internal static bool Meets(QuestData quest, ProJobRow proJob, byte level, byte jobLevel) =>
-        quest.Start_Type == LevelStartType
-        && level >= quest.Start_Type_ID
-        && level >= quest.MIN_Base_Level && (quest.MAX_Base_Level == 0 || level <= quest.MAX_Base_Level)
-        && jobLevel >= proJob.MIN_ProJob_Level && (proJob.MAX_ProJob_Level == 0 || jobLevel <= proJob.MAX_ProJob_Level);
+        QuestLevelGrantRules.Meets(quest, new ProJobRange(proJob.MIN_ProJob_Level, proJob.MAX_ProJob_Level), level, jobLevel);
 
  /// <summary>
  /// After a payout's EXP: when <paramref name="player"/>'s level is above <paramref name="levelBefore"/>, inserts
@@ -71,11 +66,9 @@ internal static class QuestLevelGrants
         if (player.Level <= levelBefore || ProJobRows.Value is not { } proJobs) return;
         var store = services.GetRequiredService<GameDataStore>();
         var jobLevel = player.Character?.JobLevel ?? 0;
-        var due = store.Quests.Values
-            .Where(q => q.Start_Type == LevelStartType && !player.ActiveQuests.Contains(q.Quest_ID)
-                        && proJobs.TryGetValue(q.Quest_ID, out var p) && Meets(q, p, player.Level, jobLevel))
-            .OrderBy(q => q.Quest_ID)
-            .ToList();
+        var due = QuestLevelGrantRules.SelectDue(store.Quests.Values, player.ActiveQuests.Contains,
+            id => proJobs.TryGetValue(id, out var p) ? new ProJobRange(p.MIN_ProJob_Level, p.MAX_ProJob_Level) : null,
+            player.Level, jobLevel);
         if (due.Count == 0) return;
 
         var quests = services.GetRequiredService<IQuestRepository>();
