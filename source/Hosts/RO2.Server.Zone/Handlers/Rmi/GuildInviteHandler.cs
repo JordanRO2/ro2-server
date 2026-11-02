@@ -9,6 +9,7 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Characters.Domain;
+using RO2.Guilds.Application;
 using RO2.Guilds.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
@@ -47,7 +48,7 @@ public class GuildInviteHandler : ZoneRmiHandlerBase<GuildInviteHandler>
         
         
         var nameExists = invitee != null
-                         || (mayInvite && await services.GetRequiredService<ICharacterRepository>().NameExistsIgnoreCaseAsync(inviteeName));
+                         || (GuildInviteUseCase.NeedsNameLookup(inviteeOnline: false, mayInvite) && await services.GetRequiredService<ICharacterRepository>().NameExistsIgnoreCaseAsync(inviteeName));
         var facts = new GuildInviteRules.InviteFacts(
             InviterInGuild: guild != null,
             InviterMayInvite: mayInvite,
@@ -68,8 +69,8 @@ public class GuildInviteHandler : ZoneRmiHandlerBase<GuildInviteHandler>
         if (result == GuildInviteRules.Sent)
         {
             inviteToken = Guid.NewGuid().ToByteArray();
-            if (!GuildService.Instance.TryAddInvite(invitee!.CharacterId, guild!.Id, player.CharacterId, inviteToken, now, lifetime))
-                result = GuildInviteRules.AlreadyInvited;
+            var registered = GuildService.Instance.TryAddInvite(invitee!.CharacterId, guild!.Id, player.CharacterId, inviteToken, now, lifetime);
+            result = GuildInviteUseCase.Settle(result, registered);
         }
 
         Logger.LogInformation("Session {Id}: {Name} invites '{Invitee}' -> result {Result}{Until}",
@@ -80,7 +81,7 @@ public class GuildInviteHandler : ZoneRmiHandlerBase<GuildInviteHandler>
         await session.SendRmiAsync(ZoneS2COpcodes.AnsGuildInviteMember,
             (ReadOnlyMemory<byte>)GuildPackets.BuildAnsGuildInviteMember(result, inviteeName, rejoinAtUtc?.ToLocalTime()));
 
-        if (result != GuildInviteRules.Sent || inviteToken == null) return;
+        if (!GuildInviteUseCase.ShouldNotifyInvitee(result) || inviteToken == null) return;
         if (Broadcast.GetSession(invitee!.SessionId) is { } inviteeSession)
         {
             

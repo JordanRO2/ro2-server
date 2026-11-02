@@ -11,6 +11,7 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Characters.Domain;
+using RO2.Guilds.Application;
 using RO2.Guilds.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
@@ -30,16 +31,13 @@ public class GuildInviteYouAnsHandler : ZoneRmiHandlerBase<GuildInviteYouAnsHand
     private const int AnswerLen = 33;
 
  /// <summary>Result 0: the answer was taken. An accept joins the guild; a decline is reported to the inviter.</summary>
-    internal const ushort AnswerTaken = 0;
+    internal const ushort AnswerTaken = GuildInviteAnswerUseCase.AnswerTaken;
 
  /// <summary>Result 1: the accepting character is already a member of a guild.</summary>
-    internal const ushort AlreadyInAGuild = 1;
+    internal const ushort AlreadyInAGuild = GuildInviteAnswerUseCase.AlreadyInAGuild;
 
  /// <summary>Result 12: no valid invite matches the answer, including an answer given after the invite has expired.</summary>
-    internal const ushort NoInvite = 12;
-
- /// <summary>Config type identifier for the invite answer timeout, in seconds.</summary>
-    private const ushort ConfigInviteAnswerSeconds = 5;
+    internal const ushort NoInvite = GuildInviteAnswerUseCase.NoInvite;
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
@@ -72,11 +70,13 @@ public class GuildInviteYouAnsHandler : ZoneRmiHandlerBase<GuildInviteYouAnsHand
         Logger.LogInformation("{Name} answers guild invite accepted={Accepted} guild={GuildId}",
             player.Name, accepted, guild?.Id ?? 0);
 
-        if (accepted && guild != null && GuildService.Instance.GetByCharId(player.CharacterId) == null)
+        var decision = GuildInviteAnswerUseCase.Decide(accepted, validInvite: guild != null,
+            alreadyInGuild: GuildService.Instance.GetByCharId(player.CharacterId) != null);
+        if (decision.Outcome == InviteAnswerOutcome.Join)
         {
-            var member = await GuildService.Instance.AddMemberAsync(guild, player.CharacterId, player.Name, player.Level, player.Job);
+            var member = await GuildService.Instance.AddMemberAsync(guild!, player.CharacterId, player.Name, player.Level, player.Job);
 
-            await session.SendRmiAsync(ZoneS2COpcodes.AnsGuildInviteYouAns, (ReadOnlyMemory<byte>)BuildAnsGuildInviteYouAns(AnswerTaken, answer));
+            await session.SendRmiAsync(ZoneS2COpcodes.AnsGuildInviteYouAns, (ReadOnlyMemory<byte>)BuildAnsGuildInviteYouAns(decision.Code, answer));
 
             
             
@@ -87,12 +87,12 @@ public class GuildInviteYouAnsHandler : ZoneRmiHandlerBase<GuildInviteYouAnsHand
             
             var characters = services.GetRequiredService<ICharacterRepository>();
             var memberView = await GuildRosterPackets.ResolveMemberAsync(member, PlayerManager, characters);
-            var addBody = GuildRosterPackets.BuildNfyGuildMemberAdd(guild, memberView);
+            var addBody = GuildRosterPackets.BuildNfyGuildMemberAdd(guild!, memberView);
 
             
             
             await NotifyInviterAsync(invite!, answer, player.Name);
-            await GuildPackets.BroadcastToGuildAsync(guild, PlayerManager, Broadcast, ZoneS2COpcodes.NfyGuildMemberAdd, addBody);
+            await GuildPackets.BroadcastToGuildAsync(guild!, PlayerManager, Broadcast, ZoneS2COpcodes.NfyGuildMemberAdd, addBody);
 
             
             
@@ -111,14 +111,13 @@ public class GuildInviteYouAnsHandler : ZoneRmiHandlerBase<GuildInviteYouAnsHand
         
         
         
-        ushort result = RefusalCode(accepted, guild != null);
-        await session.SendRmiAsync(ZoneS2COpcodes.AnsGuildInviteYouAns, (ReadOnlyMemory<byte>)BuildAnsGuildInviteYouAns(result, answer));
+        await session.SendRmiAsync(ZoneS2COpcodes.AnsGuildInviteYouAns, (ReadOnlyMemory<byte>)BuildAnsGuildInviteYouAns(decision.Code, answer));
 
         
         
         
         
-        if (!accepted && guild != null)
+        if (decision.NotifyInviter)
             await NotifyInviterAsync(invite!, answer, player.Name);
     }
 
@@ -139,24 +138,19 @@ public class GuildInviteYouAnsHandler : ZoneRmiHandlerBase<GuildInviteYouAnsHand
  /// Returns the 2568 result code for an answer that did not join: <see cref="AnswerTaken"/> for a decline of a valid invite, <see cref="AlreadyInAGuild"/> for an accept by a guild member, and <see cref="NoInvite"/> when no valid invite matches.
  /// </summary>
     internal static ushort RefusalCode(bool accepted, bool validInvite)
-        => !validInvite ? NoInvite : accepted ? AlreadyInAGuild : AnswerTaken;
+        => GuildInviteAnswerUseCase.RefusalCode(accepted, validInvite);
 
  /// <summary>
  /// Returns how long an invite can be answered, read from the invite answer timeout config row. Returns null (no limit) when the row is absent or not a positive number.
  /// </summary>
     internal static TimeSpan? AnswerLifetime(IReadOnlyList<ConfigDef> config)
-    {
-        var row = config.FirstOrDefault(c => c.type == ConfigInviteAnswerSeconds);
-        return row != null && double.TryParse(row.Value, System.Globalization.NumberStyles.Float,
-                   System.Globalization.CultureInfo.InvariantCulture, out var seconds) && seconds > 0
-            ? TimeSpan.FromSeconds(seconds) : null;
-    }
+        => GuildInviteAnswerUseCase.AnswerLifetime(config);
 
  /// <summary>
  /// Returns true when <paramref name="invite"/> is past <paramref name="lifetime"/> at <paramref name="nowUtc"/>. Never expires when <paramref name="lifetime"/> is null. An invite is expired at exactly its lifetime.
  /// </summary>
     internal static bool IsExpired(GuildPendingInvite invite, TimeSpan? lifetime, DateTime nowUtc)
-        => lifetime is { } l && nowUtc - invite.CreatedUtc >= l;
+        => GuildInviteAnswerUseCase.IsExpired(invite, lifetime, nowUtc);
 
  /// <summary>
  /// Builds the 2568 AnsGuildInviteYouAns body: [u16 result][the 33-byte 1430 answer echoed]. The 35-byte layout is the one the client reads.

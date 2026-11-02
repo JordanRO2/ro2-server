@@ -1,3 +1,4 @@
+using RO2.Guilds.Application;
 using RO2.Guilds.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -31,10 +32,9 @@ public class GuildMemberModifyAuthHandler : ZoneRmiHandlerBase<GuildMemberModify
         ulong targetGid = System.Buffers.Binary.BinaryPrimitives.ReadUInt64LittleEndian(span.Slice(17, 8));
 
         var guild = GuildService.Instance.GetByCharId(player.CharacterId);
-        ushort result = 0;
-        if (guild == null) result = 1;
-        else if (guild.MasterCharId != player.CharacterId) result = 2;
-        else if (!await GuildService.Instance.SetAuthAsync(guild, targetGid, newAuthId)) result = 3;
+        var result = GuildSetAuthUseCase.Check(guild != null, guild != null && guild.MasterCharId == player.CharacterId);
+        if (result == GuildSetAuthUseCase.ResultOk)
+            result = GuildSetAuthUseCase.Settle(await GuildService.Instance.SetAuthAsync(guild!, targetGid, newAuthId));
 
         Logger.LogInformation("Session {Id}: {Name} sets member {Gid} authority {Auth} -> result {Result}",
             session.SessionId, player.Name, targetGid, newAuthId, result);

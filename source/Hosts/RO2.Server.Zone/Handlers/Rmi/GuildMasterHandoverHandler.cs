@@ -7,6 +7,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Guilds.Application;
 using RO2.Guilds.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
@@ -30,13 +31,13 @@ public class GuildMasterHandoverHandler : ZoneRmiHandlerBase<GuildMasterHandover
     
     
  /// <summary>Result 7: no guild was found.</summary>
-    internal const ushort ResultGuildNotFound = 7;
+    internal const ushort ResultGuildNotFound = GuildMasterHandoverUseCase.ResultGuildNotFound;
 
  /// <summary>Result 13: the target is not a guild member.</summary>
-    internal const ushort ResultTargetNotMember = 13;
+    internal const ushort ResultTargetNotMember = GuildMasterHandoverUseCase.ResultTargetNotMember;
 
  /// <summary>Result 17: the requester lacks the guild master right.</summary>
-    internal const ushort ResultNotMaster = 17;
+    internal const ushort ResultNotMaster = GuildMasterHandoverUseCase.ResultNotMaster;
 
     public GuildMasterHandoverHandler(IServiceScopeFactory s, ILogger<GuildMasterHandoverHandler> l, PlayerStateManager pm, BroadcastService bc) : base(s, l, pm, bc) { }
 
@@ -45,9 +46,9 @@ public class GuildMasterHandoverHandler : ZoneRmiHandlerBase<GuildMasterHandover
  /// </summary>
     internal static ushort Precheck(Guild? guild, uint requesterCharId)
     {
-        if (guild == null) return ResultGuildNotFound;
+        if (guild == null) return GuildMasterHandoverUseCase.Precheck(guildFound: false, requesterIsMaster: false);
         lock (guild.Gate)
-            return guild.MasterCharId == requesterCharId ? (ushort)0 : ResultNotMaster;
+            return GuildMasterHandoverUseCase.Precheck(guildFound: true, requesterIsMaster: guild.MasterCharId == requesterCharId);
     }
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
@@ -61,8 +62,8 @@ public class GuildMasterHandoverHandler : ZoneRmiHandlerBase<GuildMasterHandover
         var guild = GuildService.Instance.GetByCharId(player.CharacterId);
         ulong oldMasterGid = guild != null ? GuildService.GidFor(guild.MasterCharId) : 0;
         ushort result = Precheck(guild, player.CharacterId);
-        if (result == 0 && !await GuildService.Instance.SetMasterAsync(guild!, newMasterGid))
-            result = ResultTargetNotMember;   
+        if (result == GuildMasterHandoverUseCase.ResultOk)
+            result = GuildMasterHandoverUseCase.Settle(await GuildService.Instance.SetMasterAsync(guild!, newMasterGid));
 
         Logger.LogInformation("Session {Id}: {Name} hands guild master to {Gid} -> result {Result}",
             session.SessionId, player.Name, newMasterGid, result);

@@ -8,6 +8,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Guilds.Application;
 using RO2.Guilds.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
@@ -31,7 +32,7 @@ public class GuildKickHandler : ZoneRmiHandlerBase<GuildKickHandler>
     private const int TailOff = NameFieldOff + NameFieldBytes;     
 
  /// <summary>Reason code 2 in the 2571 NfyGuildMemberRemove notice: the member was kicked. Reason 3 means the member left.</summary>
-    private const byte RemoveReasonKicked = 2;
+    private const byte RemoveReasonKicked = GuildKickUseCase.RemoveReasonKicked;
 
     
     
@@ -43,16 +44,16 @@ public class GuildKickHandler : ZoneRmiHandlerBase<GuildKickHandler>
     
     
  /// <summary>Result 7: the kicker is not in a guild.</summary>
-    internal const ushort ResultNoGuild = 7;
+    internal const ushort ResultNoGuild = GuildKickUseCase.ResultNoGuild;
 
  /// <summary>Result 8: the kicker lacks the member-removal right, or the target is the guild master.</summary>
-    internal const ushort ResultNoRight = 8;
+    internal const ushort ResultNoRight = GuildKickUseCase.ResultNoRight;
 
  /// <summary>Result 24: the kicker targeted themselves.</summary>
-    internal const ushort ResultSelf = 24;
+    internal const ushort ResultSelf = GuildKickUseCase.ResultSelf;
 
  /// <summary>Result 10: no member of the kicker's guild has the given name.</summary>
-    internal const ushort ResultNoSuchMember = 10;
+    internal const ushort ResultNoSuchMember = GuildKickUseCase.ResultNoSuchMember;
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
@@ -62,26 +63,22 @@ public class GuildKickHandler : ZoneRmiHandlerBase<GuildKickHandler>
         var targetName = payload.Length >= 6 ? GuildPackets.ReadWideNameAt(payload.Span, NameFieldOff, NameMaxChars) : string.Empty;
 
         var guild = GuildService.Instance.GetByCharId(player.CharacterId);
-        ushort result = 0;
         GuildMember? kicked = null;
 
-        if (guild == null) result = ResultNoGuild;
-        
-        else if (!GuildService.HasPermission(guild, player.CharacterId, GuildService.PermissionKick)) result = ResultNoRight;
-        else if (string.Equals(targetName, player.Name, StringComparison.OrdinalIgnoreCase)) result = ResultSelf;
-        else
+        var result = GuildKickUseCase.CheckKicker(
+            inGuild: guild != null,
+            mayKick: guild != null && GuildService.HasPermission(guild, player.CharacterId, GuildService.PermissionKick),
+            targetIsSelf: string.Equals(targetName, player.Name, StringComparison.OrdinalIgnoreCase));
+        if (result == GuildKickUseCase.ResultOk)
         {
             GuildMember? targetMember;
-            lock (guild.Gate)
+            lock (guild!.Gate)
                 targetMember = guild.Members.FirstOrDefault(m => string.Equals(m.Name, targetName, StringComparison.OrdinalIgnoreCase));
-            if (targetMember == null) result = ResultNoSuchMember;
-            
-            
-            else if (targetMember.CharId == guild.MasterCharId) result = ResultNoRight;
-            else
+            result = GuildKickUseCase.CheckTarget(targetMember != null, targetMember != null && targetMember.CharId == guild.MasterCharId);
+            if (result == GuildKickUseCase.ResultOk)
             {
-                kicked = await GuildService.Instance.RemoveMemberByCharIdAsync(guild, targetMember.CharId);
-                if (kicked == null) result = ResultNoSuchMember;   
+                kicked = await GuildService.Instance.RemoveMemberByCharIdAsync(guild, targetMember!.CharId);
+                result = GuildKickUseCase.Settle(kicked != null);
             }
         }
 

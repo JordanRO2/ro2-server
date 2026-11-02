@@ -7,6 +7,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Guilds.Application;
 using RO2.Guilds.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
@@ -24,9 +25,6 @@ public class GuildLeaveHandler : ZoneRmiHandlerBase<GuildLeaveHandler>
 
     public GuildLeaveHandler(IServiceScopeFactory s, ILogger<GuildLeaveHandler> l, PlayerStateManager pm, BroadcastService bc) : base(s, l, pm, bc) { }
 
- /// <summary>Result 2: the guild master cannot leave the guild.</summary>
-    private const ushort ResultMasterCannotLeave = 2;
-
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
         var repo = services.GetRequiredService<IGuildRepository>();
@@ -34,19 +32,13 @@ public class GuildLeaveHandler : ZoneRmiHandlerBase<GuildLeaveHandler>
         var emblems = services.GetRequiredService<IGuildEmblemRepository>();
 
         var guild = GuildService.Instance.GetByCharId(player.CharacterId);
-        ushort result = 0;
         GuildMember? left = null;
-        if (guild == null) result = 1;
-        
-        
-        
-        
-        else if (guild.MasterCharId == player.CharacterId) result = ResultMasterCannotLeave;
-        else
+        var result = GuildLeaveUseCase.Check(guild != null, guild != null && guild.MasterCharId == player.CharacterId);
+        if (result == GuildLeaveUseCase.ResultOk)
         {
-            left = await GuildService.Instance.RemoveMemberByCharIdAsync(guild, player.CharacterId);
-            if (left == null) result = 1;
-            else
+            left = await GuildService.Instance.RemoveMemberByCharIdAsync(guild!, player.CharacterId);
+            result = GuildLeaveUseCase.Settle(left != null);
+            if (left != null)
             {
                 
                 
@@ -69,7 +61,7 @@ public class GuildLeaveHandler : ZoneRmiHandlerBase<GuildLeaveHandler>
 
         if (result == 0 && guild != null && left != null)
         {
-            if (guild.Members.Count == 0)
+            if (GuildLeaveUseCase.Aftermath(guild.Members.Count) == LeaveAftermath.Disband)
             {
                 
                 
