@@ -90,7 +90,7 @@ internal static class GuildSkillLearnPackets
  /// <summary>
  /// Skill_LearnType of the lines bought with guild skill points, the only lines the learn window sells.
  /// </summary>
-    internal const byte PointLearnType = 0;
+    internal const byte PointLearnType = GuildSkillRules.PointLearnType;
 
     private static readonly ConditionalWeakTable<IReadOnlyList<GuildSkillLevel>, IReadOnlyDictionary<uint, GuildSkillLevel>> ById = new();
 
@@ -104,10 +104,10 @@ internal static class GuildSkillLearnPackets
         });
 
  /// <summary>Returns the line of a Guild_Skill_ID, which is the id without its level.</summary>
-    internal static uint LineOf(uint skillId) => skillId / 100;
+    internal static uint LineOf(uint skillId) => GuildSkillRules.LineOf(skillId);
 
  /// <summary>Returns the level of a Guild_Skill_ID within its line.</summary>
-    internal static int LevelOf(uint skillId) => (int)(skillId % 100);
+    internal static int LevelOf(uint skillId) => GuildSkillRules.LevelOf(skillId);
 
  /// <summary>
  /// Reads a 1512 body. Returns false when the length fields do not match the body.
@@ -127,29 +127,14 @@ internal static class GuildSkillLearnPackets
     }
 
  /// <summary>Returns the highest level held on each line, from a guild's learned ids.</summary>
-    internal static Dictionary<uint, int> LineLevels(IEnumerable<uint> learned)
-    {
-        var levels = new Dictionary<uint, int>();
-        foreach (var id in learned)
-        {
-            var line = LineOf(id);
-            if (LevelOf(id) > levels.GetValueOrDefault(line)) levels[line] = LevelOf(id);
-        }
-        return levels;
-    }
+    internal static Dictionary<uint, int> LineLevels(IEnumerable<uint> learned) => GuildSkillRules.LineLevels(learned);
 
  /// <summary>
  /// Returns the guild's unspent skill points: the guild level minus one, less one per level held on a point-cost
  /// line, never below 0.
  /// </summary>
     internal static byte UnspentPoints(byte guildLevel, IEnumerable<uint> learned, IReadOnlyDictionary<uint, GuildSkillLevel> table)
-    {
-        var spent = 0;
-        foreach (var (line, level) in LineLevels(learned))
-            if (table.TryGetValue(line * 100 + (uint)level, out var row) && row.Skill_LearnType == PointLearnType)
-                spent += level;
-        return (byte)Math.Clamp(guildLevel - 1 - spent, 0, byte.MaxValue);
-    }
+        => GuildSkillRules.UnspentPoints(guildLevel, learned, table);
 
  /// <summary>
  /// Returns the ids a learn request learns, in an order that satisfies their prerequisites, or null when any of
@@ -166,54 +151,9 @@ internal static class GuildSkillLearnPackets
     internal static List<uint>? PlanLearn(IReadOnlyList<uint> requested, IEnumerable<uint> learned, byte guildLevel,
         IReadOnlyDictionary<uint, GuildSkillLevel> table, out LearnRefusal refusal)
     {
-        refusal = LearnRefusal.WrongSkillIndex;
-        if (requested.Count == 0) return null;
-        var held = learned.ToArray();
-        
-        if (requested.Count > UnspentPoints(guildLevel, held, table))
-        {
-            refusal = LearnRefusal.NotEnoughPoints;
-            return null;
-        }
-        var levels = LineLevels(held);
-        var pending = new List<uint>(requested);
-        var accepted = new List<uint>(requested.Count);
-
-        bool Holds(uint id) => id == 0 || levels.GetValueOrDefault(LineOf(id)) >= LevelOf(id);
-
-        bool progress = true;
-        while (pending.Count > 0 && progress)
-        {
-            progress = false;
-            for (int i = 0; i < pending.Count; i++)
-            {
-                var id = pending[i];
-                
-                if (!table.TryGetValue(id, out var row) || row.Skill_LearnType != PointLearnType) return null;
-                if (guildLevel < row.Need_GuildLevel) return null;
-                
-                
-                if (LevelOf(id) != levels.GetValueOrDefault(LineOf(id)) + 1) continue;
-                if (!Holds(row.Need_Skill_ID_1) || !Holds(row.Need_Skill_ID_2)) continue;
-                levels[LineOf(id)] = LevelOf(id);
-                accepted.Add(id);
-                pending.RemoveAt(i--);
-                progress = true;
-            }
-        }
-        if (pending.Count == 0)
-        {
-            refusal = LearnRefusal.None;
-            return accepted;
-        }
-
-        
-        var stuck = pending[0];
-        var stuckRow = table[stuck];
-        refusal = LevelOf(stuck) != levels.GetValueOrDefault(LineOf(stuck)) + 1 ? LearnRefusal.WrongSkillIndex
-            : !Holds(stuckRow.Need_Skill_ID_1) ? LearnRefusal.MissingNeedSkill1
-            : LearnRefusal.MissingNeedSkill2;
-        return null;
+        var plan = GuildSkillRules.PlanLearn(requested, learned, guildLevel, table, out var domainRefusal);
+        refusal = (LearnRefusal)(int)domainRefusal;
+        return plan;
     }
 
  /// <summary>

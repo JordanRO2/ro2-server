@@ -1,6 +1,7 @@
 using System.Buffers.Binary;
 using RO2.GameData;
 using RO2.GameData.Tables;
+using RO2.Guilds.Domain;
 using RO2.Server.Zone.Models;
 
 namespace RO2.Server.Zone.Services;
@@ -25,7 +26,7 @@ internal static class GuildSkillBookLearn
     internal const byte GuildSkillBookItemType = 113;
 
  /// <summary>Skill_LearnType of the guild skill lines that are learned from books.</summary>
-    internal const byte BookLearnType = 1;
+    internal const byte BookLearnType = GuildSkillRules.BookLearnType;
 
  /// <summary>Length in bytes of a 1652 request body: the u64 item uid.</summary>
     internal const int RequestBodyLength = 8;
@@ -37,7 +38,7 @@ internal static class GuildSkillBookLearn
  /// Guild_Skill_ID is <c>line * SkillIdLineStride + level</c>; a player skill id (Link_Skill_ID) is
  /// <c>group * SkillIdLineStride + level</c> in the same way.
  /// </summary>
-    internal const uint SkillIdLineStride = 100;
+    internal const uint SkillIdLineStride = GuildSkillRules.SkillIdLineStride;
 
  /// <summary>2959 result 0: the book was learned.</summary>
     internal const ushort ResultLearned = 0;
@@ -72,19 +73,7 @@ internal static class GuildSkillBookLearn
  /// <param name="guildLevel">The guild's level.</param>
     internal static Verdict Plan(uint skillId, IEnumerable<uint> learned, byte guildLevel,
         IReadOnlyDictionary<uint, GuildSkillLevel> table)
-    {
-        if (skillId == 0 || !table.TryGetValue(skillId, out var row) || row.Skill_LearnType != BookLearnType)
-            return Verdict.NotLearnable;
-        if (guildLevel < row.Need_GuildLevel) return Verdict.NotLearnable;
-
-        var levels = GuildSkillLearnPackets.LineLevels(learned);
-        bool Holds(uint id) => id == 0
-            || levels.GetValueOrDefault(GuildSkillLearnPackets.LineOf(id)) >= GuildSkillLearnPackets.LevelOf(id);
-
-        if (Holds(skillId)) return Verdict.AlreadyLearned;
-        if (!Holds(row.Need_Skill_ID_1) || !Holds(row.Need_Skill_ID_2)) return Verdict.PreviousLevelMissing;
-        return Verdict.Learn;
-    }
+        => (Verdict)(int)GuildSkillRules.PlanBook(skillId, learned, guildLevel, table);
 
  /// <summary>The 2959 result for a verdict.</summary>
     internal static ushort ResultOf(Verdict verdict) => verdict switch
@@ -103,18 +92,7 @@ internal static class GuildSkillBookLearn
     internal static IReadOnlyList<(uint Group, byte Level)> SkillListWithGuildLinks(
         IEnumerable<KeyValuePair<uint, byte>> ownSkills, IEnumerable<uint> guildSkills,
         IReadOnlyDictionary<uint, GuildSkillLevel> table)
-    {
-        var byGroup = new Dictionary<uint, byte>();
-        void Add(uint group, byte level)
-        {
-            if (level > byGroup.GetValueOrDefault(group)) byGroup[group] = level;
-        }
-        foreach (var (group, level) in ownSkills) Add(group, level);
-        foreach (var (line, level) in GuildSkillLearnPackets.LineLevels(guildSkills))
-            if (table.TryGetValue(line * SkillIdLineStride + (uint)level, out var row) && row.Link_Skill_ID != 0)
-                Add(GuildSkillLearnPackets.LineOf(row.Link_Skill_ID), (byte)GuildSkillLearnPackets.LevelOf(row.Link_Skill_ID));
-        return byGroup.Select(kv => (kv.Key, kv.Value)).ToArray();
-    }
+        => GuildSkillRules.SkillListWithGuildLinks(ownSkills, guildSkills, table);
 
  /// <summary>
  /// Builds the 2488 list for a player: its own skills plus its guild's line skills, or only its own skills when
