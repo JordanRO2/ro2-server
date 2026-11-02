@@ -1,6 +1,7 @@
 using Npgsql;
 using RO2.Quests.Domain;
-using RO2.Persistence.Postgres.Repositories;
+using RO2.Persistence.Postgres;
+using RO2.Quests.Infrastructure.Postgres;
 using Xunit;
 
 namespace RO2.Tests.Integration;

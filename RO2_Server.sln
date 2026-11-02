@@ -123,6 +123,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Quest.Domain", "source\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Quest.Infrastructure.Mongo", "source\Quest\RO2.Quest.Infrastructure.Mongo\RO2.Quest.Infrastructure.Mongo.csproj", "{E4A7C1D2-5B3F-4A68-9C0E-71D2F8B6A315}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Quest.Infrastructure.Postgres", "source\Quest\RO2.Quest.Infrastructure.Postgres\RO2.Quest.Infrastructure.Postgres.csproj", "{A8D3F5B1-7C42-4E9A-B6D0-2F1E94C7A853}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -697,6 +699,18 @@ Global
 		{E4A7C1D2-5B3F-4A68-9C0E-71D2F8B6A315}.Release|x64.Build.0 = Release|Any CPU
 		{E4A7C1D2-5B3F-4A68-9C0E-71D2F8B6A315}.Release|x86.ActiveCfg = Release|Any CPU
 		{E4A7C1D2-5B3F-4A68-9C0E-71D2F8B6A315}.Release|x86.Build.0 = Release|Any CPU
+		{A8D3F5B1-7C42-4E9A-B6D0-2F1E94C7A853}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8D3F5B1-7C42-4E9A-B6D0-2F1E94C7A853}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8D3F5B1-7C42-4E9A-B6D0-2F1E94C7A853}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A8D3F5B1-7C42-4E9A-B6D0-2F1E94C7A853}.Debug|x64.Build.0 = Debug|Any CPU
+		{A8D3F5B1-7C42-4E9A-B6D0-2F1E94C7A853}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A8D3F5B1-7C42-4E9A-B6D0-2F1E94C7A853}.Debug|x86.Build.0 = Debug|Any CPU
+		{A8D3F5B1-7C42-4E9A-B6D0-2F1E94C7A853}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8D3F5B1-7C42-4E9A-B6D0-2F1E94C7A853}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8D3F5B1-7C42-4E9A-B6D0-2F1E94C7A853}.Release|x64.ActiveCfg = Release|Any CPU
+		{A8D3F5B1-7C42-4E9A-B6D0-2F1E94C7A853}.Release|x64.Build.0 = Release|Any CPU
+		{A8D3F5B1-7C42-4E9A-B6D0-2F1E94C7A853}.Release|x86.ActiveCfg = Release|Any CPU
+		{A8D3F5B1-7C42-4E9A-B6D0-2F1E94C7A853}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -734,5 +748,6 @@ Global
 		{292D93AF-781D-EAE2-E3E4-541231A1BD07} = {B8EFCA5F-814F-285C-A8CB-F00F14650265}
 		{5B765AE9-76B0-4FD3-9136-389073DC4939} = {292D93AF-781D-EAE2-E3E4-541231A1BD07}
 		{E4A7C1D2-5B3F-4A68-9C0E-71D2F8B6A315} = {292D93AF-781D-EAE2-E3E4-541231A1BD07}
+		{A8D3F5B1-7C42-4E9A-B6D0-2F1E94C7A853} = {292D93AF-781D-EAE2-E3E4-541231A1BD07}
 	EndGlobalSection
 EndGlobal

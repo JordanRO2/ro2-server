@@ -1,8 +1,9 @@
 using Npgsql;
 using NpgsqlTypes;
 using RO2.Quests.Domain;
+using RO2.Persistence.Postgres;
 
-namespace RO2.Persistence.Postgres.Repositories;
+namespace RO2.Quests.Infrastructure.Postgres;
 
 /// <summary>
 /// PostgreSQL implementation of <see cref="IQuestRepository"/>: each character's quest runs in the

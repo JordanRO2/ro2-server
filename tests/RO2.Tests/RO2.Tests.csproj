@@ -37,6 +37,7 @@
     <ProjectReference Include="..\..\source\Platform\RO2.Persistence.Mongo\RO2.Persistence.Mongo.csproj" />
     <ProjectReference Include="..\..\source\Guild\RO2.Guild.Infrastructure.Mongo\RO2.Guild.Infrastructure.Mongo.csproj" />
     <ProjectReference Include="..\..\source\Quest\RO2.Quest.Infrastructure.Mongo\RO2.Quest.Infrastructure.Mongo.csproj" />
+    <ProjectReference Include="..\..\source\Quest\RO2.Quest.Infrastructure.Postgres\RO2.Quest.Infrastructure.Postgres.csproj" />
     <ProjectReference Include="..\..\source\Guild\RO2.Guild.Infrastructure.Postgres\RO2.Guild.Infrastructure.Postgres.csproj" />
     <ProjectReference Include="..\..\source\Platform\RO2.Persistence.Postgres\RO2.Persistence.Postgres.csproj" />
     <ProjectReference Include="..\..\source\Platform\RO2.Persistence.Redis\RO2.Persistence.Redis.csproj" />
