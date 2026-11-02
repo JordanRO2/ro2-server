@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <RootNamespace>RO2.Monster.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Monster bounded context: Domain references ONLY RO2.BuildingBlocks + the shared RO2.GameData kernel
+       (World.Domain / Combat.Domain are added by the slices that need a type from them). -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+  </ItemGroup>
+
+</Project>

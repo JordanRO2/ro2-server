@@ -83,6 +83,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Combat.Application", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.World.Domain", "source\World\RO2.World.Domain\RO2.World.Domain.csproj", "{C4A4C7E4-0B2D-4E1A-9C01-0000000F1D01}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Monster.Domain", "source\Monster\RO2.Monster.Domain\RO2.Monster.Domain.csproj", "{C4A4C7E4-0B2D-4E1A-9C01-0000000B6D01}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Skill.Application", "source\Skill\RO2.Skill.Application\RO2.Skill.Application.csproj", "{C4A4C7E4-0B2D-4E1A-9C01-0000000D1D04}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Skill.Infrastructure.Mongo", "source\Skill\RO2.Skill.Infrastructure.Mongo\RO2.Skill.Infrastructure.Mongo.csproj", "{C4A4C7E4-0B2D-4E1A-9C01-0000000D1D02}"
@@ -491,6 +493,18 @@ Global
 		{C4A4C7E4-0B2D-4E1A-9C01-0000000F1D01}.Release|x64.Build.0 = Release|Any CPU
 		{C4A4C7E4-0B2D-4E1A-9C01-0000000F1D01}.Release|x86.ActiveCfg = Release|Any CPU
 		{C4A4C7E4-0B2D-4E1A-9C01-0000000F1D01}.Release|x86.Build.0 = Release|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000B6D01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000B6D01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000B6D01}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000B6D01}.Debug|x64.Build.0 = Debug|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000B6D01}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000B6D01}.Debug|x86.Build.0 = Debug|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000B6D01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000B6D01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000B6D01}.Release|x64.ActiveCfg = Release|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000B6D01}.Release|x64.Build.0 = Release|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000B6D01}.Release|x86.ActiveCfg = Release|Any CPU
+		{C4A4C7E4-0B2D-4E1A-9C01-0000000B6D01}.Release|x86.Build.0 = Release|Any CPU
 		{C4A4C7E4-0B2D-4E1A-9C01-0000000D1D04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C4A4C7E4-0B2D-4E1A-9C01-0000000D1D04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4A4C7E4-0B2D-4E1A-9C01-0000000D1D04}.Debug|x64.ActiveCfg = Debug|Any CPU

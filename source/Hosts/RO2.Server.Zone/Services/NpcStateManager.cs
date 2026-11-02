@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using Microsoft.Extensions.Logging;
 using RO2.GameData;
+using RO2.Monster.Domain;
 
 using RO2.Worlds.Domain;
 
@@ -12,10 +13,15 @@ namespace RO2.Server.Zone.Services;
 public class NpcRuntimeState
 {
     public uint EntityOid { get; set; }
-    public uint NpcId { get; set; }
-    public uint MapId { get; set; }
+
+    /// <summary>The set-once identity/catalog values. The members below that read and write them keep the old
+    /// object-initializer construction working (<c>new NpcRuntimeState { NpcId = .., Atk = .. }</c>).</summary>
+    public NpcDefinition Definition { get; set; } = new();
+
+    public uint NpcId { get => Definition.NpcId; set => Definition = Definition with { NpcId = value }; }
+    public uint MapId { get => Definition.MapId; set => Definition = Definition with { MapId = value }; }
     public int Hp { get; set; }
-    public int MaxHp { get; set; }
+    public int MaxHp { get => Definition.MaxHp; set => Definition = Definition with { MaxHp = value }; }
 
     /// <summary>
     /// The NPC's max SP, which is also its current SP (NPCs spend no SP), at record+50 and +54 (u16). Set by
@@ -23,7 +29,7 @@ public class NpcRuntimeState
     /// <see cref="NpcRetailVitals"/>, else a stated fallback). 0 means it was never resolved (a state built
     /// outside the manager), and then <see cref="WireMaxSp"/> keeps the old HP mirror.
     /// </summary>
-    public int MaxSp { get; set; }
+    public int MaxSp { get => Definition.MaxSp; set => Definition = Definition with { MaxSp = value }; }
 
     /// <summary>
     /// record+54 max SP (and the SP 2643 / 2718 / 2797 / 2495 restate): <see cref="MaxSp"/> clamped to 16 bits,
@@ -36,10 +42,10 @@ public class NpcRuntimeState
     /// == max SP, see <see cref="MaxSp"/>), else the old mirror of current HP.
     /// </summary>
     internal ushort WireCurSp => (ushort)Math.Clamp(MaxSp > 0 ? MaxSp : Hp, 0, ushort.MaxValue);
-    public int Atk { get; set; }
-    public int Def { get; set; }
-    public int ExpReward { get; set; }
-    public int Camp { get; set; }
+    public int Atk { get => Definition.Atk; set => Definition = Definition with { Atk = value }; }
+    public int Def { get => Definition.Def; set => Definition = Definition with { Def = value }; }
+    public int ExpReward { get => Definition.ExpReward; set => Definition = Definition with { ExpReward = value }; }
+    public int Camp { get => Definition.Camp; set => Definition = Definition with { Camp = value }; }
 
     /// <summary>
     /// Whether this NPC's corpse can be gathered: <c>NPCInfo.AfterDeath_FuncObject_ID != 0</c> for its asset, set
@@ -48,10 +54,10 @@ public class NpcRuntimeState
     /// lookup, because the record writer is static. A state built outside the manager keeps false, which was
     /// the byte every record carried before.
     /// </summary>
-    public bool CorpseGatherable { get; set; }
+    public bool CorpseGatherable { get => Definition.CorpseGatherable; set => Definition = Definition with { CorpseGatherable = value }; }
 
     /// <summary>NPC level. Goes on the wire at 2506 record offset +8.</summary>
-    public int Level { get; set; }
+    public int Level { get => Definition.Level; set => Definition = Definition with { Level = value }; }
     public bool IsDead { get; set; }
     public DateTime? DeathTime { get; set; }
 
@@ -71,9 +77,9 @@ public class NpcRuntimeState
     /// range test takes the range from the ATTACKER, never from the victim's weapon. No tolerance or
     /// target-size term is added to it.
     /// </summary>
-    public float AttackReach { get; set; }
+    public float AttackReach { get => Definition.AttackReach; set => Definition = Definition with { AttackReach = value }; }
 
-    public SpawnEntry Spawn { get; set; } = null!;
+    public SpawnEntry Spawn { get => Definition.Spawn; set => Definition = Definition with { Spawn = value }; }
 
     /// <summary>
     /// PathEngine navmesh cell this NPC stands on, or <c>null</c> when none is known for
@@ -357,20 +363,23 @@ public class NpcStateManager
             var state = new NpcRuntimeState
             {
                 EntityOid = entityOid,
-                NpcId = spawn.AssetIndex,
-                MapId = mapId,
+                Definition = new NpcDefinition
+                {
+                    NpcId = spawn.AssetIndex,
+                    MapId = mapId,
+                    MaxHp = hp,
+                    MaxSp = sp,
+                    Atk = npcStats?.ATK ?? DefaultAtk,
+                    Def = npcStats?.DEF ?? DefaultDef,
+                    ExpReward = npcStats?.EXP_Reward ?? DefaultExpReward,
+                    Camp = camp,
+                    CorpseGatherable = (npcInfo?.AfterDeath_FuncObject_ID ?? 0) != 0,
+                    AttackReach = npcInfo is { Attack_Range: > 0f } ? npcInfo.Attack_Range : NpcCombatService.Reach,
+                    Level = level,
+                    Spawn = spawn,
+                },
                 Hp = hp,
-                MaxHp = hp,
-                MaxSp = sp,
-                Atk = npcStats?.ATK ?? DefaultAtk,
-                Def = npcStats?.DEF ?? DefaultDef,
-                ExpReward = npcStats?.EXP_Reward ?? DefaultExpReward,
-                Camp = camp,
-                CorpseGatherable = (npcInfo?.AfterDeath_FuncObject_ID ?? 0) != 0,
-                AttackReach = npcInfo is { Attack_Range: > 0f } ? npcInfo.Attack_Range : NpcCombatService.Reach,
-                Level = level,
                 IsDead = false,
-                Spawn = spawn,
                 NavCell = _data.GetNavCell(mapId, spawn.Index),
                 PosX = spawn.PosX,
                 PosY = spawn.PosY,
@@ -705,20 +714,10 @@ public class NpcStateManager
     private static NpcRuntimeState CorpseSnapshot(NpcRuntimeState state) => new()
     {
         EntityOid = state.EntityOid,
-        NpcId = state.NpcId,
-        MapId = state.MapId,
+        Definition = state.Definition with { AttackReach = 0 },  // corpse kept AttackReach 0 before the split; preserve
         Hp = 0,
-        MaxHp = state.MaxHp,
-        MaxSp = state.MaxSp,
-        Atk = state.Atk,
-        Def = state.Def,
-        ExpReward = state.ExpReward,
-        Camp = state.Camp,
-        CorpseGatherable = state.CorpseGatherable,
-        Level = state.Level,
         IsDead = true,
         DeathTime = state.DeathTime,
-        Spawn = state.Spawn,
         NavCell = state.NavCell,
         PosX = state.PosX,
         PosY = state.PosY,
