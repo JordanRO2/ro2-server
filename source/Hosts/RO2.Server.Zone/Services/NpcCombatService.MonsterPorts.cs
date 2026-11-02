@@ -14,7 +14,7 @@ public partial class NpcCombatService
     /// the wire senders. A nested class so the target resolution and the target re-selection stay the service's own.
     /// </summary>
     private sealed class MonsterPorts(NpcCombatService owner)
-        : IMonsterReadView, IMonsterCommands, IMonsterLifecycle, IRetaliationNotifier
+        : IMonsterReadView, IMonsterCommands, IRetaliationNotifier
     {
         public PlayerFacts? FindPlayer(uint pcHandle) => FactsOf(owner.ResolvePlayer(pcHandle));
 
@@ -27,14 +27,6 @@ public partial class NpcCombatService
 
         public uint ReselectLiveTarget(uint monsterOid)
             => owner._npcState.GetNpc(monsterOid) is { } npc ? owner.ReselectLiveTarget(npc) : 0;
-
-        public uint Respawn(uint monsterOid) => owner._npcState.Respawn(monsterOid);
-
-        public IReadOnlyList<uint> GetRespawnReady()
-            => owner._npcState.GetRespawnReady().Select(n => n.EntityOid).ToArray();
-
-        public void RetireCorpse(uint corpseHandle, DateTime? deathStamp)
-            => owner._npcState.RetireCorpse(corpseHandle, deathStamp);
 
         public async Task EnterCombatAsync(uint monsterOid, uint pcHandle)
         {

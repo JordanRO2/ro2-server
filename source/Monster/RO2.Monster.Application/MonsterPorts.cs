@@ -31,19 +31,6 @@ public interface IMonsterCommands
     uint ReselectLiveTarget(uint monsterOid);
 }
 
-/// <summary>Lifecycle side: death-to-respawn bookkeeping of the monster registry.</summary>
-public interface IMonsterLifecycle
-{
-    /// <summary>Respawns a dead monster under a fresh handle; the new handle, or 0 when unknown.</summary>
-    uint Respawn(uint monsterOid);
-
-    /// <summary>The handles of the dead monsters whose respawn time has come.</summary>
-    IReadOnlyList<uint> GetRespawnReady();
-
-    /// <summary>Retires a corpse that has been announced gone.</summary>
-    void RetireCorpse(uint corpseHandle, DateTime? deathStamp);
-}
-
 /// <summary>The two wire effects the pass orders between its state changes; the host sends them.</summary>
 public interface IRetaliationNotifier
 {
