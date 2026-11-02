@@ -1,22 +1,9 @@
 using System.Collections.Frozen;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using RO2.Monster.Domain;
 
 namespace RO2.Server.Zone.Services;
-
-/// <summary>Whether, and on what condition, a monster starts a fight with a player who has not hit it.</summary>
-public enum NpcAggressionMode
-{
-    /// <summary>Passive: never aggros by proximity, only retaliates when struck (the default for every asset).</summary>
-    None = 0,
-
-    /// <summary>Aggros any player that enters its sight radius, regardless of level.</summary>
-    Always = 1,
-
-    /// <summary>Aggros a player in its sight radius only while the player is not too far above it in level
-    /// (<c>playerLevel - npcLevel &lt;= LevelGap</c>): the classic "stops noticing you once you out-level it" rule.</summary>
-    ByLevel = 2,
-}
 
 /// <summary>
 /// Per-asset monster aggression: whether a hostile NPC opens a fight on its own (and on what level condition).

@@ -140,39 +140,29 @@ public class NpcRuntimeState
 
     // ---- AI: proximity aggression + leash (server-side, custom; see NpcAggression) ------------------
     //
-    // A monster with an aggression mode other than None opens a fight with a player who enters its
-    // SightRadius (NpcCombatService's acquisition scan), on the condition the mode sets (always, or
-    // while the player is not too far above it in level). A fight the monster carries too far from its
-    // spawn (> LeashBound) is dropped: the monster heals and returns. Both are 0/None for every asset
-    // unless the custom table says otherwise, which is the passive default.
+    // Set once at spawn (AddMissingSpawns); only ReturningUntil changes afterwards (LeashReset). No lock, as before.
 
-    /// <summary>How this monster starts fights on its own: <see cref="NpcAggressionMode.None"/> (passive, the
-    /// default) unless the custom <see cref="NpcAggression"/> table gives its asset a mode. Friendly NPCs
-    /// (Camp &lt;= 1) are always None.</summary>
-    public NpcAggressionMode Aggression { get; set; }
+    /// <summary>The AI configuration and return window. The members below read and write it so the old
+    /// object-initializer / test construction keeps working.</summary>
+    public MonsterAiState Ai { get; set; } = new();
 
-    /// <summary>The level gap for a <see cref="NpcAggressionMode.ByLevel"/> monster: it acquires a player while
-    /// <c>playerLevel - Level &lt;= AggressionLevelGap</c>.</summary>
-    public int AggressionLevelGap { get; set; }
+    /// <inheritdoc cref="MonsterAiState.Aggression"/>
+    public NpcAggressionMode Aggression { get => Ai.Aggression; set => Ai = Ai with { Aggression = value }; }
 
-    /// <summary>Horizontal radius this monster acquires a player within (NPCInfo.Reaction_Bound). 0 means the row
-    /// carried none, and the acquisition scan then uses its melee fallback.</summary>
-    public float SightRadius { get; set; }
+    /// <inheritdoc cref="MonsterAiState.AggressionLevelGap"/>
+    public int AggressionLevelGap { get => Ai.AggressionLevelGap; set => Ai = Ai with { AggressionLevelGap = value }; }
 
-    /// <summary>How far from its spawn this monster chases before it leashes and resets (NPCInfo.Trace_Bound). 0
-    /// means the row carried none, so distance never leashes it (it still resets when it has no live target).</summary>
-    public float LeashBound { get; set; }
+    /// <inheritdoc cref="MonsterAiState.SightRadius"/>
+    public float SightRadius { get => Ai.SightRadius; set => Ai = Ai with { SightRadius = value }; }
 
-    /// <summary>
-    /// While <see cref="DateTime.UtcNow"/> is before this, the monster has just reset and is running home: it is
-    /// INVULNERABLE — hits on it miss (damageKind 2) and bank no threat, so it cannot be pulled back into the
-    /// fight before it arrives. Set by <see cref="NpcStateManager.LeashReset"/> (and extended by the chase's
-    /// walk-home). Default (0) = not returning.
-    /// </summary>
-    public DateTime ReturningUntil { get; set; }
+    /// <inheritdoc cref="MonsterAiState.LeashBound"/>
+    public float LeashBound { get => Ai.LeashBound; set => Ai = Ai with { LeashBound = value }; }
+
+    /// <summary>Set by <see cref="NpcStateManager.LeashReset"/> only; see <see cref="MonsterAiState.ReturningUntil"/>.</summary>
+    public DateTime ReturningUntil { get => Ai.ReturningUntil; set => Ai = Ai with { ReturningUntil = value }; }
 
     /// <summary>True while the monster is in its post-reset return/invulnerable window.</summary>
-    public bool IsReturning(DateTime now) => now < ReturningUntil;
+    public bool IsReturning(DateTime now) => Ai.IsReturning(now);
 }
 
 /// <summary>
@@ -228,8 +218,8 @@ public class NpcStateManager
     /// </summary>
     private const int MaxFriendlyCamp = 1;
 
-    /// <summary>How long after a reset a monster stays invulnerable while it runs home (hits miss); the chase's
-    /// walk-home may extend <see cref="NpcRuntimeState.ReturningUntil"/> to the real travel time.</summary>
+    /// <summary>How long after a reset a monster stays invulnerable while it runs home (hits miss);
+    /// <see cref="NpcRuntimeState.ReturningUntil"/> is stamped with it by the leash reset only.</summary>
     private static readonly TimeSpan ReturnInvulnDuration = TimeSpan.FromSeconds(3);
 
     // ---- Threat / aggro (ThreatAggro system) ------------------------------------------------

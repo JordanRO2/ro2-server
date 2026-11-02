@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging.Abstractions;
 using RO2.GameData;
+using RO2.Monster.Domain;
 using RO2.Server.Zone.Services;
 using Xunit;
 
