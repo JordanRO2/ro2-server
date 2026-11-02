@@ -15,6 +15,7 @@ using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 
 using RO2.Inventory.Domain;
+using RO2.Quests.Domain;
 using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
@@ -45,13 +46,13 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
     private const byte SkillQuickSlotEntryType = 2;
 
     /// <summary>Quest_Info Complete_Type of a "use item" objective (Value2 = the item, Value3 = how many uses).</summary>
-    private const byte UseItemObjective = 6;
+    private const byte UseItemObjective = ObjectiveRules.UseItemObjective;
 
     /// <summary>ItemInfo Item_Type of the stat-reset scrolls ("능력치 초기화 주문서"): they refund every allocated bonus stat point.</summary>
     private const byte StatResetScrollItemType = 25;
 
     /// <summary>Quest_Info Complete_Type 0: the row carries no objective.</summary>
-    private const byte NoObjective = 0;
+    private const byte NoObjective = ObjectiveRules.NoObjective;
 
     /// <summary>
     /// Value stored in <see cref="PlayerState.QuestKillProgress"/> for a use-item quest once its objective closed:
@@ -60,7 +61,7 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
     private const ushort ObjectiveClosedMark = 1;
 
     /// <summary>Most uses a type-6 objective row can ask for (the use counter is a byte).</summary>
-    private const uint MaxUsesPerRow = byte.MaxValue;
+    private const uint MaxUsesPerRow = ObjectiveRules.MaxUsesNeeded;
 
     /// <summary>msgTag of 1323 (58021 = 0xE2A5), checked by <see cref="InventoryRequest.Validate"/>.</summary>
     private const ushort MsgTag = 58021;
@@ -505,13 +506,7 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
 
             // Closed when every objective row is a met use-item row (no type-6 quest has another objective
             // type on its other rows; they are all Complete_Type 0).
-            var closed = true;
-            for (int i = 0; i < rows.Length && closed; i++)
-            {
-                if (rows[i].Complete_Type == NoObjective) continue;
-                closed = rows[i].Complete_Type == UseItemObjective
-                    && QuestUseItemProgress.Count(player, questId, i) >= UsesNeeded(rows[i]);
-            }
+            var closed = UseItemRule.AllUseItemRowsMet(rows, i => QuestUseItemProgress.Count(player, questId, i));
             if (!closed)
             {
                 // The uses so far are stored with the quest (QuestProgressStore), so a relog keeps them.
@@ -547,7 +542,7 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
     }
 
     /// <summary>Uses a type-6 row needs: <c>Complete_Type_Value3</c>, 0 read as 1 (see AdvanceUseItemQuestsAsync).</summary>
-    private static int UsesNeeded(QuestData row) => (int)Math.Clamp(row.Complete_Type_Value3, 1u, MaxUsesPerRow);
+    private static int UsesNeeded(QuestData row) => ObjectiveRules.UsesNeeded(row);
 }
 
 /// <summary>Why <see cref="ItemUseRules.CanUse"/> refused a 1323; <see cref="None"/> = allowed.</summary>

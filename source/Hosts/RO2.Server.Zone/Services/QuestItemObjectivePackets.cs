@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using RO2.Network.Packets;
+using RO2.Quests.Domain;
 using RO2.Server.Zone.Models;
 
 namespace RO2.Server.Zone.Services;
@@ -65,9 +66,8 @@ internal static class QuestUseItemProgress
         {
             if (!byQuest.TryGetValue(questId, out var counts) || counts.Length != rowCount)
                 byQuest[questId] = counts = new int[rowCount];
-            if (counts[rowIndex] >= needed) return null;
-            counts[rowIndex] = Math.Min(counts[rowIndex] + 1, needed);
-            return counts[rowIndex];
+            if (UseItemRule.Advance((ushort)counts[rowIndex], (ushort)needed) is not { } next) return null;
+            return counts[rowIndex] = next;
         }
     }
 
