@@ -72,4 +72,18 @@ public class GuildSkillRulesTests
         Assert.Contains((7u, (byte)3), list);
         Assert.Equal(2, list.Count);
     }
+
+    [Fact]
+    public void PlanGuildLinkBurst_OneCumulativeListPerMissingLink()
+    {
+        var own = new Dictionary<uint, byte> { [7] = 3 };
+        Assert.Empty(GuildSkillRules.PlanGuildLinkBurst(own, null, [10102], Table));
+
+        var burst = GuildSkillRules.PlanGuildLinkBurst(own, new Dictionary<uint, byte>(own), [10101, 10102], Table);
+        var only = Assert.Single(burst);
+        Assert.Equal([(7u, (byte)3), (55u, (byte)2)], only);
+
+        Assert.Empty(GuildSkillRules.PlanGuildLinkBurst(own, new Dictionary<uint, byte> { [7] = 3, [55] = 2 }, [10102], Table));
+        Assert.Empty(GuildSkillRules.PlanGuildLinkBurst(own, new Dictionary<uint, byte>(own), [10101], Table));
+    }
 }

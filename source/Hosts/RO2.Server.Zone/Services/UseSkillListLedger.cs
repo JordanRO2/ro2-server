@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using RO2.GameData.Tables;
+using RO2.Guilds.Domain;
 using RO2.Network.ProudNet;
 
 namespace RO2.Server.Zone.Services;
@@ -37,46 +38,9 @@ internal static class UseSkillListLedger
     internal static IReadOnlyDictionary<uint, byte>? HeldBy(ProudSession session)
         => BySession.TryGetValue(session, out var held) ? Volatile.Read(ref held.Skills) : null;
 
- /// <summary>
- /// The 2488 lists to send after a guild skill list answer. Empty when the client already holds every link skill.
- /// Otherwise one cumulative list per missing link, in line order; the last one is the full guild list.
- /// </summary>
- /// <param name="ownSkills">The character's own skills, group to level.</param>
- /// <param name="guildSkills">The guild's learned skill ids (line * 100 + level).</param>
- /// <param name="table">Guild_Skill_Level by Guild_Skill_ID.</param>
+ /// <summary>The 2488 lists to send after a guild skill list answer (see <see cref="GuildSkillRules.PlanGuildLinkBurst"/>).</summary>
     internal static IReadOnlyList<IReadOnlyList<(uint Group, byte Level)>> PlanGuildLinkBurst(
         IEnumerable<KeyValuePair<uint, byte>> ownSkills, IReadOnlyDictionary<uint, byte>? held,
         IEnumerable<uint> guildSkills, IReadOnlyDictionary<uint, GuildSkillLevel> table)
-    {
-        if (held is null) return [];
-        var own = new Dictionary<uint, byte>();
-        foreach (var (group, level) in ownSkills)
-            if (level > own.GetValueOrDefault(group)) own[group] = level;
-
-        
-        
-        var links = new List<(uint Group, byte Level)>();
-        foreach (var (line, level) in GuildSkillLearnPackets.LineLevels(guildSkills).OrderBy(kv => kv.Key))
-        {
-            if (!table.TryGetValue(line * 100 + (uint)level, out var row) || row.Link_Skill_ID == 0) continue;
-            uint group = row.Link_Skill_ID / 100;
-            byte need = Math.Max((byte)(row.Link_Skill_ID % 100), own.GetValueOrDefault(group));
-            links.Add((group, need));
-        }
-
-        var missing = links.Where(l => held.GetValueOrDefault(l.Group) != l.Level).ToList();
-        if (missing.Count == 0) return [];
-
-        var current = new Dictionary<uint, byte>(own);
-        foreach (var l in links)
-            if (!missing.Contains(l)) current[l.Group] = l.Level;
-
-        var burst = new List<IReadOnlyList<(uint Group, byte Level)>>(missing.Count);
-        foreach (var (group, level) in missing)
-        {
-            current[group] = level;
-            burst.Add(current.Select(kv => (kv.Key, kv.Value)).ToArray());
-        }
-        return burst;
-    }
+        => GuildSkillRules.PlanGuildLinkBurst(ownSkills, held, guildSkills, table);
 }
