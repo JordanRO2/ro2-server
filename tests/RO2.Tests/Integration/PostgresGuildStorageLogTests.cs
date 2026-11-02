@@ -1,3 +1,4 @@
+using RO2.Guilds.Infrastructure.Postgres;
 using Npgsql;
 using RO2.Persistence.Postgres.Repositories;
 using Xunit;

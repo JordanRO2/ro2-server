@@ -4,7 +4,7 @@ using NpgsqlTypes;
 using RO2.Persistence.Postgres;
 using RO2.Guilds.Domain;
 
-namespace RO2.Server.Zone.Services;
+namespace RO2.Guilds.Infrastructure.Postgres;
 
 /// <summary>
 /// PostgreSQL implementation of <see cref="IGuildRepository"/>. Each <see cref="Guild"/> aggregate is stored as one row

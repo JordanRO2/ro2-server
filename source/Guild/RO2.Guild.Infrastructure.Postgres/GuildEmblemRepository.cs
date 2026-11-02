@@ -1,11 +1,12 @@
 using RO2.Guilds.Domain;
 using System.Collections.Concurrent;
 using Npgsql;
+using RO2.Persistence.Postgres;
 using NpgsqlTypes;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 
-namespace RO2.Persistence.Postgres.Repositories;
+namespace RO2.Guilds.Infrastructure.Postgres;
 
 /// <summary>
 /// PostgreSQL implementation of <see cref="IGuildEmblemRepository"/>, persisting to the <c>guild_emblems</c>

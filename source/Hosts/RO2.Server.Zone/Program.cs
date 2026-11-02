@@ -106,10 +106,10 @@ public static class Program
         // them from MongoDbContext. All stateless over the singleton context, so singletons. GuildService.Instance
         // and the two stores below keep their static Instance (packet builders read them without a scope); the
         // factories only bind the context the stores load through, and each caller still runs InitAsync lazily.
-        services.AddProviderRepository<IGuildRepository, RO2.Guilds.Infrastructure.Mongo.GuildRepository, PostgresGuildRepository>(config.Database.Provider, ServiceLifetime.Singleton);
-        services.AddProviderRepository<IGuildStorageLog, RO2.Guilds.Infrastructure.Mongo.GuildStorageLogRepository, RO2.Persistence.Postgres.Repositories.GuildStorageLogRepository>(config.Database.Provider, ServiceLifetime.Singleton);
-        services.AddProviderRepository<IGuildEmblemRepository, RO2.Guilds.Infrastructure.Mongo.GuildEmblemRepository, RO2.Persistence.Postgres.Repositories.GuildEmblemRepository>(config.Database.Provider, ServiceLifetime.Singleton);
-        services.AddProviderRepository<IGuildDepartureRepository, RO2.Guilds.Infrastructure.Mongo.GuildDepartureRepository, RO2.Persistence.Postgres.Repositories.GuildDepartureRepository>(config.Database.Provider, ServiceLifetime.Singleton);
+        services.AddProviderRepository<IGuildRepository, RO2.Guilds.Infrastructure.Mongo.GuildRepository, RO2.Guilds.Infrastructure.Postgres.PostgresGuildRepository>(config.Database.Provider, ServiceLifetime.Singleton);
+        services.AddProviderRepository<IGuildStorageLog, RO2.Guilds.Infrastructure.Mongo.GuildStorageLogRepository, RO2.Guilds.Infrastructure.Postgres.GuildStorageLogRepository>(config.Database.Provider, ServiceLifetime.Singleton);
+        services.AddProviderRepository<IGuildEmblemRepository, RO2.Guilds.Infrastructure.Mongo.GuildEmblemRepository, RO2.Guilds.Infrastructure.Postgres.GuildEmblemRepository>(config.Database.Provider, ServiceLifetime.Singleton);
+        services.AddProviderRepository<IGuildDepartureRepository, RO2.Guilds.Infrastructure.Mongo.GuildDepartureRepository, RO2.Guilds.Infrastructure.Postgres.GuildDepartureRepository>(config.Database.Provider, ServiceLifetime.Singleton);
 
         // Instance stores over the singleton MongoDbContext (DB Phase 0, pass 2b). Stateless apart from their
         // collection handles, so singletons; handlers resolve them from the per-message scope, never into a field.
