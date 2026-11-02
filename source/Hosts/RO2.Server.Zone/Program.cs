@@ -155,6 +155,10 @@ public static class Program
         services.AddScoped<RO2.Mails.Application.ReadMailUseCase>();
         services.AddScoped<RO2.Mails.Application.DeleteMailUseCase>();
         services.AddScoped<RO2.Mails.Application.ListInboxUseCase>();
+        // Inbound system-mail seam for Dungeon Finder / Illusion Pyramid / Economy; no 2449 unless the draft asks. Scoped: the notify path builds a MailService (scoped ICharacterRepository).
+        services.AddScoped<RO2.Mails.Application.ISendMail>(sp => new SendMailAdapter(sp.GetRequiredService<IMailRepository>(),
+            id => MailService.From(sp, sp.GetRequiredService<PlayerStateManager>(), sp.GetRequiredService<BroadcastService>(),
+                sp.GetRequiredService<ILoggerFactory>().CreateLogger("Mail")).NotifyNewMailAsync(id)));
 
         // Instance stores over the singleton MongoDbContext (DB Phase 0, pass 2b). Stateless apart from their
         // collection handles, so singletons; handlers resolve them from the per-message scope, never into a field.

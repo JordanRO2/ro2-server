@@ -831,7 +831,7 @@ public sealed partial class AuctionService
     private AuctionService(IAuctionRepository repo, IMailRepository mails, MailService mailService, PlayerStateManager players, BroadcastService broadcast, double sellerProceedsRate, ILogger log)
     {
         _repo = repo;
-        _mailPort = new EconomyMailAdapter(mails, mailService);
+        _mailPort = new EconomyMailAdapter(new SendMailAdapter(mails), mailService);
         _log = log;
         // The economy application owns the listing transaction, the auction flows and the settlement policy; the
         // host is the adapter (validation, wallet, wire) and lends the flows its logger through AuctionLogAdapter.

@@ -1,6 +1,7 @@
 using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using RO2.BuildingBlocks;
 using RO2.Mails.Application;
 using RO2.Mails.Domain;
 using RO2.GameData;
@@ -608,8 +609,8 @@ public static class IllusionPyramidService
         IServiceProvider services, CancellationToken ct)
     {
         services.GetRequiredService<GameDataStore>().Items.TryGetValue(reward.ItemId, out var template);
-        var mails = services.GetRequiredService<IMailRepository>();
-        var mail = new MailMessage
+        var mails = services.GetRequiredService<ISendMail>();
+        var mail = await mails.SendSystemMailAsync(new MailDraft
         {
             ReceiverCharId = player.CharacterId,
             ReceiverName = player.Name,
@@ -618,12 +619,14 @@ public static class IllusionPyramidService
             Body = RewardMailBodyStringId,
             Kind = RewardMailKind,
             SentAt = DateTime.UtcNow,
-            AttachedItemUid = await services.GetRequiredService<IInventoryRepository>().GetNextIdAsync(),
-            AttachedItemId = reward.ItemId,
-            AttachedItemCount = reward.Count,
-            AttachedItemDurability = template is null ? DurabilityUnset : (short)Math.Min(template.Durability, (uint)short.MaxValue),
-        };
-        await mails.AddAsync(mail);
+            Item = new ItemStackSnapshot
+            {
+                Id = await services.GetRequiredService<IInventoryRepository>().GetNextIdAsync(),
+                ItemId = reward.ItemId,
+                Count = reward.Count,
+                Durability = template is null ? DurabilityUnset : (short)Math.Min(template.Durability, (uint)short.MaxValue),
+            },
+        });
         var record = ItemPackets.BuildItemRecord126(ClaimMailItemUseCase.AttachmentAsBagRow(mail, player.CharacterId, mail.AttachedItemUid, MailedItemSlot));
         record[ItemRecordBagOffset] = MailedItemBag;
         record[ItemRecordSlotOffset] = MailedItemSlot;

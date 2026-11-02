@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using RO2.Mails.Domain;
+using RO2.BuildingBlocks;
+using RO2.Mails.Application;
 using RO2.GameData;
 using RO2.GameData.Tables;
 using RO2.Persistence.Mongo.Persistence;
@@ -155,7 +156,7 @@ public static class DungeonFinderReward
         IReadOnlyDictionary<uint, ItemData> templates, IInventoryRepository inventory, IServiceProvider services,
         ILogger logger)
     {
-        var mails = services.GetRequiredService<IMailRepository>();
+        var mails = services.GetRequiredService<ISendMail>();
         int stored = 0;
         foreach (var (itemId, count) in items)
         {
@@ -166,7 +167,7 @@ public static class DungeonFinderReward
             {
                 try
                 {
-                    await mails.AddAsync(new MailMessage
+                    await mails.SendSystemMailAsync(new MailDraft
                     {
                         ReceiverCharId = killer.CharacterId,
                         ReceiverName = killer.Name,
@@ -175,10 +176,13 @@ public static class DungeonFinderReward
                         Body = MailBody,
                         Kind = SystemMailKind,
                         SentAt = DateTime.UtcNow,
-                        AttachedItemUid = await inventory.GetNextIdAsync(),
-                        AttachedItemId = itemId,
-                        AttachedItemCount = n,
-                        AttachedItemDurability = durability,
+                        Item = new ItemStackSnapshot
+                        {
+                            Id = await inventory.GetNextIdAsync(),
+                            ItemId = itemId,
+                            Count = n,
+                            Durability = durability,
+                        },
                     });
                     stored++;
                 }
