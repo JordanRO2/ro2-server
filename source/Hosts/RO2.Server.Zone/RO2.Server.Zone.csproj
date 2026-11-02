@@ -26,6 +26,7 @@
     <ProjectReference Include="..\..\Combat\RO2.Combat.Application\RO2.Combat.Application.csproj" />
     <ProjectReference Include="..\..\World\RO2.World.Domain\RO2.World.Domain.csproj" />
     <ProjectReference Include="..\..\Monster\RO2.Monster.Domain\RO2.Monster.Domain.csproj" />
+    <ProjectReference Include="..\..\Guild\RO2.Guild.Application\RO2.Guild.Application.csproj" />
     <ProjectReference Include="..\..\Guild\RO2.Guild.Domain\RO2.Guild.Domain.csproj" />
     <ProjectReference Include="..\..\Guild\RO2.Guild.Infrastructure.Mongo\RO2.Guild.Infrastructure.Mongo.csproj" />
     <ProjectReference Include="..\..\Guild\RO2.Guild.Infrastructure.Postgres\RO2.Guild.Infrastructure.Postgres.csproj" />

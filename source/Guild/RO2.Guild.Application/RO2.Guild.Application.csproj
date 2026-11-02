@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Plural namespace: a namespace "RO2.Guild" would shadow the type Guild in every RO2.* file (CS0118). -->
+    <RootNamespace>RO2.Guilds.Application</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Guild bounded context: Application holds the guild use-case sagas and the ports they consume. It references
+       its own Domain + the shared GameData kernel + BuildingBlocks only; the live registry (GuildService.Instance),
+       sessions and the loaded Config_Def table are reached through these ports, whose host adapters own those
+       references. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Guild.Domain\RO2.Guild.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+  </ItemGroup>
+
+</Project>

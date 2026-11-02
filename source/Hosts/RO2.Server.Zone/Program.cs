@@ -110,6 +110,11 @@ public static class Program
         services.AddProviderRepository<IGuildStorageLog, RO2.Guilds.Infrastructure.Mongo.GuildStorageLogRepository, RO2.Guilds.Infrastructure.Postgres.GuildStorageLogRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IGuildEmblemRepository, RO2.Guilds.Infrastructure.Mongo.GuildEmblemRepository, RO2.Guilds.Infrastructure.Postgres.GuildEmblemRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IGuildDepartureRepository, RO2.Guilds.Infrastructure.Mongo.GuildDepartureRepository, RO2.Guilds.Infrastructure.Postgres.GuildDepartureRepository>(config.Database.Provider, ServiceLifetime.Singleton);
+        // Guild.Application ports (S17): adapters over the live registry, sessions and Config_Def; nothing consumes them yet.
+        services.AddSingleton<RO2.Guilds.Application.IGuildNotifier, GuildNotifier>();
+        services.AddSingleton<RO2.Guilds.Application.IGuildMemberLocator, GuildMemberLocator>();
+        services.AddSingleton<RO2.Guilds.Application.IGuildConfig, GuildConfig>();
+        services.AddSingleton<RO2.Guilds.Application.IGuildDirectory, GuildDirectory>();
 
         // Instance stores over the singleton MongoDbContext (DB Phase 0, pass 2b). Stateless apart from their
         // collection handles, so singletons; handlers resolve them from the per-message scope, never into a field.
