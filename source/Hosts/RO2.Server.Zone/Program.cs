@@ -115,6 +115,8 @@ public static class Program
         services.AddSingleton<RO2.Guilds.Application.IGuildMemberLocator, GuildMemberLocator>();
         services.AddSingleton<RO2.Guilds.Application.IGuildConfig, GuildConfig>();
         services.AddSingleton<RO2.Guilds.Application.IGuildDirectory, GuildDirectory>();
+        services.AddSingleton<RO2.Guilds.Application.IGuildFundsLedger, GuildFundsLedger>();
+        services.AddSingleton<RO2.Guilds.Application.GuildFundsUseCase>();
 
         // Instance stores over the singleton MongoDbContext (DB Phase 0, pass 2b). Stateless apart from their
         // collection handles, so singletons; handlers resolve them from the per-message scope, never into a field.

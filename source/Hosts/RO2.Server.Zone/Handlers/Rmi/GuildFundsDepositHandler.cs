@@ -8,6 +8,7 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Characters.Domain;
+using RO2.Guilds.Application;
 using RO2.Guilds.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
@@ -94,45 +95,20 @@ public class GuildFundsDepositHandler : ZoneRmiHandlerBase<GuildFundsDepositHand
     private async Task<(ushort Result, long FundsAfter)> MoveAsync(Guild guild, PlayerState player, long amount, long limit, IServiceProvider services)
     {
         var characters = services.GetRequiredService<ICharacterRepository>();
-        
-        if (!player.TryDebit(amount)) return (GuildFundsInHandPackets.ResultWalletShort, 0);
-        SyncSnapshot(player);
-        try
-        {
-            await characters.UpdateGoldAsync(player.CharacterId, player.Gold);
-        }
-        catch (Exception ex)
-        {
-            player.Credit(amount);
-            SyncSnapshot(player);
-            Logger.LogError(ex, "{Name}: wallet write failed before a guild deposit of {Amount}; nothing moved", player.Name, amount);
-            return (GuildFundsInHandPackets.ResultSystemError, 0);
-        }
-
-        var (refusal, fundsAfter) = await GuildService.Instance.AddFundsAsync(guild, amount, limit);
-        if (refusal == GuildService.FundsRefusal.None) return (GuildFundsInHandPackets.ResultOk, fundsAfter);
-
-        
-        player.Credit(amount);
-        SyncSnapshot(player);
-        try
-        {
-            await characters.UpdateGoldAsync(player.CharacterId, player.Gold);
-        }
-        catch (Exception ex)
-        {
-            Logger.LogError(ex, "{Name}: wallet refund of {Amount} after a refused guild deposit did not persist (live wallet restored)",
+        var move = await services.GetRequiredService<GuildFundsUseCase>()
+            .DepositAsync(guild, player, amount, limit, () => characters.UpdateGoldAsync(player.CharacterId, player.Gold));
+        if (move.Outcome == FundsOutcome.WalletWriteFailed)
+            Logger.LogError(move.Error, "{Name}: wallet write failed before a guild deposit of {Amount}; nothing moved", player.Name, amount);
+        if (move.RefundError != null)
+            Logger.LogError(move.RefundError, "{Name}: wallet refund of {Amount} after a refused guild deposit did not persist (live wallet restored)",
                 player.Name, amount);
-        }
-        return (refusal switch
+        return (move.Outcome switch
         {
-            GuildService.FundsRefusal.OverLimit => GuildFundsInHandPackets.ResultStorageLimit,
-            GuildService.FundsRefusal.NotRegistered => GuildFundsInHandPackets.ResultGuildNotFound,
+            FundsOutcome.Ok => GuildFundsInHandPackets.ResultOk,
+            FundsOutcome.WalletShort => GuildFundsInHandPackets.ResultWalletShort,
+            FundsOutcome.OverLimit => GuildFundsInHandPackets.ResultStorageLimit,
+            FundsOutcome.NotRegistered => GuildFundsInHandPackets.ResultGuildNotFound,
             _ => GuildFundsInHandPackets.ResultSystemError,
-        }, 0);
-    }
-
-    private static void SyncSnapshot(PlayerState player)
-    {
+        }, move.FundsAfter);
     }
 }

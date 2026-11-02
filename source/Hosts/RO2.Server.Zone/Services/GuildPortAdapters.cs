@@ -69,3 +69,15 @@ public sealed class GuildDirectory : IGuildDirectory
 
     public Guild? GetByCharId(uint charId) => GuildService.Instance.GetByCharId(charId);
 }
+
+/// <summary>Host adapter of <see cref="IGuildFundsLedger"/> over the live registry singleton.</summary>
+public sealed class GuildFundsLedger : IGuildFundsLedger
+{
+    public Task<(FundsRefusal Refusal, long FundsAfter)> AddAsync(Guild guild, long amount, long limit)
+        => GuildService.Instance.AddFundsAsync(guild, amount, limit);
+
+    public Task<(FundsRefusal Refusal, long FundsAfter)> TakeAsync(Guild guild, long amount)
+        => GuildService.Instance.TakeFundsAsync(guild, amount);
+
+    public Task<long> ReturnAsync(Guild guild, long amount) => GuildService.Instance.ReturnFundsAsync(guild, amount);
+}

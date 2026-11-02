@@ -4,6 +4,7 @@ using RO2.Domain.Entities;
 using RO2.Application;
 using RO2.Persistence.Mongo.Repositories;
 using RO2.Inventory.Application;
+using RO2.Guilds.Application;
 using RO2.Guilds.Domain;
 using RO2.Inventory.Domain;
 
@@ -503,19 +504,6 @@ public sealed class GuildService
     }
 
     
- /// <summary>Why a funds move did not change the guild's funds.</summary>
-    public enum FundsRefusal
-    {
-        None,
- /// <summary>The guild was disbanded before the call.</summary>
-        NotRegistered,
- /// <summary>The deposit would exceed the guild's storage limit.</summary>
-        OverLimit,
- /// <summary>The withdrawal asks for more than the guild holds.</summary>
-        NotEnoughFunds,
- /// <summary>The guild document could not be written. The move was undone in memory.</summary>
-        WriteFailed,
-    }
 
  /// <summary>
  /// Adds <paramref name="amount"/> zeny, already taken from the depositor's wallet, to the guild's funds, unless the

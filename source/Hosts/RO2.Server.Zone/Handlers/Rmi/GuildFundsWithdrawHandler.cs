@@ -8,6 +8,7 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Characters.Domain;
+using RO2.Guilds.Application;
 using RO2.Guilds.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
@@ -81,33 +82,19 @@ public class GuildFundsWithdrawHandler : ZoneRmiHandlerBase<GuildFundsWithdrawHa
  /// funds back. Returns the 2673 code and the funds after a successful move.</summary>
     private async Task<(ushort Result, long FundsAfter)> MoveAsync(Guild guild, PlayerState player, long amount, IServiceProvider services)
     {
-        var (refusal, fundsAfter) = await GuildService.Instance.TakeFundsAsync(guild, amount);
-        switch (refusal)
+        var characters = services.GetRequiredService<ICharacterRepository>();
+        var move = await services.GetRequiredService<GuildFundsUseCase>()
+            .WithdrawAsync(guild, player, amount, () => characters.UpdateGoldAsync(player.CharacterId, player.Gold));
+        if (move.Outcome == FundsOutcome.OkWalletUnsaved)
+            Logger.LogError(move.Error, "{Name}: wallet write failed after a guild withdraw of {Amount}, but the zeny was already spent; kept as withdrawn", player.Name, amount);
+        else if (move.Outcome == FundsOutcome.WalletWriteFailed)
+            Logger.LogError(move.Error, "{Name}: wallet write failed after a guild withdraw of {Amount}; the funds were given back", player.Name, amount);
+        return (move.Outcome switch
         {
-            case GuildService.FundsRefusal.None: break;
-            case GuildService.FundsRefusal.NotEnoughFunds: return (GuildFundsInHandPackets.ResultGuildFundsShort, 0);
-            case GuildService.FundsRefusal.NotRegistered: return (GuildFundsInHandPackets.ResultGuildNotFound, 0);
-            default: return (GuildFundsInHandPackets.ResultSystemError, 0);
-        }
-
-        player.Credit(amount);
-        try
-        {
-            await services.GetRequiredService<ICharacterRepository>().UpdateGoldAsync(player.CharacterId, player.Gold);
-        }
-        catch (Exception ex)
-        {
-            
-            
-            if (!player.TryDebit(amount))
-            {
-                Logger.LogError(ex, "{Name}: wallet write failed after a guild withdraw of {Amount}, but the zeny was already spent; kept as withdrawn", player.Name, amount);
-                return (GuildFundsInHandPackets.ResultOk, fundsAfter);
-            }
-            await GuildService.Instance.ReturnFundsAsync(guild, amount);
-            Logger.LogError(ex, "{Name}: wallet write failed after a guild withdraw of {Amount}; the funds were given back", player.Name, amount);
-            return (GuildFundsInHandPackets.ResultSystemError, 0);
-        }
-        return (GuildFundsInHandPackets.ResultOk, fundsAfter);
+            FundsOutcome.Ok or FundsOutcome.OkWalletUnsaved => GuildFundsInHandPackets.ResultOk,
+            FundsOutcome.NotEnoughFunds => GuildFundsInHandPackets.ResultGuildFundsShort,
+            FundsOutcome.NotRegistered => GuildFundsInHandPackets.ResultGuildNotFound,
+            _ => GuildFundsInHandPackets.ResultSystemError,
+        }, move.FundsAfter);
     }
 }
