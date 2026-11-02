@@ -11,6 +11,7 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Characters.Domain;
+using RO2.Guilds.Application;
 using RO2.Guilds.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
@@ -103,16 +104,17 @@ public class GuildCreateHandler : ZoneRmiHandlerBase<GuildCreateHandler>
         var existing = GuildService.Instance.GetByCharId(player.CharacterId);
         Guild? guild = null;
         ushort result = ResultSuccess;
-        if (existing != null)
+        var check = GuildCreateUseCase.CheckRequest(existing != null, guildName, player.Gold, fee);
+        if (check == CreateCheck.AlreadyInGuild)
         {
             // Already in a guild: refused with code 1.
             result = ResultAlreadyInGuild;
         }
-        else if (string.IsNullOrWhiteSpace(guildName))
+        else if (check == CreateCheck.NameBlank)
         {
             result = ResultNameNotUsable;
         }
-        else if (player.Gold < fee)
+        else if (check == CreateCheck.NotEnoughZeny)
         {
             result = ResultNotEnoughZeny;
         }
@@ -130,18 +132,20 @@ public class GuildCreateHandler : ZoneRmiHandlerBase<GuildCreateHandler>
             // 1586 for the same name can both succeed.
             var (created, refusal) = await GuildService.Instance.CreateAsync(
                 player.CharacterId, player.Name, player.Level, player.Job, guildName);
-            if (refusal == GuildService.CreateRefusal.NameTaken) { result = ResultNameTaken; player.Credit(fee); }
-            else if (created == null) { result = ResultAlreadyInGuild; player.Credit(fee); }   // joined another guild meanwhile
-            else
+            switch (GuildCreateUseCase.Settle(created != null, refusal == GuildService.CreateRefusal.NameTaken))
             {
-                guild = created;
-                if (notice.Length > 0) await GuildService.Instance.SetNoticeAsync(guild, notice);
-                // The creation tax, charged only once the guild exists; it is taken on a creation and
-                // nothing on the refusal (see BuildAnsGuildCreate).
-                if (fee > 0)
-                {
-                    await services.GetRequiredService<ICharacterRepository>().UpdateGoldAsync(player.CharacterId, player.Gold);
-                }
+                case CreateSettlement.NameTakenRefund: result = ResultNameTaken; player.Credit(fee); break;
+                case CreateSettlement.AlreadyInGuildRefund: result = ResultAlreadyInGuild; player.Credit(fee); break;   // joined another guild meanwhile
+                default:
+                    guild = created;
+                    if (notice.Length > 0) await GuildService.Instance.SetNoticeAsync(guild!, notice);
+                    // The creation tax, charged only once the guild exists; it is taken on a creation and
+                    // nothing on the refusal (see BuildAnsGuildCreate).
+                    if (fee > 0)
+                    {
+                        await services.GetRequiredService<ICharacterRepository>().UpdateGoldAsync(player.CharacterId, player.Gold);
+                    }
+                    break;
             }
         }
 

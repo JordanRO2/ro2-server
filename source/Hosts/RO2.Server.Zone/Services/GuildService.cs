@@ -191,28 +191,13 @@ public sealed class GuildService : IGuildVaultLedger
         Guild g;
         lock (_createGate)
         {
-            if (GetByCharId(masterCharId) != null) return (null, CreateRefusal.AlreadyInGuild);
-            if (IsNameTaken(name)) return (null, CreateRefusal.NameTaken);
-            g = new Guild
+            switch (GuildCreateUseCase.DecideRegistration(GetByCharId(masterCharId) != null, IsNameTaken(name)))
             {
-                Id = (uint)Interlocked.Increment(ref _nextId) - 1,
-                Guid16 = Guid.NewGuid().ToByteArray(),
-                Name = name,
-                MasterCharId = masterCharId,
-                Notice = string.Empty,
-                
-                
-                CreatedUtc = DateTime.UtcNow,
-                Ranks = DefaultRanks(),
-            };
-            g.Members.Add(new GuildMember
-            {
-                CharId = masterCharId, Gid = GidFor(masterCharId), Name = masterName,
-                Level = masterLevel == 0 ? MinMemberLevel : masterLevel, Job = masterJob, AuthId = MasterRankIndex,
-                
-                
-                JoinedUtc = g.CreatedUtc,
-            });
+                case CreateRegistration.AlreadyInGuild: return (null, CreateRefusal.AlreadyInGuild);
+                case CreateRegistration.NameTaken: return (null, CreateRefusal.NameTaken);
+            }
+            g = GuildCreateUseCase.Found((uint)Interlocked.Increment(ref _nextId) - 1, Guid.NewGuid().ToByteArray(), name,
+                masterCharId, GidFor(masterCharId), masterName, masterLevel, masterJob, DateTime.UtcNow);
             _guilds[g.Id] = g;
             _byChar[masterCharId] = g.Id;
         }
@@ -245,8 +230,11 @@ public sealed class GuildService : IGuildVaultLedger
         lock (_createGate)
         {
             lock (g.Gate) oldName = g.Name;
-            if (!IsRegistered(g)) return (RenameRefusal.NotRegistered, oldName);
-            if (IsNameTaken(name)) return (RenameRefusal.NameTaken, oldName);
+            switch (GuildRenameUseCase.Decide(IsRegistered(g), IsNameTaken(name)))
+            {
+                case RenameDecision.NotRegistered: return (RenameRefusal.NotRegistered, oldName);
+                case RenameDecision.NameTaken: return (RenameRefusal.NameTaken, oldName);
+            }
             lock (g.Gate) g.Name = name;
             _heldNames.Add(oldName);
         }
@@ -259,7 +247,7 @@ public sealed class GuildService : IGuildVaultLedger
         {
             lock (_createGate)
             {
-                lock (g.Gate) if (g.Name == name) g.Name = oldName;
+                lock (g.Gate) if (GuildRenameUseCase.ShouldRestoreName(g.Name, name)) g.Name = oldName;
                 _heldNames.Remove(oldName);
             }
             
