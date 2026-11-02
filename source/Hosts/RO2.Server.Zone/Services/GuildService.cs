@@ -566,8 +566,7 @@ public sealed class GuildService
         long after;
         lock (g.Gate)
         {
-            g.Gold = g.Gold > long.MaxValue - amount ? long.MaxValue : g.Gold + amount;
-            after = g.Gold;
+            after = GuildFundsRules.ReturnFunds(g, amount);
         }
         await PersistAsync(g);
         return after;
@@ -579,17 +578,7 @@ public sealed class GuildService
  /// </summary>
     internal static bool TryAddFunds(Guild g, long amount, long limit, out long after)
     {
-        lock (g.Gate)
-        {
-            if (amount < 0 || g.Gold > limit || amount > limit - g.Gold)
-            {
-                after = g.Gold;
-                return false;
-            }
-            g.Gold += amount;
-            after = g.Gold;
-            return true;
-        }
+        lock (g.Gate) return GuildFundsRules.TryAddFunds(g, amount, limit, out after);
     }
 
  /// <summary>
@@ -598,17 +587,7 @@ public sealed class GuildService
  /// </summary>
     internal static bool TryTakeFunds(Guild g, long amount, out long after)
     {
-        lock (g.Gate)
-        {
-            if (amount < 0 || amount > g.Gold)
-            {
-                after = g.Gold;
-                return false;
-            }
-            g.Gold -= amount;
-            after = g.Gold;
-            return true;
-        }
+        lock (g.Gate) return GuildFundsRules.TryTakeFunds(g, amount, out after);
     }
 
  /// <summary>
