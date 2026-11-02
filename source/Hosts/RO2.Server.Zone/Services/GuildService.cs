@@ -14,7 +14,7 @@ namespace RO2.Server.Zone.Services;
 /// Process-wide in-memory guild registry. Every mutation is written straight through to the guild store. Item
 /// movement goes through the inventory repository that the caller passes in.
 /// </summary>
-public sealed class GuildService
+public sealed class GuildService : IGuildVaultLedger
 {
     public static readonly GuildService Instance = new();
 
@@ -27,7 +27,9 @@ public sealed class GuildService
     private volatile bool _loaded;
     private int _nextId = 1;
 
-    private GuildService() { }
+    private readonly GuildVaultUseCase _vault;
+
+    private GuildService() { _vault = new GuildVaultUseCase(this); }
 
  /// <summary>
  /// Returns the member GID of a character: the same value the character uses to log in and that the character's own
@@ -707,127 +709,70 @@ public sealed class GuildService
  /// <returns>The stored record with its vault cell, and <see cref="DepositRefusal.None"/>, or null and the refusal.</returns>
     public Task<(GuildStorageItem? Stored, DepositRefusal Refusal)> DepositAsync(Guild g, InventoryItem item,
         IInventoryRepository inv, int capacity)
-        
-        
-        
-        
-        
-        
-        => CharacterInventoryGate.RunAsync(item.CharacterId, () => DepositCoreAsync(g, item, inv, capacity));
-
-    /// <summary>StorageType of a character's bag; only bag items can be deposited, and a withdrawn item returns to it.</summary>
-    private const byte StorageBag = 0;
-
-    /// <summary>Slot of an item not yet placed in a cell; the inventory store then assigns the lowest free bag cell.</summary>
-    private const short UnplacedSlot = -1;
-
-    private async Task<(GuildStorageItem? Stored, DepositRefusal Refusal)> DepositCoreAsync(Guild g, InventoryItem item,
-        IInventoryRepository inv, int capacity)
-    {
-        
-        var live = await inv.GetByIdAsync(item.Id);
-        if (live == null || live.CharacterId != item.CharacterId || live.StorageType != StorageBag)
-            return (null, DepositRefusal.NotMoved);
-
-        lock (g.Gate)
+        // The per-character inventory gate serialises this move against every other bag mutation of the owner.
+        => CharacterInventoryGate.RunAsync(item.CharacterId, async () =>
         {
-            if (!IsRegistered(g)) return (null, DepositRefusal.NotMoved);
-            if (GuildVaultCapacity.LowestFreeCell(g.Storage, capacity) < 0) return (null, DepositRefusal.VaultFull);
-        }
-
-        var rec = new GuildStorageItem
-        {
-            Uid = live.Id, ItemId = live.ItemId, Count = live.Count, Refine = live.Refine,
-            Durability = live.Durability, CardsJson = live.CardsJson, DepositedByCharId = live.CharacterId,
-            Element = live.Element, DyeColor = live.DyeColor, SocketPunchersJson = live.SocketPunchersJson,
-            DyeColor2 = live.DyeColor2, DyeColor3 = live.DyeColor3, FxEnchantIndex = live.FxEnchantIndex,
-            EnchantReinforceId = live.EnchantReinforceId, EnchantSeconds = live.EnchantSeconds, Bound = live.Bound,
-            AbilityValue = live.AbilityValue,
-        };
-
-        
-        if (!await inv.RemoveItemAsync(live.Id, live.CharacterId))
-            return (null, DepositRefusal.NotMoved);
-        var full = false;
-        try
-        {
-            lock (g.Gate)
+            var (stored, refusal) = await _vault.DepositAsync(g, item, inv, capacity);
+            return (stored, refusal switch
             {
-                
-                
-                if (!IsRegistered(g)) throw new InvalidOperationException($"guild {g.Id} was disbanded");
-                var cell = GuildVaultCapacity.LowestFreeCell(g.Storage, capacity);
-                if (cell < 0) full = true;
-                else
-                {
-                    rec.StorageSlot = (byte)cell;
-                    g.Storage.Add(rec);
-                }
-            }
-            if (!full) await PersistAsync(g);                   
-        }
-        catch
-        {
-            await RestoreToBagAsync(g, live, rec, inv);
-            return (null, DepositRefusal.NotMoved);
-        }
-        if (full)
-        {
-            
-            await RestoreToBagAsync(g, live, rec, inv);
-            return (null, DepositRefusal.VaultFull);
-        }
-        return (rec, DepositRefusal.None);
-    }
-
- /// <summary>
- /// Compensation for <see cref="DepositAsync"/>: puts the item back into the bag on its original cell and removes it
- /// from the vault if it was added there.
- /// </summary>
-    private static async Task RestoreToBagAsync(Guild g, InventoryItem live, GuildStorageItem rec, IInventoryRepository inv)
-    {
-        live.Id = rec.Uid;
-        try { await inv.AddItemAsync(live); } catch {   }
-        lock (g.Gate) { g.Storage.RemoveAll(x => x.Uid == rec.Uid); }
-    }
+                VaultDepositRefusal.None => DepositRefusal.None,
+                VaultDepositRefusal.VaultFull => DepositRefusal.VaultFull,
+                _ => DepositRefusal.NotMoved,
+            });
+        });
 
  /// <summary>
  /// Moves one vault item back into a character's bag, by vault slot. The item is removed from the vault before it is
  /// added to the bag, keeping its uid. Returns the removed record, or null when the slot is empty.
  /// </summary>
-    public async Task<GuildStorageItem?> WithdrawAsync(Guild g, byte storageSlot, uint toCharId, IInventoryRepository inv)
+    public Task<GuildStorageItem?> WithdrawAsync(Guild g, byte storageSlot, uint toCharId, IInventoryRepository inv)
+        => _vault.WithdrawAsync(g, storageSlot, toCharId, inv);
+
+    VaultStoreOutcome IGuildVaultLedger.CheckRoom(Guild g, int capacity)
     {
-        GuildStorageItem? rec;
         lock (g.Gate)
         {
-            rec = g.Storage.FirstOrDefault(s => s.StorageSlot == storageSlot);
-            if (rec != null) g.Storage.Remove(rec);
+            if (!IsRegistered(g)) return VaultStoreOutcome.NotRegistered;
+            return GuildVaultCapacity.LowestFreeCell(g.Storage, capacity) < 0 ? VaultStoreOutcome.Full : VaultStoreOutcome.Stored;
         }
-        if (rec == null) return null;
-
-        await PersistAsync(g);                                 
-        try
-        {
-            var item = new InventoryItem
-            {
-                Id = rec.Uid, CharacterId = toCharId, ItemId = rec.ItemId, Count = rec.Count <= 0 ? 1 : rec.Count,
-                Slot = UnplacedSlot, StorageType = StorageBag, Refine = rec.Refine, Durability = rec.Durability, CardsJson = rec.CardsJson,
-                Element = rec.Element, DyeColor = rec.DyeColor, SocketPunchersJson = rec.SocketPunchersJson,
-                DyeColor2 = rec.DyeColor2, DyeColor3 = rec.DyeColor3, FxEnchantIndex = rec.FxEnchantIndex,
-                EnchantReinforceId = rec.EnchantReinforceId, EnchantSeconds = rec.EnchantSeconds, Bound = rec.Bound,
-                AbilityValue = rec.AbilityValue,
-            };
-            await inv.AddItemAsync(item);                       
-        }
-        catch
-        {
-            
-            lock (g.Gate) { g.Storage.Add(rec); }
-            try { await PersistAsync(g); } catch {   }
-            return null;
-        }
-        return rec;
     }
+
+    async Task<VaultStoreOutcome> IGuildVaultLedger.StoreAsync(Guild g, GuildStorageItem rec, int capacity)
+    {
+        lock (g.Gate)
+        {
+            // Re-check under the gate: the guild may have been disbanded or the last cell taken since the room check.
+            if (!IsRegistered(g)) return VaultStoreOutcome.NotRegistered;
+            var cell = GuildVaultCapacity.LowestFreeCell(g.Storage, capacity);
+            if (cell < 0) return VaultStoreOutcome.Full;
+            rec.StorageSlot = (byte)cell;
+            g.Storage.Add(rec);
+        }
+        await PersistAsync(g);
+        return VaultStoreOutcome.Stored;
+    }
+
+    void IGuildVaultLedger.Remove(Guild g, ulong uid)
+    {
+        lock (g.Gate) { g.Storage.RemoveAll(x => x.Uid == uid); }
+    }
+
+    GuildStorageItem? IGuildVaultLedger.Take(Guild g, byte storageSlot)
+    {
+        lock (g.Gate)
+        {
+            var rec = g.Storage.FirstOrDefault(s => s.StorageSlot == storageSlot);
+            if (rec != null) g.Storage.Remove(rec);
+            return rec;
+        }
+    }
+
+    void IGuildVaultLedger.PutBack(Guild g, GuildStorageItem rec)
+    {
+        lock (g.Gate) { g.Storage.Add(rec); }
+    }
+
+    Task IGuildVaultLedger.PersistAsync(Guild g) => PersistAsync(g);
 
     private async Task PersistAsync(Guild g)
     {
