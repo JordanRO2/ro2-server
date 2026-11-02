@@ -1,7 +1,7 @@
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using RO2.Application.Interfaces;
+using RO2.Quests.Domain;
 using RO2.GameData;
 using RO2.GameData.Tables;
 using RO2.Network.Packets;

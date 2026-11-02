@@ -1,6 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.GameData;
 using RO2.Network.Packets;

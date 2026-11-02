@@ -4,7 +4,6 @@ using RO2.Skills.Application;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
-using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.GameData;
 using RO2.Persistence.Mongo.Persistence;
@@ -15,6 +14,7 @@ using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 
 using RO2.Inventory.Domain;
+using RO2.Application.Interfaces;
 using RO2.Quests.Domain;
 using RO2.Characters.Domain;
 

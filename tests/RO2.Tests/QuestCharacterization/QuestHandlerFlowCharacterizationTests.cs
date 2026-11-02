@@ -2,7 +2,6 @@ using System.Buffers.Binary;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
-using RO2.Application.Interfaces;
 using RO2.Quests.Domain;
 using RO2.GameData;
 using RO2.Inventory.Domain;

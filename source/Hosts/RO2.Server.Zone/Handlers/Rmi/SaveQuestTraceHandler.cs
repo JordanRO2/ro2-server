@@ -35,7 +35,7 @@ public class SaveQuestTraceHandler : ZoneRmiHandlerBase<SaveQuestTraceHandler>
         }
         ids = RO2.Quests.Domain.TraceRules.Normalize(ids, player.ActiveQuests);
         player.TracedQuests = ids;
-        await services.GetRequiredService<RO2.Application.Interfaces.IQuestRepository>()
+        await services.GetRequiredService<RO2.Quests.Domain.IQuestRepository>()
             .SetQuestsTracedAsync(player.CharacterId, ids);
         Logger.LogDebug("Session {Id}: saved {N} traced quests", session.SessionId, ids.Count);
     }

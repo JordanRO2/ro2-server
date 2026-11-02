@@ -1,15 +1,17 @@
-using RO2.Quests.Domain;
+namespace RO2.Quests.Domain;
 
-namespace RO2.Application.Interfaces;
-
-public interface IQuestRepository
+/// <summary>Narrow read port over a character's quest completions, for other contexts that only gate on them.</summary>
+public interface IQuestCompletionView
 {
-    Task<IReadOnlyList<CharacterQuest>> GetActiveQuestsAsync(uint characterId);
     Task<IReadOnlyList<uint>> GetCompletedQuestIdsAsync(uint characterId);
 
- /// <summary>When the character last completed <paramref name="questId"/> (UTC), or null if it never has. The zone's
- /// daily-quest gate (QuestRepeatGate) compares it with the last daily reset.</summary>
+    /// <summary>When the character last completed <paramref name="questId"/> (UTC), or null if it never has.</summary>
     Task<DateTime?> GetLastCompletedAtAsync(uint characterId, uint questId);
+}
+
+public interface IQuestRepository : IQuestCompletionView
+{
+    Task<IReadOnlyList<CharacterQuest>> GetActiveQuestsAsync(uint characterId);
     Task AcceptQuestAsync(uint characterId, uint questId);
     Task CompleteQuestAsync(uint characterId, uint questId);
     Task GiveUpQuestAsync(uint characterId, uint questId);
