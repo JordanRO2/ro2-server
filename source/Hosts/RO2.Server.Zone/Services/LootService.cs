@@ -10,6 +10,7 @@ using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Models;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
+using RO2.Quests.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -941,10 +942,8 @@ public class LootService
  /// </summary>
     internal static bool TryTickKill(ushort current, ushort needed, out ushort next)
     {
-        next = current;
-        if (current >= needed) return false;
-        next = (ushort)(current + 1);
-        return true;
+        (next, var ticked) = KillObjectiveRule.Advance(current, needed);
+        return ticked;
     }
 
  /// <summary>Stores a quest's kill counts on its in-progress quest document. A failed write is logged and the kill continues.</summary>
@@ -999,22 +998,12 @@ public class LootService
 
  /// <summary>True when every objective row of the quest is a kill row whose count has reached its target.</summary>
     internal static bool AllKillObjectivesMet(PlayerState player, uint questId, QuestData[] rows)
-    {
-        var any = false;
-        for (int i = 0; i < rows.Length; i++)
+        => KillObjectiveRule.AllKillObjectivesMet(rows, (i, row) =>
         {
-            var row = rows[i];
-            if (row.Complete_Type == 0) continue;
-            if (row.Complete_Type != 2 || row.Complete_Type_Value1 == 0) return false;
-            var needed = QuestProgressStore.NeededKills(row);
-            ushort have;
-            if (i == 0) player.QuestKillProgress.TryGetValue(questId, out have);
-            else have = ExtraKillCount(player, questId, row.Complete_Type_Value1);
-            if (have < needed) return false;
-            any = true;
-        }
-        return any;
-    }
+            if (i != 0) return ExtraKillCount(player, questId, row.Complete_Type_Value1);
+            player.QuestKillProgress.TryGetValue(questId, out var have);
+            return have;
+        });
 
  /// <summary>
  /// Completes and pays a reward-auto kill quest at the kill that closed it. The quest is removed from the active set first,
