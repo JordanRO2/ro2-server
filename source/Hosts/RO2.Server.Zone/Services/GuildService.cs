@@ -305,19 +305,7 @@ public sealed class GuildService
         GuildMember m;
         lock (g.Gate)
         {
-            m = g.Members.FirstOrDefault(x => x.CharId == charId)!;
-            if (m == null)
-            {
-                
-                
-                m = new GuildMember
-                {
-                    CharId = charId, Gid = GidFor(charId), Name = name,
-                    Level = level == 0 ? MinMemberLevel : level, Job = job, AuthId = LowestRankIndex(g),
-                    JoinedUtc = DateTime.UtcNow,   
-                };
-                g.Members.Add(m);
-            }
+            m = GuildMembershipRules.Join(g, charId, GidFor(charId), name, level, job, DateTime.UtcNow);
         }
         _byChar[charId] = g.Id;
         await PersistAsync(g);
@@ -329,8 +317,7 @@ public sealed class GuildService
         GuildMember? removed;
         lock (g.Gate)
         {
-            removed = g.Members.FirstOrDefault(x => x.CharId == charId);
-            if (removed != null) g.Members.Remove(removed);
+            removed = GuildMembershipRules.Leave(g, charId);
         }
         if (removed != null)
         {
@@ -340,7 +327,7 @@ public sealed class GuildService
         return removed;
     }
 
-    public GuildMember? FindMemberByGid(Guild g, ulong gid) => g.Members.FirstOrDefault(m => m.Gid == gid);
+    public GuildMember? FindMemberByGid(Guild g, ulong gid) => GuildMembershipRules.FindByGid(g, gid);
 
     
     public async Task SetNoticeAsync(Guild g, string notice)
@@ -359,9 +346,7 @@ public sealed class GuildService
         if (m == null) return false;
         lock (g.Gate)
         {
-            if (m.CharId == g.MasterCharId || authId == MasterRankIndex || g.Ranks.All(r => r.Index != authId))
-                return false;
-            m.AuthId = authId;
+            if (!GuildMembershipRules.TrySetAuth(g, m, authId)) return false;
         }
         await PersistAsync(g);
         return true;
@@ -377,10 +362,7 @@ public sealed class GuildService
         if (m == null) return false;
         lock (g.Gate)
         {
-            var old = g.Members.FirstOrDefault(x => x.CharId == g.MasterCharId);
-            if (old != null && !ReferenceEquals(old, m)) old.AuthId = LowestRankIndex(g);
-            g.MasterCharId = m.CharId;
-            m.AuthId = MasterRankIndex;
+            GuildMembershipRules.SetMaster(g, m);
         }
         await PersistAsync(g);
         return true;
