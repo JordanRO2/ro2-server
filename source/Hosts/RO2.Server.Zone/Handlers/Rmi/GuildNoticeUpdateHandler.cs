@@ -7,6 +7,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Guilds.Application;
 using RO2.Guilds.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
@@ -27,16 +28,16 @@ public class GuildNoticeUpdateHandler : ZoneRmiHandlerBase<GuildNoticeUpdateHand
     public GuildNoticeUpdateHandler(IServiceScopeFactory s, ILogger<GuildNoticeUpdateHandler> l, PlayerStateManager pm, BroadcastService bc) : base(s, l, pm, bc) { }
 
  /// <summary>Result 0: the notice was set.</summary>
-    internal const ushort NoticeSet = 0;
+    internal const ushort NoticeSet = GuildNoticeUseCase.ResultOk;
 
  /// <summary>Result 7: the sender is not in a guild.</summary>
-    internal const ushort NoGuild = 7;
+    internal const ushort NoGuild = GuildNoticeUseCase.ResultNoGuild;
 
  /// <summary>Result 15: the notice is too long.</summary>
-    internal const ushort NoticeTooLong = 15;
+    internal const ushort NoticeTooLong = GuildNoticeUseCase.ResultTooLong;
 
  /// <summary>Maximum notice length in UTF-16 characters, colour code included.</summary>
-    internal const int MaxNoticeCount = 100;
+    internal const int MaxNoticeCount = GuildNoticeUseCase.MaxNoticeCount;
 
  /// <summary>Size in bytes of the request's leading length field, [u32 length - 4].</summary>
     private const int LengthFieldSize = 4;
@@ -69,8 +70,7 @@ public class GuildNoticeUpdateHandler : ZoneRmiHandlerBase<GuildNoticeUpdateHand
 
         var (count, notice) = ReadNotice(payload.Span);
         var guild = GuildService.Instance.GetByCharId(player.CharacterId);
-        ushort result = Validate(guild != null, count);
-        if (result == NoticeSet) await GuildService.Instance.SetNoticeAsync(guild!, notice);
+        ushort result = await services.GetRequiredService<GuildNoticeUseCase>().SetAsync(guild, count, notice);
 
         Logger.LogInformation("Session {Id}: {Name} sets guild notice ({Count} chars with its colour code) -> result {Result}",
             session.SessionId, player.Name, count, result);
@@ -86,7 +86,7 @@ public class GuildNoticeUpdateHandler : ZoneRmiHandlerBase<GuildNoticeUpdateHand
 
  /// <summary>Returns the 2563 result code for a notice of <paramref name="count"/> characters (colour code included), given whether the sender is in a guild.</summary>
     internal static ushort Validate(bool inGuild, int count)
-        => !inGuild ? NoGuild : count > MaxNoticeCount ? NoticeTooLong : NoticeSet;
+        => GuildNoticeUseCase.Validate(inGuild, count);
 
  /// <summary>
  /// Reads the notice from the request body. Returns the declared character count, used for the length check, and the text without the trailing colour code. The colour code is appended again when the notice is sent.

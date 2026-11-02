@@ -83,6 +83,12 @@ public sealed class GuildSkillLedger : IGuildSkillLedger
     public Task AddSkillAsync(Guild guild, uint skillId) => GuildService.Instance.AddSkillAsync(guild, skillId);
 }
 
+/// <summary>Host adapter of <see cref="IGuildNoticeLedger"/>: the live registry sets the notice and writes the guild once.</summary>
+public sealed class GuildNoticeLedger : IGuildNoticeLedger
+{
+    public Task SetNoticeAsync(Guild guild, string notice) => GuildService.Instance.SetNoticeAsync(guild, notice);
+}
+
 /// <summary>Host adapter of <see cref="IGuildFundsLedger"/> over the live registry singleton.</summary>
 public sealed class GuildFundsLedger : IGuildFundsLedger
 {

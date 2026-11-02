@@ -119,6 +119,8 @@ public static class Program
         services.AddSingleton<RO2.Guilds.Application.GuildFundsUseCase>();
         services.AddSingleton<RO2.Guilds.Application.IGuildSkillLedger, GuildSkillLedger>();
         services.AddSingleton<RO2.Guilds.Application.GuildSkillLearnUseCase>();
+        services.AddSingleton<RO2.Guilds.Application.IGuildNoticeLedger, GuildNoticeLedger>();
+        services.AddSingleton<RO2.Guilds.Application.GuildNoticeUseCase>();
         services.AddSingleton<RO2.Guilds.Application.EmergencyCallUseCase>();
         // Call-in port for Combat and Quest: they credit donated guild exp through it, never via GuildService.
         services.AddSingleton<RO2.Guilds.Application.IGuildExpLedger, GuildExpLedger>();
