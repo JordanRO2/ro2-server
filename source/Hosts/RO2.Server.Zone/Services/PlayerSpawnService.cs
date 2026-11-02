@@ -13,6 +13,7 @@ using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
 using RO2.Worlds.Application;
 using RO2.Worlds.Domain;
+using RO2.Guilds.Domain;
 
 namespace RO2.Server.Zone.Services;
 

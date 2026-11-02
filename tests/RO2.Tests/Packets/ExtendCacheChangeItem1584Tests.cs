@@ -9,6 +9,7 @@ using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Services;
 using Xunit;
 using RO2.Inventory.Domain;
+using RO2.Guilds.Domain;
 
 namespace RO2.Tests.Packets;
 

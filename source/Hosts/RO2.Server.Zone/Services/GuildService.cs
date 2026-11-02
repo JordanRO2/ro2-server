@@ -1,137 +1,13 @@
 using System.Collections.Concurrent;
-using MongoDB.Bson.Serialization.Attributes;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.Application;
 using RO2.Persistence.Mongo.Repositories;
 using RO2.Inventory.Application;
+using RO2.Guilds.Domain;
 using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Services;
-
-/// <summary>One persisted guild member, keyed by the character's 64-bit GID.</summary>
-public sealed class GuildMember
-{
-    public uint CharId { get; set; }
-    public ulong Gid { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public byte Level { get; set; } = GuildService.MinMemberLevel;
-    public byte Job { get; set; }
- /// <summary>Rank: the index of a title in the guild's rank table. Index 0 is the master's title.</summary>
-    public byte AuthId { get; set; }
- /// <summary>
- /// Guild EXP this member has contributed over time. Credited with each donation and handed to the master when the
- /// member leaves.
- /// </summary>
-    public long ContribPoints { get; set; }
- /// <summary>
- /// The member's EXP donation rate in percent, set by the member and kept across sessions. It is the share of each
- /// quest prize's EXP that is donated to the guild. The default 0 donates nothing.
- /// </summary>
-    public byte BribePercent { get; set; }
- /// <summary>
- /// When the member joined. Null for members stored before this was recorded.
- /// </summary>
-    public DateTime? JoinedUtc { get; set; }
-}
-
-/// <summary>One title of a guild's rank table.</summary>
-public sealed class GuildRank
-{
- /// <summary>Rank index, from 0 (master) to 9.</summary>
-    public byte Index { get; set; }
- /// <summary>The title as sent to the client.</summary>
-    public string Name { get; set; } = string.Empty;
- /// <summary>Permission bits of the title.</summary>
-    public byte Permissions { get; set; }
-}
-
-/// <summary>One item parked in the guild vault. The full item instance is kept, so a withdraw restores it exactly.</summary>
-public sealed class GuildStorageItem
-{
-    /// <summary>Durability value of an item that has none (not wearable gear).</summary>
-    public const short NoDurability = -1;
-
-    public ulong Uid { get; set; }
-    public uint ItemId { get; set; }
-    public int Count { get; set; } = 1;
-    public byte Refine { get; set; }
-    public short Durability { get; set; } = NoDurability;
-    public string? CardsJson { get; set; }
- /// <summary>
- /// Remaining instance state of the item: bestowed element, dye colour and rune-hole punchers. Vault items stored
- /// before these fields existed load with neutral values.
- /// </summary>
-    public byte Element { get; set; }
-    public uint DyeColor { get; set; }
-    public string? SocketPunchersJson { get; set; }
- /// <summary>
- /// Remaining per-instance state of the item (second and third dye colours, enchant data and bind history),
- /// carried for the same reason. Rows stored before these existed load with zero or false.
- /// </summary>
-    public uint DyeColor2 { get; set; }
-    public uint DyeColor3 { get; set; }
-    public uint FxEnchantIndex { get; set; }
-    public ushort EnchantReinforceId { get; set; }
-    public ushort EnchantSeconds { get; set; }
-    public bool Bound { get; set; }
- /// <summary>
- /// The item's own ability value, or null to use the template's value. Rows stored before this existed load with
- /// null.
- /// </summary>
-    public uint? AbilityValue { get; set; }
- /// <summary>Vault slot index, from 0 to N.</summary>
-    public byte StorageSlot { get; set; }
-    public uint DepositedByCharId { get; set; }
-}
-
-/// <summary>
-/// A guild aggregate. It is persisted as one document and is the live in-memory object that every handler
-/// modifies.
-/// </summary>
-public sealed class Guild
-{
-    /// <summary>Length in bytes of <see cref="Guid16"/>.</summary>
-    public const int GuidLength = 16;
-
-    [BsonId] public uint Id { get; set; }
- /// <summary>The 16-byte key the client uses to address the guild.</summary>
-    public byte[] Guid16 { get; set; } = new byte[GuidLength];
-    public string Name { get; set; } = string.Empty;
-    public uint MasterCharId { get; set; }
-    public string Notice { get; set; } = string.Empty;
-    public long Gold { get; set; }
- /// <summary>When the guild was created. Null for guilds created before this was recorded.</summary>
-    public DateTime? CreatedUtc { get; set; }
- /// <summary>
- /// Lifetime guild EXP, summed over every credit. The guild level and the EXP within that level are derived from it
- /// on every use, so the two cannot drift apart. Guilds stored before this field existed load with 0.
- /// </summary>
-    public ulong Exp { get; set; }
- /// <summary>The guild's rank table, seeded with the default titles on creation and on load.</summary>
-    public List<GuildRank> Ranks { get; set; } = new();
-    public List<GuildMember> Members { get; set; } = new();
-    public List<GuildStorageItem> Storage { get; set; } = new();
-    public List<uint> Skills { get; set; } = new();
-
- /// <summary>
- /// Lock that serialises every read and write of this guild's lists and fields. It is process state and is not
- /// stored.
- /// </summary>
-    [BsonIgnore] [System.Text.Json.Serialization.JsonIgnore] public Lock Gate { get; } = new();
-}
-
-/// <summary>A pending guild invite, kept until the invitee answers.</summary>
-public sealed class GuildPendingInvite
-{
-    public uint GuildId { get; set; }
-    public uint InviterCharId { get; set; }
- /// <summary>
- /// The 16-byte token of the invite popup. The invitee's answer must echo the token of the latest invite.
- /// </summary>
-    public byte[] Token { get; set; } = Array.Empty<byte>();
-    public DateTime CreatedUtc { get; set; } = DateTime.UtcNow;
-}
 
 /// <summary>
 /// Process-wide in-memory guild registry. Every mutation is written straight through to the guild store. Item
@@ -185,7 +61,7 @@ public sealed class GuildService
     public const byte MasterRankIndex = 0;
 
  /// <summary>Level a member is stored with when the character reports none (level 0).</summary>
-    public const byte MinMemberLevel = 1;
+    public const byte MinMemberLevel = GuildMember.MinLevel;
 
  /// <summary>Rank index of the member title in a default two-title table.</summary>
     private const byte DefaultMemberRankIndex = 1;

@@ -6,6 +6,7 @@ using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.GameData.Tables;
 using RO2.Characters.Domain;
+using RO2.Guilds.Domain;
 
 namespace RO2.Server.Zone.Services;
 

@@ -3,6 +3,7 @@ using RO2.Server.Zone.Services;
 using System.Buffers.Binary;
 using Xunit;
 using static RO2.Tests.Packets.ReauditShared;
+using RO2.Guilds.Domain;
 
 namespace RO2.Tests.Packets;
 

@@ -3,6 +3,7 @@ using System.Text;
 using RO2.Application.Interfaces;
 using RO2.Network.Packets;
 using RO2.Characters.Domain;
+using RO2.Guilds.Domain;
 
 namespace RO2.Server.Zone.Services;
 

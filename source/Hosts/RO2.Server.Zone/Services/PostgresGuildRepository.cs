@@ -2,6 +2,7 @@ using System.Text.Json;
 using Npgsql;
 using NpgsqlTypes;
 using RO2.Persistence.Postgres;
+using RO2.Guilds.Domain;
 
 namespace RO2.Server.Zone.Services;
 

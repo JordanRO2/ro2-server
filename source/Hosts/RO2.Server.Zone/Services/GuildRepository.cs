@@ -1,4 +1,5 @@
 using MongoDB.Driver;
+using RO2.Guilds.Domain;
 using RO2.Persistence.Mongo.Persistence;
 
 namespace RO2.Server.Zone.Services;
@@ -17,6 +18,7 @@ public sealed class GuildRepository : IGuildStore
 
     public GuildRepository(MongoDbContext context)
     {
+        GuildBsonMap.Register();
         _guilds = context.GetCollection<Guild>("guilds");
     }
 

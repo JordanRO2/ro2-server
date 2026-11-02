@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Plural namespace: a namespace "RO2.Guild" would shadow the type Guild in every RO2.* file (CS0118). -->
+    <RootNamespace>RO2.Guilds.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Guild bounded context: Domain references ONLY RO2.BuildingBlocks + the shared RO2.GameData kernel
+       (no Mongo, no ProudNet, no host). The aggregate types are persistence-agnostic; the Mongo class map lives in the host. -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+  </ItemGroup>
+
+</Project>

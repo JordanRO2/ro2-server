@@ -10,6 +10,7 @@ using RO2.Server.Zone.Services;
 
 using NetworkZoneRmiBase = RO2.Network.Handlers.ZoneRmiHandlerBase<RO2.Server.Zone.Handlers.Rmi.ReserveDeleteHandler>;
 using RO2.Characters.Domain;
+using RO2.Guilds.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 

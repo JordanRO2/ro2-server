@@ -6,6 +6,7 @@ using RO2.Network.Packets;
 using RO2.Network.ProudNet;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
+using RO2.Guilds.Domain;
 
 namespace RO2.Server.Zone.Services;
 

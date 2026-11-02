@@ -2,6 +2,7 @@ using System.Reflection;
 using RO2.GameData.Tables;
 using RO2.Server.Zone.Services;
 using Xunit;
+using RO2.Guilds.Domain;
 
 namespace RO2.Tests.Packets;
 

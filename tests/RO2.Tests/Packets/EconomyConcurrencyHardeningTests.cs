@@ -20,6 +20,7 @@ using static RO2.Tests.Packets.ReauditShared;
 using RO2.Inventory.Domain;
 using RO2.Inventory.Infrastructure.Mongo;
 using RO2.Characters.Domain;
+using RO2.Guilds.Domain;
 
 namespace RO2.Tests.Packets;
 

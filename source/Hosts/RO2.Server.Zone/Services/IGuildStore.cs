@@ -1,3 +1,5 @@
+using RO2.Guilds.Domain;
+
 namespace RO2.Server.Zone.Services;
 
 /// <summary>
