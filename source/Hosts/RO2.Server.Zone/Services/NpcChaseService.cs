@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RO2.GameData;
+using RO2.Monster.Application;
 using RO2.Monster.Domain;
 using RO2.Network.Protocol;
 using RO2.Server.Zone.Models;
@@ -129,12 +130,17 @@ public sealed class NpcChaseService : ITickable
                 if (npc.Camp <= MaxFriendlyCamp || npc.AggroTargetHandle == NoTargetHandle || npc.Spawn is null)
                     continue;
 
-                // (1) LEASH. Dragged past its leash bound from the spawn: it gives up, runs home in one move and
-                // resets (heals + drops aggro). The combat service does not leash (its target is still valid); the
-                // chat sweep sends the leave-combat 2398 once this clears the target.
-                if (ChaseGeometry.IsPastLeash(npc.PosX, npc.PosY, npc.Spawn.PosX, npc.Spawn.PosY, npc.LeashBound))
+                // Leash first, then the chase step: decided by ChasePass, applied here in that order.
+                var monster = new ChaseMonster(npc.MapId, npc.PosX, npc.PosY, npc.Spawn.PosX, npc.Spawn.PosY, npc.LeashBound,
+                    npc.AttackReach, NpcCombatService.Reach, SpeedOf(npc));
+                var verdict = ChasePass.Decide(monster, dt, (Svc: this, Npc: npc), static s => s.Svc.ResolveTarget(s.Npc));
+
+                if (verdict.Action == ChaseAction.LeashHome)
                 {
-                    await MoveAsync(npc, npc.Spawn.PosX, npc.Spawn.PosY, SpeedOf(npc),
+                    // (1) LEASH. Dragged past its leash bound from the spawn: it gives up, runs home in one move and
+                    // resets (heals + drops aggro). The combat service does not leash (its target is still valid); the
+                    // chat sweep sends the leave-combat 2398 once this clears the target.
+                    await MoveAsync(npc, verdict.X, verdict.Y, monster.Speed,
                         destCell: _data.GetNavCell(mapId, npc.Spawn.Index) ?? NavCellAt(npc, npc.Spawn.PosX, npc.Spawn.PosY));
                     if (_npcState.LeashReset(npc.EntityOid))
                         // Show the healed HP now (NPC 2401); otherwise the bar stays stale until the next hit.
@@ -142,17 +148,11 @@ public sealed class NpcChaseService : ITickable
                     continue;
                 }
 
-                var target = ResolvePlayer(npc.AggroTargetHandle);
-                if (target is null || target.IsDead || target.MapId != npc.MapId)
-                    continue;   // target gone: the combat service re-selects or resets it
-
                 // (2) CHASE. Close the gap down to the monster's own attack reach, where the swing takes over. No
-                // step when already in reach (stand and fight) or the target is non-finite.
-                float speed = SpeedOf(npc);
-                if (ChaseGeometry.DecideStep(npc.PosX, npc.PosY, target.X, target.Y, npc.AttackReach, NpcCombatService.Reach, speed, dt)
-                    is not var (dx, dy))
+                // step when already in reach (stand and fight), the target is gone or non-finite.
+                if (verdict.Action != ChaseAction.Step)
                     continue;
-                await MoveAsync(npc, dx, dy, speed, destCell: NavCellAt(npc, dx, dy));
+                await MoveAsync(npc, verdict.X, verdict.Y, monster.Speed, destCell: NavCellAt(npc, verdict.X, verdict.Y));
 
                 if (ct.IsCancellationRequested)
                     return;
@@ -188,6 +188,10 @@ public sealed class NpcChaseService : ITickable
         var run = _data.Npcs.GetValueOrDefault(npc.NpcId)?.Run_Speed ?? 0f;
         return run > 0f ? run : FallbackSpeed;
     }
+
+    /// <summary>The npc's aggro target as the chase decision reads it, or null when it resolves to no live player.</summary>
+    private ChaseTarget? ResolveTarget(NpcRuntimeState npc)
+        => ResolvePlayer(npc.AggroTargetHandle) is { } p ? new ChaseTarget(p.X, p.Y, p.IsDead, p.MapId) : null;
 
     /// <summary>PC actor handle -> live player: PC handles are <c>(sessionId &lt;&lt; 8) | <see cref="PlayerStateManager.PcActorTag"/></c> (0x11).</summary>
     private PlayerState? ResolvePlayer(uint pcHandle)
