@@ -1,6 +1,4 @@
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
 using RO2.Quests.Domain;
@@ -35,10 +33,10 @@ internal static class QuestProgressStore
     internal const byte NoObjective = ObjectiveRules.NoObjective;
 
  /// <summary>Element state of a quest with every objective met.</summary>
-    internal const uint StateMet = 1;
+    internal const uint StateMet = QuestElementState.StateMet;
 
  /// <summary>Element state of a quest still in progress.</summary>
-    internal const uint StateRunning = 2;
+    internal const uint StateRunning = QuestElementState.StateRunning;
 
  /// <summary>Bytes per objective sub-record of the 2310 a-array.</summary>
     internal const int SubRecordLength = 20;
@@ -50,18 +48,13 @@ internal static class QuestProgressStore
     private const uint ReservedWord = 0;
 
  /// <summary>Per-objective <c>"met"</c> value and 2310 progress of a closed talk row.</summary>
-    private const ushort TalkRowClosed = 1;
+    private const ushort TalkRowClosed = LoginProgressRule.TalkRowClosed;
 
  /// <summary>
  /// Value of the session quest counter once the quest's objective is closed (talk and use-item quests, and a login-restored
  /// quest with every row met): the close has already been reported to the client.
  /// </summary>
     private const ushort ObjectiveClosedCounter = 1;
-
-    private const string KillKey = "kill";
-
- /// <summary>The talk / use-item closes of each objective row (see the remarks).</summary>
-    private const string MetKey = "met";
 
  /// <summary>Quest_Info Complete_Type of a talk objective (Complete_Type_Value1 = the NPC).</summary>
     internal const byte TalkObjective = ObjectiveRules.TalkObjective;
@@ -95,79 +88,24 @@ internal static class QuestProgressStore
 
  /// <summary><c>{"kill":[...]}</c>: the kill counts, one per objective row in Quest_Info order (0 for a row that is not
  /// a kill row). This is the form documents had before the <c>"met"</c> key.</summary>
-    internal static string Encode(ReadOnlySpan<ushort> killCounts)
-    {
-        var sb = new StringBuilder("{");
-        AppendArray(sb, KillKey, killCounts);
-        return sb.Append('}').ToString();
-    }
+    internal static string Encode(ReadOnlySpan<ushort> killCounts) => QuestProgressDocument.Encode(killCounts);
 
  /// <summary><c>{"kill":[...],"met":[...]}</c>: the kill counts and the talk / use-item closes of each objective row.
  /// The <c>"met"</c> key marks the document as carrying the quest's run state.</summary>
     internal static string EncodeState(ReadOnlySpan<ushort> killCounts, ReadOnlySpan<ushort> metValues)
-    {
-        var sb = new StringBuilder("{");
-        AppendArray(sb, KillKey, killCounts);
-        sb.Append(',');
-        AppendArray(sb, MetKey, metValues);
-        return sb.Append('}').ToString();
-    }
-
-    private static void AppendArray(StringBuilder sb, string key, ReadOnlySpan<ushort> values)
-    {
-        sb.Append('"').Append(key).Append("\":[");
-        for (int i = 0; i < values.Length; i++)
-        {
-            if (i > 0) sb.Append(',');
-            sb.Append(values[i]);
-        }
-        sb.Append(']');
-    }
+        => QuestProgressDocument.EncodeState(killCounts, metValues);
 
  /// <summary>
  /// Reads the per-row kill counts from a stored document, as <paramref name="rowCount"/> entries. Missing or malformed
  /// entries read as 0, and counts are capped at 65,535.
  /// </summary>
-    internal static ushort[] Decode(string? json, int rowCount) => DecodeArray(json, KillKey, rowCount, out _);
+    internal static ushort[] Decode(string? json, int rowCount) => QuestProgressDocument.Decode(json, rowCount);
 
  /// <summary>Reads the per-row closes stored under <c>"met"</c>. All 0 when the key is missing.</summary>
-    internal static ushort[] DecodeMet(string? json, int rowCount) => DecodeArray(json, MetKey, rowCount, out _);
+    internal static ushort[] DecodeMet(string? json, int rowCount) => QuestProgressDocument.DecodeMet(json, rowCount);
 
  /// <summary>Whether the document carries the <c>"met"</c> key, that is, was written with the quest's run state.</summary>
-    internal static bool HasMetKey(string? json)
-    {
-        DecodeArray(json, MetKey, 0, out var found);
-        return found;
-    }
-
-    private static ushort[] DecodeArray(string? json, string key, int rowCount, out bool found)
-    {
-        found = false;
-        var counts = new ushort[Math.Max(0, rowCount)];
-        if (string.IsNullOrEmpty(json)) return counts;
-        try
-        {
-            using var doc = JsonDocument.Parse(json);
-            if (doc.RootElement.ValueKind != JsonValueKind.Object
-                || !doc.RootElement.TryGetProperty(key, out var array)
-                || array.ValueKind != JsonValueKind.Array)
-                return counts;
-            found = true;
-            int i = 0;
-            foreach (var value in array.EnumerateArray())
-            {
-                if (i >= counts.Length) break;
-                if (value.ValueKind == JsonValueKind.Number && value.TryGetInt64(out var n))
-                    counts[i] = (ushort)Math.Clamp(n, 0, ushort.MaxValue);
-                i++;
-            }
-        }
-        catch (JsonException)
-        {
-            // Not ours: read as no progress.
-        }
-        return counts;
-    }
+    internal static bool HasMetKey(string? json) => QuestProgressDocument.HasMetKey(json);
 
  /// <summary>The player's current kill count on each objective row (0 for a row that is not a kill row).</summary>
     internal static ushort[] CurrentKillCounts(PlayerState player, uint questId, QuestData[] rows)
@@ -338,45 +276,9 @@ internal static class QuestProgressStore
     internal static (ushort[] Values, bool AllMet) LoginProgress(QuestData[] rows, string? json,
         IReadOnlyList<InventoryItem>? bag)
     {
-        var values = new ushort[ObjectiveRowCount(rows)];
-        var kills = Decode(json, values.Length);
-        var met = DecodeMet(json, values.Length);
-        var allMet = values.Length > 0;
-        int objective = 0;
-        for (int i = 0; i < rows.Length && objective < values.Length; i++)
-        {
-            var row = rows[i];
-            if (row.Complete_Type == NoObjective) continue;
-            bool ok;
-            switch (row.Complete_Type)
-            {
-                case KillObjective:
-                    values[objective] = kills[objective];
-                    ok = IsKillRow(row) && kills[objective] >= NeededKills(row);
-                    break;
-                case CollectObjective or DeliverObjective:
-                    var need = NeededKills(row);
-                    values[objective] = row.Complete_Type_Value1 != 0 && bag is not null
-                        ? (ushort)Math.Min(QuestObjectiveItems.CountInBag(bag, row.Complete_Type_Value1), need)
-                        : (ushort)0;
-                    ok = row.Complete_Type_Value1 != 0 && values[objective] >= need;
-                    break;
-                case TalkObjective:
-                    values[objective] = met[objective] != 0 ? TalkRowClosed : (ushort)0;
-                    ok = values[objective] == TalkRowClosed;
-                    break;
-                case UseItemObjective:
-                    values[objective] = Math.Min(met[objective], UsesNeeded(row));
-                    ok = values[objective] >= UsesNeeded(row);
-                    break;
-                default:
-                    ok = false;
-                    break;
-            }
-            allMet &= ok;
-            objective++;
-        }
-        return (values, allMet);
+        var n = ObjectiveRowCount(rows);
+        return LoginProgressRule.Compute(rows, Decode(json, n), DecodeMet(json, n),
+            bag is null ? null : id => (int)Math.Min(QuestObjectiveItems.CountInBag(bag, id), int.MaxValue));
     }
 
  /// <summary>
