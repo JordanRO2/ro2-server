@@ -1,6 +1,7 @@
 using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using RO2.Mails.Domain;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
@@ -24,12 +25,6 @@ public class MailListHandler : ZoneRmiHandlerBase<MailListHandler>
 
     /// <summary>Smallest 1394 blob that holds the NPC handle: the offset plus the u32.</summary>
     private const int NpcHandleBlobLength = NpcHandleOffset + sizeof(uint);
-
-    /// <summary>First mail kind whose item template id the client reads from the list row (kinds 1..11).</summary>
-    private const byte FirstTemplateMailKind = 1;
-
-    /// <summary>Last mail kind whose item template id the client reads from the list row.</summary>
-    private const byte LastTemplateMailKind = 11;
 
     public MailListHandler(IServiceScopeFactory s, ILogger<MailListHandler> l, PlayerStateManager pm, BroadcastService bc) : base(s, l, pm, bc) { }
 
@@ -68,16 +63,9 @@ public class MailListHandler : ZoneRmiHandlerBase<MailListHandler>
                 // is read by the client only for kinds 1..11: it is left 0 for player mail,
                 // including those with an item attached, and set on every auction row
                 // (kinds 2/7/10/11), where the client builds the text from kind + template.
+                var row = MailListProjection.Project(m);
                 records.Add(MailPackets.BuildListRecord146(
-                    m.Uid,
-                    kind: m.Kind,
-                    isRead: m.IsRead,
-                    m.SentAt,
-                    (m.Gold > 0 && !m.GoldClaimed) ? m.Gold : 0,
-                    (m.AttachedItemId != 0 && !m.ItemClaimed) ? m.AttachedItemUid : 0,
-                    itemTemplateId: m.Kind is >= FirstTemplateMailKind and <= LastTemplateMailKind ? m.KindItemId : 0,
-                    m.SenderName,
-                    m.Title));
+                    row.Uid, row.Kind, row.IsRead, row.SentAt, row.Gold, row.ItemUid, row.ItemTemplateId, row.SenderName, row.Title));
             }
         }
         catch (Exception ex)
