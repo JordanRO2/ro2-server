@@ -759,18 +759,17 @@ public class SkillDamageHandler : ZoneRmiHandlerBase<SkillDamageHandler>
             writer => writer.WriteBytes(notify));
 
         await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
-        var guild = GuildService.Instance.GetByCharId(caster.CharacterId);
         var data = services.GetRequiredService<GameDataStore>();
-        var refusal = GuildEmergencyCallService.Validate(guild, caster.CharacterId, skillId, caster.MapId,
-            GuildEmergencyCallService.TargetMapsOf(skillId), data.GuildSkillLevel);
-        if (refusal != EmergencyCallRefusal.None || guild is null)
+        var plan = services.GetRequiredService<RO2.Guilds.Application.EmergencyCallUseCase>().Plan(
+            caster.CharacterId, skillId, caster.MapId, GuildEmergencyCallService.TargetMapsOf(skillId), data.GuildSkillLevel);
+        if (plan.Refusal != EmergencyCallRefusal.None || plan.Guild is not { } guild)
         {
             Logger.LogInformation("{Name} landed the guild Emergency Call {SkillId} on map {Map} but issues no call: {Refusal}",
-                caster.Name, skillId, caster.MapId, refusal);
+                caster.Name, skillId, caster.MapId, plan.Refusal);
             return;
         }
 
-        var prompted = await GuildEmergencyCallService.IssueAsync(guild, caster, PlayerManager, Broadcast, DateTime.UtcNow);
+        var prompted = await GuildEmergencyCallService.IssueAsync(guild, caster, plan.Recipients, Broadcast, DateTime.UtcNow);
         Logger.LogInformation("{Name} issued the guild Emergency Call {SkillId} for guild {Guild} at map {Map} ({X:F1}, {Y:F1}, {Z:F1}); {Count} member(s) prompted",
             caster.Name, skillId, guild.Id, caster.MapId, caster.X, caster.Y, caster.Z, prompted);
     }

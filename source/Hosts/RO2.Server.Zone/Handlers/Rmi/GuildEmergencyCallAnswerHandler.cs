@@ -105,7 +105,7 @@ public class GuildEmergencyCallAnswerHandler : ZoneRmiHandlerBase<GuildEmergency
         }
 
         await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
-        var guild = GuildService.Instance.GetByCharId(player.CharacterId);
+        var guild = services.GetRequiredService<RO2.Guilds.Application.IGuildDirectory>().GetByCharId(player.CharacterId);
         if (guild is null
             || !GuildEmergencyCallService.TryConsume(guild.Id, player.CharacterId, DateTime.UtcNow, out var call))
         {

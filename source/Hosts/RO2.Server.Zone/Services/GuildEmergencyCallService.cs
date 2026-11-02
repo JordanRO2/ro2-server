@@ -5,6 +5,7 @@ using RO2.GameData.Tables;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
+using RO2.Guilds.Application;
 using RO2.Guilds.Domain;
 
 namespace RO2.Server.Zone.Services;
@@ -146,27 +147,20 @@ public static class GuildEmergencyCallService
 
  /// <summary>
  /// Issues a call for <paramref name="guild"/>: records it at the caster's map and position and sends the
- /// 2960 prompt to every other member who is online. Returns how many members were prompted.
+ /// 2960 prompt to every candidate whose session is connected. Returns how many members were prompted.
  /// </summary>
  /// <remarks>
- /// Recipients are the online members other than the caster. The call is recorded at the caster's map and
- /// position before the prompts are sent, so an answer arriving right after a prompt is always matched.
+ /// The candidates are the online members other than the caster (<c>EmergencyCallUseCase</c>); the live session
+ /// check stays here. The call is recorded at the caster's map and position before the prompts are sent, so an
+ /// answer arriving right after a prompt is always matched.
  /// </remarks>
-    public static async Task<int> IssueAsync(Guild guild, PlayerState caster, PlayerStateManager players,
-        BroadcastService broadcast, DateTime nowUtc)
+    public static async Task<int> IssueAsync(Guild guild, PlayerState caster,
+        IReadOnlyList<EmergencyCallRecipient> candidates, BroadcastService broadcast, DateTime nowUtc)
     {
-        uint[] memberIds;
-        lock (guild.Gate) memberIds = guild.Members.Select(m => m.CharId).ToArray();
-
         var recipients = new List<(uint CharId, ProudSession Session)>();
-        foreach (var charId in memberIds)
+        foreach (var (charId, sessionId) in candidates)
         {
-            if (charId == caster.CharacterId)
-                continue;
-            var member = players.GetPlayerByCharacterId(charId);
-            if (member is null)
-                continue;
-            var session = broadcast.GetSession(member.SessionId);
+            var session = broadcast.GetSession(sessionId);
             if (session is null || !session.IsConnected)
                 continue;
             recipients.Add((charId, session));
