@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
 using RO2.GameData;
+using RO2.Monster.Application;
 using RO2.Monster.Domain;
 using RO2.Network.Protocol;
 using RO2.Server.Zone.Handlers.Rmi;
@@ -75,7 +76,7 @@ namespace RO2.Server.Zone.Services;
 /// goes out at once, see <see cref="ReleaseMonstersAsync"/>.
 /// </para>
 /// </remarks>
-public class NpcCombatService : ITickable
+public partial class NpcCombatService : ITickable
 {
     private readonly NpcStateManager _npcState;
     private readonly PlayerStateManager _playerManager;
@@ -85,6 +86,7 @@ public class NpcCombatService : ITickable
     private readonly PcCombatStateService _pcCombat;
     private readonly IServiceScopeFactory _scopeFactory;
     private readonly ILogger<NpcCombatService> _logger;
+    private readonly RetaliationPass _retaliation;
 
     /// <summary>How often the retaliation pass runs, regardless of the loop's tick rate.</summary>
     private static readonly TimeSpan Interval = TimeSpan.FromMilliseconds(400);
@@ -149,6 +151,8 @@ public class NpcCombatService : ITickable
         _pcCombat = pcCombat;
         _scopeFactory = scopeFactory;
         _logger = logger;
+        var ports = new MonsterPorts(this);
+        _retaliation = new RetaliationPass(ports, ports, ports);
     }
 
     /// <summary>Driven by the central game loop. Banks simulated time and runs the retaliation pass
@@ -241,47 +245,19 @@ public class NpcCombatService : ITickable
                     continue;
                 engagedBy.TryGetValue(monster.EntityOid, out var iterating);
 
-                // (3a) ACQUISITION: an aggressive, not-yet-fighting monster takes the nearest player in its sight
-                // that its mode allows. One point of threat seats the target, so the 2630 meter and the
-                // enter-combat 2398 flow exactly as a first hit's would.
-                if (monster.AggroTargetHandle == 0 && iterating is null)
-                {
-                    if (monster.Aggression == NpcAggressionMode.None)
-                        continue;
-                    var acquired = AcquireNearest(monster, onMap);
-                    if (acquired is null)
-                        continue;
-                    _npcState.AddThreat(monster.EntityOid, acquired.EntityId, acquired.Name, AcquireThreat);
-                    await _npcChat.EnterCombatAsync(monster, acquired.EntityId);
+                // (3a)-(3c) ACQUISITION, TARGET VALIDATION and RESET: the pre-swing steps live in
+                // RO2.Monster.Application.RetaliationPass; its state changes and the two wire sends run through MonsterPorts.
+                var verdict = await _retaliation.RunAsync(
+                    new MonsterFacts(monster.EntityOid, monster.MapId, monster.Aggression), iterating is not null,
+                    (self: this, monster, onMap),
+                    static s => FactsOf(s.self.AcquireNearest(s.monster, s.onMap)));
+                if (verdict.Retargeted)
                     retargeted.Add(monster.EntityOid);
-                }
-
-                // (3b) TARGET VALIDATION: a top-threat target that has died or left the map is replaced by the
-                // next-highest attacker that is still a live player here.
-                var target = ResolvePlayer(monster.AggroTargetHandle);
-                if (monster.AggroTargetHandle != 0
-                    && (target is null || target.IsDead || target.MapId != monster.MapId))
-                {
-                    target = ResolvePlayer(ReselectLiveTarget(monster));
-                    retargeted.Add(monster.EntityOid);
-                }
-
-                // (3c) RESET: no live target and no engaged player — the monster leaves the fight, clearing its
-                // threat and healing to full. The chat service's sweep sends its leave-combat 2398 (state 5 then
-                // 1) once the target is 0 and nobody is engaged with it.
-                if (target is null && iterating is null)
-                {
-                    // Clear + heal, and push the target change so a watcher's 2643 panel does not keep showing the
-                    // monster aimed at the attacker that just left (the death path does the same via its 2630/2643).
-                    if (_npcState.LeashReset(monster.EntityOid))
-                    {
-                        retargeted.Add(monster.EntityOid);
-                        // Show the healed HP now (NPC 2401): the floating bar is otherwise stale until the next hit.
-                        await ActorVitalsBroadcast.SendNpcAutoHealAsync(_broadcast, monster);
-                    }
+                if (verdict.Action == PreSwingAction.Reset)
                     _nextSwing.Remove(monster.EntityOid);
+                if (verdict.Action != PreSwingAction.Act)
                     continue;
-                }
+                var target = ResolvePlayer(verdict.TargetHandle);
 
                 acting.Add((monster, iterating, target));
             }
@@ -954,10 +930,6 @@ public class NpcCombatService : ITickable
     /// </remarks>
     internal static bool InNpcReach(NpcRuntimeState npc, PlayerState player)
         => SwingReachRules.InReach(npc.PosX, npc.PosY, npc.AttackReach, player.X, player.Y);
-
-    /// <summary>Threat seated when a monster acquires a player by proximity: one point, enough to make that
-    /// player its target. A real hit then banks its threat on top (<see cref="NpcStateManager.AddThreat"/>).</summary>
-    private const long AcquireThreat = 1;
 
     /// <summary>
     /// The nearest living player on <paramref name="onMap"/> that <paramref name="npc"/> may acquire: inside its
