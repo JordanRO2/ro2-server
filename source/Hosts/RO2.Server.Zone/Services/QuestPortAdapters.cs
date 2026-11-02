@@ -11,4 +11,15 @@ public sealed class QuestGameData(GameDataStore data) : IQuestGameData
     public bool TryGetObjectiveRows(uint questId, out QuestData[] rows) => data.QuestRows.TryGetValue(questId, out rows!);
 
     public bool ItemExists(uint itemId) => data.Items.ContainsKey(itemId);
+
+    public IReadOnlyList<RO2.GameData.Tables.JobChangeTable> JobChanges => data.JobChangeTable;
+}
+
+/// <summary>Host adapter of <see cref="IGuildDonationView"/> over the live guild registry.</summary>
+public sealed class GuildDonationView : IGuildDonationView
+{
+    public GuildDonationTarget? DonationTargetOf(uint charId) =>
+        GuildService.Instance.GetByCharId(charId) is { } guild
+            ? new GuildDonationTarget(guild, GuildService.BribePercentOf(guild, charId))
+            : null;
 }

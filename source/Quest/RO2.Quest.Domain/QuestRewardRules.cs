@@ -35,4 +35,23 @@ public static class QuestRewardRules
 
     /// <summary>The money a quest pays: Reward_Money, floored at 0.</summary>
     public static uint MoneyOf(QuestData quest) => (uint)Math.Max(0, quest.Reward_Money);
+
+    /// <summary>
+    /// True when a choice quest (types 2 and 5) pays no item: the choice is past the slots or names an empty slot. Other
+    /// reward types never have a choice to get wrong.
+    /// </summary>
+    public static bool NoValidPick(QuestData quest, uint rewardChoice)
+    {
+        var slots = quest.RewardItemSlots();
+        return quest.Reward_Type is RewardTypePickOne or RewardTypePickOneAlt
+               && (rewardChoice >= (uint)slots.Length || slots[rewardChoice].Id == 0);
+    }
+
+    /// <summary>
+    /// The completion count the 2784 re-act reports: how many times the character has completed the quest, clamped to
+    /// 1..<paramref name="questFrequency"/> (the Quest_Info Quest_Frequency column). Only a repeatable quest (frequency
+    /// above 0) reports one; a frequency of 0 is read as 1.
+    /// </summary>
+    public static int CompletionCount(int completedCount, byte questFrequency) =>
+        Math.Clamp(completedCount, 1, Math.Max(1, (int)questFrequency));
 }

@@ -394,6 +394,9 @@ public sealed class Reaudit4_B0_Tests
             .ToArray()));
         var repo = new RecordingQuests();
         collection.AddSingleton<IQuestRepository>(repo);
+        collection.AddSingleton<RO2.Quests.Application.IQuestGameData, QuestGameData>();
+        collection.AddSingleton<RO2.Quests.Application.IGuildDonationView, GuildDonationView>();
+        collection.AddSingleton<RO2.Quests.Application.QuestPrizeUseCase>();
         await using var services = collection.BuildServiceProvider();
         var handler = new QuestPrizeHandler(services.GetRequiredService<IServiceScopeFactory>(),
             NullLogger<QuestPrizeHandler>.Instance, players, broadcast);

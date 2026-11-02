@@ -131,6 +131,8 @@ public static class Program
         services.AddScoped<RO2.Quests.Application.QuestAcceptUseCase>();
         services.AddScoped<RO2.Quests.Application.QuestCompleteUseCase>();
         services.AddScoped<RO2.Quests.Application.QuestGiveUpUseCase>();
+        services.AddSingleton<RO2.Quests.Application.IGuildDonationView, GuildDonationView>();
+        services.AddScoped<RO2.Quests.Application.QuestPrizeUseCase>();
 
         // Instance stores over the singleton MongoDbContext (DB Phase 0, pass 2b). Stateless apart from their
         // collection handles, so singletons; handlers resolve them from the per-message scope, never into a field.

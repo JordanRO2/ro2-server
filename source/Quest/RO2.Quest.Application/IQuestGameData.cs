@@ -1,4 +1,5 @@
 using RO2.GameData;
+using RO2.GameData.Tables;
 
 namespace RO2.Quests.Application;
 
@@ -19,4 +20,7 @@ public interface IQuestGameData
 
     /// <summary>True when the item template exists in the item catalog (the reward payout skips unknown ids).</summary>
     bool ItemExists(uint itemId);
+
+    /// <summary>The JobChange_Table rows, which a job-change quest's payout picks from.</summary>
+    IReadOnlyList<JobChangeTable> JobChanges { get; }
 }

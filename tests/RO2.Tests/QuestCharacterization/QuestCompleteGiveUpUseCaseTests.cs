@@ -27,6 +27,7 @@ public class QuestCompleteGiveUpUseCaseTests
         { quest = new QuestData { Quest_ID = questId, Complete_Type = type, Complete_Type_Value2 = value2 }; return known; }
         public bool TryGetObjectiveRows(uint questId, out QuestData[] rows) { rows = []; return false; }
         public bool ItemExists(uint itemId) => false;
+        public IReadOnlyList<RO2.GameData.Tables.JobChangeTable> JobChanges => [];
     }
 
     private const uint Q = 7;

@@ -26,6 +26,7 @@ public class QuestAcceptUseCaseTests
         public bool TryGetQuest(uint questId, out QuestData quest) { quest = new QuestData { Quest_ID = questId }; return known; }
         public bool TryGetObjectiveRows(uint questId, out QuestData[] rows) { rows = []; return false; }
         public bool ItemExists(uint itemId) => false;
+        public IReadOnlyList<RO2.GameData.Tables.JobChangeTable> JobChanges => [];
     }
 
     private static readonly DateTime Now = new(2026, 11, 2, 15, 0, 0, DateTimeKind.Utc);

@@ -127,6 +127,9 @@ public class QuestAcceptAndPrizeReauditTests
         var bag = new GearInventory(FullBag(701));
         collection.AddSingleton<IInventoryRepository>(bag);
         collection.AddSingleton<IQuestRepository>(new NoQuests());
+        collection.AddSingleton<RO2.Quests.Application.IQuestGameData, QuestGameData>();
+        collection.AddSingleton<RO2.Quests.Application.IGuildDonationView, GuildDonationView>();
+        collection.AddSingleton<RO2.Quests.Application.QuestPrizeUseCase>();
         await using var services = collection.BuildServiceProvider();
         var handler = new QuestPrizeHandler(services.GetRequiredService<IServiceScopeFactory>(),
             NullLogger<QuestPrizeHandler>.Instance, players, broadcast);

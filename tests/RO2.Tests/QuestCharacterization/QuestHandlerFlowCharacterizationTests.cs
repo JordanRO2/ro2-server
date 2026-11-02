@@ -84,6 +84,8 @@ public class QuestHandlerFlowCharacterizationTests
                 .AddSingleton<RO2.Quests.Application.QuestAcceptUseCase>()
                 .AddSingleton<RO2.Quests.Application.QuestCompleteUseCase>()
                 .AddSingleton<RO2.Quests.Application.QuestGiveUpUseCase>()
+                .AddSingleton<RO2.Quests.Application.IGuildDonationView, GuildDonationView>()
+                .AddSingleton<RO2.Quests.Application.QuestPrizeUseCase>()
                 .AddSingleton(new EffectService(players, broadcast, store, npcState: null!, loot: null!, scopeFactory: null!,
                     logger: NullLogger<EffectService>.Instance, emblems: TestEmblems.Create()))
                 .BuildServiceProvider();

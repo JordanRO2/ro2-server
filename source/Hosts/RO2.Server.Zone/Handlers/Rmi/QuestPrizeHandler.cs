@@ -10,6 +10,7 @@ using RO2.Server.Zone.Services;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
 using RO2.Guilds.Domain;
+using RO2.Quests.Application;
 using RO2.Quests.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
@@ -240,9 +241,9 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
         
         
         
-        var cellsNeeded = RewardItemsOf(quest, rewardChoice).Count(r => r.Id != 0 && store.Items.ContainsKey(r.Id))
-            + (closesNow ? QuestAcceptHandler.ObjectiveCloseGrants(questId).Count(g => store.Items.ContainsKey(g.ItemId)) : 0)
-            + sideClosed.Sum(other => QuestAcceptHandler.ObjectiveCloseGrants(other).Count(g => store.Items.ContainsKey(g.ItemId)));
+        var closeGrantItemIds = (closesNow ? QuestAcceptHandler.ObjectiveCloseGrants(questId) : [])
+            .Concat(sideClosed.SelectMany(QuestAcceptHandler.ObjectiveCloseGrants)).Select(g => g.ItemId);
+        var cellsNeeded = services.GetRequiredService<QuestPrizeUseCase>().CellsNeeded(quest, rewardChoice, closeGrantItemIds);
         if (cellsNeeded > 0)
         {
             bag ??= await inventory.GetByCharacterAsync(player.CharacterId);
@@ -528,21 +529,20 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
         // reward choice says; types 2 and 5 pay only the slot at the 0-based index of the choice (slot i is
         // Reward_Item_ID(i+1)); any other type pays none. A choice row with no pick, or a pick past the slots or of an
         // empty slot, pays no item.
-        var slots = quest.RewardItemSlots();
-        var granted = RewardItemsOf(quest, rewardChoice);
-        if (quest.Reward_Type is RewardTypePickOne or RewardTypePickOneAlt && (rewardChoice >= (uint)slots.Length || slots[rewardChoice].Id == 0))
+        var frequency = QuestInfoExtraColumns.First(quest.Quest_ID)?.Quest_Frequency ?? 0;
+        var plan = await services.GetRequiredService<QuestPrizeUseCase>()
+            .DecideAsync(new QuestPrizeRequest(player.CharacterId, quest, rewardChoice, frequency));
+        if (plan.NoValidPick)
             logger.LogInformation("{Name} quest {QuestId}: choice reward with no valid pick ({Choice:X8}), no item paid",
                 player.Name, quest.Quest_ID, rewardChoice);
 
         
         
         var inventory = services.GetRequiredService<IInventoryRepository>();
-        var paidItemIds = new List<uint>(granted.Length);
-        foreach (var (rewardItemId, rewardCount) in granted)
+        var paidItemIds = new List<uint>(plan.Items.Count);
+        foreach (var (rewardItemId, count) in plan.Items)
         {
-            if (rewardItemId == 0 || !store.Items.ContainsKey(rewardItemId)) continue;
             paidItemIds.Add(rewardItemId);
-            var count = (int)Math.Max(1, rewardCount);
             var rewardItem = new InventoryItem
             {
                 CharacterId = player.CharacterId,
@@ -599,7 +599,7 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
         if (expRate != 0)
             logger.LogDebug("{Name} quest {QuestId}: Reward_EXP {Base} at EXP rate {Rate}/10000 -> {Exp}",
                 player.Name, quest.Quest_ID, quest.Reward_EXP, expRate, exp);
-        var money = QuestRewardRules.MoneyOf(quest);
+        var money = plan.Money;
 
         
         
@@ -607,11 +607,8 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
         
         
         
-        if (QuestInfoExtraColumns.First(quest.Quest_ID) is { Quest_Frequency: > 0 } repeatRow)
+        if (plan.CompletionCount is { } completions)
         {
-            var completedIds = await services.GetRequiredService<IQuestRepository>()
-                .GetCompletedQuestIdsAsync(player.CharacterId);
-            var completions = Math.Clamp(completedIds.Count(id => id == quest.Quest_ID), 1, (int)repeatRow.Quest_Frequency);
             var reActBody = QuestReActPackets.BuildUpdateQuestReAct2784(player.CharacterUid, quest.Quest_ID,
                 (ulong)DateTimeOffset.UtcNow.ToUnixTimeSeconds(), (byte)completions);
             await session.SendRmiAsync(ZoneS2COpcodes.NtyUpdateQuestReAct, writer => writer.WriteBytes(reActBody));
@@ -623,7 +620,7 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
         
         
         
-        var donation = await DonateToGuildAsync(session, player, exp, services);
+        var donation = await DonateToGuildAsync(session, player, plan, exp, services);
         ulong kept = exp - donation.Donated;
 
         
@@ -681,7 +678,7 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
         
         await KharaService.OnQuestCompletedAsync(session, player, quest.Quest_ID, services, logger);
 
-        await ApplyQuestJobChangeAsync(session, player, quest, services, logger);
+        await ApplyQuestJobChangeAsync(session, player, quest, plan.JobChange, services, logger);
     }
 
  /// <summary>
@@ -689,17 +686,11 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
  /// Returns the amount donated and any guild level change.
  /// </summary>
     internal static async Task<GuildDonation> DonateToGuildAsync(ProudSession session, PlayerState player,
-        ulong prizeExp, IServiceProvider services)
+        PrizePlan plan, ulong prizeExp, IServiceProvider services)
     {
-        if (prizeExp == 0) return default;
-        
-        
-        if (GuildService.Instance.GetByCharId(player.CharacterId) is not { } guild) return default;
-        var rate = GuildService.BribePercentOf(guild, player.CharacterId);
-        if (rate == 0) return default;
-
-        var bribe = GuildBribePackets.HuntingBribeAmount(prizeExp, rate);
+        var bribe = plan.DonationOf(prizeExp);
         if (bribe == 0) return default;
+        var guild = plan.DonationTarget!.Value.Guild;
 
         await session.SendRmiAsync(ZoneS2COpcodes.NfyGuildBribeHunting,
             writer => writer.WriteBytes(GuildBribePackets.BuildNfyGuildBribeHunting(bribe)));
@@ -715,22 +706,16 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
  /// <summary>Result of <see cref="DonateToGuildAsync"/>: the experience donated and any guild level change.</summary>
     internal readonly record struct GuildDonation(ulong Donated, Guild? LevelledGuild, byte NewGuildLevel);
 
- /// <summary>Quest_Info action type of a job change granted by a quest.</summary>
-    private const byte JobChangeAction = 19;
-
  /// <summary>
  /// Applies the job change that a quest pays. The skills are reset to the new job's starters, the job is
  /// set and saved, the stat sheet is recomputed and the client is notified.
  /// </summary>
     private static async Task ApplyQuestJobChangeAsync(ProudSession session, PlayerState player, QuestData quest,
-        IServiceProvider services, ILogger logger)
+        PrizeJobChange? jobChange, IServiceProvider services, ILogger logger)
     {
+        if (jobChange is not { } job) return;
+        var (jobId, change) = job;
         var store = services.GetRequiredService<GameDataStore>();
-        var rows = store.QuestRows.TryGetValue(quest.Quest_ID, out var all) ? all : new[] { quest };
-        var jobRow = rows.FirstOrDefault(r => r.Action_Type == JobChangeAction && r.Action_Value1 != 0);
-        if (jobRow is null) return;
-        var jobId = jobRow.Action_Value1;
-        var change = JobChangeSelection.Pick(jobId, quest.Quest_ID, store.JobChangeTable);
         if (change is null)
         {
             logger.LogWarning("{Name} quest {QuestId}: job change to {Job}, which is no JobChange_Table Job_ID; not applied",
