@@ -53,8 +53,8 @@ public class MailListHandler : ZoneRmiHandlerBase<MailListHandler>
         try
         {
             var mail = MailService.From(services, PlayerManager, Broadcast, Logger);
-            var inbox = await mail.GetInboxAsync(player.CharacterId);
-            foreach (var m in inbox)
+            var inbox = await mail.ListInboxAsync(player.CharacterId);
+            foreach (var row in inbox)
             {
                 // The stored kind: 0 for a player mail (kind 22 system mails have sender/title as string ids, which we
                 // never create), or the
@@ -63,7 +63,6 @@ public class MailListHandler : ZoneRmiHandlerBase<MailListHandler>
                 // is read by the client only for kinds 1..11: it is left 0 for player mail,
                 // including those with an item attached, and set on every auction row
                 // (kinds 2/7/10/11), where the client builds the text from kind + template.
-                var row = MailListProjection.Project(m);
                 records.Add(MailPackets.BuildListRecord146(
                     row.Uid, row.Kind, row.IsRead, row.SentAt, row.Gold, row.ItemUid, row.ItemTemplateId, row.SenderName, row.Title));
             }

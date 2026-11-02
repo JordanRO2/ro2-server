@@ -149,8 +149,12 @@ public static class Program
         services.AddSingleton<RO2.Quests.Application.IGuildDonationView, GuildDonationView>();
         services.AddScoped<RO2.Quests.Application.QuestPrizeUseCase>();
 
-        // Mail.Application: the 1393 send decisions (scoped, it holds the scoped ICharacterRepository).
+        // Mail.Application: the 1393 send decisions (scoped, it holds the scoped ICharacterRepository) and the 1457 / 1397 / 1398 / 1394 gold, read, delete and list use cases.
         services.AddScoped<RO2.Mails.Application.MailSendUseCase>();
+        services.AddScoped<RO2.Mails.Application.ClaimMailGoldUseCase>();
+        services.AddScoped<RO2.Mails.Application.ReadMailUseCase>();
+        services.AddScoped<RO2.Mails.Application.DeleteMailUseCase>();
+        services.AddScoped<RO2.Mails.Application.ListInboxUseCase>();
 
         // Instance stores over the singleton MongoDbContext (DB Phase 0, pass 2b). Stateless apart from their
         // collection handles, so singletons; handlers resolve them from the per-message scope, never into a field.

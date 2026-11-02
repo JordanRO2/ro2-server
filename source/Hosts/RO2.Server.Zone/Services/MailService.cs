@@ -43,15 +43,24 @@ public sealed class MailService
 
     private readonly IMailRepository _repo;
     private readonly MailSendUseCase _send;
+    private readonly ClaimMailGoldUseCase _claimGold;
+    private readonly ReadMailUseCase _read;
+    private readonly DeleteMailUseCase _delete;
+    private readonly ListInboxUseCase _list;
     private readonly PlayerStateManager _players;
     private readonly BroadcastService _broadcast;
     private readonly ILogger _log;
 
     public MailService(IMailRepository repo, ICharacterRepository characters, PlayerStateManager players, BroadcastService broadcast, ILogger log,
-        MailSendUseCase? send = null)
+        MailSendUseCase? send = null, ClaimMailGoldUseCase? claimGold = null, ReadMailUseCase? read = null,
+        DeleteMailUseCase? delete = null, ListInboxUseCase? list = null)
     {
         _repo = repo;
         _send = send ?? new MailSendUseCase(characters, repo);
+        _claimGold = claimGold ?? new ClaimMailGoldUseCase(repo);
+        _read = read ?? new ReadMailUseCase(repo);
+        _delete = delete ?? new DeleteMailUseCase(repo);
+        _list = list ?? new ListInboxUseCase(repo);
         _players = players;
         _broadcast = broadcast;
         _log = log;
@@ -61,10 +70,11 @@ public sealed class MailService
     public static MailService From(IServiceProvider services, PlayerStateManager players, BroadcastService broadcast, ILogger log)
     {
         return new MailService(services.GetRequiredService<IMailRepository>(), services.GetRequiredService<ICharacterRepository>(),
-            players, broadcast, log, services.GetService<MailSendUseCase>());
+            players, broadcast, log, services.GetService<MailSendUseCase>(), services.GetService<ClaimMailGoldUseCase>(),
+            services.GetService<ReadMailUseCase>(), services.GetService<DeleteMailUseCase>(), services.GetService<ListInboxUseCase>());
     }
 
-    public Task<IReadOnlyList<MailMessage>> GetInboxAsync(uint receiverCharId) => _repo.GetInboxAsync(receiverCharId);
+    public Task<IReadOnlyList<MailListRow>> ListInboxAsync(uint receiverCharId) => _list.ListAsync(receiverCharId);
 
     public Task<long> CountUnreadAsync(uint receiverCharId) => _repo.CountUnreadAsync(receiverCharId);
 
@@ -208,13 +218,7 @@ public sealed class MailService
     // ---------------------------------------------------------------------------------------------
 
     /// <summary>Marks the mail read and returns it (null if the caller does not own a mail with that uid).</summary>
-    public async Task<MailMessage?> ReadMailAsync(uint receiverCharId, ulong uid)
-    {
-        var mail = await _repo.GetByUidAsync(receiverCharId, uid);
-        if (mail == null) return null;
-        if (mail.MarkRead()) await _repo.ReplaceAsync(mail);
-        return mail;
-    }
+    public Task<MailMessage?> ReadMailAsync(uint receiverCharId, ulong uid) => _read.ReadAsync(receiverCharId, uid);
 
     /// <summary>
     /// What <see cref="ClaimItemAsync"/> did. <see cref="Placed"/> is the bag row the item is now in, as it
@@ -455,10 +459,9 @@ public sealed class MailService
     {
         // E-H7: one atomic flip of GoldClaimed (TryClaimGoldAsync) decides the winner, so no gate is needed:
         // of two concurrent 1457 for one mail exactly one gets the mail back and the amount to grant.
-        var claimed = await _repo.TryClaimGoldAsync(charId, uid);
-        if (claimed == null) return (await _repo.GetByUidAsync(charId, uid), 0);
-        await RemoveIfSpentAuctionMailAsync(claimed);
-        return (claimed, claimed.Gold);
+        var claim = await _claimGold.ClaimAsync(charId, uid, AuctionMailKind.IsAuction,
+            (m, ex) => _log.LogWarning(ex, "Removing claimed auction mail {Uid:X} of char {Char} failed", m.Uid, m.ReceiverCharId));
+        return (claim.Mail, claim.Granted);
     }
 
     /// <summary>
@@ -488,7 +491,7 @@ public sealed class MailService
         }
     }
 
-    public Task<bool> DeleteMailAsync(uint charId, ulong uid) => _repo.DeleteAsync(charId, uid);
+    public Task<bool> DeleteMailAsync(uint charId, ulong uid) => _delete.DeleteAsync(charId, uid);
 
     // ---------------------------------------------------------------------------------------------
     // Notify
