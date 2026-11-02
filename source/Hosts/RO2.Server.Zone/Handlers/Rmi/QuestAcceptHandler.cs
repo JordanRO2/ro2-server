@@ -173,7 +173,7 @@ public class QuestAcceptHandler : ZoneRmiHandlerBase<QuestAcceptHandler>
         
         
         
-        if (bag is not null && startItem != 0 && QuestPrizeHandler.CountInBag(bag, startItem) < 1)
+        if (bag is not null && startItem != 0 && QuestObjectiveItems.CountInBag(bag, startItem) < 1)
         {
             Logger.LogInformation("{Name} accept of quest {QuestId} refused: its start item {Item} is not in the bag",
                 player.Name, questId, startItem);
@@ -183,7 +183,7 @@ public class QuestAcceptHandler : ZoneRmiHandlerBase<QuestAcceptHandler>
         }
         
         
-        if (bag is not null && takes.Any(t => QuestPrizeHandler.CountInBag(bag, t.ItemId) < t.Count))
+        if (bag is not null && takes.Any(t => QuestObjectiveItems.CountInBag(bag, t.ItemId) < t.Count))
         {
             Logger.LogInformation("{Name} accept of quest {QuestId} refused: an accept item is not in the bag", player.Name, questId);
             await session.SendRmiAsync(ZoneS2COpcodes.OnQuestInsert, writer => writer.WriteBytes(
@@ -255,8 +255,8 @@ public class QuestAcceptHandler : ZoneRmiHandlerBase<QuestAcceptHandler>
         {
             var row = rows[i];
             if (row.Complete_Type != CollectObjective || row.Complete_Type_Value1 == 0) continue;
-            var needed = QuestPrizeHandler.ObjectiveItemCount(row);
-            held[i] = Math.Min(QuestPrizeHandler.CountInBag(bag, row.Complete_Type_Value1), needed);
+            var needed = QuestObjectiveItems.ObjectiveItemCount(row);
+            held[i] = Math.Min(QuestObjectiveItems.CountInBag(bag, row.Complete_Type_Value1), needed);
             if (held[i] == 0) continue;
             anyHeld = true;
             var tickBody = QuestItemObjectivePackets.BuildQuestInCompleteNotify2428(
@@ -272,7 +272,7 @@ public class QuestAcceptHandler : ZoneRmiHandlerBase<QuestAcceptHandler>
             if (rows[i].Complete_Type == 0) continue;
             objectiveRows++;
             if (rows[i].Complete_Type != CollectObjective || rows[i].Complete_Type_Value1 == 0
-                || held[i] < QuestPrizeHandler.ObjectiveItemCount(rows[i]))
+                || held[i] < QuestObjectiveItems.ObjectiveItemCount(rows[i]))
                 closed = false;
         }
 

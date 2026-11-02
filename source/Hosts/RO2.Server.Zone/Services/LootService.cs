@@ -886,8 +886,7 @@ public class LootService
                 if (i == 0)
                 {
                     killer.QuestKillProgress.TryGetValue(questId, out current);
-                    if (current >= needed) continue; 
-                    current = (ushort)(current + 1);
+                    if (!TryTickKill(current, needed, out current)) continue;
                     killer.QuestKillProgress[questId] = current;
                 }
                 else
@@ -895,8 +894,7 @@ public class LootService
                     lock (extra)
                     {
                         later!.Counts.TryGetValue(npcId, out current);
-                        if (current >= needed) continue;
-                        current = (ushort)(current + 1);
+                        if (!TryTickKill(current, needed, out current)) continue;
                         later.Counts[npcId] = current;
                     }
                 }
@@ -935,6 +933,18 @@ public class LootService
             if (closes && QuestInfoExtraColumns.IsRewardAuto(questId))
                 await PayRewardAutoKillQuestAsync(killerSession, killer, questId);
         }
+    }
+
+ /// <summary>
+ /// The pure kill-count decision for one objective row: a count already at its need is not ticked, otherwise it
+ /// goes up by one. The caller picks where the count lives (first row or later row) and sends the tick.
+ /// </summary>
+    internal static bool TryTickKill(ushort current, ushort needed, out ushort next)
+    {
+        next = current;
+        if (current >= needed) return false;
+        next = (ushort)(current + 1);
+        return true;
     }
 
  /// <summary>Stores a quest's kill counts on its in-progress quest document. A failed write is logged and the kill continues.</summary>

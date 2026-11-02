@@ -367,7 +367,7 @@ internal static class QuestProgressStore
                 case CollectObjective or DeliverObjective:
                     var need = NeededKills(row);
                     values[objective] = row.Complete_Type_Value1 != 0 && bag is not null
-                        ? (ushort)Math.Min(QuestPrizeHandler.CountInBag(bag, row.Complete_Type_Value1), need)
+                        ? (ushort)Math.Min(QuestObjectiveItems.CountInBag(bag, row.Complete_Type_Value1), need)
                         : (ushort)0;
                     ok = row.Complete_Type_Value1 != 0 && values[objective] >= need;
                     break;

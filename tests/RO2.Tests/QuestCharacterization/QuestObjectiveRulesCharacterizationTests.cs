@@ -100,7 +100,7 @@ public class QuestObjectiveRulesCharacterizationTests
     [InlineData(256u, 256)]                    // the turn-in side is uncapped: 256 items are taken for need 256
     [InlineData(70000u, 70000)]
     public void ObjectiveItemCount_IsUncappedValue2_ZeroReadAsOne(uint value2, int expected)
-        => Assert.Equal(expected, QuestPrizeHandler.ObjectiveItemCount(Q.Row(4, 5000, value2)));
+        => Assert.Equal(expected, QuestObjectiveItems.ObjectiveItemCount(Q.Row(4, 5000, value2)));
 
     [Theory]
     [InlineData(0u, (ushort)1)]
@@ -904,10 +904,10 @@ public class QuestObjectiveRulesCharacterizationTests
     [Fact]
     public void CountInBag_OnlyTheMainBag_ZeroCountReadsAsOne()
     {
-        Assert.Equal(0, QuestPrizeHandler.CountInBag([], 5000));
-        Assert.Equal(7, QuestPrizeHandler.CountInBag([Q.Stack(5000, 3), Q.Stack(5000, 4), Q.Stack(5001, 9)], 5000));
-        Assert.Equal(0, QuestPrizeHandler.CountInBag([Q.Stack(5000, 3, storageType: 1)], 5000));
-        Assert.Equal(1, QuestPrizeHandler.CountInBag([Q.Stack(5000, 0)], 5000));
-        Assert.Equal(1, QuestPrizeHandler.CountInBag([Q.Stack(5000, -4)], 5000));
+        Assert.Equal(0, QuestObjectiveItems.CountInBag([], 5000));
+        Assert.Equal(7, QuestObjectiveItems.CountInBag([Q.Stack(5000, 3), Q.Stack(5000, 4), Q.Stack(5001, 9)], 5000));
+        Assert.Equal(0, QuestObjectiveItems.CountInBag([Q.Stack(5000, 3, storageType: 1)], 5000));
+        Assert.Equal(1, QuestObjectiveItems.CountInBag([Q.Stack(5000, 0)], 5000));
+        Assert.Equal(1, QuestObjectiveItems.CountInBag([Q.Stack(5000, -4)], 5000));
     }
 }

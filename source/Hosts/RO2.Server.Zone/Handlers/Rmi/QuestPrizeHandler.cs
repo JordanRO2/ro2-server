@@ -189,7 +189,7 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
         if (completionTakes.Count > 0)
         {
             bag ??= await inventory.GetByCharacterAsync(player.CharacterId);
-            if (completionTakes.Any(t => CountInBag(bag, t.ItemId) < t.Count))
+            if (completionTakes.Any(t => QuestObjectiveItems.CountInBag(bag, t.ItemId) < t.Count))
             {
                 player.ActiveQuests.Add(questId);
                 Logger.LogInformation("{Name} turned in quest {QuestId} without the item it takes; refused (21708)",
@@ -247,7 +247,7 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
         {
             bag ??= await inventory.GetByCharacterAsync(player.CharacterId);
             var emptied = quest.Complete_Type is QuestProgressStore.CollectObjective or QuestProgressStore.DeliverObjective && quest.Complete_Type_Value1 != 0
-                ? StacksEmptiedBy(bag, quest.Complete_Type_Value1, ObjectiveItemCount(quest))
+                ? StacksEmptiedBy(bag, quest.Complete_Type_Value1, QuestObjectiveItems.ObjectiveItemCount(quest))
                 : new HashSet<ulong>();
             if (BagCapacity.FreeCells(bag.Where(i => !emptied.Contains(i.Id)), store.Items).Count < cellsNeeded)
             {
@@ -311,7 +311,7 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
         
         if (quest.Complete_Type is QuestProgressStore.CollectObjective or QuestProgressStore.DeliverObjective && quest.Complete_Type_Value1 != 0 && bag is not null)
             await RemoveFromBagAsync(session, player, inventory, bag, quest.Complete_Type_Value1,
-                ObjectiveItemCount(quest), Logger, services);
+                QuestObjectiveItems.ObjectiveItemCount(quest), Logger, services);
 
         var questRepo = services.GetRequiredService<IQuestRepository>();
         await questRepo.CompleteQuestAsync(player.CharacterId, questId);
@@ -388,7 +388,7 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
                 return (true, null);
             case QuestProgressStore.CollectObjective or QuestProgressStore.DeliverObjective when quest.Complete_Type_Value1 != 0:
                 var bag = await inventory.GetByCharacterAsync(player.CharacterId);
-                return (CountInBag(bag, quest.Complete_Type_Value1) >= ObjectiveItemCount(quest), bag);
+                return (QuestObjectiveItems.CountInBag(bag, quest.Complete_Type_Value1) >= QuestObjectiveItems.ObjectiveItemCount(quest), bag);
             default:
                 return (true, null);
         }
@@ -398,9 +398,6 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
  /// Returns the objective total as the progress counter stores it, capped at 65,535.
  /// </summary>
     private static ushort ObjectiveTotal(QuestData quest) => QuestProgressStore.NeededKills(quest);
-
- /// <summary>Returns how many objective items a collect or deliver turn-in takes.</summary>
-    internal static int ObjectiveItemCount(QuestData quest) => (int)Math.Max(1u, quest.Complete_Type_Value2);
 
  /// <summary>
  /// Returns whether this session has already sent the objective-closed notification for the quest. Quests
@@ -459,10 +456,6 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
 
     private static bool PaidThisLogin(PlayerState player, uint questId)
         => PaidQuests.TryGetValue(player, out var paid) && paid.ContainsKey(questId);
-
- /// <summary>Returns how many of <paramref name="itemId"/> the bag holds. A stack without a count counts as one item.</summary>
-    internal static long CountInBag(IReadOnlyList<InventoryItem> bag, uint itemId) =>
-        bag.Where(i => i.StorageType == StorageBag && i.ItemId == itemId).Sum(i => (long)Math.Max(1, i.Count));
 
  /// <summary>
  /// Removes up to <paramref name="count"/> of <paramref name="itemId"/> from the bag, stack by stack, and

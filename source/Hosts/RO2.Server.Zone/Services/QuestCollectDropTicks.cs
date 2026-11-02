@@ -35,7 +35,7 @@ internal static class QuestCollectDropTicks
     private const byte DeliverObjective = 5;
 
  /// <summary>One Complete_Type-4 or -5 row: its quest, its index among the quest's Quest_Info rows, and its need
- /// (<see cref="QuestPrizeHandler.ObjectiveItemCount"/>).</summary>
+ /// (<see cref="QuestObjectiveItems.ObjectiveItemCount"/>).</summary>
     internal readonly record struct CollectRow(uint QuestId, int RowIndex, int Need);
 
  /// <summary>One 2428 to send.</summary>
@@ -59,7 +59,7 @@ internal static class QuestCollectDropTicks
                 if (row.Complete_Type is not (CollectObjective or DeliverObjective) || row.Complete_Type_Value1 == 0) continue;
                 if (!byItem.TryGetValue(row.Complete_Type_Value1, out var list))
                     byItem[row.Complete_Type_Value1] = list = new List<CollectRow>();
-                list.Add(new CollectRow(questId, i, QuestPrizeHandler.ObjectiveItemCount(row)));
+                list.Add(new CollectRow(questId, i, QuestObjectiveItems.ObjectiveItemCount(row)));
             }
         }
         return byItem.ToDictionary(kv => kv.Key, kv => kv.Value.ToArray());
@@ -109,7 +109,7 @@ internal static class QuestCollectDropTicks
         if (!rows.Any(r => held.Contains(r.QuestId))) return;
 
         var bag = await services.GetRequiredService<IInventoryRepository>().GetByCharacterAsync(player.CharacterId);
-        var inBag = QuestPrizeHandler.CountInBag(bag, itemId);
+        var inBag = QuestObjectiveItems.CountInBag(bag, itemId);
         foreach (var tick in PlanTicks(rows, held, inBag))
         {
             LowerFirstRowCounter(player, tick);
