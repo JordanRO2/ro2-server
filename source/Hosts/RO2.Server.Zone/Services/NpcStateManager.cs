@@ -125,14 +125,18 @@ public class NpcRuntimeState
     /// from the game-loop thread (NpcCombatService), so all access is serialised on this lock.</summary>
     internal readonly Lock ThreatLock = new();
 
+    /// <summary>The threat rules and state (rows + current target); every access holds <see cref="ThreatLock"/>.
+    /// The members below read and write it so the old object-initializer / test construction keeps working.</summary>
+    internal readonly ThreatTable ThreatTable = new();
+
     /// <summary>attackerHandle -> accumulated threat row. Keyed by the attacker's actor handle
     /// (a PC handle, low byte 0x11). Cleared on death and respawn.</summary>
-    internal readonly Dictionary<uint, NpcStateManager.ThreatRow> Threat = new();
+    internal Dictionary<uint, ThreatRow> Threat => ThreatTable.Rows;
 
     /// <summary>The attacker the monster is currently on: the highest-threat entry unless the previous
     /// target is within 10% of it (see NpcStateManager.SelectAggroTarget), or 0 when the threat table is
     /// empty. This is the value that goes out as 2630/2629 body+4.</summary>
-    public uint AggroTargetHandle { get; internal set; }
+    public uint AggroTargetHandle { get => ThreatTable.AggroTargetHandle; internal set => ThreatTable.AggroTargetHandle = value; }
 
     // ---- AI: proximity aggression + leash (server-side, custom; see NpcAggression) ------------------
     //
@@ -229,16 +233,6 @@ public class NpcStateManager
     private static readonly TimeSpan ReturnInvulnDuration = TimeSpan.FromSeconds(3);
 
     // ---- Threat / aggro (ThreatAggro system) ------------------------------------------------
-
-    /// <summary>One row of a monster's threat table: an attacker, the name shown on the aggro
-    /// meter, and the accumulated threat. Threat is banked as a <see cref="long"/> so a long fight
-    /// never overflows; it is clamped to <see cref="uint"/> only when written to the wire.</summary>
-    public sealed class ThreatRow
-    {
-        public uint AttackerHandle;
-        public string Name = string.Empty;
-        public long Threat;
-    }
 
     /// <summary>
     /// A queued 2630 NfyAggroChanged: one positive threat bank on an NPC (every hit with an attacker, see
@@ -511,95 +505,26 @@ public class NpcStateManager
     private bool AddThreatCore(NpcRuntimeState state, uint attackerHandle, string? attackerName,
         long amount)
     {
-        uint newTarget, oldTarget;
-        long newThreat;
-        bool isNew;
-
+        ThreatAdded added;
         lock (state.ThreatLock)
-        {
-            oldTarget = state.AggroTargetHandle;
-
-            if (!state.Threat.TryGetValue(attackerHandle, out var row))
-            {
-                row = new ThreatRow { AttackerHandle = attackerHandle, Name = attackerName ?? string.Empty };
-                state.Threat[attackerHandle] = row;
-                isNew = true;
-            }
-            else
-            {
-                isNew = false;
-                if (!string.IsNullOrEmpty(attackerName))
-                    row.Name = attackerName;   // keep the freshest name for the meter
-            }
-
-            row.Threat += amount;
-            newThreat = row.Threat;
-
-            // The monster keeps its target until another row passes it by more than 10%.
-            newTarget = SelectAggroTarget(state.Threat, oldTarget);
-            state.AggroTargetHandle = newTarget;
-        }
+            added = state.ThreatTable.AddThreat(attackerHandle, attackerName, amount);   // keeps the target until a row passes it by 10%
 
         _aggroChanges.Enqueue(new AggroChange(
-            state.EntityOid, state.MapId, newTarget, attackerHandle,
-            attackerName ?? string.Empty, (uint)Math.Clamp(newThreat, 0, uint.MaxValue)));
-        return isNew || newTarget != oldTarget;
+            state.EntityOid, state.MapId, added.NewTarget, attackerHandle,
+            attackerName ?? string.Empty, (uint)Math.Clamp(added.NewThreat, 0, uint.MaxValue)));
+        return added.Changed;
     }
 
-    /// <summary>A challenger takes the target only above <c>TargetSwitchNumerator / TargetSwitchDenominator</c>
-    /// (110%) of the current target's threat. See <see cref="SelectAggroTarget"/>.</summary>
-    private const long TargetSwitchNumerator = 11;
-
-    /// <inheritdoc cref="TargetSwitchNumerator"/>
-    private const long TargetSwitchDenominator = 10;
-
-    /// <summary>
-    /// The monster's target after a threat change: the current target while it is on the table and no
-    /// other row has more than 110% of its threat, otherwise the top row (0 for an empty table).
-    /// </summary>
-    /// <remarks>
-    /// <para>
-    /// A target that is still on the table is kept: when another row's threat passes the target's by less than
-    /// 10% the target stays, and it moves once a row passes it by more than 10%. The same rule is
-    /// NpcCombatService's (DropFromThreatTablesAsync), which already keeps the target when another row leaves
-    /// the table. Making the top row the target on every add would let two players trading the lead by a
-    /// point flip the monster, and its 2630/2643, back and forth. The line is taken strictly (a challenger at
-    /// exactly 110% does not switch).
-    /// </para>
-    /// <para>
-    /// Caller holds <see cref="NpcRuntimeState.ThreatLock"/>. Ties for the top row go to the row met first.
-    /// </para>
-    /// </remarks>
+    /// <summary>The monster's target after a threat change (110% hysteresis, strict, ties to the first row met);
+    /// the rule is <see cref="ThreatTable.SelectAggroTarget"/>. Caller holds <see cref="NpcRuntimeState.ThreatLock"/>.</summary>
     internal static uint SelectAggroTarget(IReadOnlyDictionary<uint, ThreatRow> table, uint currentTarget)
-    {
-        uint best = 0;
-        long bestThreat = long.MinValue;
-        foreach (var kv in table)
-        {
-            if (kv.Value.Threat > bestThreat)
-            {
-                bestThreat = kv.Value.Threat;
-                best = kv.Key;
-            }
-        }
-        if (best == 0)
-            return 0;
-
-        if (currentTarget != 0 && currentTarget != best && table.TryGetValue(currentTarget, out var current)
-            && bestThreat * TargetSwitchDenominator <= current.Threat * TargetSwitchNumerator)
-            return currentTarget;
-
-        return best;
-    }
+        => ThreatTable.SelectAggroTarget(table, currentTarget);
 
     /// <summary>Empties a monster's threat table and drops its current target.</summary>
     private static void ClearThreat(NpcRuntimeState state)
     {
         lock (state.ThreatLock)
-        {
-            state.Threat.Clear();
-            state.AggroTargetHandle = 0;
-        }
+            state.ThreatTable.Clear();
     }
 
     /// <summary>
@@ -624,11 +549,7 @@ public class NpcStateManager
                 return false;
             bool hadThreat;
             lock (state.ThreatLock)
-            {
-                hadThreat = state.AggroTargetHandle != 0 || state.Threat.Count > 0;
-                state.Threat.Clear();
-                state.AggroTargetHandle = 0;
-            }
+                hadThreat = state.ThreatTable.Clear();
             bool changed = hadThreat || state.Hp < state.MaxHp;
             state.Vitals = state.Vitals.RestoreHp();
             state.ReturningUntil = DateTime.UtcNow + ReturnInvulnDuration;   // invulnerable while it runs home

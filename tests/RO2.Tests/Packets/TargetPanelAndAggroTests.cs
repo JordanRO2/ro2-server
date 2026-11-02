@@ -2,6 +2,7 @@ using System.Buffers.Binary;
 using RO2.Domain.Entities;
 using RO2.GameData;
 using RO2.Server.Zone.Handlers.Rmi;
+using RO2.Monster.Domain;
 using RO2.Server.Zone.Services;
 using Xunit;
 using RO2.Inventory.Domain;
@@ -84,9 +85,9 @@ public class TargetPanelAndAggroTests
             "01116c090a0201074100720063006b0068006f006e0001000000");
 
         var npc = new NpcRuntimeState { EntityOid = 0x3F2F6F13u };
-        npc.Threat[0x0A096C11u] = new NpcStateManager.ThreatRow { AttackerHandle = 0x0A096C11u, Name = "Arckhon", Threat = 1 };
-        npc.Threat[0x0A096D11u] = new NpcStateManager.ThreatRow { AttackerHandle = 0x0A096D11u, Name = "Namakuro", Threat = 590060 };
-        npc.Threat[0x0A096B11u] = new NpcStateManager.ThreatRow { AttackerHandle = 0x0A096B11u, Name = "TsuyoiFoka", Threat = 633320 };
+        npc.Threat[0x0A096C11u] = new ThreatRow { AttackerHandle = 0x0A096C11u, Name = "Arckhon", Threat = 1 };
+        npc.Threat[0x0A096D11u] = new ThreatRow { AttackerHandle = 0x0A096D11u, Name = "Namakuro", Threat = 590060 };
+        npc.Threat[0x0A096B11u] = new ThreatRow { AttackerHandle = 0x0A096B11u, Name = "TsuyoiFoka", Threat = 633320 };
         npc.AggroTargetHandle = 0x0A096D11u;
 
         var entries = OpenAggroListHandler.SnapshotThreat(npc, out var currentTarget);

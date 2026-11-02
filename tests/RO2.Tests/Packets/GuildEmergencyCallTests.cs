@@ -1,6 +1,7 @@
 using System.Text.Json;
 using RO2.GameData.Tables;
 using RO2.Server.Zone.Handlers.Rmi;
+using RO2.Monster.Domain;
 using RO2.Server.Zone.Services;
 using Xunit;
 
@@ -249,8 +250,8 @@ public class CoolTimeClear2817Tests
 /// <summary>Gate for the monster's target choice: a target is kept until another row passes it by more than 10%.</summary>
 public class ThreatTargetHysteresisTests
 {
-    private static Dictionary<uint, NpcStateManager.ThreatRow> Table(params (uint Handle, long Threat)[] rows)
-        => rows.ToDictionary(r => r.Handle, r => new NpcStateManager.ThreatRow { AttackerHandle = r.Handle, Threat = r.Threat });
+    private static Dictionary<uint, ThreatRow> Table(params (uint Handle, long Threat)[] rows)
+        => rows.ToDictionary(r => r.Handle, r => new ThreatRow { AttackerHandle = r.Handle, Threat = r.Threat });
 
     [Fact]
     public void Target_IsKeptUpTo110Percent()

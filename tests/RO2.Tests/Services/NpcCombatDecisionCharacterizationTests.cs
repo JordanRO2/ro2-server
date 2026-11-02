@@ -2,6 +2,7 @@ using System.Reflection;
 using Microsoft.Extensions.Logging.Abstractions;
 using RO2.GameData;
 using RO2.Server.Zone.Models;
+using RO2.Monster.Domain;
 using RO2.Server.Zone.Services;
 using Xunit;
 
@@ -64,7 +65,7 @@ public class NpcCombatDecisionCharacterizationTests
         => (uint)ReselectMi.Invoke(c, [npc])!;
 
     private static void Seat(NpcRuntimeState npc, PlayerState p, long threat)
-        => npc.Threat[p.EntityId] = new NpcStateManager.ThreatRow { AttackerHandle = p.EntityId, Threat = threat };
+        => npc.Threat[p.EntityId] = new ThreatRow { AttackerHandle = p.EntityId, Threat = threat };
 
     // ---- InNpcReach -------------------------------------------------------------------------------
 
@@ -309,7 +310,7 @@ public class NpcCombatDecisionCharacterizationTests
         Assert.Single(npc.Threat);
 
         // A handle with no registered player (logged out) is skipped too.
-        npc.Threat[PlayerStateManager.BuildActorHandle(77)] = new NpcStateManager.ThreatRow { Threat = 100 };
+        npc.Threat[PlayerStateManager.BuildActorHandle(77)] = new ThreatRow { Threat = 100 };
         Assert.Equal(0u, Reselect(c, npc));
     }
 
@@ -331,7 +332,7 @@ public class NpcCombatDecisionCharacterizationTests
         var squatter = Pc(players, 4, 0f, 0f);
         squatter.EntityId = 0xABCD;       // slot 4 now holds an EntityId that differs from the key below
         Seat(npc, squatter, 9);           // key 0xABCD -> session 0xAB, unregistered
-        npc.Threat[PlayerStateManager.BuildActorHandle(4)] = new NpcStateManager.ThreatRow { Threat = 9 };   // slot 4, EntityId mismatch
+        npc.Threat[PlayerStateManager.BuildActorHandle(4)] = new ThreatRow { Threat = 9 };   // slot 4, EntityId mismatch
         Assert.Equal(0u, Reselect(c, npc));
     }
 }

@@ -840,26 +840,14 @@ public class NpcCombatService : ITickable
             uint target;
             lock (npc.ThreatLock)
             {
-                held = npc.Threat.Remove(victim.EntityId);
+                held = npc.ThreatTable.Remove(victim.EntityId);
                 // Only losing the TARGET re-selects. A monster keeps its current target while that row
                 // is on the table (it moves only when another row passes it by more than 10%). So removing someone else must not
                 // move the target. (NpcStateManager.AddThreatCore does not apply that 10% margin: it
                 // makes the top row the target on every add, so the target is the top row and removing
                 // another row leaves it the top row anyway.)
                 if (held && npc.AggroTargetHandle == victim.EntityId)
-                {
-                    uint best = 0;
-                    long bestThreat = long.MinValue;
-                    foreach (var kv in npc.Threat)
-                    {
-                        if (kv.Value.Threat > bestThreat)
-                        {
-                            bestThreat = kv.Value.Threat;
-                            best = kv.Key;
-                        }
-                    }
-                    npc.AggroTargetHandle = best;
-                }
+                    npc.ThreatTable.ReselectTop();
                 target = npc.AggroTargetHandle;
             }
 
@@ -1051,23 +1039,11 @@ public class NpcCombatService : ITickable
     private uint ReselectLiveTarget(NpcRuntimeState npc)
     {
         lock (npc.ThreatLock)
-        {
-            uint best = 0;
-            long bestThreat = long.MinValue;
-            foreach (var kv in npc.Threat)
+            return npc.ThreatTable.ReselectTop(handle =>
             {
-                var p = ResolvePlayer(kv.Key);
-                if (p is null || p.IsDead || p.MapId != npc.MapId)
-                    continue;
-                if (kv.Value.Threat > bestThreat)
-                {
-                    bestThreat = kv.Value.Threat;
-                    best = kv.Key;
-                }
-            }
-            npc.AggroTargetHandle = best;
-            return best;
-        }
+                var p = ResolvePlayer(handle);
+                return p is not null && !p.IsDead && p.MapId == npc.MapId;
+            });
     }
 
     /// <summary>
