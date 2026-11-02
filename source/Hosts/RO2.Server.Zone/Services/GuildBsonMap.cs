@@ -16,12 +16,21 @@ public static class GuildBsonMap
     private static readonly Lock s_gate = new();
     private static bool s_registered;
 
-    /// <summary>Registers the map once; safe to call more than once.</summary>
+    // Registers our Guild class map at Zone-assembly load, before any code can serialize a Guild and trigger a
+    // default auto-map (which would keep the Gate lock and map Id, not _id). Must win the race, hence eager.
+    [ModuleInitializer]
+    internal static void Init() => Register();
+
+    /// <summary>Registers the map once; safe to call more than once and after a default map may already exist.</summary>
     public static void Register()
     {
         lock (s_gate)
         {
             if (s_registered) return;
+            s_registered = true;
+            // Another map may already be registered if a Guild was serialized before this ran. Do not re-register
+            // (RegisterClassMap throws on a duplicate key); the eager ModuleInitializer makes ours the one that lands.
+            if (BsonClassMap.IsClassMapRegistered(typeof(Guild))) return;
             RuntimeHelpers.RunClassConstructor(typeof(MongoDbContext).TypeHandle);
             BsonClassMap.RegisterClassMap<Guild>(cm =>
             {
@@ -30,7 +39,6 @@ public static class GuildBsonMap
                 cm.MapIdMember(g => g.Id);
                 cm.UnmapMember(g => g.Gate);
             });
-            s_registered = true;
         }
     }
 }
