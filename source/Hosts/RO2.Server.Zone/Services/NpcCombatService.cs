@@ -997,39 +997,19 @@ public class NpcCombatService : ITickable
         return MathF.Sqrt(dx * dx + dy * dy) <= reach;
     }
 
-    /// <summary>Sight radius for an aggressive monster whose NPCInfo row carries no Reaction_Bound: the modal hostile
-    /// Reaction_Bound. It is the radius the server uses for acquisition.</summary>
-    private const float DefaultSightRadius = 9f;
-
     /// <summary>Threat seated when a monster acquires a player by proximity: one point, enough to make that
     /// player its target. A real hit then banks its threat on top (<see cref="NpcStateManager.AddThreat"/>).</summary>
     private const long AcquireThreat = 1;
 
     /// <summary>
     /// The nearest living player on <paramref name="onMap"/> that <paramref name="npc"/> may acquire: inside its
-    /// sight radius (NPCInfo.Reaction_Bound, else <see cref="DefaultSightRadius"/>) and allowed by its aggression
+    /// sight radius (NPCInfo.Reaction_Bound, else <see cref="AggroAcquisition.DefaultSightRadius"/>) and allowed by its aggression
     /// mode (<see cref="NpcAggression.Acquires"/> — always, or while the player is not too far above it in level).
     /// Null when none qualifies.
     /// </summary>
     private PlayerState? AcquireNearest(NpcRuntimeState npc, PlayerState[] onMap)
-    {
-        float sight = npc.SightRadius > 0f ? npc.SightRadius : DefaultSightRadius;
-        float best = sight * sight;
-        PlayerState? nearest = null;
-        foreach (var p in onMap)
-        {
-            if (!NpcAggression.Acquires(npc.Aggression, npc.AggressionLevelGap, npc.Level, p.Level))
-                continue;
-            float dx = p.X - npc.PosX, dy = p.Y - npc.PosY;
-            float d2 = dx * dx + dy * dy;
-            if (float.IsFinite(d2) && d2 <= best)
-            {
-                best = d2;
-                nearest = p;
-            }
-        }
-        return nearest;
-    }
+        => AggroAcquisition.Nearest(npc.Ai, npc.Level, npc.PosX, npc.PosY, onMap,
+            static p => new AggroCandidate(p.X, p.Y, p.Level));
 
     /// <summary>
     /// Re-points <paramref name="npc"/> at the highest-threat attacker that is still a live player on its map,
