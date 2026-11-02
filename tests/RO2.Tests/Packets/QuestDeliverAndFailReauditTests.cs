@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.GameData;
+using RO2.Quests.Domain;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Handlers.Rmi;
@@ -49,11 +50,11 @@ public class QuestDeliverAndFailReauditTests
     {
         var player = new PlayerState();
         player.QuestKillProgress[911000440] = 300;
-        QuestCollectDropTicks.LowerFirstRowCounter(player, new QuestCollectDropTicks.Tick(911000440, 0, 280));
+        QuestCollectDropTicks.LowerFirstRowCounter(player, new CollectDropTickPlanner.Tick(911000440, 0, 280));
         Assert.Equal((ushort)280, player.QuestKillProgress[911000440]);
 
         player.QuestKillProgress[111010090] = 1;
-        QuestCollectDropTicks.LowerFirstRowCounter(player, new QuestCollectDropTicks.Tick(111010090, 0, 0));
+        QuestCollectDropTicks.LowerFirstRowCounter(player, new CollectDropTickPlanner.Tick(111010090, 0, 0));
         Assert.Equal((ushort)0, player.QuestKillProgress[111010090]);
     }
 

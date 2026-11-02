@@ -449,9 +449,9 @@ public class QuestObjectiveRulesCharacterizationTests
             [10] = [Q.Row(4, 100, 3, questId: 10), Q.Row(5, 100, 0, questId: 10), Q.Row(6, 100, 1, questId: 10), Q.Row(4, 0, 5, questId: 10), Q.Row(4, 101, 5, questId: 10)],
         };
         Assert.Equal(
-            new[] { new QuestCollectDropTicks.CollectRow(20, 1, 300), new QuestCollectDropTicks.CollectRow(10, 0, 3), new QuestCollectDropTicks.CollectRow(10, 1, 1) },
+            new[] { new CollectDropTickPlanner.CollectRow(20, 1, 300), new CollectDropTickPlanner.CollectRow(10, 0, 3), new CollectDropTickPlanner.CollectRow(10, 1, 1) },
             QuestCollectDropTicks.RowsCollecting(rows, 100));
-        Assert.Equal(new[] { new QuestCollectDropTicks.CollectRow(10, 4, 5) }, QuestCollectDropTicks.RowsCollecting(rows, 101));
+        Assert.Equal(new[] { new CollectDropTickPlanner.CollectRow(10, 4, 5) }, QuestCollectDropTicks.RowsCollecting(rows, 101));
         Assert.Empty(QuestCollectDropTicks.RowsCollecting(rows, 0));        // a row with Value1 0 is never indexed
         Assert.Empty(QuestCollectDropTicks.RowsCollecting(rows, 555));
     }
@@ -461,16 +461,16 @@ public class QuestObjectiveRulesCharacterizationTests
     {
         var rows = new[]
         {
-            new QuestCollectDropTicks.CollectRow(20, 1, 5), new QuestCollectDropTicks.CollectRow(10, 3, 2),
-            new QuestCollectDropTicks.CollectRow(10, 0, 300), new QuestCollectDropTicks.CollectRow(30, 0, 70000),
+            new CollectDropTickPlanner.CollectRow(20, 1, 5), new CollectDropTickPlanner.CollectRow(10, 3, 2),
+            new CollectDropTickPlanner.CollectRow(10, 0, 300), new CollectDropTickPlanner.CollectRow(30, 0, 70000),
         };
         Assert.Equal(
-            new[] { new QuestCollectDropTicks.Tick(10, 0, 4), new QuestCollectDropTicks.Tick(10, 3, 2), new QuestCollectDropTicks.Tick(20, 1, 4) },
+            new[] { new CollectDropTickPlanner.Tick(10, 0, 4), new CollectDropTickPlanner.Tick(10, 3, 2), new CollectDropTickPlanner.Tick(20, 1, 4) },
             QuestCollectDropTicks.PlanTicks(rows, new uint[] { 20, 10 }, heldInBag: 4));
-        Assert.Equal(new[] { new QuestCollectDropTicks.Tick(20, 1, 0) }, QuestCollectDropTicks.PlanTicks(rows, new uint[] { 20 }, 0));
-        Assert.Equal(new[] { new QuestCollectDropTicks.Tick(20, 1, 0) }, QuestCollectDropTicks.PlanTicks(rows, new uint[] { 20 }, -5));   // negative bag reads as 0
-        Assert.Equal(new[] { new QuestCollectDropTicks.Tick(30, 0, 65535) }, QuestCollectDropTicks.PlanTicks(rows, new uint[] { 30 }, 70000));
-        Assert.Equal(new[] { new QuestCollectDropTicks.Tick(10, 0, 256) }, QuestCollectDropTicks.PlanTicks([rows[2]], new uint[] { 10 }, 256)); // NOT byte capped, unlike the live collect tick
+        Assert.Equal(new[] { new CollectDropTickPlanner.Tick(20, 1, 0) }, QuestCollectDropTicks.PlanTicks(rows, new uint[] { 20 }, 0));
+        Assert.Equal(new[] { new CollectDropTickPlanner.Tick(20, 1, 0) }, QuestCollectDropTicks.PlanTicks(rows, new uint[] { 20 }, -5));   // negative bag reads as 0
+        Assert.Equal(new[] { new CollectDropTickPlanner.Tick(30, 0, 65535) }, QuestCollectDropTicks.PlanTicks(rows, new uint[] { 30 }, 70000));
+        Assert.Equal(new[] { new CollectDropTickPlanner.Tick(10, 0, 256) }, QuestCollectDropTicks.PlanTicks([rows[2]], new uint[] { 10 }, 256)); // NOT byte capped, unlike the live collect tick
         Assert.Empty(QuestCollectDropTicks.PlanTicks(rows, new uint[] { 99 }, 4));
         Assert.Empty(QuestCollectDropTicks.PlanTicks([], new uint[] { 10 }, 4));
     }
@@ -480,15 +480,15 @@ public class QuestObjectiveRulesCharacterizationTests
     {
         var player = new PlayerState();
         player.QuestKillProgress[Qid] = 5;
-        QuestCollectDropTicks.LowerFirstRowCounter(player, new QuestCollectDropTicks.Tick(Qid, 1, 0));      // row 1: untouched
+        QuestCollectDropTicks.LowerFirstRowCounter(player, new CollectDropTickPlanner.Tick(Qid, 1, 0));      // row 1: untouched
         Assert.Equal((ushort)5, player.QuestKillProgress[Qid]);
-        QuestCollectDropTicks.LowerFirstRowCounter(player, new QuestCollectDropTicks.Tick(Qid, 0, 5));      // equal: untouched
+        QuestCollectDropTicks.LowerFirstRowCounter(player, new CollectDropTickPlanner.Tick(Qid, 0, 5));      // equal: untouched
         Assert.Equal((ushort)5, player.QuestKillProgress[Qid]);
-        QuestCollectDropTicks.LowerFirstRowCounter(player, new QuestCollectDropTicks.Tick(Qid, 0, 9));      // higher: never raised
+        QuestCollectDropTicks.LowerFirstRowCounter(player, new CollectDropTickPlanner.Tick(Qid, 0, 9));      // higher: never raised
         Assert.Equal((ushort)5, player.QuestKillProgress[Qid]);
-        QuestCollectDropTicks.LowerFirstRowCounter(player, new QuestCollectDropTicks.Tick(Qid, 0, 2));
+        QuestCollectDropTicks.LowerFirstRowCounter(player, new CollectDropTickPlanner.Tick(Qid, 0, 2));
         Assert.Equal((ushort)2, player.QuestKillProgress[Qid]);
-        QuestCollectDropTicks.LowerFirstRowCounter(player, new QuestCollectDropTicks.Tick(Qid + 1, 0, 0)); // no counter: none created
+        QuestCollectDropTicks.LowerFirstRowCounter(player, new CollectDropTickPlanner.Tick(Qid + 1, 0, 0)); // no counter: none created
         Assert.False(player.QuestKillProgress.ContainsKey(Qid + 1));
     }
 

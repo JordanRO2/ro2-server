@@ -1,5 +1,6 @@
 using System.Text.Json;
 using RO2.GameData;
+using RO2.Quests.Domain;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using Xunit;
@@ -211,17 +212,17 @@ public class QuestCollectDropTicksTests
     {
         var player = new PlayerState();
         player.QuestKillProgress[911000440] = 50;
-        QuestCollectDropTicks.LowerFirstRowCounter(player, new QuestCollectDropTicks.Tick(911000440, 0, 0));
+        QuestCollectDropTicks.LowerFirstRowCounter(player, new CollectDropTickPlanner.Tick(911000440, 0, 0));
         Assert.Equal((byte)0, player.QuestKillProgress[911000440]);
 
-        QuestCollectDropTicks.LowerFirstRowCounter(player, new QuestCollectDropTicks.Tick(911000440, 0, 20));
+        QuestCollectDropTicks.LowerFirstRowCounter(player, new CollectDropTickPlanner.Tick(911000440, 0, 20));
         Assert.Equal((byte)0, player.QuestKillProgress[911000440]);
 
-        QuestCollectDropTicks.LowerFirstRowCounter(player, new QuestCollectDropTicks.Tick(911000450, 0, 0));
+        QuestCollectDropTicks.LowerFirstRowCounter(player, new CollectDropTickPlanner.Tick(911000450, 0, 0));
         Assert.False(player.QuestKillProgress.ContainsKey(911000450));
 
         player.QuestKillProgress[613000010] = 8;
-        QuestCollectDropTicks.LowerFirstRowCounter(player, new QuestCollectDropTicks.Tick(613000010, 1, 0));
+        QuestCollectDropTicks.LowerFirstRowCounter(player, new CollectDropTickPlanner.Tick(613000010, 1, 0));
         Assert.Equal((byte)8, player.QuestKillProgress[613000010]);
     }
 }

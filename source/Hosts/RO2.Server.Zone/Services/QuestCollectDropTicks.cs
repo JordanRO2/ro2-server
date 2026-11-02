@@ -8,6 +8,7 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Models;
 using RO2.Inventory.Domain;
+using RO2.Quests.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -27,72 +28,21 @@ namespace RO2.Server.Zone.Services;
 /// </remarks>
 internal static class QuestCollectDropTicks
 {
- /// <summary>Quest_Info Complete_Type of a collect objective (Value1 = item, Value2 = how many).</summary>
-    private const byte CollectObjective = 4;
-
- /// <summary>Quest_Info Complete_Type of a deliver objective (Value1 = item handed over, Value2 = how many).
- /// Its item is ticked like a collect item.</summary>
-    private const byte DeliverObjective = 5;
-
- /// <summary>One Complete_Type-4 or -5 row: its quest, its index among the quest's Quest_Info rows, and its need
- /// (<see cref="QuestObjectiveItems.ObjectiveItemCount"/>).</summary>
-    internal readonly record struct CollectRow(uint QuestId, int RowIndex, int Need);
-
- /// <summary>One 2428 to send.</summary>
-    internal readonly record struct Tick(uint QuestId, int RowIndex, ushort Count);
-
  /// <summary>item template -> its collect rows, built once per loaded QuestRows table.</summary>
-    private static readonly ConditionalWeakTable<IReadOnlyDictionary<uint, QuestData[]>, Dictionary<uint, CollectRow[]>> Indexes = new();
+    private static readonly ConditionalWeakTable<IReadOnlyDictionary<uint, QuestData[]>, Dictionary<uint, CollectDropTickPlanner.CollectRow[]>> Indexes = new();
 
  /// <summary>Every Complete_Type-4 or -5 row, in any quest, whose Complete_Type_Value1 is <paramref name="itemId"/>.</summary>
-    internal static IReadOnlyList<CollectRow> RowsCollecting(IReadOnlyDictionary<uint, QuestData[]> questRows, uint itemId)
-        => Indexes.GetValue(questRows, BuildIndex).TryGetValue(itemId, out var rows) ? rows : Array.Empty<CollectRow>();
+    internal static IReadOnlyList<CollectDropTickPlanner.CollectRow> RowsCollecting(IReadOnlyDictionary<uint, QuestData[]> questRows, uint itemId)
+        => Indexes.GetValue(questRows, BuildIndex).TryGetValue(itemId, out var rows) ? rows : Array.Empty<CollectDropTickPlanner.CollectRow>();
 
-    private static Dictionary<uint, CollectRow[]> BuildIndex(IReadOnlyDictionary<uint, QuestData[]> questRows)
-    {
-        var byItem = new Dictionary<uint, List<CollectRow>>();
-        foreach (var (questId, rows) in questRows)
-        {
-            for (int i = 0; i < rows.Length; i++)
-            {
-                var row = rows[i];
-                if (row.Complete_Type is not (CollectObjective or DeliverObjective) || row.Complete_Type_Value1 == 0) continue;
-                if (!byItem.TryGetValue(row.Complete_Type_Value1, out var list))
-                    byItem[row.Complete_Type_Value1] = list = new List<CollectRow>();
-                list.Add(new CollectRow(questId, i, QuestObjectiveItems.ObjectiveItemCount(row)));
-            }
-        }
-        return byItem.ToDictionary(kv => kv.Key, kv => kv.Value.ToArray());
-    }
+    private static Dictionary<uint, CollectDropTickPlanner.CollectRow[]> BuildIndex(IReadOnlyDictionary<uint, QuestData[]> questRows)
+        => CollectDropTickPlanner.BuildIndex(questRows, QuestObjectiveItems.ObjectiveItemCount);
 
- /// <summary>
- /// <summary>
- /// The 2428s owed when the bag holds <paramref name="heldInBag"/> of the item after a removal: one per row of
- /// <paramref name="rows"/> whose quest is in <paramref name="heldQuests"/>, in ascending quest-id order, each with
- /// <c>min(heldInBag, need)</c>.
- /// </summary>
- /// </summary>
-    internal static List<Tick> PlanTicks(IReadOnlyList<CollectRow> rows, IReadOnlyCollection<uint> heldQuests, long heldInBag)
-    {
-        var ticks = new List<Tick>();
-        foreach (var row in rows.OrderBy(r => r.QuestId).ThenBy(r => r.RowIndex))
-        {
-            if (!heldQuests.Contains(row.QuestId)) continue;
-            ticks.Add(new Tick(row.QuestId, row.RowIndex, (ushort)Math.Clamp(Math.Min(heldInBag, row.Need), 0, ushort.MaxValue)));
-        }
-        return ticks;
-    }
+    internal static List<CollectDropTickPlanner.Tick> PlanTicks(IReadOnlyList<CollectDropTickPlanner.CollectRow> rows, IReadOnlyCollection<uint> heldQuests, long heldInBag)
+        => CollectDropTickPlanner.PlanTicks(rows, heldQuests, heldInBag);
 
- /// <summary>
- /// Lowers a first row's collect counter to a tick's count when the counter is above it. It never raises the counter or
- /// creates one. Rows after the first keep no counter on this server. A deliver first row is lowered the same way.
- /// </summary>
-    internal static void LowerFirstRowCounter(PlayerState player, Tick tick)
-    {
-        
-        if (tick.RowIndex == 0 && player.QuestKillProgress.TryGetValue(tick.QuestId, out var counted) && counted > tick.Count)
-            player.QuestKillProgress[tick.QuestId] = tick.Count;
-    }
+    internal static void LowerFirstRowCounter(PlayerState player, CollectDropTickPlanner.Tick tick)
+        => CollectDropTickPlanner.LowerFirstRowCounter(player.QuestKillProgress, tick);
 
  /// <summary>
  /// Some of item <paramref name="itemId"/> left <paramref name="player"/>'s bag (destroyed, sold or offered, and
