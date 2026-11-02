@@ -7,6 +7,7 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Characters.Domain;
+using RO2.Mails.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -46,9 +47,7 @@ public class MailGetMoneyHandler : ZoneRmiHandlerBase<MailGetMoneyHandler>
         
         
         
-        byte disposition = granted > 0 && claimed != null && MailService.ClaimRemovesMail(claimed)
-            ? MailPackets.ClaimDeletesMail
-            : MailPackets.GetMoneyKeepMail;
+        byte disposition = MailRules.ClaimDisposition(granted > 0 && claimed != null && MailService.ClaimRemovesMail(claimed));
         await session.SendRmiAsync(ZoneS2COpcodes.OnMailGetMoney,
             MailPackets.BuildMailGetMoney2617(player.EntityId, mailUid, player.Gold, disposition));
     }

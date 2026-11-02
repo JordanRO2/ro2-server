@@ -1,4 +1,3 @@
-using System.Globalization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
@@ -10,6 +9,7 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Inventory.Domain;
+using RO2.Mails.Domain;
 using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
@@ -47,7 +47,7 @@ public class MailSendHandler : ZoneRmiHandlerBase<MailSendHandler>
         // sender: the checks here, then the unknown recipient and the full mailbox inside it. A refused
         // send moves nothing and costs nothing (see MailPackets.PostageZeny), and its 2445 stops
         // the client at the result code.
-        if (req.Gold < 0 || req.Gold > MaxMailZeny(services))
+        if (!MailRules.IsAttachableZeny(req.Gold, MaxMailZeny(services)))
         {
             Logger.LogWarning("{Name} tried to mail {Gold} zeny (over the Config_Def 92 cap)", player.Name, req.Gold);
             await RefuseAsync(session, player, MailPackets.SendSystemError);
@@ -56,12 +56,11 @@ public class MailSendHandler : ZoneRmiHandlerBase<MailSendHandler>
         // Postage + attached zeny are TAKEN here, atomically (TryDebit), not just compared: the mail is stored
         // and its item taken further down, and a check followed by a later clamped deduct would let a concurrent
         // spender drain the same funds in between. Every refusal below hands the charge back.
-        if (req.Gold > long.MaxValue - MailPackets.PostageZeny || !player.TryDebit(req.Gold + MailPackets.PostageZeny))
+        if (!MailRules.TryTotalCharge(req.Gold, out long charged) || !player.TryDebit(charged))
         {
             await RefuseAsync(session, player, MailPackets.SendNotEnoughZeny);
             return;
         }
-        long charged = req.Gold + MailPackets.PostageZeny;
 
         var inv = services.GetService<IInventoryRepository>();
         InventoryItem? attached = null;
@@ -150,7 +149,6 @@ public class MailSendHandler : ZoneRmiHandlerBase<MailSendHandler>
     private static long MaxMailZeny(IServiceProvider services)
     {
         var row = services.GetService<GameDataStore>()?.ConfigDef.FirstOrDefault(c => c.type == ConfigMaxMailZeny);
-        return row != null && long.TryParse(row.Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var cap)
-            ? cap : long.MaxValue;
+        return MailRules.ZenyCap(row?.Value);
     }
 }

@@ -101,4 +101,12 @@ public sealed class MailMessage
  /// <summary>True while any attachment is still waiting to be claimed (drives can-delete / claim UI).</summary>
     public bool HasUnclaimedAttachment =>
         (AttachedItemId != 0 && !ItemClaimed) || (Gold > 0 && !GoldClaimed);
+
+    /// <summary>Marks the mail read; true when it was unread (the caller then persists it).</summary>
+    public bool MarkRead()
+    {
+        if (IsRead) return false;
+        IsRead = true;
+        return true;
+    }
 }

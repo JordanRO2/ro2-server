@@ -130,7 +130,7 @@ public static class MailPackets
     /// Number of mails a player-to-player send is refused at, because the recipient's mailbox is full. Counts the whole
     /// mailbox, not only unread mails. System and auction mail are not limited. Not a table value.
     /// </summary>
-    public const int MailboxPlayerSendLimit = 31;
+    public const int MailboxPlayerSendLimit = MailRules.MailboxPlayerSendLimit;
 
     /// <summary>Result code 16208 (string_ui 2307 "Item is empty."): the attached item is not in the sender's bag.</summary>
     public const ushort SendItemEmpty = 16208;
@@ -142,7 +142,7 @@ public static class MailPackets
     /// Zeny charged on top of the attached zeny for each successful send: the 2445 wallet value is the previous wallet
     /// minus the attached zeny minus this postage. Not a table value. A refused send costs nothing.
     /// </summary>
-    public const long PostageZeny = 10;
+    public const long PostageZeny = MailRules.PostageZeny;
 
     // ----- S2C builders -----
 
@@ -255,7 +255,7 @@ public static class MailPackets
         rec.WriteUInt64(mailUid);              // record @6   uid
         rec.WriteByte((byte)(isRead ? 1 : 0)); // record @14  read flag
         // Same order as the list row: expiry first, sent second; expiry is sent + MailLifetimeDays.
-        WriteMailDate(rec, sentAt.AddDays(MailLifetimeDays)); // record @15 expiry (16)
+        WriteMailDate(rec, MailRules.ExpiresAt(sentAt)); // record @15 expiry (16)
         WriteMailDate(rec, sentAt);            // record @31  sent (16)
         WriteItemRecord(rec, item126);         // record @47  item (126)
         rec.WriteUInt64((ulong)Math.Max(0, auctionPrice)); // record @173 auction instant price (0 = not an auction mail)
@@ -307,14 +307,14 @@ public static class MailPackets
     public const ushort GetItemSystemError = 16201;
 
     /// <summary>Disposition (blob+144) of a successful claim where the mail stays in the mailbox.</summary>
-    public const byte GetItemKeepMail = 1;
+    public const byte GetItemKeepMail = MailRules.KeepMailDisposition;
 
     /// <summary>
     /// Disposition of a claim after which the mail is removed (2447 blob+144, 2617 blob+26): the client then deletes the
     /// mail itself. Sent for every successful auction-mail claim, exactly the mails
     /// <see cref="MailService.ClaimRemovesMail"/> removes from the store.
     /// </summary>
-    public const byte ClaimDeletesMail = 2;
+    public const byte ClaimDeletesMail = MailRules.DeleteMailDisposition;
 
     /// <summary>Disposition (blob+144) of a failed claim, which also carries an all-zero item record.</summary>
     public const byte GetItemFailedDisposition = 0;
@@ -373,7 +373,7 @@ public static class MailPackets
     /// Disposition (2617 blob+26) of a claim where the mail stays in the mailbox. The client deletes the mail only on
     /// <see cref="ClaimDeletesMail"/>, which is sent for auction-proceeds mails; every player mail is answered 1.
     /// </summary>
-    public const byte GetMoneyKeepMail = 1;
+    public const byte GetMoneyKeepMail = MailRules.KeepMailDisposition;
 
     /// <summary>
     /// Builds the 2617 OnMailGetMoney response (blob 27): result @8, mail uid @10, the wallet total after the claim @18 and
@@ -397,7 +397,7 @@ public static class MailPackets
     }
 
     /// <summary>Mail lifetime in days: a mail's expiry date is its sent date plus 30 days. Not a table value.</summary>
-    public const int MailLifetimeDays = 30;
+    public const int MailLifetimeDays = MailRules.MailLifetimeDays;
 
     /// <summary>
     /// Builds one 146-byte mail row for the mail list. Layout: uid@0, kind u8@8, isRead u8@9, expiry(16)@10, sent(16)@26,
@@ -415,7 +415,7 @@ public static class MailPackets
         pw.WriteByte(kind);                         // @8  mail kind
         pw.WriteByte((byte)(isRead ? 1 : 0));       // @9  read flag
         // Expiry first: the client feeds row+10 to its remaining-time formatter and shows row+26 as the absolute date.
-        WriteMailDate(pw, sentAt.AddDays(MailLifetimeDays)); // @10 expiry (16)
+        WriteMailDate(pw, MailRules.ExpiresAt(sentAt)); // @10 expiry (16)
         WriteMailDate(pw, sentAt);                  // @26 sent (16)
         pw.WriteUInt64((ulong)Math.Max(0, gold));   // @42 attached zeny
         pw.WriteUInt64(itemUid);                    // @50 attached item uid

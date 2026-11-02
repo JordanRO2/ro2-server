@@ -112,9 +112,8 @@ public sealed class MailService
                 // and before anything is taken from the sender: a refused send moves nothing and costs nothing
                 // (MailPackets.PostageZeny). The count is the whole box, every kind, read or not, but only mails
                 // younger than the mail lifetime count (IMailRepository.CountLiveInboxAsync).
-                long held = await _repo.CountLiveInboxAsync(recipient.Id,
-                    DateTime.UtcNow.AddDays(-MailPackets.MailLifetimeDays));
-                if (held >= MailPackets.MailboxPlayerSendLimit)
+                long held = await _repo.CountLiveInboxAsync(recipient.Id, MailRules.LiveCutoff(DateTime.UtcNow));
+                if (MailRules.IsMailboxFull(held))
                 {
                     _log.LogInformation("Mail {Sender} -> {Recipient}: mailbox holds {Held} (limit {Limit})",
                         sender.Name, recipient.Name, held, MailPackets.MailboxPlayerSendLimit);
@@ -246,11 +245,7 @@ public sealed class MailService
     {
         var mail = await _repo.GetByUidAsync(receiverCharId, uid);
         if (mail == null) return null;
-        if (!mail.IsRead)
-        {
-            mail.IsRead = true;
-            await _repo.ReplaceAsync(mail);
-        }
+        if (mail.MarkRead()) await _repo.ReplaceAsync(mail);
         return mail;
     }
 
@@ -291,7 +286,7 @@ public sealed class MailService
         {
             var mail = await _repo.GetByUidAsync(charId, uid);
             if (mail == null) return new ItemClaim(null, null, false);
-            if (mail.AttachedItemId == 0 || mail.ItemClaimed || inventory == null) return new ItemClaim(mail, null, false);
+            if (!MailRules.HasClaimableItem(mail) || inventory == null) return new ItemClaim(mail, null, false);
             if (joinStack == null && cell < 0) return new ItemClaim(mail, null, false);   // nowhere to put it; the caller answers 16207
 
             var claimed = await _repo.TryClaimItemAsync(charId, uid);
@@ -540,7 +535,7 @@ public sealed class MailService
     /// test guards).
     /// </summary>
     public static bool ClaimRemovesMail(MailMessage mail) =>
-        AuctionMailKind.IsAuction(mail.Kind) && !mail.HasUnclaimedAttachment;
+        MailRules.ClaimRemovesMail(AuctionMailKind.IsAuction(mail.Kind), mail);
 
     private async Task RemoveIfSpentAuctionMailAsync(MailMessage mail)
     {

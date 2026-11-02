@@ -9,6 +9,7 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Inventory.Domain;
+using RO2.Mails.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -129,9 +130,7 @@ public class MailGetItemHandler : ZoneRmiHandlerBase<MailGetItemHandler>
         // spent auction mails from the store, so asking the same predicate of the mail it returned makes the
         // client drop the mail when, and only when, the store did.
         var m = claim.Mail;
-        var disposition = m != null && MailService.ClaimRemovesMail(m)
-            ? MailPackets.ClaimDeletesMail
-            : MailPackets.GetItemKeepMail;
+        var disposition = MailRules.ClaimDisposition(m != null && MailService.ClaimRemovesMail(m));
         byte[] item126 = ItemWorkbench.RecordWithRuneholes(claim.Placed, store);
 
         Logger.LogInformation("{Name} claims mail item {Uid:X} (itemId={ItemId}, bag uid={BagUid}, slot={Slot}, count={Count}, joined={Joined}, disposition={Disposition})",
