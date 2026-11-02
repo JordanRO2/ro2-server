@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Plural namespace: a namespace "RO2.Quest" would shadow any future Quest type in every RO2.* file (CS0118). -->
+    <RootNamespace>RO2.Quests.Application</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Quest bounded context: Application holds the quest use cases and the ports they consume. It references its own
+       Domain + the shared GameData kernel + BuildingBlocks + the Inventory and Guild contexts it talks to (the bag
+       repository, the guild experience credit) only; the Quest_Info catalog, the live guild registry and the payout
+       side effects are reached through ports, whose host adapters own those references. Never the Zone host. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Quest.Domain\RO2.Quest.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+    <ProjectReference Include="..\..\Inventory\RO2.Inventory.Domain\RO2.Inventory.Domain.csproj" />
+    <ProjectReference Include="..\..\Guild\RO2.Guild.Domain\RO2.Guild.Domain.csproj" />
+    <ProjectReference Include="..\..\Guild\RO2.Guild.Application\RO2.Guild.Application.csproj" />
+  </ItemGroup>
+
+</Project>
