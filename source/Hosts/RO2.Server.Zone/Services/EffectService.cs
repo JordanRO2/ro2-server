@@ -1594,8 +1594,7 @@ public sealed class EffectService : BackgroundService
             // of a monster a concurrent killing hit has just zeroed (which would resurrect the corpse).
             lock (npc.HpLock)
             {
-                if (!npc.IsDead)
-                    npc.Hp = Math.Min(npc.MaxHp, npc.Hp + e.HpPerTick);
+                npc.Vitals = npc.Vitals.Heal(e.HpPerTick);
             }
         }
 

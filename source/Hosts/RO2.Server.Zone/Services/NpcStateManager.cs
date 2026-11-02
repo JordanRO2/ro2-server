@@ -20,8 +20,13 @@ public class NpcRuntimeState
 
     public uint NpcId { get => Definition.NpcId; set => Definition = Definition with { NpcId = value }; }
     public uint MapId { get => Definition.MapId; set => Definition = Definition with { MapId = value }; }
-    public int Hp { get; set; }
-    public int MaxHp { get => Definition.MaxHp; set => Definition = Definition with { MaxHp = value }; }
+
+    /// <summary>The HP and life state. Replaced whole (a new value per transition); writers hold <see cref="HpLock"/>.
+    /// The members below that read and write it keep the old object-initializer construction working.</summary>
+    public MonsterVitals Vitals { get; set; } = new();
+
+    public int Hp { get => Vitals.Hp; set => Vitals = Vitals with { Hp = value }; }
+    public int MaxHp { get => Vitals.MaxHp; set => Vitals = Vitals with { MaxHp = value }; }
 
     /// <summary>
     /// The NPC's max SP, which is also its current SP (NPCs spend no SP), at record+50 and +54 (u16). Set by
@@ -29,7 +34,7 @@ public class NpcRuntimeState
     /// <see cref="NpcRetailVitals"/>, else a stated fallback). 0 means it was never resolved (a state built
     /// outside the manager), and then <see cref="WireMaxSp"/> keeps the old HP mirror.
     /// </summary>
-    public int MaxSp { get => Definition.MaxSp; set => Definition = Definition with { MaxSp = value }; }
+    public int MaxSp { get => Vitals.MaxSp; set => Vitals = Vitals with { MaxSp = value }; }
 
     /// <summary>
     /// record+54 max SP (and the SP 2643 / 2718 / 2797 / 2495 restate): <see cref="MaxSp"/> clamped to 16 bits,
@@ -58,8 +63,8 @@ public class NpcRuntimeState
 
     /// <summary>NPC level. Goes on the wire at 2506 record offset +8.</summary>
     public int Level { get => Definition.Level; set => Definition = Definition with { Level = value }; }
-    public bool IsDead { get; set; }
-    public DateTime? DeathTime { get; set; }
+    public bool IsDead { get => Vitals.IsDead; set => Vitals = Vitals with { IsDead = value }; }
+    public DateTime? DeathTime { get => Vitals.DeathTime; set => Vitals = Vitals with { DeathTime = value }; }
 
     /// <summary>
     /// Serialises the HP read-modify-write and the death transition: <see cref="NpcStateManager.ApplyDamage"/>
@@ -367,8 +372,6 @@ public class NpcStateManager
                 {
                     NpcId = spawn.AssetIndex,
                     MapId = mapId,
-                    MaxHp = hp,
-                    MaxSp = sp,
                     Atk = npcStats?.ATK ?? DefaultAtk,
                     Def = npcStats?.DEF ?? DefaultDef,
                     ExpReward = npcStats?.EXP_Reward ?? DefaultExpReward,
@@ -378,8 +381,7 @@ public class NpcStateManager
                     Level = level,
                     Spawn = spawn,
                 },
-                Hp = hp,
-                IsDead = false,
+                Vitals = new MonsterVitals { Hp = hp, MaxHp = hp, MaxSp = sp },
                 NavCell = _data.GetNavCell(mapId, spawn.Index),
                 PosX = spawn.PosX,
                 PosY = spawn.PosY,
@@ -453,8 +455,7 @@ public class NpcStateManager
             if (state.IsDead || state.EntityOid != entityOid)
                 return (0, false);
 
-            actual = Math.Min(damage, state.Hp);
-            state.Hp -= actual;
+            (state.Vitals, actual) = state.Vitals.ApplyDamage(damage);
 
             // Bank the threat BEFORE the death branch so the killing blow is attributed too: the caller's amount
             // (ThreatAmount) or one point per point of damage dealt. Only monsters (Camp >= 2) keep a threat table.
@@ -462,11 +463,9 @@ public class NpcStateManager
             if (attackerHandle != 0 && banked > 0 && state.Camp > MaxFriendlyCamp)
                 AddThreatCore(state, attackerHandle, attackerName, banked);
 
-            if (state.Hp <= 0)
+            if (state.Vitals.IsOutOfHp)
             {
-                state.Hp = 0;
-                state.IsDead = true;
-                state.DeathTime = DateTime.UtcNow;
+                state.Vitals = state.Vitals.Die(DateTime.UtcNow);
                 ClearThreat(state);
                 died = true;
             }
@@ -631,7 +630,7 @@ public class NpcStateManager
                 state.AggroTargetHandle = 0;
             }
             bool changed = hadThreat || state.Hp < state.MaxHp;
-            state.Hp = state.MaxHp;
+            state.Vitals = state.Vitals.RestoreHp();
             state.ReturningUntil = DateTime.UtcNow + ReturnInvulnDuration;   // invulnerable while it runs home
             return changed;
         }
@@ -680,9 +679,7 @@ public class NpcStateManager
             lock (state.HpLock)
             {
                 state.EntityOid = fresh;
-                state.Hp = state.MaxHp;
-                state.IsDead = false;
-                state.DeathTime = null;
+                state.Vitals = state.Vitals.Revive();
                 ClearThreat(state);   // a fresh monster starts with an empty threat table
             }
             _npcs[fresh] = state;
@@ -715,9 +712,7 @@ public class NpcStateManager
     {
         EntityOid = state.EntityOid,
         Definition = state.Definition with { AttackReach = 0 },  // corpse kept AttackReach 0 before the split; preserve
-        Hp = 0,
-        IsDead = true,
-        DeathTime = state.DeathTime,
+        Vitals = state.Vitals with { Hp = 0, IsDead = true },
         NavCell = state.NavCell,
         PosX = state.PosX,
         PosY = state.PosY,

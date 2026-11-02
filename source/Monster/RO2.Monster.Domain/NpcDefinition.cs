@@ -12,11 +12,6 @@ public sealed record NpcDefinition
     public uint NpcId { get; init; }
     /// <summary>Map the spawn lives on.</summary>
     public uint MapId { get; init; }
-    /// <summary>Max HP.</summary>
-    public int MaxHp { get; init; }
-
-    /// <summary>Max SP, which is also its current SP (NPCs spend no SP). 0 means it was never resolved.</summary>
-    public int MaxSp { get; init; }
     /// <summary>Attack.</summary>
     public int Atk { get; init; }
     /// <summary>Defense.</summary>
