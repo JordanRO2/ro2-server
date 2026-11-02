@@ -1,6 +1,6 @@
 namespace RO2.Combats.Domain;
 
-/// <summary>The outcome kind of a resolved hit, mapped by the host to the wire DamageKind (1 normal, 3 guard, 4 crit).</summary>
+/// <summary>The outcome kind of a resolved hit, mapped by the host to the wire DamageKind (1 normal, 2 miss, 3 guard, 4 crit).</summary>
 public enum HitKind
 {
     /// <summary>An ordinary hit (wire kind 1).</summary>
@@ -11,6 +11,9 @@ public enum HitKind
 
     /// <summary>A critical hit, ×2 (wire kind 4).</summary>
     Crit,
+
+    /// <summary>A missed hit, damage 0 (wire kind 2).</summary>
+    Miss,
 }
 
 /// <summary>

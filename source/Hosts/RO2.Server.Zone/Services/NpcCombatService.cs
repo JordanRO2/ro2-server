@@ -95,30 +95,6 @@ public class NpcCombatService : ITickable
     /// <summary>How many <see cref="Interval"/>s of simulated time a delayed pass may bank before the surplus is dropped.</summary>
     private const int MaxBankedIntervals = 4;
 
-    /// <summary>Percent scale of the defense and parry rates (a rate of 100 is "always").</summary>
-    private const double PercentScale = 100.0;
-
-    /// <summary>Cap, in percent, of the damage a player's Defense removes from a monster's hit.</summary>
-    private const double MaxDefensePercent = 75.0;
-
-    /// <summary>The penetration a monster's hit carries: none (NPCs have no Pen stat, so the defense is used as is).</summary>
-    private const int NoPenetration = 0;
-
-    /// <summary>Lowest damage a landed monster hit deals after the defense reduction.</summary>
-    private const int MinHitDamage = 1;
-
-    /// <summary>
-    /// Parry (guard) rate, in percent: <c>Parry / (ParryPerPoint * Parry + ParryBase + ParryLevelWeight * (DefLv - AtkLv))</c>,
-    /// capped at <see cref="MaxParryPercent"/>. DefLv is the player's level, AtkLv the monster's.
-    /// </summary>
-    private const double ParryPerPoint = 0.02;
-    private const double ParryBase = 40.0;
-    private const double ParryLevelWeight = 0.8;
-    private const double MaxParryPercent = 70.0;
-
-    /// <summary>Damage multiplier of a guarded (parried) hit; such a hit is sent as <see cref="CombatService.DamageKindGuard"/>.</summary>
-    private const double GuardDamageMultiplier = 0.5;
-
     /// <summary>The SP a monster reports as an attacker in 2696 (monsters carry no SP).</summary>
     private const ushort MonsterCurSp = 0;
 
@@ -330,38 +306,22 @@ public class NpcCombatService : ITickable
             // Mitigate with the REAL RO2 (AoV) DefenseRate against the player's EFFECTIVE Defense (2498
             // trait 26 = VitDefenseValue·VIT + worn armour), attacker level = the monster's:
             //   Defense% = 100·Def / (Def + 870 + AttackerLv·35), capped 75%.
-            // This replaces the earlier invented curve that used the player's RAW VIT and ignored armour.
-            int def = Math.Max(0, victim.CombatDefense);
-            double defEff = DefenseRules.PenetratedDef(def, NoPenetration, Math.Max(0, npc.Level));  // NPCs carry no Pen (no-op)
-            double defPct = Math.Min(MaxDefensePercent, PercentScale * defEff / (defEff + DefenseRules.DefenseRateAdd + Math.Max(0, npc.Level) * DefenseRules.DefenseRateMulti));
-            var damage = Math.Max(MinHitDamage, (int)Math.Round(npc.Atk * (1.0 - defPct / PercentScale)));
-
             // A PC whose active effects add Miss_Rate +100% (trait 35, Trait_Kind 4: the map-move buff 60205 that
             // every 1304 reply grants for 10 s, EffectService.ApplyMapMoveBuffAsync) takes no hit: the swing goes
             // out as a kind-2 miss, damage 0, HP unchanged, and with no armour wear below (a miss wears none).
             // Without this the client would show an "invincible" icon over a PC the server still hurts. A rate below
             // 100% is not rolled here: the evasion formula is not established, only the certain case is.
-            bool evaded = MissRateOf(victim) >= EffectService.FullMissRate;
-
             // PARRY — the player's Parry stat (trait 61) can GUARD an incoming hit down to ×0.5, flagged as
-            // damageKind 3. Rate = Parry/(0.02·Parry + 40 + 0.8·(DefLv−AtkLv)) cap 70% (AoV); here
-            // DefLv = the player, AtkLv = the monster. NPCs carry no Crit stat, so they never crit the player.
-            byte damageKind = CombatPackets.DamageKindNormal;
-            int parry = victim.CombatParry;
-            if (evaded)
+            // damageKind 3. NPCs carry no Crit stat, so they never crit the player. The rule lives in
+            // MonsterSwingDamage (Combat.Domain); the live Miss_Rate lookup and the RNG source stay here.
+            var (damage, hitKind) = MonsterSwingDamage.Resolve(npc.Atk, npc.Level, victim.CombatDefense,
+                victim.CombatParry, victim.Level, MissRateOf(victim) >= EffectService.FullMissRate, SharedRoller.Instance);
+            byte damageKind = hitKind switch
             {
-                damage = 0;
-                damageKind = CombatPackets.DamageKindMiss;
-            }
-            else if (parry > 0)
-            {
-                double parryPct = Math.Min(MaxParryPercent, parry / (ParryPerPoint * parry + ParryBase + ParryLevelWeight * (victim.Level - Math.Max(0, npc.Level))));
-                if (parryPct > 0 && Random.Shared.NextDouble() * PercentScale < parryPct)
-                {
-                    damage = Math.Max(MinHitDamage, (int)Math.Round(damage * GuardDamageMultiplier));
-                    damageKind = CombatService.DamageKindGuard;
-                }
-            }
+                HitKind.Miss => CombatPackets.DamageKindMiss,
+                HitKind.Guard => CombatService.DamageKindGuard,
+                _ => CombatPackets.DamageKindNormal,
+            };
             // A player in a started field duel is not killed by a monster's hit: it is left at HP 1 and the duel ends as
             // fought out, the other duelist the winner. FieldPvPCombat.TryFightOutMonsterHitAsync then sends this
             // hit's 2694, the end, the 2696 and the armour wear itself; false leaves the hit to the code below.
@@ -420,7 +380,7 @@ public class NpcCombatService : ITickable
             // the evaded one, and those are exactly the hits that wear armour; a miss wears none.
             // See DurabilityService.ArmourWearStep for the per-piece step. Awaited, not fired off, so the burst
             // cannot overtake the 2696 it belongs to. The one miss this pass sends (an evaded hit, above) wears nothing.
-            if (!evaded)
+            if (hitKind != HitKind.Miss)
                 await _durability.ApplyArmourWearOnTakenHitAsync(victim, ct);
 
             // A 2696 that names the PC, while its Illusion Pyramid is armed, is followed by a 29005 close after the
