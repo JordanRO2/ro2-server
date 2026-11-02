@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RO2.GameData;
+using RO2.Monster.Domain;
 using RO2.Network.Protocol;
 using RO2.Server.Zone.Models;
 using RO2.Worlds.Domain;
@@ -131,8 +132,7 @@ public sealed class NpcChaseService : ITickable
                 // (1) LEASH. Dragged past its leash bound from the spawn: it gives up, runs home in one move and
                 // resets (heals + drops aggro). The combat service does not leash (its target is still valid); the
                 // chat sweep sends the leave-combat 2398 once this clears the target.
-                float homeDx = npc.PosX - npc.Spawn.PosX, homeDy = npc.PosY - npc.Spawn.PosY;
-                if (npc.LeashBound > 0f && MathF.Sqrt(homeDx * homeDx + homeDy * homeDy) > npc.LeashBound)
+                if (ChaseGeometry.IsPastLeash(npc.PosX, npc.PosY, npc.Spawn.PosX, npc.Spawn.PosY, npc.LeashBound))
                 {
                     await MoveAsync(npc, npc.Spawn.PosX, npc.Spawn.PosY, SpeedOf(npc),
                         destCell: _data.GetNavCell(mapId, npc.Spawn.Index) ?? NavCellAt(npc, npc.Spawn.PosX, npc.Spawn.PosY));
@@ -148,17 +148,10 @@ public sealed class NpcChaseService : ITickable
 
                 // (2) CHASE. Close the gap down to the monster's own attack reach, where the swing takes over. No
                 // step when already in reach (stand and fight) or the target is non-finite.
-                float reach = npc.AttackReach > 0f ? npc.AttackReach : NpcCombatService.Reach;
-                float gap = Distance(npc.PosX, npc.PosY, target.X, target.Y);
-                if (!float.IsFinite(gap) || gap <= reach)
-                    continue;
-
                 float speed = SpeedOf(npc);
-                float step = MathF.Min(gap - reach, speed * (float)dt);
-                if (step <= 0f)
+                if (ChaseGeometry.DecideStep(npc.PosX, npc.PosY, target.X, target.Y, npc.AttackReach, NpcCombatService.Reach, speed, dt)
+                    is not var (dx, dy))
                     continue;
-
-                var (dx, dy) = StepToward(npc.PosX, npc.PosY, target.X, target.Y, step);
                 await MoveAsync(npc, dx, dy, speed, destCell: NavCellAt(npc, dx, dy));
 
                 if (ct.IsCancellationRequested)
@@ -194,24 +187,6 @@ public sealed class NpcChaseService : ITickable
     {
         var run = _data.Npcs.GetValueOrDefault(npc.NpcId)?.Run_Speed ?? 0f;
         return run > 0f ? run : FallbackSpeed;
-    }
-
-    /// <summary>A point <paramref name="step"/> units from (fromX, fromY) toward (toX, toY); the origin itself
-    /// when they coincide. Pure, so the step geometry is unit-tested without a world.</summary>
-    internal static (float X, float Y) StepToward(float fromX, float fromY, float toX, float toY, float step)
-    {
-        float dx = toX - fromX, dy = toY - fromY;
-        float dist = MathF.Sqrt(dx * dx + dy * dy);
-        if (dist <= 0f || !float.IsFinite(dist))
-            return (fromX, fromY);
-        float t = MathF.Min(1f, step / dist);   // never step past the target
-        return (fromX + dx * t, fromY + dy * t);
-    }
-
-    private static float Distance(float ax, float ay, float bx, float by)
-    {
-        float dx = bx - ax, dy = by - ay;
-        return MathF.Sqrt(dx * dx + dy * dy);
     }
 
     /// <summary>PC actor handle -> live player: PC handles are <c>(sessionId &lt;&lt; 8) | <see cref="PlayerStateManager.PcActorTag"/></c> (0x11).</summary>
