@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using RO2.GameData;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
+using RO2.Quests.Application;
 using RO2.Quests.Domain;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Models;
@@ -65,23 +66,19 @@ internal static class QuestLevelGrants
         if (player.Level <= levelBefore || ProJobRows.Value is not { } proJobs) return;
         var store = services.GetRequiredService<GameDataStore>();
         var jobLevel = player.Character?.JobLevel ?? 0;
-        var due = QuestLevelGrantRules.SelectDue(store.Quests.Values, player.ActiveQuests.Contains,
-            id => proJobs.TryGetValue(id, out var p) ? new ProJobRange(p.MIN_ProJob_Level, p.MAX_ProJob_Level) : null,
-            player.Level, jobLevel);
-        if (due.Count == 0) return;
-
         var quests = services.GetRequiredService<IQuestRepository>();
-        var completed = await quests.GetCompletedQuestIdsAsync(player.CharacterId);
-        foreach (var quest in due)
-        {
-            if (completed.Contains(quest.Quest_ID) || player.ActiveQuests.Contains(quest.Quest_ID)) continue;
-            await quests.AcceptQuestAsync(player.CharacterId, quest.Quest_ID);
-            QuestAcceptHandler.BeginRun(player, quest.Quest_ID);
-            await QuestAcceptHandler.StoreTrackedRunStateAsync(quests, player, quest.Quest_ID, store, logger);
-            await session.SendRmiAsync(ZoneS2COpcodes.OnQuestInsert,
-                writer => writer.WriteBytes(QuestProgressPackets.BuildQuestInsert2421(quest.Quest_ID)));
-            logger.LogInformation("{Name} reached level {Level}: quest {QuestId} granted (Start_Type 4)",
-                player.Name, player.Level, quest.Quest_ID);
-        }
+        await services.GetRequiredService<QuestLevelGrantUseCase>().GrantAsync(player.CharacterId, store.Quests.Values,
+            player.ActiveQuests.Contains,
+            id => proJobs.TryGetValue(id, out var p) ? new ProJobRange(p.MIN_ProJob_Level, p.MAX_ProJob_Level) : null,
+            player.Level, jobLevel,
+            async quest =>
+            {
+                QuestAcceptHandler.BeginRun(player, quest.Quest_ID);
+                await QuestAcceptHandler.StoreTrackedRunStateAsync(quests, player, quest.Quest_ID, store, logger);
+                await session.SendRmiAsync(ZoneS2COpcodes.OnQuestInsert,
+                    writer => writer.WriteBytes(QuestProgressPackets.BuildQuestInsert2421(quest.Quest_ID)));
+                logger.LogInformation("{Name} reached level {Level}: quest {QuestId} granted (Start_Type 4)",
+                    player.Name, player.Level, quest.Quest_ID);
+            });
     }
 }
