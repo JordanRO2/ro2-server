@@ -1,6 +1,4 @@
-using RO2.Domain.Entities;
-
-namespace RO2.Application.Interfaces;
+namespace RO2.Guilds.Domain;
 
 /// <summary>
 /// The guild vault's two histories: the item history (1491 ReqGuildStorageStatement_Item pages through it,

@@ -44,7 +44,7 @@ public class GuildModifyAuthorityHandler : ZoneRmiHandlerBase<GuildModifyAuthori
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
         if (payload.Length < RecordOff + GuildRosterPackets.RankRecordLen) return;
-        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
         
         var emblems = services.GetRequiredService<IGuildEmblemRepository>();
         await emblems.InitAsync();

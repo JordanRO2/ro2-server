@@ -1,3 +1,4 @@
+using RO2.Guilds.Domain;
 using System.Collections.Concurrent;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;

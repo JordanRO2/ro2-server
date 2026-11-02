@@ -1,3 +1,4 @@
+using RO2.Guilds.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Persistence.Mongo.Persistence;
@@ -33,7 +34,7 @@ public class GuildSetBribePercentHandler : ZoneRmiHandlerBase<GuildSetBribePerce
         var requested = payload.Span[0];
 
         
-        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
 
         
         

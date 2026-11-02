@@ -24,7 +24,7 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 /// 2614 NfyUpdateGuildEmblem to the guild's online members, uploader included:
 /// [u32 len-4][u16 0][16 GUID][u16 emblemIndex][u32 imgLen][image]. The 2614 image is the uploaded one
 /// byte for byte and its index is the guild's previous index plus one, so
-/// the image is stored and the index advanced (<see cref="RO2.Application.Interfaces.IGuildEmblemRepository"/>). It is a guild broadcast,
+/// the image is stored and the index advanced (<see cref="IGuildEmblemRepository"/>). It is a guild broadcast,
 /// not a reply: every other online member of that guild receives
 /// the same 2614 — same index, same image. Each 2614 is
 /// followed by 2591 NfyPCViewInfoUpdate frames carrying the new index.
@@ -74,7 +74,7 @@ public class GuildEmblemUpdateHandler : ZoneRmiHandlerBase<GuildEmblemUpdateHand
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
-        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
         var emblems = services.GetRequiredService<IGuildEmblemRepository>();
         await emblems.InitAsync();
 

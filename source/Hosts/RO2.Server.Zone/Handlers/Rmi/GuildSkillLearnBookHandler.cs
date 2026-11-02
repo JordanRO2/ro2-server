@@ -1,3 +1,4 @@
+using RO2.Guilds.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
@@ -39,7 +40,7 @@ public class GuildSkillLearnBookHandler : ZoneRmiHandlerBase<GuildSkillLearnBook
             return;
         }
 
-        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
         var guild = GuildService.Instance.GetByCharId(player.CharacterId);
         if (guild is null || guild.MasterCharId != player.CharacterId)
         {

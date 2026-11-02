@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Guilds.Domain;
 
 /// <summary>One guild's registered emblem: the image the master uploaded with 1455 and its emblem index.</summary>
 public sealed class GuildEmblem
@@ -15,5 +15,6 @@ public sealed class GuildEmblem
  /// <summary>The image bytes exactly as uploaded (a DDS file; 640 bytes in every captured image).</summary>
     public byte[] Image { get; set; } = Array.Empty<byte>();
 
+ /// <summary>When the image was last uploaded (UTC).</summary>
     public DateTime UpdatedUtc { get; set; }
 }

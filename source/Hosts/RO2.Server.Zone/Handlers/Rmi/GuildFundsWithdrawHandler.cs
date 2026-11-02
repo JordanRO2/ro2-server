@@ -42,7 +42,7 @@ public class GuildFundsWithdrawHandler : ZoneRmiHandlerBase<GuildFundsWithdrawHa
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
-        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
 
         var guild = GuildService.Instance.GetByCharId(player.CharacterId);
         if (!GuildFundsInHandPackets.TryParseRequest(payload.Span, guild, out var amount, out var guidMatches))

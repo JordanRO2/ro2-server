@@ -1,3 +1,4 @@
+using RO2.Guilds.Domain;
 using System;
 using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;

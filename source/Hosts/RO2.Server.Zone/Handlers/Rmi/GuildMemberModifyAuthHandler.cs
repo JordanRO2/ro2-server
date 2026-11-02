@@ -1,3 +1,4 @@
+using RO2.Guilds.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Persistence.Mongo.Persistence;
@@ -22,7 +23,7 @@ public class GuildMemberModifyAuthHandler : ZoneRmiHandlerBase<GuildMemberModify
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
         if (payload.Length < 25) return;
-        var repo = services.GetRequiredService<IGuildStore>();
+        var repo = services.GetRequiredService<IGuildRepository>();
         await GuildService.Instance.InitAsync(repo);
 
         var span = payload.Span;

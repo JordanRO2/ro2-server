@@ -56,7 +56,7 @@ public class GuildKickHandler : ZoneRmiHandlerBase<GuildKickHandler>
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
-        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
         var emblems = services.GetRequiredService<IGuildEmblemRepository>();
 
         var targetName = payload.Length >= 6 ? GuildPackets.ReadWideNameAt(payload.Span, NameFieldOff, NameMaxChars) : string.Empty;

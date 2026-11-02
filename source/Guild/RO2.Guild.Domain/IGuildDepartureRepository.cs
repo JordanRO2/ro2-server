@@ -1,4 +1,4 @@
-namespace RO2.Application.Interfaces;
+namespace RO2.Guilds.Domain;
 
 /// <summary>
 /// Per-character guild-departure state that outlives guild membership: when a character last left a guild

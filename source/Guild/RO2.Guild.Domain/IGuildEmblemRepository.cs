@@ -1,6 +1,4 @@
-using RO2.Domain.Entities;
-
-namespace RO2.Application.Interfaces;
+namespace RO2.Guilds.Domain;
 
 /// <summary>
 /// Process-wide guild emblem registry, persisted to the <c>guild_emblems</c> collection, kept separate from

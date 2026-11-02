@@ -31,7 +31,7 @@ public class GuildInviteHandler : ZoneRmiHandlerBase<GuildInviteHandler>
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
-        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
         var departures = services.GetRequiredService<IGuildDepartureRepository>();
         await departures.InitAsync();
         var config = services.GetRequiredService<GameDataStore>().ConfigDef;

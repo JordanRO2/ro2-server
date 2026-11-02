@@ -1,3 +1,4 @@
+using RO2.Guilds.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
@@ -34,7 +35,7 @@ public class GuildStorageStatementItemHandler : ZoneRmiHandlerBase<GuildStorageS
         byte page = payload.Span[16];
         byte period = payload.Span[17];
 
-        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
 
         
         

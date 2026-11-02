@@ -1,4 +1,5 @@
 ﻿using RO2.Economy.Domain;
+using RO2.Guilds.Domain;
 using RO2.Skills.Domain;
 using RO2.Skills.Application;
 using RO2.Domain.Entities;
@@ -543,7 +544,7 @@ public class LoginPCHandler : NetworkZoneRmiBase
         IReadOnlyList<(uint Group, byte Level)>? useSkillList = null;
         try
         {
-            await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+            await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
             if (playerManager.GetPlayer(session.SessionId) is { } skillOwner)
                 useSkillList = GuildSkillBookLearn.SkillListFor(skillOwner, store);
         }

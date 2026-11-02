@@ -40,7 +40,7 @@ public class ReqGuildSkillListHandler : Base1513
         Guild? guild = null;
         if (players.TryGetPlayer(session.SessionId, out var player) && player != null)
         {
-            await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+            await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
             guild = GuildService.Instance.GetByCharId(player.CharacterId);
         }
 

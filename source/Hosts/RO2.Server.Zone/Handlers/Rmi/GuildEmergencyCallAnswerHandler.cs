@@ -1,3 +1,4 @@
+using RO2.Guilds.Domain;
 using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -103,7 +104,7 @@ public class GuildEmergencyCallAnswerHandler : ZoneRmiHandlerBase<GuildEmergency
             return;
         }
 
-        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
         var guild = GuildService.Instance.GetByCharId(player.CharacterId);
         if (guild is null
             || !GuildEmergencyCallService.TryConsume(guild.Id, player.CharacterId, DateTime.UtcNow, out var call))

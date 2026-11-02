@@ -1,3 +1,4 @@
+using RO2.Guilds.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
@@ -48,7 +49,7 @@ public class GuildStorageStatementZenyHandler : ZoneRmiHandlerBase<GuildStorageS
         byte page = payload.Span[16];
         byte days = payload.Span[17];
 
-        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
         var config = services.GetRequiredService<GameDataStore>().ConfigDef;
         int pageSize = GuildStorageLog.HistoryPageSize(config);
         

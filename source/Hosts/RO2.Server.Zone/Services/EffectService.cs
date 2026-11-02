@@ -1,3 +1,4 @@
+using RO2.Guilds.Domain;
 using RO2.Monster.Application;
 using System.Buffers.Binary;
 using System.Collections.Concurrent;

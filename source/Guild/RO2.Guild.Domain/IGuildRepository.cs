@@ -1,6 +1,4 @@
-using RO2.Guilds.Domain;
-
-namespace RO2.Server.Zone.Services;
+namespace RO2.Guilds.Domain;
 
 /// <summary>
 /// Persistence seam for the <see cref="Guild"/> aggregate: loads all guilds at startup, saves a whole guild
@@ -9,7 +7,7 @@ namespace RO2.Server.Zone.Services;
 /// <remarks>
 /// Guild id allocation is not part of this interface; it is in-memory process state held by the guild service.
 /// </remarks>
-public interface IGuildStore
+public interface IGuildRepository
 {
  /// <summary>Loads every stored guild, once at startup.</summary>
     Task<IReadOnlyList<Guild>> LoadAllAsync(CancellationToken ct = default);

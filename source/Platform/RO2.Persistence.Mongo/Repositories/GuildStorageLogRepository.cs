@@ -1,3 +1,4 @@
+using RO2.Guilds.Domain;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;

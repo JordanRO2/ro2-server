@@ -90,7 +90,7 @@ public class GuildStorageItemPutHandler : ZoneRmiHandlerBase<GuildStorageItemPut
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
         if (payload.Length < RequestLength) return;
-        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
 
         var span = payload.Span;
         byte bag = span[BagOffset];

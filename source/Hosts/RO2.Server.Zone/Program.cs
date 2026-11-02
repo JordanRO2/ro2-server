@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using RO2.Guilds.Domain;
 using RO2.Skills.Domain;
 using System.Reflection;
 using System.Text.Json;
@@ -105,7 +106,7 @@ public static class Program
         // them from MongoDbContext. All stateless over the singleton context, so singletons. GuildService.Instance
         // and the two stores below keep their static Instance (packet builders read them without a scope); the
         // factories only bind the context the stores load through, and each caller still runs InitAsync lazily.
-        services.AddProviderRepository<IGuildStore, GuildRepository, PostgresGuildRepository>(config.Database.Provider, ServiceLifetime.Singleton);
+        services.AddProviderRepository<IGuildRepository, GuildRepository, PostgresGuildRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IGuildStorageLog, RO2.Persistence.Mongo.Repositories.GuildStorageLogRepository, RO2.Persistence.Postgres.Repositories.GuildStorageLogRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IGuildEmblemRepository, RO2.Persistence.Mongo.Repositories.GuildEmblemRepository, RO2.Persistence.Postgres.Repositories.GuildEmblemRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IGuildDepartureRepository, RO2.Persistence.Mongo.Repositories.GuildDepartureRepository, RO2.Persistence.Postgres.Repositories.GuildDepartureRepository>(config.Database.Provider, ServiceLifetime.Singleton);

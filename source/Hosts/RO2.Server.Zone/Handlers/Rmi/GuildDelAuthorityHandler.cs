@@ -75,7 +75,7 @@ public class GuildDelAuthorityHandler : ZoneRmiHandlerBase<GuildDelAuthorityHand
             Logger.LogWarning("{Name} sent a {Len}-byte ReqGuildDelAuthority, need {Need}", player.Name, payload.Length, RequestLength);
             return;
         }
-        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
 
         var guild = GuildService.Instance.GetByCharId(player.CharacterId);
         var index = payload.Span[GuidLength];

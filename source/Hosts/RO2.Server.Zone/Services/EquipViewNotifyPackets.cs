@@ -1,3 +1,4 @@
+using RO2.Guilds.Domain;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

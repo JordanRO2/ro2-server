@@ -53,7 +53,7 @@ public class GuildMasterHandoverHandler : ZoneRmiHandlerBase<GuildMasterHandover
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
         if (payload.Length < 24) return;
-        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
 
         var span = payload.Span;
         ulong newMasterGid = System.Buffers.Binary.BinaryPrimitives.ReadUInt64LittleEndian(span.Slice(16, 8));

@@ -758,7 +758,7 @@ public class SkillDamageHandler : ZoneRmiHandlerBase<SkillDamageHandler>
         await Broadcast.BroadcastToMapAsync(caster.MapId, ZoneS2COpcodes.NfySkillDamage,
             writer => writer.WriteBytes(notify));
 
-        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
         var guild = GuildService.Instance.GetByCharId(caster.CharacterId);
         var data = services.GetRequiredService<GameDataStore>();
         var refusal = GuildEmergencyCallService.Validate(guild, caster.CharacterId, skillId, caster.MapId,

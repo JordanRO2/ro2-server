@@ -148,7 +148,7 @@ public class PlayerSpawnService
     {
         try
         {
-            await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+            await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
             await _emblems.InitAsync();
             return true;
         }

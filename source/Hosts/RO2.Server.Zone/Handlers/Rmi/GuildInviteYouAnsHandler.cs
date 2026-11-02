@@ -44,7 +44,7 @@ public class GuildInviteYouAnsHandler : ZoneRmiHandlerBase<GuildInviteYouAnsHand
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
         if (payload.Length < AnswerLen) return;
-        var repo = services.GetRequiredService<IGuildStore>();
+        var repo = services.GetRequiredService<IGuildRepository>();
         await GuildService.Instance.InitAsync(repo);
 
         var span = payload.Span;

@@ -1,3 +1,4 @@
+using RO2.Guilds.Domain;
 using System.Buffers.Binary;
 using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
@@ -1094,7 +1095,7 @@ public static class KharaService
         bool inGuild;
         try
         {
-            await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+            await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
             inGuild = GuildService.Instance.GetByCharId(player.CharacterId) is not null;
         }
         catch { inGuild = false; }

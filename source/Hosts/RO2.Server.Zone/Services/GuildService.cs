@@ -21,7 +21,7 @@ public sealed class GuildService
     private readonly ConcurrentDictionary<uint, uint> _byChar = new();       
     private readonly ConcurrentDictionary<uint, GuildPendingInvite> _invites = new(); 
 
-    private IGuildStore? _repo;
+    private IGuildRepository? _repo;
     private readonly SemaphoreSlim _initLock = new(1, 1);
     private volatile bool _loaded;
     private int _nextId = 1;
@@ -104,7 +104,7 @@ public sealed class GuildService
  /// Loads every guild from the store once, and sets the store used for all later writes. Safe to call from every
  /// handler.
  /// </summary>
-    public async Task InitAsync(IGuildStore repo)
+    public async Task InitAsync(IGuildRepository repo)
     {
         if (_loaded) return;
         await _initLock.WaitAsync();

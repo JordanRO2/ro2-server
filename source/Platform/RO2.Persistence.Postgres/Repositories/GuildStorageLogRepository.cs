@@ -1,3 +1,4 @@
+using RO2.Guilds.Domain;
 using Npgsql;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;

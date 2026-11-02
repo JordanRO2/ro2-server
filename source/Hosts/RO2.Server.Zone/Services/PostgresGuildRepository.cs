@@ -7,12 +7,12 @@ using RO2.Guilds.Domain;
 namespace RO2.Server.Zone.Services;
 
 /// <summary>
-/// PostgreSQL implementation of <see cref="IGuildStore"/>. Each <see cref="Guild"/> aggregate is stored as one row
+/// PostgreSQL implementation of <see cref="IGuildRepository"/>. Each <see cref="Guild"/> aggregate is stored as one row
 /// in the <c>guilds</c> table (<c>id</c> bigint and <c>data</c> jsonb). Loading reads every row, saving is a
 /// whole-aggregate upsert, and deleting removes the row together with the guild's vault and roster. The in-memory
 /// lock is excluded from the stored document.
 /// </summary>
-public sealed class PostgresGuildRepository : IGuildStore
+public sealed class PostgresGuildRepository : IGuildRepository
 {
     public const string TableName = "guilds";
 

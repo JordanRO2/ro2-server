@@ -1,3 +1,4 @@
+using RO2.Guilds.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
@@ -23,7 +24,7 @@ public class GuildMemListHandler : ZoneRmiHandlerBase<GuildMemListHandler>
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
-        var repo = services.GetRequiredService<IGuildStore>();
+        var repo = services.GetRequiredService<IGuildRepository>();
         await GuildService.Instance.InitAsync(repo);
 
         var guild = GuildService.Instance.GetByCharId(player.CharacterId);

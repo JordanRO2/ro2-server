@@ -1,3 +1,4 @@
+using RO2.Guilds.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Persistence.Mongo.Persistence;
@@ -21,7 +22,7 @@ public class GuildListRegisteredRobeHandler : ZoneRmiHandlerBase<GuildListRegist
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
-        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
         var guild = GuildService.Instance.GetByCharId(player.CharacterId);
 
         // The result code is keyed on the viewer, not on the guild: code 0 goes to the guild master

@@ -1,10 +1,11 @@
+using RO2.Guilds.Domain;
 using RO2.Characters.Application;
 using RO2.Server.Zone.Handlers.Rmi;
 
 namespace RO2.Server.Zone.Services;
 
 /// <summary>Backs <see cref="IGuildMembershipView"/> with the live <see cref="GuildService"/>.</summary>
-internal sealed class GuildMembershipView(IGuildStore store) : IGuildMembershipView
+internal sealed class GuildMembershipView(IGuildRepository store) : IGuildMembershipView
 {
     public async Task<bool> IsGuildMasterAsync(uint characterId)
     {

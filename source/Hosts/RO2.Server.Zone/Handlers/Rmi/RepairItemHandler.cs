@@ -1,3 +1,4 @@
+using RO2.Guilds.Domain;
 using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -104,7 +105,7 @@ public class RepairItemHandler : ZoneRmiHandlerBase<RepairItemHandler>
         }
 
         // The guild's repair discount (Guild_Skill_Level category 5).
-        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
         long discountPct = 0;
         if (GuildService.Instance.GetByCharId(player.CharacterId) is { } guild)
         {

@@ -1,3 +1,4 @@
+using RO2.Guilds.Domain;
 using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -36,7 +37,7 @@ public class GuildSelectRobeHandler : ZoneRmiHandlerBase<GuildSelectRobeHandler>
         }
         uint robeItemId = BinaryPrimitives.ReadUInt32LittleEndian(payload.Span);
 
-        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
         var guild = GuildService.Instance.GetByCharId(player.CharacterId);
         if (guild == null || guild.MasterCharId != player.CharacterId)
         {

@@ -1,3 +1,4 @@
+using RO2.Guilds.Domain;
 using System.Buffers.Binary;
 using System.Collections.Concurrent;
 using Npgsql;

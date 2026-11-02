@@ -29,7 +29,7 @@ public class GuildLeaveHandler : ZoneRmiHandlerBase<GuildLeaveHandler>
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
-        var repo = services.GetRequiredService<IGuildStore>();
+        var repo = services.GetRequiredService<IGuildRepository>();
         await GuildService.Instance.InitAsync(repo);
         var emblems = services.GetRequiredService<IGuildEmblemRepository>();
 

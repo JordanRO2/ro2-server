@@ -1,3 +1,4 @@
+using RO2.Guilds.Domain;
 using System.Collections.Concurrent;
 using System.Globalization;
 using Microsoft.Extensions.DependencyInjection;
@@ -271,7 +272,7 @@ public static class RankingService
         var store = services.GetService<GameDataStore>();
         if (repo is null || store is null)
             return;
-        var guilds = services.GetRequiredService<IGuildStore>();
+        var guilds = services.GetRequiredService<IGuildRepository>();
         var scopes = services.GetRequiredService<IServiceScopeFactory>();
         if (Interlocked.CompareExchange(ref _clockStarted, 1, 0) != 0)
             return;
@@ -281,7 +282,7 @@ public static class RankingService
         _ = Task.Run(() => RunClockAsync(repo, guilds, scopes, store, logger, stopping), CancellationToken.None);
     }
 
-    private static async Task RunClockAsync(IRankingRepository repo, IGuildStore guilds, IServiceScopeFactory scopes, GameDataStore store, ILogger logger, CancellationToken ct)
+    private static async Task RunClockAsync(IRankingRepository repo, IGuildRepository guilds, IServiceScopeFactory scopes, GameDataStore store, ILogger logger, CancellationToken ct)
     {
         logger.LogInformation("Ranking clock started (boards roll at {Reset} UTC; next {Next:u})",
             RankingSchedule.ResetTimeOfDayUtc, NextRollAfter(store, DateTime.UtcNow));
@@ -327,7 +328,7 @@ public static class RankingService
         if (repo is null || store is null)
             return null;
         EnsureClockRunning(services);
-        var guilds = services.GetRequiredService<IGuildStore>();
+        var guilds = services.GetRequiredService<IGuildRepository>();
         var scopes = services.GetRequiredService<IServiceScopeFactory>();
         try
         {
@@ -343,7 +344,7 @@ public static class RankingService
 
  /// <summary>The board published for the current period of <paramref name="rankingType"/>, rolled now if the
  /// stored one belongs to an earlier period.</summary>
-    private static async Task<RankingSnapshotDocument?> GetPublishedCoreAsync(IRankingRepository repo, IGuildStore guilds, IServiceScopeFactory scopes, GameDataStore store,
+    private static async Task<RankingSnapshotDocument?> GetPublishedCoreAsync(IRankingRepository repo, IGuildRepository guilds, IServiceScopeFactory scopes, GameDataStore store,
         byte rankingType, ILogger logger, CancellationToken ct)
     {
         if (RankingSchedule.ResetRowOf(store, rankingType) is not { } reset)
@@ -386,7 +387,7 @@ public static class RankingService
  /// The board of the period starting at <paramref name="period"/>: the counters of the period before it, ranked
  /// against <paramref name="replaced"/> for the previous ranks.
  /// </summary>
-    private static async Task<RankingSnapshotDocument> RollAsync(IRankingRepository repo, ICharacterRepository characters, IGuildStore guilds, byte rankingType,
+    private static async Task<RankingSnapshotDocument> RollAsync(IRankingRepository repo, ICharacterRepository characters, IGuildRepository guilds, byte rankingType,
         RankingReset reset, DateTime period, RankingSnapshotDocument? replaced, CancellationToken ct)
     {
         var now = DateTime.UtcNow;

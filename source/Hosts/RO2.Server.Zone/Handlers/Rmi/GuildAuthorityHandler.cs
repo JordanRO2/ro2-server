@@ -1,3 +1,4 @@
+using RO2.Guilds.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Persistence.Mongo.Persistence;
@@ -20,7 +21,7 @@ public class GuildAuthorityHandler : ZoneRmiHandlerBase<GuildAuthorityHandler>
     {
         
         
-        var repo = services.GetRequiredService<IGuildStore>();
+        var repo = services.GetRequiredService<IGuildRepository>();
         await GuildService.Instance.InitAsync(repo);
 
         

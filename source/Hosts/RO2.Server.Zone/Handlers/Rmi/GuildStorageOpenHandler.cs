@@ -63,7 +63,7 @@ public class GuildStorageOpenHandler : ZoneRmiHandlerBase<GuildStorageOpenHandle
             return;
         }
 
-        var repo = services.GetRequiredService<IGuildStore>();
+        var repo = services.GetRequiredService<IGuildRepository>();
         await GuildService.Instance.InitAsync(repo);
 
         var guild = GuildService.Instance.GetByCharId(player.CharacterId);

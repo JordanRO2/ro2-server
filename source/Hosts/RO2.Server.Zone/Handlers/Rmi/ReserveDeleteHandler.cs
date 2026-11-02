@@ -68,7 +68,7 @@ public class ReserveDeleteHandler : NetworkZoneRmiBase
             return;
         }
 
-        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildStore>());
+        await GuildService.Instance.InitAsync(services.GetRequiredService<IGuildRepository>());
         if (IsGuildMaster(GuildService.Instance.GetByCharId(characterId), characterId))
         {
             // The character is kept; the timestamp is still the server's clock.

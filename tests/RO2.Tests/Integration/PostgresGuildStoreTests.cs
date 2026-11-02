@@ -5,7 +5,7 @@ using RO2.Guilds.Domain;
 namespace RO2.Tests.Integration;
 
 /// <summary>
-/// Runtime tests for <see cref="PostgresGuildRepository"/> (<c>IGuildStore</c>) against a live PostgreSQL
+/// Runtime tests for <see cref="PostgresGuildRepository"/> (<c>IGuildRepository</c>) against a live PostgreSQL
 /// instance (<see cref="PostgresFixture"/>). Covers whole-aggregate save and load round-trips (members, ranks,
 /// storage, skills, and the byte[] guild GUID), upsert replacement, and delete.
 /// </summary>

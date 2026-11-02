@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using RO2.Guilds.Domain;
 using RO2.Skills.Domain;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;

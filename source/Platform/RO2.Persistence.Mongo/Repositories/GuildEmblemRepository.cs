@@ -1,3 +1,4 @@
+using RO2.Guilds.Domain;
 using System.Collections.Concurrent;
 using MongoDB.Driver;
 using RO2.Application.Interfaces;
