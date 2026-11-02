@@ -5,10 +5,11 @@
     <RootNamespace>RO2.Quests.Domain</RootNamespace>
   </PropertyGroup>
 
-  <!-- Quest bounded context: Domain references ONLY RO2.BuildingBlocks (no Mongo, no ProudNet, no host).
-       The entity is persistence-agnostic and default-mappable; later slices add the GameData / Inventory.Domain refs. -->
+  <!-- Quest bounded context: Domain references ONLY RO2.BuildingBlocks + the shared RO2.GameData kernel (no Mongo, no ProudNet, no host).
+       The entity is persistence-agnostic and default-mappable; a later slice adds the Inventory.Domain ref. -->
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
   </ItemGroup>
 
 </Project>

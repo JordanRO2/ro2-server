@@ -29,10 +29,10 @@ namespace RO2.Server.Zone.Services;
 internal static class QuestProgressStore
 {
  /// <summary>Quest_Info Complete_Type of a kill objective (Complete_Type_Value1 = NPC, Value2 = count).</summary>
-    internal const byte KillObjective = 2;
+    internal const byte KillObjective = ObjectiveRules.KillObjective;
 
  /// <summary>Quest_Info Complete_Type of a row with no objective (the quest's non-objective rows); it is skipped.</summary>
-    internal const byte NoObjective = 0;
+    internal const byte NoObjective = ObjectiveRules.NoObjective;
 
  /// <summary>Element state of a quest with every objective met.</summary>
     internal const uint StateMet = 1;
@@ -49,9 +49,6 @@ internal static class QuestProgressStore
  /// <summary>Element dword at rec+8, always 0.</summary>
     private const uint ReservedWord = 0;
 
- /// <summary>Most uses a use-item row can need (the session counter is a byte).</summary>
-    private const uint MaxUsesNeeded = 255;
-
  /// <summary>Per-objective <c>"met"</c> value and 2310 progress of a closed talk row.</summary>
     private const ushort TalkRowClosed = 1;
 
@@ -67,16 +64,16 @@ internal static class QuestProgressStore
     private const string MetKey = "met";
 
  /// <summary>Quest_Info Complete_Type of a talk objective (Complete_Type_Value1 = the NPC).</summary>
-    internal const byte TalkObjective = 1;
+    internal const byte TalkObjective = ObjectiveRules.TalkObjective;
 
  /// <summary>Quest_Info Complete_Type of a collect objective (Value1 = the item, Value2 = the count).</summary>
-    internal const byte CollectObjective = 4;
+    internal const byte CollectObjective = ObjectiveRules.CollectObjective;
 
  /// <summary>Quest_Info Complete_Type of a deliver objective (Value1 = the item, Value2 = the count).</summary>
-    internal const byte DeliverObjective = 5;
+    internal const byte DeliverObjective = ObjectiveRules.DeliverObjective;
 
  /// <summary>Quest_Info Complete_Type of a use-item objective (Value2 = the item, Value3 = the uses).</summary>
-    internal const byte UseItemObjective = 6;
+    internal const byte UseItemObjective = ObjectiveRules.UseItemObjective;
 
  /// <summary>The quests whose stored document carried the <c>"met"</c> key at this login's restore, per player.</summary>
     private static readonly ConditionalWeakTable<PlayerState, HashSet<uint>> KnownState = new();
@@ -85,23 +82,16 @@ internal static class QuestProgressStore
     private static readonly ConditionalWeakTable<PlayerState, SemaphoreSlim> SaveGates = new();
 
  /// <summary>The quest's objective rows: the Quest_Info rows with Complete_Type != 0.</summary>
-    internal static int ObjectiveRowCount(QuestData[] rows)
-    {
-        int n = 0;
-        foreach (var row in rows)
-            if (row.Complete_Type != NoObjective) n++;
-        return n;
-    }
+    internal static int ObjectiveRowCount(QuestData[] rows) => ObjectiveRules.ObjectiveRowCount(rows);
 
  /// <summary>
  /// A kill row's needed total as the session counters hold it: Complete_Type_Value2, with 0 read as 1 and the value
  /// capped at the u16 maximum.
  /// </summary>
-    internal static ushort NeededKills(QuestData row)
-        => row.Complete_Type_Value2 == 0 ? (ushort)1 : (ushort)Math.Min(row.Complete_Type_Value2, ushort.MaxValue);
+    internal static ushort NeededKills(QuestData row) => ObjectiveRules.NeededKills(row);
 
  /// <summary>A kill row that a kill can advance: Complete_Type 2 with a target (213010440 has none).</summary>
-    internal static bool IsKillRow(QuestData row) => row.Complete_Type == KillObjective && row.Complete_Type_Value1 != 0;
+    internal static bool IsKillRow(QuestData row) => ObjectiveRules.IsKillRow(row);
 
  /// <summary><c>{"kill":[...]}</c>: the kill counts, one per objective row in Quest_Info order (0 for a row that is not
  /// a kill row). This is the form documents had before the <c>"met"</c> key.</summary>
@@ -201,7 +191,7 @@ internal static class QuestProgressStore
     }
 
  /// <summary>Uses a use-item row needs: Complete_Type_Value3, with 0 read as 1 and the value capped at 255.</summary>
-    internal static ushort UsesNeeded(QuestData row) => (ushort)Math.Clamp(row.Complete_Type_Value3, 1u, MaxUsesNeeded);
+    internal static ushort UsesNeeded(QuestData row) => ObjectiveRules.UsesNeeded(row);
 
  /// <summary>
  /// The player's talk and use-item closes on each objective row, as the <c>"met"</c> key stores them: 1 for a met talk
