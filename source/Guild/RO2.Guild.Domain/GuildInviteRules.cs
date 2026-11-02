@@ -1,14 +1,7 @@
-﻿using System.Globalization;
-using System.Text.RegularExpressions;
-using MongoDB.Bson;
-using MongoDB.Driver;
-using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
+using System.Globalization;
 using RO2.GameData.Tables;
-using RO2.Characters.Domain;
-using RO2.Guilds.Domain;
 
-namespace RO2.Server.Zone.Services;
+namespace RO2.Guilds.Domain;
 
 /// <summary>
 /// Decides the answer to a guild invite request (1429): the 2565 result code, and the end of the rejoin
@@ -19,7 +12,7 @@ namespace RO2.Server.Zone.Services;
 /// Checks run from the inviter to the invitee: guild, right, name, online, guild, cooldown, pending invite.
 /// Code 60 is never produced, because the server does not place characters in the Colosseum.
 /// </remarks>
-internal static class GuildInviteRules
+public static class GuildInviteRules
 {
     /// <summary>Result code for a sent invite. The invitee receives the invite popup (2566).</summary>
     public const ushort Sent = 0;
@@ -34,7 +27,7 @@ internal static class GuildInviteRules
     public const ushort InviterNoGuild = 7;
 
     /// <summary>
-    /// The inviter's guild title does not hold the invite permission (<see cref="GuildService.PermissionInvite"/>).
+    /// The inviter's guild title does not hold the invite permission (<c>GuildService.PermissionInvite</c>).
     /// </summary>
     public const ushort InviterNoRight = 8;
 
@@ -43,7 +36,7 @@ internal static class GuildInviteRules
 
     /// <summary>
     /// No character (deleted ones excluded) carries the typed name. The lookup ignores case
-    /// (see <see cref="NameExistsAsync"/>).
+    /// (the host looks it up through <c>ICharacterRepository.NameExistsIgnoreCaseAsync</c>).
     /// </summary>
     public const ushort NoSuchName = 54;
 
@@ -67,7 +60,7 @@ internal static class GuildInviteRules
     /// <param name="InviteeInGuild">The online invitee is already in a guild.</param>
     /// <param name="RejoinAtUtc">The end of the invitee's rejoin cooldown, when one is still running.</param>
     /// <param name="InviteePending">The invitee holds an invite younger than the lifetime.</param>
-    internal readonly record struct InviteFacts(
+    public readonly record struct InviteFacts(
         bool InviterInGuild,
         bool InviterMayInvite,
         bool NameExists,
@@ -77,7 +70,7 @@ internal static class GuildInviteRules
         bool InviteePending);
 
     /// <summary>The 2565 code for <paramref name="f"/>, and the cooldown end that goes with code 73.</summary>
-    internal static (ushort Code, DateTime? RejoinAtUtc) Decide(in InviteFacts f)
+    public static (ushort Code, DateTime? RejoinAtUtc) Decide(in InviteFacts f)
     {
         if (!f.InviterInGuild) return (InviterNoGuild, null);
         if (!f.InviterMayInvite) return (InviterNoRight, null);
@@ -96,19 +89,19 @@ internal static class GuildInviteRules
     /// <remarks>
     /// Only a leave request (1432) starts the cooldown; see <c>GuildDeparture.LeftUtc</c>.
     /// </remarks>
-    internal static TimeSpan RejoinCooldown(IReadOnlyList<ConfigDef> config)
+    public static TimeSpan RejoinCooldown(IReadOnlyList<ConfigDef> config)
         => ConfigNumber(config, ConfigRejoinCooldownHours) is { } hours ? TimeSpan.FromHours(hours) : TimeSpan.Zero;
 
     /// <summary>
     /// How long an unanswered invite blocks another one: Config_Def type 5, in seconds (300 by default). Zero
     /// (never blocks) when the row is absent or not a number.
     /// </summary>
-    internal static TimeSpan InviteLifetime(IReadOnlyList<ConfigDef> config)
+    public static TimeSpan InviteLifetime(IReadOnlyList<ConfigDef> config)
         => ConfigNumber(config, ConfigInviteLifetimeSeconds) is { } seconds ? TimeSpan.FromSeconds(seconds) : TimeSpan.Zero;
 
     /// <summary>The end of a rejoin cooldown that started at <paramref name="leftUtc"/>, or null when there
     /// is none or it is over at <paramref name="nowUtc"/>.</summary>
-    internal static DateTime? RejoinAtUtc(DateTime? leftUtc, TimeSpan cooldown, DateTime nowUtc)
+    public static DateTime? RejoinAtUtc(DateTime? leftUtc, TimeSpan cooldown, DateTime nowUtc)
     {
         if (leftUtc is not { } left || cooldown <= TimeSpan.Zero) return null;
         var end = left + cooldown;
@@ -116,15 +109,8 @@ internal static class GuildInviteRules
     }
 
     /// <summary>Whether <paramref name="invite"/> still blocks another invite at <paramref name="nowUtc"/>.</summary>
-    internal static bool IsPending(GuildPendingInvite? invite, TimeSpan lifetime, DateTime nowUtc)
+    public static bool IsPending(GuildPendingInvite? invite, TimeSpan lifetime, DateTime nowUtc)
         => invite != null && nowUtc - invite.CreatedUtc < lifetime;
-
-    /// <summary>
-    /// Whether a character that is not deleted carries <paramref name="name"/>, compared case-insensitively.
-    /// Used instead of the exact-match lookup, which would reject case variants of a name.
-    /// </summary>
-    internal static Task<bool> NameExistsAsync(ICharacterRepository characters, string name)
-        => characters.NameExistsIgnoreCaseAsync(name);
 
     private static double? ConfigNumber(IReadOnlyList<ConfigDef> config, ushort type)
     {

@@ -9,6 +9,7 @@ using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Characters.Domain;
+using RO2.Guilds.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -46,7 +47,7 @@ public class GuildInviteHandler : ZoneRmiHandlerBase<GuildInviteHandler>
         
         
         var nameExists = invitee != null
-                         || (mayInvite && await GuildInviteRules.NameExistsAsync(services.GetRequiredService<ICharacterRepository>(), inviteeName));
+                         || (mayInvite && await services.GetRequiredService<ICharacterRepository>().NameExistsIgnoreCaseAsync(inviteeName));
         var facts = new GuildInviteRules.InviteFacts(
             InviterInGuild: guild != null,
             InviterMayInvite: mayInvite,
