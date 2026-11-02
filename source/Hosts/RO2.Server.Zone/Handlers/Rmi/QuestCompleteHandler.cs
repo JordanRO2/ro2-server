@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using RO2.Quests.Application;
 using RO2.Quests.Domain;
 using RO2.Domain.Entities;
 using RO2.GameData;
@@ -23,14 +24,8 @@ public class QuestCompleteHandler : ZoneRmiHandlerBase<QuestCompleteHandler>
     public override ushort Opcode => ZoneC2SOpcodes.ReqQuestComplete;
     public override string Name => "QuestComplete";
 
- /// <summary>Quest_Info Complete_Type of a talk objective (Complete_Type_Value1 = the NPC to talk to).</summary>
-    private const byte TalkObjective = 1;
-
  /// <summary>Quest_Info Complete_Type of a "reach a place" objective (Complete_Type_Value1 = a Position_Info id).</summary>
     private const byte PositionObjective = 3;
-
- /// <summary>Quest_Info Complete_Type of a deliver objective (Value1 = item, Value2 = how many).</summary>
-    private const byte DeliverObjective = 5;
 
     public QuestCompleteHandler(IServiceScopeFactory s, ILogger<QuestCompleteHandler> l, PlayerStateManager pm, BroadcastService bc) : base(s, l, pm, bc) { }
 
@@ -66,96 +61,44 @@ public class QuestCompleteHandler : ZoneRmiHandlerBase<QuestCompleteHandler>
 
         
         
-        if (!store.Quests.ContainsKey(questId))
-        {
-            await session.SendRmiAsync(ZoneS2COpcodes.OnQuestError,
-                writer => writer.WriteBytes(QuestProgressPackets.BuildQuestError2431(
-                    questId, QuestProgressPackets.QuestErrorInsertRejected)));
-            return;
-        }
-
-        
-        if (!player.ActiveQuests.Contains(questId))
-        {
-            Logger.LogWarning("{Name} tried to complete non-active quest {QuestId}", player.Name, questId);
-            await session.SendRmiAsync(ZoneS2COpcodes.OnQuestError,
-                writer => writer.WriteBytes(QuestProgressPackets.BuildQuestError2431(
-                    questId, QuestProgressPackets.QuestErrorPrizeRejected)));
-            return;
-        }
-
-        var quest = store.Quests[questId];
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        var isTalk = quest.Complete_Type == TalkObjective;
-        var payNow = isTalk && QuestInfoExtraColumns.IsRewardAuto(questId);
-
-        
-        
-        
-        
-        
-        
-        
+        var useCase = services.GetRequiredService<QuestCompleteUseCase>();
         player.QuestKillProgress.TryGetValue(questId, out var progress);
-        var sendUpdate = isTalk && progress == 0;
+        var decision = useCase.Decide(new QuestCompleteRequest(questId, player.ActiveQuests.Contains(questId), progress,
+            QuestInfoExtraColumns.IsRewardAuto(questId)));
 
-        
-        
-        
-        var deliverTotal = quest.Complete_Type_Value2 == 0 ? (byte)1 : (byte)Math.Min(quest.Complete_Type_Value2, 255);
-        var closesNow = sendUpdate || (quest.Complete_Type == DeliverObjective && progress < deliverTotal);
-
-        if (payNow)
+        switch (decision.Verdict)
         {
-            
-            player.ActiveQuests.Remove(questId);
-            player.QuestKillProgress.Remove(questId);
-            LootService.ResetExtraKillProgress(player, questId);
-            QuestUseItemProgress.Reset(player, questId);
-        }
-        else if (isTalk)
-        {
-            
-            
-            
-            
-            
-            player.QuestKillProgress[questId] = 1;
-        }
-        else if (quest.Complete_Type == DeliverObjective)
-        {
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            player.QuestKillProgress[questId] = Math.Max(progress, deliverTotal);
+            case QuestCompleteVerdict.UnknownQuest:
+                await session.SendRmiAsync(ZoneS2COpcodes.OnQuestError,
+                    writer => writer.WriteBytes(QuestProgressPackets.BuildQuestError2431(
+                        questId, QuestProgressPackets.QuestErrorInsertRejected)));
+                return;
+            case QuestCompleteVerdict.NotHeld:
+                Logger.LogWarning("{Name} tried to complete non-active quest {QuestId}", player.Name, questId);
+                await session.SendRmiAsync(ZoneS2COpcodes.OnQuestError,
+                    writer => writer.WriteBytes(QuestProgressPackets.BuildQuestError2431(
+                        questId, QuestProgressPackets.QuestErrorPrizeRejected)));
+                return;
         }
 
-        
-        
-        
-        
-        
+        var quest = decision.Quest!;
+        var payNow = decision.PayNow;
+        var sendUpdate = decision.SendUpdate;
+        var closesNow = decision.ClosesNow;
+
+        switch (decision.Counter)
+        {
+            case QuestCounterChange.Forget:
+                player.ActiveQuests.Remove(questId);
+                player.QuestKillProgress.Remove(questId);
+                LootService.ResetExtraKillProgress(player, questId);
+                QuestUseItemProgress.Reset(player, questId);
+                break;
+            case QuestCounterChange.Set:
+                player.QuestKillProgress[questId] = decision.CounterValue;
+                break;
+        }
+
         if (sendUpdate)
         {
             var updateTarget = giverId ?? quest.Complete_Type_Value1;
@@ -185,7 +128,7 @@ public class QuestCompleteHandler : ZoneRmiHandlerBase<QuestCompleteHandler>
             
             
             
-            if (isTalk)
+            if (quest.Complete_Type == ObjectiveRules.TalkObjective)
                 await QuestProgressStore.SaveObjectiveStateAsync(services.GetRequiredService<IQuestRepository>(),
                     player, questId, store, Logger);
             Logger.LogInformation("{Name} closed quest {QuestId} at {Giver}; paid at its turn-in",
@@ -193,8 +136,7 @@ public class QuestCompleteHandler : ZoneRmiHandlerBase<QuestCompleteHandler>
             return;
         }
 
-        var questRepo = services.GetRequiredService<IQuestRepository>();
-        await questRepo.CompleteQuestAsync(player.CharacterId, questId);
+        await useCase.CompleteAsync(player.CharacterId, questId);
         
         await QuestPrizeHandler.GrantRewardsAsync(
             session, player, quest, QuestPrizeHandler.NoRewardChoice, services, Logger);
@@ -271,7 +213,7 @@ public class QuestCompleteHandler : ZoneRmiHandlerBase<QuestCompleteHandler>
             Logger.LogDebug("{Name} is not yet at the place of quest(s) {Quests} ({Map} {X:F1},{Y:F1})",
                 player.Name, string.Join(",", refused), player.MapId, player.X, player.Y);
 
-        IQuestRepository? questRepo = null;
+        var useCase = services.GetRequiredService<QuestCompleteUseCase>();
         foreach (var (quest, pay) in closes)
         {
             var questId = quest.Quest_ID;
@@ -284,8 +226,7 @@ public class QuestCompleteHandler : ZoneRmiHandlerBase<QuestCompleteHandler>
                 continue;
             }
 
-            questRepo ??= services.GetRequiredService<IQuestRepository>();
-            await questRepo.CompleteQuestAsync(player.CharacterId, questId);
+            await useCase.CompleteAsync(player.CharacterId, questId);
             await QuestPrizeHandler.GrantRewardsAsync(
                 session, player, quest, QuestPrizeHandler.NoRewardChoice, services, Logger);
             Logger.LogInformation("{Name} quest {QuestId}: place reached, paid on the spot (Reward_Auto)",

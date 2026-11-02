@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using RO2.Quests.Application;
 using RO2.Quests.Domain;
 using RO2.GameData;
 using RO2.Network.Packets;
@@ -58,7 +59,10 @@ public class QuestGiveUpHandler : ZoneRmiHandlerBase<QuestGiveUpHandler>
         
         
         
-        if (!wasActive)
+        // The wipe above stays here, before the decision: the use case only sees whether the quest was held.
+        var useCase = services.GetRequiredService<QuestGiveUpUseCase>();
+        var decision = useCase.Decide(questId, wasActive);
+        if (decision.Verdict == QuestGiveUpVerdict.NotHeld)
         {
             Logger.LogInformation("{Name} tried to give up quest {QuestId}, which is not active: refused with {Code}",
                 player.Name, questId, QuestProgressPackets.QuestErrorPrizeRejected);
@@ -85,8 +89,7 @@ public class QuestGiveUpHandler : ZoneRmiHandlerBase<QuestGiveUpHandler>
         
         
         
-        if (wasActive
-            && services.GetRequiredService<GameDataStore>().Quests.TryGetValue(questId, out var quest))
+        if (decision.Quest is { } quest)
         {
             var grants = QuestAcceptHandler.AcceptGrants(quest);
             if (grants.Count > 0)
@@ -100,8 +103,7 @@ public class QuestGiveUpHandler : ZoneRmiHandlerBase<QuestGiveUpHandler>
         }
 
         
-        var questRepo = services.GetRequiredService<IQuestRepository>();
-        await questRepo.GiveUpQuestAsync(player.CharacterId, questId);
+        await useCase.GiveUpAsync(player.CharacterId, questId);
 
         Logger.LogInformation("{Name} gave up quest {QuestId}", player.Name, questId);
 

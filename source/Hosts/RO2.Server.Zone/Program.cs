@@ -126,9 +126,11 @@ public static class Program
         services.AddSingleton<RO2.Guilds.Application.IGuildExpLedger, GuildExpLedger>();
         services.AddSingleton<RO2.Guilds.Application.ICreditGuildExp, RO2.Guilds.Application.GuildExpCreditUseCase>();
 
-        // Quest.Application: the Quest_Info port and the accept use case (scoped, it holds the scoped IQuestRepository).
+        // Quest.Application: the Quest_Info port and the accept / complete / give-up use cases (scoped, it holds the scoped IQuestRepository).
         services.AddSingleton<RO2.Quests.Application.IQuestGameData, QuestGameData>();
         services.AddScoped<RO2.Quests.Application.QuestAcceptUseCase>();
+        services.AddScoped<RO2.Quests.Application.QuestCompleteUseCase>();
+        services.AddScoped<RO2.Quests.Application.QuestGiveUpUseCase>();
 
         // Instance stores over the singleton MongoDbContext (DB Phase 0, pass 2b). Stateless apart from their
         // collection handles, so singletons; handlers resolve them from the per-message scope, never into a field.

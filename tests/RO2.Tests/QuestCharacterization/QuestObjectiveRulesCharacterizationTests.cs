@@ -46,7 +46,6 @@ public class QuestObjectiveRulesCharacterizationTests
         Assert.Equal(0u, Q.PrivateConst(typeof(QuestPrizeHandler), "TalkRowMetByDialog"));
         Assert.Equal(uint.MaxValue, QuestPrizeHandler.NoRewardChoice);
         Assert.Equal((byte)3, Q.PrivateConst(typeof(QuestCompleteHandler), "PositionObjective"));
-        Assert.Equal((byte)5, Q.PrivateConst(typeof(QuestCompleteHandler), "DeliverObjective"));
         Assert.Equal((byte)34, Q.PrivateConst(typeof(QuestAcceptHandler), "TimedObjective"));
         Assert.Equal((byte)38, Q.PrivateConst(typeof(QuestAcceptHandler), "TimeLimitFailType"));
         Assert.Equal((byte)4, Q.PrivateConst(typeof(QuestAcceptHandler), "CollectObjective"));
