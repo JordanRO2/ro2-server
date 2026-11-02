@@ -1,6 +1,7 @@
 using System.Collections.Frozen;
 using System.Runtime.CompilerServices;
 using RO2.GameData;
+using RO2.Quests.Domain;
 using RO2.Server.Zone.Models;
 
 namespace RO2.Server.Zone.Services;
@@ -17,7 +18,7 @@ namespace RO2.Server.Zone.Services;
 internal static class QuestTalkProgress
 {
  /// <summary>Quest_Info Complete_Type of a talk objective (Complete_Type_Value1 = the NPC to talk to).</summary>
-    internal const byte TalkObjective = 1;
+    internal const byte TalkObjective = ObjectiveRules.TalkObjective;
 
  /// <summary>The met row indexes (into <c>GameDataStore.QuestRows</c>) of each tracked quest.</summary>
     private static readonly ConditionalWeakTable<PlayerState, Dictionary<uint, HashSet<int>>> Table = new();
@@ -44,18 +45,7 @@ internal static class QuestTalkProgress
  /// in this login. Meeting the talk NPC closes its row, as it does for a multi-talk quest. A talk row that names the
  /// reward NPC is left to the turn-in, which meets it.
  /// </remarks>
-    internal static int[] TrackedRows(QuestData[] rows)
-    {
-        var tracked = new List<int>(rows.Length);
-        for (int i = 0; i < rows.Length; i++)
-            if (rows[i].Complete_Type == TalkObjective && rows[i].Complete_Type_Value3 == 0 && rows[i].Complete_Type_Value1 != 0)
-                tracked.Add(i);
-        if (tracked.Count >= 2) return tracked.ToArray();
-        if (tracked.Count == 1 && tracked[0] == 0 && rows.Skip(1).All(r => r.Complete_Type == 0)
-            && rows[0].Complete_Type_Value1 != rows[0].Reward_NPC_ID)
-            return tracked.ToArray();
-        return [];
-    }
+    internal static int[] TrackedRows(QuestData[] rows) => TalkObjectiveRules.TrackedRows(rows);
 
  /// <summary>
  /// Records that the player met <paramref name="npcAsset"/> for <paramref name="questId"/>. Returns null when the quest
@@ -69,15 +59,15 @@ internal static class QuestTalkProgress
         var byQuest = Table.GetOrCreateValue(player);
         lock (byQuest)
         {
-            var targets = tracked.Where(i => rows[i].Complete_Type_Value1 == npcAsset).ToArray();
-            if (targets.Length == 0) return null;
-            if (!byQuest.TryGetValue(questId, out var met))
+            byQuest.TryGetValue(questId, out var met);
+            if (TalkObjectiveRules.MeetDecision(rows, tracked, met, npcAsset) is not { } decision) return null;
+            if (met is null)
             {
                 met = [];
                 byQuest[questId] = met;
             }
-            met.UnionWith(targets);
-            return new Meeting(tracked.All(met.Contains));
+            met.UnionWith(decision.Targets);
+            return new Meeting(decision.AllMet);
         }
     }
 
