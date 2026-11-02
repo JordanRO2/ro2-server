@@ -11,6 +11,7 @@ using RO2.Server.Zone.Services;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
 using RO2.Guilds.Domain;
+using RO2.Quests.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -58,13 +59,13 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
     private const byte TimedObjective = 34;
 
     /// <summary>Quest_Info <c>Reward_Type</c> that pays every filled reward slot.</summary>
-    private const byte RewardTypeAllSlots = 1;
+    private const byte RewardTypeAllSlots = QuestRewardRules.RewardTypeAllSlots;
 
     /// <summary>Quest_Info <c>Reward_Type</c> that pays the one slot named by the reward choice.</summary>
-    private const byte RewardTypePickOne = 2;
+    private const byte RewardTypePickOne = QuestRewardRules.RewardTypePickOne;
 
     /// <summary>Quest_Info <c>Reward_Type</c> that pays the one slot named by the reward choice, like <see cref="RewardTypePickOne"/>.</summary>
-    private const byte RewardTypePickOneAlt = 5;
+    private const byte RewardTypePickOneAlt = QuestRewardRules.RewardTypePickOneAlt;
 
     /// <summary>Value of the session quest counter once an objective is closed and reported to the client (1 for
     /// talk, place, use-item and timed quests).</summary>
@@ -72,7 +73,7 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
 
     /// <summary><c>Complete_Type_Value3</c> of a talk row that is met by speaking to its NPC. A row with Value3 1 is
     /// closed by the client itself with a 1377.</summary>
-    private const uint TalkRowMetByDialog = 0;
+    private const uint TalkRowMetByDialog = QuestTurnInRules.TalkRowMetByDialog;
 
     /// <summary><c>InventoryItem.StorageType</c> of the main bag.</summary>
     private const byte StorageBag = 0;
@@ -333,35 +334,16 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
  /// Returns the ids of the bag stacks that a hand-over of <paramref name="count"/> of <paramref name="itemId"/>
  /// empties, so the bag check can count those cells as free.
  /// </summary>
-    internal static HashSet<ulong> StacksEmptiedBy(IReadOnlyList<InventoryItem> bag, uint itemId, int count)
-    {
-        var emptied = new HashSet<ulong>();
-        var left = count;
-        foreach (var stack in bag)
-        {
-            if (left <= 0) break;
-            if (stack.StorageType != StorageBag || stack.ItemId != itemId) continue;
-            var held = Math.Max(1, stack.Count);
-            if (held <= left) emptied.Add(stack.Id);
-            left -= held;
-        }
-        return emptied;
-    }
+    internal static HashSet<ulong> StacksEmptiedBy(IReadOnlyList<InventoryItem> bag, uint itemId, int count) =>
+        QuestTurnInRules.StacksEmptiedBy(
+            bag.Where(s => s.StorageType == StorageBag).Select(s => (s.Id, s.ItemId, s.Count)), itemId, count);
 
  /// <summary>
  /// Returns the reward items of a quest for the given reward choice, by reward type. Empty slots are
  /// included and must be skipped by the caller.
  /// </summary>
-    internal static (uint Id, uint Count)[] RewardItemsOf(QuestData quest, uint rewardChoice)
-    {
-        var slots = quest.RewardItemSlots();
-        return quest.Reward_Type switch
-        {
-            RewardTypeAllSlots => slots,
-            RewardTypePickOne or RewardTypePickOneAlt => rewardChoice < (uint)slots.Length ? new[] { slots[rewardChoice] } : Array.Empty<(uint Id, uint Count)>(),
-            _ => Array.Empty<(uint Id, uint Count)>(),
-        };
-    }
+    internal static (uint Id, uint Count)[] RewardItemsOf(QuestData quest, uint rewardChoice) =>
+        QuestRewardRules.RewardItemsOf(quest, rewardChoice);
 
  /// <summary>
  /// Checks whether the objective of <paramref name="quest"/> is met for the objectives this server tracks.
@@ -418,9 +400,8 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
  /// </summary>
     internal static bool TalkMetElsewhereUnmet(QuestData quest, uint giverId, bool objectiveClosed, bool acceptedThisLogin,
         GameDataStore store) =>
-        quest.Complete_Type == QuestTalkProgress.TalkObjective && quest.Complete_Type_Value1 != 0
-        && quest.Complete_Type_Value1 != quest.Reward_NPC_ID && quest.Complete_Type_Value1 != giverId
-        && !objectiveClosed && acceptedThisLogin && QuestTalkProgress.IsMeetableNpc(store, quest.Complete_Type_Value1);
+        QuestTurnInRules.TalkMetElsewhereUnmet(quest, giverId, objectiveClosed, acceptedThisLogin,
+            npc => QuestTalkProgress.IsMeetableNpc(store, npc));
 
  /// <summary>
  /// Returns the held quests that the turn-in of <paramref name="questId"/> at <paramref name="giverId"/>
@@ -433,9 +414,8 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
         foreach (var other in player.ActiveQuests.ToArray())
         {
             if (other == questId || !store.QuestRows.TryGetValue(other, out var rows)) continue;
-            if (!IsSingleTalkRow(rows) || rows[0].Complete_Type_Value1 != giverId) continue;
-            if (player.QuestKillProgress.TryGetValue(other, out var p) && p != 0) continue;
-            if (QuestFailState.IsFailed(player, other)) continue;
+            player.QuestKillProgress.TryGetValue(other, out var p);
+            if (!QuestTurnInRules.ClosesWithTurnIn(rows, giverId, p, QuestFailState.IsFailed(player, other))) continue;
             closed.Add(other);
         }
         closed.Sort();
@@ -443,9 +423,7 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
     }
 
  /// <summary>Returns whether the quest's only objective is its first row, a talk objective with an NPC.</summary>
-    internal static bool IsSingleTalkRow(QuestData[] rows) =>
-        rows.Length > 0 && rows[0].Complete_Type == QuestTalkProgress.TalkObjective && rows[0].Complete_Type_Value3 == TalkRowMetByDialog
-        && rows[0].Complete_Type_Value1 != 0 && rows.Skip(1).All(r => r.Complete_Type == QuestProgressStore.NoObjective);
+    internal static bool IsSingleTalkRow(QuestData[] rows) => QuestTurnInRules.IsSingleTalkRow(rows);
 
  /// <summary>
  /// Quests paid to the player in this login. A later turn-in of one of them is refused, as the client expects.
@@ -622,7 +600,7 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
         if (expRate != 0)
             logger.LogDebug("{Name} quest {QuestId}: Reward_EXP {Base} at EXP rate {Rate}/10000 -> {Exp}",
                 player.Name, quest.Quest_ID, quest.Reward_EXP, expRate, exp);
-        var money = (uint)Math.Max(0, quest.Reward_Money);
+        var money = QuestRewardRules.MoneyOf(quest);
 
         
         
@@ -753,10 +731,7 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
         var jobRow = rows.FirstOrDefault(r => r.Action_Type == JobChangeAction && r.Action_Value1 != 0);
         if (jobRow is null) return;
         var jobId = jobRow.Action_Value1;
-        var change = jobId > byte.MaxValue ? null
-            : store.JobChangeTable.FirstOrDefault(j => j.Job_ID == jobId && j.Need_Quest_ID == quest.Quest_ID)
-              ?? store.JobChangeTable.FirstOrDefault(j => j.Job_ID == jobId && j.ISJobMaster == 0)
-              ?? store.JobChangeTable.FirstOrDefault(j => j.Job_ID == jobId);
+        var change = JobChangeSelection.Pick(jobId, quest.Quest_ID, store.JobChangeTable);
         if (change is null)
         {
             logger.LogWarning("{Name} quest {QuestId}: job change to {Job}, which is no JobChange_Table Job_ID; not applied",
