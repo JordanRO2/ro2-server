@@ -1,5 +1,4 @@
 using RO2.Guilds.Domain;
-using System.Buffers.Binary;
 using System.Collections.Concurrent;
 using Npgsql;
 using RO2.Persistence.Postgres;
@@ -54,40 +53,6 @@ public sealed class GuildDepartureRepository : IGuildDepartureRepository
     private const int ColumnCharId = 0;
     private const int ColumnLeftUtc = 1;
     private const int ColumnKickNoticePending = 2;
-
-    /// <summary>
-    /// Inner length of the 2570 kick-notice body: <c>3 + 2n</c> for a name of n = 1 character (the u8 name
-    /// length, the one UTF-16 character, the u16 terminator).
-    /// </summary>
-    private const uint KickNoticeInnerLength = 5;
-
-    /// <summary>Name length (in UTF-16 characters) of the placeholder name in the kick-notice body.</summary>
-    private const byte KickNoticeNameChars = 1;
-
-    /// <summary>
-    /// The single placeholder name character (U+0012) of the kick-notice body. It is not a guild name: the
-    /// client ignores the name and prints the expelled notice with the player's own name.
-    /// </summary>
-    private const ushort KickNoticePlaceholderChar = 0x0012;
-
-    /// <summary>Size of the kick-notice body: u32 length + u8 name length + 1 UTF-16 char + u16 terminator.</summary>
-    private const int KickNoticeBodyLength = 4 + 1 + 2 + 2;
-
-    /// <summary>
-    /// The 2570 NfyGuildKickMember body sent to a member kicked while offline, at their next world
-    /// entry. It has the layout of the online kick notice, <c>[u32 L = 3 + 2n][u8 n][n UTF-16LE characters]
-    /// [u16 0]</c>, with a one-character placeholder name instead of the guild name (9 bytes in all). The
-    /// client ignores the name and shows the expelled notice with the player's own name.
-    /// </summary>
-    public static byte[] KickNoticeBody()
-    {
-        var body = new byte[KickNoticeBodyLength];
-        BinaryPrimitives.WriteUInt32LittleEndian(body, KickNoticeInnerLength);
-        body[4] = KickNoticeNameChars;
-        BinaryPrimitives.WriteUInt16LittleEndian(body.AsSpan(5), KickNoticePlaceholderChar);
-        // The trailing u16 terminator is the zero-initialised last two bytes.
-        return body;
-    }
 
     public async Task InitAsync()
     {

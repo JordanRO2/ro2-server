@@ -1,6 +1,7 @@
 using RO2.Guilds.Infrastructure.Postgres;
 using RO2.Persistence.Postgres;
 using RO2.Persistence.Postgres.Repositories;
+using RO2.Server.Zone.Services;
 using Xunit;
 
 namespace RO2.Tests.Integration;
@@ -260,6 +261,6 @@ public sealed class PostgresGuildDepartureTests
     [Fact]
     public void KickNoticeBody_is_retails_constant()
     {
-        Assert.Equal("050000000112000000", Convert.ToHexString(GuildDepartureRepository.KickNoticeBody()).ToLowerInvariant());
+        Assert.Equal("050000000112000000", Convert.ToHexString(GuildPackets.KickNoticeBody()).ToLowerInvariant());
     }
 }
