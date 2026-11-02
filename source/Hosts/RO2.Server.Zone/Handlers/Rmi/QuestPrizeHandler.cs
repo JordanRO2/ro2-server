@@ -735,11 +735,10 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
             writer => writer.WriteBytes(GuildBribePackets.BuildNfyGuildBribeHunting(bribe)));
 
         var store = services.GetRequiredService<GameDataStore>();
-        var (before, after) = await GuildService.Instance.CreditMemberExpAsync(guild, player.CharacterId, bribe);
-        var oldLevel = GuildRosterPackets.GuildLevelOf(before, store.GuildExpTable).Level;
-        var newLevel = GuildRosterPackets.GuildLevelOf(after, store.GuildExpTable).Level;
-        return newLevel > oldLevel
-            ? new GuildDonation(bribe, guild, newLevel)
+        var credit = await services.GetRequiredService<RO2.Guilds.Application.ICreditGuildExp>()
+            .CreditAsync(guild, player.CharacterId, bribe, store.GuildExpTable);
+        return credit.LevelledUp
+            ? new GuildDonation(bribe, guild, credit.NewLevel)
             : new GuildDonation(bribe, null, 0);
     }
 

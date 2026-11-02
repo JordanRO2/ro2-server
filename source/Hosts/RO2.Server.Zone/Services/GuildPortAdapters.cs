@@ -70,6 +70,13 @@ public sealed class GuildDirectory : IGuildDirectory
     public Guild? GetByCharId(uint charId) => GuildService.Instance.GetByCharId(charId);
 }
 
+/// <summary>Host adapter of <see cref="IGuildExpLedger"/>: the live registry credits under the guild's gate and writes the guild.</summary>
+public sealed class GuildExpLedger : IGuildExpLedger
+{
+    public Task<(ulong Before, ulong After)> CreditMemberAsync(Guild guild, uint charId, ulong amount)
+        => GuildService.Instance.CreditMemberExpAsync(guild, charId, amount);
+}
+
 /// <summary>Host adapter of <see cref="IGuildFundsLedger"/> over the live registry singleton.</summary>
 public sealed class GuildFundsLedger : IGuildFundsLedger
 {

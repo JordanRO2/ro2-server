@@ -36,14 +36,19 @@ public class CombatService
     /// </summary>
     private readonly IServiceScopeFactory? _scopeFactory;
 
+    /// <summary>The Guild call-in that credits the level-up bribe; the container always supplies it, a test that never loads a guild may omit it.</summary>
+    private readonly RO2.Guilds.Application.ICreditGuildExp? _creditGuildExp;
+
     public CombatService(
         PlayerStateManager playerManager,
         NpcStateManager npcState,
         BroadcastService broadcast,
         GameDataStore data,
         ILogger<CombatService> logger,
-        IServiceScopeFactory? scopeFactory = null)
+        IServiceScopeFactory? scopeFactory = null,
+        RO2.Guilds.Application.ICreditGuildExp? creditGuildExp = null)
     {
+        _creditGuildExp = creditGuildExp;
         _playerManager = playerManager;
         _npcState = npcState;
         _broadcast = broadcast;
@@ -283,10 +288,10 @@ public class CombatService
             // (see Guild.Exp). The next 2559 of every member shows it (GuildRosterPackets.GuildLevelOf). It is
             // also the member's own contribution: roster +30 moves by the 2725 + 2726 amounts, so the credit goes
             // through CreditMemberExpAsync, not the guild-only AddExpAsync.
-            var (before, after) = await GuildService.Instance.CreditMemberExpAsync(guild, player.CharacterId, bribe);
-            var oldGuildLevel = GuildRosterPackets.GuildLevelOf(before, _data.GuildExpTable).Level;
-            var newGuildLevel = GuildRosterPackets.GuildLevelOf(after, _data.GuildExpTable).Level;
-            if (newGuildLevel > oldGuildLevel)
+            var credit = await (_creditGuildExp ?? throw new InvalidOperationException("CombatService built without ICreditGuildExp"))
+                .CreditAsync(guild, player.CharacterId, bribe, _data.GuildExpTable);
+            var newGuildLevel = credit.NewLevel;
+            if (credit.LevelledUp)
             {
                 // 2728 NfyGuildLevelUP [u8 new level] to the online members, right after the credit that
                 // crossed the level (within a few milliseconds of the 2725/2726; it can go out to two members'

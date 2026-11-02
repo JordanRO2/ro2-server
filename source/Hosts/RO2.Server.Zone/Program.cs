@@ -117,6 +117,9 @@ public static class Program
         services.AddSingleton<RO2.Guilds.Application.IGuildDirectory, GuildDirectory>();
         services.AddSingleton<RO2.Guilds.Application.IGuildFundsLedger, GuildFundsLedger>();
         services.AddSingleton<RO2.Guilds.Application.GuildFundsUseCase>();
+        // Call-in port for Combat and Quest: they credit donated guild exp through it, never via GuildService.
+        services.AddSingleton<RO2.Guilds.Application.IGuildExpLedger, GuildExpLedger>();
+        services.AddSingleton<RO2.Guilds.Application.ICreditGuildExp, RO2.Guilds.Application.GuildExpCreditUseCase>();
 
         // Instance stores over the singleton MongoDbContext (DB Phase 0, pass 2b). Stateless apart from their
         // collection handles, so singletons; handlers resolve them from the per-message scope, never into a field.
