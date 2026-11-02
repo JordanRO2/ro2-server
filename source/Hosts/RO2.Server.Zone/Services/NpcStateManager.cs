@@ -188,9 +188,6 @@ public class NpcStateManager
     private readonly GameDataStore _data;
     private readonly ILogger<NpcStateManager> _logger;
 
-    /// <summary>Default respawn delay for killed NPCs.</summary>
-    private static readonly TimeSpan RespawnDelay = TimeSpan.FromSeconds(30);
-
     // Stand-in stats for a spawn whose asset has no NpcServerInfo / NPCInfo row. They are placeholders, not game
     // data, and apply only to that missing-row case.
 
@@ -648,7 +645,7 @@ public class NpcStateManager
     {
         var now = DateTime.UtcNow;
         return _npcs.Values
-            .Where(s => s.IsDead && s.DeathTime.HasValue && now - s.DeathTime.Value >= RespawnDelay);
+            .Where(s => MonsterRespawnRules.IsRespawnReady(s.Vitals, now));
     }
 
     /// <summary>
