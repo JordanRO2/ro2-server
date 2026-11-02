@@ -1,3 +1,4 @@
+using RO2.Guilds.Application;
 using RO2.Guilds.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -58,17 +59,9 @@ public class GuildSkillLearnHandler : ZoneRmiHandlerBase<GuildSkillLearnHandler>
 
         
         
-        List<uint>? learned;
-        GuildSkillLearnPackets.LearnRefusal refusal;
-        byte unspentAfter;
-        lock (guild.Gate)
-        {
-            learned = GuildSkillLearnPackets.PlanLearn(requested, guild.Skills, guildLevel, table, out refusal);
-            if (learned is not null)
-                foreach (var id in learned)
-                    if (!guild.Skills.Contains(id)) guild.Skills.Add(id);
-            unspentAfter = GuildSkillLearnPackets.UnspentPoints(guildLevel, guild.Skills, table);
-        }
+        var (learned, domainRefusal, unspentAfter) = await services.GetRequiredService<GuildSkillLearnUseCase>()
+            .LearnAsync(guild, requested, guildLevel, table);
+        var refusal = (GuildSkillLearnPackets.LearnRefusal)(int)domainRefusal;
 
         if (learned is null)
         {
@@ -79,10 +72,6 @@ public class GuildSkillLearnHandler : ZoneRmiHandlerBase<GuildSkillLearnHandler>
             return;
         }
 
-        
-        await GuildService.Instance.AddSkillAsync(guild, learned[^1]);
-
-        
         await SendResultAsync(session, GuildSkillLearnPackets.ResultLearned, ct);
 
         var notice = GuildSkillLearnPackets.BuildNfyGuildSkillLearn2724(unspentAfter,

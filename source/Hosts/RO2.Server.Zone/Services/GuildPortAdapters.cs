@@ -77,6 +77,12 @@ public sealed class GuildExpLedger : IGuildExpLedger
         => GuildService.Instance.CreditMemberExpAsync(guild, charId, amount);
 }
 
+/// <summary>Host adapter of <see cref="IGuildSkillLedger"/>: the live registry adds the skill under the guild's gate and writes the guild once.</summary>
+public sealed class GuildSkillLedger : IGuildSkillLedger
+{
+    public Task AddSkillAsync(Guild guild, uint skillId) => GuildService.Instance.AddSkillAsync(guild, skillId);
+}
+
 /// <summary>Host adapter of <see cref="IGuildFundsLedger"/> over the live registry singleton.</summary>
 public sealed class GuildFundsLedger : IGuildFundsLedger
 {

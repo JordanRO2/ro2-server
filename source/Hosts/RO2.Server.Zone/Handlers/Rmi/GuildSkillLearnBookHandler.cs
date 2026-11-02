@@ -1,3 +1,4 @@
+using RO2.Guilds.Application;
 using RO2.Guilds.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -66,15 +67,9 @@ public class GuildSkillLearnBookHandler : ZoneRmiHandlerBase<GuildSkillLearnBook
 
         
         
-        GuildSkillBookLearn.Verdict verdict;
-        byte unspentAfter;
-        lock (guild.Gate)
-        {
-            verdict = GuildSkillBookLearn.Plan(skillId, guild.Skills, guildLevel, table);
-            if (verdict == GuildSkillBookLearn.Verdict.Learn && !guild.Skills.Contains(skillId))
-                guild.Skills.Add(skillId);
-            unspentAfter = GuildSkillLearnPackets.UnspentPoints(guildLevel, guild.Skills, table);
-        }
+        var (domainVerdict, unspentAfter) = await services.GetRequiredService<GuildSkillLearnUseCase>()
+            .LearnBookAsync(guild, skillId, guildLevel, table);
+        var verdict = (GuildSkillBookLearn.Verdict)(int)domainVerdict;
 
         if (verdict == GuildSkillBookLearn.Verdict.NotLearnable)
         {
@@ -91,10 +86,6 @@ public class GuildSkillLearnBookHandler : ZoneRmiHandlerBase<GuildSkillLearnBook
             return;
         }
 
-        
-        await GuildService.Instance.AddSkillAsync(guild, skillId);
-
-        
         var (bag, slot) = ItemWorkbench.ClientBagSlot(book);
         var remaining = book.Count - 1;
         if (remaining <= 0) { await inventory.RemoveItemAsync(itemUid); remaining = 0; }
