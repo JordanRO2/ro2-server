@@ -360,7 +360,7 @@ public class MailSendCharacterizationTests
         await using var r = await MailRig.StartAsync(sessions: 2);
         var online = r.AddOnline(Recipient, "Rcvr", 0x0A0B0C11);
         var svc = new MailService(r.Fx.MailRepo, r.Fx.CharacterRepo, r.Players, r.Broadcast, NullLogger.Instance);
-        for (int i = 0; i < 70_000; i++) r.Fx.Mail.Seed(new RO2.Domain.Entities.MailMessage { ReceiverCharId = Recipient });
+        for (int i = 0; i < 70_000; i++) r.Fx.Mail.Seed(new RO2.Mails.Domain.MailMessage { ReceiverCharId = Recipient });
 
         await svc.NotifyNewMailAsync(Recipient);
 

@@ -1,6 +1,6 @@
 using RO2.Economy.Domain;
 using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
+using RO2.Mails.Domain;
 using RO2.Server.Zone.Models;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;

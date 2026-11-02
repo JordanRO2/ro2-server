@@ -1,5 +1,5 @@
 using RO2.Economy.Domain;
-using RO2.Domain.Entities;
+using RO2.Mails.Domain;
 using Xunit;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;

@@ -2,7 +2,7 @@ using System;
 using System.Buffers.Binary;
 using System.Collections.Generic;
 using System.Text;
-using RO2.Domain.Entities;
+using RO2.Mails.Domain;
 using RO2.Network.Packets;
 
 namespace RO2.Server.Zone.Services;

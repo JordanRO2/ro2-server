@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Plural namespace: a namespace "RO2.Mail" would shadow any future Mail type in every RO2.* file (CS0118), as RO2.Quests.Domain / RO2.Guilds.Domain avoid. -->
+    <RootNamespace>RO2.Mails.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Mail bounded context: Domain references ONLY RO2.BuildingBlocks + the shared RO2.GameData kernel + the foundational RO2.Inventory.Domain
+       (MailMessage's attachment docs cref InventoryItem; the later snapshot mappers need it). No Mongo, no ProudNet, no host. -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+    <ProjectReference Include="..\..\Inventory\RO2.Inventory.Domain\RO2.Inventory.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -2,7 +2,7 @@ using RO2.Economy.Domain;
 using System.Buffers.Binary;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
-using RO2.Domain.Entities;
+using RO2.Mails.Domain;
 using RO2.GameData;
 using RO2.Network.Packets;
 using RO2.Server.Zone.Handlers.Rmi;

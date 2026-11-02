@@ -3,7 +3,7 @@ using System.Reflection;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
-using RO2.Domain.Entities;
+using RO2.Mails.Domain;
 using RO2.Persistence.Mongo.Persistence;
 using RO2.Persistence.Mongo.Repositories;
 using Testcontainers.MongoDb;

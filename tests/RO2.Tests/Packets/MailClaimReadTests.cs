@@ -1,4 +1,4 @@
-using RO2.Domain.Entities;
+using RO2.Mails.Domain;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using Xunit;

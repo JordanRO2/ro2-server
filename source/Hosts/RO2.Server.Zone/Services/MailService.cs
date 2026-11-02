@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
+using RO2.Mails.Domain;
 using RO2.Persistence.Mongo.Persistence;
 using RO2.Application;
 using RO2.Persistence.Mongo.Repositories;

@@ -1,4 +1,4 @@
-using RO2.Domain.Entities;
+using RO2.Mails.Domain;
 
 namespace RO2.Application.Interfaces;
 

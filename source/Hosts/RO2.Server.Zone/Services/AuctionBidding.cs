@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
+using RO2.Mails.Domain;
 using RO2.Network.Packets;
 using RO2.Server.Zone.Models;
 using RO2.Characters.Domain;
@@ -14,7 +14,7 @@ using RO2.Characters.Domain;
 namespace RO2.Server.Zone.Services;
 
 /// <summary>
-/// <see cref="RO2.Domain.Entities.MailMessage.Kind"/> values of the mails produced by a bid, next to the auction kinds in <see cref="AuctionMailKind"/>.
+/// <see cref="RO2.Mails.Domain.MailMessage.Kind"/> values of the mails produced by a bid, next to the auction kinds in <see cref="AuctionMailKind"/>.
 /// </summary>
 /// <remarks>
 /// <para>

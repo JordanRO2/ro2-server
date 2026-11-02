@@ -1,5 +1,5 @@
 using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
+using RO2.Mails.Domain;
 
 namespace RO2.Tests.Economy;
 

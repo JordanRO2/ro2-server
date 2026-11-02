@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Mails.Domain;
 
 /// <summary>
 /// A stored mail. Persisted to the <c>mails</c> collection in the local dev Mongo (db ro2_server).
