@@ -528,7 +528,7 @@ public class LootService
         if (DungeonFinderPendingStore.GetRun(killer) is not null)
         {
             using var finderScope = _scopeFactory.CreateScope();
-            await DungeonFinderReward.TryPayAsync(killerSession, killer, npcId, _data, this, finderScope.ServiceProvider, _logger);
+            await DungeonFinderReward.TryPayAsync(killerSession, killer, npcId, _data, finderScope.ServiceProvider, _logger);
         }
 
         

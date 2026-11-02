@@ -405,8 +405,8 @@ public class ItemPickUpHandler : ZoneRmiHandlerBase<ItemPickUpHandler>
     {
         // Quest and Khara progress for the new bag contents, ahead of the item's 2333 (the kill path
         // uses the same order: 2424 before the 2333 of the same item).
-        await services.GetRequiredService<LootService>()
-            .AdvanceCollectQuestsAsync(session, player, itemTemplateId, count);
+        await services.GetRequiredService<IQuestObjectiveEvents>()
+            .OnItemGainedAsync(session, player, itemTemplateId, count);
         await KharaService.OnHeldItemChangedAsync(session, player, itemTemplateId, services, logger);
 
         foreach (var stack in landed)

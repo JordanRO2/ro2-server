@@ -117,7 +117,7 @@ public class RandomItemBattingHandler : ZoneRmiHandlerBase<RandomItemBattingHand
 
         
         await KharaService.OnHeldItemChangedAsync(session, player, prizeId, services, Logger, ct);
-        await services.GetRequiredService<LootService>().AdvanceCollectQuestsAsync(session, player, prizeId, prizeCount);
+        await services.GetRequiredService<IQuestObjectiveEvents>().OnItemGainedAsync(session, player, prizeId, prizeCount);
         await CardRegistrationNotifier.NotifyArrivedAsync(session, player.CharacterId, new[] { prizeId }, services, Logger);
 
         

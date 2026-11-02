@@ -100,7 +100,7 @@ public class ItemDestroyHandler : ZoneRmiHandlerBase<ItemDestroyHandler>
         
         
         
-        await QuestCollectDropTicks.OnCollectItemLeftBagAsync(session, player, it.ItemId, services, Logger, ct);
+        await services.GetRequiredService<IQuestObjectiveEvents>().OnItemLeftBagAsync(session, player, it.ItemId, services, Logger, ct);
 
         
         

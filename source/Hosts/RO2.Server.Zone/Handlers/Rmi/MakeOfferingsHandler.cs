@@ -105,7 +105,7 @@ public class MakeOfferingsHandler : ZoneRmiHandlerBase<MakeOfferingsHandler>
         
         
         await KharaService.OnHeldItemChangedAsync(session, player, item.ItemId, services, Logger, ct);
-        await QuestCollectDropTicks.OnCollectItemLeftBagAsync(session, player, item.ItemId, services, Logger, ct);
+        await services.GetRequiredService<IQuestObjectiveEvents>().OnItemLeftBagAsync(session, player, item.ItemId, services, Logger, ct);
 
         await session.SendRmiAsync(ZoneS2COpcodes.OnUseItem, writer => writer.WriteBytes(
             CombatPackets.BuildUseItem2329(player.EntityId, slotIx, bagIx, item.Id,

@@ -187,6 +187,7 @@ public static class Program
         services.AddSingleton<PartyService>();
         services.AddSingleton<CombatService>();
         services.AddSingleton<LootService>();
+        services.AddSingleton<IQuestObjectiveEvents, QuestObjectiveEvents>();
         services.AddSingleton<AnnouncementService>();
         services.AddSingleton<ZoneService>();
         // Pending channel moves (RMI 1420 -> 2556 -> reconnect -> 1421). The 1421 arrives on a NEW

@@ -742,7 +742,7 @@ public static class IllusionPyramidService
         var landed = await ItemPickUpHandler.WriteLandingAsync(inventory, landing, player, reward.ItemId, logger);
         if (landed.Count == 0) return;
 
-        await services.GetRequiredService<LootService>().AdvanceCollectQuestsAsync(session, player, reward.ItemId, reward.Count);
+        await services.GetRequiredService<IQuestObjectiveEvents>().OnItemGainedAsync(session, player, reward.ItemId, reward.Count);
         await KharaService.OnHeldItemChangedAsync(session, player, reward.ItemId, services, logger, ct);
         foreach (var stack in landed)
             await session.SendRmiAsync(ZoneS2COpcodes.OnPickupItem,

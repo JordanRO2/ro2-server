@@ -101,7 +101,7 @@ public class WebItemAtMyInvenHandler : ZoneRmiHandlerBase<WebItemAtMyInvenHandle
 
         
         
-        await services.GetRequiredService<LootService>().AdvanceCollectQuestsAsync(session, player, taken.ItemId, records.Count);
+        await services.GetRequiredService<IQuestObjectiveEvents>().OnItemGainedAsync(session, player, taken.ItemId, records.Count);
         await KharaService.OnHeldItemChangedAsync(session, player, taken.ItemId, services, Logger, ct);
 
         double filed = CashMallPackets.WallClockOleDate(taken.FiledUtc);

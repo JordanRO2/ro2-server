@@ -126,7 +126,7 @@ public class SellItemHandler : ZoneRmiHandlerBase<SellItemHandler>
         foreach (var templateId in result.SoldTemplates)
         {
             await KharaService.OnHeldItemChangedAsync(session, player, templateId, services, Logger, ct);
-            await QuestCollectDropTicks.OnCollectItemLeftBagAsync(session, player, templateId, services, Logger, ct);
+            await services.GetRequiredService<IQuestObjectiveEvents>().OnItemLeftBagAsync(session, player, templateId, services, Logger, ct);
         }
 
         // OnSellItem 2376: for each sold stack the client finds the slot by the record's uid and clears

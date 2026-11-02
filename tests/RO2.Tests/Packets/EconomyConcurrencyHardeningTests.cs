@@ -210,6 +210,7 @@ public sealed class EconomyConcurrencyHardeningTests
         var sc = new ServiceCollection()
             .AddScoped(_ => inv)
             .AddSingleton(store)
+            .AddSingleton<IQuestObjectiveEvents, RO2.Tests.Economy.ForwardingQuestEvents>()
             .AddSingleton(DispatchProxy.Create<ICharacterRepository, WalletSink>());
         if (npcs is not null) sc.AddSingleton(npcs);
         return sc.BuildServiceProvider();

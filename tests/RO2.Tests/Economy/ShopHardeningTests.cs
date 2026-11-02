@@ -125,6 +125,7 @@ public sealed class ShopHardeningTests
             .AddSingleton(fx.CharacterRepo)
             .AddSingleton(store)
             .AddSingleton(npcs)
+            .AddSingleton<IQuestObjectiveEvents, ForwardingQuestEvents>()
             .BuildServiceProvider();
         return new Rig
         {

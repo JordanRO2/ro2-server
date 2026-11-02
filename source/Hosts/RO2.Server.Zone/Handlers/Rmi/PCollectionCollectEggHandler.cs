@@ -78,7 +78,7 @@ public class PCollectionCollectEggHandler : ZoneRmiHandlerBase<PCollectionCollec
 
         
         
-        await services.GetRequiredService<LootService>().AdvanceCollectQuestsAsync(session, player, pet.Hatched_Egg_ID, 1);
+        await services.GetRequiredService<IQuestObjectiveEvents>().OnItemGainedAsync(session, player, pet.Hatched_Egg_ID, 1);
         await KharaService.OnHeldItemChangedAsync(session, player, pet.Hatched_Egg_ID, services, Logger);
         foreach (var stack in landed)
             await session.SendRmiAsync(ZoneS2COpcodes.OnPickupItem,

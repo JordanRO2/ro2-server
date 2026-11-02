@@ -156,7 +156,7 @@ public static class AccountGiftClaims
 
         
         
-        await services.GetRequiredService<LootService>().AdvanceCollectQuestsAsync(session, player, gift.ItemId, gift.Count);
+        await services.GetRequiredService<IQuestObjectiveEvents>().OnItemGainedAsync(session, player, gift.ItemId, gift.Count);
         await KharaService.OnHeldItemChangedAsync(session, player, gift.ItemId, services, logger);
 
         await session.SendRmiAsync(ZoneS2COpcodes.AnsGetAccountGift, AccountGiftPackets.Build2800(player.AccountId,

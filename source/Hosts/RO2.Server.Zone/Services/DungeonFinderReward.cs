@@ -49,7 +49,7 @@ public static class DungeonFinderReward
  /// Pays <paramref name="killer"/>'s finder run when <paramref name="npcId"/> is the list's last boss.
  /// </summary>
     public static async Task TryPayAsync(ProudSession session, PlayerState killer, uint npcId, GameDataStore data,
-        LootService loot, IServiceProvider services, ILogger logger)
+        IServiceProvider services, ILogger logger)
     {
         var run = DungeonFinderPendingStore.GetRun(killer);
         if (run is null) return;
@@ -120,7 +120,7 @@ public static class DungeonFinderReward
 
             
             
-            await loot.AdvanceCollectQuestsAsync(session, killer, landing.ItemId, landing.Count);
+            await services.GetRequiredService<IQuestObjectiveEvents>().OnItemGainedAsync(session, killer, landing.ItemId, landing.Count);
             await KharaService.OnHeldItemChangedAsync(session, killer, landing.ItemId, services, logger);
             foreach (var stack in landed)
                 await session.SendRmiAsync(ZoneS2COpcodes.OnPickupItem,

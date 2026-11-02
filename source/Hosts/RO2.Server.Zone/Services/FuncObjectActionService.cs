@@ -69,7 +69,7 @@ public static class FuncObjectActionService
             plans.Add((itemId, count, landing));
         }
 
-        var loot = services.GetRequiredService<LootService>();
+        var quests = services.GetRequiredService<IQuestObjectiveEvents>();
         var anyLanded = false;
         foreach (var (itemId, count, landing) in plans)
         {
@@ -79,7 +79,7 @@ public static class FuncObjectActionService
 
             
             
-            await loot.AdvanceCollectQuestsAsync(session, player, itemId, count);
+            await quests.OnItemGainedAsync(session, player, itemId, count);
             await KharaService.OnHeldItemChangedAsync(session, player, itemId, services, logger, ct);
             foreach (var stack in landed)
                 await session.SendRmiAsync(ZoneS2COpcodes.OnPickupItem,
