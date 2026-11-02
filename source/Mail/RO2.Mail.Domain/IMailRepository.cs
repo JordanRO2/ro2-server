@@ -1,6 +1,4 @@
-using RO2.Mails.Domain;
-
-namespace RO2.Application.Interfaces;
+namespace RO2.Mails.Domain;
 
 /// <summary>
 /// Persistence of player and system mail (the <c>mails</c> store). One store behind every mail writer: player

@@ -1,4 +1,3 @@
-using RO2.Application.Interfaces;
 using RO2.BuildingBlocks;
 using RO2.Mails.Domain;
 using RO2.Economy.Application;
