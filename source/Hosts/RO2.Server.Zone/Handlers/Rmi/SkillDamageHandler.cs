@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using RO2.Monster.Application;
 using RO2.Skills.Domain;
 using RO2.Combats.Domain;
 using RO2.Combats.Application;
@@ -462,15 +463,12 @@ public class SkillDamageHandler : ZoneRmiHandlerBase<SkillDamageHandler>
                     npc.MapId, handle, ReqActorDetailInfoHandler.BuildIconOf(npc), ct);
 
                 // The kill's credit, which names no corpse: 2425/2427, 2577, the EXP grant's 2394 burst and
-                // each receiver's 2393.
-                await loot.ProcessKillCreditAsync(session, player, handle, npc.NpcId);
-
-                // Same grant the normal-attack path sends, for the same reasons: unicast to the killer, and
-                // BEFORE the corpse's 2392 (ProcessNpcCorpseAsync below). Without it a skill kill leaves the
-                // corpse out of the client's loot list, so CLootIndicatorMgr never lights it and the body
-                // cannot be opened.
-                await session.SendInternalRmiAsync(ZoneS2COpcodes.OnLootingAuthority,
-                    CombatPackets.BuildLootingAuthority2471(handle));
+                // each receiver's 2393. Then the same 2471 grant the normal-attack path sends, for the same reasons:
+                // unicast to the killer, and BEFORE the corpse's 2392 (ProcessNpcCorpseAsync below). Without it a
+                // skill kill leaves the corpse out of the client's loot list, so CLootIndicatorMgr never lights it
+                // and the body cannot be opened.
+                await MonsterKillGrant.SendCreditAndAuthorityAsync(loot, session, player,
+                    new MonsterDied(handle, npc.NpcId, player.EntityId));
             }
         }
 

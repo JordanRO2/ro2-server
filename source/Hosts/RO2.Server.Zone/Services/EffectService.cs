@@ -1,3 +1,4 @@
+using RO2.Monster.Application;
 using System.Buffers.Binary;
 using System.Collections.Concurrent;
 using Microsoft.Extensions.DependencyInjection;
@@ -1685,10 +1686,7 @@ public sealed class EffectService : BackgroundService
         if (session == null)
             return;
 
-        await _loot.ProcessKillCreditAsync(session, killer, npc.EntityOid, npc.NpcId);
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.OnLootingAuthority,
-            CombatPackets.BuildLootingAuthority2471(npc.EntityOid));
-        await _loot.ProcessNpcCorpseAsync(session, killer, npc.EntityOid, npc.NpcId);
+        await MonsterKillGrant.SendAsync(_loot, session, killer, new MonsterDied(npc.EntityOid, npc.NpcId, casterHandle));
     }
 
     // ---- Removal --------------------------------------------------------------------------------

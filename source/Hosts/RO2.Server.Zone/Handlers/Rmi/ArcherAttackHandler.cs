@@ -1,3 +1,4 @@
+using RO2.Monster.Application;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.GameData;
@@ -88,10 +89,8 @@ public class ArcherAttackHandler : ZoneRmiHandlerBase<ArcherAttackHandler>
                 npc.MapId, npc.EntityOid, ReqActorDetailInfoHandler.BuildIconOf(npc), ct);
             // Credit, then the 2471 grant, then the corpse: retail's kill order (LootService.ProcessKillCreditAsync).
             var loot = services.GetRequiredService<LootService>();
-            await loot.ProcessKillCreditAsync(session, player, targetEntityId, npc.NpcId);
-            await session.SendInternalRmiAsync(ZoneS2COpcodes.OnLootingAuthority,
-                CombatPackets.BuildLootingAuthority2471(npc.EntityOid));
-            await loot.ProcessNpcCorpseAsync(session, player, targetEntityId, npc.NpcId);
+            await MonsterKillGrant.SendAsync(loot, session, player,
+                new MonsterDied(targetEntityId, npc.NpcId, player.EntityId));
         }
     }
 }

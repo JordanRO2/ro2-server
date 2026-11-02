@@ -1,3 +1,4 @@
+using RO2.Monster.Application;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Network.Packets;
@@ -212,10 +213,8 @@ public class NormalAttackDamageHandler : ZoneRmiHandlerBase<NormalAttackDamageHa
             // 2425 quest tick, 2427 and 2577 precede the 2471, and the 2393 comes right before it (the skill-kill
             // path, SkillDamageHandler, has the same split).
             var loot = services.GetRequiredService<LootService>();
-            await loot.ProcessKillCreditAsync(session, player, targetEntityId, npcRuntime.NpcId);
-            await session.SendInternalRmiAsync(ZoneS2COpcodes.OnLootingAuthority,
-                CombatPackets.BuildLootingAuthority2471(npcRuntime.EntityOid));
-            await loot.ProcessNpcCorpseAsync(session, player, targetEntityId, npcRuntime.NpcId);
+            await MonsterKillGrant.SendAsync(loot, session, player,
+                new MonsterDied(targetEntityId, npcRuntime.NpcId, player.EntityId));
         }
     }
 

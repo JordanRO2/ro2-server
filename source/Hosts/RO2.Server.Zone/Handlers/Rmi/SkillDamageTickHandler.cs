@@ -1,3 +1,4 @@
+using RO2.Monster.Application;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Network.Packets;
@@ -224,10 +225,8 @@ public class SkillDamageTickHandler : ZoneRmiHandlerBase<SkillDamageTickHandler>
 
             // Credit, then the 2471 grant, then the corpse (LootService.ProcessKillCreditAsync),
             // run for each monster this tick killed, as SkillDamageHandler does for a 1509 that kills several.
-            await loot.ProcessKillCreditAsync(session, player, targetHandle, npcRuntime.NpcId);
-
-            await session.SendInternalRmiAsync(ZoneS2COpcodes.OnLootingAuthority,
-                CombatPackets.BuildLootingAuthority2471(targetHandle));
+            var died = new MonsterDied(targetHandle, npcRuntime.NpcId, player.EntityId);
+            await MonsterKillGrant.SendCreditAndAuthorityAsync(loot, session, player, died);
 
             // Close the engagement now rather than at the next NpcChatService sweep, so the respawned
             // monster's first hit carries its state 3 and combat line again.
