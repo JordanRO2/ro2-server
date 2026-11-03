@@ -527,8 +527,8 @@ public class CorpseLootTests
         GroundItemService.BeginCorpse(map, corpse, 50000001, Died, owner, 1, nowUtc: DateTime.UtcNow);
         GroundItemService.AddCorpseItem(map, corpse, 30000196, 1);
         GroundItemService.AddCorpseItem(map, corpse, 22300102, 1, diceBound: true); 
-        Assert.Equal(2, ItemPickUpHandler.ItemsLooterCanStillTake(map, corpse, owner, Died));
-        Assert.Equal(0, ItemPickUpHandler.ItemsLooterCanStillTake(map, corpse, owner + 1, Died)); 
+        Assert.Equal(2, ItemPickUpHandler.ItemsLooterCanStillTake(map, corpse, owner, Died, _ => false));
+        Assert.Equal(0, ItemPickUpHandler.ItemsLooterCanStillTake(map, corpse, owner + 1, Died, _ => false)); 
     }
 
     

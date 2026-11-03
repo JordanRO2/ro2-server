@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
+using RO2.PartyDice.Application;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 
@@ -43,9 +44,6 @@ public class PartyDiceChattingCmdHandler : ZoneRmiHandlerBase<PartyDiceChattingC
     /// <summary>1545 body offset of the u16 max (min is at 0).</summary>
     private const int MaxOffset = 2;
 
-    /// <summary>Lowest bound the client can send: it refuses a 0 locally, so min is at least 1.</summary>
-    private const ushort MinAllowedBound = 1;
-
     public override ushort Opcode => ZoneC2SOpcodes.ReqPartyDiceChattingCmd;
     public override string Name => "PartyDiceChattingCmd";
 
@@ -72,14 +70,13 @@ public class PartyDiceChattingCmdHandler : ZoneRmiHandlerBase<PartyDiceChattingC
 
         // A 0 cannot come from the client. min > max can (the client never compares the two); the expected
         // answer to it is not defined, so this silence is a placeholder (see the remarks).
-        if (min < MinAllowedBound || min > max)
+        if (!DiceRolling.TryRollChat(min, max, out var roll))
         {
             Logger.LogInformation("{Name}: 1545 dice range {Min}-{Max} has no defined answer; nothing sent",
                 player.Name, min, max);
             return;
         }
 
-        var roll = (ushort)Random.Shared.Next(min, max + 1);
         Logger.LogDebug("{Name} rolled {Roll} ({Min}-{Max})", player.Name, roll, min, max);
 
         await partyService.BroadcastBodyToPartyAsync(party, ZoneS2COpcodes.NfyPartyDiceChattingCmd,

@@ -146,12 +146,11 @@ public sealed class ModeTwoTurnTests
             var open = $"2468:{ToHex(PartyDicePackets.BuildRouletteOpen2468(item.Uid, RollItem, 1))}";
             Assert.Equal(new[] { open }, await rig.FramesUntilMarkerAsync(0));
             Assert.Equal(new[] { open }, await rig.FramesUntilMarkerAsync(1));
-            Assert.True(PartyDiceService.IsRolling(item.Uid));
+            Assert.True(rig.Dice.IsRolling(item.Uid));
 
-            var deps = PartyDiceService.Deps.From(rig.Services, NullLogger.Instance);
-            await PartyDiceService.AnswerAsync(deps, member, item.Uid, PartyDiceRolls.ChoicePass);
-            await PartyDiceService.AnswerAsync(deps, killer, item.Uid, PartyDiceRolls.ChoicePass);
-            Assert.False(PartyDiceService.IsRolling(item.Uid));
+            await rig.Dice.AnswerAsync(member, item.Uid, PartyDiceRolls.ChoicePass);
+            await rig.Dice.AnswerAsync(killer, item.Uid, PartyDiceRolls.ChoicePass);
+            Assert.False(rig.Dice.IsRolling(item.Uid));
             Assert.True(GroundItemService.TryGetCorpseLoot(map, handle, member.CharacterId, death, out var left));
             Assert.Equal(new[] { item with { DiceBound = false } }, left.Items);
         }

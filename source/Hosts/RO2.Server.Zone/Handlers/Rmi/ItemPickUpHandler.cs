@@ -196,7 +196,8 @@ public class ItemPickUpHandler : ZoneRmiHandlerBase<ItemPickUpHandler>
             return;
         }
 
-        if (PartyDiceService.IsRolling(wanted.Uid))
+        var dice = services.GetRequiredService<PartyDiceService>();
+        if (dice.IsRolling(wanted.Uid))
         {
             Logger.LogDebug("{Name}: 1322 for uid {Uid:X} while its party roll is open — not answered", player.Name, itemUid);
             return;
@@ -207,7 +208,7 @@ public class ItemPickUpHandler : ZoneRmiHandlerBase<ItemPickUpHandler>
         var party = services.GetRequiredService<PartyService>().GetPlayerParty(player.SessionId);
         if (wanted.DiceBound && party != null)
         {
-            await PartyDiceService.OpenAsync(PartyDiceService.Deps.From(services, Logger), player, party, loot, wanted);
+            await dice.OpenAsync(player, party.PartyId, loot, wanted);
             return;
         }
 
@@ -271,9 +272,10 @@ public class ItemPickUpHandler : ZoneRmiHandlerBase<ItemPickUpHandler>
     /// an open party roll, which PartyDiceService settles on its own. 0 is when the looter's
     /// authority is revoked (2471 granted 0), see the class remarks.
     /// </summary>
-    internal static int ItemsLooterCanStillTake(uint mapId, uint corpseHandle, uint looterCharId, DateTime? deathStamp)
+    internal static int ItemsLooterCanStillTake(uint mapId, uint corpseHandle, uint looterCharId, DateTime? deathStamp,
+        Func<ulong, bool> isRolling)
         => GroundItemService.TryGetCorpseLoot(mapId, corpseHandle, looterCharId, deathStamp, out var rest)
-            ? rest.Items.Count(i => !PartyDiceService.IsRolling(i.Uid))
+            ? rest.Items.Count(i => !isRolling(i.Uid))
             : 0;
 
     private async Task TakeFromCorpseAsync(ProudSession session, PlayerState player, IServiceProvider services,
@@ -316,7 +318,8 @@ public class ItemPickUpHandler : ZoneRmiHandlerBase<ItemPickUpHandler>
 
         // The pickup that leaves the looter nothing more to take revokes the corpse first (see the class remarks),
         // for the picker alone: a shared corpse's other looters drop it on the 2362 below, whose count is then 0.
-        if (ItemsLooterCanStillTake(loot.MapId, loot.CorpseHandle, player.CharacterId, loot.DeathStamp) == 0)
+        if (ItemsLooterCanStillTake(loot.MapId, loot.CorpseHandle, player.CharacterId, loot.DeathStamp,
+                services.GetRequiredService<PartyDiceService>().IsRolling) == 0)
             await session.SendInternalRmiAsync(ZoneS2COpcodes.OnLootingAuthority,
                 CombatPackets.BuildLootingAuthority2471(loot.CorpseHandle, granted: false));
 

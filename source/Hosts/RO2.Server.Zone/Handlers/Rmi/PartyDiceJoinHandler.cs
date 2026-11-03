@@ -39,6 +39,6 @@ public class PartyDiceJoinHandler : ZoneRmiHandlerBase<PartyDiceJoinHandler>
             return;
         }
 
-        await PartyDiceService.AnswerAsync(PartyDiceService.Deps.From(services, Logger), player, itemUid, choice);
+        await services.GetRequiredService<PartyDiceService>().AnswerAsync(player, itemUid, choice);
     }
 }

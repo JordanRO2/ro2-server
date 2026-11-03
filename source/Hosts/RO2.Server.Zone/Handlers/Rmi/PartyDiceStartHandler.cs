@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
+using RO2.Parties.Application;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 
@@ -51,14 +52,15 @@ public class PartyDiceStartHandler : ZoneRmiHandlerBase<PartyDiceStartHandler>
             return;
         }
 
-        var party = services.GetRequiredService<PartyService>().GetPlayerParty(player.SessionId);
-        if (party == null || PartyDiceService.IsRolling(item.Uid))
+        var party = services.GetRequiredService<IPartyRoster>().RosterOf(player.SessionId);
+        var dice = services.GetRequiredService<PartyDiceService>();
+        if (party == null || dice.IsRolling(item.Uid))
         {
             Logger.LogDebug("{Name} ReqPartyDiceStart item {Uid:X}: {Why}, not answered",
                 player.Name, itemUid, party == null ? "not in a party" : "already rolling");
             return;
         }
 
-        await PartyDiceService.OpenAsync(PartyDiceService.Deps.From(services, Logger), player, party, loot, item);
+        await dice.OpenAsync(player, party.PartyId, loot, item);
     }
 }

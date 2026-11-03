@@ -1,5 +1,8 @@
 using System.Buffers.Binary;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
+using RO2.Network.Protocol;
+using RO2.Parties.Application;
 using RO2.PartyDice.Domain;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
@@ -28,8 +31,9 @@ public sealed class PartyDiceFlowTests
         public required GroundItemService.CorpseItem Item;
         public required uint Map, Handle;
         public required DateTime? Death;
+        public required PartyDiceService Dice;
 
-        public static async Task<Round> OpenAsync()
+        public static async Task<Round> OpenAsync(TimeSpan? window = null)
         {
             var rig = await CorpseShareRig.StartAsync(2);
             var (npcs, handle) = CorpseShareRig.OneDeadNpc(out var map);
@@ -41,19 +45,22 @@ public sealed class PartyDiceFlowTests
                 MemberSessionIds = [killer.SessionId, member.SessionId],
             });
             rig.Loot(npcs);
+            var dice = window is { } w
+                ? new PartyDiceService(rig.Party, rig.Services.GetRequiredService<IPartyRoster>(), rig.Players, rig.Broadcast, npcs,
+                    rig.Data, rig.ScopeFactory, NullLogger<PartyDiceService>.Instance, w)
+                : rig.Dice;
             var death = npcs.GetNpc(handle)!.DeathTime;
             GroundItemService.BeginCorpse(map, handle, CorpseShareRig.Spawn.AssetIndex, death, killer.CharacterId,
                 killer.CharacterUid, sharedLooters: [new GroundItemService.CorpseLooter(member.CharacterId, MemberGid)]);
             var item = GroundItemService.AddCorpseItem(map, handle, RollItem, 1, diceBound: true)!;
-            var round = new Round { Rig = rig, Killer = killer, Member = member, Item = item, Map = map, Handle = handle, Death = death };
+            var round = new Round { Rig = rig, Killer = killer, Member = member, Item = item, Map = map, Handle = handle, Death = death, Dice = dice };
             Assert.True(GroundItemService.TryGetCorpseLoot(map, handle, killer.CharacterId, death, out var loot));
-            var party = rig.Party.GetPlayerParty(killer.SessionId)!;
-            await PartyDiceService.OpenAsync(PartyDiceService.Deps.From(rig.Services, NullLogger.Instance), killer, party, loot, item);
+            await dice.OpenAsync(killer, rig.Party.GetPlayerParty(killer.SessionId)!.PartyId, loot, item);
             return round;
         }
 
         public Task AnswerAsync(PlayerState who, byte choice)
-            => PartyDiceService.AnswerAsync(PartyDiceService.Deps.From(Rig.Services, NullLogger.Instance), who, Item.Uid, choice);
+            => Dice.AnswerAsync(who, Item.Uid, choice);
 
         /// <summary>What each of the two clients received since the last call.</summary>
         public async Task<(List<string> Killer, List<string> Member)> FramesAsync()
@@ -77,7 +84,7 @@ public sealed class PartyDiceFlowTests
         var open = $"2468:{ToHex(PartyDicePackets.BuildRouletteOpen2468(r.Item.Uid, RollItem, 1))}";
         Assert.Equal(new[] { open }, killer);
         Assert.Equal(new[] { open }, member);
-        Assert.True(PartyDiceService.IsRolling(r.Item.Uid));
+        Assert.True(r.Dice.IsRolling(r.Item.Uid));
     }
 
     [Fact]
@@ -90,7 +97,7 @@ public sealed class PartyDiceFlowTests
         var (k0, m0) = await r.FramesAsync();
         Assert.Empty(k0);
         Assert.Empty(m0);
-        Assert.True(PartyDiceService.IsRolling(r.Item.Uid));
+        Assert.True(r.Dice.IsRolling(r.Item.Uid));
 
         await r.AnswerAsync(r.Killer, PartyDiceRolls.ChoicePass);
         var killerGid = PartyAnswerPackets.MemberGid(r.Killer);
@@ -111,7 +118,7 @@ public sealed class PartyDiceFlowTests
         Assert.Equal(new[] { memberPassed, allPassed }, k3);
         Assert.Equal(new[] { memberPassed, allPassed }, m3);
 
-        Assert.False(PartyDiceService.IsRolling(r.Item.Uid));
+        Assert.False(r.Dice.IsRolling(r.Item.Uid));
         Assert.True(GroundItemService.TryGetCorpseLoot(r.Map, r.Handle, r.Member.CharacterId, r.Death, out var left));
         Assert.Equal(new[] { r.Item with { DiceBound = false } }, left.Items);
     }
@@ -134,10 +141,85 @@ public sealed class PartyDiceFlowTests
         Assert.InRange(memberRoll, (ushort)1001, (ushort)2000);
 
         // The rig has no inventory, so the member's win cannot land: the award fails and the item stays on the corpse, still marked.
-        Assert.False(PartyDiceService.IsRolling(r.Item.Uid));
+        Assert.False(r.Dice.IsRolling(r.Item.Uid));
         Assert.True(GroundItemService.TryGetCorpseLoot(r.Map, r.Handle, r.Member.CharacterId, r.Death, out var left));
         Assert.Equal(new[] { r.Item }, left.Items);
         Assert.True(left.Items[0].DiceBound);
+    }
+
+    private static async Task WaitUntilAsync(Func<bool> condition)
+    {
+        var deadline = DateTime.UtcNow + TimeSpan.FromSeconds(10);
+        while (!condition() && DateTime.UtcNow < deadline) await Task.Delay(10);
+        Assert.True(condition());
+    }
+
+    [Fact]
+    public async Task TimeoutWithNoAnswers_SettlesAnAllPass_AndReleasesTheMark()
+    {
+        await using var r = await Round.OpenAsync(TimeSpan.FromMilliseconds(150));
+        await r.FramesAsync();
+        await WaitUntilAsync(() => !r.Dice.IsRolling(r.Item.Uid));
+        await WaitUntilAsync(() => GroundItemService.TryGetCorpseLoot(r.Map, r.Handle, r.Member.CharacterId, r.Death, out var l) && !l.Items[0].DiceBound);
+        var allPassed = $"2469:{ToHex(PartyDicePackets.BuildRouletteResult2469(PartyDicePackets.ResultAllPassed, 0, 0, RollItem, r.Item.Uid))}";
+        var (killer, member) = await r.FramesAsync();
+        Assert.Equal(new[] { allPassed }, killer);
+        Assert.Equal(new[] { allPassed }, member);
+    }
+
+    [Fact]
+    public async Task TimeoutWithOneRoll_SettlesTheWinnerWithoutWaitingForTheOther()
+    {
+        await using var r = await Round.OpenAsync(TimeSpan.FromMilliseconds(300));
+        await r.FramesAsync();
+        await r.AnswerAsync(r.Killer, PartyDiceRolls.ChoiceHigh);
+        Assert.True(r.Dice.IsRolling(r.Item.Uid));
+        await WaitUntilAsync(() => !r.Dice.IsRolling(r.Item.Uid));
+        await Task.Delay(300); // the award attempt (it cannot land here) and the corpse release follow the settle
+        var (killer, member) = await r.FramesAsync();
+        Assert.Equal(killer, member);
+        Assert.Single(killer);
+        Assert.StartsWith("2469:", killer[0]); // the killer's roll, never an all-pass notice
+        Assert.NotEqual(0, BinaryPrimitives.ReadUInt16LittleEndian(Convert.FromHexString(killer[0]["2469:".Length..]).AsSpan(12)));
+        Assert.True(GroundItemService.TryGetCorpseLoot(r.Map, r.Handle, r.Member.CharacterId, r.Death, out var left));
+        Assert.True(left.Items[0].DiceBound);
+    }
+
+    [Fact]
+    public async Task SettlingByAnswers_LeavesTheTimerNothingToDo()
+    {
+        await using var r = await Round.OpenAsync(TimeSpan.FromMilliseconds(300));
+        await r.FramesAsync();
+        await r.AnswerAsync(r.Killer, PartyDiceRolls.ChoicePass);
+        await r.AnswerAsync(r.Member, PartyDiceRolls.ChoicePass);
+        await Task.Delay(700); // past the window: the timer must not settle (and announce) a second time
+        var (killer, member) = await r.FramesAsync();
+        Assert.Equal(3, killer.Count); // two passes and one all-pass notice
+        Assert.Equal(killer, member);
+        Assert.Equal(1, killer.Count(f => f.StartsWith("2469:")));
+    }
+
+    [Fact]
+    public void Translator_ReproducesTheDiceFramesFromTheEffects()
+    {
+        var item = new GroundItemService.CorpseItem(0x0E043DA80D8F552FUL, 22300102, 1);
+        Assert.Equal((ZoneS2COpcodes.OnLootingBoxRouletteOpen, "0115150090e3000000002f558f0da83d040ec645540101"),
+            Frame(new Opened([1u, 2u]), item));
+        Assert.Equal((ZoneS2COpcodes.OnLootingBoxRouletteResult, "0120200092e3000000000000860681d9e7a7b3b6e00dc64554012f558f0da83d040e"),
+            Frame(new Answered(0x0DE0B6B3A7E7D981, 1670), item));
+        Assert.Equal((ZoneS2COpcodes.OnLootingBoxRouletteRefuse, "011c1c0093e3000000004cab56ab8f3c296fd06e54010d278a0da83d040e"),
+            Frame(new Refused(0x6F293C8FAB56AB4C), new GroundItemService.CorpseItem(0x0E043DA80D8A270D, 22310608, 1)));
+        Assert.Equal((ZoneS2COpcodes.OnLootingBoxRouletteResult, "0120200092e300000000733d000000000000000000002ddbfe00d9f24f0ea83d040e"),
+            Frame(new AllPassed(), new GroundItemService.CorpseItem(0x0E043DA80E4FF2D9, 16702253, 1)));
+        Assert.Null(PartyDiceFrames.ToFrame(new Winner(1, 2, 3), item));
+        Assert.Null(PartyDiceFrames.ToFrame(new HoldDiceBound(), item));
+        Assert.Null(PartyDiceFrames.ToFrame(new ReleaseDiceBound(), item));
+
+        static (ushort, string) Frame(DiceEffect e, GroundItemService.CorpseItem i)
+        {
+            var (op, body) = PartyDiceFrames.ToFrame(e, i)!.Value;
+            return (op, ToHex(body));
+        }
     }
 
     /// <summary>Checks that <paramref name="frame"/> is the 2469 of a roll by <paramref name="gid"/> and returns the roll.</summary>

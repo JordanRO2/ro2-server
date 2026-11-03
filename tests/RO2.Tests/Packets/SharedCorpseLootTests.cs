@@ -2,6 +2,7 @@ using System.Buffers.Binary;
 using System.Net;
 using System.Net.Sockets;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using RO2.GameData;
 using RO2.GameData.Tables;
@@ -65,7 +66,7 @@ public sealed class SharedCorpseLootTests
             Assert.False(GroundItemService.TryTakeCorpseItem(map, corpse, a.Uid, stranger, died, out _, out _));
             Assert.True(GroundItemService.TryTakeCorpseItem(map, corpse, a.Uid, member, died, out var took, out var left));
             Assert.Equal((a, 1), (took, left));
-            Assert.Equal(1, ItemPickUpHandler.ItemsLooterCanStillTake(map, corpse, killer, died));
+            Assert.Equal(1, ItemPickUpHandler.ItemsLooterCanStillTake(map, corpse, killer, died, _ => false));
             Assert.True(GroundItemService.TryTakeCorpseItem(map, corpse, b.Uid, killer, died, out _, out left));
             Assert.Equal(0, left);
             Assert.False(GroundItemService.HasCorpseLoot(map, corpse, died));
@@ -158,6 +159,9 @@ internal sealed class CorpseShareRig : IAsyncDisposable
  /// <summary>The root provider behind <see cref="ScopeFactory"/>.</summary>
     public IServiceProvider Services => _services;
 
+ /// <summary>The dice service handlers resolve, over this rig's party, players and sessions.</summary>
+    public PartyDiceService Dice => _services.GetRequiredService<PartyDiceService>();
+
     private NpcStateManager? _npcs;
 
     private CorpseShareRig(ProudServer server, Socket[] clients, ProudSession[] sessions)
@@ -173,6 +177,9 @@ internal sealed class CorpseShareRig : IAsyncDisposable
         collection.AddSingleton(Broadcast);
         collection.AddSingleton(Party);
         collection.AddSingleton(Data);
+        collection.AddSingleton<RO2.Parties.Application.IPartyRoster, PartyRosterAdapter>();
+        collection.AddSingleton<ILogger<PartyDiceService>>(NullLogger<PartyDiceService>.Instance);
+        collection.AddSingleton<PartyDiceService>();
         collection.AddSingleton<NpcStateManager>(_ => _npcs ?? throw new InvalidOperationException("call Loot(npcs) first"));
         _services = collection.BuildServiceProvider();
     }
