@@ -43,11 +43,7 @@ public sealed class VehicleRepository : IVehicleRepository
         => (await ModifyAsync(characterId, owned => VehicleRules.Grant(owned, ridingId, days, nowOle), ct))!;
 
     public Task<IReadOnlyList<OwnedVehicle>?> TryExtendTimedAsync(uint characterId, uint ridingId, uint days, double nowOle, CancellationToken ct = default)
-        => ModifyAsync(characterId,
-            owned => owned.FirstOrDefault(v => v.RidingId == ridingId) is { ExpiryOle: not 0 }
-                ? VehicleRules.Grant(owned, ridingId, days, nowOle)
-                : null,
-            ct);
+        => ModifyAsync(characterId, owned => VehicleRules.TryExtendTimed(owned, ridingId, days, nowOle), ct);
 
     public async Task<IReadOnlyList<OwnedVehicle>> LoadAndCutToWholeSecondsAsync(uint characterId, CancellationToken ct = default)
     {

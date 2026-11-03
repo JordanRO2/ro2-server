@@ -124,4 +124,15 @@ public static class VehicleRules
         result.Sort((a, b) => a.RidingId.CompareTo(b.RidingId));
         return result;
     }
+
+ /// <summary>
+ /// Returns <paramref name="owned"/> after a reins item extends the timed vehicle <paramref name="ridingId"/>
+ /// by <paramref name="days"/> at <paramref name="nowOle"/>, or null when the vehicle is not owned or is
+ /// permanent (nothing to extend).
+ /// </summary>
+ /// <remarks>An expired vehicle counts from now, as <see cref="Grant"/> does.</remarks>
+    public static IReadOnlyList<OwnedVehicle>? TryExtendTimed(IReadOnlyList<OwnedVehicle> owned, uint ridingId, uint days, double nowOle)
+        => owned.FirstOrDefault(v => v.RidingId == ridingId) is { ExpiryOle: not 0 }
+            ? Grant(owned, ridingId, days, nowOle)
+            : null;
 }

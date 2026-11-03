@@ -75,6 +75,22 @@ public class VehicleCompanionCharacterizationTests
         Assert.Equal(new[] { 100u, 200u, 300u }, again.Select(v => v.RidingId));
     }
 
+    [Fact]
+    public void TryExtendTimed_is_null_for_not_owned_or_permanent_and_otherwise_a_Grant()
+    {
+        var owned = new List<OwnedVehicle> { V(100, 0), V(200, Now + 2), V(300, Now - 5) };
+
+        Assert.Null(VehicleRules.TryExtendTimed(owned, 999, 5, Now));   // not owned
+        Assert.Null(VehicleRules.TryExtendTimed(owned, 100, 5, Now));   // permanent
+        Assert.Equal(new[] { 100u, 200u, 300u }, owned.Select(v => v.RidingId));
+
+        var live = VehicleRules.TryExtendTimed(owned, 200, 5, Now)!;     // counts from the current expiry, float32
+        Assert.Equal(Bits((float)(Now + 2 + 5)), Bits(live.Single(v => v.RidingId == 200).ExpiryOle));
+
+        var expired = VehicleRules.TryExtendTimed(owned, 300, 3, Now)!;  // an expired vehicle counts from now
+        Assert.Equal(Bits((float)(Now + 3)), Bits(expired.Single(v => v.RidingId == 300).ExpiryOle));
+    }
+
     // ---------------------------------------------------------------------------------------------- whole-second cut
 
     [Fact]
