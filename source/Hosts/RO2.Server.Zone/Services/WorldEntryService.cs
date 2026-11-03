@@ -309,31 +309,6 @@ public static class WorldEntryService
     private const int QuickSlotRecordLength = 20;
 
  /// <summary>
- /// Writes the map-load body that tells the client to load a map at a position.
- /// </summary>
-    private static void WriteMapLoad(PacketWriter writer, uint entityId, uint mapId, float posX, float posY, float posZ)
-    {
-        var lengthPos = writer.Reserve(4); 
-        var dataStart = writer.Length;
-
-        writer.WriteUInt32(mapId);     
-        writer.WriteUInt32(entityId);  
-
-        
-        writer.WriteSingle(posX);
-        writer.WriteSingle(posY);
-        writer.WriteSingle(posZ);
-        writer.WriteSingle(0f); 
-
-        
-        writer.WriteByte(0); 
-        writer.WriteByte(0); 
-        writer.WriteUInt16(0); 
-
-        writer.WriteAt(lengthPos, (uint)(writer.Length - dataStart));
-    }
-
- /// <summary>
  /// Sends the messages that precede a map-load message when the map changes: key config, dependent dungeon info, trait initialization, the trait message and the server time.
  /// </summary>
  /// <remarks>
