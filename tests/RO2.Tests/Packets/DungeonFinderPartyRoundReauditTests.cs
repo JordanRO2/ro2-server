@@ -25,6 +25,25 @@ public class DungeonFinderPartyRoundReauditTests
 {
     private static readonly JsonSerializerOptions JsonOptions = new() { PropertyNameCaseInsensitive = true };
 
+    /// <summary>A 1417 re-login on the same session and character builds a new PlayerState: the old seat must go stale.</summary>
+    [Fact]
+    public void SameSessionSameCharacterRelogin_MakesTheOldSeatStale()
+    {
+        var players = new PlayerStateManager(new NoDirtySink());
+        var first = new PlayerState { SessionId = 7, CharacterId = 70 };
+        players.AddPlayer(7, first);
+        var liveness = new SeatLivenessAdapter(players);
+        var oldSeat = SeatKeys.Of(first);
+        Assert.True(liveness.IsLive(oldSeat));
+
+        var second = new PlayerState { SessionId = 7, CharacterId = 70 };
+        players.AddPlayer(7, second);
+
+        Assert.False(liveness.IsLive(oldSeat));
+        Assert.NotEqual(oldSeat, SeatKeys.Of(second));
+        Assert.True(liveness.IsLive(SeatKeys.Of(second)));
+    }
+
     
  /// <summary>2598 NotifyChangeP2PGroupID with no group: a single u32 of 0.</summary>
     [Fact]

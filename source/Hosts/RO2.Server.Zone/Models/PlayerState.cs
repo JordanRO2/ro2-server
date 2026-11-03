@@ -13,6 +13,11 @@ namespace RO2.Server.Zone.Models;
 /// </summary>
 public class PlayerState : IWallet
 {
+    private static long _nextIncarnation;
+
+    /// <summary>Unique per constructed instance: a value stand-in for object identity (a re-login on the same session builds a new one).</summary>
+    public long Incarnation { get; } = Interlocked.Increment(ref _nextIncarnation);
+
     /// <summary>
     /// Where live changes to persistent fields are reported for real-time write-behind persistence.
     /// Wired by <see cref="Services.PlayerStateManager"/> when the player is registered; stays null
