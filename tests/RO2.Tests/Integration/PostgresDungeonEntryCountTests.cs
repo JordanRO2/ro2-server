@@ -41,7 +41,7 @@ public sealed class PostgresDungeonEntryCountTests
     [Fact]
     public async Task Unknown_character_reads_zero()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new DungeonEntryCountRepository(_fx.Db!);
         Assert.Equal(0, await repo.GetUsedAsync(FreshId(), 11001, Day1));
     }
@@ -49,7 +49,7 @@ public sealed class PostgresDungeonEntryCountTests
     [Fact]
     public async Task Record_counts_up_and_get_reads_it_back()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new DungeonEntryCountRepository(_fx.Db!);
         uint id = FreshId();
 
@@ -64,7 +64,7 @@ public sealed class PostgresDungeonEntryCountTests
     [Fact]
     public async Task Counts_are_per_dungeon()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new DungeonEntryCountRepository(_fx.Db!);
         uint id = FreshId();
 
@@ -80,7 +80,7 @@ public sealed class PostgresDungeonEntryCountTests
     [Fact]
     public async Task Counts_are_per_character()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new DungeonEntryCountRepository(_fx.Db!);
         uint a = FreshId();
         uint b = FreshId();
@@ -96,7 +96,7 @@ public sealed class PostgresDungeonEntryCountTests
     [Fact]
     public async Task Next_window_reads_zero_without_touching_the_stored_counts()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new DungeonEntryCountRepository(_fx.Db!);
         uint id = FreshId();
         await repo.RecordEntryAsync(id, 11001, Day1);
@@ -109,7 +109,7 @@ public sealed class PostgresDungeonEntryCountTests
     [Fact]
     public async Task Record_in_next_window_restarts_at_one_and_drops_other_dungeons()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new DungeonEntryCountRepository(_fx.Db!);
         uint id = FreshId();
         await repo.RecordEntryAsync(id, 11001, Day1);
@@ -125,7 +125,7 @@ public sealed class PostgresDungeonEntryCountTests
     [Fact]
     public async Task Record_in_an_earlier_window_replaces_the_stored_one()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new DungeonEntryCountRepository(_fx.Db!);
         uint id = FreshId();
         await repo.RecordEntryAsync(id, 11001, Day2);
@@ -140,7 +140,7 @@ public sealed class PostgresDungeonEntryCountTests
     [Fact]
     public async Task Reset_boundary_is_exactly_10_utc()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new DungeonEntryCountRepository(_fx.Db!);
         uint id = FreshId();
         var before = new DateTime(2026, 7, 11, 9, 59, 59, DateTimeKind.Utc);
@@ -156,7 +156,7 @@ public sealed class PostgresDungeonEntryCountTests
     [Fact]
     public async Task Local_and_unspecified_kinds_are_read_as_their_utc_instant()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new DungeonEntryCountRepository(_fx.Db!);
         uint id = FreshId();
         await repo.RecordEntryAsync(id, 11001, Day1);
@@ -169,7 +169,7 @@ public sealed class PostgresDungeonEntryCountTests
     [Fact]
     public async Task Uint_ids_above_int_max_round_trip()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new DungeonEntryCountRepository(_fx.Db!);
         uint id = uint.MaxValue - (uint)Random.Shared.Next(0, 1_000_000);
         uint dungeon = 4_000_000_000;
@@ -183,7 +183,7 @@ public sealed class PostgresDungeonEntryCountTests
     [Fact]
     public async Task Concurrent_records_of_one_character_lose_no_count()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new DungeonEntryCountRepository(_fx.Db!);
         uint id = FreshId();
         await repo.RecordEntryAsync(id, 11002, Day1); 
@@ -198,7 +198,7 @@ public sealed class PostgresDungeonEntryCountTests
     [Fact]
     public async Task Concurrent_first_records_of_one_character_lose_no_count()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new DungeonEntryCountRepository(_fx.Db!);
         uint id = FreshId();
 
