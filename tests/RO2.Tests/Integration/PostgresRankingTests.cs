@@ -49,7 +49,7 @@ public sealed class PostgresRankingTests
     [Fact]
     public async Task Running_score_is_zero_when_none_stored()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new RankingRepository(_fx.Db!);
         Assert.Equal(0, await repo.GetRunningScoreAsync(1, FreshPeriod(), 42));
     }
@@ -57,7 +57,7 @@ public sealed class PostgresRankingTests
     [Fact]
     public async Task AddScore_creates_then_accumulates_and_moves_reached_time()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new RankingRepository(_fx.Db!);
         var period = FreshPeriod();
         var t1 = new DateTime(2030, 5, 1, 10, 0, 0, DateTimeKind.Utc);
@@ -80,7 +80,7 @@ public sealed class PostgresRankingTests
     [Fact]
     public async Task AddScore_negative_amount_decrements()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new RankingRepository(_fx.Db!);
         var period = FreshPeriod();
         var now = DateTime.UtcNow;
@@ -92,7 +92,7 @@ public sealed class PostgresRankingTests
     [Fact]
     public async Task Counters_are_isolated_by_type_period_and_character()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new RankingRepository(_fx.Db!);
         var period = FreshPeriod();
         var other = FreshPeriod();
@@ -113,7 +113,7 @@ public sealed class PostgresRankingTests
     [Fact]
     public async Task GetPeriodScores_returns_every_counter_of_the_period_only()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new RankingRepository(_fx.Db!);
         var period = FreshPeriod();
         var other = FreshPeriod();
@@ -133,7 +133,7 @@ public sealed class PostgresRankingTests
     [Fact]
     public async Task GetPeriodScores_is_empty_when_none()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new RankingRepository(_fx.Db!);
         Assert.Empty(await repo.GetPeriodScoresAsync(8, FreshPeriod()));
     }
@@ -141,7 +141,7 @@ public sealed class PostgresRankingTests
     [Fact]
     public async Task Reached_time_is_truncated_to_milliseconds_like_a_bson_date()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new RankingRepository(_fx.Db!);
         var period = FreshPeriod();
         var reached = new DateTime(2032, 6, 7, 8, 9, 10, DateTimeKind.Utc).AddTicks(1234_567); 
@@ -154,7 +154,7 @@ public sealed class PostgresRankingTests
     [Fact]
     public async Task Concurrent_AddScore_loses_no_increment()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new RankingRepository(_fx.Db!);
         var period = FreshPeriod();
         var now = DateTime.UtcNow;
@@ -168,7 +168,7 @@ public sealed class PostgresRankingTests
     [Fact]
     public async Task Latest_snapshot_is_null_when_none_published()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new RankingRepository(_fx.Db!);
         Assert.Null(await repo.GetLatestSnapshotAsync(201));
     }
@@ -176,7 +176,7 @@ public sealed class PostgresRankingTests
     [Fact]
     public async Task Publish_inserts_returns_candidate_and_round_trips_every_field()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new RankingRepository(_fx.Db!);
         var period = new DateTime(2033, 3, 4, 5, 0, 0, DateTimeKind.Utc);
         var rolled = new DateTime(2033, 3, 4, 5, 0, 1, DateTimeKind.Utc);
@@ -215,7 +215,7 @@ public sealed class PostgresRankingTests
     [Fact]
     public async Task Publish_empty_board_round_trips_empty()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new RankingRepository(_fx.Db!);
         var period = new DateTime(2034, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         await repo.PublishSnapshotAsync(Board(203, period, period));
@@ -228,7 +228,7 @@ public sealed class PostgresRankingTests
     [Fact]
     public async Task Publish_same_id_first_writer_wins_and_returns_the_stored_board()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new RankingRepository(_fx.Db!);
         var period = new DateTime(2035, 2, 3, 4, 0, 0, DateTimeKind.Utc);
         var rolled1 = period.AddSeconds(1);
@@ -255,7 +255,7 @@ public sealed class PostgresRankingTests
     [Fact]
     public async Task Concurrent_publish_of_one_id_has_exactly_one_winner()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new RankingRepository(_fx.Db!);
         var period = new DateTime(2036, 4, 5, 6, 0, 0, DateTimeKind.Utc);
         var candidates = Enumerable.Range(1, 12)
@@ -276,7 +276,7 @@ public sealed class PostgresRankingTests
     [Fact]
     public async Task Latest_snapshot_is_the_one_with_the_latest_period_regardless_of_publish_order()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new RankingRepository(_fx.Db!);
         var p1 = new DateTime(2037, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         var p2 = p1.AddDays(7);
@@ -295,7 +295,7 @@ public sealed class PostgresRankingTests
     [Fact]
     public async Task Latest_snapshot_is_scoped_to_the_ranking_type()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new RankingRepository(_fx.Db!);
         var period = new DateTime(2038, 8, 9, 0, 0, 0, DateTimeKind.Utc);
 
