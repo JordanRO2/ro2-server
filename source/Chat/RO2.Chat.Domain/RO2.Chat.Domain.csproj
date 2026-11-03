@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Plural namespace: a namespace "RO2.Chat" would collide with the RO2.Server.Chat host namespace (CS0118). -->
+    <RootNamespace>RO2.Chats.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+  <!-- Chat bounded context: Domain references ONLY RO2.BuildingBlocks + the shared RO2.GameData kernel. -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <RootNamespace>RO2.Chats.Application</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Chat bounded context: Application. Rooms key members by the 64-bit messenger uid and reuse RO2.Socials.Domain.CharacterGid. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Chat.Domain\RO2.Chat.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+    <ProjectReference Include="..\..\Social\RO2.Social.Domain\RO2.Social.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

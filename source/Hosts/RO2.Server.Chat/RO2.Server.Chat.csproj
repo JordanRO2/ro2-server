@@ -26,6 +26,9 @@
     <ProjectReference Include="..\..\Social\RO2.Social.Domain\RO2.Social.Domain.csproj" />
     <ProjectReference Include="..\..\Social\RO2.Social.Infrastructure.Mongo\RO2.Social.Infrastructure.Mongo.csproj" />
     <ProjectReference Include="..\..\Social\RO2.Social.Infrastructure.Postgres\RO2.Social.Infrastructure.Postgres.csproj" />
+    <ProjectReference Include="..\..\Chat\RO2.Chat.Application\RO2.Chat.Application.csproj" />
+    <ProjectReference Include="..\..\Chat\RO2.Chat.Infrastructure.Mongo\RO2.Chat.Infrastructure.Mongo.csproj" />
+    <ProjectReference Include="..\..\Chat\RO2.Chat.Infrastructure.Postgres\RO2.Chat.Infrastructure.Postgres.csproj" />
   </ItemGroup>
 
 </Project>
