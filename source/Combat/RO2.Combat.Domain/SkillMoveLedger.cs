@@ -18,8 +18,8 @@ public sealed class SkillMoveLedger
     /// <summary>The actor a skill is moving, the move kind and the last position 1523 reported.</summary>
     public readonly record struct SkillMove(uint MovedHandle, byte MoveKind, float X, float Y, float Z);
 
-    /// <summary>An accepted 1508: its skill id, its +16 target, the map it was cast on and when (only to bound the dictionary).</summary>
-    public readonly record struct Cast(uint MapId, uint SkillId, uint TargetHandle, DateTime AtUtc);
+    /// <summary>An accepted 1508: its skill id, its +16 target, the map and the caster's X/Y it was cast at, and when (only to bound the dictionary).</summary>
+    public readonly record struct Cast(uint MapId, uint SkillId, uint TargetHandle, float OriginX, float OriginY, DateTime AtUtc);
 
     /// <summary>
     /// The most casts held per caster. A 1508 names a skill by a client u32, so without a cap a client could grow the
@@ -42,11 +42,12 @@ public sealed class SkillMoveLedger
     /// Records the accepted 1508 ReqSkillStart of <paramref name="skillId"/> on <paramref name="targetHandle"/>
     /// (request +16) as the caster's cast of that skill, replacing the previous cast of the SAME skill (a cast of
     /// another skill does not evict it: the ground effect of a move skill outlives the next cast). <paramref
-    /// name="nowUtc"/> only bounds the dictionary (oldest evicted past the cap).
+    /// name="nowUtc"/> only bounds the dictionary (oldest evicted past the cap). (<paramref name="originX"/>,
+    /// <paramref name="originY"/>) is where the caster stood: the anchor a self-move's reach is measured from.
     /// </summary>
-    public void RecordCast(uint mapId, uint skillId, uint targetHandle, DateTime nowUtc)
+    public void RecordCast(uint mapId, uint skillId, uint targetHandle, float originX, float originY, DateTime nowUtc)
     {
-        _casts[skillId] = new Cast(mapId, skillId, targetHandle, nowUtc);
+        _casts[skillId] = new Cast(mapId, skillId, targetHandle, originX, originY, nowUtc);
         while (_casts.Count > MaxCastsPerCaster)
         {
             var oldest = _casts.MinBy(kv => kv.Value.AtUtc).Key;
@@ -68,6 +69,22 @@ public sealed class SkillMoveLedger
     /// </summary>
     public bool IsCastSkill(uint mapId, uint skillId)
         => _casts.TryGetValue(skillId, out var cast) && cast.MapId == mapId;
+
+    /// <summary>
+    /// Where the caster stood at its accepted cast of exactly <paramref name="skillId"/> on <paramref name="mapId"/>;
+    /// false when there is no such cast. A self-move's reach is measured from here, not from the caster's current
+    /// position: a hop that moved the caster would otherwise carry the next hop's reach with it, chaining for ever.
+    /// </summary>
+    public bool TryGetCastOrigin(uint mapId, uint skillId, out float x, out float y)
+    {
+        if (_casts.TryGetValue(skillId, out var cast) && cast.MapId == mapId)
+        {
+            x = cast.OriginX; y = cast.OriginY;
+            return true;
+        }
+        x = y = 0f;
+        return false;
+    }
 
     /// <summary>How many moves the caster holds.</summary>
     public int MoveCount() => _moves.Count;

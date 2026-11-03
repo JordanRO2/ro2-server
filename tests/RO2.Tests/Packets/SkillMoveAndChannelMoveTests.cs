@@ -91,6 +91,19 @@ public class SkillMoveAndChannelMoveTests
         SkillMoveTracker.ReachTableOverride = null;
     }
 
+    [Fact]
+    public void SelfMove_IsBoundedByTheCastOrigin_SoHopsCannotChain()
+    {
+        UseShippedReachTable();
+        var caster = new PlayerState { EntityId = 0x00100111u, X = 0f, Y = 0f };
+        SkillMoveTracker.RecordCast(caster, caster.MapId, 630401, caster.EntityId);
+        Assert.Null(SkillMoveNotifyHandler.SelfMoveRefusal(caster, 630401, 9, 30f, 0f));    // inside ReachFor(6304) = 39 of the cast point
+        caster.X = 30f;                                                                       // the first hop landed
+        Assert.NotNull(SkillMoveNotifyHandler.SelfMoveRefusal(caster, 630401, 9, 60f, 0f)); // 30 from the caster but 60 from the cast point
+        Assert.Null(SkillMoveNotifyHandler.SelfMoveRefusal(caster, 630401, 9, 35f, 0f));    // still inside the original reach
+        SkillMoveTracker.ReachTableOverride = null;
+    }
+
     /// <summary>The reach gate reads Skill_Table_Base through a cwd-relative path a test host cannot see; hand it the
     /// shipped file for this thread (SkillMoveTracker.ReachTableOverride).</summary>
     private static void UseShippedReachTable()

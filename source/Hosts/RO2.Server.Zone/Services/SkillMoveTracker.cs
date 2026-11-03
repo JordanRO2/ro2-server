@@ -49,7 +49,7 @@ internal static class SkillMoveTracker
     /// Handle_SkillEndCasting), so it starts no ground effect.
     /// </summary>
     internal static void RecordCast(PlayerState caster, uint mapId, uint skillId, uint targetHandle)
-        => LedgerOf(caster).RecordCast(mapId, skillId, targetHandle, DateTime.UtcNow);
+        => LedgerOf(caster).RecordCast(mapId, skillId, targetHandle, caster.X, caster.Y, DateTime.UtcNow);
 
     /// <summary>
     /// Whether <paramref name="handle"/> is the target of <paramref name="caster"/>'s accepted cast of exactly
@@ -65,6 +65,13 @@ internal static class SkillMoveTracker
     /// </summary>
     internal static bool IsCastSkill(PlayerState caster, uint mapId, uint skillId)
         => Store.TryGetValue(caster, out var l) && l.IsCastSkill(mapId, skillId);
+
+    /// <summary>Where <paramref name="caster"/> stood at its accepted cast of <paramref name="skillId"/> on <paramref name="mapId"/>.</summary>
+    internal static bool TryGetCastOrigin(PlayerState caster, uint mapId, uint skillId, out float x, out float y)
+    {
+        x = y = 0f;
+        return Store.TryGetValue(caster, out var l) && l.TryGetCastOrigin(mapId, skillId, out x, out y);
+    }
 
     /// <summary>How many moves <paramref name="caster"/> holds.</summary>
     internal static int MoveCount(PlayerState caster)

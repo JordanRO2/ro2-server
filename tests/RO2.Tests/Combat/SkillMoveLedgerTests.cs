@@ -17,18 +17,30 @@ public class SkillMoveLedgerTests
     }
 
     [Fact]
+    public void CastOrigin_IsWhereTheCasterStoodAtTheCast_PerMapAndSkill()
+    {
+        var l = new SkillMoveLedger();
+        Assert.False(l.TryGetCastOrigin(1300, 630401, out _, out _));
+        l.RecordCast(1300, 630401, 0u, 10f, 20f, T(0));
+        Assert.True(l.TryGetCastOrigin(1300, 630401, out var x, out var y));
+        Assert.Equal((10f, 20f), (x, y));
+        Assert.False(l.TryGetCastOrigin(1100, 630401, out _, out _));   // other map
+        Assert.False(l.TryGetCastOrigin(1300, 630402, out _, out _));   // other skill
+    }
+
+    [Fact]
     public void Cast_TargetAndSkillChecks_ByMapAndSkill()
     {
         var l = new SkillMoveLedger();
         Assert.False(l.IsCastSkill(1300, 630401));                  // no cast yet
-        l.RecordCast(1300, 630401, 0x00205D13u, T(0));
+        l.RecordCast(1300, 630401, 0x00205D13u, 0f, 0f, T(0));
         Assert.True(l.IsCastSkill(1300, 630401));
         Assert.True(l.IsCastTarget(1300, 630401, 0x00205D13u));
         Assert.False(l.IsCastTarget(1300, 630401, 0u));             // a zero handle never is
         Assert.False(l.IsCastTarget(1100, 630401, 0x00205D13u));    // other map
         Assert.False(l.IsCastSkill(1300, 630402));                  // other skill
 
-        l.RecordCast(1300, 630402, 0u, T(1));                       // another skill's cast does NOT evict it
+        l.RecordCast(1300, 630402, 0u, 0f, 0f, T(1));                // another skill's cast does NOT evict it
         Assert.True(l.IsCastSkill(1300, 630401));
         Assert.True(l.IsCastSkill(1300, 630402));
     }
@@ -38,7 +50,7 @@ public class SkillMoveLedgerTests
     {
         var l = new SkillMoveLedger();
         for (uint i = 0; i < SkillMoveLedger.MaxCastsPerCaster + 5; i++)
-            l.RecordCast(1300, 800000 + i, 1u, T((int)i));
+            l.RecordCast(1300, 800000 + i, 1u, 0f, 0f, T((int)i));
         Assert.False(l.IsCastSkill(1300, 800000));                                                   // oldest evicted
         Assert.True(l.IsCastSkill(1300, 800000 + (uint)SkillMoveLedger.MaxCastsPerCaster + 4));      // newest kept
     }

@@ -159,25 +159,29 @@ public class SkillMoveNotifyHandler : ZoneRmiHandlerBase<SkillMoveNotifyHandler>
     /// accepted cast's target was the caster itself (a target-storing kind whose +16 target is the caster is the
     /// only way the client can name the caster's own handle at 1523 +0, so refusing it would
     /// refuse every legitimate self-move); the skill group has a Skill_Table_Base row; and the end point is within
-    /// <see cref="SkillMoveTracker.ReachFor"/> of the caster's current X/Y (2D).
+    /// <see cref="SkillMoveTracker.ReachFor"/> of where the caster stood at that cast (2D).
     /// </remarks>
     internal static string? SelfMoveRefusal(PlayerState caster, uint skillId, byte moveKind, float x, float y)
     {
         // How far a self-move may carry its caster is not defined by data; the skill's own Skill_Range +
         // Influence_Bound_Length is the conservative bound.
         var reach = SkillMoveTracker.ReachFor(skillId / 100u);
+        // Measured from where the cast was made, not the caster's current X/Y: a hop moves the caster, and a
+        // reach that followed it would let 1523 chain hops for ever from one accepted cast.
+        if (!SkillMoveTracker.TryGetCastOrigin(caster, caster.MapId, skillId, out var originX, out var originY))
+            (originX, originY) = (caster.X, caster.Y); // no cast: SelfMove refuses with NoAcceptedCast
         var refusal = SkillMoveAuthorization.SelfMove(
             hasCastOfSkill: SkillMoveTracker.IsCastSkill(caster, caster.MapId, skillId),
             moveKindStoresTarget: SkillMoveTracker.IsTargetMoveKind(moveKind),
             castTargetedSelf: SkillMoveTracker.IsCastTarget(caster, caster.MapId, skillId, caster.EntityId),
-            reach, caster.X, caster.Y, x, y);
+            reach, originX, originY, x, y);
         return refusal switch
         {
             SkillMoveAuthorization.MoveRefusal.None => null,
             SkillMoveAuthorization.MoveRefusal.NoAcceptedCast => "caster has no accepted cast of this skill on this map",
             SkillMoveAuthorization.MoveRefusal.SelfNotCastTarget => $"move kind {moveKind} stores a cast target and the caster's cast did not target itself",
             SkillMoveAuthorization.MoveRefusal.NoReachRow => "skill group has no Skill_Table_Base row",
-            _ => $"end point is farther than {reach} from the caster",
+            _ => $"end point is farther than {reach} from where the skill was cast",
         };
     }
 
