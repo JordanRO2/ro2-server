@@ -9,7 +9,6 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
-using RO2.Inventory.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -29,10 +28,6 @@ public class PlayTimeRewardGetItemHandler : ZoneRmiHandlerBase<PlayTimeRewardGet
     public override ushort Opcode => ZoneC2SOpcodes.ReqPlayTimeRewardGetItem;
     public override string Name => "PlayTimeRewardGetItem";
     public PlayTimeRewardGetItemHandler(IServiceScopeFactory s, ILogger<PlayTimeRewardGetItemHandler> l, PlayerStateManager pm, BroadcastService bc) : base(s, l, pm, bc) { }
-
- /// <summary>Where one reward item goes: into a held stack (with its new count), or into new stacks.</summary>
-    internal sealed record RewardLanding(uint ItemId, int Count, InventoryItem? MergeInto, int MergedCount,
-        IReadOnlyList<InventoryItem> NewStacks);
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
@@ -95,77 +90,5 @@ public class PlayTimeRewardGetItemHandler : ZoneRmiHandlerBase<PlayTimeRewardGet
 
         if (outcome.GiftsInBox > 0)
             await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyAccountGiftReceived, AccountGiftPackets.Build2798(outcome.GiftsInBox), ct);
-    }
-
- /// <summary>
- /// Plans where each reward item of <paramref name="row"/> lands in the bag, without writing anything.
- /// Items are merged into the lowest fitting held stack, otherwise placed in new stacks in the lowest free cells.
- /// Returns null when any item has no room, so the reward is granted in full or not at all.
- /// </summary>
-    internal static IReadOnlyList<RewardLanding>? PlanRewardLandings(IReadOnlyList<InventoryItem> owned, uint characterId,
-        Attendance row, IReadOnlyDictionary<uint, ItemData> items)
-    {
-        var rewards = new (uint ItemId, int Count)[]
-        {
-            (row.Reward_item1, row.Item_count1),
-            (row.Reward_item2, row.Item_count2),
-            (row.Reward_item3, row.Item_count3),
-        };
-
-        var free = BagCapacity.FreeCells(owned, items);
-        int nextCell = 0;
-        var stacks = owned.Where(i => i.StorageType == 0 && i.Slot >= 0 && i.Count > 0)
-            .Select(i => (Item: i, Count: i.Count)).ToList();
-        var plan = new List<RewardLanding>(rewards.Length);
-
-        foreach (var (itemId, count) in rewards)
-        {
-            if (itemId == 0 || count <= 0) continue;
-            items.TryGetValue(itemId, out var template);
-            int perStack = Math.Max(1, (int)(template?.Stack_Max ?? 1));
-
-            if (perStack > 1)
-            {
-                int target = -1;
-                for (int s = 0; s < stacks.Count; s++)
-                {
-                    var c = stacks[s];
-                    if (c.Item.ItemId != itemId || c.Count + count > perStack) continue;
-                    if (target < 0 || c.Item.Slot < stacks[target].Item.Slot) target = s;
-                }
-                if (target >= 0)
-                {
-                    int merged = stacks[target].Count + count;
-                    stacks[target] = (stacks[target].Item, merged);
-                    plan.Add(new RewardLanding(itemId, count, stacks[target].Item, merged, Array.Empty<InventoryItem>()));
-                    continue;
-                }
-            }
-
-            int needed = (count + perStack - 1) / perStack;
-            if (free.Count - nextCell < needed)
-                return null;
-
-            short durability = template is null ? (short)-1 : (short)Math.Min(template.Durability, (uint)short.MaxValue);
-            var opened = new List<InventoryItem>(needed);
-            for (int remaining = count; remaining > 0;)
-            {
-                int n = Math.Min(perStack, remaining);
-                var stack = new InventoryItem
-                {
-                    CharacterId = characterId,
-                    ItemId = itemId,
-                    Count = n,
-                    Slot = free[nextCell++],
-                    StorageType = 0, 
-                    Durability = durability,
-                };
-                opened.Add(stack);
-                stacks.Add((stack, n));
-                remaining -= n;
-            }
-            plan.Add(new RewardLanding(itemId, count, null, 0, opened));
-        }
-        return plan;
     }
 }

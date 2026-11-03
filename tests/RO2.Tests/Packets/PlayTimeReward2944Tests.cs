@@ -4,7 +4,6 @@ using RO2.GameData.Tables;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Services;
 using Xunit;
-using RO2.Inventory.Domain;
 
 namespace RO2.Tests.Packets;
 
@@ -280,57 +279,5 @@ public class PlayTimeReward2944Tests
 
         Assert.False(asked);
         Assert.Equal(Convert.FromHexString("1c790700000004010000"), Body(early!.Value));
-    }
-
- /// <summary>Item 66666666 (Loki's Dice): Stack_Max 255, Durability 0, from the ItemInfo table.</summary>
-    private static readonly Dictionary<uint, ItemData> Items = new()
-    {
-        [66666666] = new ItemData { ID = 66666666, Stack_Max = 255, Durability = 0 },
-    };
-
-    [Fact]
-    public void Reward_JoinsTheLowestHeldStackItFits()
-    {
-        var owned = new List<InventoryItem>
-        {
-            new() { Id = 5, CharacterId = 1, ItemId = 66666666, Count = 3, Slot = 9, StorageType = 0 },
-            new() { Id = 6, CharacterId = 1, ItemId = 66666666, Count = 255, Slot = 2, StorageType = 0 },
-            new() { Id = 7, CharacterId = 1, ItemId = 66666666, Count = 1, Slot = 4, StorageType = 0 },
-        };
-        var plan = PlayTimeRewardGetItemHandler.PlanRewardLandings(owned, 1, Chain[0], Items);
-
-        var landing = Assert.Single(plan!);
-        Assert.Same(owned[2], landing.MergeInto); 
-        Assert.Equal(2, landing.MergedCount);
-        Assert.Empty(landing.NewStacks);
-    }
-
-    [Fact]
-    public void Reward_WithoutAHeldStack_TakesTheLowestUsableFreeCell()
-    {
-        var owned = new List<InventoryItem>
-        {
-            new() { Id = 5, CharacterId = 1, ItemId = 11100001, Count = 1, Slot = 0, StorageType = 0 },
-            new() { Id = 6, CharacterId = 1, ItemId = 11100002, Count = 1, Slot = 1, StorageType = 0 },
-        };
-        var plan = PlayTimeRewardGetItemHandler.PlanRewardLandings(owned, 1, Chain[0], Items);
-
-        var stack = Assert.Single(Assert.Single(plan!).NewStacks);
-        Assert.Equal((short)2, stack.Slot);
-        Assert.Equal(66666666u, stack.ItemId);
-        Assert.Equal(1, stack.Count);
-        Assert.Equal((short)0, stack.Durability);
-        Assert.Equal((byte)0, stack.StorageType);
-    }
-
-    [Fact]
-    public void Reward_IntoAFullBag_HasNoLanding()
-    {
-        
-        var owned = Enumerable.Range(0, 20)
-            .Select(i => new InventoryItem { Id = (ulong)(i + 1), CharacterId = 1, ItemId = 11100001, Count = 1, Slot = (short)i, StorageType = 0 })
-            .ToList();
-
-        Assert.Null(PlayTimeRewardGetItemHandler.PlanRewardLandings(owned, 1, Chain[0], Items));
     }
 }
