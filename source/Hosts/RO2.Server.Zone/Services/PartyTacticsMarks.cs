@@ -1,9 +1,8 @@
 using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
-using RO2.GameData;
-using RO2.GameData.Tables;
 using RO2.Network.Packets;
 using RO2.Characters.Domain;
+using RO2.TacticsMarks.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -13,59 +12,17 @@ namespace RO2.Server.Zone.Services;
 /// </summary>
 public static class PartyTacticsMarks
 {
- /// <summary>One mark on the party's list, with the time it was set.</summary>
-    internal readonly record struct Entry(ushort Mark, uint Handle, DateTime SetAtUtc);
-
-    private static readonly ConditionalWeakTable<PartyState, List<Entry>> Marks = new();
+    private static readonly ConditionalWeakTable<PartyState, TacticsMarkList> Marks = new();
 
  /// <summary>Character UID mapped to the time of its last accepted channel move.</summary>
     private static readonly ConcurrentDictionary<ulong, DateTime> ChannelMoves = new();
 
  /// <summary>
- /// Records a mark on a target. A numbered mark already on the list moves to the new target; the target
- /// leaves any other entry.
+ /// Records a mark on a target with the numbered flag (the caller reads it from the loaded Tactics_Target table
+ /// through <see cref="TacticsMarkList.IsNumbered"/>) and the time supplied.
  /// </summary>
-    public static void Set(PartyState party, uint targetHandle, ushort mark)
-        => Set(party, targetHandle, mark, IsNumbered(GameDataStore.Loaded?.TacticsTarget, mark), DateTime.UtcNow);
-
- /// <summary>Records a mark with the numbered flag and the time supplied.</summary>
     internal static void Set(PartyState party, uint targetHandle, ushort mark, bool numbered, DateTime setAtUtc)
-    {
-        var list = Marks.GetValue(party, _ => new List<Entry>());
-        lock (list)
-        {
-            int slot = numbered ? list.FindIndex(e => e.Mark == mark) : -1;
-            if (slot >= 0)
-            {
-                list[slot] = new Entry(mark, targetHandle, setAtUtc);
-                for (int i = list.Count - 1; i >= 0; i--)
-                    if (i != slot && list[i].Handle == targetHandle)
-                        list.RemoveAt(i);
-                return;
-            }
-            list.RemoveAll(e => e.Handle == targetHandle);
-            if (list.Count < byte.MaxValue) 
-                list.Add(new Entry(mark, targetHandle, setAtUtc));
-        }
-    }
-
- /// <summary>Whether a mark is numbered, that is, its tactics target icon carries a number. False when there is no table.</summary>
-    internal static bool IsNumbered(IReadOnlyList<TacticsTarget>? rows, ushort mark)
-    {
-        if (rows is null || mark == 0) return false;
-        foreach (var row in rows)
-        {
-            if (row.Tactics_List != mark) continue;
-            var file = row.Route.Replace('\\', '/');
-            file = file[(file.LastIndexOf('/') + 1)..];
-            const string prefix = "Tactic_icon_", suffix = ".nif";
-            if (!file.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) || !file.EndsWith(suffix, StringComparison.OrdinalIgnoreCase))
-                return false;
-            var number = file[prefix.Length..^suffix.Length];
-            return number.Length > 0 && number.All(char.IsAsciiDigit);
-        }
-        return false;
-    }
+        => Marks.GetValue(party, _ => new TacticsMarkList()).Set(targetHandle, mark, numbered, setAtUtc);
 
  /// <summary>
  /// Records that a character has changed channel. Its later map-load lists omit the marks set before the move.
@@ -85,10 +42,7 @@ public static class PartyTacticsMarks
     public static byte[]? BuildMapEntry2751(PartyState party, uint mapId, ulong loaderCharacterUid)
     {
         if (!Marks.TryGetValue(party, out var list)) return null;
-        Entry[] entries;
-        lock (list) entries = list.ToArray();
-        if (ChannelMoves.TryGetValue(loaderCharacterUid, out var movedAt))
-            entries = Array.FindAll(entries, e => e.SetAtUtc > movedAt);
+        var entries = list.Snapshot(ChannelMoves.TryGetValue(loaderCharacterUid, out var movedAt) ? movedAt : null);
         if (entries.Length == 0) return null;
 
         using var pw = new PacketWriter(15 + 6 * entries.Length);

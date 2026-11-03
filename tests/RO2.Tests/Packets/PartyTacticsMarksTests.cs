@@ -1,5 +1,6 @@
 using RO2.GameData.Tables;
 using RO2.Server.Zone.Services;
+using RO2.TacticsMarks.Domain;
 using Xunit;
 
 namespace RO2.Tests.Packets;
@@ -22,15 +23,15 @@ public class PartyTacticsMarksTests
     }).ToArray();
 
     private static void Set(PartyState party, ushort mark, uint handle, int second)
-        => PartyTacticsMarks.Set(party, handle, mark, PartyTacticsMarks.IsNumbered(ShippedRows, mark), T0.AddSeconds(second));
+        => PartyTacticsMarks.Set(party, handle, mark, TacticsMarkList.IsNumbered(ShippedRows, mark), T0.AddSeconds(second));
 
     [Fact]
     public void NumberedMarks_AreTheNumberIcons()
     {
-        for (ushort m = 1; m <= 10; m++) Assert.True(PartyTacticsMarks.IsNumbered(ShippedRows, m));
-        for (ushort m = 11; m <= 17; m++) Assert.False(PartyTacticsMarks.IsNumbered(ShippedRows, m));
-        Assert.False(PartyTacticsMarks.IsNumbered(ShippedRows, 0));
-        Assert.False(PartyTacticsMarks.IsNumbered(null, 3));
+        for (ushort m = 1; m <= 10; m++) Assert.True(TacticsMarkList.IsNumbered(ShippedRows, m));
+        for (ushort m = 11; m <= 17; m++) Assert.False(TacticsMarkList.IsNumbered(ShippedRows, m));
+        Assert.False(TacticsMarkList.IsNumbered(ShippedRows, 0));
+        Assert.False(TacticsMarkList.IsNumbered(null, 3));
     }
 
     [Fact]
@@ -46,7 +47,7 @@ public class PartyTacticsMarksTests
             await File.ReadAllBytesAsync(Path.Combine(root.FullName, "data", "Tactics_Target.json")))!;
         Assert.Equal(17, rows.Count);
         Assert.Equal(Enumerable.Range(1, 10).Select(i => (ushort)i),
-            rows.Select(r => (ushort)r.Tactics_List).Where(m => PartyTacticsMarks.IsNumbered(rows, m)).OrderBy(m => m));
+            rows.Select(r => (ushort)r.Tactics_List).Where(m => TacticsMarkList.IsNumbered(rows, m)).OrderBy(m => m));
     }
 
     [Fact]

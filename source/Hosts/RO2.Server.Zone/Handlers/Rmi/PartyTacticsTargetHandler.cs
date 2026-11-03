@@ -9,6 +9,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.TacticsMarks.Domain;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -54,7 +55,8 @@ public class PartyTacticsTargetHandler : ZoneRmiHandlerBase<PartyTacticsTargetHa
         
         
         
-        PartyTacticsMarks.Set(party, targetHandle, mark);
+        var numbered = TacticsMarkList.IsNumbered(services.GetRequiredService<GameDataStore>().TacticsTarget, mark);
+        PartyTacticsMarks.Set(party, targetHandle, mark, numbered, DateTime.UtcNow);
 
         
         
