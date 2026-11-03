@@ -1,0 +1,47 @@
+name: Bug report
+description: Something in the server behaves wrongly or crashes
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is a server emulator you run locally against a client you own. Please check that the bug is in the server and not in a modified or mismatched client before filing.
+  - type: input
+    id: client-build
+    attributes:
+      label: Client build / SHA
+      description: The client build number and the SHA-256 of Rag2.exe you are running.
+      placeholder: "b303, 5f6e2115..."
+    validations:
+      required: true
+  - type: dropdown
+    id: host
+    attributes:
+      label: Host
+      description: Which server host shows the problem?
+      options:
+        - Login (7101)
+        - Zone (7201)
+        - Chat (7401)
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: report
+    attributes:
+      label: What happened
+      description: Steps to reproduce, what you expected, and what you got instead. Paste relevant log lines.
+      placeholder: |
+        Steps:
+        1.
+        Expected:
+        Actual:
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, .NET SDK version (dotnet --version), MongoDB version, and the commit you built from.
+    validations:
+      required: true

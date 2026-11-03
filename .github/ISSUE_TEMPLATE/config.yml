@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions and help
+    url: https://github.com/JordanRO2/ro2-server/discussions
+    about: Setup problems, usage questions and general discussion go to Discussions.
