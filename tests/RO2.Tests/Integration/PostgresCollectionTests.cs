@@ -1,6 +1,6 @@
 using Npgsql;
 using RO2.Collections.Domain;
-using RO2.Persistence.Postgres.Repositories;
+using RO2.Collections.Infrastructure.Postgres;
 using Xunit;
 
 namespace RO2.Tests.Integration;

@@ -2,7 +2,7 @@ using MongoDB.Driver;
 using RO2.Collections.Domain;
 using RO2.Persistence.Mongo.Persistence;
 
-namespace RO2.Persistence.Mongo.Repositories;
+namespace RO2.Collections.Infrastructure.Mongo;
 
 /// <summary>
 /// MongoDB store for <see cref="IPetIncubatorRepository"/>, one document per character in the <c>pet_incubators</c>

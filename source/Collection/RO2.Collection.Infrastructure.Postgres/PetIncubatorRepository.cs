@@ -2,8 +2,9 @@ using System.Text.Json;
 using Npgsql;
 using NpgsqlTypes;
 using RO2.Collections.Domain;
+using RO2.Persistence.Postgres;
 
-namespace RO2.Persistence.Postgres.Repositories;
+namespace RO2.Collections.Infrastructure.Postgres;
 
 /// <summary>
 /// PostgreSQL implementation of <see cref="IPetIncubatorRepository"/>: one row per character in the

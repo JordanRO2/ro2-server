@@ -173,7 +173,7 @@ public static class Program
         services.AddProviderRepository<ICraftRecipeRepository, RO2.Economy.Infrastructure.Mongo.CraftRecipeRepository, RO2.Economy.Infrastructure.Postgres.CraftRecipeRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<ICardBookChargeRepository, RO2.Persistence.Mongo.Repositories.CardBookChargeRepository, RO2.Persistence.Postgres.Repositories.CardBookChargeRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IPrivateShopCraftRepository, RO2.Economy.Infrastructure.Mongo.PrivateShopCraftRepository, RO2.Economy.Infrastructure.Postgres.PrivateShopCraftRepository>(config.Database.Provider, ServiceLifetime.Singleton);
-        services.AddProviderRepository<IPetIncubatorRepository, RO2.Persistence.Mongo.Repositories.PetIncubatorRepository, RO2.Persistence.Postgres.Repositories.PetIncubatorRepository>(config.Database.Provider, ServiceLifetime.Singleton);
+        services.AddProviderRepository<IPetIncubatorRepository, RO2.Collections.Infrastructure.Mongo.PetIncubatorRepository, RO2.Collections.Infrastructure.Postgres.PetIncubatorRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IUnionMembershipRepository, RO2.Characters.Infrastructure.Mongo.UnionMembershipRepository, RO2.Characters.Infrastructure.Postgres.UnionMembershipRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         // Character.Application ports: game-data reads and the union-head mirror, backed by the host's store.
         services.AddSingleton<ICharacterGameData, CharacterGameData>();
@@ -186,8 +186,8 @@ public static class Program
         services.AddProviderRepository<ICardRegistryRepository, RO2.Persistence.Mongo.Repositories.CardRegistryRepository, RO2.Persistence.Postgres.Repositories.CardRegistryRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IGameMallListRepository, RO2.Economy.Infrastructure.Mongo.GameMallListRepository, RO2.Economy.Infrastructure.Postgres.GameMallListRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<ICardBookRepository, RO2.Persistence.Mongo.Repositories.CardBookRepository, RO2.Persistence.Postgres.Repositories.CardBookRepository>(config.Database.Provider, ServiceLifetime.Singleton);
-        services.AddProviderRepository<ICollectionRepository, RO2.Persistence.Mongo.Repositories.CollectionRepository, RO2.Persistence.Postgres.Repositories.CollectionRepository>(config.Database.Provider, ServiceLifetime.Singleton);
-        services.AddProviderRepository<IMonsterCollectionProgressRepository, RO2.Persistence.Mongo.Repositories.MonsterCollectionProgressRepository, RO2.Persistence.Postgres.Repositories.MonsterCollectionProgressRepository>(config.Database.Provider, ServiceLifetime.Singleton);
+        services.AddProviderRepository<ICollectionRepository, RO2.Collections.Infrastructure.Mongo.CollectionRepository, RO2.Collections.Infrastructure.Postgres.CollectionRepository>(config.Database.Provider, ServiceLifetime.Singleton);
+        services.AddProviderRepository<IMonsterCollectionProgressRepository, RO2.Collections.Infrastructure.Mongo.MonsterCollectionProgressRepository, RO2.Collections.Infrastructure.Postgres.MonsterCollectionProgressRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IKharaTitleRepository, RO2.Persistence.Mongo.Repositories.KharaTitleRepository, RO2.Persistence.Postgres.Repositories.KharaTitleRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddSingleton<KharaTitleStore>();
         services.AddProviderRepository<IKharaStateRepository, RO2.Persistence.Mongo.Repositories.KharaStateRepository, RO2.Persistence.Postgres.Repositories.KharaStateRepository>(config.Database.Provider, ServiceLifetime.Singleton);

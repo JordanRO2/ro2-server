@@ -6,7 +6,7 @@ using RO2.Collections.Domain;
 using RO2.GameData;
 using RO2.GameData.Tables;
 using RO2.Persistence.Mongo.Persistence;
-using RO2.Persistence.Mongo.Repositories;
+using RO2.Collections.Infrastructure.Mongo;
 using RO2.Server.Zone.Services;
 using Xunit;
 using Xunit.Abstractions;
