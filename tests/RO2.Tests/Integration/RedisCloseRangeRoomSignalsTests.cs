@@ -1,7 +1,6 @@
 using System.Collections.Concurrent;
 using RO2.Chats.Infrastructure.Postgres;
 using RO2.Chats.Domain;
-using RO2.Domain.Entities;
 using RO2.Persistence.Redis;
 using Testcontainers.Redis;
 using Xunit;

@@ -1,4 +1,3 @@
-using RO2.Domain.Entities;
 using RO2.Chats.Domain;
 using RO2.Kharas.Domain;
 using System.Net;
