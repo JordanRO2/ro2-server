@@ -1,3 +1,4 @@
+using RO2.DungeonFinder.Domain;
 using RO2.Domain.Entities;
 using RO2.GameData;
 using RO2.GameData.Tables;
@@ -692,7 +693,7 @@ public class DungeonFinderTests
     {
         var queue = new DungeonFinderQueue();
         var pc = Pc(1);
-        var outcome = queue.Join(pc, DungeonFinderPackets.RoleDealer, [List21]);
+        var outcome = queue.Join(pc, RoleKind.RoleDealer, [List21]);
 
         Assert.False(outcome.AlreadyQueued);
         Assert.NotNull(outcome.Match);
@@ -703,14 +704,14 @@ public class DungeonFinderTests
 
         
         Assert.Empty(queue.MembersOf(21));
-        Assert.NotNull(queue.Join(pc, DungeonFinderPackets.RoleDealer, [List21]).Match);
+        Assert.NotNull(queue.Join(pc, RoleKind.RoleDealer, [List21]).Match);
     }
 
     [Fact]
     public void SoloList21_WithNoDealerFlag_HasNoSlot_AndStaysQueued()
     {
         var queue = new DungeonFinderQueue();
-        var outcome = queue.Join(Pc(1), DungeonFinderPackets.RoleTank, [List21]);
+        var outcome = queue.Join(Pc(1), RoleKind.RoleTank, [List21]);
         Assert.Null(outcome.Match);
         Assert.Single(queue.MembersOf(21));
         Assert.Equal("00001500000000000000", ToHex(DungeonFinderPackets.BuildInProgressInfo2806(outcome.ShownListId, outcome.Shown, outcome.OwnRole)));
@@ -721,11 +722,11 @@ public class DungeonFinderTests
     {
         var queue = new DungeonFinderQueue();
         var pc = Pc(1);
-        var outcome = queue.Join(pc, DungeonFinderPackets.RoleDealer, [List4]);
+        var outcome = queue.Join(pc, RoleKind.RoleDealer, [List4]);
         Assert.Null(outcome.Match);
         
         Assert.Equal("00000400000000010002", ToHex(DungeonFinderPackets.BuildInProgressInfo2806(outcome.ShownListId, outcome.Shown, outcome.OwnRole)));
-        Assert.True(queue.Join(pc, DungeonFinderPackets.RoleDealer, [List4]).AlreadyQueued);
+        Assert.True(queue.Join(pc, RoleKind.RoleDealer, [List4]).AlreadyQueued);
 
         Assert.Same(pc, queue.Leave(pc)?.Player);
         Assert.Null(queue.Leave(pc));
@@ -737,8 +738,8 @@ public class DungeonFinderTests
         var queue = new DungeonFinderQueue();
         var first = Pc(1);
         var second = Pc(2);
-        queue.Join(first, DungeonFinderPackets.RoleDealer, [List2]);
-        var joined = queue.Join(second, DungeonFinderPackets.RoleDealer, [List2]);
+        queue.Join(first, RoleKind.RoleDealer, [List2]);
+        var joined = queue.Join(second, RoleKind.RoleDealer, [List2]);
         
         Assert.Equal("00000200000000020002", ToHex(DungeonFinderPackets.BuildInProgressInfo2806(joined.ShownListId, joined.Shown, joined.OwnRole)));
 
@@ -761,8 +762,8 @@ public class DungeonFinderTests
     {
         
         var queue = new DungeonFinderQueue();
-        queue.Join(Pc(1), DungeonFinderPackets.RoleDealer, [List8]);
-        var healer = queue.Join(Pc(2), DungeonFinderPackets.RoleHealer, [List8]);
+        queue.Join(Pc(1), RoleKind.RoleDealer, [List8]);
+        var healer = queue.Join(Pc(2), RoleKind.RoleHealer, [List8]);
         Assert.Equal("00000800000001010004", ToHex(DungeonFinderPackets.BuildInProgressInfo2806(healer.ShownListId, healer.Shown, healer.OwnRole)));
     }
 
@@ -772,8 +773,8 @@ public class DungeonFinderTests
         var queue = new DungeonFinderQueue();
         var stays = Pc(1);
         var gone = Pc(2);
-        queue.Join(stays, DungeonFinderPackets.RoleDealer, [List2]);
-        queue.Join(gone, DungeonFinderPackets.RoleDealer, [List2]);
+        queue.Join(stays, RoleKind.RoleDealer, [List2]);
+        queue.Join(gone, RoleKind.RoleDealer, [List2]);
 
         var removed = queue.Prune(e => ReferenceEquals(e.Player, gone));
         Assert.Single(removed);

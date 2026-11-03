@@ -1,3 +1,4 @@
+using RO2.DungeonFinder.Domain;
 using RO2.GameData;
 using RO2.GameData.Tables;
 using RO2.Server.Zone.Models;
@@ -29,12 +30,6 @@ public sealed class DungeonFinderQueue
 {
  /// <summary>The queue shared by the Zone handlers.</summary>
     public static DungeonFinderQueue Shared { get; } = new();
-
- /// <summary>Filled slots per role.</summary>
-    public readonly record struct RoleCounts(byte Tanks, byte Healers, byte Dealers)
-    {
-        public int Total => Tanks + Healers + Dealers;
-    }
 
  /// <summary>One searching player. <see cref="ListIds"/>[0] is the list named in its 2806.</summary>
     public sealed class Entry(PlayerState player, uint sessionId, uint[] listIds, byte roleFlags)
@@ -126,17 +121,15 @@ public sealed class DungeonFinderQueue
  /// </summary>
     public static (RoleCounts Filled, Dictionary<Entry, byte> Roles) Assign(FindDungeonList row, IReadOnlyList<Entry> members)
     {
-        byte tanks = 0, healers = 0, dealers = 0;
+        var filled = default(RoleCounts);
         var roles = new Dictionary<Entry, byte>(ReferenceEqualityComparer.Instance);
         foreach (var e in members)
         {
-            byte role = 0;
-            if ((e.RoleFlags & DungeonFinderPackets.RoleTank) != 0 && tanks < row.Role_Tanker) { role = DungeonFinderPackets.RoleTank; tanks++; }
-            else if ((e.RoleFlags & DungeonFinderPackets.RoleHealer) != 0 && healers < row.Role_Healer) { role = DungeonFinderPackets.RoleHealer; healers++; }
-            else if ((e.RoleFlags & DungeonFinderPackets.RoleDealer) != 0 && dealers < row.Role_Dealer) { role = DungeonFinderPackets.RoleDealer; dealers++; }
+            var role = RoleSlotting.FirstFreeRole(row, filled, e.RoleFlags);
+            filled = filled.With(role);
             roles[e] = role;
         }
-        return (new RoleCounts(tanks, healers, dealers), roles);
+        return (filled, roles);
     }
 
  /// <summary>

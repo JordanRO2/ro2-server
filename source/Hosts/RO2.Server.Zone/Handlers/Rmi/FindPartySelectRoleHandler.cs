@@ -1,3 +1,4 @@
+using RO2.DungeonFinder.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Network.Protocol;
@@ -32,7 +33,7 @@ public class FindPartySelectRoleHandler : ZoneRmiHandlerBase<FindPartySelectRole
             Logger.LogDebug("Session {Id}: malformed ReqFindParty_Party_SelectRole ({Len}B)", session.SessionId, payload.Length);
             return;
         }
-        roleFlags &= DungeonFinderPackets.RoleTank | DungeonFinderPackets.RoleDealer | DungeonFinderPackets.RoleHealer;
+        roleFlags &= RoleKind.RoleTank | RoleKind.RoleDealer | RoleKind.RoleHealer;
         if (roleFlags == 0)
         {
             // The client refuses an empty role selection itself, so no answer is defined for it.

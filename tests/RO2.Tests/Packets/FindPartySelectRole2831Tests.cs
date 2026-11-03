@@ -1,3 +1,4 @@
+using RO2.DungeonFinder.Domain;
 using RO2.Server.Zone.Services;
 using Xunit;
 
@@ -28,8 +29,8 @@ public class FindPartySelectRole2831Tests
 
  /// <summary>Reference bodies of 1568: <c>04</c> (healer) and <c>01</c> (tank).</summary>
     [Theory]
-    [InlineData("04", DungeonFinderPackets.RoleHealer)]
-    [InlineData("01", DungeonFinderPackets.RoleTank)]
+    [InlineData("04", RoleKind.RoleHealer)]
+    [InlineData("01", RoleKind.RoleTank)]
     public void SelectRole1568_ParsesRetailBodies(string body, byte expected)
     {
         Assert.True(FindPartyRolePackets.TryParseSelectRole1568(Convert.FromHexString(body), out var flags));

@@ -239,27 +239,11 @@ public sealed class DungeonFinderPartyRound
             : DungeonFinderPackets.BuildFindDungeonAnswer2804(result);
 
  /// <summary>The round's filled slots.</summary>
-    private static DungeonFinderQueue.RoleCounts Filled(IReadOnlyList<Seat> seats)
-    {
-        byte tanks = 0, healers = 0, dealers = 0;
-        foreach (var s in seats)
-        {
-            if (s.Role == DungeonFinderPackets.RoleTank) tanks++;
-            else if (s.Role == DungeonFinderPackets.RoleHealer) healers++;
-            else if (s.Role == DungeonFinderPackets.RoleDealer) dealers++;
-        }
-        return new DungeonFinderQueue.RoleCounts(tanks, healers, dealers);
-    }
+    private static RoleCounts Filled(IReadOnlyList<Seat> seats) => RoleCounts.Of(seats.Select(s => s.Role));
 
  /// <summary>The first of <paramref name="flags"/>' roles, in tank, healer, dealer order, with a free slot; 0 for none.</summary>
     private static byte FirstFreeRole(FindDungeonList row, IReadOnlyList<Seat> seats, byte flags)
-    {
-        var filled = Filled(seats);
-        if ((flags & DungeonFinderPackets.RoleTank) != 0 && filled.Tanks < row.Role_Tanker) return DungeonFinderPackets.RoleTank;
-        if ((flags & DungeonFinderPackets.RoleHealer) != 0 && filled.Healers < row.Role_Healer) return DungeonFinderPackets.RoleHealer;
-        if ((flags & DungeonFinderPackets.RoleDealer) != 0 && filled.Dealers < row.Role_Dealer) return DungeonFinderPackets.RoleDealer;
-        return 0;
-    }
+        => RoleSlotting.FirstFreeRole(row, Filled(seats), flags);
 
  /// <summary>Sends the round's counts to every member, each with its own role.</summary>
     private static void AddStateLocked(Round round, List<FinderEffect> effects)

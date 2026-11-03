@@ -1,3 +1,4 @@
+using RO2.DungeonFinder.Domain;
 using System.Text.Json;
 using RO2.GameData.Tables;
 using RO2.Network.Protocol;
@@ -77,11 +78,11 @@ public class DungeonFinderPartyRoundTests
         var round = new DungeonFinderPartyRound();
         var searcher = Player(SearcherSession);
 
-        var opened = round.Open(Party, Five, searcher, DungeonFinderPackets.RoleDealer,
+        var opened = round.Open(Party, Five, searcher, RoleKind.RoleDealer,
             [Player(MSession), Player(XSession)], Everyone);
 
         Assert.Equal(DungeonFinderPartyRound.OpenStatus.Opened, opened.Status);
-        Assert.Equal(DungeonFinderPackets.RoleDealer, opened.SearcherRole);
+        Assert.Equal(RoleKind.RoleDealer, opened.SearcherRole);
         Assert.Equal(
             [
                 Frame(SearcherSession, A2804, "0000"),
@@ -107,20 +108,20 @@ public class DungeonFinderPartyRoundTests
         var m = Player(MSession);
         var x = Player(XSession);
         var y = Player(YSession);
-        var opened = round.Open(Party, Five, Player(SearcherSession), DungeonFinderPackets.RoleDealer, [m, x, y], Everyone);
+        var opened = round.Open(Party, Five, Player(SearcherSession), RoleKind.RoleDealer, [m, x, y], Everyone);
         Assert.Equal([Frame(MSession, N2822, ""), Frame(MSession, A2806, "00000000000000010000")], To(MSession, opened.Sends));
 
         var mPick = round.SelectRole(m, 0x04, Everyone);
         Assert.Equal(DungeonFinderPartyRound.SelectStatus.Accepted, mPick.Status);
-        Assert.Equal(DungeonFinderPackets.RoleHealer, mPick.Role);
+        Assert.Equal(RoleKind.RoleHealer, mPick.Role);
         Assert.Equal([Frame(MSession, A2834, "0000"), Frame(MSession, A2806, "00000000000001010004")], To(MSession, mPick.Sends));
 
-        var xPick = round.SelectRole(x, DungeonFinderPackets.RoleDealer, Everyone);
+        var xPick = round.SelectRole(x, RoleKind.RoleDealer, Everyone);
         Assert.Equal(DungeonFinderPartyRound.SelectStatus.Accepted, xPick.Status);
         Assert.Equal([Frame(MSession, A2806, "00000000000001020004")], To(MSession, xPick.Sends));
         Assert.Equal([Frame(XSession, A2834, "0000"), Frame(XSession, A2806, "00000000000001020002")], To(XSession, xPick.Sends));
 
-        var yPick = round.SelectRole(y, DungeonFinderPackets.RoleHealer, Everyone);
+        var yPick = round.SelectRole(y, RoleKind.RoleHealer, Everyone);
         Assert.Equal(DungeonFinderPartyRound.SelectStatus.SlotTaken, yPick.Status);
         Assert.Equal(
             [
@@ -144,10 +145,10 @@ public class DungeonFinderPartyRoundTests
         var m = Player(MSession);
         var x = Player(XSession);
         var y = Player(YSession);
-        round.Open(Party, Five, Player(SearcherSession), DungeonFinderPackets.RoleHealer, [x, y, m], Everyone);
+        round.Open(Party, Five, Player(SearcherSession), RoleKind.RoleHealer, [x, y, m], Everyone);
 
-        Assert.Equal([Frame(MSession, A2806, "00000000000001000100")], To(MSession, round.SelectRole(x, DungeonFinderPackets.RoleTank, Everyone).Sends));
-        Assert.Equal([Frame(MSession, A2806, "00000000000001010100")], To(MSession, round.SelectRole(y, DungeonFinderPackets.RoleDealer, Everyone).Sends));
+        Assert.Equal([Frame(MSession, A2806, "00000000000001000100")], To(MSession, round.SelectRole(x, RoleKind.RoleTank, Everyone).Sends));
+        Assert.Equal([Frame(MSession, A2806, "00000000000001010100")], To(MSession, round.SelectRole(y, RoleKind.RoleDealer, Everyone).Sends));
 
         var mPick = round.SelectRole(m, 0x01, Everyone);
 
@@ -167,11 +168,11 @@ public class DungeonFinderPartyRoundTests
         var m = Player(MSession);
         var x = Player(XSession);
         var y = Player(YSession);
-        var opened = round.Open(Party, Five, Player(SearcherSession), DungeonFinderPackets.RoleHealer, [m, x, y], Everyone);
+        var opened = round.Open(Party, Five, Player(SearcherSession), RoleKind.RoleHealer, [m, x, y], Everyone);
         Assert.Equal([Frame(MSession, N2822, ""), Frame(MSession, A2806, "00000000000001000000")], To(MSession, opened.Sends));
 
-        Assert.Equal([Frame(MSession, A2806, "00000000000001010000")], To(MSession, round.SelectRole(x, DungeonFinderPackets.RoleDealer, Everyone).Sends));
-        Assert.Equal([Frame(MSession, A2806, "00000000000001020000")], To(MSession, round.SelectRole(y, DungeonFinderPackets.RoleDealer, Everyone).Sends));
+        Assert.Equal([Frame(MSession, A2806, "00000000000001010000")], To(MSession, round.SelectRole(x, RoleKind.RoleDealer, Everyone).Sends));
+        Assert.Equal([Frame(MSession, A2806, "00000000000001020000")], To(MSession, round.SelectRole(y, RoleKind.RoleDealer, Everyone).Sends));
         var mPick = round.SelectRole(m, 0x04, Everyone);
 
         Assert.Equal([Frame(MSession, A2834, "0800"), Frame(MSession, N2831, "0200000000")], To(MSession, mPick.Sends));
@@ -183,10 +184,10 @@ public class DungeonFinderPartyRoundTests
         var round = new DungeonFinderPartyRound();
         var m = Player(MSession);
         var x = Player(XSession);
-        round.Open(Party, Five, Player(SearcherSession), DungeonFinderPackets.RoleDealer, [m, x], Everyone);
-        Assert.Equal(DungeonFinderPartyRound.SelectStatus.Accepted, round.SelectRole(m, DungeonFinderPackets.RoleTank, Everyone).Status);
+        round.Open(Party, Five, Player(SearcherSession), RoleKind.RoleDealer, [m, x], Everyone);
+        Assert.Equal(DungeonFinderPartyRound.SelectStatus.Accepted, round.SelectRole(m, RoleKind.RoleTank, Everyone).Status);
 
-        var last = round.SelectRole(x, DungeonFinderPackets.RoleHealer, Everyone);
+        var last = round.SelectRole(x, RoleKind.RoleHealer, Everyone);
 
         Assert.Equal(DungeonFinderPartyRound.SelectStatus.Completed, last.Status);
         Assert.Equal(
@@ -199,7 +200,7 @@ public class DungeonFinderPartyRoundTests
             Render(last.Sends));
         
         Assert.Equal(DungeonFinderPartyRound.OpenStatus.Opened,
-            round.Open(Party, Five, Player(SearcherSession), DungeonFinderPackets.RoleDealer, [m, x], Everyone).Status);
+            round.Open(Party, Five, Player(SearcherSession), RoleKind.RoleDealer, [m, x], Everyone).Status);
     }
 
     [Fact]
@@ -208,11 +209,11 @@ public class DungeonFinderPartyRoundTests
         var round = new DungeonFinderPartyRound();
         var m = Player(MSession);
         var x = Player(XSession);
-        round.Open(Party, Five, Player(SearcherSession), DungeonFinderPackets.RoleTank, [m, x], Everyone);
+        round.Open(Party, Five, Player(SearcherSession), RoleKind.RoleTank, [m, x], Everyone);
 
-        var pick = round.SelectRole(m, DungeonFinderPackets.RoleTank | DungeonFinderPackets.RoleHealer, Everyone);
+        var pick = round.SelectRole(m, RoleKind.RoleTank | RoleKind.RoleHealer, Everyone);
 
-        Assert.Equal(DungeonFinderPackets.RoleHealer, pick.Role);
+        Assert.Equal(RoleKind.RoleHealer, pick.Role);
     }
 
  /// <summary>A 1568 from a window whose round no longer exists is refused to the sender alone.</summary>
@@ -233,7 +234,7 @@ public class DungeonFinderPartyRoundTests
         var round = new DungeonFinderPartyRound();
         var m = Player(MSession);
         var x = Player(XSession);
-        round.Open(Party, Five, Player(SearcherSession), DungeonFinderPackets.RoleDealer, [m, x], Everyone);
+        round.Open(Party, Five, Player(SearcherSession), RoleKind.RoleDealer, [m, x], Everyone);
 
         var cancel = round.Cancel(x, Everyone);
 
@@ -267,8 +268,8 @@ public class DungeonFinderPartyRoundTests
         var round = new DungeonFinderPartyRound();
         var searcher = Player(SearcherSession);
         var m = Player(MSession);
-        round.Open(Party, Five, searcher, DungeonFinderPackets.RoleDealer, [m, Player(XSession)], Everyone);
-        round.SelectRole(m, DungeonFinderPackets.RoleHealer, Everyone);
+        round.Open(Party, Five, searcher, RoleKind.RoleDealer, [m, Player(XSession)], Everyone);
+        round.SelectRole(m, RoleKind.RoleHealer, Everyone);
 
         var cancel = round.Cancel(searcher, Everyone);
 
@@ -281,7 +282,7 @@ public class DungeonFinderPartyRoundTests
             ],
             Render(cancel.Sends));
         Assert.Equal(DungeonFinderPartyRound.OpenStatus.Opened,
-            round.Open(Party, Five, searcher, DungeonFinderPackets.RoleDealer, [m], Everyone).Status);
+            round.Open(Party, Five, searcher, RoleKind.RoleDealer, [m], Everyone).Status);
     }
 
  /// <summary>
@@ -308,8 +309,8 @@ public class DungeonFinderPartyRoundTests
         var searcher = Player(SearcherSession);
         var m = Player(MSession);
         var x = Player(XSession);
-        var opened = round.Open(Party, Five, searcher, DungeonFinderPackets.RoleDealer, [m, x], Everyone);
-        Assert.Equal(DungeonFinderPartyRound.SelectStatus.Accepted, round.SelectRole(m, DungeonFinderPackets.RoleHealer, Everyone).Status);
+        var opened = round.Open(Party, Five, searcher, RoleKind.RoleDealer, [m, x], Everyone);
+        Assert.Equal(DungeonFinderPartyRound.SelectStatus.Accepted, round.SelectRole(m, RoleKind.RoleHealer, Everyone).Status);
 
         var expired = round.Expire(opened.RoundId, Everyone);
 
@@ -323,7 +324,7 @@ public class DungeonFinderPartyRoundTests
             Render(expired.Sends));
         Assert.Equal(DungeonFinderPartyRound.SelectStatus.NoRound, round.SelectRole(x, 0x04, Everyone).Status);
         Assert.Equal(DungeonFinderPartyRound.OpenStatus.Opened,
-            round.Open(Party, Five, searcher, DungeonFinderPackets.RoleDealer, [m, x], Everyone).Status);
+            round.Open(Party, Five, searcher, RoleKind.RoleDealer, [m, x], Everyone).Status);
     }
 
  /// <summary>A round that completed before its timeout: the timeout finds nothing to end.</summary>
@@ -332,8 +333,8 @@ public class DungeonFinderPartyRoundTests
     {
         var round = new DungeonFinderPartyRound();
         var m = Player(MSession);
-        var opened = round.Open(Party, Five, Player(SearcherSession), DungeonFinderPackets.RoleDealer, [m], Everyone);
-        Assert.Equal(DungeonFinderPartyRound.SelectStatus.Completed, round.SelectRole(m, DungeonFinderPackets.RoleTank, Everyone).Status);
+        var opened = round.Open(Party, Five, Player(SearcherSession), RoleKind.RoleDealer, [m], Everyone);
+        Assert.Equal(DungeonFinderPartyRound.SelectStatus.Completed, round.SelectRole(m, RoleKind.RoleTank, Everyone).Status);
 
         var expired = round.Expire(opened.RoundId, Everyone);
 
@@ -351,9 +352,9 @@ public class DungeonFinderPartyRoundTests
         var round = new DungeonFinderPartyRound();
         var searcher = Player(SearcherSession);
         var m = Player(MSession);
-        var first = round.Open(Party, Five, searcher, DungeonFinderPackets.RoleDealer, [m], Everyone);
+        var first = round.Open(Party, Five, searcher, RoleKind.RoleDealer, [m], Everyone);
         Assert.True(round.Cancel(m, Everyone).Ended);
-        var second = round.Open(Party, Five, searcher, DungeonFinderPackets.RoleDealer, [m], Everyone);
+        var second = round.Open(Party, Five, searcher, RoleKind.RoleDealer, [m], Everyone);
         Assert.NotEqual(first.RoundId, second.RoundId);
 
         var stale = round.Expire(first.RoundId, Everyone);
@@ -361,7 +362,7 @@ public class DungeonFinderPartyRoundTests
         Assert.False(stale.Ended);
         Assert.Empty(stale.Sends);
         Assert.Equal(DungeonFinderPartyRound.OpenStatus.AlreadyOpen,
-            round.Open(Party, Five, searcher, DungeonFinderPackets.RoleDealer, [m], Everyone).Status);
+            round.Open(Party, Five, searcher, RoleKind.RoleDealer, [m], Everyone).Status);
         Assert.True(round.Expire(second.RoundId, Everyone).Ended);
     }
 
@@ -373,7 +374,7 @@ public class DungeonFinderPartyRoundTests
     public void Expire_OfARoundThatLostAMember_TellsTheMembersStillThereOnce()
     {
         var round = new DungeonFinderPartyRound();
-        var opened = round.Open(Party, Five, Player(SearcherSession), DungeonFinderPackets.RoleDealer,
+        var opened = round.Open(Party, Five, Player(SearcherSession), RoleKind.RoleDealer,
             [Player(MSession), Player(XSession)], Everyone);
         DungeonFinderPartyRound.SeatCheck xGone = (_, session, _) => session != XSession;
 
@@ -398,7 +399,7 @@ public class DungeonFinderPartyRoundTests
         var round = new DungeonFinderPartyRound();
         var m = Player(MSession);
         var x = Player(XSession);
-        round.Open(Party, Five, Player(SearcherSession), DungeonFinderPackets.RoleDealer, [m, x], Everyone);
+        round.Open(Party, Five, Player(SearcherSession), RoleKind.RoleDealer, [m, x], Everyone);
         DungeonFinderPartyRound.SeatCheck xGone = (_, session, _) => session != XSession;
 
         var pick = round.SelectRole(m, 0x04, xGone);
@@ -418,9 +419,9 @@ public class DungeonFinderPartyRoundTests
     {
         var round = new DungeonFinderPartyRound();
         var m = Player(MSession);
-        round.Open(Party, Five, Player(SearcherSession), DungeonFinderPackets.RoleDealer, [m], Everyone);
+        round.Open(Party, Five, Player(SearcherSession), RoleKind.RoleDealer, [m], Everyone);
 
-        var again = round.Open(Party, Five, m, DungeonFinderPackets.RoleHealer, [Player(SearcherSession)], Everyone);
+        var again = round.Open(Party, Five, m, RoleKind.RoleHealer, [Player(SearcherSession)], Everyone);
 
         Assert.Equal(DungeonFinderPartyRound.OpenStatus.AlreadyOpen, again.Status);
         Assert.Empty(again.Sends);
@@ -433,7 +434,7 @@ public class DungeonFinderPartyRoundTests
         var m = Player(MSession);
         var noTank = Five with { Role_Tanker = 0 };
 
-        var opened = round.Open(Party, noTank, Player(SearcherSession), DungeonFinderPackets.RoleTank, [m], Everyone);
+        var opened = round.Open(Party, noTank, Player(SearcherSession), RoleKind.RoleTank, [m], Everyone);
 
         Assert.Equal(DungeonFinderPartyRound.OpenStatus.SearcherHasNoSlot, opened.Status);
         Assert.Empty(opened.Sends);

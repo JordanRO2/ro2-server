@@ -1,3 +1,4 @@
+using RO2.DungeonFinder.Domain;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Services;
 using Xunit;
@@ -48,7 +49,7 @@ public class PartyMatchingAnswersA13Tests
     public void FindDungeonRandom1556_IsRoleThenCategory()
     {
         Assert.True(DungeonFinderPackets.TryParseFindDungeonRandom1556([0x02, 0x03], out var roles, out var category));
-        Assert.Equal(DungeonFinderPackets.RoleDealer, roles);
+        Assert.Equal(RoleKind.RoleDealer, roles);
         Assert.Equal(3, category);
         Assert.False(DungeonFinderPackets.TryParseFindDungeonRandom1556([0x02], out _, out _));
         Assert.False(DungeonFinderPackets.TryParseFindDungeonRandom1556([0x02, 0x03, 0x00], out _, out _));

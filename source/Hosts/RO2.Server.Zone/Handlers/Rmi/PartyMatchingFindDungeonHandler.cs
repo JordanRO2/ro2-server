@@ -1,3 +1,4 @@
+using RO2.DungeonFinder.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.GameData;
@@ -60,7 +61,7 @@ public class PartyMatchingFindDungeonHandler : ZoneRmiHandlerBase<PartyMatchingF
             Logger.LogDebug("Session {Id}: malformed ReqPartyMatchingFindDungeon ({Len}B)", session.SessionId, payload.Length);
             return;
         }
-        roleFlags &= DungeonFinderPackets.RoleTank | DungeonFinderPackets.RoleDealer | DungeonFinderPackets.RoleHealer;
+        roleFlags &= RoleKind.RoleTank | RoleKind.RoleDealer | RoleKind.RoleHealer;
         if (roleFlags == 0)
         {
             // No role selected: nothing to queue for, and no answer is defined for it.

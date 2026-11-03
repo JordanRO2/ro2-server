@@ -1,3 +1,4 @@
+using RO2.DungeonFinder.Domain;
 using System.Runtime.CompilerServices;
 using RO2.Server.Zone.Models;
 
@@ -19,7 +20,7 @@ namespace RO2.Server.Zone.Services;
 public static class DungeonFinderPendingStore
 {
  /// <summary>A match awaiting its 1559: the list, the searcher's role, and the group counts for 2824.</summary>
-    public sealed record PendingMatch(uint ListId, byte Role, DungeonFinderQueue.RoleCounts Group);
+    public sealed record PendingMatch(uint ListId, byte Role, RoleCounts Group);
 
  /// <summary>
  /// A run started by the finder: the list, the map of its arrival point, and the registry instance the join

@@ -1,3 +1,4 @@
+using RO2.DungeonFinder.Domain;
 using RO2.Dungeons.Domain;
 using System.Globalization;
 using RO2.GameData;
@@ -265,7 +266,7 @@ public class DungeonFinderReauditTests
     [InlineData(22u, "16000000000100")]
     public void JoinMsg2824_IsRetails(uint listId, string retail)
         => Assert.Equal(retail, Hex(DungeonFinderPackets.BuildInProgressJoinMsg2824(listId,
-            new DungeonFinderQueue.RoleCounts(Tanks: 0, Healers: 0, Dealers: 1))));
+            new RoleCounts(Tanks: 0, Healers: 0, Dealers: 1))));
 
  /// <summary>
  /// The finder join's hand-off 2556: account, ticket, host and port, then the destination block taken from
@@ -358,7 +359,7 @@ public class DungeonFinderReauditTests
     public void PendingMatch_IsPerPlayerState()
     {
         var player = new PlayerState { CharacterId = 0x5A1F_0003u };
-        var match = new DungeonFinderPendingStore.PendingMatch(21, 2, new DungeonFinderQueue.RoleCounts(0, 0, 1));
+        var match = new DungeonFinderPendingStore.PendingMatch(21, 2, new RoleCounts(0, 0, 1));
         DungeonFinderPendingStore.SetPending(player, match);
 
         Assert.Null(DungeonFinderPendingStore.TakePending(new PlayerState { CharacterId = player.CharacterId }));

@@ -1,3 +1,4 @@
+using RO2.DungeonFinder.Domain;
 using System.Buffers.Binary;
 using RO2.Network.Packets;
 
@@ -19,15 +20,6 @@ namespace RO2.Server.Zone.Services;
 /// </remarks>
 public static class DungeonFinderPackets
 {
- /// Role flag for a tank.
-    public const byte RoleTank = 1;
-
- /// Role flag for a damage dealer.
-    public const byte RoleDealer = 2;
-
- /// Role flag for a healer.
-    public const byte RoleHealer = 4;
-
  /// <summary>Result 0: the search was accepted.</summary>
     public const ushort ResultAccepted = 0;
 
@@ -103,7 +95,7 @@ public static class DungeonFinderPackets
  /// [u8 tanks filled][u8 receiver's own role flag]</c>. Puts the client into the finding state and shows the
  /// filled role slots of the queue. Only result 0 is sent.
  /// </summary>
-    public static byte[] BuildInProgressInfo2806(uint listId, DungeonFinderQueue.RoleCounts filled, byte ownRole)
+    public static byte[] BuildInProgressInfo2806(uint listId, RoleCounts filled, byte ownRole)
     {
         using var pw = new PacketWriter(10);
         pw.WriteUInt16(0);             
@@ -132,7 +124,7 @@ public static class DungeonFinderPackets
  /// 2824 NfyDungeonFind_InProgress_JoinMsg: <c>[u32 List_ID][u8 healers][u8 dealers][u8 tanks]</c>, the members of
  /// the group that is going in.
  /// </summary>
-    public static byte[] BuildInProgressJoinMsg2824(uint listId, DungeonFinderQueue.RoleCounts group)
+    public static byte[] BuildInProgressJoinMsg2824(uint listId, RoleCounts group)
     {
         using var pw = new PacketWriter(7);
         pw.WriteUInt32(listId);

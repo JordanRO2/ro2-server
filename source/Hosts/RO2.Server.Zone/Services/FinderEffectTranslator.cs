@@ -14,7 +14,7 @@ internal static class FinderEffectTranslator
         // The 2806 builder writes healers, dealers, tanks; the named arguments keep each count in its own slot.
         InProgress i => Frame(i.SessionId, ZoneS2COpcodes.AnsPartyMatchingInProgressInfo,
             DungeonFinderPackets.BuildInProgressInfo2806(i.ListId,
-                new DungeonFinderQueue.RoleCounts(Tanks: i.Tanks, Healers: i.Healers, Dealers: i.Dealers), i.OwnRole)),
+                new RoleCounts(Tanks: i.Tanks, Healers: i.Healers, Dealers: i.Dealers), i.OwnRole)),
         SelectRoleAnswered a => Frame(a.SessionId, ZoneS2COpcodes.AnsFindParty_Party_SelectRole,
             FindPartyRolePackets.BuildSelectRoleAnswer2834(a.Result)),
         RoundFailed f => Frame(f.SessionId, ZoneS2COpcodes.NfyResult_FindParty_Party_SelectRole,
