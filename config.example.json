@@ -27,5 +27,9 @@
     "MaxHz": 128,
     "Adaptive": true,
     "MaxCatchUpSteps": 5
+  },
+  "Colosseum": {
+    "OpenHoursUtc": [1, 13, 18],
+    "MinAnnounceLevel": 2
   }
 }

@@ -10,6 +10,7 @@ public class ServerConfiguration
     public GameConfig Game { get; set; } = new();
     public WorldConfig World { get; set; } = new();
     public TickConfig Tick { get; set; } = new();
+    public ColosseumConfig Colosseum { get; set; } = new();
 }
 
 /// <summary>
@@ -23,6 +24,17 @@ public class TickConfig
     public int MaxHz { get; set; } = 128;   
     public bool Adaptive { get; set; } = true;   
     public int MaxCatchUpSteps { get; set; } = 5; 
+}
+
+/// <summary>
+/// Colosseum opening schedule. OpenHoursUtc are the server-clock hours at which the arena opens (one-hour windows);
+/// confirmed correct by the operator, and in no data table. MinAnnounceLevel is the lowest level told on world entry
+/// that it is open.
+/// </summary>
+public class ColosseumConfig
+{
+    public int[] OpenHoursUtc { get; set; } = { 1, 13, 18 };
+    public byte MinAnnounceLevel { get; set; } = 2;
 }
 
 public class GameConfig

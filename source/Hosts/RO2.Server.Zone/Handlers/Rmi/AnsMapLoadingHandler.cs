@@ -2,6 +2,7 @@ using RO2.Colosseum.Domain;
 using RO2.Rewards.Domain;
 using RO2.Guilds.Domain;
 using Microsoft.Extensions.DependencyInjection;
+using RO2.Server.Zone.Configuration;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
 using RO2.Network.Packets;
@@ -412,7 +413,8 @@ public class AnsMapLoadingHandler : Base1304
             
             var giftBox = services.GetRequiredService<IAccountGiftRepository>();
             var attendanceGift = await SendMapLoadNotifiesAsync(session, player, character, store,
-                services.GetRequiredService<RO2.Rewards.Application.AttendTodayUseCase>(), ct);
+                services.GetRequiredService<RO2.Rewards.Application.AttendTodayUseCase>(),
+                services.GetRequiredService<ServerConfiguration>().Colosseum, ct);
 
             
             
@@ -547,7 +549,7 @@ public class AnsMapLoadingHandler : Base1304
  /// </remarks>
     private async Task<AccountGift?> SendMapLoadNotifiesAsync(ProudSession session, RO2.Server.Zone.Models.PlayerState player,
         RO2.Characters.Domain.Character? character, RO2.GameData.GameDataStore store, RO2.Rewards.Application.AttendTodayUseCase attendToday,
-        CancellationToken ct)
+        ColosseumConfig colosseumConfig, CancellationToken ct)
     {
         await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyServerTime,
             ServerTimeCodec.BuildServerTimeBody(ServerWallClock.Now()));
@@ -579,7 +581,8 @@ public class AnsMapLoadingHandler : Base1304
             TransChargePackets.BuildTransChargeGauge2529(
                 TransChargePackets.CurrentChargeSeconds(player.CharacterId, System.DateTime.UtcNow)));
         if (ColosseumService.MatchesServed && character is not null
-            && ColosseumSchedule.AnnouncesOnEntry(ServerWallClock.Now(), character.Level, store.GetMap(player.MapId)))
+            && ColosseumSchedule.AnnouncesOnEntry(ServerWallClock.Now(), character.Level, store.GetMap(player.MapId),
+                colosseumConfig.OpenHoursUtc, colosseumConfig.MinAnnounceLevel))
             await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyColosseumStart, ColosseumSchedule.Build2879(true));
         await session.SendInternalRmiAsync(ZoneS2COpcodes.NfySpinelRevivalInfo, SpinelRevivalNoCooldown);
         await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyPCCafeRevivalInfo, PcCafeRevivalNone);

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using RO2.Companions.Domain;
 using RO2.Persistence.Mongo.Persistence;
 using RO2.Network.Protocol;
+using RO2.Server.Zone.Configuration;
 
 namespace RO2.Server.Zone.Services;
 
@@ -17,11 +18,13 @@ public class ServerTimeService : BackgroundService
     private readonly BroadcastService _broadcast;
     private readonly ILogger<ServerTimeService> _logger;
     private readonly VehicleExpiryNotifier _vehicleExpiry;
+    private readonly ServerConfiguration _config;
 
     
     public ServerTimeService(PlayerStateManager playerManager, BroadcastService broadcast, IVehicleRepository vehicles,
-        ILogger<ServerTimeService> logger)
+        ILogger<ServerTimeService> logger, ServerConfiguration config)
     {
+        _config = config;
         _playerManager = playerManager;
         _broadcast = broadcast;
         _logger = logger;
@@ -38,7 +41,7 @@ public class ServerTimeService : BackgroundService
         
         
         
-        var colosseumOpen = ColosseumSchedule.IsOpen(ServerWallClock.Now());
+        var colosseumOpen = ColosseumSchedule.IsOpen(ServerWallClock.Now(), _config.Colosseum.OpenHoursUtc);
 
         using var timer = new PeriodicTimer(ServerTimeCodec.ServerTimeInterval);
         while (await timer.WaitForNextTickAsync(stoppingToken))
@@ -66,7 +69,7 @@ public class ServerTimeService : BackgroundService
             
             
             
-            var openNow = ColosseumSchedule.IsOpen(now);
+            var openNow = ColosseumSchedule.IsOpen(now, _config.Colosseum.OpenHoursUtc);
             byte[]? colosseumBody = null;
             if (openNow != colosseumOpen)
             {
