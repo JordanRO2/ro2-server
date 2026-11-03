@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using RO2.Application.Interfaces;
 using RO2.Collections.Domain;
 using RO2.GameData;
 using RO2.GameData.Tables;

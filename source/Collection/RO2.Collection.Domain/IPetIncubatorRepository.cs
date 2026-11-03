@@ -1,6 +1,5 @@
-using RO2.Collections.Domain;
 
-namespace RO2.Application.Interfaces;
+namespace RO2.Collections.Domain;
 
 /// <summary>
 /// Persistence of a character's pet-incubator slots (1630 place an incubator, 1631 put an egg in, 1632 collect the

@@ -1,6 +1,5 @@
-using RO2.Collections.Domain;
 
-namespace RO2.Application.Interfaces;
+namespace RO2.Collections.Domain;
 
 /// <summary>
 /// Document persistence for a character's monster-collection progress (summon level + DNA exp per
