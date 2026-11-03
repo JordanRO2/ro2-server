@@ -1,6 +1,8 @@
+using System.Reflection;
 using RO2.BuildingBlocks;
 using RO2.Economy.Application;
 using RO2.Economy.Domain;
+using RO2.Server.Zone.Services;
 using Xunit;
 
 namespace RO2.Tests.Economy;
@@ -118,5 +120,49 @@ public sealed class AuctionApplicationServiceTests
         Assert.Contains(mail.Sent, m => m.Receiver == BidderId && m.Item);
         Assert.Contains(mail.Sent, m => m.Receiver == SellerId && m.Gold > 0);
         Assert.Equal(1, log.WalletNotPersistedCount);
+    }
+
+    private sealed class EscrowThatCannotRestore : IInventoryEscrow
+    {
+        public Task<(ItemStackSnapshot? Taken, int CountLeft)> TakeAsync(uint characterId, ulong itemUid, int count)
+            => Task.FromResult<(ItemStackSnapshot?, int)>((new ItemStackSnapshot { Id = itemUid, ItemId = TemplateId, Count = count }, 0));
+        public Task RestoreAsync(uint characterId, ItemStackSnapshot taken, int countLeft, int count)
+            => throw new InvalidOperationException("slot taken");
+        public Task<ulong> NextItemUidAsync() => Task.FromResult(1UL);
+    }
+
+    [Fact]
+    public async Task List_WhenTheStoreAndTheRestoreBothThrow_StillHandsTheFeeBack()
+    {
+        var (svc, repo, _, _, _) = Build();
+        var failing = DispatchProxy.Create<IAuctionRepository, AuctionClusterATests.ThrowOnInsert>();
+        ((AuctionClusterATests.ThrowOnInsert)(object)failing).Inner = repo;
+        var svcFailing = new AuctionApplicationService(failing, new Mail(), new Notifier(), 0.95, new Log());
+        var wallet = new Wallet(1000);
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() => svcFailing.ListAsync(
+            new AuctionListCommand(SellerId, "Seller", 10, 55, 1, 100, 1000, 24, Fee: 40), wallet, new EscrowThatCannotRestore()));
+
+        Assert.Equal(1000, wallet.Gold);
+    }
+
+    [Fact]
+    public async Task Restore_OfAWholeStackWhoseSlotWasTakenMeanwhile_KeepsTheIdInAFreeSlot()
+    {
+        var fx = new EconomyFixture();
+        fx.AddPlayer(SellerId, gold: 1000);
+        await fx.InventoryRepo.EnsureIndexesAsync();   // the unique placement index is what rejects the reused slot
+        var item = fx.GiveItem(SellerId, TemplateId, 3);
+        var escrow = new InventoryEscrowAdapter(fx.InventoryRepo);
+
+        var (taken, left) = await escrow.TakeAsync(SellerId, item.Id, 3);
+        Assert.NotNull(taken);
+        var intruder = fx.GiveItem(SellerId, 9999, 1, slot: item.Slot);   // loot lands in the freed slot
+        await escrow.RestoreAsync(SellerId, taken, left, 3);
+
+        var back = fx.Inventory.Rows.Single(r => r.Id == item.Id);
+        Assert.Equal(3, back.Count);
+        Assert.NotEqual(item.Slot, back.Slot);
+        Assert.Equal(intruder.Slot, fx.Inventory.Rows.Single(r => r.Id == intruder.Id).Slot);
     }
 }

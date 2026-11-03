@@ -44,7 +44,14 @@ public sealed class InventoryEscrowAdapter(IInventoryRepository inventory) : IIn
     {
         if (countLeft <= 0)
         {
-            await _inventory.AddItemAsync(ToInventoryItem(taken, characterId)); // same Id and slot as before
+            var whole = ToInventoryItem(taken, characterId);   // same Id and slot as before
+            try { await _inventory.AddItemAsync(whole); }
+            catch
+            {
+                // The slot was taken since the take (loot, trade, mail): keep the Id, let the repo pick a free one.
+                whole.Slot = -1;
+                await _inventory.AddItemAsync(whole);
+            }
             return;
         }
         if (await _inventory.AdjustCountAsync(taken.Id, characterId, count) is null)

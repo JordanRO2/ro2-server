@@ -142,8 +142,9 @@ public sealed class AuctionApplicationService(
         catch (Exception ex)
         {
             onStoreError?.Invoke(ex);
-            await escrow.RestoreAsync(cmd.SellerCharId, taken, countLeft, cmd.Count);
-            wallet.Credit(cmd.Fee);   // the fee was taken above and nothing was listed
+            // The fee was taken above and nothing was listed: hand it back even when the restore throws.
+            try { await escrow.RestoreAsync(cmd.SellerCharId, taken, countLeft, cmd.Count); }
+            finally { wallet.Credit(cmd.Fee); }
             return new AuctionListResult(AuctionListOutcome.InternalError, null, taken, countLeft);
         }
     }
