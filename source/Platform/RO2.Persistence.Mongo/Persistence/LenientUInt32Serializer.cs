@@ -26,9 +26,17 @@ public sealed class LenientUInt32Serializer : StructSerializerBase<uint>
         return reader.CurrentBsonType switch
         {
             BsonType.Int32 => (uint)reader.ReadInt32(),
-            BsonType.Int64 => (uint)reader.ReadInt64(),
+            BsonType.Int64 => ToUInt32(reader.ReadInt64()),
             var t => throw new FormatException($"Cannot read a uint from BSON type {t}."),
         };
+    }
+
+    // Surface an out-of-uint-range Int64 (only from a mis-schema of a former long/ulong field) instead of truncating.
+    private static uint ToUInt32(long value)
+    {
+        if (value is < 0 or > uint.MaxValue)
+            throw new FormatException($"Int64 value {value} is outside the uint range.");
+        return (uint)value;
     }
 }
 
