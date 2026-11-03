@@ -99,7 +99,7 @@ public class ReqAddFriendHandler : ChatRmiHandlerBase<ReqAddFriendHandler>
             Logger.LogInformation("Session {Id}: add friend \"{Name}\": list full ({Count} of {Max})",
                 session.SessionId, name, listed, FriendStore.MaxFriends);
             await session.SendInternalRmiAsync(ChatS2COpcodes.AnsAddFriend,
-                FriendStore.BuildAddFriendAnswer(FriendStore.AddResultListFull, null));
+                SocialPackets.BuildAddFriendAnswer(FriendStore.AddResultListFull, null));
             return;
         }
 
@@ -108,7 +108,7 @@ public class ReqAddFriendHandler : ChatRmiHandlerBase<ReqAddFriendHandler>
         {
             Logger.LogInformation("Session {Id}: add friend \"{Name}\": no such character", session.SessionId, name);
             await session.SendInternalRmiAsync(ChatS2COpcodes.AnsAddFriend,
-                FriendStore.BuildAddFriendAnswer(FriendStore.AddResultNotFound, null));
+                SocialPackets.BuildAddFriendAnswer(FriendStore.AddResultNotFound, null));
             return;
         }
 
@@ -135,14 +135,14 @@ public class ReqAddFriendHandler : ChatRmiHandlerBase<ReqAddFriendHandler>
             case AddOutcome.AlreadyFriend:
                 Logger.LogInformation("Session {Id}: add friend \"{Name}\": already a friend", session.SessionId, target.Name);
                 await session.SendInternalRmiAsync(ChatS2COpcodes.AnsAddFriend,
-                    FriendStore.BuildAddFriendAnswer(FriendStore.AddResultAlreadyFriend, null));
+                    SocialPackets.BuildAddFriendAnswer(FriendStore.AddResultAlreadyFriend, null));
                 return;
             case AddOutcome.ListFull:
                 // A concurrent add slipped past the pre-lookup count check and filled the last slot; the
                 // atomic size guard caught it. Answer 33, the same list-full result as the pre-check.
                 Logger.LogInformation("Session {Id}: add friend \"{Name}\": list full (atomic guard)", session.SessionId, target.Name);
                 await session.SendInternalRmiAsync(ChatS2COpcodes.AnsAddFriend,
-                    FriendStore.BuildAddFriendAnswer(FriendStore.AddResultListFull, null));
+                    SocialPackets.BuildAddFriendAnswer(FriendStore.AddResultListFull, null));
                 return;
         }
 
@@ -151,7 +151,7 @@ public class ReqAddFriendHandler : ChatRmiHandlerBase<ReqAddFriendHandler>
         // The record's uid is the friend's GID, as in 23505 (ReqFriendListHandler.WithGids): it is above
         // 2^32, and the client keys the new friend by it.
         await session.SendInternalRmiAsync(ChatS2COpcodes.AnsAddFriend,
-            FriendStore.BuildAddFriendAnswer(FriendStore.AddResultOk,
+            SocialPackets.BuildAddFriendAnswer(FriendStore.AddResultOk,
                 FriendStore.Entry(target, FriendStore.IsOnline(broadcast, target.Id),
                         (await presence.GetLocationsAsync(new[] { target.Id }, ct)).GetValueOrDefault(target.Id))
                     with { Uid = CharacterGid.Of(ownerGid, target.Id) }));
@@ -177,7 +177,7 @@ public class ReqAddFriendHandler : ChatRmiHandlerBase<ReqAddFriendHandler>
             return;
         }
 
-        var notify = FriendStore.BuildNfyAddFriend(session.Username);
+        var notify = SocialPackets.BuildNfyAddFriend(session.Username);
         foreach (var other in broadcast.Sessions)
         {
             if (other.IsConnected && other.CharacterId == target.Id)

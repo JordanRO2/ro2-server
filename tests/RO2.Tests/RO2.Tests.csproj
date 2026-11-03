@@ -71,6 +71,7 @@
     <ProjectReference Include="..\..\source\Khara\RO2.Khara.Infrastructure.Mongo\RO2.Khara.Infrastructure.Mongo.csproj" />
     <ProjectReference Include="..\..\source\Khara\RO2.Khara.Infrastructure.Postgres\RO2.Khara.Infrastructure.Postgres.csproj" />
     <ProjectReference Include="..\..\source\Social\RO2.Social.Domain\RO2.Social.Domain.csproj" />
+    <ProjectReference Include="..\..\source\Social\RO2.Social.Infrastructure.Mongo\RO2.Social.Infrastructure.Mongo.csproj" />
   </ItemGroup>
 
 </Project>

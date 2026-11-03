@@ -1,15 +1,9 @@
-using System.Buffers.Binary;
-using System.Text;
-using System.Text.RegularExpressions;
-using MongoDB.Bson;
-using MongoDB.Driver;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
-using RO2.Persistence.Mongo.Persistence;
 using RO2.Persistence.Mongo.Repositories;
-using RO2.Network.Packets;
 using RO2.Characters.Domain;
 using RO2.Socials.Domain;
+using RO2.Socials.Infrastructure.Mongo;
 
 namespace RO2.Server.Chat;
 
@@ -27,12 +21,13 @@ namespace RO2.Server.Chat;
 /// Why persist at all: after every successful 23508 the client re-requests the lists at once
 /// (23004, 23003). A friend that is not in the next 23505 would drop out of the window again straight away.
 ///
-/// A scoped DI service: the storage methods are instance methods over the Mongo context and the scope's
-/// <see cref="ICharacterRepository"/>; the result codes and wire builders are static.
+/// A scoped DI service: the raw list persistence is delegated to <see cref="IFriendListRepository"/>; this
+/// facade adds what needs the scope's <see cref="ICharacterRepository"/> and presence store. The result codes
+/// are static; the wire builders live in <see cref="SocialPackets"/>.
 /// </summary>
 public sealed class FriendStore
 {
-    public const string CollectionName = "chat_friend_lists";
+    public const string CollectionName = MongoFriendListRepository.CollectionName;
 
     /// <summary>Result codes of 23508 AnsAddFriend.</summary>
     public const ushort AddResultOk = SocialRules.ResultOk;
@@ -60,48 +55,19 @@ public sealed class FriendStore
     private const byte NoProJobLevel = 0;
     private const byte NoProJobId = 0;
 
-    /// <summary>
-    /// Length of the head of a one-entry <see cref="CommunityChannels.BuildFriendListBody"/> body that precedes the
-    /// record: <c>[reserved:2][innerLen:4][count:2]</c>.
-    /// </summary>
-    private const int FriendListBodyHeaderLength = 2 + 4 + 2;
-
-    /// <summary>Size of the 23508 head before the record: <c>[u16 result][u32 innerLen]</c>.</summary>
-    private const int AddFriendAnswerHeaderLength = 2 + 4;
-
-    /// <summary>Offset of the u32 record length in a 23508 body.</summary>
-    private const int AddFriendAnswerLengthOffset = 2;
-
-    /// <summary>23509 AnsDelFriend: the result is always 0 (a zero u16), and the uid follows at +2.</summary>
-    private const int DelFriendAnswerUidOffset = 2;
-    private const int DelFriendAnswerLength = 2 + 8;
-
-    /// <summary>Width tag of a bare wide string on the wire: 2 = UTF-16LE, followed by a compact-length character count.</summary>
-    private const byte WStrWidthTagUtf16 = 0x02;
-
-    /// <summary>Bytes per UTF-16 code unit.</summary>
-    private const int Utf16UnitSize = 2;
-
-    /// <summary>The all-zero record that carries a failed 23508: uid 0, empty name and location, zero trailers.</summary>
-    private static readonly CommunityChannels.FriendEntry FailureEntry =
-        new(0, "", false, 0, 0, "", NoProJobLevel, NoProJobId);
-
     /// <summary>True when a list of <paramref name="count"/> friends (<see cref="CountAsync"/>) takes no more.</summary>
     public static bool IsListFull(int count) => SocialRules.IsFriendListFull(count);
 
-    private readonly MongoDbContext _db;
+    private readonly IFriendListRepository _lists;
     private readonly ICharacterRepository _characters;
     private readonly IChannelPresenceStore _presence;
 
-    public FriendStore(MongoDbContext db, ICharacterRepository characters, IChannelPresenceStore presence)
+    public FriendStore(IFriendListRepository lists, ICharacterRepository characters, IChannelPresenceStore presence)
     {
-        _db = db;
+        _lists = lists;
         _characters = characters;
         _presence = presence;
     }
-
-    private IMongoCollection<FriendListDocument> Lists()
-        => _db.GetCollection<FriendListDocument>(CollectionName);
 
     /// <summary>
     /// Case-insensitive, exact-length name lookup. Names match without regard to case and the answer carries
@@ -114,52 +80,11 @@ public sealed class FriendStore
     }
 
     /// <summary>
-    /// Add <paramref name="friendId"/> to the owner's list.
-    /// <para>
-    /// The add is a single size-guarded <c>UpdateOne</c> — <c>$addToSet</c> runs only while the stored
-    /// list holds fewer than <see cref="MaxFriends"/> ids ($expr/$size) — so two requests that both pass the
-    /// handler's pre-lookup count check cannot both land and push the list past the cap. The guard counts the
-    /// raw <see cref="FriendListDocument.FriendIds"/> array, which still holds ids of since-deleted characters
-    /// that <see cref="CountAsync"/> leaves out; the handler keeps the live count for the 33 answer,
-    /// and this is only the concurrency backstop. A full list that also already holds the friend answers
-    /// <see cref="AddOutcome.AlreadyFriend"/>, matched by re-reading the document.
-    /// </para>
+    /// Add <paramref name="friendId"/> to the owner's list. The size guard (<see cref="MaxFriends"/>) counts the
+    /// raw stored array, which still holds ids of since-deleted characters that <see cref="CountAsync"/> leaves
+    /// out; the handler keeps the live count for the 33 answer, and the guard is only the concurrency backstop.
     /// </summary>
-    public async Task<AddOutcome> AddAsync(uint ownerId, uint friendId)
-    {
-        // The driver renders FriendIds.Count < MaxFriends as {"FriendIds.<Max-1>": {$exists: false}}, i.e. the
-        // list has no element at the last index, so there is room for one more. $addToSet runs only then.
-        var guard = Builders<FriendListDocument>.Filter.And(
-            Builders<FriendListDocument>.Filter.Eq(d => d.Id, ownerId),
-            Builders<FriendListDocument>.Filter.Where(d => d.FriendIds.Count < MaxFriends));
-        var add = Builders<FriendListDocument>.Update.AddToSet(d => d.FriendIds, friendId);
-
-        var result = await Lists().UpdateOneAsync(guard, add);
-        if (result.ModifiedCount > 0) return AddOutcome.Added;
-        if (result.MatchedCount > 0) return AddOutcome.AlreadyFriend; // had room, $addToSet was a no-op
-
-        // No match: no list document yet, or the list is full. Re-read to tell those apart.
-        var doc = await Lists().Find(d => d.Id == ownerId).FirstOrDefaultAsync();
-        if (doc is not null)
-            return doc.FriendIds.Contains(friendId) ? AddOutcome.AlreadyFriend : AddOutcome.ListFull;
-
-        // Truly absent: create it. The guarded upsert keeps the cap even against a concurrent first-add, and
-        // the loser of that create race gets a duplicate _id error, after which the document exists and one
-        // conditional retry settles the outcome.
-        try
-        {
-            await Lists().UpdateOneAsync(guard, add, new UpdateOptions { IsUpsert = true });
-            return AddOutcome.Added;
-        }
-        catch (MongoWriteException ex) when (ex.WriteError?.Category == ServerErrorCategory.DuplicateKey)
-        {
-            var retry = await Lists().UpdateOneAsync(guard, add);
-            if (retry.ModifiedCount > 0) return AddOutcome.Added;
-            if (retry.MatchedCount > 0) return AddOutcome.AlreadyFriend;
-            var after = await Lists().Find(d => d.Id == ownerId).FirstOrDefaultAsync();
-            return after is not null && after.FriendIds.Contains(friendId) ? AddOutcome.AlreadyFriend : AddOutcome.ListFull;
-        }
-    }
+    public Task<AddOutcome> AddAsync(uint ownerId, uint friendId) => _lists.AddAsync(ownerId, friendId);
 
     /// <summary>
     /// How many friends the owner's 23505 lists: the stored ids that are still a character that is not deleted,
@@ -168,27 +93,20 @@ public sealed class FriendStore
     /// </summary>
     public async Task<int> CountAsync(uint ownerId, CancellationToken ct)
     {
-        var doc = await Lists().Find(d => d.Id == ownerId).FirstOrDefaultAsync(ct);
-        if (doc == null || doc.FriendIds.Count == 0) return 0;
-        return await _characters.CountLiveByIdsAsync(doc.FriendIds, ct);
+        var ids = await _lists.LoadAsync(ownerId, ct);
+        if (ids.Count == 0) return 0;
+        return await _characters.CountLiveByIdsAsync(ids, ct);
     }
 
     /// <summary>
-    /// Remove <paramref name="friendId"/> from the owner's list. The filter requires the id to be present, so
-    /// a delete for an id the owner never listed (a forged or repeated 23005) matches nothing and writes
-    /// nothing; the handler answers 0 either way.
+    /// Remove <paramref name="friendId"/> from the owner's list. A delete for an id the owner never listed (a
+    /// forged or repeated 23005) writes nothing; the handler answers 0 either way.
     /// </summary>
-    public async Task RemoveAsync(uint ownerId, uint friendId)
-        => await Lists().UpdateOneAsync(
-            d => d.Id == ownerId && d.FriendIds.Contains(friendId),
-            Builders<FriendListDocument>.Update.Pull(d => d.FriendIds, friendId));
+    public Task RemoveAsync(uint ownerId, uint friendId) => _lists.RemoveAsync(ownerId, friendId);
 
     /// <summary>Whether <paramref name="listOwnerId"/> has <paramref name="friendId"/> in its stored list.</summary>
-    public async Task<bool> ListsFriendAsync(uint listOwnerId, uint friendId, CancellationToken ct)
-    {
-        var list = await Lists().Find(d => d.Id == listOwnerId).FirstOrDefaultAsync(ct);
-        return list != null && list.FriendIds.Contains(friendId);
-    }
+    public Task<bool> ListsFriendAsync(uint listOwnerId, uint friendId, CancellationToken ct)
+        => _lists.ListsFriendAsync(listOwnerId, friendId, ct);
 
     /// <summary>
     /// The owner's friends as 23505 records, in the order they were added. Deleted characters are skipped.
@@ -200,17 +118,17 @@ public sealed class FriendStore
     public async Task<IReadOnlyList<CommunityChannels.FriendEntry>> GetEntriesAsync(
         ChatBroadcastService broadcast, uint ownerId, CancellationToken ct)
     {
-        var doc = await Lists().Find(d => d.Id == ownerId).FirstOrDefaultAsync(ct);
-        if (doc == null || doc.FriendIds.Count == 0)
+        var friendIds = await _lists.LoadAsync(ownerId, ct);
+        if (friendIds.Count == 0)
             return Array.Empty<CommunityChannels.FriendEntry>();
 
-        var byId = (await _characters.GetLiveByIdsAsync(doc.FriendIds, ct)).ToDictionary(c => c.Id);
+        var byId = (await _characters.GetLiveByIdsAsync(friendIds, ct)).ToDictionary(c => c.Id);
 
         var online = byId.Keys.Where(id => IsOnline(broadcast, id)).ToHashSet();
         var locations = await _presence.GetLocationsAsync(online, ct);
 
-        var entries = new List<CommunityChannels.FriendEntry>(doc.FriendIds.Count);
-        foreach (var id in doc.FriendIds)
+        var entries = new List<CommunityChannels.FriendEntry>(friendIds.Count);
+        foreach (var id in friendIds)
             if (byId.TryGetValue(id, out var c))
                 entries.Add(Entry(c, online.Contains(id), locations.GetValueOrDefault(id)));
         return entries;
@@ -240,46 +158,4 @@ public sealed class FriendStore
 
     public static bool IsOnline(ChatBroadcastService broadcast, uint characterId)
         => broadcast.Sessions.Any(s => s.IsConnected && s.CharacterId == characterId);
-
-    /// <summary>
-    /// 23508 AnsAddFriend: [u16 result][u32 innerLen][one friend record], innerLen == len-6.
-    /// A failure carries an all-zero 17-byte record (uid 0, empty name, zeros, empty location, zero
-    /// trailers): 12 00 / 06 00 / 21 00 followed by 11 00 00 00 and 17 zero bytes.
-    /// The record comes from <see cref="CommunityChannels.BuildFriendListBody"/>, whose one-entry body is
-    /// [reserved:2][innerLen:4][count:2][record], so the record is everything from byte 8.
-    /// </summary>
-    public static byte[] BuildAddFriendAnswer(ushort result, CommunityChannels.FriendEntry? entry)
-    {
-        var e = entry ?? FailureEntry;
-        var record = CommunityChannels.BuildFriendListBody(new[] { e }).AsSpan(FriendListBodyHeaderLength);
-        var body = new byte[AddFriendAnswerHeaderLength + record.Length];
-        BinaryPrimitives.WriteUInt16LittleEndian(body.AsSpan(0), result);
-        BinaryPrimitives.WriteUInt32LittleEndian(body.AsSpan(AddFriendAnswerLengthOffset), (uint)record.Length);
-        record.CopyTo(body.AsSpan(AddFriendAnswerHeaderLength));
-        return body;
-    }
-
-    /// <summary>
-    /// 23509 AnsDelFriend: [u16 result][u64 uid], the request's uid echoed back with result 0.
-    /// </summary>
-    public static byte[] BuildDelFriendAnswer(ulong uid)
-    {
-        var body = new byte[DelFriendAnswerLength];
-        BinaryPrimitives.WriteUInt64LittleEndian(body.AsSpan(DelFriendAnswerUidOffset), uid);
-        return body;
-    }
-
-    /// <summary>
-    /// 23512 NfyAddFriend, sent to the player who was just added: a bare WStr of the requester's name,
-    /// [widthTag:u8=02][CompactLen nChars][UTF-16LE]. It carries the REQUESTER's name, not the receiver's.
-    /// </summary>
-    public static byte[] BuildNfyAddFriend(string requesterName)
-    {
-        var name = Encoding.Unicode.GetBytes(requesterName);
-        using var w = new PacketWriter(4 + name.Length);
-        w.WriteByte(WStrWidthTagUtf16);
-        w.WriteCompactLength(name.Length / Utf16UnitSize);
-        w.WriteBytes(name);
-        return w.ToArray();
-    }
 }

@@ -2,8 +2,6 @@ using RO2.Application.Interfaces;
 using System.Buffers.Binary;
 using System.Net.Sockets;
 using System.Text;
-using MongoDB.Driver;
-using RO2.Persistence.Mongo.Persistence;
 using RO2.Socials.Domain;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
@@ -35,12 +33,14 @@ namespace RO2.Server.Chat;
 /// </summary>
 public sealed class FriendPresence
 {
-    private readonly MongoDbContext _db;
+    private readonly IFriendListRepository _friends;
+    private readonly IBlockListRepository _blocks;
     private readonly IChannelPresenceStore _presence;
 
-    public FriendPresence(MongoDbContext db, IChannelPresenceStore presence)
+    public FriendPresence(IFriendListRepository friends, IBlockListRepository blocks, IChannelPresenceStore presence)
     {
-        _db = db;
+        _friends = friends;
+        _blocks = blocks;
         _presence = presence;
     }
 
@@ -131,12 +131,7 @@ public sealed class FriendPresence
         var ids = ownerIds.ToList();
         if (ids.Count == 0) return new HashSet<uint>();
 
-        ulong storedId = charId;
-        var filter = Builders<BlockListDocument>.Filter.And(
-            Builders<BlockListDocument>.Filter.In(d => d.Id, ids),
-            Builders<BlockListDocument>.Filter.ElemMatch(d => d.Entries, e => e.Uid == storedId));
-        var blockers = await _db.GetCollection<BlockListDocument>(BlockListRepository.CollectionName)
-            .Find(filter).Project(d => d.Id).ToListAsync();
+        var blockers = await _blocks.OwnersBlockingAsync(ids, charId);
         return blockers.ToHashSet();
     }
 
@@ -147,10 +142,7 @@ public sealed class FriendPresence
     private async Task<List<ProudSession>> OnlineOwnersAsync(
         ChatBroadcastService broadcast, uint charId, ProudSession subject)
     {
-        var ownerIds = await _db.GetCollection<FriendListDocument>(FriendStore.CollectionName)
-            .Find(Builders<FriendListDocument>.Filter.AnyEq(d => d.FriendIds, charId))
-            .Project(d => d.Id)
-            .ToListAsync();
+        var ownerIds = await _friends.OwnersListingAsync(charId);
         if (ownerIds.Count == 0) return new List<ProudSession>();
 
         var owners = ownerIds.ToHashSet();

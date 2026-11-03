@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>RO2.Socials.Infrastructure.Mongo</RootNamespace>
+  </PropertyGroup>
+
+  <!-- MongoDB persistence for the Social bounded context. References the shared RO2.Persistence.Mongo for
+       MongoDbContext, so the friend/block documents live in the same database as the game data. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Social.Domain\RO2.Social.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Platform\RO2.Persistence.Mongo\RO2.Persistence.Mongo.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+</Project>

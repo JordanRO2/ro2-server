@@ -1,13 +1,12 @@
 using System.Buffers.Binary;
 using System.Text;
-using MongoDB.Driver;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
-using RO2.Persistence.Mongo.Persistence;
 using RO2.Persistence.Mongo.Repositories;
 using RO2.Network.Packets;
 using RO2.Characters.Domain;
 using RO2.Socials.Domain;
+using RO2.Socials.Infrastructure.Mongo;
 
 namespace RO2.Server.Chat;
 
@@ -15,13 +14,14 @@ namespace RO2.Server.Chat;
 public readonly record struct BlockedCharacter(ulong Gid, string Name);
 
 /// <summary>
-/// Mongo-backed messenger block list (<c>chat_block_lists</c> collection). A scoped DI service: it takes the
-/// scope's <see cref="ICharacterRepository"/> for the name lookups.
+/// Messenger block list facade (<c>chat_block_lists</c> collection). A scoped DI service: raw persistence is
+/// delegated to <see cref="IBlockListRepository"/>; it takes the scope's <see cref="ICharacterRepository"/>
+/// for the name lookups.
 /// </summary>
 public sealed class BlockListRepository
 {
     /// <summary>The Mongo collection holding one block-list document per owner character.</summary>
-    public const string CollectionName = "chat_block_lists";
+    public const string CollectionName = MongoBlockListRepository.CollectionName;
 
     /// <summary>
     /// A defensive ceiling on one owner's block list, so a scripted client cannot grow the document without
@@ -30,12 +30,12 @@ public sealed class BlockListRepository
     /// </summary>
     public const int MaxBlocked = SocialRules.MaxBlocked;
 
-    private readonly IMongoCollection<BlockListDocument> _lists;
+    private readonly IBlockListRepository _lists;
     private readonly ICharacterRepository _characters;
 
-    public BlockListRepository(MongoDbContext context, ICharacterRepository characters)
+    public BlockListRepository(IBlockListRepository lists, ICharacterRepository characters)
     {
-        _lists = context.GetCollection<BlockListDocument>(CollectionName);
+        _lists = lists;
         _characters = characters;
     }
 
@@ -55,13 +55,13 @@ public sealed class BlockListRepository
     /// </summary>
     public async Task<IReadOnlyList<BlockedCharacter>> GetAsync(uint ownerId, ulong ownerGid, CancellationToken ct = default)
     {
-        var doc = await _lists.Find(d => d.Id == ownerId).FirstOrDefaultAsync(ct);
-        if (doc is null || doc.Entries.Count == 0) return Array.Empty<BlockedCharacter>();
+        var entries = await _lists.GetStoredEntriesAsync(ownerId, ct);
+        if (entries.Count == 0) return Array.Empty<BlockedCharacter>();
 
-        var ids = doc.Entries.Select(e => CharacterGid.CharacterIdOf(e.Uid)).Distinct().ToList();
+        var ids = entries.Select(e => CharacterGid.CharacterIdOf(e.Uid)).Distinct().ToList();
         var current = await _characters.GetLiveByIdsAsync(ids, ct);
         var nameById = current.ToDictionary(c => c.Id, c => c.Name);
-        return doc.Entries
+        return entries
             .Select(e =>
             {
                 var id = CharacterGid.CharacterIdOf(e.Uid);
@@ -76,56 +76,9 @@ public sealed class BlockListRepository
     /// <see cref="BlockAddOutcome.AlreadyRegistered"/> when that character is already on it (the client is answered
     /// with a refusal, <see cref="BlockListPackets.BuildAddBlockRefusal"/>), or
     /// <see cref="BlockAddOutcome.ListFull"/> when the list is at <see cref="MaxBlocked"/>.
-    /// <para>
-    /// C-H4: a single conditional <c>UpdateOne</c> replaces the former read-modify-ReplaceOne, so two
-    /// concurrent blocks cannot both read the old document and lose one of the writes. The <c>$push</c> runs
-    /// only while the character is not already present (ElemMatch) and the list is below the cap ($size), so
-    /// it never duplicates an entry or grows past the bound. The entries are <c>{Uid, Name}</c> objects, so a
-    /// plain <c>$addToSet</c> could not dedup by id alone (a renamed entry would differ); the not-present
-    /// guard gives the same idempotence.
-    /// </para>
     /// </summary>
-    public async Task<BlockAddOutcome> AddAsync(uint ownerId, uint characterId, string name, CancellationToken ct = default)
-    {
-        ulong storedId = characterId;
-        // $push runs only while the character is not already present (ElemMatch) and the list has room
-        // (Entries.Count < MaxBlocked renders as {"Entries.<Max-1>": {$exists: false}}).
-        var guard = Builders<BlockListDocument>.Filter.And(
-            Builders<BlockListDocument>.Filter.Eq(d => d.Id, ownerId),
-            Builders<BlockListDocument>.Filter.Not(
-                Builders<BlockListDocument>.Filter.ElemMatch(d => d.Entries, e => e.Uid == storedId)),
-            Builders<BlockListDocument>.Filter.Where(d => d.Entries.Count < MaxBlocked));
-        var push = Builders<BlockListDocument>.Update.Push(d => d.Entries, new BlockListEntry { Uid = storedId, Name = name });
-
-        var result = await _lists.UpdateOneAsync(guard, push, cancellationToken: ct);
-        if (result.ModifiedCount > 0) return BlockAddOutcome.Added;
-
-        // No match: no document yet, the character is already blocked, or the list is full. Re-read to tell
-        // them apart - the first two have protocol answers; the cap has none.
-        var doc = await _lists.Find(d => d.Id == ownerId).FirstOrDefaultAsync(ct);
-        if (doc is not null)
-            return doc.Entries.Any(e => CharacterGid.CharacterIdOf(e.Uid) == characterId)
-                ? BlockAddOutcome.AlreadyRegistered
-                : BlockAddOutcome.ListFull;
-
-        // Truly absent: create it. The guarded upsert holds the cap even against a concurrent first-block, and
-        // the loser of that create race gets a duplicate _id error, after which the document exists and one
-        // conditional retry settles the outcome.
-        try
-        {
-            await _lists.UpdateOneAsync(guard, push, new UpdateOptions { IsUpsert = true }, ct);
-            return BlockAddOutcome.Added;
-        }
-        catch (MongoWriteException ex) when (ex.WriteError?.Category == ServerErrorCategory.DuplicateKey)
-        {
-            var retry = await _lists.UpdateOneAsync(guard, push, cancellationToken: ct);
-            if (retry.ModifiedCount > 0) return BlockAddOutcome.Added;
-            var after = await _lists.Find(d => d.Id == ownerId).FirstOrDefaultAsync(ct);
-            return after is not null && after.Entries.Any(e => CharacterGid.CharacterIdOf(e.Uid) == characterId)
-                ? BlockAddOutcome.AlreadyRegistered
-                : BlockAddOutcome.ListFull;
-        }
-    }
+    public Task<BlockAddOutcome> AddAsync(uint ownerId, uint characterId, string name, CancellationToken ct = default)
+        => _lists.AddAsync(ownerId, characterId, name, ct);
 
     /// <summary>
     /// C-H3: whether <paramref name="ownerId"/> blocks <paramref name="characterId"/>. Used to withhold a
@@ -133,13 +86,7 @@ public sealed class BlockListRepository
     /// This backs a defensive server-side policy only.
     /// </summary>
     public Task<bool> BlocksAsync(uint ownerId, uint characterId, CancellationToken ct = default)
-    {
-        ulong storedId = characterId;
-        return _lists.Find(Builders<BlockListDocument>.Filter.And(
-                Builders<BlockListDocument>.Filter.Eq(d => d.Id, ownerId),
-                Builders<BlockListDocument>.Filter.ElemMatch(d => d.Entries, e => e.Uid == storedId)))
-            .AnyAsync(ct);
-    }
+        => _lists.BlocksAsync(ownerId, characterId, ct);
 
     /// <summary>
     /// Removes the character that <paramref name="uid"/> names from the owner's list (a no-op when it is
@@ -148,17 +95,7 @@ public sealed class BlockListRepository
     /// carry the character id in their low dword, which is what every row stores.
     /// </summary>
     public Task RemoveAsync(uint ownerId, ulong uid, CancellationToken ct = default)
-    {
-        ulong characterId = CharacterGid.CharacterIdOf(uid);
-        // Pull only when the entry is present, so a forged or repeated 23007 for an id the owner never
-        // blocked matches nothing and writes nothing. The handler answers 0 either way.
-        return _lists.UpdateOneAsync(
-            Builders<BlockListDocument>.Filter.And(
-                Builders<BlockListDocument>.Filter.Eq(d => d.Id, ownerId),
-                Builders<BlockListDocument>.Filter.ElemMatch(d => d.Entries, e => e.Uid == characterId)),
-            Builders<BlockListDocument>.Update.PullFilter(d => d.Entries, e => e.Uid == characterId),
-            cancellationToken: ct);
-    }
+        => _lists.RemoveAsync(ownerId, uid, ct);
 }
 
 /// <summary>

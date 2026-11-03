@@ -51,6 +51,6 @@ public class ReqDelFriendHandler : ChatRmiHandlerBase<ReqDelFriendHandler>
             CharacterGid.CharacterIdOf(uid));
 
         Logger.LogInformation("Session {Id}: {Owner} removed friend uid {Uid}", session.SessionId, session.Username ?? "?", uid);
-        await session.SendInternalRmiAsync(ChatS2COpcodes.AnsDelFriend, FriendStore.BuildDelFriendAnswer(uid));
+        await session.SendInternalRmiAsync(ChatS2COpcodes.AnsDelFriend, SocialPackets.BuildDelFriendAnswer(uid));
     }
 }

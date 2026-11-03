@@ -73,16 +73,16 @@ public class SocialGraphPureTests
     public void AddFriend_failures_are_result_plus_len17_plus_17_zero_bytes()
     {
         var zeros = new string('0', 34);
-        Assert.Equal("2100" + "11000000" + zeros, Hex(FriendStore.BuildAddFriendAnswer(FriendStore.AddResultListFull, null)));
-        Assert.Equal("1200" + "11000000" + zeros, Hex(FriendStore.BuildAddFriendAnswer(FriendStore.AddResultNotFound, null)));
-        Assert.Equal("0600" + "11000000" + zeros, Hex(FriendStore.BuildAddFriendAnswer(FriendStore.AddResultAlreadyFriend, null)));
+        Assert.Equal("2100" + "11000000" + zeros, Hex(SocialPackets.BuildAddFriendAnswer(FriendStore.AddResultListFull, null)));
+        Assert.Equal("1200" + "11000000" + zeros, Hex(SocialPackets.BuildAddFriendAnswer(FriendStore.AddResultNotFound, null)));
+        Assert.Equal("0600" + "11000000" + zeros, Hex(SocialPackets.BuildAddFriendAnswer(FriendStore.AddResultAlreadyFriend, null)));
     }
 
     [Fact]
     public void AddFriend_success_carries_the_record_and_innerLen_is_length_minus_6()
     {
         var entry = new CommunityChannels.FriendEntry(0x0DE0B6B3A7F46769UL, "Bob", true, 5, 4, "Channel 1", 0, 0);
-        var body = FriendStore.BuildAddFriendAnswer(FriendStore.AddResultOk, entry);
+        var body = SocialPackets.BuildAddFriendAnswer(FriendStore.AddResultOk, entry);
         Assert.Equal((ushort)0, BinaryPrimitives.ReadUInt16LittleEndian(body));
         Assert.Equal((uint)(body.Length - 6), BinaryPrimitives.ReadUInt32LittleEndian(body.AsSpan(2)));
         // the record is the one-entry 23505 body from byte 8 on
@@ -92,13 +92,13 @@ public class SocialGraphPureTests
     [Fact]
     public void DelFriend_answer_is_result_zero_then_the_echoed_uid()
     {
-        Assert.Equal("0000" + "efcdab8967452301", Hex(FriendStore.BuildDelFriendAnswer(0x0123456789ABCDEFUL)));
+        Assert.Equal("0000" + "efcdab8967452301", Hex(SocialPackets.BuildDelFriendAnswer(0x0123456789ABCDEFUL)));
     }
 
     [Fact]
     public void NfyAddFriend_is_a_bare_utf16_wstr_of_the_requester_name()
     {
-        var body = FriendStore.BuildNfyAddFriend("Bob");
+        var body = SocialPackets.BuildNfyAddFriend("Bob");
         Assert.Equal(0x02, body[0]);                                  // width tag: UTF-16LE
         Assert.Equal(Utf16("Bob"), body[^6..]);                       // name last
         Assert.Equal(3, body[^7]);                                    // compact length byte = char count (1-byte form)

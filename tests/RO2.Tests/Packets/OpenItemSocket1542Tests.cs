@@ -196,7 +196,7 @@ public class FriendListFull23508Tests
         
         
         var retail = Convert.FromHexString("2100110000000000000000000000000000000000000000");
-        Assert.Equal(retail, FriendStore.BuildAddFriendAnswer(FriendStore.AddResultListFull, null));
+        Assert.Equal(retail, SocialPackets.BuildAddFriendAnswer(FriendStore.AddResultListFull, null));
     }
 
     [Fact]

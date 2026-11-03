@@ -6,6 +6,7 @@ using RO2.Characters.Domain;
 using RO2.Persistence.Mongo.Persistence;
 using RO2.Server.Chat;
 using RO2.Socials.Domain;
+using RO2.Socials.Infrastructure.Mongo;
 using RO2.Tests.Economy;
 using Xunit;
 using Xunit.Abstractions;
@@ -13,8 +14,8 @@ using Xunit.Abstractions;
 namespace RO2.Tests.Integration;
 
 // B14 S1: the stored-shape net for the two Chat social-graph collections (chat_friend_lists, chat_block_lists), against a REAL mongo:7
-// container (MongoMailFixture, one database per class). The concrete FriendStore / BlockListRepository / FriendPresence are exercised (no
-// ports yet; S5 adds them). Every value below was observed from the current code. The Postgres friend/block repositories and tables do
+// container (MongoMailFixture, one database per class). The raw persistence is exercised through the Mongo repositories behind the S5/S6 ports
+// (MongoFriendListRepository / MongoBlockListRepository), the host facades (FriendStore.CountAsync, BlockListRepository.GetAsync) and FriendPresence. Every value below was observed from the current code. The Postgres friend/block repositories and tables do
 // not exist yet (S7), so the both-provider round-trip is DEFERRED to S7: S1 pins the MONGO shape only. Every test reports SKIPPED without
 // Docker and asserts the fixture started when Docker is up.
 
@@ -33,13 +34,15 @@ public sealed class MongoFriendListStoredShapeTests
     // Mongo's UInt32Serializer writes Int32 and throws above int.MaxValue, so every uint stored value stays within int.MaxValue.
     private static uint New() => (uint)Interlocked.Increment(ref _seq);
 
-    private (FriendStore store, FakeCharacterRepository chars) Open()
+    private (MongoFriendListRepository store, FakeCharacterRepository chars) Open()
     {
         Assert.True(_fx.Available, "Docker is up but the mongo:7 fixture did not start: " + _fx.StartupError);
         var chars = new FakeCharacterRepository(new RepoScheduler());
-        // The IChannelPresenceStore is only used by GetEntriesAsync (needs a presence store); the storage methods pinned here never touch it.
-        return (new FriendStore(new MongoDbContext(_fx.ConnectionString, Db), chars, null!), chars);
+        return (new MongoFriendListRepository(new MongoDbContext(_fx.ConnectionString, Db)), chars);
     }
+
+    // The IChannelPresenceStore is only used by GetEntriesAsync (needs a presence store); CountAsync never touches it.
+    private static FriendStore Facade(MongoFriendListRepository store, FakeCharacterRepository chars) => new(store, chars, null!);
 
     private IMongoCollection<BsonDocument> Raw() => _fx.Client!.GetDatabase(Db).GetCollection<BsonDocument>(Coll);
     private BsonDocument One(uint id) => Raw().Find(new BsonDocument("_id", (int)id)).Single();
@@ -142,8 +145,9 @@ public sealed class MongoFriendListStoredShapeTests
         await store.AddAsync(owner, gone);
 
         Assert.Equal(2, One(owner)["FriendIds"].AsBsonArray.Count);                              // raw array keeps both
-        Assert.Equal(1, await store.CountAsync(owner, CancellationToken.None));                  // the 33 pre-check counts the live one only
-        Assert.Equal(0, await store.CountAsync(New(), CancellationToken.None));
+        var facade = Facade(store, chars);
+        Assert.Equal(1, await facade.CountAsync(owner, CancellationToken.None));                 // the 33 pre-check counts the live one only
+        Assert.Equal(0, await facade.CountAsync(New(), CancellationToken.None));
     }
 
     [DockerFact]
@@ -170,13 +174,16 @@ public sealed class MongoBlockListStoredShapeTests
 
     private static uint New() => (uint)Interlocked.Increment(ref _seq);
 
-    private (BlockListRepository repo, FakeCharacterRepository chars, MongoDbContext ctx) Open()
+    private (MongoBlockListRepository repo, FakeCharacterRepository chars, MongoDbContext ctx) Open()
     {
         Assert.True(_fx.Available, "Docker is up but the mongo:7 fixture did not start: " + _fx.StartupError);
         var ctx = new MongoDbContext(_fx.ConnectionString, Db);
         var chars = new FakeCharacterRepository(new RepoScheduler());
-        return (new BlockListRepository(ctx, chars), chars, ctx);
+        return (new MongoBlockListRepository(ctx), chars, ctx);
     }
+
+    // GetAsync is the host's name-refresh join over the raw entries the port returns.
+    private static BlockListRepository Facade(MongoBlockListRepository repo, FakeCharacterRepository chars) => new(repo, chars);
 
     private IMongoCollection<BsonDocument> Raw() => _fx.Client!.GetDatabase(Db).GetCollection<BsonDocument>(Coll);
     private BsonDocument One(uint id) => Raw().Find(new BsonDocument("_id", (int)id)).Single();
@@ -272,26 +279,27 @@ public sealed class MongoBlockListStoredShapeTests
                 } },
         });
 
-        var got = await repo.GetAsync(owner, OwnerGid);
+        var facade = Facade(repo, chars);
+        var got = await facade.GetAsync(owner, OwnerGid);
         Assert.Equal(OwnerGid | renamed, got[0].Gid);
         Assert.Equal("NewName", got[0].Name);                                    // name re-read from the characters
         Assert.Equal(OwnerGid | vanished, got[1].Gid);
         Assert.Equal("Stored", got[1].Name);                                     // unresolved -> the stored name
         Assert.Equal(OwnerGid | renamed, got[2].Gid);                            // a row that already holds a GID projects through its low dword
-        Assert.Empty(await repo.GetAsync(New(), OwnerGid));
+        Assert.Empty(await facade.GetAsync(New(), OwnerGid));
     }
 
     [DockerFact]
     public async Task A_legacy_document_with_extra_fields_or_without_Entries_reads_its_defaults()
     {
-        var (repo, _, ctx) = Open();
+        var (repo, chars, ctx) = Open();
         var typed = _fx.Client!.GetDatabase(Db).GetCollection<BlockListDocument>(Coll);
 
         var bare = New();
         Raw().InsertOne(new BsonDocument { { "_id", (int)bare }, { "RetiredField", 1 } });
         var doc = typed.Find(d => d.Id == bare).Single();                       // extra field ignored by the process-wide convention
         Assert.Empty(doc.Entries);
-        Assert.Empty(await repo.GetAsync(bare, OwnerGid));
+        Assert.Empty(await Facade(repo, chars).GetAsync(bare, OwnerGid));
         Assert.Equal(BlockAddOutcome.Added, await repo.AddAsync(bare, 9, "Nine"));
 
         var noName = New();
@@ -311,7 +319,7 @@ public sealed class MongoBlockListStoredShapeTests
         await repo.AddAsync(other, target + 1, "U");
         Raw().InsertOne(new BsonDocument { { "_id", (int)empty }, { "Entries", new BsonArray() } });
 
-        var presence = new FriendPresence(ctx, null!);
+        var presence = new FriendPresence(new MongoFriendListRepository(ctx), repo, null!);
         var m = typeof(FriendPresence).GetMethod("OwnersBlockingAsync", BindingFlags.NonPublic | BindingFlags.Instance)!;
         var blockers = await (Task<HashSet<uint>>)m.Invoke(presence, new object[] { new uint[] { blocker, other, empty, New() }, target })!;
         Assert.Equal(new[] { blocker }, blockers.ToArray());                     // suppressed from 23502/23503: only the blocker
