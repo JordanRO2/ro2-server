@@ -1,5 +1,4 @@
 using RO2.DungeonFinder.Domain;
-using RO2.GameData.Tables;
 using RO2.Inventory.Domain;
 
 namespace RO2.DungeonFinder.Application;
@@ -18,9 +17,6 @@ public interface IFinderPartyView
 
     /// <summary>True while the seat's session is still in <paramref name="partyId"/>.</summary>
     bool IsStillMember(uint partyId, SeatKey seat);
-
-    /// <summary>The character's party id, or null when solo.</summary>
-    uint? PartyIdOf(uint characterId);
 }
 
 /// <summary>Whether a seat is still the live player on its session. Same locking rules as <see cref="IFinderPartyView"/>.</summary>
@@ -28,23 +24,6 @@ public interface ISeatLiveness
 {
     /// <summary>True when the seat's character is still logged in on that session.</summary>
     bool IsLive(SeatKey seat);
-}
-
-/// <summary>The dungeon instance registry as the finder sees it.</summary>
-public interface IInstanceBinding
-{
-    /// <summary>True while the character is bound to the instance.</summary>
-    bool IsBound(long instanceId, uint characterId);
-
-    /// <summary>Starts the cleared lifetime of the instance.</summary>
-    void MarkCleared(long instanceId);
-}
-
-/// <summary>Find_Dungeon_List rows by list id.</summary>
-public interface IFinderRowCatalog
-{
-    /// <summary>The row for <paramref name="listId"/>, or null when unknown.</summary>
-    FindDungeonList? Row(uint listId);
 }
 
 /// <summary>Session-bound side effects of paying a finder run, resolved by the paid character.</summary>

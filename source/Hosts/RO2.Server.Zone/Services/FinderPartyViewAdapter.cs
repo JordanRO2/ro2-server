@@ -18,7 +18,4 @@ public sealed class FinderPartyViewAdapter(PartyService parties, PlayerStateMana
     }
 
     public bool IsStillMember(uint partyId, SeatKey seat) => parties.GetPlayerParty(seat.SessionId)?.PartyId == partyId;
-
-    public uint? PartyIdOf(uint characterId) =>
-        players.GetPlayerByCharacterId(characterId) is { } p ? parties.GetPlayerParty(p.SessionId)?.PartyId : null;
 }
