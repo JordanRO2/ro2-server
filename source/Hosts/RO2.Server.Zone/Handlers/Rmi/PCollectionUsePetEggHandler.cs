@@ -2,6 +2,7 @@ using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
+using RO2.Collections.Application;
 using RO2.Collections.Domain;
 using RO2.GameData;
 using RO2.Network.Packets;
@@ -80,15 +81,14 @@ public class PCollectionUsePetEggHandler : ZoneRmiHandlerBase<PCollectionUsePetE
             return;
         }
 
-        var svc = CollectionService.From(services, Logger);
-        var book = await svc.GetStateAsync(player.CharacterId, ct);
-        if (book.RegisteredPetIds.Contains(petId))
+        var use = await PetCollectionUseCaseFactory.From(services, Logger).UseEggAsync(player.CharacterId, petId, ct);
+        if (use.Kind != PetEggKind.Registered)
         {
-            await FeedAsync(session, player, svc, book, store, inventory, egg, bag, slot, petId, ct);
+            await FeedAsync(session, player, use, store, inventory, egg, bag, slot, petId);
             return;
         }
 
-        int registered = await svc.RegisterPetAsync(player.CharacterId, petId, ct);
+        int registered = use.Registered;
 
         int remaining = await TakeOneEggAsync(inventory, egg);
         Logger.LogInformation("{Name} hatched pet {Pet} from egg {Egg} ({N} pets registered)",
@@ -107,23 +107,24 @@ public class PCollectionUsePetEggHandler : ZoneRmiHandlerBase<PCollectionUsePetE
     }
 
  /// <summary>
- /// Feeds the egg to <paramref name="petId"/>, which is already in <paramref name="book"/>: loyalty rises up to the pet's cap,
+ /// Feeds the egg to <paramref name="petId"/>, which the use case found in the book: loyalty rises up to the pet's cap,
  /// one egg is taken, and the feed answer is sent. At the cap nothing is taken and the refusal is sent instead.
  /// </summary>
-    private async Task FeedAsync(ProudSession session, PlayerState player, CollectionService svc,
-        CollectionDocument book, GameDataStore store, IInventoryRepository inventory, InventoryItem egg,
-        byte bag, byte slot, uint petId, CancellationToken ct)
+    private async Task FeedAsync(ProudSession session, PlayerState player, PetEggUse use,
+        GameDataStore store, IInventoryRepository inventory, InventoryItem egg,
+        byte bag, byte slot, uint petId)
     {
         
         
-        if (await svc.FeedPetAsync(player.CharacterId, petId, ct) is not { } loyalty)
+        if (use.Kind == PetEggKind.Capped)
         {
             Logger.LogInformation("{Name}: 1627 egg {Egg} for pet {Pet}, already at loyalty {Loyalty} (its cap); refused with {Code}",
-                player.Name, egg.ItemId, petId, book.LoyaltyOf(petId), ResultLoyaltyCapped);
+                player.Name, egg.ItemId, petId, use.Loyalty, ResultLoyaltyCapped);
             await SendRefusalAsync(session, petId, ResultLoyaltyCapped);
             return;
         }
 
+        ushort loyalty = use.Loyalty;
         int remaining = await TakeOneEggAsync(inventory, egg);
         var record = PetCollectionBook.State(store, petId, loyalty);
         Logger.LogInformation("{Name} fed egg {Egg} to pet {Pet}: loyalty {Loyalty}, level {Level}",
@@ -136,13 +137,13 @@ public class PCollectionUsePetEggHandler : ZoneRmiHandlerBase<PCollectionUsePetE
             CollectionPackets.BuildNfyPCollectionSkill(record)));
         
         
-        if (book.ActivePetId == petId)
+        if (use.WasActive)
         {
             await session.SendRmiAsync(ZoneS2COpcodes.AnsPCollectionSetActivePet, writer => writer.WriteBytes(
                 CollectionPackets.BuildAnsPCollectionSetActivePet(petId, record.LoyaltyLevel, 0)));
         }
         await session.SendRmiAsync(ZoneS2COpcodes.NfyPCollection, writer => writer.WriteBytes(
-            CollectionPackets.BuildNfyPCollection(book.RegisteredPetIds.Count)));
+            CollectionPackets.BuildNfyPCollection(use.Registered)));
         await session.SendRmiAsync(ZoneS2COpcodes.AnsPCollectionUsePetEgg, writer => writer.WriteBytes(
             CollectionPackets.BuildAnsPCollectionUsePetEgg(petId, FlagFed, 0)));
     }

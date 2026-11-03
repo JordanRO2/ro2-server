@@ -2,6 +2,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using Microsoft.Extensions.Logging.Abstractions;
+using RO2.Collections.Application;
 using RO2.Collections.Domain;
 using RO2.GameData;
 using RO2.GameData.Tables;
@@ -239,15 +240,15 @@ public sealed class CollectionStoredShapeMongoTests
         var repo = new CollectionRepository(ctx);
         var id = NewChar();
         const uint pet = 83000019;
-        var svc = new CollectionService(repo, await StoreAsync(Pet(pet, cap: 25)), NullLogger.Instance);
+        var svc = new PetCollectionUseCase(repo, (await StoreAsync(Pet(pet, cap: 25))).PetInfo);
 
-        Assert.Equal(1, await svc.RegisterPetAsync(id, pet));
-        Assert.Equal(1, await svc.RegisterPetAsync(id, pet));        // idempotent
-        Assert.Equal((ushort)10, await svc.FeedPetAsync(id, pet));
-        Assert.Equal((ushort)20, await svc.FeedPetAsync(id, pet));
-        Assert.Equal((ushort)25, await svc.FeedPetAsync(id, pet));   // min(loyalty + 10, cap)
-        Assert.Null(await svc.FeedPetAsync(id, pet));                // at the cap: nothing fed
-        Assert.Equal((pet, (byte)1), await svc.SetActivePetAsync(id, pet));
+        Assert.Equal(1, await svc.RegisterAsync(id, pet));
+        Assert.Equal(1, await svc.RegisterAsync(id, pet));        // idempotent
+        Assert.Equal((ushort)10, await svc.FeedAsync(id, pet));
+        Assert.Equal((ushort)20, await svc.FeedAsync(id, pet));
+        Assert.Equal((ushort)25, await svc.FeedAsync(id, pet));   // min(loyalty + 10, cap)
+        Assert.Null(await svc.FeedAsync(id, pet));                // at the cap: nothing fed
+        Assert.Equal(new ActivePetOutcome(true, pet, 1), await svc.SetActiveAsync(id, pet));
 
         var raw = One(Raw("collections"), id);
         Assert.Equal(new[] { (int)pet }, Ints(raw["RegisteredPetIds"]));

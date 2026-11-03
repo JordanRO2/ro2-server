@@ -27,22 +27,27 @@ public class CollectionServiceCharacterizationTests
     private static MonsterCollectionUseCase Uc(FakeCollectionRepo repo, FakeMonsterProgressRepo? progress = null) =>
         new(repo, progress ?? new FakeMonsterProgressRepo(), _ => 0);
 
+    /// <summary>The pet use case over the same book repo, with the synthetic PetInfo rows (or none).</summary>
+    private static async Task<PetCollectionUseCase> PetUcAsync(FakeCollectionRepo repo, bool withStore = true) =>
+        new(repo, withStore ? (await StoreAsync()).PetInfo : null);
+
     // ------------------------------------------------------------------------------------------------ register and select
 
     [Fact]
     public async Task Register_is_idempotent_ignores_id_0_and_returns_the_registered_count_without_saving_when_nothing_changed()
     {
-        var (svc, repo) = await NewAsync();
+        var (_, repo) = await NewAsync();
         var uc = Uc(repo);
+        var pets = await PetUcAsync(repo);
 
         Assert.Equal(1, await uc.RegisterAsync(C, Mon));
         Assert.Equal(1, await uc.RegisterAsync(C, Mon));              // already in
         Assert.Equal(1, await uc.RegisterAsync(C, 0));                // 0 is never registered
         Assert.Equal(1, repo.Saves);                                  // only the first call wrote
         Assert.Equal(2, await uc.RegisterAsync(C, MonSingle));
-        Assert.Equal(1, await svc.RegisterPetAsync(C, Pet));
-        Assert.Equal(1, await svc.RegisterPetAsync(C, Pet));
-        Assert.Equal(1, await svc.RegisterPetAsync(C, 0));
+        Assert.Equal(1, await pets.RegisterAsync(C, Pet));
+        Assert.Equal(1, await pets.RegisterAsync(C, Pet));
+        Assert.Equal(1, await pets.RegisterAsync(C, 0));
         Assert.Equal(new uint[] { Mon, MonSingle }, repo.Stored(C)!.RegisteredMonsterIds);                // insertion order, not sorted
         Assert.Equal(new uint[] { Pet }, repo.Stored(C)!.RegisteredPetIds);
     }
@@ -79,39 +84,94 @@ public class CollectionServiceCharacterizationTests
     [Fact]
     public async Task FeedPet_returns_null_for_an_unregistered_pet_a_missing_row_a_null_store_and_a_pet_at_its_cap()
     {
-        var (svc, repo) = await NewAsync();
-        Assert.Null(await svc.FeedPetAsync(C, Pet));                  // not in the book
-        await svc.RegisterPetAsync(C, PetUnknown);
-        Assert.Null(await svc.FeedPetAsync(C, PetUnknown));           // booked but PetInfo has no row
-        await svc.RegisterPetAsync(C, Pet);
+        var (_, repo) = await NewAsync();
+        var pets = await PetUcAsync(repo);
+        Assert.Null(await pets.FeedAsync(C, Pet));                    // not in the book
+        await pets.RegisterAsync(C, PetUnknown);
+        Assert.Null(await pets.FeedAsync(C, PetUnknown));             // booked but PetInfo has no row
+        await pets.RegisterAsync(C, Pet);
 
-        Assert.Equal((ushort)10, await svc.FeedPetAsync(C, Pet));
-        Assert.Equal((ushort)20, await svc.FeedPetAsync(C, Pet));
-        Assert.Equal((ushort)25, await svc.FeedPetAsync(C, Pet));
+        Assert.Equal((ushort)10, await pets.FeedAsync(C, Pet));
+        Assert.Equal((ushort)20, await pets.FeedAsync(C, Pet));
+        Assert.Equal((ushort)25, await pets.FeedAsync(C, Pet));
         var saves = repo.Saves;
-        Assert.Null(await svc.FeedPetAsync(C, Pet));                  // at the cap
+        Assert.Null(await pets.FeedAsync(C, Pet));                    // at the cap
         Assert.Equal(saves, repo.Saves);                              // a refused feed writes nothing
 
-        var (noData, repo2) = await NewAsync(withStore: false);
-        await noData.RegisterPetAsync(C, Pet);
-        Assert.Null(await noData.FeedPetAsync(C, Pet));
+        var (_, repo2) = await NewAsync(withStore: false);
+        var noData = await PetUcAsync(repo2, withStore: false);
+        await noData.RegisterAsync(C, Pet);
+        Assert.Null(await noData.FeedAsync(C, Pet));
         Assert.Empty(repo2.Stored(C)!.PetLoyalties);
     }
 
     [Fact]
     public async Task SetActivePet_stores_only_registered_pets_a_refusal_returns_the_current_pair_and_pet_0_clears()
     {
-        var (svc, repo) = await NewAsync();
-        await svc.RegisterPetAsync(C, Pet);
+        var (_, repo) = await NewAsync();
+        var pets = await PetUcAsync(repo);
+        await pets.RegisterAsync(C, Pet);
         repo.Seed(new CollectionDocument { Id = C, RegisteredPetIds = { Pet }, PetLoyalties = { new PetLoyalty { PetId = Pet, Loyalty = 25 } } });
 
-        Assert.Equal((0u, (byte)0), await svc.SetActivePetAsync(C, PetBig));      // refused: the (unchanged) current pair
-        Assert.Equal((Pet, (byte)1), await svc.SetActivePetAsync(C, Pet));
-        Assert.Equal((Pet, (byte)1), await svc.GetActivePetAsync(C));
-        Assert.Equal((Pet, (byte)1), await svc.SetActivePetAsync(C, PetBig));     // refused: still Pet
-        Assert.Equal((0u, (byte)0), await svc.SetActivePetAsync(C, 0));           // cleared
-        Assert.Equal((0u, (byte)0), await svc.GetActivePetAsync(C));
+        Assert.Equal(new ActivePetOutcome(false, 0, 0), await pets.SetActiveAsync(C, PetBig));      // refused: the (unchanged) current pair
+        Assert.Equal(new ActivePetOutcome(true, Pet, 1), await pets.SetActiveAsync(C, Pet));
+        Assert.Equal((Pet, (byte)1), await pets.GetActiveAsync(C));
+        Assert.Equal(new ActivePetOutcome(false, Pet, 1), await pets.SetActiveAsync(C, PetBig));     // refused: still Pet
+        Assert.Equal(new ActivePetOutcome(true, 0, 0), await pets.SetActiveAsync(C, 0));             // cleared
+        Assert.Equal((0u, (byte)0), await pets.GetActiveAsync(C));
         Assert.Equal(new uint[] { Pet }, repo.Stored(C)!.RegisteredPetIds);       // activating never registers
+    }
+
+    // ------------------------------------------------------------------------------------------------ egg use (1627)
+
+    [Fact]
+    public async Task UseEgg_registers_an_unbooked_pet_then_feeds_it_up_to_its_cap_and_refuses_at_the_cap_without_writing()
+    {
+        var (_, repo) = await NewAsync();
+        var pets = await PetUcAsync(repo);
+
+        Assert.Equal(new PetEggUse(PetEggKind.Registered, 0, 1, false), await pets.UseEggAsync(C, Pet));
+        Assert.Equal(new uint[] { Pet }, repo.Stored(C)!.RegisteredPetIds);
+        Assert.Empty(repo.Stored(C)!.PetLoyalties);                   // registering writes no loyalty
+
+        Assert.Equal(new PetEggUse(PetEggKind.Fed, 10, 1, false), await pets.UseEggAsync(C, Pet));
+        Assert.Equal(new PetEggUse(PetEggKind.Fed, 20, 1, false), await pets.UseEggAsync(C, Pet));
+        Assert.Equal(new PetEggUse(PetEggKind.Fed, 25, 1, false), await pets.UseEggAsync(C, Pet));   // min(loyalty + 10, cap)
+        var saves = repo.Saves;
+        Assert.Equal(new PetEggUse(PetEggKind.Capped, 25, 1, false), await pets.UseEggAsync(C, Pet)); // the 30001 refusal
+        Assert.Equal(saves, repo.Saves);
+    }
+
+    [Fact]
+    public async Task UseEgg_reports_the_book_count_and_whether_the_fed_pet_is_active_as_read_before_the_feed()
+    {
+        var (_, repo) = await NewAsync();
+        var pets = await PetUcAsync(repo);
+        repo.Seed(new CollectionDocument { Id = C, RegisteredPetIds = { Pet, PetBig }, ActivePetId = Pet });
+
+        Assert.Equal(new PetEggUse(PetEggKind.Fed, 10, 2, true), await pets.UseEggAsync(C, Pet));
+        Assert.Equal(new PetEggUse(PetEggKind.Fed, 10, 2, false), await pets.UseEggAsync(C, PetBig));
+    }
+
+    [Fact]
+    public async Task UseEgg_on_a_booked_pet_with_no_row_is_refused_as_capped_and_writes_nothing()
+    {
+        var (_, repo) = await NewAsync();
+        var pets = await PetUcAsync(repo);
+        repo.Seed(new CollectionDocument { Id = C, RegisteredPetIds = { PetUnknown } });
+
+        Assert.Equal(new PetEggUse(PetEggKind.Capped, 0, 1, false), await pets.UseEggAsync(C, PetUnknown));
+        Assert.Equal(0, repo.Saves);
+    }
+
+    [Fact]
+    public async Task The_active_flag_is_re_derived_from_the_stored_loyalty_on_every_pet_load()
+    {
+        var (_, repo) = await NewAsync();
+        var pets = await PetUcAsync(repo);
+        repo.Seed(new CollectionDocument { Id = C, RegisteredPetIds = { Pet }, ActivePetId = Pet, ActivePetFlag = 9, PetLoyalties = { new PetLoyalty { PetId = Pet, Loyalty = 25 } } });
+
+        Assert.Equal((Pet, (byte)1), await pets.GetActiveAsync(C));   // derived 1 from loyalty 25, not the stored 9
     }
 
     // ------------------------------------------------------------------------------------------------ storage failure policy
@@ -160,11 +220,12 @@ public class CollectionServiceCharacterizationTests
     [Fact]
     public async Task QUIRK_two_concurrent_feeds_of_one_pet_both_read_the_same_loyalty_so_one_feed_is_lost_last_writer_wins()
     {
-        var (svc, repo) = await NewAsync();
+        var (_, repo) = await NewAsync();
+        var pets = await PetUcAsync(repo);
         repo.Seed(new CollectionDocument { Id = C, RegisteredPetIds = { Pet } });
 
         repo.HoldLoadsUntil(2);                                        // both requests load before either saves
-        var results = await Task.WhenAll(svc.FeedPetAsync(C, Pet), svc.FeedPetAsync(C, Pet));
+        var results = await Task.WhenAll(pets.FeedAsync(C, Pet), pets.FeedAsync(C, Pet));
 
         Assert.Equal(new ushort?[] { 10, 10 }, results);              // each saw loyalty 0 and answered +10
         Assert.Equal((ushort)10, repo.Stored(C)!.LoyaltyOf(Pet));     // two eggs' worth was applied once (the host still consumed two eggs)
@@ -174,10 +235,10 @@ public class CollectionServiceCharacterizationTests
     [Fact]
     public async Task QUIRK_two_concurrent_registrations_of_different_things_overwrite_each_other_whole_document()
     {
-        var (svc, repo) = await NewAsync();
+        var (_, repo) = await NewAsync();
 
         repo.HoldLoadsUntil(2);
-        await Task.WhenAll(Uc(repo).RegisterAsync(C, Mon), svc.RegisterPetAsync(C, Pet));
+        await Task.WhenAll(Uc(repo).RegisterAsync(C, Mon), (await PetUcAsync(repo)).RegisterAsync(C, Pet));
 
         var stored = repo.Stored(C)!;
         Assert.Equal(1, stored.RegisteredMonsterIds.Count + stored.RegisteredPetIds.Count);   // exactly one survived: the later whole-document write replaced the other

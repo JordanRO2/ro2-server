@@ -28,8 +28,7 @@ public class PCollectionActivePetHandler : ZoneRmiHandlerBase<PCollectionActiveP
         
         
         
-        var svc = CollectionService.From(services, Logger);
-        var (petId, level) = await svc.GetActivePetAsync(player.CharacterId, ct);
+        var (petId, level) = await PetCollectionUseCaseFactory.From(services, Logger).GetActiveAsync(player.CharacterId, ct);
         Logger.LogDebug("{Name} queries active pet -> {Pet} (loyalty level {Level})", player.Name, petId, level);
 
         byte[] body = petId != 0

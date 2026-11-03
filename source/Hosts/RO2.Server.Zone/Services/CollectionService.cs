@@ -58,18 +58,6 @@ public sealed class CollectionService
         return doc;
     }
 
-    
- /// <summary>Registers a pet collection (idempotent) and returns the new registered count.</summary>
-    public async Task<int> RegisterPetAsync(uint characterId, uint petCollectionId, CancellationToken ct = default)
-    {
-        var doc = await GetStateAsync(characterId, ct);
-        if (petCollectionId != 0 && !doc.RegisteredPetIds.Contains(petCollectionId))
-        {
-            doc.RegisteredPetIds.Add(petCollectionId);
-            await SaveAsync(doc, ct);
-        }
-        return doc.RegisteredPetIds.Count;
-    }
 
     
  /// <summary>
@@ -85,56 +73,6 @@ public sealed class CollectionService
             await SaveAsync(doc, ct);
         }
         return doc;
-    }
-
-    
- /// <summary>
- /// Feeds one hatched egg to a pet already in the book. Its loyalty rises up to the pet's maximum loyalty level and the change is saved.
- /// </summary>
- /// <returns>The new loyalty, or null when nothing was fed: the pet is not in the book, has no data row, or is already at its maximum.</returns>
- /// <remarks>
- /// The caller consumes the egg only when a value is returned.
- /// </remarks>
-    public async Task<ushort?> FeedPetAsync(uint characterId, uint petCollectionId, CancellationToken ct = default)
-    {
-        var doc = await GetStateAsync(characterId, ct);
-        if (!doc.RegisteredPetIds.Contains(petCollectionId)
-            || _data is null || MonsterCollectionRules.Pet(_data, petCollectionId) is not { } pet)
-            return null;
-        var decision = PetEggDecision.Decide(pet, registered: true, doc.LoyaltyOf(petCollectionId));
-        if (decision.Kind != PetEggKind.Fed)
-            return null;
-        doc.SetLoyalty(petCollectionId, decision.Loyalty);
-        await SaveAsync(doc, ct);
-        return decision.Loyalty;
-    }
-
-    
- /// <summary>
- /// Sets the active companion pet. An id of 0 clears the active pet. Only a pet already in the book can be made active, and activating never registers a pet.
- /// </summary>
- /// <returns>The stored pet id and its loyalty level, to echo back to the client.</returns>
-    public async Task<(uint petId, byte flag)> SetActivePetAsync(uint characterId, uint petCollectionId, CancellationToken ct = default)
-    {
-        var doc = await GetStateAsync(characterId, ct);
-        var decision = ActivePetRule.Decide(_data?.PetInfo, doc, petCollectionId);
-        if (!decision.Accepted)
-        {
-            _log.LogWarning("Collection: char {Char} asked to activate pet {Pet}, which is not in its pet book; " +
-                            "active pet stays {Active}", characterId, petCollectionId, doc.ActivePetId);
-            return (decision.PetId, decision.Flag);
-        }
-        doc.ActivePetId = decision.PetId;
-        doc.ActivePetFlag = decision.Flag;
-        await SaveAsync(doc, ct);
-        return (doc.ActivePetId, doc.ActivePetFlag);
-    }
-
- /// <summary>Reads the currently active pet (id and loyalty level) without changing state.</summary>
-    public async Task<(uint petId, byte flag)> GetActivePetAsync(uint characterId, CancellationToken ct = default)
-    {
-        var doc = await GetStateAsync(characterId, ct);
-        return (doc.ActivePetId, doc.ActivePetFlag);
     }
 
     

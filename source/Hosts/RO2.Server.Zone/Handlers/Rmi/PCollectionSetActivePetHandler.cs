@@ -27,8 +27,10 @@ public class PCollectionSetActivePetHandler : ZoneRmiHandlerBase<PCollectionSetA
         Logger.LogInformation("{Name} sets active pet {PetId}", player.Name, petCollectionId);
 
         
-        var svc = CollectionService.From(services, Logger);
-        var (petId, level) = await svc.SetActivePetAsync(player.CharacterId, petCollectionId, ct);
+        var active = await PetCollectionUseCaseFactory.From(services, Logger).SetActiveAsync(player.CharacterId, petCollectionId, ct);
+        if (!active.Accepted)
+            Logger.LogWarning("Collection: char {Char} asked to activate pet {Pet}, which is not in its pet book; " +
+                              "active pet stays {Active}", player.CharacterId, petCollectionId, active.PetId);
 
         
         
@@ -38,7 +40,7 @@ public class PCollectionSetActivePetHandler : ZoneRmiHandlerBase<PCollectionSetA
         
         
         
-        var body = CollectionPackets.BuildAnsPCollectionSetActivePet(petId, level, 0);
+        var body = CollectionPackets.BuildAnsPCollectionSetActivePet(active.PetId, active.Flag, 0);
         await session.SendRmiAsync(ZoneS2COpcodes.AnsPCollectionSetActivePet, writer => writer.WriteBytes(body));
     }
 }
