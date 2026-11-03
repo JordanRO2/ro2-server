@@ -1,3 +1,4 @@
+using RO2.DungeonFinder.Application;
 using RO2.DungeonFinder.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -41,9 +42,8 @@ public class FindPartySelectRoleHandler : ZoneRmiHandlerBase<FindPartySelectRole
             return;
         }
 
-        var parties = services.GetRequiredService<PartyService>();
-        var outcome = DungeonFinderPartyRound.Shared.SelectRole(player, roleFlags,
-            DungeonFinderPartyRound.SeatCheckFor(PlayerManager, parties));
+        var outcome = DungeonFinderPartyRound.Shared.SelectRole(player, roleFlags, DungeonFinderPartyRound.SeatCheckFor(
+            services.GetRequiredService<IFinderPartyView>(), services.GetRequiredService<ISeatLiveness>()));
         await DungeonFinderPartyRound.DeliverAsync(outcome.Sends, Broadcast.GetSession);
         Logger.LogInformation("{Name} answered the dungeon finder role check with roles {Flags}: {Status} (role {Role})",
             player.Name, roleFlags, outcome.Status, outcome.Role);

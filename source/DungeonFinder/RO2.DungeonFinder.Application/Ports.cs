@@ -5,7 +5,7 @@ using RO2.Inventory.Domain;
 namespace RO2.DungeonFinder.Application;
 
 /// <summary>One other online party member of a searcher.</summary>
-public readonly record struct PartySeat(uint CharacterId, uint SessionId);
+public readonly record struct PartySeat(uint CharacterId, uint SessionId, long Incarnation);
 
 /// <summary>The searcher's party and its other online members.</summary>
 public sealed record SearcherParty(uint PartyId, IReadOnlyList<PartySeat> OtherOnlineMembers);
@@ -16,8 +16,8 @@ public interface IFinderPartyView
     /// <summary>The searcher's party, or null when solo. Others are online and the same live character.</summary>
     SearcherParty? PartyOf(uint searcherCharacterId);
 
-    /// <summary>True while the character is still in the world as that character and still in <paramref name="partyId"/>.</summary>
-    bool IsStillMember(uint partyId, uint characterId);
+    /// <summary>True while the seat's session is still in <paramref name="partyId"/>.</summary>
+    bool IsStillMember(uint partyId, SeatKey seat);
 
     /// <summary>The character's party id, or null when solo.</summary>
     uint? PartyIdOf(uint characterId);

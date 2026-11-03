@@ -1,3 +1,4 @@
+using RO2.DungeonFinder.Application;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.GameData;
@@ -52,7 +53,8 @@ public static class DungeonFinderPartyRoundStarter
         }
 
         
-        var isSeated = DungeonFinderPartyRound.SeatCheckFor(players, parties);
+        var isSeated = DungeonFinderPartyRound.SeatCheckFor(
+            services.GetRequiredService<IFinderPartyView>(), services.GetRequiredService<ISeatLiveness>());
         var opened = DungeonFinderPartyRound.Shared.Open(party.PartyId, rows[0], player, roleFlags, others, isSeated,
             answerOpcode);
         await DungeonFinderPartyRound.DeliverAsync(opened.Sends, broadcast.GetSession);

@@ -1,3 +1,4 @@
+using RO2.DungeonFinder.Application;
 using RO2.DungeonFinder.Domain;
 using RO2.GameData.Tables;
 using RO2.Network.Protocol;
@@ -218,11 +219,8 @@ public sealed class DungeonFinderPartyRound
  /// The live membership check used by the handlers: the session still carries this character and the character is
  /// still in the party. A member that went offline or left fails it.
  /// </summary>
-    public static SeatCheck SeatCheckFor(PlayerStateManager players, PartyService parties)
-    {
-        var liveness = new SeatLivenessAdapter(players);
-        return (partyId, seat) => liveness.IsLive(seat) && parties.GetPlayerParty(seat.SessionId)?.PartyId == partyId;
-    }
+    public static SeatCheck SeatCheckFor(IFinderPartyView view, ISeatLiveness liveness)
+        => (partyId, seat) => liveness.IsLive(seat) && view.IsStillMember(partyId, seat);
 
  /// <summary>Sends <paramref name="sends"/> in order through the unencrypted game RMI path.</summary>
     public static async Task DeliverAsync(IEnumerable<Outgoing> sends, Func<uint, ProudSession?> sessionOf)

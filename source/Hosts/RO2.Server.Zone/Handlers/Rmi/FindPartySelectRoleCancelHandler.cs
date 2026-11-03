@@ -1,3 +1,4 @@
+using RO2.DungeonFinder.Application;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Network.Protocol;
@@ -36,8 +37,8 @@ public class FindPartySelectRoleCancelHandler : ZoneRmiHandlerBase<FindPartySele
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
-        var parties = services.GetRequiredService<PartyService>();
-        var outcome = DungeonFinderPartyRound.Shared.Cancel(player, DungeonFinderPartyRound.SeatCheckFor(PlayerManager, parties));
+        var outcome = DungeonFinderPartyRound.Shared.Cancel(player, DungeonFinderPartyRound.SeatCheckFor(
+            services.GetRequiredService<IFinderPartyView>(), services.GetRequiredService<ISeatLiveness>()));
 
         await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsFindParty_Party_SelectRole_Cancel,
             PartyStatePackets.BuildAnsFindPartySelectRoleCancel());
