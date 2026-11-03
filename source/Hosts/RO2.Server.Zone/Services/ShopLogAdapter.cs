@@ -51,6 +51,11 @@ public sealed class ShopLogAdapter(ILogger log) : IShopLog
         => _log.LogInformation("{Name} sold uid {Uid} ('{Item}') x{Qty} for {Gold}g", playerName, uid, itemName, quantity, gold);
 
     /// <inheritdoc />
+    public void SaleInterrupted(Exception ex, string playerName, int sold, int requested)
+        => _log.LogError(ex, "{Name}'s sale stopped after {Sold} of {Count} requested stack(s); the taken ones are paid for, the rest stay in the bag",
+            playerName, sold, requested);
+
+    /// <inheritdoc />
     public void SoldNothing(string playerName, int requested)
         => _log.LogInformation("{Name} sold nothing: none of the {Count} requested uid(s) is a sellable bag stack",
             playerName, requested);

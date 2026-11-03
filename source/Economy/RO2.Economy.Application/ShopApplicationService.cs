@@ -202,22 +202,31 @@ public sealed class ShopApplicationService
         var lines = new List<ShopSaleLine>();
         var soldTemplates = new List<uint>();
 
-        await inventory.TakeForSaleAsync(cmd.CharacterId, cmd.Entries, snapshot => cmd.TermsOf(snapshot.ItemId) is not null, line =>
+        // A write that throws on a later stack must not strand the earlier ones: they are already out of the bag and
+        // on the buy-back list, so they are still paid for below (the filter lets a throw with nothing taken escape).
+        try
         {
-            // Each item carries its OWN sell price (ItemInfo Price_Sell), it is NOT half the buy price.
-            var terms = cmd.TermsOf(line.Row.ItemId)!;
-            long paid = ShopPricing.SellProceeds(terms.UnitSellPrice, line.SellQty);
-            proceeds += paid;
-            lines.Add(line);
-            if (!soldTemplates.Contains(line.Row.ItemId)) soldTemplates.Add(line.Row.ItemId);
+            await inventory.TakeForSaleAsync(cmd.CharacterId, cmd.Entries, snapshot => cmd.TermsOf(snapshot.ItemId) is not null, line =>
+            {
+                // Each item carries its OWN sell price (ItemInfo Price_Sell), it is NOT half the buy price.
+                var terms = cmd.TermsOf(line.Row.ItemId)!;
+                long paid = ShopPricing.SellProceeds(terms.UnitSellPrice, line.SellQty);
+                proceeds += paid;
+                lines.Add(line);
+                if (!soldTemplates.Contains(line.Row.ItemId)) soldTemplates.Add(line.Row.ItemId);
 
-            // Put the sale on the buy-back list that 1336 ReqCancelSellItem draws from; Paid is what this sale
-            // credits, which is what the buy-back charges. Recorded only after the inventory write went through,
-            // so a failed write cannot leave a buy-back entry for an item the player still has.
-            buyBack.RecordSale(line.Row, line.SellQty, paid);
+                // Put the sale on the buy-back list that 1336 ReqCancelSellItem draws from; Paid is what this sale
+                // credits, which is what the buy-back charges. Recorded only after the inventory write went through,
+                // so a failed write cannot leave a buy-back entry for an item the player still has.
+                buyBack.RecordSale(line.Row, line.SellQty, paid);
 
-            log.Sold(cmd.PlayerName, line.Row.Id, terms.Name, line.SellQty, paid);
-        });
+                log.Sold(cmd.PlayerName, line.Row.Id, terms.Name, line.SellQty, paid);
+            });
+        }
+        catch (Exception ex) when (lines.Count > 0)
+        {
+            log.SaleInterrupted(ex, cmd.PlayerName, lines.Count, cmd.Entries.Count);
+        }
 
         if (lines.Count == 0)
         {

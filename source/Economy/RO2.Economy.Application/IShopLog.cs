@@ -31,6 +31,9 @@ public interface IShopLog
     /// <summary>A stack was sold to the shop.</summary>
     void Sold(string playerName, ulong uid, string itemName, int quantity, long gold);
 
+    /// <summary>A sale write failed after some stacks were already taken; those are paid for and the rest stay in the bag.</summary>
+    void SaleInterrupted(Exception ex, string playerName, int sold, int requested);
+
     /// <summary>A sale request resolved to no sellable bag stack.</summary>
     void SoldNothing(string playerName, int requested);
 

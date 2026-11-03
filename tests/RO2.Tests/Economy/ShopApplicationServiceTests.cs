@@ -60,6 +60,8 @@ public sealed class ShopApplicationServiceTests
         public bool ReadThrows { get; set; }
         public bool WriteThrows { get; set; }
         public bool PlaceThrows { get; set; }
+        /// <summary>The N-th stack of a sale (1-based) throws before it is taken; 0 = never.</summary>
+        public int SellThrowsAt { get; set; }
         public bool NoFreeCell { get; set; }
         public Dictionary<ulong, ItemStackSnapshot> Rows { get; } = [];
         public ShopBuyPlan? WrittenPlan { get; private set; }
@@ -86,9 +88,11 @@ public sealed class ShopApplicationServiceTests
         public Task TakeForSaleAsync(uint characterId, IReadOnlyList<ShopSellEntry> entries,
             Func<ItemStackSnapshot, bool> isSellable, Action<ShopSaleLine> onSold)
         {
+            var n = 0;
             foreach (var (uid, qty) in entries)
             {
                 if (!Rows.TryGetValue(uid, out var row) || !isSellable(row)) continue;
+                if (++n == SellThrowsAt) throw new InvalidOperationException("take");
                 var sellQty = ShopPricing.SellQty(qty, row.Count);
                 events.Add($"take:{uid}x{sellQty}");
                 onSold(new ShopSaleLine(row, sellQty, row.Count - sellQty));
@@ -114,6 +118,7 @@ public sealed class ShopApplicationServiceTests
         public void Buying(string playerName, uint quantity, string itemName, long cost, uint npcHandle) => events.Add($"log:Buying:{cost}");
         public void BuyNotSaved(Exception ex, string playerName, uint quantity, string itemName) => events.Add("log:BuyNotSaved");
         public void Sold(string playerName, ulong uid, string itemName, int quantity, long gold) => events.Add($"log:Sold:{uid}x{quantity}={gold}");
+        public void SaleInterrupted(Exception ex, string playerName, int sold, int requested) => events.Add($"log:SaleInterrupted:{sold}/{requested}");
         public void SoldNothing(string playerName, int requested) => events.Add($"log:SoldNothing:{requested}");
         public void BuyBackNotListed(string playerName, ulong uid) => events.Add("log:BuyBackNotListed");
         public void BuyBackCannotAfford(string playerName, ulong uid, long cost, long have) => events.Add("log:BuyBackCannotAfford");
@@ -333,6 +338,37 @@ public sealed class ShopApplicationServiceTests
         // What the buy-back charges is what the sale paid, and the copy carries the SOLD quantity.
         Assert.True(list.TryTake(12, out var entry, out _));
         Assert.Equal((3, 30L), (entry!.Item.Count, entry.Paid));
+    }
+
+    [Fact]
+    public async Task Sell_WhenALaterStackThrows_TheStacksAlreadyTakenAreStillCreditedAndPersisted()
+    {
+        var rig = new Rig();
+        var list = new BuyBackList();
+        rig.Inventory.Rows[11] = new ItemStackSnapshot { Id = 11, ItemId = Stocked, Count = 4 };
+        rig.Inventory.Rows[12] = new ItemStackSnapshot { Id = 12, ItemId = Stocked, Count = 9 };
+        rig.Inventory.SellThrowsAt = 2;
+
+        var result = await rig.Service.SellAsync(Sell(Pays10, (11, 4), (12, 3)), rig.Wallet, list, rig.Inventory, rig.Log, rig.PersistAsync);
+
+        Assert.Equal(40, result.Proceeds);
+        Assert.Equal([11UL], result.Lines.Select(l => l.Row.Id));
+        Assert.Equal(["take:11x4", "log:Sold:11x4=40", "log:SaleInterrupted:1/2", "credit:40", "persist"], rig.Events);
+        Assert.Equal(Start + 40, rig.Wallet.Gold);
+        Assert.Equal(new ulong[] { 11 }, result.BuyBackUids);
+    }
+
+    [Fact]
+    public async Task Sell_WhenTheFirstStackThrows_NothingWasTakenSoTheFailureEscapes()
+    {
+        var rig = new Rig();
+        rig.Inventory.Rows[11] = new ItemStackSnapshot { Id = 11, ItemId = Stocked, Count = 4 };
+        rig.Inventory.SellThrowsAt = 1;
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            rig.Service.SellAsync(Sell(Pays10, (11, 4)), rig.Wallet, new BuyBackList(), rig.Inventory, rig.Log, rig.PersistAsync));
+
+        Assert.Equal(Start, rig.Wallet.Gold);
     }
 
     [Fact]
