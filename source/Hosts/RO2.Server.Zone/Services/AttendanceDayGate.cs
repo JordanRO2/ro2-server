@@ -1,5 +1,4 @@
 using System.Collections.Concurrent;
-using RO2.Application.Interfaces;
 using RO2.Rewards.Application;
 using RO2.Rewards.Domain;
 

@@ -1,7 +1,6 @@
 using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using RO2.Application.Interfaces;
 using RO2.Rewards.Application;
 using RO2.Rewards.Domain;
 using RO2.GameData;
