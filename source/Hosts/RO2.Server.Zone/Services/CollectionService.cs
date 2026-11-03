@@ -59,18 +59,6 @@ public sealed class CollectionService
     }
 
     
- /// <summary>Registers a monster collection (idempotent) and returns the new registered count.</summary>
-    public async Task<int> RegisterMonsterAsync(uint characterId, uint collectionId, CancellationToken ct = default)
-    {
-        var doc = await GetStateAsync(characterId, ct);
-        if (collectionId != 0 && !doc.RegisteredMonsterIds.Contains(collectionId))
-        {
-            doc.RegisteredMonsterIds.Add(collectionId);
-            await SaveAsync(doc, ct);
-        }
-        return doc.RegisteredMonsterIds.Count;
-    }
-
  /// <summary>Registers a pet collection (idempotent) and returns the new registered count.</summary>
     public async Task<int> RegisterPetAsync(uint characterId, uint petCollectionId, CancellationToken ct = default)
     {
@@ -84,21 +72,6 @@ public sealed class CollectionService
     }
 
     
- /// <summary>
- /// Records a monster collection as the selected one. Selecting does not register it; registration happens with the first DNA feed.
- /// </summary>
- /// <returns>True if the collection is registered.</returns>
-    public async Task<bool> SelectMonsterSkillAsync(uint characterId, uint collectionId, CancellationToken ct = default)
-    {
-        var doc = await GetStateAsync(characterId, ct);
-        if (collectionId != 0 && !doc.SelectedMonsterSkills.Contains(collectionId))
-        {
-            doc.SelectedMonsterSkills.Add(collectionId);
-            await SaveAsync(doc, ct);
-        }
-        return doc.RegisteredMonsterIds.Contains(collectionId);
-    }
-
  /// <summary>
  /// Records a pet collection as the selected one. Selecting does not register it.
  /// </summary>

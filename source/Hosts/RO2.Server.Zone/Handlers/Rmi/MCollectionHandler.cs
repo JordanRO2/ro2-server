@@ -22,11 +22,8 @@ public class MCollectionHandler : ZoneRmiHandlerBase<MCollectionHandler>
         
         
         
-        var svc = CollectionService.From(services, Logger);
-        var book = await svc.GetStateAsync(player.CharacterId, ct);
         var store = services.GetRequiredService<GameDataStore>();
-        var progress = await MonsterCollectionProgressStore.From(services, Logger).GetAsync(player.CharacterId, ct);
-        var records = MonsterCollectionRules.BookStates(store, book.RegisteredMonsterIds, progress);
+        var records = await MonsterCollectionUseCaseFactory.From(services, Logger).OpenBookAsync(player.CharacterId, store.CollectMonster, ct);
         Logger.LogDebug("{Name} opens monster collection ({N} registered)", player.Name, records.Count);
 
         var body = CollectionPackets.BuildAnsMCollection(records, MonsterCollectionRules.RateFor(store, records.Count));

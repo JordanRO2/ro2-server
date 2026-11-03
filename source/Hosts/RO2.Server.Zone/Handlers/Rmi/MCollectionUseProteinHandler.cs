@@ -2,6 +2,7 @@ using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
+using RO2.Collections.Application;
 using RO2.Collections.Domain;
 using RO2.GameData;
 using RO2.Network.Protocol;
@@ -74,37 +75,18 @@ public class MCollectionUseProteinHandler : ZoneRmiHandlerBase<MCollectionUsePro
             return;
         }
 
-        var svc = CollectionService.From(services, Logger);
-        var book = await svc.GetStateAsync(player.CharacterId, ct);
-        var progressStore = MonsterCollectionProgressStore.From(services, Logger);
-        var progress = await progressStore.GetAsync(player.CharacterId, ct);
-        var entry = progress.Find(npcId);
-        byte level = entry?.Level ?? 1;
-        uint exp = entry?.Exp ?? 0;
-
-        var decision = MonsterFeedDecision.Decide(store.CollectMonster, npcId, book.RegisteredMonsterIds.Contains(npcId), level, exp);
-        if (decision.Kind == MonsterFeedKind.MaxLevel)
+        var feed = await MonsterCollectionUseCaseFactory.From(services, Logger).FeedAsync(player.CharacterId, npcId, store.CollectMonster, ct);
+        if (feed.Kind == MonsterFeedKind.MaxLevel)
         {
             
             await session.SendRmiAsync(ZoneS2COpcodes.AnsMCollectionUseProtein, writer => writer.WriteBytes(
-                CollectionPackets.BuildCollectionIdResultAck(npcId, decision.Result)));
+                CollectionPackets.BuildCollectionIdResultAck(npcId, feed.Result)));
             return;
         }
-        int registered = decision.Kind == MonsterFeedKind.Registered
-            ? await svc.RegisterMonsterAsync(player.CharacterId, npcId, ct)
-            : book.RegisteredMonsterIds.Count;
-        level = decision.Level;
-        exp = decision.Exp;
-        ushort result = decision.Result;
-
-        if (entry is null)
-        {
-            entry = new MonsterCollectionEntry { NpcId = npcId };
-            progress.Entries.Add(entry);
-        }
-        entry.Level = level;
-        entry.Exp = exp;
-        await progressStore.SaveAsync(progress, ct);
+        byte level = feed.Level;
+        uint exp = feed.Exp;
+        ushort result = feed.Result;
+        int registered = feed.Registered;
 
         
         int remaining = dna.Count - 1;

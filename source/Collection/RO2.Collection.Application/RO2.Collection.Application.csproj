@@ -6,10 +6,11 @@
     <RootNamespace>RO2.Collections.Application</RootNamespace>
   </PropertyGroup>
 
-  <!-- Collection bounded context: Application holds the read port and, later, the use cases. It references its own Domain only.
+  <!-- Collection bounded context: Application holds the read port and, later, the use cases. It references its own Domain + the shared GameData kernel (the row types the rows come in as) only.
        The wire, the live registries and the order of the side effects stay in the Zone host. Never the Zone host. -->
   <ItemGroup>
     <ProjectReference Include="..\RO2.Collection.Domain\RO2.Collection.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
   </ItemGroup>
 
 </Project>

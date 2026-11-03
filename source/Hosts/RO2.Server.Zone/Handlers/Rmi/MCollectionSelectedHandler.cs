@@ -31,16 +31,14 @@ public class MCollectionSelectedHandler : ZoneRmiHandlerBase<MCollectionSelected
 
         
         
-        var svc = CollectionService.From(services, Logger);
-        bool registered = await svc.SelectMonsterSkillAsync(player.CharacterId, collectionId, ct);
+        var store = services.GetRequiredService<GameDataStore>();
+        var selection = await MonsterCollectionUseCaseFactory.From(services, Logger).SelectAsync(player.CharacterId, collectionId, store.CollectMonster, ct);
 
         
         
         
         
-        var store = services.GetRequiredService<GameDataStore>();
-        var progress = await MonsterCollectionProgressStore.From(services, Logger).GetAsync(player.CharacterId, ct);
-        var state = MonsterCollectionRules.State(store, progress, collectionId, registered);
+        var state = selection.State;
         var pieces = await MonsterCollectionRules.MonsterPieceCountsAsync(
             store, services.GetRequiredService<IInventoryRepository>(), player.CharacterId, collectionId);
 

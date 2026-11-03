@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging.Abstractions;
+using RO2.Collections.Application;
 using RO2.Collections.Domain;
 using RO2.Server.Zone.Services;
 using Xunit;
@@ -22,18 +23,23 @@ public class CollectionServiceCharacterizationTests
         return (new CollectionService(repo, withStore ? await StoreAsync() : null, NullLogger.Instance), repo);
     }
 
+    /// <summary>The monster use case over the same book repo (the host passes the derived-flag delegate; none of these tests reads the flag).</summary>
+    private static MonsterCollectionUseCase Uc(FakeCollectionRepo repo, FakeMonsterProgressRepo? progress = null) =>
+        new(repo, progress ?? new FakeMonsterProgressRepo(), _ => 0);
+
     // ------------------------------------------------------------------------------------------------ register and select
 
     [Fact]
     public async Task Register_is_idempotent_ignores_id_0_and_returns_the_registered_count_without_saving_when_nothing_changed()
     {
         var (svc, repo) = await NewAsync();
+        var uc = Uc(repo);
 
-        Assert.Equal(1, await svc.RegisterMonsterAsync(C, Mon));
-        Assert.Equal(1, await svc.RegisterMonsterAsync(C, Mon));      // already in
-        Assert.Equal(1, await svc.RegisterMonsterAsync(C, 0));        // 0 is never registered
+        Assert.Equal(1, await uc.RegisterAsync(C, Mon));
+        Assert.Equal(1, await uc.RegisterAsync(C, Mon));              // already in
+        Assert.Equal(1, await uc.RegisterAsync(C, 0));                // 0 is never registered
         Assert.Equal(1, repo.Saves);                                  // only the first call wrote
-        Assert.Equal(2, await svc.RegisterMonsterAsync(C, MonSingle));
+        Assert.Equal(2, await uc.RegisterAsync(C, MonSingle));
         Assert.Equal(1, await svc.RegisterPetAsync(C, Pet));
         Assert.Equal(1, await svc.RegisterPetAsync(C, Pet));
         Assert.Equal(1, await svc.RegisterPetAsync(C, 0));
@@ -44,12 +50,14 @@ public class CollectionServiceCharacterizationTests
     [Fact]
     public async Task SelectMonsterSkill_stores_the_selection_without_registering_and_returns_whether_it_is_registered()
     {
-        var (svc, repo) = await NewAsync();
+        var (_, repo) = await NewAsync();
+        var uc = Uc(repo);
+        var rows = (await StoreAsync()).CollectMonster;
 
-        Assert.False(await svc.SelectMonsterSkillAsync(C, Mon));
-        Assert.False(await svc.SelectMonsterSkillAsync(C, 0));        // 0: not stored, and registered-contains(0) is false
-        await svc.RegisterMonsterAsync(C, Mon);
-        Assert.True(await svc.SelectMonsterSkillAsync(C, Mon));       // already selected: not duplicated
+        Assert.False((await uc.SelectAsync(C, Mon, rows)).Registered);
+        Assert.False((await uc.SelectAsync(C, 0, rows)).Registered);  // 0: not stored, and registered-contains(0) is false
+        await uc.RegisterAsync(C, Mon);
+        Assert.True((await uc.SelectAsync(C, Mon, rows)).Registered); // already selected: not duplicated
         Assert.Equal(new uint[] { Mon }, repo.Stored(C)!.SelectedMonsterSkills);
     }
 
@@ -111,17 +119,18 @@ public class CollectionServiceCharacterizationTests
     [Fact]
     public async Task A_load_failure_yields_an_empty_default_document_and_a_save_failure_is_swallowed_the_caller_still_gets_its_result()
     {
-        var (svc, repo) = await NewAsync();
+        var (_, repo) = await NewAsync();
+        var uc = Uc(repo);
         repo.Seed(new CollectionDocument { Id = C, RegisteredMonsterIds = { Mon, MonSingle } });
 
         repo.ThrowOnGet = true;
-        Assert.Equal(1, await svc.RegisterMonsterAsync(C, 99));       // the load threw: the service works on an EMPTY document ...
+        Assert.Equal(1, await uc.RegisterAsync(C, 99));       // the load threw: the service works on an EMPTY document ...
         repo.ThrowOnGet = false;
         Assert.Equal(new uint[] { 99 }, repo.Stored(C)!.RegisteredMonsterIds);   // ... and then SAVES it: QUIRK, the stored registrations Mon and MonSingle are overwritten
         repo.Seed(new CollectionDocument { Id = C, RegisteredMonsterIds = { Mon, MonSingle } });
 
         repo.ThrowOnSave = true;
-        Assert.Equal(3, await svc.RegisterMonsterAsync(C, MonNoRecipe));    // the count includes the unsaved registration
+        Assert.Equal(3, await uc.RegisterAsync(C, MonNoRecipe));    // the count includes the unsaved registration
         Assert.Equal(2, repo.Stored(C)!.RegisteredMonsterIds.Count);        // QUIRK: the client was told 3, storage holds 2
     }
 
@@ -168,11 +177,27 @@ public class CollectionServiceCharacterizationTests
         var (svc, repo) = await NewAsync();
 
         repo.HoldLoadsUntil(2);
-        await Task.WhenAll(svc.RegisterMonsterAsync(C, Mon), svc.RegisterPetAsync(C, Pet));
+        await Task.WhenAll(Uc(repo).RegisterAsync(C, Mon), svc.RegisterPetAsync(C, Pet));
 
         var stored = repo.Stored(C)!;
         Assert.Equal(1, stored.RegisteredMonsterIds.Count + stored.RegisteredPetIds.Count);   // exactly one survived: the later whole-document write replaced the other
         Assert.Equal(2, repo.Saves);
+    }
+
+    [Fact]
+    public async Task QUIRK_two_concurrent_feeds_of_one_monster_both_read_the_same_progress_so_one_exp_is_lost_last_writer_wins()
+    {
+        var repo = new FakeCollectionRepo();
+        var progress = new FakeMonsterProgressRepo();
+        var rows = (await StoreAsync()).CollectMonster;
+        repo.Seed(new CollectionDocument { Id = C, RegisteredMonsterIds = { Mon } });
+        var uc = Uc(repo, progress);
+
+        repo.HoldLoadsUntil(2);                                        // both feeds load the book before either saves progress
+        var results = await Task.WhenAll(uc.FeedAsync(C, Mon, rows), uc.FeedAsync(C, Mon, rows));
+
+        Assert.All(results, r => Assert.Equal((MonsterFeedKind.ExpGained, (byte)1, 1u), (r.Kind, r.Level, r.Exp)));   // each saw exp 0 and answered exp 1
+        Assert.Equal(1u, progress.Stored(C)!.Find(Mon)!.Exp);          // two DNA, one exp (the host still consumed two)
     }
 
     [Fact]
