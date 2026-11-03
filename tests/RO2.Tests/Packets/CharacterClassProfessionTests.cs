@@ -1,5 +1,6 @@
 ﻿using RO2.Domain.Entities;
 using RO2.Skills.Domain;
+using RO2.Collections.Domain;
 using RO2.GameData;
 using RO2.Network.Packets;
 using RO2.Server.Zone.Handlers.Rmi;

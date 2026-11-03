@@ -74,27 +74,17 @@ public static class MonsterCollectionRules
     public const ushort ResultExpGained = 30009;
 
  /// <summary>Returns the CollectMonster row for a collection and level, or null.</summary>
-    public static CollectMonster? Row(GameDataStore store, uint npcId, byte level)
-    {
-        foreach (var r in store.CollectMonster)
-            if (r.NpcID == npcId && r.SummonLevel == level) return r;
-        return null;
-    }
+    public static CollectMonster? Row(GameDataStore store, uint npcId, byte level) =>
+        CollectionRules.Row(store.CollectMonster, npcId, level);
 
  /// <summary>Highest summon level defined for a collection, or 0 when the id is not a collection.</summary>
-    public static byte MaxLevel(GameDataStore store, uint npcId)
-    {
-        byte max = 0;
-        foreach (var r in store.CollectMonster)
-            if (r.NpcID == npcId && r.SummonLevel > max) max = r.SummonLevel;
-        return max;
-    }
+    public static byte MaxLevel(GameDataStore store, uint npcId) => CollectionRules.MaxLevel(store.CollectMonster, npcId);
 
  /// <summary>
  /// Wire state of a collection at its current level. The skill id is derived from the level, not stored.
  /// </summary>
     public static MonsterCollectionState State(GameDataStore store, uint npcId, byte level, uint exp) =>
-        new(npcId, Row(store, npcId, level)?.SkillID ?? 0, level, exp);
+        CollectionRules.State(store.CollectMonster, npcId, level, exp);
 
  /// <summary>
  /// Wire state of one collection. A registered collection carries its stored level and experience. An unregistered
@@ -102,12 +92,8 @@ public static class MonsterCollectionRules
  /// </summary>
  /// <param name="registered">Whether the collection is registered. Required, so the caller chooses the form explicitly.</param>
     public static MonsterCollectionState State(GameDataStore store, MonsterCollectionProgressDocument progress,
-        uint npcId, bool registered)
-    {
-        if (!registered) return new(npcId, Row(store, npcId, 1)?.SkillID ?? 0, 0, 0);
-        var e = progress.Find(npcId);
-        return State(store, npcId, e?.Level ?? 1, e?.Exp ?? 0);
-    }
+        uint npcId, bool registered) =>
+        CollectionRules.State(store.CollectMonster, progress, npcId, registered);
 
  /// <summary>
  /// Book records for the registered collections, ordered by collection id. Each record carries the stored level and
@@ -115,24 +101,13 @@ public static class MonsterCollectionRules
  /// </summary>
     public static List<MonsterCollectionState> BookStates(GameDataStore store, IEnumerable<uint> registeredIds,
         MonsterCollectionProgressDocument progress) =>
-        registeredIds.Where(id => id != 0).Distinct().OrderBy(id => id)
-            .Select(id => State(store, progress, id, registered: true))
-            .ToList();
+        CollectionRules.BookStates(store.CollectMonster, registeredIds, progress);
 
  /// <summary>
  /// Count bucket of a registered-count header: the CollectRate row whose range contains <paramref name="count"/>, giving
  /// the index, maximum skill and skill cooldown.
  /// </summary>
-    public static CollectRateHeader RateFor(GameDataStore store, int count)
-    {
-        CollectRate? best = null;
-        foreach (var r in store.CollectRate)
-        {
-            if (count >= r.Num_Start && count <= r.Num_End) { best = r; break; }
-            if (best is null || r.Num_End > best.Num_End) best = r; 
-        }
-        return best is null ? default : new CollectRateHeader(best.Index, best.Skill_Max, best.Skill_Cooltime);
-    }
+    public static CollectRateHeader RateFor(GameDataStore store, int count) => CollectionRules.RateFor(store.CollectRate, count);
 
  /// <summary>
  /// Bag counts of the collection's four DNA pieces (CollectMonster.ItemID_Piece1 to Piece4), in the record's four u16 fields.
@@ -147,21 +122,13 @@ public static class MonsterCollectionRules
     }
 
  /// <summary>Returns the PetInfo row for a pet collection id, or null.</summary>
-    public static PetInfo? Pet(GameDataStore store, uint petId)
-    {
-        foreach (var p in store.PetInfo)
-            if (p.NPC_ID == petId) return p;
-        return null;
-    }
+    public static PetInfo? Pet(GameDataStore store, uint petId) => CollectionRules.Pet(store.PetInfo, petId);
 
  /// <summary>
  /// Wire state of a pet record at a given loyalty. The effect is that of the highest loyalty level reached, and the level
  /// index and loyalty value are also included.
  /// </summary>
-    public static PetCollectionState PetState(PetInfo pet, ushort loyalty) =>
-        loyalty >= pet.LoyaltyLevel_1
-            ? new PetCollectionState(pet.NPC_ID, pet.LoyaltyEffect_1, 1, loyalty)
-            : new PetCollectionState(pet.NPC_ID, pet.LoyaltyEffect_0, 0, loyalty);
+    public static PetCollectionState PetState(PetInfo pet, ushort loyalty) => CollectionRules.PetState(pet, loyalty);
 
  /// <summary>Bag counts of a pet's four PetInfo piece items.</summary>
     public static Task<PieceCounts> PetPieceCountsAsync(PetInfo pet, IInventoryRepository inventory, uint characterId) =>
