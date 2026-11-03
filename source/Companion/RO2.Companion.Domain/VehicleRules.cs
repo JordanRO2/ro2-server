@@ -57,6 +57,31 @@ public static class VehicleRules
     }
 
  /// <summary>
+ /// Resolves the days an extension item adds to a vehicle: the item's DurationExtendGroup bit must be
+ /// accepted by one of the vehicle's reins items (accepted bits are OR-ed across them), and the item must
+ /// last <c>Duration_Time &gt; 0</c> days (<c>Duration_Type</c> 1 only). Returns false otherwise.
+ /// </summary>
+    public static bool ResolveExtension(IReadOnlyList<DurationExtendGroup> extendGroups, IReadOnlyList<ItemCashInfo> cashInfo,
+        IReadOnlyList<RidingInfo> vehicles, IReadOnlyList<RidingDurationGroup> reinsGroups, uint ridingId, uint itemId, out uint days)
+    {
+        days = 0;
+        var bit = extendGroups.FirstOrDefault(g => g.Item_ID == itemId)?.DurationExtend_ID ?? 0;
+        if (bit == 0) return false;
+        var cash = cashInfo.FirstOrDefault(c => c.Item_ID == itemId);
+        if (cash is not { Duration_Type: DurationDays, Duration_Time: > 0 }) return false;
+        var vehicle = vehicles.FirstOrDefault(r => r.ID == ridingId);
+        if (vehicle is null) return false;
+        var reins = reinsGroups.Where(g => g.RidingDuration_ID == vehicle.RidingDuration_GroupID)
+            .Select(g => g.Item_ID).ToHashSet();
+        int accepted = 0;
+        foreach (var c in cashInfo)
+            if (reins.Contains(c.Item_ID)) accepted |= c.DurationExtend_GroupID;
+        if ((accepted & bit) == 0) return false;
+        days = cash.Duration_Time;
+        return true;
+    }
+
+ /// <summary>
  /// Cuts <paramref name="expiryOle"/> to its whole second. A value already on a whole second is returned
  /// unchanged, and 0 (permanent) stays 0.
  /// </summary>

@@ -27,9 +27,6 @@ public class RidingExtendItemHandler : ZoneRmiHandlerBase<RidingExtendItemHandle
 {
     private const int BodyLength = 12;
 
- /// <summary>ItemCashInfo.Duration_Type value for items that last a number of days.</summary>
-    private const byte DurationDays = 1;
-
  /// <summary>Source value of the 2329 reply that marks a vehicle extension.</summary>
     private const byte UseSourceExtend = 1;
 
@@ -95,23 +92,8 @@ public class RidingExtendItemHandler : ZoneRmiHandlerBase<RidingExtendItemHandle
  /// vehicle's reins items accepts the item's extension group.
  /// </summary>
     internal static bool TryResolveExtension(GameDataStore store, uint ridingId, uint itemId, out uint days)
-    {
-        days = 0;
-        var bit = store.DurationExtendGroup.FirstOrDefault(g => g.Item_ID == itemId)?.DurationExtend_ID ?? 0;
-        if (bit == 0) return false;
-        var cash = store.ItemCashInfo.FirstOrDefault(c => c.Item_ID == itemId);
-        if (cash is not { Duration_Type: DurationDays, Duration_Time: > 0 }) return false;
-        var vehicle = store.RidingInfo.FirstOrDefault(r => r.ID == ridingId);
-        if (vehicle is null) return false;
-        var reins = store.RidingDurationGroup.Where(g => g.RidingDuration_ID == vehicle.RidingDuration_GroupID)
-            .Select(g => g.Item_ID).ToHashSet();
-        int accepted = 0;
-        foreach (var c in store.ItemCashInfo)
-            if (reins.Contains(c.Item_ID)) accepted |= c.DurationExtend_GroupID;
-        if ((accepted & bit) == 0) return false;
-        days = cash.Duration_Time;
-        return true;
-    }
+        => VehicleRules.ResolveExtension(store.DurationExtendGroup, store.ItemCashInfo, store.RidingInfo,
+            store.RidingDurationGroup, ridingId, itemId, out days);
 
  /// <summary>
  /// Builds the 3023 AnsRidingExtendItem body (17 bytes): <c>[u16 result 0][u32 ridingId][f64 expiry][u8 1][u8 state][u8 0]</c>.
