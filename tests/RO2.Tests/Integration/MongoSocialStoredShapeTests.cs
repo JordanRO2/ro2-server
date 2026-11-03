@@ -59,9 +59,9 @@ public sealed class MongoFriendListStoredShapeTests
     {
         var (store, _) = Open();
         var owner = New();
-        Assert.Equal(FriendStore.AddOutcome.Added, await store.AddAsync(owner, 30));
-        Assert.Equal(FriendStore.AddOutcome.Added, await store.AddAsync(owner, 10));
-        Assert.Equal(FriendStore.AddOutcome.Added, await store.AddAsync(owner, 20));
+        Assert.Equal(AddOutcome.Added, await store.AddAsync(owner, 30));
+        Assert.Equal(AddOutcome.Added, await store.AddAsync(owner, 10));
+        Assert.Equal(AddOutcome.Added, await store.AddAsync(owner, 20));
 
         var raw = One(owner);
         Assert.Equal(new[] { "_id", "FriendIds" }, raw.Names.ToArray());
@@ -85,7 +85,7 @@ public sealed class MongoFriendListStoredShapeTests
         var (store, _) = Open();
         var owner = New();
         await store.AddAsync(owner, 5);
-        Assert.Equal(FriendStore.AddOutcome.AlreadyFriend, await store.AddAsync(owner, 5));
+        Assert.Equal(AddOutcome.AlreadyFriend, await store.AddAsync(owner, 5));
         Assert.Equal(new[] { 5 }, One(owner)["FriendIds"].AsBsonArray.Select(v => v.AsInt32).ToArray());
 
         Assert.True(await store.ListsFriendAsync(owner, 5, CancellationToken.None));
@@ -106,11 +106,11 @@ public sealed class MongoFriendListStoredShapeTests
 
         var below = New();
         Raw().InsertOne(new BsonDocument { { "_id", (int)below }, { "FriendIds", new BsonArray(Enumerable.Range(1, FriendStore.MaxFriends - 1)) } });
-        Assert.Equal(FriendStore.AddOutcome.Added, await store.AddAsync(below, 5000));         // 199 -> 200
+        Assert.Equal(AddOutcome.Added, await store.AddAsync(below, 5000));         // 199 -> 200
         Assert.Equal(FriendStore.MaxFriends, One(below)["FriendIds"].AsBsonArray.Count);
 
-        Assert.Equal(FriendStore.AddOutcome.ListFull, await store.AddAsync(below, 5001));      // 200: full, new id refused
-        Assert.Equal(FriendStore.AddOutcome.AlreadyFriend, await store.AddAsync(below, 5000)); // 200: full but already listed -> AlreadyFriend
+        Assert.Equal(AddOutcome.ListFull, await store.AddAsync(below, 5001));      // 200: full, new id refused
+        Assert.Equal(AddOutcome.AlreadyFriend, await store.AddAsync(below, 5000)); // 200: full but already listed -> AlreadyFriend
         Assert.Equal(FriendStore.MaxFriends, One(below)["FriendIds"].AsBsonArray.Count);
     }
 
@@ -125,7 +125,7 @@ public sealed class MongoFriendListStoredShapeTests
         var doc = typed.Find(d => d.Id == noArray).Single();
         Assert.Empty(doc.FriendIds);                                                              // missing field -> empty list, not null
         Assert.False(await store.ListsFriendAsync(noArray, 1, CancellationToken.None));
-        Assert.Equal(FriendStore.AddOutcome.Added, await store.AddAsync(noArray, 7));             // $addToSet creates the array
+        Assert.Equal(AddOutcome.Added, await store.AddAsync(noArray, 7));             // $addToSet creates the array
         Assert.Equal(new[] { 7 }, One(noArray)["FriendIds"].AsBsonArray.Select(v => v.AsInt32).ToArray());
         Assert.Equal("x", One(noArray)["RetiredField"].AsString);                                 // the write does not strip unknown fields
     }

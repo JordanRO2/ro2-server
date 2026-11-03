@@ -1,3 +1,4 @@
+using RO2.Socials.Domain;
 using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

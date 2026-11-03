@@ -1,3 +1,4 @@
+using RO2.Socials.Domain;
 using RO2.Application.Configuration;
 using RO2.Domain.Entities;
 using RO2.Persistence.Mongo.Persistence;

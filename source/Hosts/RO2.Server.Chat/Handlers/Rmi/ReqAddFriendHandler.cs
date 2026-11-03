@@ -1,3 +1,4 @@
+using RO2.Socials.Domain;
 using RO2.Application.Interfaces;
 using System.Buffers.Binary;
 using System.Text;
@@ -131,12 +132,12 @@ public class ReqAddFriendHandler : ChatRmiHandlerBase<ReqAddFriendHandler>
 
         switch (await friends.AddAsync(ownerId, target.Id))
         {
-            case FriendStore.AddOutcome.AlreadyFriend:
+            case AddOutcome.AlreadyFriend:
                 Logger.LogInformation("Session {Id}: add friend \"{Name}\": already a friend", session.SessionId, target.Name);
                 await session.SendInternalRmiAsync(ChatS2COpcodes.AnsAddFriend,
                     FriendStore.BuildAddFriendAnswer(FriendStore.AddResultAlreadyFriend, null));
                 return;
-            case FriendStore.AddOutcome.ListFull:
+            case AddOutcome.ListFull:
                 // A concurrent add slipped past the pre-lookup count check and filled the last slot; the
                 // atomic size guard caught it. Answer 33, the same list-full result as the pre-check.
                 Logger.LogInformation("Session {Id}: add friend \"{Name}\": list full (atomic guard)", session.SessionId, target.Name);

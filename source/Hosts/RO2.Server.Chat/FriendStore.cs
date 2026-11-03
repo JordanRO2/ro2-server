@@ -35,9 +35,9 @@ public sealed class FriendStore
     public const string CollectionName = "chat_friend_lists";
 
     /// <summary>Result codes of 23508 AnsAddFriend.</summary>
-    public const ushort AddResultOk = 0;
-    public const ushort AddResultAlreadyFriend = 6;
-    public const ushort AddResultNotFound = 18;
+    public const ushort AddResultOk = SocialRules.ResultOk;
+    public const ushort AddResultAlreadyFriend = SocialRules.AddResultAlreadyFriend;
+    public const ushort AddResultNotFound = SocialRules.AddResultNotFound;
 
     /// <summary>
     /// 23508 result 33: the REQUESTER's list is full. The client's messenger result table shows
@@ -45,13 +45,13 @@ public sealed class FriendStore
     /// an empty name, its own name and a name already in its map before sending 23002). The failure frame is
     /// <c>21 00 11 00 00 00</c> + 17 zero bytes, the same all-zero record the other failures carry.
     /// </summary>
-    public const ushort AddResultListFull = 33;
+    public const ushort AddResultListFull = SocialRules.AddResultListFull;
 
     /// <summary>
     /// Friends one character may list. No data/ table holds a friend limit, so this is a server constant: 200.
     /// The limit is checked BEFORE the name is looked up, and it is measured on the count the owner's 23505 lists.
     /// </summary>
-    public const int MaxFriends = 200;
+    public const int MaxFriends = SocialRules.MaxFriends;
 
     /// <summary>
     /// Profession (ProJob) level and id carried by a friend record's two trailer bytes. No profession is modelled,
@@ -87,7 +87,7 @@ public sealed class FriendStore
         new(0, "", false, 0, 0, "", NoProJobLevel, NoProJobId);
 
     /// <summary>True when a list of <paramref name="count"/> friends (<see cref="CountAsync"/>) takes no more.</summary>
-    public static bool IsListFull(int count) => count >= MaxFriends;
+    public static bool IsListFull(int count) => SocialRules.IsFriendListFull(count);
 
     private readonly MongoDbContext _db;
     private readonly ICharacterRepository _characters;
@@ -111,17 +111,6 @@ public sealed class FriendStore
     public async Task<Character?> FindCharacterByNameAsync(string name)
     {
         return await _characters.FindByNameIgnoreCaseAsync(name);
-    }
-
-    /// <summary>Outcome of <see cref="AddAsync"/>: the three cases the 23508 result codes distinguish.</summary>
-    public enum AddOutcome
-    {
-        /// <summary>The friend was added (23508 result 0).</summary>
-        Added,
-        /// <summary>The friend was already on the list, nothing written (23508 result 6).</summary>
-        AlreadyFriend,
-        /// <summary>The list was at the cap, nothing written (23508 result 33).</summary>
-        ListFull,
     }
 
     /// <summary>

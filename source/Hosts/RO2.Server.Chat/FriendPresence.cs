@@ -121,7 +121,7 @@ public sealed class FriendPresence
 
         var blockers = await OwnersBlockingAsync(owners.Select(o => o.CharacterId!.Value), charId);
         foreach (var owner in owners)
-            if (!blockers.Contains(owner.CharacterId!.Value))
+            if (SocialRules.ReceivesPresenceNotice(owner.CharacterId!.Value, blockers))
                 await TrySendAsync(owner, opcode, body);
     }
 

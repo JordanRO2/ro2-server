@@ -1,3 +1,4 @@
+using RO2.Socials.Domain;
 using System.Buffers.Binary;
 using System.Text;
 using RO2.Domain.Entities;

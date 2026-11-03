@@ -14,17 +14,6 @@ namespace RO2.Server.Chat;
 /// <summary>A blocked character as the client sees it: its GID (the 23506/23510 record uid) and current name.</summary>
 public readonly record struct BlockedCharacter(ulong Gid, string Name);
 
-/// <summary>Outcome of <see cref="BlockListRepository.AddAsync"/>.</summary>
-public enum BlockAddOutcome
-{
-    /// <summary>The character was added to the list.</summary>
-    Added,
-    /// <summary>The character was already on the list, nothing written (23510 result 7).</summary>
-    AlreadyRegistered,
-    /// <summary>The list was at its defensive cap, nothing written (the protocol has no answer for this case).</summary>
-    ListFull,
-}
-
 /// <summary>
 /// Mongo-backed messenger block list (<c>chat_block_lists</c> collection). A scoped DI service: it takes the
 /// scope's <see cref="ICharacterRepository"/> for the name lookups.
@@ -39,7 +28,7 @@ public sealed class BlockListRepository
     /// bound (and so the 23506 count, written as a u16, can never approach its wrap point).
     /// No data table defines a block-list limit; 200 mirrors <see cref="FriendStore.MaxFriends"/> as a sane bound.
     /// </summary>
-    public const int MaxBlocked = 200;
+    public const int MaxBlocked = SocialRules.MaxBlocked;
 
     private readonly IMongoCollection<BlockListDocument> _lists;
     private readonly ICharacterRepository _characters;
@@ -181,7 +170,7 @@ public static class BlockListPackets
     /// <summary>
     /// Result code 0, success. It is the leading u16 of a 23506 list, of a successful 23510 and of a 23511 reply.
     /// </summary>
-    public const ushort ResultOk = 0;
+    public const ushort ResultOk = SocialRules.ResultOk;
 
     /// <summary>Size of the u32 <c>innerLen</c> field that prefixes the record block of 23506/23510 and heads a 23006 body.</summary>
     private const int InnerLenFieldSize = sizeof(uint);
@@ -223,7 +212,7 @@ public static class BlockListPackets
     /// between). The client shows string 9514 for it, the same message as for 6, the already-a-friend
     /// code of 23508 (FriendStore.AddResultAlreadyFriend).
     /// </summary>
-    public const ushort AddBlockResultAlreadyRegistered = 7;
+    public const ushort AddBlockResultAlreadyRegistered = SocialRules.AddBlockResultAlreadyRegistered;
 
     /// <summary>
     /// 23510 result for a typed name that resolves to no character. Every such 23006 is answered with
@@ -232,7 +221,7 @@ public static class BlockListPackets
     /// character name you've entered does not exist." It is the same code the friend add sends for an
     /// unknown name (FriendStore.AddResultNotFound, 23508).
     /// </summary>
-    public const ushort AddBlockResultNotFound = 18;
+    public const ushort AddBlockResultNotFound = SocialRules.AddBlockResultNotFound;
 
     /// <summary>
     /// Builds RMI 23506 AnsBlockList: <c>[u16 0][u32 innerLen][u16 count]{ record }</c>, record =
