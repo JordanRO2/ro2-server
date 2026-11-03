@@ -4,7 +4,7 @@ using RO2.Domain.Entities;
 using RO2.Kharas.Domain;
 using RO2.Persistence.Mongo.Persistence;
 
-namespace RO2.Persistence.Mongo.Repositories;
+namespace RO2.Kharas.Infrastructure.Mongo;
 
 /// <summary>
 /// MongoDB store for <see cref="IKharaTitleRepository"/>, one document per character. Holds raw document I/O only;

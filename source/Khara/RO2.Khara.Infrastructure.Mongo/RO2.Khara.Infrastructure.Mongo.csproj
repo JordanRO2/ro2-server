@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>RO2.Kharas.Infrastructure.Mongo</RootNamespace>
+  </PropertyGroup>
+
+  <!-- MongoDB persistence for the Khara bounded context. References the shared RO2.Persistence.Mongo for
+       MongoDbContext, so the Khara documents keeps going through its class maps (IgnoreExtraElements, no _t
+       discriminator) in the same database as the game data. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Khara.Domain\RO2.Khara.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Platform\RO2.Persistence.Mongo\RO2.Persistence.Mongo.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+</Project>

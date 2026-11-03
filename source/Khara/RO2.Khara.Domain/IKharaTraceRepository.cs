@@ -1,4 +1,4 @@
-namespace RO2.Application.Interfaces;
+namespace RO2.Kharas.Domain;
 
 /// <summary>
 /// Persistence for a character's Khara tracker pins — the list the client last saved with RMI 1434

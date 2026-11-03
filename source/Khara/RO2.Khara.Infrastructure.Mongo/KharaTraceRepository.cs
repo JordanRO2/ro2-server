@@ -1,8 +1,9 @@
+using RO2.Kharas.Domain;
 using MongoDB.Driver;
 using RO2.Application.Interfaces;
 using RO2.Persistence.Mongo.Persistence;
 
-namespace RO2.Persistence.Mongo.Repositories;
+namespace RO2.Kharas.Infrastructure.Mongo;
 
 /// <summary>
 /// MongoDB store for <see cref="IKharaTraceRepository"/>, holding each character's Khara tracker pins in the

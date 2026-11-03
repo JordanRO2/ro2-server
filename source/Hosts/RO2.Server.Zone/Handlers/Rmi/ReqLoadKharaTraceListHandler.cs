@@ -1,3 +1,4 @@
+using RO2.Kharas.Domain;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -43,7 +44,7 @@ public class ReqLoadKharaTraceListHandler : Base1435
             .GetPlayer(session.SessionId);
         var ids = player is null
             ? (IReadOnlyList<uint>)System.Array.Empty<uint>()
-            : await services.GetRequiredService<RO2.Application.Interfaces.IKharaTraceRepository>()
+            : await services.GetRequiredService<IKharaTraceRepository>()
                 .GetAsync(player.CharacterId, ct);
 
         await session.SendRmiAsync(ZoneS2COpcodes.AnsLoadKharaTraceList, writer =>

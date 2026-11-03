@@ -1,4 +1,4 @@
-using RO2.Persistence.Postgres.Repositories;
+using RO2.Kharas.Infrastructure.Postgres;
 using Xunit;
 
 namespace RO2.Tests.Integration;

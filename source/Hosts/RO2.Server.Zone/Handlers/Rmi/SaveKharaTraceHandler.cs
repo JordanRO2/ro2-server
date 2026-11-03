@@ -1,3 +1,4 @@
+using RO2.Kharas.Domain;
 using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -49,7 +50,7 @@ public class SaveKharaTraceHandler : ZoneRmiHandlerBase<SaveKharaTraceHandler>
         for (int i = 0; i < count; i++)
             ids.Add(BinaryPrimitives.ReadUInt32LittleEndian(span.Slice(6 + 4 * i)));
 
-        await services.GetRequiredService<RO2.Application.Interfaces.IKharaTraceRepository>()
+        await services.GetRequiredService<IKharaTraceRepository>()
             .SaveAsync(player.CharacterId, ids, ct);
         Logger.LogDebug("Session {Id}: saved {N} traced Khara for character {Char}",
             session.SessionId, ids.Count, player.CharacterId);

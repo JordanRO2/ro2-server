@@ -1,6 +1,6 @@
 using RO2.Domain.Entities;
 using RO2.Kharas.Domain;
-using RO2.Persistence.Postgres.Repositories;
+using RO2.Kharas.Infrastructure.Postgres;
 using Xunit;
 
 namespace RO2.Tests.Integration;

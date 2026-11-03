@@ -173,6 +173,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Khara", "Khara", "{9B6BC3D9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Khara.Domain", "source\Khara\RO2.Khara.Domain\RO2.Khara.Domain.csproj", "{B783A128-56C0-44A2-A068-A492A5B26E57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Khara.Infrastructure.Postgres", "source\Khara\RO2.Khara.Infrastructure.Postgres\RO2.Khara.Infrastructure.Postgres.csproj", "{9A0DF87F-4903-4A53-9DBC-390AC28933C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -975,6 +977,18 @@ Global
 		{B783A128-56C0-44A2-A068-A492A5B26E57}.Release|x64.Build.0 = Release|Any CPU
 		{B783A128-56C0-44A2-A068-A492A5B26E57}.Release|x86.ActiveCfg = Release|Any CPU
 		{B783A128-56C0-44A2-A068-A492A5B26E57}.Release|x86.Build.0 = Release|Any CPU
+		{9A0DF87F-4903-4A53-9DBC-390AC28933C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A0DF87F-4903-4A53-9DBC-390AC28933C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A0DF87F-4903-4A53-9DBC-390AC28933C6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9A0DF87F-4903-4A53-9DBC-390AC28933C6}.Debug|x64.Build.0 = Debug|Any CPU
+		{9A0DF87F-4903-4A53-9DBC-390AC28933C6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9A0DF87F-4903-4A53-9DBC-390AC28933C6}.Debug|x86.Build.0 = Debug|Any CPU
+		{9A0DF87F-4903-4A53-9DBC-390AC28933C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A0DF87F-4903-4A53-9DBC-390AC28933C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A0DF87F-4903-4A53-9DBC-390AC28933C6}.Release|x64.ActiveCfg = Release|Any CPU
+		{9A0DF87F-4903-4A53-9DBC-390AC28933C6}.Release|x64.Build.0 = Release|Any CPU
+		{9A0DF87F-4903-4A53-9DBC-390AC28933C6}.Release|x86.ActiveCfg = Release|Any CPU
+		{9A0DF87F-4903-4A53-9DBC-390AC28933C6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1034,5 +1048,6 @@ Global
 		{6888ED5B-5622-44A4-93F6-663933A7FE46} = {8B7795A8-B2FA-E8CE-275C-05BBFE2D2256}
 		{5061F4E7-46D9-4A8B-8343-44DD6C22C716} = {61AE66F3-6D17-B387-ED78-006B020AD4C6}
 		{B783A128-56C0-44A2-A068-A492A5B26E57} = {9B6BC3D9-BF34-AF6A-5BD0-10965AAA1C05}
+		{9A0DF87F-4903-4A53-9DBC-390AC28933C6} = {9B6BC3D9-BF34-AF6A-5BD0-10965AAA1C05}
 	EndGlobalSection
 EndGlobal

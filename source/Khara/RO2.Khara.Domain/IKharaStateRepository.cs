@@ -1,7 +1,6 @@
-using RO2.Domain.Entities;
 using RO2.Kharas.Domain;
 
-namespace RO2.Application.Interfaces;
+namespace RO2.Kharas.Domain;
 
 /// <summary>
 /// Document persistence for a character's Khara state (one <see cref="KharaStateDocument"/> per character:

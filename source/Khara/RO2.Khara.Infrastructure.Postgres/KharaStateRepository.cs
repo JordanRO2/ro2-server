@@ -2,10 +2,11 @@ using System.Text.Json;
 using Npgsql;
 using NpgsqlTypes;
 using RO2.Application.Interfaces;
+using RO2.Persistence.Postgres;
 using RO2.Domain.Entities;
 using RO2.Kharas.Domain;
 
-namespace RO2.Persistence.Postgres.Repositories;
+namespace RO2.Kharas.Infrastructure.Postgres;
 
 /// <summary>
 /// PostgreSQL implementation of <see cref="IKharaStateRepository"/>: one row per character in the
