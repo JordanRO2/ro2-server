@@ -1,6 +1,7 @@
 using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using RO2.Companions.Application;
 using RO2.Companions.Domain;
 using RO2.GameData;
 using RO2.Persistence.Mongo.Persistence;
@@ -40,44 +41,28 @@ public class RidingExtendItemHandler : ZoneRmiHandlerBase<RidingExtendItemHandle
         var ridingId = BinaryPrimitives.ReadUInt32LittleEndian(payload.Span);
         var extensionItemUid = BinaryPrimitives.ReadUInt64LittleEndian(payload.Span.Slice(4));
 
-        var inventory = services.GetRequiredService<IInventoryRepository>();
-        var ticket = await inventory.GetByIdAsync(extensionItemUid);
-        if (ticket is null || ticket.CharacterId != player.CharacterId || ticket.StorageType == 1 || ticket.Count <= 0)
-        {
-            Logger.LogInformation("{Name}: 1691 names item uid {Uid}, which the player does not hold in a bag", player.Name, extensionItemUid);
-            return;
-        }
-
         var store = services.GetRequiredService<GameDataStore>();
-        if (!TryResolveExtension(store, ridingId, ticket.ItemId, out var days))
-        {
-            Logger.LogInformation("{Name}: item {Item} does not extend vehicle {Vehicle} (DurationExtendGroup / ItemCashInfo)",
-                player.Name, ticket.ItemId, ridingId);
-            return;
-        }
-
         var nowOle = VehiclePackets.NowOle();
-        IReadOnlyList<OwnedVehicle>? vehicles;
-        try
+        var r = await services.GetRequiredService<ExtendRidingUseCase>().ExtendAsync(player.CharacterId, ridingId, extensionItemUid,
+            store.DurationExtendGroup, store.ItemCashInfo, store.RidingInfo, store.RidingDurationGroup, nowOle, ct);
+        switch (r.Status)
         {
-            vehicles = await services.GetRequiredService<IVehicleRepository>()
-                .TryExtendTimedAsync(player.CharacterId, ridingId, days, nowOle, ct);
+            case ExtendRidingStatus.TicketNotHeld:
+                Logger.LogInformation("{Name}: 1691 names item uid {Uid}, which the player does not hold in a bag", player.Name, extensionItemUid);
+                return;
+            case ExtendRidingStatus.NotExtendable:
+                Logger.LogInformation("{Name}: item {Item} does not extend vehicle {Vehicle} (DurationExtendGroup / ItemCashInfo)",
+                    player.Name, r.Ticket!.ItemId, ridingId);
+                return;
+            case ExtendRidingStatus.StoreFailed:
+                Logger.LogWarning(r.Error, "{Name}: could not store the extension of vehicle {Vehicle}; item not consumed", player.Name, ridingId);
+                return;
+            case ExtendRidingStatus.NotOwnedTimed:
+                Logger.LogInformation("{Name}: vehicle {Vehicle} is not a timed vehicle the character owns", player.Name, ridingId);
+                return;
         }
-        catch (Exception ex) when (ex is not OperationCanceledException)
-        {
-            Logger.LogWarning(ex, "{Name}: could not store the extension of vehicle {Vehicle}; item not consumed", player.Name, ridingId);
-            return;
-        }
-        if (vehicles is null)
-        {
-            Logger.LogInformation("{Name}: vehicle {Vehicle} is not a timed vehicle the character owns", player.Name, ridingId);
-            return;
-        }
-        var expiry = vehicles.First(v => v.RidingId == ridingId).ExpiryOle;
-
-        var remaining = ticket.Count - 1;
-        if (remaining <= 0) { await inventory.RemoveItemAsync(ticket.Id); remaining = 0; }
-        else { ticket.Count = remaining; await inventory.UpdateItemAsync(ticket); }
+        var ticket = r.Ticket!;
+        var (days, expiry, remaining) = (r.Days, r.ExpiryOle, r.Remaining);
 
         var (bag, slot) = ClientBagSlot(ticket);
         await session.SendRmiAsync(ZoneS2COpcodes.OnUseItem,
@@ -86,14 +71,6 @@ public class RidingExtendItemHandler : ZoneRmiHandlerBase<RidingExtendItemHandle
         await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsRidingExtendItem, BuildAnsRidingExtendItem3023(ridingId, expiry, nowOle));
         Logger.LogInformation("{Name} extended vehicle {Vehicle} by {Days} days with item {Item}", player.Name, ridingId, days, ticket.ItemId);
     }
-
- /// <summary>
- /// Returns the number of days <paramref name="itemId"/> adds to <paramref name="ridingId"/>, if one of the
- /// vehicle's reins items accepts the item's extension group.
- /// </summary>
-    internal static bool TryResolveExtension(GameDataStore store, uint ridingId, uint itemId, out uint days)
-        => VehicleRules.ResolveExtension(store.DurationExtendGroup, store.ItemCashInfo, store.RidingInfo,
-            store.RidingDurationGroup, ridingId, itemId, out days);
 
  /// <summary>
  /// Builds the 3023 AnsRidingExtendItem body (17 bytes): <c>[u16 result 0][u32 ridingId][f64 expiry][u8 1][u8 state][u8 0]</c>.

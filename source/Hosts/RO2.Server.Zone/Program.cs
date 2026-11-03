@@ -160,6 +160,7 @@ public static class Program
         // Companion.Application: the reins grant (Item_Type 11) and the character-load vehicle list (cut to whole seconds); scoped like the other use cases.
         services.AddScoped<RO2.Companions.Application.GrantReinsUseCase>();
         services.AddScoped<RO2.Companions.Application.ListVehiclesUseCase>();
+        services.AddScoped<RO2.Companions.Application.ExtendRidingUseCase>();
         // Inbound system-mail seam for Dungeon Finder / Illusion Pyramid / Economy; no 2449 unless the draft asks. Scoped: the notify path builds a MailService (scoped ICharacterRepository).
         services.AddScoped<RO2.Mails.Application.ISendMail>(sp => new SendMailAdapter(sp.GetRequiredService<IMailRepository>(),
             id => MailService.From(sp, sp.GetRequiredService<PlayerStateManager>(), sp.GetRequiredService<BroadcastService>(),

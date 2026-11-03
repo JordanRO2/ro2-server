@@ -370,7 +370,7 @@ public class VehicleCompanionCharacterizationTests
             await store.LoadAsync(dir);
 
             (bool ok, uint days) Resolve(uint ridingId, uint itemId)
-                => (RidingExtendItemHandler.TryResolveExtension(store, ridingId, itemId, out var d), d);
+                => (VehicleRules.ResolveExtension(store.DurationExtendGroup, store.ItemCashInfo, store.RidingInfo, store.RidingDurationGroup, ridingId, itemId, out var d), d);
 
             Assert.Equal((true, 7u), Resolve(100, 501));      // bit 1 is accepted by reins 11
             Assert.Equal((true, 14u), Resolve(100, 502));     // bit 4 comes from reins 12: the accepted bits are OR-ed across the group's reins
