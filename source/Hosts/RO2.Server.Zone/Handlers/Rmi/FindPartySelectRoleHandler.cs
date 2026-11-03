@@ -42,7 +42,7 @@ public class FindPartySelectRoleHandler : ZoneRmiHandlerBase<FindPartySelectRole
             return;
         }
 
-        var outcome = DungeonFinderPartyRound.Shared.SelectRole(player, roleFlags, DungeonFinderPartyRound.SeatCheckFor(
+        var outcome = DungeonFinderPartyRound.Shared.SelectRole(SeatKeys.Of(player), roleFlags, DungeonFinderPartyRound.SeatCheckFor(
             services.GetRequiredService<IFinderPartyView>(), services.GetRequiredService<ISeatLiveness>()));
         await DungeonFinderPartyRound.DeliverAsync(outcome.Sends, Broadcast.GetSession);
         Logger.LogInformation("{Name} answered the dungeon finder role check with roles {Flags}: {Status} (role {Role})",

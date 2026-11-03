@@ -15,10 +15,10 @@ namespace RO2.Server.Zone.Services;
 public static class FindPartyRolePackets
 {
  /// <summary>2834 result 0: the role was accepted.</summary>
-    public const ushort SelectRoleAccepted = 0;
+    public const ushort SelectRoleAccepted = RO2.DungeonFinder.Domain.FinderRound.ResultAccepted;
 
  /// <summary>2834 result 8: the role's slot is already filled.</summary>
-    public const ushort SelectRoleSlotTaken = 8;
+    public const ushort SelectRoleSlotTaken = RO2.DungeonFinder.Domain.FinderRound.ResultSlotTaken;
 
  /// <summary>
  /// 2831 result 2: the round ended without a party. Any non-zero result shows the round-failed notice and resets the

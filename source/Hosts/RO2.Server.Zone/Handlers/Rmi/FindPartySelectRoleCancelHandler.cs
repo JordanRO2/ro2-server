@@ -37,7 +37,7 @@ public class FindPartySelectRoleCancelHandler : ZoneRmiHandlerBase<FindPartySele
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
-        var outcome = DungeonFinderPartyRound.Shared.Cancel(player, DungeonFinderPartyRound.SeatCheckFor(
+        var outcome = DungeonFinderPartyRound.Shared.Cancel(SeatKeys.Of(player), DungeonFinderPartyRound.SeatCheckFor(
             services.GetRequiredService<IFinderPartyView>(), services.GetRequiredService<ISeatLiveness>()));
 
         await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsFindParty_Party_SelectRole_Cancel,

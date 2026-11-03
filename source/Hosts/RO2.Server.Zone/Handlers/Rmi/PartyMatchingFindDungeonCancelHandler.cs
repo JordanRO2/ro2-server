@@ -28,7 +28,7 @@ public class PartyMatchingFindDungeonCancelHandler : ZoneRmiHandlerBase<PartyMat
         
         
         
-        var round = DungeonFinderPartyRound.Shared.Cancel(player,
+        var round = DungeonFinderPartyRound.Shared.Cancel(SeatKeys.Of(player),
             DungeonFinderPartyRound.SeatCheckFor(
                 services.GetRequiredService<IFinderPartyView>(), services.GetRequiredService<ISeatLiveness>()));
         await queue.PruneAndPushAsync(services.GetRequiredService<ISeatLiveness>(), DungeonFinderQueue.RowsOf(data), SendToSessionAsync);

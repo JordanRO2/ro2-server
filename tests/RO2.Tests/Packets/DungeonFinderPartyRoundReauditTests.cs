@@ -63,10 +63,10 @@ public class DungeonFinderPartyRoundReauditTests
         var member = new PlayerState { SessionId = 21, Name = "member" };
         var round = new DungeonFinderPartyRound();
 
-        var opened = round.Open(9, row, searcher, RoleKind.RoleDealer, [member], (_, _) => true,
+        var opened = round.Open(9, row, SeatKeys.Of(searcher), RoleKind.RoleDealer, [SeatKeys.Of(member)], (_, _) => true,
             ZoneS2COpcodes.AnsPartyMatchingFindDungeonRandom);
 
-        Assert.Equal(DungeonFinderPartyRound.OpenStatus.Opened, opened.Status);
+        Assert.Equal(OpenStatus.Opened, opened.Status);
         var toSearcher = opened.Sends.Where(o => o.SessionId == 20).Select(o => (o.Opcode, Hex(o.Body))).ToArray();
         Assert.Equal((ZoneS2COpcodes.AnsPartyMatchingFindDungeonRandom, "0000"), toSearcher[0]);
         Assert.DoesNotContain(opened.Sends, o => o.Opcode == ZoneS2COpcodes.AnsPartyMatchingFindDungeon);

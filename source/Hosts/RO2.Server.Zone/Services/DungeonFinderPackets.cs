@@ -21,7 +21,7 @@ namespace RO2.Server.Zone.Services;
 public static class DungeonFinderPackets
 {
  /// <summary>Result 0: the search was accepted.</summary>
-    public const ushort ResultAccepted = 0;
+    public const ushort ResultAccepted = RO2.DungeonFinder.Domain.FinderRound.ResultAccepted;
 
  /// <summary>Result 9: the player already has a search in the queue.</summary>
     public const ushort ResultAlreadyRegistered = 9;

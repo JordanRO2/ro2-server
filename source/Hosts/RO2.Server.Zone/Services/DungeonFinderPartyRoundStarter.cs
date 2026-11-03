@@ -1,4 +1,5 @@
 using RO2.DungeonFinder.Application;
+using RO2.DungeonFinder.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.GameData;
@@ -35,13 +36,9 @@ public static class DungeonFinderPartyRoundStarter
         PlayerStateManager players, BroadcastService broadcast, ILogger logger, ushort answerOpcode)
     {
         if (!rows.TrueForAll(r => r.Party_Num > 1)) return false;
-        var parties = services.GetRequiredService<PartyService>();
-        if (parties.GetPlayerParty(session.SessionId) is not { } party) return false;
-        var others = new List<PlayerState>();
-        foreach (var memberId in party.MemberKeys)
-            if (memberId != session.SessionId && parties.GetOnlineMember(party, memberId) is { } member)
-                others.Add(member);
-        if (others.Count == 0) return false;
+        var view = services.GetRequiredService<IFinderPartyView>();
+        if (view.PartyOf(player.CharacterId) is not { OtherOnlineMembers.Count: > 0 } party) return false;
+        var others = party.OtherOnlineMembers.Select(m => new SeatKey(m.CharacterId, m.SessionId, m.Incarnation)).ToList();
 
         
         
@@ -53,18 +50,17 @@ public static class DungeonFinderPartyRoundStarter
         }
 
         
-        var isSeated = DungeonFinderPartyRound.SeatCheckFor(
-            services.GetRequiredService<IFinderPartyView>(), services.GetRequiredService<ISeatLiveness>());
-        var opened = DungeonFinderPartyRound.Shared.Open(party.PartyId, rows[0], player, roleFlags, others, isSeated,
+        var isSeated = DungeonFinderPartyRound.SeatCheckFor(view, services.GetRequiredService<ISeatLiveness>());
+        var opened = DungeonFinderPartyRound.Shared.Open(party.PartyId, rows[0], SeatKeys.Of(player), roleFlags, others, isSeated,
             answerOpcode);
         await DungeonFinderPartyRound.DeliverAsync(opened.Sends, broadcast.GetSession);
         switch (opened.Status)
         {
-            case DungeonFinderPartyRound.OpenStatus.AlreadyOpen:
+            case OpenStatus.AlreadyOpen:
                 await session.SendInternalRmiAsync(answerOpcode,
                     DungeonFinderPartyRound.SearcherAnswer(answerOpcode, DungeonFinderPackets.ResultAlreadyRegistered));
                 return true;
-            case DungeonFinderPartyRound.OpenStatus.Opened:
+            case OpenStatus.Opened:
                 
                 _ = ExpireRoundWhenDueAsync(opened.RoundId, isSeated, broadcast, logger);
                 logger.LogInformation("{Name} opened dungeon finder party round {Round} for lists {Lists} as role {Role}, asking {Count} member(s)",
