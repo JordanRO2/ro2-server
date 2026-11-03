@@ -128,11 +128,12 @@ public sealed class CollectionService
         if (!doc.RegisteredPetIds.Contains(petCollectionId)
             || _data is null || MonsterCollectionRules.Pet(_data, petCollectionId) is not { } pet)
             return null;
-        if (PetCollectionBook.FedLoyalty(pet, doc.LoyaltyOf(petCollectionId)) is not { } fed)
+        var decision = PetEggDecision.Decide(pet, registered: true, doc.LoyaltyOf(petCollectionId));
+        if (decision.Kind != PetEggKind.Fed)
             return null;
-        doc.SetLoyalty(petCollectionId, fed);
+        doc.SetLoyalty(petCollectionId, decision.Loyalty);
         await SaveAsync(doc, ct);
-        return fed;
+        return decision.Loyalty;
     }
 
     
@@ -143,14 +144,15 @@ public sealed class CollectionService
     public async Task<(uint petId, byte flag)> SetActivePetAsync(uint characterId, uint petCollectionId, CancellationToken ct = default)
     {
         var doc = await GetStateAsync(characterId, ct);
-        if (petCollectionId != 0 && !doc.RegisteredPetIds.Contains(petCollectionId))
+        var decision = ActivePetRule.Decide(_data?.PetInfo, doc, petCollectionId);
+        if (!decision.Accepted)
         {
             _log.LogWarning("Collection: char {Char} asked to activate pet {Pet}, which is not in its pet book; " +
                             "active pet stays {Active}", characterId, petCollectionId, doc.ActivePetId);
-            return (doc.ActivePetId, doc.ActivePetFlag);
+            return (decision.PetId, decision.Flag);
         }
-        doc.ActivePetId = petCollectionId;
-        doc.ActivePetFlag = PetCollectionBook.ActiveFlag(_data, petCollectionId, doc.LoyaltyOf(petCollectionId));
+        doc.ActivePetId = decision.PetId;
+        doc.ActivePetFlag = decision.Flag;
         await SaveAsync(doc, ct);
         return (doc.ActivePetId, doc.ActivePetFlag);
     }

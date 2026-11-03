@@ -82,34 +82,20 @@ public class MCollectionUseProteinHandler : ZoneRmiHandlerBase<MCollectionUsePro
         byte level = entry?.Level ?? 1;
         uint exp = entry?.Exp ?? 0;
 
-        ushort result;
-        int registered;
-        if (!book.RegisteredMonsterIds.Contains(npcId))
-        {
-            registered = await svc.RegisterMonsterAsync(player.CharacterId, npcId, ct);
-            level = 1;
-            exp = 0;
-            result = MonsterCollectionRules.ResultRegistered;
-        }
-        else if (level >= MonsterCollectionRules.MaxLevel(store, npcId))
+        var decision = MonsterFeedDecision.Decide(store.CollectMonster, npcId, book.RegisteredMonsterIds.Contains(npcId), level, exp);
+        if (decision.Kind == MonsterFeedKind.MaxLevel)
         {
             
             await session.SendRmiAsync(ZoneS2COpcodes.AnsMCollectionUseProtein, writer => writer.WriteBytes(
-                CollectionPackets.BuildCollectionIdResultAck(npcId, MonsterCollectionRules.ResultMaxLevel)));
+                CollectionPackets.BuildCollectionIdResultAck(npcId, decision.Result)));
             return;
         }
-        else
-        {
-            registered = book.RegisteredMonsterIds.Count;
-            exp++;
-            var row = MonsterCollectionRules.Row(store, npcId, level);
-            if (row is not null && exp >= row.Exp)
-            {
-                level++;
-                exp = 0;
-            }
-            result = MonsterCollectionRules.ResultExpGained;
-        }
+        int registered = decision.Kind == MonsterFeedKind.Registered
+            ? await svc.RegisterMonsterAsync(player.CharacterId, npcId, ct)
+            : book.RegisteredMonsterIds.Count;
+        level = decision.Level;
+        exp = decision.Exp;
+        ushort result = decision.Result;
 
         if (entry is null)
         {

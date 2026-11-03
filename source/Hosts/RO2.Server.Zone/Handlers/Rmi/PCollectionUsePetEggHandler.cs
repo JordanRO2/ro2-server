@@ -35,19 +35,19 @@ public class PCollectionUsePetEggHandler : ZoneRmiHandlerBase<PCollectionUsePetE
     private const byte UseSourceCollection = 3;
 
  /// <summary>2925 flag for a pet the egg added to the book.</summary>
-    private const byte FlagAdded = 1;
+    private const byte FlagAdded = PetEggDecision.FlagAdded;
 
  /// <summary>2925 flag for an egg fed to a pet already in the book.</summary>
-    private const byte FlagFed = 2;
+    private const byte FlagFed = PetEggDecision.FlagFed;
 
  /// <summary>2925 flag of a refusal: no egg taken, the result says why.</summary>
-    private const byte FlagRefused = 0;
+    private const byte FlagRefused = PetEggDecision.FlagRefused;
 
  /// <summary>2925 result: the fed pet is already at its loyalty cap, so no egg is taken.</summary>
-    internal const ushort ResultLoyaltyCapped = 30001;
+    internal const ushort ResultLoyaltyCapped = PetEggDecision.ResultLoyaltyCapped;
 
  /// <summary>2925 result: the named cell no longer holds the pet's hatched egg.</summary>
-    internal const ushort ResultNoEgg = 30004;
+    internal const ushort ResultNoEgg = PetEggDecision.ResultNoEgg;
 
     public override ushort Opcode => ZoneC2SOpcodes.ReqPCollectionUsePetEgg;
     public override string Name => "PCollectionUsePetEgg";

@@ -2,6 +2,7 @@ using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
+using RO2.Collections.Domain;
 using RO2.Domain.Entities;
 using RO2.GameData;
 using RO2.Network.Protocol;
@@ -63,7 +64,7 @@ public class MCollectionCombinProteinHandler : ZoneRmiHandlerBase<MCollectionCom
         var bagItems = await inventory.GetByCharacterAsync(player.CharacterId);
 
         int flat = BagSlotToFlat(bag, slot);
-        int proteinNeed = times * Math.Max(1, (int)recipe.Num_Combine1);
+        int proteinNeed = PlanCombine.ConsumableNeed(times, recipe.Num_Combine1);
         var protein = flat < 0 ? null : bagItems.FirstOrDefault(i => i.StorageType == 0 && i.Slot == flat);
         if (protein is null || protein.ItemId != recipe.ItemID_Combine1 || protein.Count < proteinNeed)
         {
@@ -75,17 +76,7 @@ public class MCollectionCombinProteinHandler : ZoneRmiHandlerBase<MCollectionCom
         
         
         
-        var pieceNeeds = new[]
-            {
-                (Id: recipe.ItemID_Piece1, Need: times * (int)recipe.Num_Piece1),
-                (Id: recipe.ItemID_Piece2, Need: times * (int)recipe.Num_Piece2),
-                (Id: recipe.ItemID_Piece3, Need: times * (int)recipe.Num_Piece3),
-                (Id: recipe.ItemID_Piece4, Need: times * (int)recipe.Num_Piece4),
-            }
-            .Where(p => p.Id != 0 && p.Need > 0)
-            .GroupBy(p => p.Id)
-            .Select(g => (Id: g.Key, Need: g.Sum(p => p.Need)))
-            .ToList();
+        var pieceNeeds = PlanCombine.PieceNeeds(recipe, times);
         foreach (var (id, need) in pieceNeeds)
         {
             long held = BagStacks(bagItems, id).Sum(i => (long)i.Count);

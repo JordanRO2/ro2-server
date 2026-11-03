@@ -65,13 +65,13 @@ public sealed class MonsterCollectionProgressStore
 public static class MonsterCollectionRules
 {
  /// <summary>Result code when the collection is already at its highest level.</summary>
-    public const ushort ResultMaxLevel = 30005;
+    public const ushort ResultMaxLevel = MonsterFeedDecision.ResultMaxLevel;
 
  /// <summary>Result code when a monster's DNA registers a new collection.</summary>
-    public const ushort ResultRegistered = 30008;
+    public const ushort ResultRegistered = MonsterFeedDecision.ResultRegistered;
 
  /// <summary>Result code when a DNA adds experience to a registered collection.</summary>
-    public const ushort ResultExpGained = 30009;
+    public const ushort ResultExpGained = MonsterFeedDecision.ResultExpGained;
 
  /// <summary>Returns the CollectMonster row for a collection and level, or null.</summary>
     public static CollectMonster? Row(GameDataStore store, uint npcId, byte level) =>

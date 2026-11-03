@@ -2,6 +2,7 @@ using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
+using RO2.Collections.Domain;
 using RO2.Domain.Entities;
 using RO2.GameData;
 using RO2.GameData.Tables;
@@ -59,7 +60,7 @@ public class PCollectionCombinEggBlankHandler : ZoneRmiHandlerBase<PCollectionCo
 
         
         int flat = BagSlotToFlat(bag, slot);
-        int catalystNeed = times * Math.Max(1, (int)pet.Num_Catalyst);
+        int catalystNeed = PlanCombine.ConsumableNeed(times, pet.Num_Catalyst);
         var catalyst = flat < 0 ? null : bagItems.FirstOrDefault(i => i.StorageType == 0 && i.Slot == flat);
         if (catalyst is null || catalyst.ItemId != pet.ItemID_Catalyst || catalyst.Count < catalystNeed)
         {
@@ -188,18 +189,7 @@ public class PCollectionCombinEggBlankHandler : ZoneRmiHandlerBase<PCollectionCo
     }
 
  /// <summary>Returns the pieces that <paramref name="times"/> combines take, grouped by item id.</summary>
-    internal static List<(uint Id, int Need)> PieceNeeds(PetInfo pet, int times) =>
-        new[]
-            {
-                (Id: pet.ItemID_Piece1, Need: times * (int)pet.Num_Piece1),
-                (Id: pet.ItemID_Piece2, Need: times * (int)pet.Num_Piece2),
-                (Id: pet.ItemID_Piece3, Need: times * (int)pet.Num_Piece3),
-                (Id: pet.ItemID_Piece4, Need: times * (int)pet.Num_Piece4),
-            }
-            .Where(p => p.Id != 0 && p.Need > 0)
-            .GroupBy(p => p.Id)
-            .Select(g => (Id: g.Key, Need: g.Sum(p => p.Need)))
-            .ToList();
+    internal static List<(uint Id, int Need)> PieceNeeds(PetInfo pet, int times) => PlanCombine.PieceNeeds(pet, times);
 
     private static IEnumerable<InventoryItem> BagStacks(IEnumerable<InventoryItem> bag, uint itemId) =>
         bag.Where(i => i.StorageType == 0 && i.ItemId == itemId && i.Count > 0).OrderBy(i => i.Slot);
