@@ -11,8 +11,8 @@ namespace RO2.Server.Zone.Services;
 /// <summary>
 /// Host implementation of <see cref="IStallBuyInventory"/> over the inventory repository and the stall registry. It holds
 /// the exact read, placement-write and listing-removal steps the private-shop buy handler used inline. It takes NO
-/// inventory gate (the stall's purchase gate, held by the handler, is the only serialization) and rolls nothing back when
-/// a write throws. One instance serves one buy: it keeps the live seller and buyer rows it read, and, after
+/// gate itself: the handler holds the stall's purchase gate and, around the whole buy, both characters' inventory gates.
+/// Its writes are owner-guarded and atomic, and it rolls nothing back when one throws. One instance serves one buy: it keeps the live seller and buyer rows it read, and, after
 /// <see cref="ApplyAsync"/>, the buyer stacks that received items and the seller's sale records the handler's frames need.
 /// </summary>
 /// <param name="inventory">The inventory repository.</param>
@@ -76,13 +76,10 @@ internal sealed class StallBuyInventoryAdapter(IInventoryRepository inventory, I
             }
         }
 
-        foreach (var (uid, count) in plan.HeldCounts)
-        {
-            var held = _buyerHeld[uid];
-            held.Count = count;
-            await _inventory.UpdateItemAsync(held);
-        }
-
+        // Every write is owner-guarded and atomic (the caller holds both characters' inventory gates around the whole buy,
+        // so the rows read above are current; the guards are the cross-process backstop). The seller's side comes first,
+        // the buyer's held stacks grow last, so a failure part-way loses units and never copies them.
+        uint sellerId = _owner.CharacterId;
         var placed = new InventoryItem?[plan.Moves.Count];
         for (int i = 0; i < plan.Moves.Count; i++)
         {
@@ -91,18 +88,16 @@ internal sealed class StallBuyInventoryAdapter(IInventoryRepository inventory, I
             bool wholeStack = move.Item.Qty >= it.Count;
             if (move.Cell < 0)
             {
-                if (wholeStack) await _inventory.RemoveItemAsync(it.Id);
-                else
+                if (wholeStack)
                 {
-                    it.Count -= move.Item.Qty;
-                    await _inventory.UpdateItemAsync(it);
+                    if (!await _inventory.RemoveItemAsync(it.Id, sellerId)) throw SellerNoLongerHolds(it);
                 }
+                else it.Count = await _inventory.AdjustCountAsync(it.Id, sellerId, -move.Item.Qty) ?? throw SellerNoLongerHolds(it);
                 continue;
             }
             if (!wholeStack)
             {
-                it.Count -= move.Item.Qty;
-                await _inventory.UpdateItemAsync(it);
+                it.Count = await _inventory.AdjustCountAsync(it.Id, sellerId, -move.Item.Qty) ?? throw SellerNoLongerHolds(it);
                 var row = new InventoryItem
                 {
                     CharacterId = buyerCharacterId,
@@ -116,17 +111,30 @@ internal sealed class StallBuyInventoryAdapter(IInventoryRepository inventory, I
             }
             else
             {
+                if (!await _inventory.TryReassignAsync(it.Id, sellerId, buyerCharacterId, 0, move.Cell)) throw SellerNoLongerHolds(it);
+                if (move.CellCount != it.Count
+                    && await _inventory.AdjustCountAsync(it.Id, buyerCharacterId, move.CellCount - it.Count) is null)
+                    throw SellerNoLongerHolds(it);
                 it.CharacterId = buyerCharacterId;
                 it.StorageType = 0;
                 it.Slot = move.Cell;
                 it.Count = move.CellCount;
-                await _inventory.UpdateItemAsync(it);
                 placed[i] = it;
             }
         }
 
+        foreach (var (uid, count) in plan.HeldCounts)
+        {
+            var held = _buyerHeld[uid];
+            held.Count = await _inventory.AdjustCountAsync(held.Id, buyerCharacterId, count - held.Count)
+                ?? throw new InvalidOperationException($"Stall buy: the buyer's stack {held.Id:X} is gone from their bag");
+        }
+
         BuyerStacks = plan.Filled.Select(f => f.HeldUid is { } uid ? _buyerHeld[uid] : placed[f.MoveIndex]!).ToList();
     }
+
+    private static InvalidOperationException SellerNoLongerHolds(InventoryItem item) =>
+        new($"Stall buy of uid {item.Id:X} refused: the seller's row is gone or no longer theirs");
 
     /// <inheritdoc />
     public void RemoveListings(IReadOnlyList<byte> indices)

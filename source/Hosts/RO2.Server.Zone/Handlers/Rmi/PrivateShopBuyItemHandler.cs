@@ -9,6 +9,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
+using RO2.Inventory.Application;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
 
@@ -188,9 +189,13 @@ public class PrivateShopBuyItemHandler : ZoneRmiHandlerBase<PrivateShopBuyItemHa
         }
 
         var stall = new StallBuyInventoryAdapter(inventory, itemData, owner);
-        var result = await new StallBuyApplicationService().BuyAsync(
-            new StallBuyCommand(buyer.CharacterId, owner.CharacterId, picked), buyer, owner, PrivateShopRegistry.WalletLock, stall,
-            persistBuyer ?? (_ => Task.CompletedTask), persistSeller ?? (_ => Task.CompletedTask));
+        // The seller's rows, the buyer's bag, the plan and the writes are one hold of both inventory gates (lowest id first),
+        // so a sale to an NPC, a trade or a mail attach cannot change either bag in between. Nothing inside takes a
+        // character's gate again (the planned cells are real slots).
+        var result = await CharacterInventoryGate.WithBothGatesAsync(buyer.CharacterId, owner.CharacterId, () =>
+            new StallBuyApplicationService().BuyAsync(
+                new StallBuyCommand(buyer.CharacterId, owner.CharacterId, picked), buyer, owner, PrivateShopRegistry.WalletLock, stall,
+                persistBuyer ?? (_ => Task.CompletedTask), persistSeller ?? (_ => Task.CompletedTask)));
         if (!result.Succeeded)
             return Sale.Refused(result.Refusal, result.Reason);
 
