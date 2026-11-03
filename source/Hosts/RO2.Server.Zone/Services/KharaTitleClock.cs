@@ -1,3 +1,5 @@
+using RO2.Kharas.Domain;
+
 namespace RO2.Server.Zone.Services;
 
 /// <summary>
@@ -111,9 +113,5 @@ internal static class KharaTitleClock
     }
 
     private static DateTime PlayNowLocked(Entry e, DateTime wallNowUtc)
-    {
-        if (e.RunningSinceUtc is not { } since || wallNowUtc <= since)
-            return e.PlayAt;
-        return e.PlayAt + (wallNowUtc - since);
-    }
+        => new PlayClock(e.PlayAt, e.RunningSinceUtc).At(wallNowUtc);
 }

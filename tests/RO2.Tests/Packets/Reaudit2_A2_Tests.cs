@@ -1,3 +1,4 @@
+using RO2.Kharas.Domain;
 using RO2.Economy.Domain;
 using System.Buffers.Binary;
 using Microsoft.Extensions.Logging.Abstractions;

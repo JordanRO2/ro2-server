@@ -1,3 +1,4 @@
+using RO2.Kharas.Domain;
 using RO2.GameData.Tables;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Models;

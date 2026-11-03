@@ -1,3 +1,4 @@
+using RO2.Kharas.Domain;
 using System.Buffers.Binary;
 using System.Text.Json;
 using RO2.GameData.Tables;
