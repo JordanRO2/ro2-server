@@ -72,14 +72,12 @@ public sealed class ShopInventoryAdapter(IInventoryRepository inventory, IReadOn
             {
                 // The live row of the bag read: the 2375 record carries its existing uid with the new total.
                 var target = owned.First(i => i.Id == restackId);
-                var before = target.Count;
-                undo.Add(async () =>
-                {
-                    target.Count = before;
-                    await _inventory.UpdateItemAsync(target);
-                });
-                target.Count += quantity;
-                await _inventory.UpdateItemAsync(target);
+                // An atomic owner-guarded $inc, not a whole-row $set of the snapshot count, so a concurrent change to
+                // the stack from another process is added to rather than overwritten.
+                var newCount = await _inventory.AdjustCountAsync(restackId, characterId, quantity)
+                    ?? throw new InvalidOperationException($"restack target {restackId} is gone from character {characterId}'s bag");
+                undo.Add(async () => await _inventory.AdjustCountAsync(restackId, characterId, -quantity));
+                target.Count = newCount;
                 stacks.Add(target);
             }
             else

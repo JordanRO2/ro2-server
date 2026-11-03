@@ -13,6 +13,7 @@ using RO2.Server.Zone.Services;
 using RO2.Worlds.Domain;
 
 using RO2.Economy.Application;
+using RO2.Inventory.Application;
 using RO2.Economy.Domain;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
@@ -383,7 +384,10 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
         var command = new ShopBuyCommand(player.CharacterId, player.Name, npcHandle, itemId, item.Name, quantity,
             item.Price_Buy, item.Stack_Max, item.Durability, PossessionLimitOf(itemId),
             tokenCost is null ? null : TokenCostOf(tokenCost), tokenCost?.ID ?? 0);
-        var result = await Shop.BuyAsync(command, player,
+        // The bag read, the plan and the writes are one hold of the buyer's inventory gate, like every other bag
+        // mutation: a trade swap, a loot pickup or a mail claim in between would otherwise be overwritten or collide
+        // with a planned cell. Nothing inside takes this character's gate again (the planned cells are real slots).
+        var result = await CharacterInventoryGate.RunAsync(player.CharacterId, () => Shop.BuyAsync(command, player,
             new ShopInventoryAdapter(services.GetRequiredService<IInventoryRepository>(), store.Items, Logger),
             new ShopLogAdapter(Logger),
             () => characters.UpdateGoldAsync(player.CharacterId, player.Gold),
@@ -399,7 +403,7 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
                         TokenRecordOf(touch, player.CharacterId), ShopItemPackets.DestroyReasonTokenBuy);
                     await session.SendRmiAsync(ZoneS2COpcodes.OnDestroyItem, writer => writer.WriteBytes(destroyBody));
                 }
-            });
+            }));
         if (result.Written is not { } written)
         {
             await RefuseAsync(result.RefusalCode);

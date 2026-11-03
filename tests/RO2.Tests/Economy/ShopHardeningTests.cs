@@ -242,6 +242,56 @@ public sealed class ShopHardeningTests
         Assert.Equal(StartZeny - 120, rig.Player.Gold);
     }
 
+    [Fact]
+    public async Task Buy_WaitsForTheBuyersInventoryGate_ThenCompletes()
+    {
+        await using var rig = await StartAsync();
+        var shop = rig.Spawn(x: 10, y: 10);
+        var release = new TaskCompletionSource();
+        var held = new TaskCompletionSource();
+        var holder = CharacterInventoryGate.RunAsync(CharId, async () => { held.SetResult(); await release.Task; return 0; });
+        await held.Task;
+
+        var buy = BuyHandler(rig).HandleAsync(rig.Net.Sessions[0], Buy1334(shop, Stocked, count: 3));
+        await Task.Delay(200);
+        Assert.False(buy.IsCompleted);                 // a bag mutation by another path is in flight: the buy queues behind it
+        Assert.Empty(rig.Fx.Inventory.Rows);
+
+        release.SetResult();
+        await holder;
+        await buy;
+        Assert.Equal(3, rig.Fx.Inventory.Rows.Single().Count);
+    }
+
+    [Fact]
+    public async Task Restack_AddsToTheLiveCount_NotTheSnapshotCount()
+    {
+        await using var rig = await StartAsync();
+        var stack = rig.Fx.GiveItem(CharId, Stocked, 5, slot: 2);
+        var bag = await Adapter(rig).ReadBagAsync(CharId);              // snapshot: 5
+        var plan = ShopBuyPlanner.Plan(bag.Stacks, bag.FreeCells, Stocked, 2, 99);
+        Assert.Equal(stack.Id, plan!.RestackId);
+        await rig.Fx.InventoryRepo.AdjustCountAsync(stack.Id, CharId, 3);       // a concurrent add lands: 8
+
+        var written = await Adapter(rig).WriteBuyAsync(bag, CharId, Stocked, 2, plan, templateDurability: 0, tokenTakes: null);
+
+        Assert.Equal(10, rig.Fx.Inventory.Rows.Single().Count);          // not 7: the +3 survives
+        Assert.Equal(10, written.Stacks.Single().Count);                 // the 2375 record carries the real total
+    }
+
+    [Fact]
+    public async Task Restack_OntoAStackThatLeftTheBag_Throws_SoTheBuyIsRefused()
+    {
+        await using var rig = await StartAsync();
+        var stack = rig.Fx.GiveItem(CharId, Stocked, 5, slot: 2);
+        var bag = await Adapter(rig).ReadBagAsync(CharId);
+        var plan = ShopBuyPlanner.Plan(bag.Stacks, bag.FreeCells, Stocked, 2, 99);
+        await rig.Inventory.RemoveItemAsync(stack.Id);
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            Adapter(rig).WriteBuyAsync(bag, CharId, Stocked, 2, plan!, templateDurability: 0, tokenTakes: null));
+    }
+
     // ============================== E-H13: fail-closed buy ==============================
 
     [Fact]
