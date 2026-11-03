@@ -157,6 +157,8 @@ public static class Program
         services.AddScoped<RO2.Rewards.Application.GetAttendanceStateUseCase>();
         services.AddScoped<RO2.Rewards.Application.ClaimPlayTimeRewardUseCase>();
         services.AddScoped<RO2.Rewards.Application.PollPlayTimeRewardUseCase>();
+        services.AddScoped<RO2.Rewards.Application.ClaimAccountGiftUseCase>();
+        services.AddScoped<RO2.Rewards.Application.ListAccountGiftsUseCase>();
 
         // Mail.Application: the 1393 send decisions (scoped, it holds the scoped ICharacterRepository) and the 1457 / 1397 / 1398 / 1394 gold, read, delete and list use cases.
         services.AddScoped<RO2.Mails.Application.MailSendUseCase>();

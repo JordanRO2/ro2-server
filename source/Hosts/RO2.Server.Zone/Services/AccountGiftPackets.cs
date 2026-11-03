@@ -42,12 +42,12 @@ public static class AccountGiftPackets
  /// <c>[u32 18 + 43n][u32 accountId][u64 character GID][u16 page][u16 total][u16 n][n gift records]</c>.
  /// </summary>
  /// <remarks>
- /// The page window is <see cref="AccountGiftStore.PageWindow"/>. Each record is written by <see cref="WriteGiftRecord"/>.
+ /// The page window is <see cref="AccountGiftRules.PageWindow"/>. Each record is written by <see cref="WriteGiftRecord"/>.
  /// </remarks>
     public static byte[] Build2799(uint accountId, ulong characterGid, ushort page, IReadOnlyList<AccountGift> newestFirst,
         DateTime nowLocal)
     {
-        var (start, count) = AccountGiftStore.PageWindow(newestFirst.Count, page);
+        var (start, count) = AccountGiftRules.PageWindow(newestFirst.Count, page);
         using var w = new PacketWriter(4 + 18 + GiftRecordLength * count);
         w.WriteUInt32((uint)(18 + GiftRecordLength * count));
         w.WriteUInt32(accountId);

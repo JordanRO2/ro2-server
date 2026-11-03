@@ -2,6 +2,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
+using RO2.Rewards.Application;
 using RO2.Rewards.Domain;
 using RO2.Persistence.Mongo.Persistence;
 using RO2.Network.Packets;
@@ -67,9 +68,7 @@ public class AccountGiftListHandler : ZoneRmiHandlerBase<AccountGiftListHandler>
         IReadOnlyList<AccountGift> gifts;
         try
         {
-            gifts = player.AccountId == 0
-                ? new List<AccountGift>()
-                : await services.GetRequiredService<IAccountGiftRepository>().GetLiveAsync(player.AccountId, nowLocal, ct);
+            gifts = (await services.GetRequiredService<ListAccountGiftsUseCase>().ExecuteAsync(player.AccountId, page, nowLocal, ct)).NewestFirst;
         }
         catch (Exception ex) when (ex is not OperationCanceledException)
         {

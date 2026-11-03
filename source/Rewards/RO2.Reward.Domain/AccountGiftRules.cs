@@ -24,6 +24,33 @@ public static class AccountGiftRules
     public static List<AccountGift> NewestFirst(IEnumerable<AccountGift> gifts, DateTime nowLocal)
         => gifts.Where(g => IsLive(g, nowLocal)).OrderByDescending(g => g.ReceivedUtc).ToList();
 
+ /// <summary>
+ /// Page window: page P lists the live gifts, newest first, starting at index <c>5 * (P - 1)</c> (floored at 0)
+ /// and holding up to 7 entries. Consecutive pages share two gifts.
+ /// </summary>
+    public const int PageStride = 5, PageRows = 7;
+
+ /// <summary>
+ /// The first index and count of the gifts that page <paramref name="page"/> lists out of <paramref name="total"/>.
+ /// </summary>
+    public static (int Start, int Count) PageWindow(int total, ushort page)
+    {
+        int from = PageStride * (page - 1);
+        int to = Math.Min(total, from + PageRows);
+        from = Math.Max(0, from);
+        return (from, Math.Max(0, to - from));
+    }
+
+ /// <summary>Creates a gift with the given id (32 hex digits) filed at <paramref name="nowUtc"/>.</summary>
+    public static AccountGift NewGift(string guid, uint itemId, ushort count, byte source, DateTime nowUtc) => new()
+    {
+        Guid = guid,
+        ItemId = itemId,
+        Count = count,
+        ReceivedUtc = nowUtc,
+        Source = source,
+    };
+
  /// <summary>A stored UTC instant on the server's local clock, the one the wire carries.</summary>
     public static DateTime ToLocal(DateTime storedUtc) => DateTime.SpecifyKind(storedUtc, DateTimeKind.Utc).ToLocalTime();
 }

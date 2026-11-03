@@ -2,6 +2,7 @@ using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
+using RO2.Rewards.Application;
 using RO2.Rewards.Domain;
 using RO2.GameData;
 using RO2.Network.Protocol;
@@ -15,7 +16,7 @@ namespace RO2.Server.Zone.Services;
 /// <summary>
 /// Zone-side rules of the account gift box: which gifts are listed, counted, and claimed. The box is shared by
 /// all characters of a login account. Persistence is handled by <see cref="IAccountGiftRepository"/>; this class
-/// holds the filing and paging helpers and forwards expiry rules to <see cref="AccountGiftRules"/>.
+/// holds the expiry helpers and forwards expiry rules to <see cref="AccountGiftRules"/>.
 /// </summary>
 /// <remarks>
 /// <para>
@@ -34,22 +35,6 @@ public static class AccountGiftStore
  /// <summary>Days a gift stays in the box, counting the day it was filed.</summary>
     internal const int DaysKept = AccountGiftRules.DaysKept;
 
- /// <summary>
- /// Page window: page P lists the live gifts, newest first, starting at index <c>5 * (P - 1)</c> (floored at 0)
- /// and holding up to 7 entries. Consecutive pages share two gifts.
- /// </summary>
-    internal const int PageStride = 5, PageRows = 7;
-
- /// <summary>Creates a gift filed at the given time, with a new random 16-byte ID.</summary>
-    public static AccountGift NewGift(uint itemId, ushort count, byte source, DateTime nowUtc) => new()
-    {
-        Guid = Convert.ToHexString(System.Guid.NewGuid().ToByteArray()),
-        ItemId = itemId,
-        Count = count,
-        ReceivedUtc = nowUtc,
-        Source = source,
-    };
-
  /// <summary>Days left for a gift filed at <paramref name="receivedLocal"/>: 7 on that day, 0 seven days later.</summary>
     public static int DaysLeft(DateTime receivedLocal, DateTime nowLocal)
         => AccountGiftRules.DaysLeft(receivedLocal, nowLocal);
@@ -61,17 +46,6 @@ public static class AccountGiftStore
  /// <summary>The live gifts of <paramref name="gifts"/>, newest first.</summary>
     public static List<AccountGift> NewestFirst(IEnumerable<AccountGift> gifts, DateTime nowLocal)
         => AccountGiftRules.NewestFirst(gifts, nowLocal);
-
- /// <summary>
- /// The first index and count of the gifts that page <paramref name="page"/> lists out of <paramref name="total"/>.
- /// </summary>
-    public static (int Start, int Count) PageWindow(int total, ushort page)
-    {
-        int from = PageStride * (page - 1);
-        int to = Math.Min(total, from + PageRows);
-        from = Math.Max(0, from);
-        return (from, Math.Max(0, to - from));
-    }
 
  /// <summary>Converts a stored UTC instant to the server's local clock, the one the wire carries.</summary>
     public static DateTime ToLocal(DateTime storedUtc) => AccountGiftRules.ToLocal(storedUtc);
@@ -112,39 +86,42 @@ public static class AccountGiftClaims
 
         var nowLocal = ServerWallClock.Now().DateTime;
         var giftStore = services.GetRequiredService<IAccountGiftRepository>();
-        AccountGift? gift;
+        var store = services.GetRequiredService<GameDataStore>();
+        var inventory = services.GetRequiredService<IInventoryRepository>();
+        ItemPickUpHandler.Landing landing = null!;
+        ClaimAccountGiftResult claim;
         try
         {
-            gift = (await giftStore.GetLiveAsync(player.AccountId, nowLocal, ct)).FirstOrDefault(g => g.Guid == guid);
+            claim = await services.GetRequiredService<ClaimAccountGiftUseCase>().ExecuteAsync(player.AccountId, guid, nowLocal,
+                async g =>
+                {
+                    var owned = await inventory.GetByCharacterAsync(player.CharacterId);
+                    landing = ItemPickUpHandler.PlanLanding(owned, player.CharacterId, g.ItemId, Math.Max(1, (int)g.Count), store.Items);
+                    return !landing.Refused;
+                }, ct);
         }
         catch (Exception ex) when (ex is not OperationCanceledException)
         {
             logger.LogWarning(ex, "{Name}: 1551 for gift {Guid} not answered, the gift box could not be read", player.Name, guid);
             return;
         }
-        if (gift is null)
+        if (claim.Status == ClaimAccountGiftStatus.NotFound)
         {
             logger.LogDebug("{Name}: 1551 for gift {Guid}, which is not in account {Account}'s box: not answered",
                 player.Name, guid, player.AccountId);
             return;
         }
-
-        var store = services.GetRequiredService<GameDataStore>();
-        var inventory = services.GetRequiredService<IInventoryRepository>();
-        var owned = await inventory.GetByCharacterAsync(player.CharacterId);
-        var landing = ItemPickUpHandler.PlanLanding(owned, player.CharacterId, gift.ItemId, Math.Max(1, (int)gift.Count), store.Items);
-        if (landing.Refused)
+        var gift = claim.Gift!;
+        if (claim.Status == ClaimAccountGiftStatus.BagFull)
         {
-            
             await session.SendRmiAsync(ZoneS2COpcodes.AnsGetAccountGift, AccountGiftPackets.Build2800(player.AccountId,
                 AccountGiftPackets.ClaimBagFull, gid, guidBytes, gift.ItemId, gift.Count, gift.Source, record126: null), ct);
             logger.LogInformation("{Name}: gift {Guid} ({Count}x {Item}) stays in the box, the bag is full",
                 player.Name, guid, gift.Count, gift.ItemId);
             return;
         }
-
-        if (!await giftStore.TryTakeAsync(player.AccountId, guid, ct))
-            return;   
+        if (claim.Status == ClaimAccountGiftStatus.StoreFailed)
+            return;
 
         var landed = await ItemPickUpHandler.WriteLandingAsync(inventory, landing, player, gift.ItemId, logger);
         if (landed.Count == 0)

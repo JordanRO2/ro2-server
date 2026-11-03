@@ -44,7 +44,7 @@ public class AccountGiftBoxTests
 
  /// <summary>Gifts older than every listed one are not shown on page 1, only counted in the total.</summary>
     private static IEnumerable<AccountGift> Older(int count, DateTime beforeLocal)
-        => Enumerable.Range(1, count).Select(i => AccountGiftStore.NewGift(60000265, 1, 3,
+        => Enumerable.Range(1, count).Select(i => AccountGiftRules.NewGift(Convert.ToHexString(Guid.NewGuid().ToByteArray()), 60000265, 1, 3,
             beforeLocal.AddMinutes(-i).ToUniversalTime()));
 
     [Fact]
@@ -85,7 +85,7 @@ public class AccountGiftBoxTests
     [InlineData(13, 2, 5, 7)]
     [InlineData(26, 6, 25, 1)]
     public void ThePageWindowIsRetails(int total, int page, int start, int count)
-        => Assert.Equal((start, count), AccountGiftStore.PageWindow(total, (ushort)page));
+        => Assert.Equal((start, count), AccountGiftRules.PageWindow(total, (ushort)page));
 
     [Fact]
     public void AGiftLastsSevenDaysAfterItsFilingDay()
@@ -95,7 +95,7 @@ public class AccountGiftBoxTests
         Assert.Equal(7, AccountGiftStore.DaysLeft(filed, new DateTime(2026, 9, 20, 23, 59, 30)));
         Assert.Equal(6, AccountGiftStore.DaysLeft(filed, new DateTime(2026, 9, 21, 0, 0, 1)));
         Assert.Equal(0, AccountGiftStore.DaysLeft(filed, new DateTime(2026, 9, 27, 12, 0, 0)));
-        var gift = AccountGiftStore.NewGift(66666666, 1, AccountGiftStore.SourcePlayTime, filed.ToUniversalTime());
+        var gift = AccountGiftRules.NewGift(Convert.ToHexString(Guid.NewGuid().ToByteArray()), 66666666, 1, AccountGiftStore.SourcePlayTime, filed.ToUniversalTime());
         Assert.True(AccountGiftStore.IsLive(gift, new DateTime(2026, 9, 27, 23, 0, 0)));
         Assert.False(AccountGiftStore.IsLive(gift, new DateTime(2026, 9, 28, 0, 0, 1)));
     }
