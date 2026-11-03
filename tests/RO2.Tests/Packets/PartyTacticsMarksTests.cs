@@ -136,4 +136,20 @@ public class PartyTacticsMarksTests
     {
         Assert.Null(PartyTacticsMarks.BuildMapEntry2751(new PartyState { PartyId = 6 }, 1100, 0x4444));
     }
+
+    [Fact]
+    public void ANumberedReplace_DropsTheTargetsOtherEntries_AndTheListCapsAt255()
+    {
+        var party = new PartyState { PartyId = 7 };
+        Set(party, 12, 0xA1, 0);
+        Set(party, 5, 0xB2, 1);
+        Set(party, 5, 0xA1, 2);            // numbered 5 moves to A1 and A1's picture entry leaves
+        var body = PartyTacticsMarks.BuildMapEntry2751(party, 1100, 0x5555)!;
+        Assert.Equal(15 + 6, body.Length);
+
+        var big = new PartyState { PartyId = 8 };
+        for (uint h = 1; h <= 300; h++) Set(big, 12, h, (int)h);
+        var capped = PartyTacticsMarks.BuildMapEntry2751(big, 1100, 0x5555)!;
+        Assert.Equal(255, capped[capped.Length - 6 * 255 - 1]);   // the count byte precedes the 255 entries; 256..300 were dropped
+    }
 }
