@@ -8,7 +8,7 @@ public sealed class BlockListEntry
     /// original name and 64-bit type so the rows written before the GID change still load: they already
     /// hold exactly this value, because the old code stored <c>target.Id</c> here and sent it as the wire
     /// uid. The wire uid is now the GID built from it (<see cref="CharacterGid"/>), so those rows need no
-    /// migration, and <see cref="BlockListRepository.AddAsync"/> keeps writing the bare id.
+    /// migration, and <see cref="IBlockListRepository.AddAsync"/> keeps writing the bare id.
     /// </summary>
     public ulong Uid { get; set; }
 
