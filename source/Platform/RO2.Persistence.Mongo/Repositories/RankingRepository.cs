@@ -48,7 +48,7 @@ public sealed class RankingRepository : IRankingRepository
     public Task AddScoreAsync(byte rankingType, DateTime periodStartUtc, uint charId, long amount, DateTime reachedUtc,
         CancellationToken ct = default)
     {
-        var id = ScoreId(rankingType, periodStartUtc, charId);
+        var id = RankingKeys.ScoreId(rankingType, periodStartUtc, charId);
         var update = Builders<RankingScoreDocument>.Update
             .Inc(x => x.Score, amount)
             .Set(x => x.ReachedUtc, reachedUtc)
@@ -61,7 +61,7 @@ public sealed class RankingRepository : IRankingRepository
     public async Task<long> GetRunningScoreAsync(byte rankingType, DateTime periodStartUtc, uint charId,
         CancellationToken ct = default)
     {
-        var id = ScoreId(rankingType, periodStartUtc, charId);
+        var id = RankingKeys.ScoreId(rankingType, periodStartUtc, charId);
         var doc = await _scores.Find(x => x.Id == id).FirstOrDefaultAsync(ct);
         return doc?.Score ?? 0;
     }
@@ -99,7 +99,4 @@ public sealed class RankingRepository : IRankingRepository
             return winner;
         }
     }
-
-    internal static string ScoreId(byte rankingType, DateTime periodStartUtc, uint charId) =>
-        string.Create(CultureInfo.InvariantCulture, $"{rankingType}:{periodStartUtc:yyyyMMddHHmm}:{charId}");
 }

@@ -1,8 +1,7 @@
-using RO2.Rewards.Domain;
 using RO2.GameData;
 using RO2.GameData.Tables;
 
-namespace RO2.Server.Zone.Services;
+namespace RO2.Rankings.Domain;
 
 /// <summary>
 /// Calendar and request decoding for the ranking boards: which Ranking_Reset row a ranking type follows, when its
@@ -38,7 +37,8 @@ public static class RankingSchedule
     public const byte FilterByProfession = 2;
 
  /// <summary>The reset instant as a UTC time of day: Public_Time 5 (see the remarks).</summary>
-    public static TimeSpan ResetTimeOfDayUtc => PlayTimeRewardChain.ResetTimeOfDayUtc;
+    // anchor: must match PlayTimeRewardChain.ResetTimeOfDayUtc (Rewards). Both derive from GameData Public_Time 5.
+    public static TimeSpan ResetTimeOfDayUtc { get; } = TimeSpan.FromHours(12);
 
  /// <summary>
  /// The Reset_Type of <paramref name="rankingType"/>: its Ranking.json row, daily for type 1, or 0 (no schedule) for a

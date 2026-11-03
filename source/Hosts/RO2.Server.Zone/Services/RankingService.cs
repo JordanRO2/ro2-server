@@ -422,7 +422,7 @@ public static class RankingService
 
         return new RankingSnapshotDocument
         {
-            Id = SnapshotId(rankingType, period),
+            Id = RankingKeys.SnapshotId(rankingType, period),
             Type = rankingType,
             PeriodStartUtc = period,
             RolledUtc = now,
@@ -451,7 +451,4 @@ public static class RankingService
         _cardIds = (store, ids);
         return ids;
     }
-
-    internal static string SnapshotId(byte rankingType, DateTime periodStartUtc) =>
-        string.Create(CultureInfo.InvariantCulture, $"{rankingType}:{periodStartUtc:yyyyMMddHHmm}");
 }

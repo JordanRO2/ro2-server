@@ -38,8 +38,8 @@ public sealed class MongoRankingStoredShapeTests
     public void Key_formats_are_pinned_literals()
     {
         var d = new DateTime(2026, 3, 4, 5, 6, 7, DateTimeKind.Utc);
-        Assert.Equal("3:202603040506:123", MongoRankingRepository.ScoreId(3, d, 123));
-        Assert.Equal("3:202603040506", RankingService.SnapshotId(3, d));
+        Assert.Equal("3:202603040506:123", RankingKeys.ScoreId(3, d, 123));
+        Assert.Equal("3:202603040506", RankingKeys.SnapshotId(3, d));
     }
 
     [DockerFact]
@@ -73,7 +73,7 @@ public sealed class MongoRankingStoredShapeTests
         var rolled = Period.AddSeconds(3);
         await repo.PublishSnapshotAsync(new RankingSnapshotDocument
         {
-            Id = RankingService.SnapshotId(12, Period), Type = 12, PeriodStartUtc = Period, RolledUtc = rolled,
+            Id = RankingKeys.SnapshotId(12, Period), Type = 12, PeriodStartUtc = Period, RolledUtc = rolled,
             Rows = { new RankingSnapshotRow { CharId = 5, Rank = 1, PreviousRank = 2, ClassId = 3, Profession = 7, Score = 9_000_000_000L, Name = "Alpha", Guild = "GuildA" } },
         });
 
@@ -109,7 +109,7 @@ public sealed class MongoRankingStoredShapeTests
         Assert.Equal(reached, score.ReachedUtc);
         Assert.Equal(DateTimeKind.Utc, score.ReachedUtc.Kind);
 
-        await repo.PublishSnapshotAsync(new RankingSnapshotDocument { Id = RankingService.SnapshotId(13, period), Type = 13, PeriodStartUtc = period, RolledUtc = rolled });
+        await repo.PublishSnapshotAsync(new RankingSnapshotDocument { Id = RankingKeys.SnapshotId(13, period), Type = 13, PeriodStartUtc = period, RolledUtc = rolled });
         var snap = (await repo.GetLatestSnapshotAsync(13))!;
         Assert.Equal(period, snap.PeriodStartUtc);
         Assert.Equal(DateTimeKind.Utc, snap.PeriodStartUtc.Kind);
@@ -152,7 +152,7 @@ public sealed class PostgresRankingStoredShapeTests
     [Fact]
     public void Snapshot_id_key_format_is_invariant()
     {
-        Assert.Equal("5:202611300000", RankingService.SnapshotId(5, new DateTime(2026, 11, 30, 0, 0, 59, DateTimeKind.Utc)));
+        Assert.Equal("5:202611300000", RankingKeys.SnapshotId(5, new DateTime(2026, 11, 30, 0, 0, 59, DateTimeKind.Utc)));
     }
 
     [Fact]
@@ -192,7 +192,7 @@ public sealed class PostgresRankingStoredShapeTests
         Assert.Equal(reached.AddTicks(-999), score.ReachedUtc);
         Assert.Equal(DateTimeKind.Utc, score.ReachedUtc.Kind);
 
-        await repo.PublishSnapshotAsync(new RankingSnapshotDocument { Id = RankingService.SnapshotId(91, period), Type = 91, PeriodStartUtc = period, RolledUtc = rolled });
+        await repo.PublishSnapshotAsync(new RankingSnapshotDocument { Id = RankingKeys.SnapshotId(91, period), Type = 91, PeriodStartUtc = period, RolledUtc = rolled });
         var snap = (await repo.GetLatestSnapshotAsync(91))!;
         Assert.Equal(period, snap.PeriodStartUtc);
         Assert.Equal(rolled.AddTicks(-4567), snap.RolledUtc);

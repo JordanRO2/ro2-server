@@ -1,3 +1,4 @@
+using RO2.Rankings.Domain;
 using RO2.Companions.Domain;
 using RO2.Guilds.Domain;
 using Microsoft.Extensions.DependencyInjection;
