@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
+using RO2.Chats.Domain;
 using RO2.Infrastructure;
 using RO2.Persistence.Mongo.Persistence;
 using RO2.Persistence.Mongo.Repositories;
@@ -63,8 +64,8 @@ public static class Program
         services.AddScoped<RO2.Socials.Application.AddBlockUseCase>();
         services.AddSingleton<FriendPresence>();
         services.AddProviderRepository<IChannelColorRepository,
-            RO2.Persistence.Mongo.Repositories.ChannelColorRepository,
-            RO2.Persistence.Postgres.Repositories.ChannelColorRepository>(config.Database.Provider, ServiceLifetime.Singleton);
+            RO2.Chats.Infrastructure.Mongo.ChannelColorRepository,
+            RO2.Chats.Infrastructure.Postgres.ChannelColorRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddSingleton<ChatBroadcastService>();
         services.AddSingleton<Services.ChatSocialThrottle>();
         services.AddChatHandlers(Assembly.GetExecutingAssembly());

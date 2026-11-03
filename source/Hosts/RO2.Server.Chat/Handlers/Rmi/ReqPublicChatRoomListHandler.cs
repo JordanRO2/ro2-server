@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
+using RO2.Chats.Domain;
 using RO2.Network.Handlers;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;

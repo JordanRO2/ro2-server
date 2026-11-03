@@ -1,7 +1,7 @@
 using MongoDB.Bson;
 using MongoDB.Driver;
 using RO2.Persistence.Mongo.Persistence;
-using RO2.Persistence.Mongo.Repositories;
+using RO2.Chats.Infrastructure.Mongo;
 using Xunit;
 using Xunit.Abstractions;
 

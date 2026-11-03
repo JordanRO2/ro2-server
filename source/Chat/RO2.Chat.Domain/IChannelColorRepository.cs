@@ -1,4 +1,4 @@
-namespace RO2.Application.Interfaces;
+namespace RO2.Chats.Domain;
 
 /// <summary>
 /// Per-character community-channel tab colours (the colours a player picks with 23019 and sees back in
