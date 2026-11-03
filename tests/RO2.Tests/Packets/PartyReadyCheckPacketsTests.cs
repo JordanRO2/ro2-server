@@ -1,5 +1,6 @@
 using System.Text.Json;
 using RO2.GameData.Tables;
+using RO2.ReadyChecks.Domain;
 using RO2.Server.Zone.Services;
 using Xunit;
 
@@ -76,19 +77,19 @@ public class PartyReadyCheckPacketsTests
         
         uint[] roster = [7, 3, 9, 4];
         var online = new HashSet<uint> { 7, 3, 4 };
-        Assert.Equal(new uint[] { 3, 4 }, PartyReadyCheckService.MembersToNotify(roster, online.Contains, initiatorSessionId: 7));
-        Assert.Empty(PartyReadyCheckService.MembersToNotify([7], online.Contains, initiatorSessionId: 7));
+        Assert.Equal(new uint[] { 3, 4 }, ReadyCheck.MembersToNotify(roster, online.Contains, initiatorSessionId: 7));
+        Assert.Empty(ReadyCheck.MembersToNotify([7], online.Contains, initiatorSessionId: 7));
     }
 
     [Fact]
     public void Tally_CountsEveryoneButTheInitiator()
     {
-        PartyReadyCheckService.RosterEntry[] roster =
+        RosterEntry[] roster =
         [
             new(1, "Lead", true), new(2, "Yes", true), new(3, "No", true), new(4, "Silent", true), new(5, "Offline", false),
         ];
         var votes = new Dictionary<ulong, byte> { [2] = PartyReadyCheckPackets.VoteReady, [3] = 0 };
-        var (ready, notReady, names) = PartyReadyCheckService.Tally(roster, initiatorGid: 1, votes);
+        var (ready, notReady, names) = ReadyCheck.Tally(roster, initiatorGid: 1, votes);
         
         Assert.Equal(1, ready);
         Assert.Equal(3, notReady);
@@ -98,9 +99,9 @@ public class PartyReadyCheckPacketsTests
     [Fact]
     public void Tally_IgnoresTheInitiatorsOwnVoteAndAVoterOutsideTheRoster()
     {
-        PartyReadyCheckService.RosterEntry[] roster = [new(1, "Lead", true), new(2, "Yes", true)];
+        RosterEntry[] roster = [new(1, "Lead", true), new(2, "Yes", true)];
         var votes = new Dictionary<ulong, byte> { [1] = PartyReadyCheckPackets.VoteReady, [2] = PartyReadyCheckPackets.VoteReady, [99] = PartyReadyCheckPackets.VoteReady };
-        var (ready, notReady, names) = PartyReadyCheckService.Tally(roster, initiatorGid: 1, votes);
+        var (ready, notReady, names) = ReadyCheck.Tally(roster, initiatorGid: 1, votes);
         Assert.Equal(1, ready);
         Assert.Equal(0, notReady);
         Assert.Empty(names);
@@ -109,19 +110,19 @@ public class PartyReadyCheckPacketsTests
     [Fact]
     public void Tally_NoVotesAndEmptyRoster()
     {
-        PartyReadyCheckService.RosterEntry[] roster = [new(1, "Lead", true), new(2, "A", true), new(3, "B", false)];
-        var (ready, notReady, names) = PartyReadyCheckService.Tally(roster, 1, new Dictionary<ulong, byte>());
+        RosterEntry[] roster = [new(1, "Lead", true), new(2, "A", true), new(3, "B", false)];
+        var (ready, notReady, names) = ReadyCheck.Tally(roster, 1, new Dictionary<ulong, byte>());
         Assert.Equal((0, 2), (ready, notReady));
         Assert.Equal(new[] { "A", "B" }, names);
-        Assert.Equal((0, 0), (PartyReadyCheckService.Tally([], 1, new Dictionary<ulong, byte>()).Ready, PartyReadyCheckService.Tally([], 1, new Dictionary<ulong, byte>()).NotReady));
+        Assert.Equal((0, 0), (ReadyCheck.Tally([], 1, new Dictionary<ulong, byte>()).Ready, ReadyCheck.Tally([], 1, new Dictionary<ulong, byte>()).NotReady));
     }
 
     [Fact]
     public void Tally_ClampsEachCountToAByte()
     {
-        var roster = new List<PartyReadyCheckService.RosterEntry> { new(1, "Lead", true) };
+        var roster = new List<RosterEntry> { new(1, "Lead", true) };
         for (ulong g = 2; g < 2 + 300; g++) roster.Add(new(g, "m" + g, true));
-        var (ready, notReady, names) = PartyReadyCheckService.Tally(roster, 1, new Dictionary<ulong, byte>());
+        var (ready, notReady, names) = ReadyCheck.Tally(roster, 1, new Dictionary<ulong, byte>());
         Assert.Equal(0, ready);
         Assert.Equal(255, notReady);
         Assert.Equal(300, names.Count);
@@ -131,7 +132,7 @@ public class PartyReadyCheckPacketsTests
     public void MembersToNotify_KeepsRosterOrder()
     {
         uint[] roster = [9, 2, 5, 1];
-        Assert.Equal(new uint[] { 9, 5, 1 }, PartyReadyCheckService.MembersToNotify(roster, _ => true, initiatorSessionId: 2));
+        Assert.Equal(new uint[] { 9, 5, 1 }, ReadyCheck.MembersToNotify(roster, _ => true, initiatorSessionId: 2));
     }
 
     private static string Hex(byte[] b) => Convert.ToHexString(b).ToLowerInvariant();

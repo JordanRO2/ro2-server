@@ -35,6 +35,6 @@ public class PartyFightingTrimHandler : ZoneRmiHandlerBase<PartyFightingTrimHand
             return;
         }
 
-        await PartyReadyCheckService.StartAsync(partyService, Broadcast, party, player, session, Logger);
+        await services.GetRequiredService<PartyReadyCheckService>().StartAsync(party.PartyId, player, session);
     }
 }

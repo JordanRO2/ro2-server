@@ -21,7 +21,7 @@ public static class PartyReadyCheckPackets
     public const ushort ResultAlreadyChecking = 15727;
 
  /// <summary>Vote value for the dialog's Ready button.</summary>
-    public const byte VoteReady = 1;
+    public const byte VoteReady = RO2.ReadyChecks.Domain.ReadyCheck.VoteReady;
 
  /// <summary>Length of a name element in 2697, in wide characters, including the terminator.</summary>
     public const int NameChars = 21;

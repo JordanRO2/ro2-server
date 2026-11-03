@@ -37,6 +37,6 @@ public class PartyFightingTrimVoteHandler : ZoneRmiHandlerBase<PartyFightingTrim
         var party = partyService.GetPlayerParty(session.SessionId);
         if (party == null) return;
 
-        await PartyReadyCheckService.VoteAsync(partyService, party, player, session, payload.Span[0], Logger);
+        await services.GetRequiredService<PartyReadyCheckService>().VoteAsync(party.PartyId, player, session, payload.Span[0]);
     }
 }
