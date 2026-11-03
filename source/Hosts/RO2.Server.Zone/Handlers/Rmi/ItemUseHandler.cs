@@ -216,24 +216,22 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
         // duration the tables do not give, or whose grant cannot be stored, is not consumed and gets no answer.
         if (itemData is { Item_Type: VehicleRules.ReinsItemType })
         {
-            if (!VehicleRules.TryResolveReins(store, used.ItemId, out var ridingId, out var days))
+            var nowOle = VehiclePackets.NowOle();
+            var grant = await services.GetRequiredService<RO2.Companions.Application.GrantReinsUseCase>().GrantAsync(
+                player.CharacterId, used.ItemId, store.RidingDurationGroup, store.RidingInfo, store.ItemCashInfo, nowOle, ct);
+            if (grant.Status == RO2.Companions.Application.GrantReinsStatus.Unresolved)
             {
                 Logger.LogWarning("{Name} used reins item {Item}, which no RidingDurationGroup/RidingInfo/ItemCashInfo row resolves: not consumed",
                     player.Name, used.ItemId);
                 return;
             }
-            var nowOle = VehiclePackets.NowOle();
-            IReadOnlyList<OwnedVehicle> vehicles;
-            try
+            if (grant.Status == RO2.Companions.Application.GrantReinsStatus.StoreFailed)
             {
-                vehicles = await services.GetRequiredService<IVehicleRepository>().GrantAsync(player.CharacterId, ridingId, days, nowOle, ct);
-            }
-            catch (System.Exception ex) when (ex is not System.OperationCanceledException)
-            {
-                Logger.LogWarning(ex, "{Name}: could not store vehicle {Vehicle} from reins {Item}; item not consumed",
-                    player.Name, ridingId, used.ItemId);
+                Logger.LogWarning(grant.Error, "{Name}: could not store vehicle {Vehicle} from reins {Item}; item not consumed",
+                    player.Name, grant.RidingId, used.ItemId);
                 return;
             }
+            var (ridingId, days, vehicles) = (grant.RidingId, grant.Days, grant.Vehicles!);
             await session.SendInternalRmiAsync(ZoneS2COpcodes.OnVehicleQuickSlot, VehiclePackets.BuildVehicleQuickSlot2523Empty());
             VehicleClientList.Record(session.SessionId, vehicles); // before the send: see VehicleClientList (2838 guard)
             await session.SendInternalRmiAsync(ZoneS2COpcodes.OnAllVehicleList, VehiclePackets.BuildAllVehicleList2522(vehicles, nowOle));

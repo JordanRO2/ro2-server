@@ -520,7 +520,7 @@ public class LoginPCHandler : NetworkZoneRmiBase
             // the .5 s float32 sum of a reins use survives only in the session that made it). The repository stores
             // the cut list too, so the rest of this session, warps and glider arrivals included, keeps sending it,
             // and so a grant made now adds its days to the cut value.
-            vehicles = await services.GetRequiredService<IVehicleRepository>().LoadAndCutToWholeSecondsAsync(characterId, ct);
+            vehicles = await services.GetRequiredService<RO2.Companions.Application.ListVehiclesUseCase>().LoadAndCutAsync(characterId, ct);
         }
         catch (Exception ex)
         {
