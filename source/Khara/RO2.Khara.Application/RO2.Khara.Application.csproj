@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Plural namespace: a namespace "RO2.Khara" would shadow any future Khara type in every RO2.* file (CS0118). -->
+    <RootNamespace>RO2.Kharas.Application</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Khara bounded context: Application holds the title-select decision over IKharaStateRepository. The title state read, the
+       play clock, the save/publish and the wire stay in the Zone host. Never the Zone host. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Khara.Domain\RO2.Khara.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+  </ItemGroup>
+
+</Project>

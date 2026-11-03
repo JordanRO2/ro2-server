@@ -89,6 +89,7 @@ public sealed class KharaTitleSelectHandlerHardeningTests
             var services = new ServiceCollection()
                 .AddSingleton(new KharaTitleStore(repo))
                 .AddSingleton<IKharaStateRepository>(new FakeKharaState(Khara572))
+                .AddSingleton<RO2.Kharas.Application.SelectKharaTitleUseCase>()
                 .AddSingleton(store)
                 .BuildServiceProvider();
             var scopes = services.GetRequiredService<IServiceScopeFactory>();
