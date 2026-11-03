@@ -58,8 +58,8 @@ public class ReqPlayTimeRewardHandler : Base1642
             return;
 
         (uint Slot, uint RemainingSeconds)? answer;
-        lock (progress.Gate)
-            answer = PlayTimeRewardChain.Peek(progress, chain, player.LoginTime, DateTime.UtcNow);
+        answer = services.GetRequiredService<RO2.Rewards.Application.PollPlayTimeRewardUseCase>()
+            .Execute(progress, chain, player.LoginTime, DateTime.UtcNow);
 
         if (answer is not { } a)
         {

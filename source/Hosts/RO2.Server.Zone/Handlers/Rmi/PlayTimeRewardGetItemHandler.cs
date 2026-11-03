@@ -65,12 +65,11 @@ public class PlayTimeRewardGetItemHandler : ZoneRmiHandlerBase<PlayTimeRewardGet
             return;
         }
 
-        PlayTimeRewardChain.ClaimResult? result;
-        lock (progress.Gate)
-            result = PlayTimeRewardChain.Claim(progress, chain, requestedSlot, player.LoginTime, DateTime.UtcNow,
-                _ => true);
+        var outcome = await services.GetRequiredService<RO2.Rewards.Application.ClaimPlayTimeRewardUseCase>().ExecuteAsync(
+            progress, chain, requestedSlot, player.LoginTime, DateTime.UtcNow, player.AccountId,
+            () => Convert.ToHexString(Guid.NewGuid().ToByteArray()), ServerWallClock.Now().DateTime, ct);
 
-        if (result is not { } claim)
+        if (outcome.Claim is not { } claim)
         {
             Logger.LogWarning("{Name}: 1643 for slot {Slot} not answered, Attendance.json has no Type-1 (play-time) row",
                 player.Name, requestedSlot);
@@ -80,56 +79,23 @@ public class PlayTimeRewardGetItemHandler : ZoneRmiHandlerBase<PlayTimeRewardGet
         Logger.LogDebug("{Name} claims play-time slot {Slot}: result {Result}, answer slot {Next} / {Seconds}s",
             player.Name, requestedSlot, claim.Result, claim.Slot, claim.Seconds);
 
-        
-        
-        
-        int? giftsInBox = null;
         if (claim.GrantedRow is { } row)
         {
-            giftsInBox = await FileRewardAsync(gifts, player, row);
+            if (player.AccountId == 0)
+                Logger.LogWarning("{Name}: play-time slot {Slot} granted with no account id; no gift filed", player.Name, row.ID);
+            else if (outcome.FilingError is { } error)
+                Logger.LogError(error, "{Name}: play-time slot {Slot} reward could not be filed in the gift box", player.Name, row.ID);
+            else if (outcome.Filed.Count > 0)
+                Logger.LogInformation("{Name}: play-time slot {Slot} reward filed in the gift box ({Items}), {Total} gift(s) in it",
+                    player.Name, row.ID, string.Join(", ", outcome.Filed.Select(g => $"{g.Count}x {g.ItemId}")), outcome.GiftsInBox);
             await rewards.SaveAsync(player.AccountId, progress, chain, Logger, ct);
         }
 
         await session.SendRmiAsync(ZoneS2COpcodes.AnsPlayTimeRewardGetItem,
             PlayTimeRewardPackets.BuildAnswer(claim.Result, claim.Slot, claim.Seconds), ct);
 
-        if (giftsInBox is > 0)
-            await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyAccountGiftReceived, AccountGiftPackets.Build2798(giftsInBox.Value), ct);
-    }
-
- /// <summary>
- /// Files each reward item of <paramref name="row"/> into the account's gift box as a play-time gift.
- /// Returns the box's total gift count afterwards, or null when nothing was filed (empty row or storage error).
- /// </summary>
-    private async Task<int?> FileRewardAsync(IAccountGiftRepository gifts, PlayerState player, Attendance row)
-    {
-        if (player.AccountId == 0)
-        {
-            
-            Logger.LogWarning("{Name}: play-time slot {Slot} granted with no account id; no gift filed", player.Name, row.ID);
-            return null;
-        }
-        var nowUtc = DateTime.UtcNow;
-        var filed = new List<AccountGift>(3);
-        foreach (var (itemId, count) in new[] { (row.Reward_item1, row.Item_count1), (row.Reward_item2, row.Item_count2), (row.Reward_item3, row.Item_count3) })
-        {
-            if (itemId == 0 || count <= 0) continue;
-            filed.Add(AccountGiftStore.NewGift(itemId, (ushort)Math.Min(count, ushort.MaxValue), AccountGiftStore.SourcePlayTime, nowUtc));
-        }
-        if (filed.Count == 0) return null;
-
-        try
-        {
-            int total = await gifts.FileAsync(player.AccountId, filed, ServerWallClock.Now().DateTime);
-            Logger.LogInformation("{Name}: play-time slot {Slot} reward filed in the gift box ({Items}), {Total} gift(s) in it",
-                player.Name, row.ID, string.Join(", ", filed.Select(g => $"{g.Count}x {g.ItemId}")), total);
-            return total;
-        }
-        catch (Exception ex) when (ex is not OperationCanceledException)
-        {
-            Logger.LogError(ex, "{Name}: play-time slot {Slot} reward could not be filed in the gift box", player.Name, row.ID);
-            return null;
-        }
+        if (outcome.GiftsInBox > 0)
+            await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyAccountGiftReceived, AccountGiftPackets.Build2798(outcome.GiftsInBox), ct);
     }
 
  /// <summary>

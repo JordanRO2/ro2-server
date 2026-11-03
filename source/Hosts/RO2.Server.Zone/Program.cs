@@ -155,6 +155,8 @@ public static class Program
         // Reward.Application: the daily attendance claim (map load) and the attendance state read (1692).
         services.AddScoped<RO2.Rewards.Application.AttendTodayUseCase>();
         services.AddScoped<RO2.Rewards.Application.GetAttendanceStateUseCase>();
+        services.AddScoped<RO2.Rewards.Application.ClaimPlayTimeRewardUseCase>();
+        services.AddScoped<RO2.Rewards.Application.PollPlayTimeRewardUseCase>();
 
         // Mail.Application: the 1393 send decisions (scoped, it holds the scoped ICharacterRepository) and the 1457 / 1397 / 1398 / 1394 gold, read, delete and list use cases.
         services.AddScoped<RO2.Mails.Application.MailSendUseCase>();

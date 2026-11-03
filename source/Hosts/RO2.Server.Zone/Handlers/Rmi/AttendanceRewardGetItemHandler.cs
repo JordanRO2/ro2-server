@@ -23,7 +23,7 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 /// <para>
 /// <b>What a real claim would need, and why it is not attempted:</b> the Type-0 rows of Attendance.json (Day 1..6
 /// rewards) plus per-character attendance state — which day the player is on, what was already claimed, and the
-/// reset time — none of which this server keeps (PlayTimeRewardState covers only the Type-1 play-time chain).
+/// reset time — none of which this server keeps (PlayTimeRewardChain covers only the Type-1 play-time chain).
 /// The client's 2947 consumer erases the u32 from its claimable map, so answering success without
 /// that state would let the window hand out the same reward repeatedly. Matching retail's silence is the
 /// neutral behaviour.
