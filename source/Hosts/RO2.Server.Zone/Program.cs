@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using RO2.Rewards.Domain;
 using RO2.Guilds.Domain;
 using RO2.Skills.Domain;
 using System.Reflection;
@@ -178,7 +179,7 @@ public static class Program
         services.AddProviderRepository<ICashMallRepository, RO2.Economy.Infrastructure.Mongo.CashMallRepository, RO2.Economy.Infrastructure.Postgres.CashMallRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IVehicleRepository, RO2.Companions.Infrastructure.Mongo.VehicleRepository, RO2.Companions.Infrastructure.Postgres.VehicleRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IKeyConfigRepository, RO2.Characters.Infrastructure.Mongo.KeyConfigRepository, RO2.Characters.Infrastructure.Postgres.KeyConfigRepository>(config.Database.Provider, ServiceLifetime.Singleton);
-        services.AddProviderRepository<IAccountGiftRepository, RO2.Persistence.Mongo.Repositories.AccountGiftRepository, RO2.Persistence.Postgres.Repositories.AccountGiftRepository>(config.Database.Provider, ServiceLifetime.Singleton);
+        services.AddProviderRepository<IAccountGiftRepository, RO2.Rewards.Infrastructure.Mongo.AccountGiftRepository, RO2.Rewards.Infrastructure.Postgres.AccountGiftRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IPresentPasswordRepository, RO2.Persistence.Mongo.Repositories.PresentPasswordRepository, RO2.Persistence.Postgres.Repositories.PresentPasswordRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IMailRepository, RO2.Mails.Infrastructure.Mongo.MailRepository, RO2.Mails.Infrastructure.Postgres.MailRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IDungeonEntryCountRepository, RO2.Persistence.Mongo.Repositories.DungeonEntryCountRepository, RO2.Persistence.Postgres.Repositories.DungeonEntryCountRepository>(config.Database.Provider, ServiceLifetime.Singleton);

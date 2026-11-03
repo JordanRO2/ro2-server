@@ -1,6 +1,5 @@
-using RO2.Rewards.Domain;
 
-namespace RO2.Application.Interfaces;
+namespace RO2.Rewards.Domain;
 
 /// <summary>
 /// Document persistence for the per-account play-time reward chain. The timer's cache, clock and chain rules

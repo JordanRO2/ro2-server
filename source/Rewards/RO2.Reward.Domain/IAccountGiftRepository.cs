@@ -1,6 +1,5 @@
-using RO2.Rewards.Domain;
 
-namespace RO2.Application.Interfaces;
+namespace RO2.Rewards.Domain;
 
 /// <summary>
 /// Persistence for the account gift box and the account's daily attendance. One box is shared by the characters

@@ -5,6 +5,7 @@ using RO2.Application.Configuration;
 using RO2.Application.Interfaces;
 using RO2.Quests.Domain;
 using RO2.Inventory.Domain;
+using RO2.Rewards.Domain;
 using MongoRepos = RO2.Persistence.Mongo.Repositories;
 using MongoPersist = RO2.Persistence.Mongo.Persistence;
 using PgRepos = RO2.Persistence.Postgres.Repositories;
@@ -64,7 +65,7 @@ public static class PersistenceServiceCollectionExtensions
         services.AddProviderRepository<IAccountAccessRepository, MongoRepos.AccountAccessRepository, PgRepos.AccountAccessRepository>(provider, ServiceLifetime.Scoped);
         
         services.AddProviderRepository<IChannelPresenceStore, MongoPersist.ChannelPresenceStore, PgRepos.ChannelPresenceStore>(provider, ServiceLifetime.Singleton);
-        services.AddProviderRepository<IPlayTimeRewardRepository, MongoRepos.PlayTimeRewardRepository, PgRepos.PlayTimeRewardRepository>(provider, ServiceLifetime.Singleton);
+        services.AddProviderRepository<IPlayTimeRewardRepository, RO2.Rewards.Infrastructure.Mongo.PlayTimeRewardRepository, RO2.Rewards.Infrastructure.Postgres.PlayTimeRewardRepository>(provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IOnlineAccountRegistry, MongoRepos.OnlineAccountRegistry, PgRepos.OnlineAccountRegistry>(provider, ServiceLifetime.Singleton);
         
         

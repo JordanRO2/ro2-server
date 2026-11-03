@@ -1,8 +1,8 @@
 using Npgsql;
-using RO2.Application.Interfaces;
+using RO2.Persistence.Postgres;
 using RO2.Rewards.Domain;
 
-namespace RO2.Persistence.Postgres.Repositories;
+namespace RO2.Rewards.Infrastructure.Postgres;
 
 /// <summary>
 /// PostgreSQL implementation of <see cref="IAccountGiftRepository"/>. The Mongo provider keeps one

@@ -64,6 +64,8 @@
     <ProjectReference Include="..\..\source\Inventory\RO2.Inventory.Infrastructure.Mongo\RO2.Inventory.Infrastructure.Mongo.csproj" />
     <ProjectReference Include="..\..\source\Inventory\RO2.Inventory.Infrastructure.Postgres\RO2.Inventory.Infrastructure.Postgres.csproj" />
     <ProjectReference Include="..\..\source\Rewards\RO2.Reward.Domain\RO2.Reward.Domain.csproj" />
+    <ProjectReference Include="..\..\source\Rewards\RO2.Reward.Infrastructure.Mongo\RO2.Reward.Infrastructure.Mongo.csproj" />
+    <ProjectReference Include="..\..\source\Rewards\RO2.Reward.Infrastructure.Postgres\RO2.Reward.Infrastructure.Postgres.csproj" />
   </ItemGroup>
 
 </Project>

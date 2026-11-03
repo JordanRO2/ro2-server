@@ -59,6 +59,8 @@
     <ProjectReference Include="..\..\Inventory\RO2.Inventory.Application\RO2.Inventory.Application.csproj" />
     <ProjectReference Include="..\..\Economy\RO2.Economy.Application\RO2.Economy.Application.csproj" />
     <ProjectReference Include="..\..\Rewards\RO2.Reward.Domain\RO2.Reward.Domain.csproj" />
+    <ProjectReference Include="..\..\Rewards\RO2.Reward.Infrastructure.Mongo\RO2.Reward.Infrastructure.Mongo.csproj" />
+    <ProjectReference Include="..\..\Rewards\RO2.Reward.Infrastructure.Postgres\RO2.Reward.Infrastructure.Postgres.csproj" />
   </ItemGroup>
 
 </Project>

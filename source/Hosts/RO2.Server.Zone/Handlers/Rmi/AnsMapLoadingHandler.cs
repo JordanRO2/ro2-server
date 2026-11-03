@@ -1,3 +1,4 @@
+using RO2.Rewards.Domain;
 using RO2.Guilds.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

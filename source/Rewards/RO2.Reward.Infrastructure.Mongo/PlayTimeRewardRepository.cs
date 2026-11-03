@@ -1,9 +1,8 @@
 using MongoDB.Driver;
-using RO2.Application.Interfaces;
 using RO2.Rewards.Domain;
 using RO2.Persistence.Mongo.Persistence;
 
-namespace RO2.Persistence.Mongo.Repositories;
+namespace RO2.Rewards.Infrastructure.Mongo;
 
 /// <summary>
 /// MongoDB store for <see cref="IPlayTimeRewardRepository"/>, one document per account in the
