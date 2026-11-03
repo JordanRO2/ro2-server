@@ -2,7 +2,7 @@ using MongoDB.Driver;
 using RO2.Companions.Domain;
 using RO2.Persistence.Mongo.Persistence;
 
-namespace RO2.Persistence.Mongo.Repositories;
+namespace RO2.Companions.Infrastructure.Mongo;
 
 /// <summary>
 /// MongoDB store for <see cref="IVehicleRepository"/>, one document per character in the <c>character_vehicles</c>

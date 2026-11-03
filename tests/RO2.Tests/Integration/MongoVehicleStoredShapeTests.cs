@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using RO2.Companions.Domain;
 using RO2.Persistence.Mongo.Persistence;
-using RO2.Persistence.Mongo.Repositories;
+using RO2.Companions.Infrastructure.Mongo;
 using Xunit;
 using Xunit.Abstractions;
 
