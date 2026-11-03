@@ -183,6 +183,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Social.Domain", "source
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Social.Infrastructure.Mongo", "source\Social\RO2.Social.Infrastructure.Mongo\RO2.Social.Infrastructure.Mongo.csproj", "{9273BC47-E9F2-4789-B4C3-0DF4624E23CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Social.Infrastructure.Postgres", "source\Social\RO2.Social.Infrastructure.Postgres\RO2.Social.Infrastructure.Postgres.csproj", "{5C6111D8-EEC8-47B8-821B-F1D601D86A5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1033,6 +1035,18 @@ Global
 		{9273BC47-E9F2-4789-B4C3-0DF4624E23CE}.Release|x64.Build.0 = Release|Any CPU
 		{9273BC47-E9F2-4789-B4C3-0DF4624E23CE}.Release|x86.ActiveCfg = Release|Any CPU
 		{9273BC47-E9F2-4789-B4C3-0DF4624E23CE}.Release|x86.Build.0 = Release|Any CPU
+		{5C6111D8-EEC8-47B8-821B-F1D601D86A5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C6111D8-EEC8-47B8-821B-F1D601D86A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C6111D8-EEC8-47B8-821B-F1D601D86A5A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5C6111D8-EEC8-47B8-821B-F1D601D86A5A}.Debug|x64.Build.0 = Debug|Any CPU
+		{5C6111D8-EEC8-47B8-821B-F1D601D86A5A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5C6111D8-EEC8-47B8-821B-F1D601D86A5A}.Debug|x86.Build.0 = Debug|Any CPU
+		{5C6111D8-EEC8-47B8-821B-F1D601D86A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C6111D8-EEC8-47B8-821B-F1D601D86A5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C6111D8-EEC8-47B8-821B-F1D601D86A5A}.Release|x64.ActiveCfg = Release|Any CPU
+		{5C6111D8-EEC8-47B8-821B-F1D601D86A5A}.Release|x64.Build.0 = Release|Any CPU
+		{5C6111D8-EEC8-47B8-821B-F1D601D86A5A}.Release|x86.ActiveCfg = Release|Any CPU
+		{5C6111D8-EEC8-47B8-821B-F1D601D86A5A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1095,5 +1109,6 @@ Global
 		{9A0DF87F-4903-4A53-9DBC-390AC28933C6} = {9B6BC3D9-BF34-AF6A-5BD0-10965AAA1C05}
 		{F1343D5C-3B7F-4C0D-A5AF-4826804B1890} = {B37F513C-AEF7-945D-415B-4E2ADC1C5611}
 		{9273BC47-E9F2-4789-B4C3-0DF4624E23CE} = {B37F513C-AEF7-945D-415B-4E2ADC1C5611}
+		{5C6111D8-EEC8-47B8-821B-F1D601D86A5A} = {B37F513C-AEF7-945D-415B-4E2ADC1C5611}
 	EndGlobalSection
 EndGlobal

@@ -51,8 +51,12 @@ public static class Program
         services.AddPersistence(config.Database);
         // The raw ports only hold the singleton MongoDbContext, and the singleton FriendPresence consumes them,
         // so they are singletons; the facades below stay scoped (they take the scope's character repository).
-        services.AddSingleton<RO2.Socials.Domain.IFriendListRepository, RO2.Socials.Infrastructure.Mongo.MongoFriendListRepository>();
-        services.AddSingleton<RO2.Socials.Domain.IBlockListRepository, RO2.Socials.Infrastructure.Mongo.MongoBlockListRepository>();
+        services.AddProviderRepository<RO2.Socials.Domain.IFriendListRepository,
+            RO2.Socials.Infrastructure.Mongo.MongoFriendListRepository,
+            RO2.Socials.Infrastructure.Postgres.PostgresFriendListRepository>(config.Database.Provider, ServiceLifetime.Singleton);
+        services.AddProviderRepository<RO2.Socials.Domain.IBlockListRepository,
+            RO2.Socials.Infrastructure.Mongo.MongoBlockListRepository,
+            RO2.Socials.Infrastructure.Postgres.PostgresBlockListRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddScoped<FriendStore>();
         services.AddScoped<BlockListRepository>();
         services.AddSingleton<FriendPresence>();

@@ -649,6 +649,20 @@ public static class PostgresSchema
             data  jsonb  NOT NULL
         )
         """,
+
+        """
+        CREATE TABLE IF NOT EXISTS chat_friend_lists (
+            owner_id    bigint PRIMARY KEY,
+            friend_ids  jsonb  NOT NULL DEFAULT '[]'::jsonb
+        )
+        """,
+
+        """
+        CREATE TABLE IF NOT EXISTS chat_block_lists (
+            owner_id  bigint PRIMARY KEY,
+            entries   jsonb  NOT NULL DEFAULT '[]'::jsonb
+        )
+        """,
     };
 
  /// <summary>Create every ported table if it does not already exist.</summary>
