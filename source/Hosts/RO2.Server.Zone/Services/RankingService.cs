@@ -312,8 +312,8 @@ public static class RankingService
 
             
             using var rollScope = scopes.CreateScope();
-            var characters = rollScope.ServiceProvider.GetRequiredService<ICharacterRepository>();
-            var candidate = await RollAsync(repo, characters, guilds, rankingType, reset, period, latest, ct);
+            var roll = rollScope.ServiceProvider.GetRequiredService<RollRankingUseCase>();
+            var candidate = await roll.DecideAsync(rankingType, reset, period, DateTime.UtcNow, latest, ct);
             
             var rolled = await repo.PublishSnapshotAsync(candidate, ct);
             Published[rankingType] = rolled;
@@ -327,48 +327,6 @@ public static class RankingService
         }
     }
 
- /// <summary>
- /// The board of the period starting at <paramref name="period"/>: the counters of the period before it, ranked
- /// against <paramref name="replaced"/> for the previous ranks.
- /// </summary>
-    private static async Task<RankingSnapshotDocument> RollAsync(IRankingRepository repo, ICharacterRepository characters, IGuildRepository guilds, byte rankingType,
-        RankingReset reset, DateTime period, RankingSnapshotDocument? replaced, CancellationToken ct)
-    {
-        var now = DateTime.UtcNow;
-        var ended = RankingSchedule.PreviousPeriodStart(reset, period);
-        var docs = await repo.GetPeriodScoresAsync(rankingType, ended, ct);
-        var scores = docs.Select(d => (d.CharId, d.Score, d.ReachedUtc)).ToList();
-
-        var ids = scores.Where(s => s.Score > 0).Select(s => s.CharId).Distinct().ToList();
-        IReadOnlyList<Character> rankedCharacters = ids.Count == 0
-            ? Array.Empty<Character>()
-            : await characters.GetByIdsAsync(ids, ct);
-        var byId = rankedCharacters.Where(c => !c.IsDeleted).ToDictionary(c => c.Id);
-        
-        
-        if (byId.Count > 0)
-            await GuildService.Instance.InitAsync(guilds);
-
-        var standings = new List<Standing>(scores.Count);
-        foreach (var (charId, score, reached) in scores)
-        {
-            if (!byId.TryGetValue(charId, out var c)) continue; 
-            standings.Add(new Standing(charId, score, reached, c.Name,
-                CharacterHeadRules.CombatJobByte(c), CharacterHeadRules.CreationProfessionByte(c),
-                GuildService.Instance.GetByCharId(charId)?.Name ?? string.Empty));
-        }
-
-        return new RankingSnapshotDocument
-        {
-            Id = RankingKeys.SnapshotId(rankingType, period),
-            Type = rankingType,
-            PeriodStartUtc = period,
-            RolledUtc = now,
-            Rows = RankingBoard.RankRows(standings, replaced?.Rows),
-        };
-    }
-
-    
     private static async Task<long> RunningCountAsync(IServiceProvider services, uint charId, byte rankingType,
         CancellationToken ct)
     {
