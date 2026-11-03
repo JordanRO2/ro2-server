@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Plural namespace: matches RO2.Rankings.Domain (a namespace "RO2.Dungeon" could shadow a Dungeon type). -->
+    <RootNamespace>RO2.Dungeons.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Lets the tests reach the domain' internals. -->
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+  <!-- Dungeon bounded context: Domain references ONLY RO2.BuildingBlocks + the shared RO2.GameData kernel.
+       No Mongo, no ProudNet, no host. -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+  </ItemGroup>
+
+</Project>

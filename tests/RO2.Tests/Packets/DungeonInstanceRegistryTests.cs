@@ -1,3 +1,4 @@
+using RO2.Dungeons.Domain;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
@@ -96,7 +97,7 @@ public class DungeonInstanceRegistryTests
     {
         var registry = new DungeonInstanceRegistry();
         var party = new PartyState { PartyId = 0x00026915 };
-        var owner = DungeonInstanceOwner.For(party, 1);
+        var owner = DungeonInstanceOwner.For(party.PartyId, 1);
         const uint leader = 1, member = 2;
 
         
@@ -142,7 +143,7 @@ public class DungeonInstanceRegistryTests
         
         var registry = new DungeonInstanceRegistry();
         var party = new PartyState { PartyId = 7 };
-        var inParty = DungeonInstanceOwner.For(party, Character);
+        var inParty = DungeonInstanceOwner.For(party.PartyId, Character);
         var solo = DungeonInstanceOwner.For(null, Character);
         registry.Enter(inParty, 64, 426101, Character);
 
@@ -150,7 +151,7 @@ public class DungeonInstanceRegistryTests
         Assert.True(registry.WouldCount(solo, 64, Character));
         Assert.True(registry.Enter(solo, 64, 426101, Character).IsNewInstance);
         
-        Assert.NotEqual(DungeonInstanceOwner.For(new PartyState { PartyId = Character }, 1), solo);
+        Assert.NotEqual(DungeonInstanceOwner.For(new PartyState { PartyId = Character }.PartyId, 1), solo);
     }
 
     [Fact]

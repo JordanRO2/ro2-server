@@ -1,3 +1,4 @@
+using RO2.Dungeons.Domain;
 using RO2.Application.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -123,7 +124,7 @@ public class PartyMatchingFindDungeonJoinSelectBtnHandler : ZoneRmiHandlerBase<P
         
         var isInstance = map.Map_Type == DungeonEntryGate.InstanceMapType;
         var owner = DungeonInstanceOwner.For(
-            services.GetRequiredService<PartyService>().GetPlayerParty(player.SessionId), player.CharacterId);
+            services.GetRequiredService<PartyService>().GetPlayerParty(player.SessionId)?.PartyId, player.CharacterId);
         var counts = isInstance && dungeon.Enter_Count != NoEntryLimit
             ? services.GetRequiredService<IDungeonEntryCountRepository>()
             : null;

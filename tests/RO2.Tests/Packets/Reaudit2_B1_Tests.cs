@@ -1,3 +1,4 @@
+using RO2.Dungeons.Domain;
 using RO2.Kharas.Domain;
 using System.Buffers.Binary;
 using System.Text.Json;
@@ -83,7 +84,7 @@ public class Reaudit2_B1_Tests
         var clock = new ManualClock(new DateTimeOffset(2026, 7, 18, 3, 0, 0, TimeSpan.Zero));
         var registry = new DungeonInstanceRegistry(clock);
         const uint a = 0x5B1D_0011u, b = 0x5B1D_0012u;
-        var party = DungeonInstanceOwner.For(new PartyState { PartyId = 0x5B1D_0010u }, a);
+        var party = DungeonInstanceOwner.For(new PartyState { PartyId = 0x5B1D_0010u }.PartyId, a);
         var entry = registry.Enter(party, 64, InstanceMap, a);
         registry.Enter(party, 64, InstanceMap, b);
         Assert.Null(registry.VacantSince(entry.InstanceId));

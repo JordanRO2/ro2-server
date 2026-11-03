@@ -1,3 +1,4 @@
+using RO2.Dungeons.Domain;
 using RO2.Application.Interfaces;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
@@ -102,7 +103,7 @@ public class PartyDungeonTeleportHandler : ZoneRmiHandlerBase<PartyDungeonTelepo
         if (isInstance)
         {
             var party = services.GetRequiredService<PartyService>().GetPlayerParty(player.SessionId);
-            var owner = DungeonInstanceOwner.For(party, player.CharacterId);
+            var owner = DungeonInstanceOwner.For(party?.PartyId, player.CharacterId);
             var registry = DungeonInstanceRegistry.Shared;
             var wouldCount = registry.WouldCount(owner, dungeon.DungeonID, player.CharacterId);
             if (dungeon.Enter_Count != 0)

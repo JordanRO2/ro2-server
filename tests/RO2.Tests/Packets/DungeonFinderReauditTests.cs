@@ -1,3 +1,4 @@
+using RO2.Dungeons.Domain;
 using System.Globalization;
 using RO2.GameData;
 using RO2.GameData.Tables;

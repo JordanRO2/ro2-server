@@ -1,3 +1,4 @@
+using RO2.Dungeons.Domain;
 using System.Buffers.Binary;
 using System.Net;
 using System.Net.Sockets;
@@ -379,7 +380,7 @@ public class Reaudit5_A0_Tests
     {
         const uint first = 8425599, second = 8509175, world = 1221, instanceMap = 426101;
         var registry = new DungeonInstanceRegistry();
-        var owner = DungeonInstanceOwner.For(new PartyState { PartyId = 751893 }, first);
+        var owner = DungeonInstanceOwner.For(new PartyState { PartyId = 751893 }.PartyId, first);
         var entry = registry.Enter(owner, 64, instanceMap, first);
         Assert.True(registry.Enter(owner, 64, instanceMap, second).CountsForCharacter);
 
@@ -401,7 +402,7 @@ public class Reaudit5_A0_Tests
     {
         const uint leader = 0xC9F4_0001u, member = 0xC9F4_0002u, late = 0xC9F4_0003u, world = 1221, instanceMap = 426101;
         var registry = new DungeonInstanceRegistry();
-        var owner = DungeonInstanceOwner.For(new PartyState { PartyId = 0xC9F4 }, leader);
+        var owner = DungeonInstanceOwner.For(new PartyState { PartyId = 0xC9F4 }.PartyId, leader);
         var entry = registry.Enter(owner, 64, instanceMap, leader);
         registry.Enter(owner, 64, instanceMap, member);
 
@@ -423,7 +424,7 @@ public class Reaudit5_A0_Tests
     public void FinderRun_EndsWithTheMembersOwnReset_WhileTheInstanceStaysOpen()
     {
         const uint a = 0x5A50_0001u, b = 0x5A50_0002u;
-        var owner = DungeonInstanceOwner.For(new PartyState { PartyId = 0x5A50_0000u }, a);
+        var owner = DungeonInstanceOwner.For(new PartyState { PartyId = 0x5A50_0000u }.PartyId, a);
         var entry = DungeonInstanceRegistry.Shared.EnterFinder(owner, 63, 410104, a);
         DungeonInstanceRegistry.Shared.Enter(owner, 63, 410104, b);
         var player = new PlayerState { CharacterId = a };

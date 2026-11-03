@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\source\Dungeon\RO2.Dungeon.Domain\RO2.Dungeon.Domain.csproj" />
     <ProjectReference Include="..\..\source\Ranking\RO2.Rankings.Domain\RO2.Rankings.Domain.csproj" />
     <ProjectReference Include="..\..\source\Ranking\RO2.Rankings.Application\RO2.Rankings.Application.csproj" />
                         <ProjectReference Include="..\..\source\Quest\RO2.Quest.Domain\RO2.Quest.Domain.csproj" />

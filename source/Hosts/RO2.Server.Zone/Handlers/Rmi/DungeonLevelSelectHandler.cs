@@ -1,3 +1,4 @@
+using RO2.Dungeons.Domain;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -97,7 +98,7 @@ public class DungeonLevelSelectHandler : ZoneRmiHandlerBase<DungeonLevelSelectHa
         
         
         var registry = DungeonInstanceRegistry.Shared;
-        var owner = DungeonInstanceOwner.For(party, player.CharacterId);
+        var owner = DungeonInstanceOwner.For(party?.PartyId, player.CharacterId);
         var wouldCount = !trainingGround && registry.WouldCount(owner, row.DungeonID, player.CharacterId);
         var counts = row.Enter_Count != 0 && !trainingGround
             ? services.GetRequiredService<IDungeonEntryCountRepository>()

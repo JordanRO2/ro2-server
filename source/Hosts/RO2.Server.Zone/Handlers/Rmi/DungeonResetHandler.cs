@@ -1,3 +1,4 @@
+using RO2.Dungeons.Domain;
 using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -25,7 +26,7 @@ public class DungeonResetHandler : ZoneRmiHandlerBase<DungeonResetHandler>
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
         var party = services.GetRequiredService<PartyService>().GetPartyView(player.SessionId);
-        var owner = DungeonInstanceOwner.For(party, player.CharacterId);
+        var owner = DungeonInstanceOwner.For(party?.PartyId, player.CharacterId);
         var reset = DungeonInstanceRegistry.Shared.Reset(owner, player.MapId, player.CharacterId);
         if (reset.Count == 0)
         {
