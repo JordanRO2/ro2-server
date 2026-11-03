@@ -44,7 +44,7 @@ jobs:
           dotnet-quality: 'preview'
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@4bfa242aa49c5f7c6770b98670d354a7dfac05f8 # v3
+        uses: github/codeql-action/init@9b3254085494b55a0f7c4c2b3d2d52cc712ce370 # v4.39.1
         with:
           languages: csharp
           build-mode: manual
@@ -56,6 +56,6 @@ jobs:
           dotnet build RO2_Server.sln --no-restore -c Release
 
       - name: Perform CodeQL analysis
-        uses: github/codeql-action/analyze@4bfa242aa49c5f7c6770b98670d354a7dfac05f8 # v3
+        uses: github/codeql-action/analyze@9b3254085494b55a0f7c4c2b3d2d52cc712ce370 # v4.39.1
         with:
           category: "/language:csharp"

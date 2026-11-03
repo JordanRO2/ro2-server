@@ -18,3 +18,9 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    groups:
+      # One PR for all action bumps. CodeQL's init and analyze steps must move in
+      # lockstep (a mixed v3/v4 pair fails the analysis), so never split them.
+      actions:
+        patterns:
+          - "*"
