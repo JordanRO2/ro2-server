@@ -39,12 +39,6 @@ public class GliderTeleportHandler : ZoneRmiHandlerBase<GliderTeleportHandler>
     /// <summary>Minimum body length that holds the station id: <see cref="StationIdOffset"/> + the 2-byte u16.</summary>
     private const int MinBodyLength = StationIdOffset + sizeof(ushort);
 
-    /// <summary>
-    /// The client sends 1528 twice per flight, about 16 ms apart. Any 1528 inside this window after an accepted one
-    /// is a duplicate and is dropped.
-    /// </summary>
-    private const double DuplicateWindowSeconds = 3.0;
-
     public GliderTeleportHandler(IServiceScopeFactory s, ILogger<GliderTeleportHandler> l, PlayerStateManager pm, BroadcastService bc) : base(s, l, pm, bc) { }
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
@@ -54,11 +48,7 @@ public class GliderTeleportHandler : ZoneRmiHandlerBase<GliderTeleportHandler>
             ? System.Buffers.Binary.BinaryPrimitives.ReadUInt16LittleEndian(payload.Span.Slice(StationIdOffset))
             : (ushort)0;
 
-        if (!GliderRoutes.TryGet(station, out var dest))
-        {
-            Logger.LogWarning("{Name} glider unknown station {St}", player.Name, station);
-            return;
-        }
+        var stationKnown = GliderRoutes.TryGet(station, out var dest);
 
         var store = services.GetRequiredService<GameDataStore>();
 
@@ -66,27 +56,31 @@ public class GliderTeleportHandler : ZoneRmiHandlerBase<GliderTeleportHandler>
         // second re-runs the whole re-entry and drops the socket. Read here, stamped only once the gate below passes,
         // so a refused 1528 neither opens nor extends the window.
         var now = DateTime.UtcNow;
-        if ((now - player.LastGliderWarpUtc).TotalSeconds < DuplicateWindowSeconds)
-        {
-            Logger.LogDebug("{Name} duplicate glider 1528 (station {St}) within 3s — ignored", player.Name, station);
-            return;
-        }
 
-        // Gate. The station's row must start on the map the player is on. A cross-map hop must also present
+        // Gate (GliderRules.Admit1528). The station's row must start on the map the player is on. A cross-map hop must also present
         // the single-use flight token the 1515 TakeFarGlider issued for this station. A SAME-MAP hop
         // (smap_index == emap_index) is exempt from the token, since demanding one could refuse a legitimate
         // short hop. A refused 1528 is logged and ignored: nothing sent, nothing moved, no fare taken.
+        // Side-effect order, preserved: the token is consumed and the 3 s window stamped HERE, before the dest-map
+        // and fare checks below, so a 1528 refused later (unpaid fare, missing map or character) has already burned
+        // its token and opened the window, with no refund.
         var spline = System.Linq.Enumerable.FirstOrDefault(store.Spline, s => s.index == station);
-        if (spline is null || spline.smap_index != player.MapId)
+        switch (GliderRules.Admit1528(stationKnown, now, player.LastGliderWarpUtc, spline, player.MapId,
+                    () => GliderRideStore.TryConsumeFlightToken(player, station, now)))
         {
-            Logger.LogWarning("{Name} glider station {St} refused: row starts on map {Start}, player is on map {Map} - ignored",
-                player.Name, station, spline?.smap_index, player.MapId);
-            return;
-        }
-        if (spline.smap_index != spline.emap_index && !GliderRideStore.TryConsumeFlightToken(player, station, now))
-        {
-            Logger.LogWarning("{Name} glider station {St} refused: no valid 1515 flight token - ignored", player.Name, station);
-            return;
+            case GliderTeleportAdmission.UnknownStation:
+                Logger.LogWarning("{Name} glider unknown station {St}", player.Name, station);
+                return;
+            case GliderTeleportAdmission.Duplicate:
+                Logger.LogDebug("{Name} duplicate glider 1528 (station {St}) within 3s — ignored", player.Name, station);
+                return;
+            case GliderTeleportAdmission.WrongMap:
+                Logger.LogWarning("{Name} glider station {St} refused: row starts on map {Start}, player is on map {Map} - ignored",
+                    player.Name, station, spline?.smap_index, player.MapId);
+                return;
+            case GliderTeleportAdmission.NoToken:
+                Logger.LogWarning("{Name} glider station {St} refused: no valid 1515 flight token - ignored", player.Name, station);
+                return;
         }
         player.LastGliderWarpUtc = now;
 
@@ -112,7 +106,7 @@ public class GliderTeleportHandler : ZoneRmiHandlerBase<GliderTeleportHandler>
         // player.Gold) alone carries the new balance (UpdateGoldAsync below persists it).
         // PlayerState.Gold is the runtime wallet (write-behind persisted); the row loaded above can lag it,
         // so the fare comes off the live value. Runs after the once-per-flight de-dupe guard above.
-        int fare = spline.cost;
+        int fare = spline!.cost; // non-null: Admit1528 returned Ok
         if (fare > 0)
         {
             // Taken atomically, never clamped: a rider who cannot pay is refused (no flight, nothing sent),

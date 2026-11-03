@@ -1,3 +1,4 @@
+using RO2.Companions.Domain;
 using RO2.Guilds.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -122,9 +123,7 @@ public class GetOffGliderHandler : ZoneRmiHandlerBase<GetOffGliderHandler>
     /// </summary>
     internal static (float X, float Y, float Z) DismountPosition(RO2.GameData.Tables.Spline? spline,
         uint riderMapId, float requestX, float requestY, float requestZ)
-        => spline != null && spline.emap_index == riderMapId
-            ? (spline.end_x, spline.end_y, spline.end_z)
-            : (requestX, requestY, requestZ);
+        => GliderRules.DismountPosition(spline, riderMapId, requestX, requestY, requestZ);
 
     // 2442 OnUnmountGlider — COMPACT-BA. Blob (32B): [u16 inner=32][u16 tag=0xE308][u32 rider][u16 result]
     // [f32 x][f32 y][f32 z][u64 zeny][u16 route]. selfLen 32 -> body 34.

@@ -10,6 +10,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
     <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+    <!-- GliderRules reuses the World route table's ride npc_id; World.Domain references only BuildingBlocks + GameData, so no cycle. -->
+    <ProjectReference Include="..\..\World\RO2.World.Domain\RO2.World.Domain.csproj" />
   </ItemGroup>
 
 </Project>

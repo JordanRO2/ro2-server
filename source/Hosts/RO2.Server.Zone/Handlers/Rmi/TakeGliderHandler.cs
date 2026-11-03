@@ -1,3 +1,4 @@
+using RO2.Companions.Domain;
 using RO2.Guilds.Domain;
 using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
@@ -87,8 +88,7 @@ public class TakeGliderHandler : ZoneRmiHandlerBase<TakeGliderHandler>
         var spline = gliderKind == GliderRoutes.RideNpcId && GliderRoutes.IsRide(route)
             ? services.GetRequiredService<GameDataStore>().Spline.FirstOrDefault(s => s.index == route)
             : null;
-        if (spline is null || spline.npc_id != GliderRoutes.RideNpcId || spline.smap_index != player.MapId
-            || GliderRideStore.HasRide(player))
+        if (!GliderRules.Admit1313(gliderKind, route, player.MapId, GliderRideStore.HasRide(player), spline))
         {
             Logger.LogWarning("{Name} ReqTakeGlider refused (kind {K}, route {R}, map {Map}, ride held {Held}): ignored",
                 player.Name, gliderKind, route, player.MapId, GliderRideStore.HasRide(player));

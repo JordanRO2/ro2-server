@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using RO2.Companions.Domain;
 using Microsoft.Extensions.Logging;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
@@ -35,7 +36,7 @@ public class TakeFarGliderHandler : ZoneRmiHandlerBase<TakeFarGliderHandler>
         // Gate: the station must be a far-glider station (GliderRoutes.TryGet drops unknown ids and the
         // npc_id 99990000 ride rows) and start on the map the player is on. A refused 1515 is LOG-AND-IGNORE: no 2731,
         // no flight token, nothing moves.
-        if (!GliderRoutes.TryGet(station, out _) || !GliderRoutes.StartsOnMap(station, player.MapId))
+        if (!GliderRules.Admit1515(GliderRoutes.TryGet(station, out _), GliderRoutes.StartsOnMap(station, player.MapId)))
         {
             Logger.LogWarning("{Name} far-glider station {St} refused: not a station or wrong map ({Map}) - ignored",
                 player.Name, station, player.MapId);
