@@ -204,7 +204,7 @@ public class Reaudit2_A0_Tests
         Assert.Equal(new uint[] { 0x0242C613, 0x020FF813, 0x020FF913 }, request.Targets);
         var npcs = LiveNpcs(0x0242C613, 0x020FF813, 0x020FF913);
         Assert.Equal(new uint[] { 0x0242C613 },
-            SkillDamageHandler.SelectNpcVictims(request, 0x0789A111, npcs.Get, 5));
+            SkillDamageHandler.SelectNpcVictims(request, 0x0789A111, npcs.Get, 5, 0));
 
         var body = SkillDamagePackets.BuildSkillDamage2718(0x0789A111, request.SkillId, request.PrimaryTarget,
             [new SkillDamageHit(0x0242C613, 0x00D027D3, 0x2CB5, [new SkillHitEffect(1, 0xD6E8)])],
@@ -220,9 +220,9 @@ public class Reaudit2_A0_Tests
         const uint caster = 0x06FC0E11;
         var npcs = LiveNpcs(0x00112E13, 0x00112F13);
         var atOther = Request(1, 0x06FC0F11, 0x06FC0F11, 0x00112E13, 0x00112F13);
-        Assert.Empty(SkillDamageHandler.SelectNpcVictims(atOther, caster, npcs.Get, 10));
+        Assert.Empty(SkillDamageHandler.SelectNpcVictims(atOther, caster, npcs.Get, 10, 0));
         var atSelf = Request(1, caster, caster, 0x00112E13, 0x00112F13);
-        Assert.Equal(new uint[] { 0x00112E13, 0x00112F13 }, SkillDamageHandler.SelectNpcVictims(atSelf, caster, npcs.Get, 10));
+        Assert.Equal(new uint[] { 0x00112E13, 0x00112F13 }, SkillDamageHandler.SelectNpcVictims(atSelf, caster, npcs.Get, 10, 0));
     }
 
  /// <summary>
@@ -235,14 +235,27 @@ public class Reaudit2_A0_Tests
         npcs.Map[0x00000113].IsDead = true;
         npcs.Map[0x00000213].Camp = 1;
         var ground = Request(0, 0, 0x00000113, 0x00000213, 0x00000313, 0x00000413, 0x00000513, 0x06FC0F11);
-        Assert.Equal(new uint[] { 0x00000313, 0x00000413 }, SkillDamageHandler.SelectNpcVictims(ground, 0x06FC0E11, npcs.Get, 2));
+        Assert.Equal(new uint[] { 0x00000313, 0x00000413 }, SkillDamageHandler.SelectNpcVictims(ground, 0x06FC0E11, npcs.Get, 2, 0));
         Assert.Equal(new uint[] { 0x00000313, 0x00000413, 0x00000513 },
-            SkillDamageHandler.SelectNpcVictims(ground, 0x06FC0E11, npcs.Get, null));
+            SkillDamageHandler.SelectNpcVictims(ground, 0x06FC0E11, npcs.Get, null, 0));
 
         var many = Request(0, 0, Enumerable.Range(1, 25).Select(i => (uint)(i << 8) | 0x13).ToArray());
         var crowd = LiveNpcs(many.Targets);
         Assert.Equal(SkillDamagePackets.MaxSkillDamageTargets,
-            SkillDamageHandler.SelectNpcVictims(many, 0x06FC0E11, crowd.Get, null).Count);
+            SkillDamageHandler.SelectNpcVictims(many, 0x06FC0E11, crowd.Get, null, 0).Count);
+    }
+
+ /// <summary>
+ /// The hit list is the client's: a monster on another map takes no damage and does not spend a Skill_Damage_Quantity slot.
+ /// </summary>
+    [Fact]
+    public void NpcVictims_GroundCast_SkipsMonstersOnAnotherMap()
+    {
+        var npcs = LiveNpcs(0x00000113, 0x00000213, 0x00000313);
+        npcs.Map[0x00000113].MapId = 1100;
+        var ground = Request(0, 0, 0x00000113, 0x00000213, 0x00000313);
+        Assert.Equal(new uint[] { 0x00000213, 0x00000313 }, SkillDamageHandler.SelectNpcVictims(ground, 0x06FC0E11, npcs.Get, 2, 0));
+        Assert.Equal(new uint[] { 0x00000113 }, SkillDamageHandler.SelectNpcVictims(ground, 0x06FC0E11, npcs.Get, 2, 1100));
     }
 
  /// <summary>
@@ -271,7 +284,7 @@ public class Reaudit2_A0_Tests
         Assert.Equal(kindDamage.Length / 2, records);
 
         var npcs = LiveNpcs(request.PrimaryTarget);
-        Assert.Equal(new[] { request.PrimaryTarget }, SkillDamageHandler.SelectNpcVictims(request, caster, npcs.Get, 1));
+        Assert.Equal(new[] { request.PrimaryTarget }, SkillDamageHandler.SelectNpcVictims(request, caster, npcs.Get, 1, 0));
 
         var effects = Enumerable.Range(0, records)
             .Select(i => new SkillHitEffect((byte)kindDamage[2 * i], kindDamage[2 * i + 1])).ToArray();

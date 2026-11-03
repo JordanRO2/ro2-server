@@ -337,7 +337,7 @@ public class SkillDamageHandler : ZoneRmiHandlerBase<SkillDamageHandler>
         // alone when it is an NPC, none when the primary is another PC, else the live hit-list monsters up to
         // Skill_Damage_Quantity.
         var npcVictims = SkillDamagePcElements.DamagesNpcs(skillType)
-            ? SelectNpcVictims(request, player.EntityId, npcState.GetNpc, SkillLevelColumns.DamageQuantityOf(skillId))
+            ? SelectNpcVictims(request, player.EntityId, npcState.GetNpc, SkillLevelColumns.DamageQuantityOf(skillId), player.MapId)
                 .ToHashSet()
             : null;
         // max(1, Number_Of_Normal_Influences) damage records per NPC element (SkillLevelColumns).
@@ -684,9 +684,11 @@ public class SkillDamageHandler : ZoneRmiHandlerBase<SkillDamageHandler>
     /// <see cref="NpcCombatantView"/> and supplies the host caps and actor-handle conventions.
     /// </summary>
     internal static List<uint> SelectNpcVictims(SkillDamageRequest request, uint casterHandle,
-        Func<uint, NpcRuntimeState?> npcOf, int? damageQuantity)
+        Func<uint, NpcRuntimeState?> npcOf, int? damageQuantity, uint casterMapId)
+        // The hit list is the client's, and a monster on another map is no legitimate target (ICombatantView
+        // carries no map): treat it as not found, so it neither takes damage nor spends a Skill_Damage_Quantity slot.
         => SkillVictimSelection.SelectNpcVictims(request.HasTarget, request.PrimaryTarget, request.Targets,
-            casterHandle, new NpcCombatantView(npcOf), damageQuantity,
+            casterHandle, new NpcCombatantView(h => npcOf(h) is { } n && n.MapId == casterMapId ? n : null), damageQuantity,
             new SkillVictimSelection.VictimSelectionRules(MaxHits, PlayerStateManager.PcActorTag, ActorTagMask,
                 NpcSpawnService.CampFriendly));
 
