@@ -1,7 +1,7 @@
 using RO2.GameData;
 using RO2.GameData.Tables;
 
-namespace RO2.Domain.Entities;
+namespace RO2.Companions.Domain;
 
 /// <summary>
 /// Rules for the vehicles a character owns: which vehicle and duration a reins item grants, how a grant

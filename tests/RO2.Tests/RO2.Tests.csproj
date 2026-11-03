@@ -39,6 +39,7 @@
 <ProjectReference Include="..\..\source\Shared\RO2.GameData\RO2.GameData.csproj" />
 <ProjectReference Include="..\..\source\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
     <ProjectReference Include="..\..\source\Platform\RO2.Network\RO2.Network.csproj" />
+    <ProjectReference Include="..\..\source\Companion\RO2.Companion.Domain\RO2.Companion.Domain.csproj" />
     <ProjectReference Include="..\..\source\Game\RO2.Domain\RO2.Domain.csproj" />
     <ProjectReference Include="..\..\source\Platform\RO2.Persistence.Mongo\RO2.Persistence.Mongo.csproj" />
     <ProjectReference Include="..\..\source\Guild\RO2.Guild.Infrastructure.Mongo\RO2.Guild.Infrastructure.Mongo.csproj" />

@@ -1,4 +1,4 @@
-using RO2.Domain.Entities;
+using RO2.Companions.Domain;
 using RO2.Network.Packets;
 
 namespace RO2.Server.Zone.Services;

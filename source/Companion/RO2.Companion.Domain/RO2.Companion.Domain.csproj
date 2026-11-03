@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Plural namespace: a namespace "RO2.Companion" would shadow any future Companion type in every RO2.* file (CS0118), as RO2.Mails.Domain / RO2.Quests.Domain / RO2.Collections.Domain avoid. -->
+    <RootNamespace>RO2.Companions.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Companion bounded context: Domain references ONLY RO2.BuildingBlocks + the shared RO2.GameData kernel.
+       No Mongo, no ProudNet, no host. -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+  </ItemGroup>
+
+</Project>

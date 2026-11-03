@@ -2,7 +2,7 @@
 using RO2.Guilds.Domain;
 using RO2.Skills.Domain;
 using RO2.Skills.Application;
-using RO2.Domain.Entities;
+using RO2.Companions.Domain;
 using RO2.Collections.Domain;
 using RO2.Collections.Application;
 using RO2.Application.Interfaces;

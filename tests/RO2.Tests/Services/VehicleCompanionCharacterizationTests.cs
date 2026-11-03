@@ -1,5 +1,5 @@
 using System.Text.Json;
-using RO2.Domain.Entities;
+using RO2.Companions.Domain;
 using RO2.GameData;
 using RO2.GameData.Tables;
 using RO2.Server.Zone.Handlers.Rmi;

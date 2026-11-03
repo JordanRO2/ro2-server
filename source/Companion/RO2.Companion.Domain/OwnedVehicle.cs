@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Companions.Domain;
 
 /// <summary>A vehicle owned by a character: its RidingInfo id and expiry.</summary>
 public sealed class OwnedVehicle

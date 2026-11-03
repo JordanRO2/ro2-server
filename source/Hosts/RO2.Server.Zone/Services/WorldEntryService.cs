@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using RO2.Skills.Domain;
 using Microsoft.Extensions.Logging;
-using RO2.Domain.Entities;
+using RO2.Companions.Domain;
 using RO2.Collections.Domain;
 using RO2.Collections.Application;
 using RO2.Quests.Domain;

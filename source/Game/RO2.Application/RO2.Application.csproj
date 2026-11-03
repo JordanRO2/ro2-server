@@ -5,6 +5,7 @@
         <ProjectReference Include="..\..\Mail\RO2.Mail.Domain\RO2.Mail.Domain.csproj" />
         <ProjectReference Include="..\..\Collection\RO2.Collection.Domain\RO2.Collection.Domain.csproj" />
         <ProjectReference Include="..\..\Character\RO2.Character.Domain\RO2.Character.Domain.csproj" />
+<ProjectReference Include="..\..\Companion\RO2.Companion.Domain\RO2.Companion.Domain.csproj" />
 <ProjectReference Include="..\RO2.Domain\RO2.Domain.csproj" />
     <ProjectReference Include="..\..\Inventory\RO2.Inventory.Domain\RO2.Inventory.Domain.csproj" />
   </ItemGroup>

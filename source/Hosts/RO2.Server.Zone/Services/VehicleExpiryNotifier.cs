@@ -2,7 +2,7 @@ using System.Collections.Concurrent;
 using System.Collections.Frozen;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
+using RO2.Companions.Domain;
 using RO2.Persistence.Mongo.Persistence;
 using RO2.Network.ProudNet;
 using RO2.Network.Protocol;

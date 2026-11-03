@@ -1,4 +1,4 @@
-using RO2.Domain.Entities;
+using RO2.Companions.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
