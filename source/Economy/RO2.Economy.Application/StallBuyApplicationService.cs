@@ -47,8 +47,9 @@ public sealed class StallBuyApplicationService
     /// <remarks>
     /// There is NO compensation: once the zeny has changed hands, a failing item write or persist propagates with the
     /// buyer already debited, the seller already credited, and whatever was written left in place (the listings are removed
-    /// only after the item writes, so a failed write leaves them listed). The buy takes no per-character inventory gate;
-    /// the host's stall purchase gate is the only serialization.
+    /// only after the item writes, so a failed write leaves them listed). The host runs the buy under the buyer's and the
+    /// seller's per-character inventory gates (and its stall purchase gate), and the item moves are owner-guarded, so a
+    /// gone or no-longer-owned row throws rather than clobbering; the balance half-move above is still uncompensated.
     /// </remarks>
     /// <param name="cmd">The purchase.</param>
     /// <param name="buyerWallet">The buyer's wallet.</param>
