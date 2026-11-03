@@ -22,7 +22,7 @@ public class DungeonFinderPartyRoundTests
     private const uint Party = 7;
     private const uint SearcherSession = 10, MSession = 11, XSession = 12, YSession = 13;
 
-    private static readonly DungeonFinderPartyRound.SeatCheck Everyone = (_, _, _) => true;
+    private static readonly DungeonFinderPartyRound.SeatCheck Everyone = (_, _) => true;
 
     private static string Hex(byte[] b) => Convert.ToHexString(b).ToLowerInvariant();
 
@@ -376,7 +376,7 @@ public class DungeonFinderPartyRoundTests
         var round = new DungeonFinderPartyRound();
         var opened = round.Open(Party, Five, Player(SearcherSession), RoleKind.RoleDealer,
             [Player(MSession), Player(XSession)], Everyone);
-        DungeonFinderPartyRound.SeatCheck xGone = (_, session, _) => session != XSession;
+        DungeonFinderPartyRound.SeatCheck xGone = (_, seat) => seat.SessionId != XSession;
 
         var expired = round.Expire(opened.RoundId, xGone);
 
@@ -400,7 +400,7 @@ public class DungeonFinderPartyRoundTests
         var m = Player(MSession);
         var x = Player(XSession);
         round.Open(Party, Five, Player(SearcherSession), RoleKind.RoleDealer, [m, x], Everyone);
-        DungeonFinderPartyRound.SeatCheck xGone = (_, session, _) => session != XSession;
+        DungeonFinderPartyRound.SeatCheck xGone = (_, seat) => seat.SessionId != XSession;
 
         var pick = round.SelectRole(m, 0x04, xGone);
 

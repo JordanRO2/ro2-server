@@ -728,7 +728,7 @@ public class DungeonFinderTests
         Assert.Equal("00000400000000010002", ToHex(DungeonFinderPackets.BuildInProgressInfo2806(outcome.ShownListId, outcome.Shown, outcome.OwnRole)));
         Assert.True(queue.Join(pc, RoleKind.RoleDealer, [List4]).AlreadyQueued);
 
-        Assert.Same(pc, queue.Leave(pc)?.Player);
+        Assert.Equal(SeatKeys.Of(pc), queue.Leave(pc)?.Seat);
         Assert.Null(queue.Leave(pc));
     }
 
@@ -776,7 +776,7 @@ public class DungeonFinderTests
         queue.Join(stays, RoleKind.RoleDealer, [List2]);
         queue.Join(gone, RoleKind.RoleDealer, [List2]);
 
-        var removed = queue.Prune(e => ReferenceEquals(e.Player, gone));
+        var removed = queue.Prune(e => e.Seat == SeatKeys.Of(gone));
         Assert.Single(removed);
         var sent = new List<string>();
         await queue.PushStateAsync(removed.SelectMany(e => e.ListIds), null, Rows(List2), (s, b) => { sent.Add(ToHex(b)); return Task.CompletedTask; });

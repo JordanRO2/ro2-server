@@ -44,7 +44,7 @@ public class DungeonFinderPartyRoundReauditTests
         var member = new PlayerState { SessionId = 21, Name = "member" };
         var round = new DungeonFinderPartyRound();
 
-        var opened = round.Open(9, row, searcher, RoleKind.RoleDealer, [member], (_, _, _) => true,
+        var opened = round.Open(9, row, searcher, RoleKind.RoleDealer, [member], (_, _) => true,
             ZoneS2COpcodes.AnsPartyMatchingFindDungeonRandom);
 
         Assert.Equal(DungeonFinderPartyRound.OpenStatus.Opened, opened.Status);

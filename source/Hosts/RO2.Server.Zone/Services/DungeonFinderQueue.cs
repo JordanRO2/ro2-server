@@ -1,3 +1,4 @@
+using RO2.DungeonFinder.Application;
 using RO2.DungeonFinder.Domain;
 using RO2.GameData;
 using RO2.GameData.Tables;
@@ -32,10 +33,10 @@ public sealed class DungeonFinderQueue
     public static DungeonFinderQueue Shared { get; } = new();
 
  /// <summary>One searching player. <see cref="ListIds"/>[0] is the list named in its 2806.</summary>
-    public sealed class Entry(PlayerState player, uint sessionId, uint[] listIds, byte roleFlags)
+    public sealed class Entry(SeatKey seat, uint[] listIds, byte roleFlags)
     {
-        public PlayerState Player { get; } = player;
-        public uint SessionId { get; } = sessionId;
+        public SeatKey Seat { get; } = seat;
+        public uint SessionId => Seat.SessionId;
         public IReadOnlyList<uint> ListIds { get; } = listIds;
         public byte RoleFlags { get; } = roleFlags;
         public uint PrimaryListId => ListIds[0];
@@ -63,10 +64,11 @@ public sealed class DungeonFinderQueue
         ArgumentOutOfRangeException.ThrowIfZero(rows.Count);
         lock (_gate)
         {
-            if (_entries.Exists(e => ReferenceEquals(e.Player, player)))
+            var seat = SeatKeys.Of(player);
+            if (_entries.Exists(e => e.Seat == seat))
                 return new JoinOutcome(true, null, 0, default, 0, null);
 
-            var entry = new Entry(player, player.SessionId, rows.Select(r => (uint)r.List_ID).ToArray(), roleFlags);
+            var entry = new Entry(seat, rows.Select(r => (uint)r.List_ID).ToArray(), roleFlags);
             foreach (var row in rows)
             {
                 if (row.Party_Num != 1) continue;
@@ -88,7 +90,8 @@ public sealed class DungeonFinderQueue
     {
         lock (_gate)
         {
-            int i = _entries.FindIndex(e => ReferenceEquals(e.Player, player));
+            var seat = SeatKeys.Of(player);
+            int i = _entries.FindIndex(e => e.Seat == seat);
             if (i < 0) return null;
             var entry = _entries[i];
             _entries.RemoveAt(i);
@@ -139,6 +142,7 @@ public sealed class DungeonFinderQueue
     public async Task PushStateAsync(IEnumerable<uint> listIds, PlayerState? skip, Func<uint, FindDungeonList?> rowOf,
         Func<uint, byte[], Task> sendToSession)
     {
+        SeatKey? skipSeat = skip is null ? null : SeatKeys.Of(skip);
         foreach (var listId in listIds.Distinct())
         {
             if (rowOf(listId) is not { } row) continue;
@@ -146,7 +150,7 @@ public sealed class DungeonFinderQueue
             var (filled, roles) = Assign(row, members);
             foreach (var m in members)
             {
-                if (m.PrimaryListId != listId || ReferenceEquals(m.Player, skip)) continue;
+                if (m.PrimaryListId != listId || m.Seat == skipSeat) continue;
                 await sendToSession(m.SessionId, DungeonFinderPackets.BuildInProgressInfo2806(listId, filled, roles[m]));
             }
         }
@@ -156,10 +160,10 @@ public sealed class DungeonFinderQueue
  /// Drops the entries of players that are no longer registered under their session, and sends the updated state
  /// to the remaining members of their lists.
  /// </summary>
-    public async Task PruneAndPushAsync(PlayerStateManager players, Func<uint, FindDungeonList?> rowOf,
+    public async Task PruneAndPushAsync(ISeatLiveness liveness, Func<uint, FindDungeonList?> rowOf,
         Func<uint, byte[], Task> sendToSession)
     {
-        var gone = Prune(e => !ReferenceEquals(players.GetPlayer(e.SessionId), e.Player));
+        var gone = Prune(e => !liveness.IsLive(e.Seat));
         if (gone.Count > 0)
             await PushStateAsync(gone.SelectMany(e => e.ListIds), null, rowOf, sendToSession);
     }

@@ -1,3 +1,4 @@
+using RO2.DungeonFinder.Application;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.GameData;
@@ -29,7 +30,7 @@ public class PartyMatchingFindDungeonCancelHandler : ZoneRmiHandlerBase<PartyMat
         
         var round = DungeonFinderPartyRound.Shared.Cancel(player,
             DungeonFinderPartyRound.SeatCheckFor(PlayerManager, services.GetRequiredService<PartyService>()));
-        await queue.PruneAndPushAsync(PlayerManager, DungeonFinderQueue.RowsOf(data), SendToSessionAsync);
+        await queue.PruneAndPushAsync(services.GetRequiredService<ISeatLiveness>(), DungeonFinderQueue.RowsOf(data), SendToSessionAsync);
         Logger.LogDebug("Session {Id}: PartyMatchingFindDungeonCancel (was queued: {Queued})", session.SessionId, left is not null);
 
         

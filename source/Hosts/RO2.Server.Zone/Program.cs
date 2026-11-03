@@ -242,6 +242,7 @@ public static class Program
         services.AddSingleton<IClock, SystemClock>();
         services.AddSingleton<MovementGuard>();
         services.AddSingleton<PlayerStateManager>();
+        services.AddSingleton<RO2.DungeonFinder.Application.ISeatLiveness, SeatLivenessAdapter>();
         services.AddSingleton<NpcStateManager>();
         services.AddSingleton<BroadcastService>();
         services.AddSingleton<PlayerSpawnService>();

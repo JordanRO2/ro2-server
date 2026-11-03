@@ -44,7 +44,7 @@ public static class DungeonFinderPartyRoundStarter
 
         
         
-        if (data.FindDungeonList.Any(r => queue.MembersOf(r.List_ID).Exists(e => ReferenceEquals(e.Player, player))))
+        if (data.FindDungeonList.Any(r => queue.MembersOf(r.List_ID).Exists(e => e.Seat == SeatKeys.Of(player))))
         {
             await session.SendInternalRmiAsync(answerOpcode,
                 DungeonFinderPartyRound.SearcherAnswer(answerOpcode, DungeonFinderPackets.ResultAlreadyRegistered));

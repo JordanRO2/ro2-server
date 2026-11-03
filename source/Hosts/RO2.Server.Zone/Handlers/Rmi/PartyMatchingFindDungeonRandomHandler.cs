@@ -1,3 +1,4 @@
+using RO2.DungeonFinder.Application;
 using RO2.DungeonFinder.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -87,7 +88,7 @@ public class PartyMatchingFindDungeonRandomHandler : ZoneRmiHandlerBase<PartyMat
         }
 
         var queue = DungeonFinderQueue.Shared;
-        await queue.PruneAndPushAsync(PlayerManager, DungeonFinderQueue.RowsOf(data), SendToSessionAsync);
+        await queue.PruneAndPushAsync(services.GetRequiredService<ISeatLiveness>(), DungeonFinderQueue.RowsOf(data), SendToSessionAsync);
 
         
         
