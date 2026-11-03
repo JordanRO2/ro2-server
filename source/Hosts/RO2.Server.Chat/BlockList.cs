@@ -1,7 +1,5 @@
 using System.Buffers.Binary;
 using System.Text;
-using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
 using RO2.Persistence.Mongo.Repositories;
 using RO2.Network.Packets;
 using RO2.Characters.Domain;

@@ -4,8 +4,6 @@ using RO2.Chats.Application;
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
 using RO2.Network.Handlers;
 using RO2.Network.Throttling;
 using RO2.Network.Protocol;
