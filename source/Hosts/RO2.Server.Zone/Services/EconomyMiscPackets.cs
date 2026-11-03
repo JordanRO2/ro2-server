@@ -1,4 +1,5 @@
 using RO2.Network.Packets;
+using RO2.Rewards.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -173,53 +174,6 @@ public static class EconomyMiscPackets
 
 
 
- /// <summary>Attendance entry flags: a plain reward day, with no bit of its own set.</summary>
-    private const byte AttendanceFlagPlain = 0x00;
-
- /// <summary>Attendance entry flag 0x10: the diamond-pouch reward of a milestone day on an unbroken streak.</summary>
-    private const byte AttendanceFlagPouch = 0x10;
-
- /// <summary>
- /// Item ids (ItemInfo, Item_Type 129) of the diamond pouch rewarded on milestone days 7, 14, 21 and 28 of an unbroken streak.
- /// </summary>
-    private const uint DiamondPouchDay7 = 50001113, DiamondPouchDay14 = 50001114, DiamondPouchDay21 = 50001115, DiamondPouchDay28 = 50001116;
-
- /// <summary>
- /// Item ids (ItemInfo, Item_Type 127) of the seal rewarded on milestone days 7, 14, 21 and 28 once the streak has broken.
- /// </summary>
-    private const uint SealDay7 = 22402012, SealDay14 = 22402013, SealDay21 = 22402014, SealDay28 = 22402015;
-
- /// <summary>Reward count of the seal milestone entry.</summary>
-    private const byte AttendanceSealCount = 1;
-
- /// <summary>
- /// The 28-day attendance calendar of an unbroken cycle: for each day, the entry flag, the reward count and the reward item id.
- /// </summary>
- /// <remarks>
- /// <para>
- /// The calendar does not rotate by month. Only the milestone days (7, 14, 21 and 28) differ between accounts: each shows
- /// either a pouch reward or a seal reward, decided by the account's streak (see <see cref="AttendanceMilestone"/>).
- /// </para>
- /// </remarks>
-    private static readonly (byte Flag, byte Count, uint ItemId)[] AttendanceCalendar =
-    {
-        (AttendanceFlagPlain, 1, 60000165), (AttendanceFlagPlain, 1, 60000474), (AttendanceFlagPlain, 1, 60000486), (AttendanceFlagPlain, 1, 60000076),
-        (AttendanceFlagPlain, 1, 60000277), (AttendanceFlagPlain, 1, 50001072), (AttendanceFlagPouch, 1, DiamondPouchDay7), (AttendanceFlagPlain, 1, 60000086),
-        (AttendanceFlagPlain, 2, 60000474), (AttendanceFlagPlain, 2, 60000486), (AttendanceFlagPlain, 1, 60000076), (AttendanceFlagPlain, 1, 60000277),
-        (AttendanceFlagPlain, 1, 50001072), (AttendanceFlagPouch, 1, DiamondPouchDay14), (AttendanceFlagPlain, 1, 60000058), (AttendanceFlagPlain, 3, 60000474),
-        (AttendanceFlagPlain, 3, 60000486), (AttendanceFlagPlain, 1, 60000076), (AttendanceFlagPlain, 1, 60000277), (AttendanceFlagPlain, 1, 50001072),
-        (AttendanceFlagPouch, 1, DiamondPouchDay21), (AttendanceFlagPlain, 1, 60000065), (AttendanceFlagPlain, 4, 60000474), (AttendanceFlagPlain, 4, 60000486),
-        (AttendanceFlagPlain, 1, 60000076), (AttendanceFlagPlain, 1, 60000277), (AttendanceFlagPlain, 1, 50001072), (AttendanceFlagPouch, 1, DiamondPouchDay28),
-    };
-
- /// <summary>The milestone days of the calendar: every seventh day (7, 14, 21 and 28).</summary>
-    private const int AttendanceMilestoneEvery = 7;
-
- /// <summary>
- /// The milestone entry of a broken streak, for milestone k (day 7k) at index k-1: a seal reward with count 1 and flag 0.
- /// </summary>
-    private static readonly uint[] AttendanceSealMilestones = { SealDay7, SealDay14, SealDay21, SealDay28 };
-
  /// <summary>The constant first byte of the attendance body, after the VarBlob32 length.</summary>
     private const byte AttendanceBodyMarker = 1;
 
@@ -236,25 +190,6 @@ public static class EconomyMiscPackets
     private const byte AttendanceDayAttended = 0x20;
 
  /// <summary>
- /// The calendar entry of day <paramref name="day"/> (1 to 28) for an account whose streak broke after
- /// <paramref name="streakBrokenAfter"/> attended days (0 when the cycle is unbroken).
- /// </summary>
- /// <remarks>
- /// <para>
- /// A milestone is a pouch reward while the cycle's attendance has been unbroken since day 1. Once a day is missed, the
- /// milestones not yet reached become seals, and the milestones already reached keep their pouch. A cycle that wraps from
- /// 28 back to 1 starts unbroken again.
- /// </para>
- /// </remarks>
-    internal static (byte Flag, byte Count, uint ItemId) AttendanceMilestone(int day, int streakBrokenAfter)
-    {
-        var entry = AttendanceCalendar[day - 1];
-        if (day % AttendanceMilestoneEvery != 0 || streakBrokenAfter <= 0 || day <= streakBrokenAfter)
-            return entry;
-        return (AttendanceFlagPlain, AttendanceSealCount, AttendanceSealMilestones[day / AttendanceMilestoneEvery - 1]);
-    }
-
- /// <summary>
  /// 3026 AnsShowAttendanceState (the 3027 notify has the same body): a VarBlob32 holding
  /// <c>[u32 innerLen][u8 1][u8 days][u8 attendedDays][u16 n][n x (u8 flags, u8 count, u32 itemId)]</c>, 177 bytes for the
  /// 28-day calendar.
@@ -268,7 +203,7 @@ public static class EconomyMiscPackets
  /// <param name="streakBrokenAfter">The count attended before the first missed day, or 0 while the cycle is unbroken.</param>
     public static byte[] BuildShowAttendanceState(int attendedDays, int streakBrokenAfter)
     {
-        var days = AttendanceCalendar.Length;
+        var days = AttendanceCalendar.Days;
         var attended = Math.Clamp(attendedDays, AttendanceMinAttendedDays, days);
         using var w = new PacketWriter(VarBlob32PrefixLength + AttendanceHeaderLength + AttendanceEntryLength * days);
         w.WriteUInt32((uint)(AttendanceHeaderLength + AttendanceEntryLength * days));
@@ -278,7 +213,7 @@ public static class EconomyMiscPackets
         w.WriteUInt16((ushort)days);
         for (var i = 0; i < days; i++)
         {
-            var e = AttendanceMilestone(i + 1, streakBrokenAfter);
+            var e = AttendanceCalendar.EntryFor(i + 1, streakBrokenAfter);
             w.WriteByte((byte)(e.Flag | (i < attended ? AttendanceDayAttended : 0)));
             w.WriteByte(e.Count);
             w.WriteUInt32(e.ItemId);

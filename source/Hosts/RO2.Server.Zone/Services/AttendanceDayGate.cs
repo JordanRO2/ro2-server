@@ -1,4 +1,3 @@
-using System.Buffers.Binary;
 using System.Collections.Concurrent;
 using RO2.Application.Interfaces;
 using RO2.Rewards.Domain;
@@ -31,7 +30,6 @@ public static class AttendanceDayGate
 
     
     
-    private const int CalendarDaysOffset = 5, EntriesOffset = 9, EntryLength = 6, EntryCountOffset = 1, EntryItemOffset = 2;
 
  /// <summary>The account's last attended day, as last recorded by this process. A cache of the stored value.</summary>
     private static readonly ConcurrentDictionary<uint, int> KnownAttendedDay = new();
@@ -69,12 +67,12 @@ public static class AttendanceDayGate
                 return null;
             }
 
-            int next = NextAttendedDays(attendedDays, CalendarDays);
-            int nextBrokenAfter = NextStreakBrokenAfter(attendedDays, lastDay, today, brokenAfter, next);
+            int next = AttendanceRules.NextAttendedDays(attendedDays, AttendanceCalendar.Days);
+            int nextBrokenAfter = AttendanceRules.NextStreakBrokenAfter(attendedDays, lastDay, today, brokenAfter, next);
             
             
             var popup = EconomyMiscPackets.BuildShowAttendanceState(next, nextBrokenAfter);
-            var reward = RewardOf(popup, next) is { } r
+            var reward = AttendanceCalendar.RewardOf(next, nextBrokenAfter) is { } r
                 ? AccountGiftStore.NewGift(r.ItemId, r.Count, SourceAttendance, DateTime.UtcNow)
                 : null;
             if (await gifts.TryRecordAttendanceAsync(accountId, lastDay, today, next, nextBrokenAfter, reward, ct))
@@ -84,51 +82,5 @@ public static class AttendanceDayGate
             }
         }
         return null;
-    }
-
- /// <summary>
- /// The count after one more attended day: 1 for the first day, then plus one, and back to 1 after the calendar's last day.
- /// </summary>
- /// <param name="attendedDays">Count before this day.</param>
- /// <param name="calendarDays">Length of the attendance calendar.</param>
-    internal static int NextAttendedDays(int attendedDays, int calendarDays)
-        => attendedDays < 1 || calendarDays < 1 ? 1 : attendedDays % calendarDays + 1;
-
- /// <summary>
- /// The streak state once a server day is attended.
- /// </summary>
- /// <remarks>
- /// The state is 0 at the start of a cycle. An already broken cycle keeps its stored value. A missed day breaks the cycle and records the count before that day. Because a missed day does not reset the count, this state is stored separately.
- /// </remarks>
- /// <param name="attendedDays">Count before today.</param>
- /// <param name="lastDay">Last attended day.</param>
- /// <param name="today">Day being attended.</param>
- /// <param name="brokenAfter">Stored streak state.</param>
- /// <param name="next">Count after today.</param>
-    internal static int NextStreakBrokenAfter(int attendedDays, int lastDay, int today, int brokenAfter, int next)
-    {
-        if (next == 1) return 0;
-        if (brokenAfter > 0) return brokenAfter;
-        return lastDay != 0 && today - lastDay > 1 ? Math.Max(1, attendedDays) : 0;
-    }
-
- /// <summary>
- /// Length of the attendance calendar, which is the cycle the count wraps at. Read from the popup's own day count.
- /// </summary>
-    internal static int CalendarDays { get; } = EconomyMiscPackets.BuildShowAttendanceState(1, 0)[CalendarDaysOffset];
-
- /// <summary>
- /// Gets the item and count of the reward for an attended day, read from an attendance popup body.
- /// </summary>
- /// <param name="popup">Attendance popup body.</param>
- /// <param name="attendedDays">Attended day to look up.</param>
- /// <returns>The item and count, or null when the body has no entry for that day or the entry names no item.</returns>
-    internal static (uint ItemId, ushort Count)? RewardOf(ReadOnlySpan<byte> popup, int attendedDays)
-    {
-        int at = EntriesOffset + EntryLength * (attendedDays - 1);
-        if (attendedDays < 1 || popup.Length < at + EntryLength) return null;
-        uint itemId = BinaryPrimitives.ReadUInt32LittleEndian(popup[(at + EntryItemOffset)..]);
-        byte count = popup[at + EntryCountOffset];
-        return itemId == 0 || count == 0 ? null : (itemId, count);
     }
 }

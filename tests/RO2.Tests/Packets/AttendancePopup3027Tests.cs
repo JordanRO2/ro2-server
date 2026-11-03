@@ -1,6 +1,7 @@
 using System.Text.Json;
 using RO2.GameData;
 using RO2.Quests.Domain;
+using RO2.Rewards.Domain;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using Xunit;
@@ -66,38 +67,38 @@ public class AttendancePopup3027Tests
     [InlineData(27, 28)]
     [InlineData(28, 1)]
     public void TheCountStepsOncePerDayAndWraps(int before, int after)
-        => Assert.Equal(after, AttendanceDayGate.NextAttendedDays(before, AttendanceDayGate.CalendarDays));
+        => Assert.Equal(after, AttendanceRules.NextAttendedDays(before, AttendanceCalendar.Days));
 
     [Fact]
     public void AMissedDayBreaksTheStreakUntilTheWrap()
     {
         var jul10 = new DateOnly(2026, 7, 10).DayNumber;
         
-        var broken = AttendanceDayGate.NextStreakBrokenAfter(1, jul10, jul10 + 2, 0, next: 2);
+        var broken = AttendanceRules.NextStreakBrokenAfter(1, jul10, jul10 + 2, 0, next: 2);
         Assert.Equal(1, broken);
         Assert.Equal(Convert.FromHexString(RetailStreptopeliaDay2AfterAMissedDay), EconomyMiscPackets.BuildShowAttendanceState(2, broken));
         
-        Assert.Equal(0, AttendanceDayGate.NextStreakBrokenAfter(6, jul10, jul10 + 1, 0, next: 7));
-        Assert.Equal(1, AttendanceDayGate.NextStreakBrokenAfter(4, jul10, jul10 + 1, 1, next: 5));
-        Assert.Equal(1, AttendanceDayGate.NextStreakBrokenAfter(4, jul10, jul10 + 5, 1, next: 5));
+        Assert.Equal(0, AttendanceRules.NextStreakBrokenAfter(6, jul10, jul10 + 1, 0, next: 7));
+        Assert.Equal(1, AttendanceRules.NextStreakBrokenAfter(4, jul10, jul10 + 1, 1, next: 5));
+        Assert.Equal(1, AttendanceRules.NextStreakBrokenAfter(4, jul10, jul10 + 5, 1, next: 5));
         
-        Assert.Equal(0, AttendanceDayGate.NextStreakBrokenAfter(28, jul10 + 7, jul10 + 11, 3, next: 1));
+        Assert.Equal(0, AttendanceRules.NextStreakBrokenAfter(28, jul10 + 7, jul10 + 11, 3, next: 1));
         
-        Assert.Equal(0, AttendanceDayGate.NextStreakBrokenAfter(0, 0, jul10, 0, next: 1));
+        Assert.Equal(0, AttendanceRules.NextStreakBrokenAfter(0, 0, jul10, 0, next: 1));
     }
 
     [Fact]
     public void TheRewardIsTheDaysEntry()
     {
-        Assert.Equal((60000486u, (ushort)3), AttendanceDayGate.RewardOf(Convert.FromHexString(RetailDay17), 17));
-        Assert.Equal((60000165u, (ushort)1), AttendanceDayGate.RewardOf(Convert.FromHexString(RetailDay1), 1));
-        Assert.Equal((50001116u, (ushort)1), AttendanceDayGate.RewardOf(EconomyMiscPackets.BuildShowAttendanceState(28, 0), 28));
+        Assert.Equal((60000486u, (ushort)3), AttendanceCalendar.RewardOf(17, 0));
+        Assert.Equal((60000165u, (ushort)1), AttendanceCalendar.RewardOf(1, 0));
+        Assert.Equal((50001116u, (ushort)1), AttendanceCalendar.RewardOf(28, 0));
         
-        Assert.Equal((22402012u, (ushort)1), AttendanceDayGate.RewardOf(EconomyMiscPackets.BuildShowAttendanceState(7, 3), 7));
-        Assert.Equal((22402015u, (ushort)1), AttendanceDayGate.RewardOf(EconomyMiscPackets.BuildShowAttendanceState(28, 7), 28));
-        Assert.Equal((50001113u, (ushort)1), AttendanceDayGate.RewardOf(EconomyMiscPackets.BuildShowAttendanceState(7, 7), 7));
-        Assert.Null(AttendanceDayGate.RewardOf(EconomyMiscPackets.BuildShowAttendanceState(28, 0), 29));
-        Assert.Null(AttendanceDayGate.RewardOf(EconomyMiscPackets.BuildShowAttendanceState(28, 0), 0));
+        Assert.Equal((22402012u, (ushort)1), AttendanceCalendar.RewardOf(7, 3));
+        Assert.Equal((22402015u, (ushort)1), AttendanceCalendar.RewardOf(28, 7));
+        Assert.Equal((50001113u, (ushort)1), AttendanceCalendar.RewardOf(7, 7));
+        Assert.Null(AttendanceCalendar.RewardOf(29, 0));
+        Assert.Null(AttendanceCalendar.RewardOf(0, 0));
     }
 
     [Fact]
