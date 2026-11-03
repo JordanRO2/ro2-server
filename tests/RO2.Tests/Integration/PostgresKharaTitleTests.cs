@@ -22,18 +22,18 @@ public sealed class PostgresKharaTitleTests
     private static DateTime Utc(int year, int month, int day, int hour, int minute, int second)
         => new(year, month, day, hour, minute, second, DateTimeKind.Utc);
 
-    [Fact]
+    [DockerFact]
     public async Task Get_unknown_character_is_null()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new KharaTitleRepository(_fx.Db!);
         Assert.Null(await repo.GetAsync(NewCharacterId()));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Save_then_get_round_trips_every_field()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new KharaTitleRepository(_fx.Db!);
         var id = NewCharacterId();
         var doc = new KharaTitleDocument
@@ -61,10 +61,10 @@ public sealed class PostgresKharaTitleTests
         Assert.Equal(DateTimeKind.Utc, got.PlayClockUtc!.Value.Kind);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Save_with_null_instants_reads_back_null()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new KharaTitleRepository(_fx.Db!);
         var id = NewCharacterId();
         await repo.SaveAsync(new KharaTitleDocument { Id = id, KharaA = 0, KharaB = 0, UpdatedUtc = Utc(2026, 1, 2, 3, 4, 5) });
@@ -79,10 +79,10 @@ public sealed class PostgresKharaTitleTests
         Assert.Equal(Utc(2026, 1, 2, 3, 4, 5), got.UpdatedUtc);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Save_twice_replaces_whole_document_including_back_to_null()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new KharaTitleRepository(_fx.Db!);
         var id = NewCharacterId();
         await repo.SaveAsync(new KharaTitleDocument
@@ -117,10 +117,10 @@ public sealed class PostgresKharaTitleTests
         Assert.Equal(Utc(2026, 6, 1, 0, 0, 3), got.UpdatedUtc);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Save_truncates_to_milliseconds_and_normalises_local_to_utc()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new KharaTitleRepository(_fx.Db!);
         var id = NewCharacterId();
         var withTicks = Utc(2026, 7, 8, 9, 10, 11).AddTicks(1_234_567); 
@@ -139,10 +139,10 @@ public sealed class PostgresKharaTitleTests
         Assert.Equal(DateTimeKind.Utc, got.PlayClockUtc!.Value.Kind);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task StorePlayClock_updates_only_clock_and_updated_stamp()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new KharaTitleRepository(_fx.Db!);
         var id = NewCharacterId();
         await repo.SaveAsync(new KharaTitleDocument
@@ -170,10 +170,10 @@ public sealed class PostgresKharaTitleTests
         Assert.Equal(newUpdated, got.UpdatedUtc);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task StorePlayClock_sets_clock_on_document_that_had_none()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new KharaTitleRepository(_fx.Db!);
         var id = NewCharacterId();
         await repo.SaveAsync(new KharaTitleDocument { Id = id, KharaA = 9, UpdatedUtc = Utc(2026, 2, 2, 2, 2, 2) });
@@ -187,10 +187,10 @@ public sealed class PostgresKharaTitleTests
         Assert.Equal(Utc(2026, 2, 3, 0, 0, 1), got.UpdatedUtc);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task StorePlayClock_for_missing_character_creates_no_document()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new KharaTitleRepository(_fx.Db!);
         var id = NewCharacterId();
 
@@ -199,10 +199,10 @@ public sealed class PostgresKharaTitleTests
         Assert.Null(await repo.GetAsync(id)); 
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Documents_of_different_characters_are_independent()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new KharaTitleRepository(_fx.Db!);
         var idA = NewCharacterId();
         var idB = idA + 1;

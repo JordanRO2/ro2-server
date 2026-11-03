@@ -18,18 +18,18 @@ public sealed class PostgresKharaTraceTests
     
     private static uint NewCharacterId() => (uint)Random.Shared.NextInt64(1, 2_000_000_000);
 
-    [Fact]
+    [DockerFact]
     public async Task Get_never_saved_is_empty()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new KharaTraceRepository(_fx.Db!);
         Assert.Empty(await repo.GetAsync(NewCharacterId()));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Save_then_get_round_trips_order_and_duplicates()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new KharaTraceRepository(_fx.Db!);
         var cid = NewCharacterId();
         var list = new uint[] { 30, 5, 5, 4_000_000_000, 7, 30 }; 
@@ -37,10 +37,10 @@ public sealed class PostgresKharaTraceTests
         Assert.Equal(list, await repo.GetAsync(cid));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Save_replaces_whole_list_not_merge()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new KharaTraceRepository(_fx.Db!);
         var cid = NewCharacterId();
         await repo.SaveAsync(cid, new uint[] { 1, 2, 3 });
@@ -48,10 +48,10 @@ public sealed class PostgresKharaTraceTests
         Assert.Equal(new uint[] { 9, 1 }, await repo.GetAsync(cid));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Save_empty_list_clears_previous()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new KharaTraceRepository(_fx.Db!);
         var cid = NewCharacterId();
         await repo.SaveAsync(cid, new uint[] { 11, 22 });
@@ -59,20 +59,20 @@ public sealed class PostgresKharaTraceTests
         Assert.Empty(await repo.GetAsync(cid));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Save_empty_list_on_first_save_is_empty()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new KharaTraceRepository(_fx.Db!);
         var cid = NewCharacterId();
         await repo.SaveAsync(cid, new List<uint>());
         Assert.Empty(await repo.GetAsync(cid));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Characters_are_isolated()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new KharaTraceRepository(_fx.Db!);
         var a = NewCharacterId();
         var b = a + 1;
@@ -82,20 +82,20 @@ public sealed class PostgresKharaTraceTests
         Assert.Equal(new uint[] { 300 }, await repo.GetAsync(b));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Character_id_above_int_max_round_trips()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new KharaTraceRepository(_fx.Db!);
         var cid = (uint)Random.Shared.NextInt64(3_000_000_000, 4_000_000_000);
         await repo.SaveAsync(cid, new uint[] { 42 });
         Assert.Equal(new uint[] { 42 }, await repo.GetAsync(cid));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Concurrent_first_saves_do_not_conflict_and_last_writer_wins_with_a_valid_list()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new KharaTraceRepository(_fx.Db!);
         var cid = NewCharacterId();
         var lists = Enumerable.Range(1, 8).Select(i => new uint[] { (uint)i, (uint)i * 10 }).ToArray();
