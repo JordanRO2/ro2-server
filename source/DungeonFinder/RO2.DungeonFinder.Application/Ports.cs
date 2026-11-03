@@ -47,12 +47,12 @@ public interface IFinderRowCatalog
     FindDungeonList? Row(uint listId);
 }
 
-/// <summary>Session-bound side effects of paying a finder run.</summary>
+/// <summary>Session-bound side effects of paying a finder run, resolved by the paid character.</summary>
 public interface IFinderRewardPublisher
 {
     /// <summary>A reward item landed in the bag: quest objective, khara, then the 2333 pickup per stack.</summary>
-    Task ItemLanded(SeatKey seat, uint itemId, int count, IReadOnlyList<InventoryItem> stacks);
+    Task ItemLanded(uint characterId, uint itemId, int count, IReadOnlyList<InventoryItem> landedStacks);
 
-    /// <summary>The run is paid: sends the 2816 completion notice, mailed when the bag was full.</summary>
-    Task Completed(SeatKey seat, uint listId, bool mailed);
+    /// <summary>The run is paid: sends the 2816 completion notice in the given state.</summary>
+    Task Completed(uint characterId, uint listId, CompleteGiftState state);
 }

@@ -244,6 +244,8 @@ public static class Program
         services.AddSingleton<PlayerStateManager>();
         services.AddSingleton<RO2.DungeonFinder.Application.ISeatLiveness, SeatLivenessAdapter>();
         services.AddSingleton<RO2.DungeonFinder.Application.IFinderPartyView, FinderPartyViewAdapter>();
+        services.AddScoped<RO2.DungeonFinder.Application.IFinderRewardPublisher, FinderRewardPublisher>();
+        services.AddScoped<RO2.DungeonFinder.Application.PayFinderRun>();
         services.AddSingleton<NpcStateManager>();
         services.AddSingleton<BroadcastService>();
         services.AddSingleton<PlayerSpawnService>();

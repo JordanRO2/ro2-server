@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
+using RO2.DungeonFinder.Domain;
 using RO2.GameData.Tables;
 using RO2.GameData;
 using RO2.Identity.Application.Commands;
@@ -37,13 +38,13 @@ public sealed class DungeonFinderRewardReauditTests
     [Fact]
     public void FinderRewardMail_IsOneMailPerStack_WithTheClientStringIds()
     {
-        Assert.Equal(new[] { 5 }, DungeonFinderReward.SplitIntoMails(5, 99));
-        Assert.Equal(new[] { 99, 99, 52 }, DungeonFinderReward.SplitIntoMails(250, 99));
-        Assert.Equal(new[] { 1, 1 }, DungeonFinderReward.SplitIntoMails(2, 1));
-        Assert.Empty(DungeonFinderReward.SplitIntoMails(0, 99));
+        Assert.Equal(new[] { 5 }, RewardPolicy.SplitIntoMails(5, 99));
+        Assert.Equal(new[] { 99, 99, 52 }, RewardPolicy.SplitIntoMails(250, 99));
+        Assert.Equal(new[] { 1, 1 }, RewardPolicy.SplitIntoMails(2, 1));
+        Assert.Empty(RewardPolicy.SplitIntoMails(0, 99));
         
         
         Assert.Equal(("11809", "11812", "11813"),
-            (DungeonFinderReward.MailSender, DungeonFinderReward.MailTitle, DungeonFinderReward.MailBody));
+            (RewardPolicy.MailSender, RewardPolicy.MailTitle, RewardPolicy.MailBody));
     }
 }

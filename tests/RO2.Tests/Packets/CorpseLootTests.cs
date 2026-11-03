@@ -1,3 +1,4 @@
+using RO2.DungeonFinder.Application;
 using RO2.DungeonFinder.Domain;
 using RO2.Domain.Entities;
 using RO2.GameData;
@@ -792,13 +793,13 @@ public class DungeonFinderTests
     [InlineData(50, 4)]
     [InlineData(10, 3)]
     public void RewardRow_IsChosenByTheRewardLevel(int level, int rowId)
-        => Assert.Equal((byte)rowId, DungeonFinderReward.RewardRow(Categories, Rewards, List21, level)?.ID);
+        => Assert.Equal((byte)rowId, RewardPolicy.RewardRow(Categories, Rewards, List21, level)?.ID);
 
     [Fact]
     public void RewardRow_FallsBackToTheCategoryGroup_AndIsNullBelowTheFirstRow()
     {
-        Assert.Equal((byte)2, DungeonFinderReward.RewardRow(Categories, Rewards, List4, 50)?.ID);
-        Assert.Null(DungeonFinderReward.RewardRow(Categories, Rewards, List21, 9));
+        Assert.Equal((byte)2, RewardPolicy.RewardRow(Categories, Rewards, List4, 50)?.ID);
+        Assert.Null(RewardPolicy.RewardRow(Categories, Rewards, List21, 9));
     }
 
     [Fact]
@@ -822,8 +823,8 @@ public class DungeonFinderTests
             new() { Id = 2, CharacterId = 7, ItemId = 22402022, Count = 1, Slot = 1 },
             new() { Id = 3, CharacterId = 7, ItemId = 22402097, Count = 2, Slot = 2 },
         };
-        var items = DungeonFinderReward.RewardItems(Rewards[3], Templates, "pc", Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance);
-        var plan = DungeonFinderReward.PlanBag(items, owned, 7, Templates);
+        var items = RewardPolicy.RewardItems(Rewards[3], Templates).items;
+        var plan = PayFinderRun.PlanBag(items, owned, 7, Templates);
 
         Assert.NotNull(plan);
         Assert.Equal([10, 2, 3], plan.Select(l => l.MergedCount));
@@ -837,12 +838,12 @@ public class DungeonFinderTests
         var owned = Enumerable.Range(0, 20)
             .Select(i => new InventoryItem { Id = (ulong)i + 1, CharacterId = 7, ItemId = 60000000u + (uint)i, Count = 1, Slot = (short)i })
             .ToList();
-        var items = DungeonFinderReward.RewardItems(Rewards[3], Templates, "pc", Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance);
-        Assert.Null(DungeonFinderReward.PlanBag(items, owned, 7, Templates));
+        var items = RewardPolicy.RewardItems(Rewards[3], Templates).items;
+        Assert.Null(PayFinderRun.PlanBag(items, owned, 7, Templates));
 
         
         owned.RemoveAt(19);
-        Assert.Null(DungeonFinderReward.PlanBag(items, owned, 7, Templates));
+        Assert.Null(PayFinderRun.PlanBag(items, owned, 7, Templates));
     }
 
     [Fact]
@@ -850,7 +851,7 @@ public class DungeonFinderTests
     {
         
         var body = LootNotifyPackets.BuildPickupItem2333(new byte[LootNotifyPackets.ItemRecordLength],
-            pickupKind: DungeonFinderReward.PickupKindFinderReward);
+            pickupKind: RewardPolicy.PickupKindFinderReward);
         Assert.Equal("00000300", ToHex(body[..4]));
     }
 }
