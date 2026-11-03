@@ -17,20 +17,20 @@ public sealed class PostgresChannelColorTests
 
     private static uint NewOwner() => (uint)Random.Shared.NextInt64(1, uint.MaxValue);
 
-    [Fact]
+    [DockerFact]
     public async Task Unknown_owner_has_no_colors()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new ChannelColorRepository(_fx.Db!);
         var colors = await repo.GetColorsAsync(NewOwner());
         Assert.NotNull(colors);
         Assert.Empty(colors);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Set_then_get_round_trips_one_channel()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new ChannelColorRepository(_fx.Db!);
         var owner = NewOwner();
         await repo.SetColorAsync(owner, 12, 0xFF112233u);
@@ -39,10 +39,10 @@ public sealed class PostgresChannelColorTests
         Assert.Equal(0xFF112233u, colors[12]);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Set_replaces_existing_channel_value()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new ChannelColorRepository(_fx.Db!);
         var owner = NewOwner();
         await repo.SetColorAsync(owner, 13, 0xFF000001u);
@@ -52,10 +52,10 @@ public sealed class PostgresChannelColorTests
         Assert.Equal(0xFF000002u, colors[13]);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Channels_are_independent_for_one_owner()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new ChannelColorRepository(_fx.Db!);
         var owner = NewOwner();
         await repo.SetColorAsync(owner, 12, 0xFFAA0000u);
@@ -69,10 +69,10 @@ public sealed class PostgresChannelColorTests
         Assert.Equal(0xFF0000CCu, colors[14]);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Owners_are_isolated()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new ChannelColorRepository(_fx.Db!);
         var a = NewOwner();
         var b = a == uint.MaxValue ? a - 1 : a + 1;
@@ -88,10 +88,10 @@ public sealed class PostgresChannelColorTests
         Assert.Equal(0xFF333333u, cb[14]);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Unsigned_extremes_round_trip()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new ChannelColorRepository(_fx.Db!);
         
         
@@ -104,10 +104,10 @@ public sealed class PostgresChannelColorTests
         Assert.Equal(0u, colors[0]);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Concurrent_sets_on_different_channels_all_persist()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new ChannelColorRepository(_fx.Db!);
         var owner = NewOwner();
         await Task.WhenAll(
