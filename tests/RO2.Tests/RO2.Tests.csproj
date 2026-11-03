@@ -89,6 +89,8 @@
     <ProjectReference Include="..\..\source\Party\RO2.Party.Application\RO2.Party.Application.csproj" />
     <ProjectReference Include="..\..\source\Party\RO2.Party.Domain\RO2.Party.Domain.csproj" />
     <ProjectReference Include="..\..\source\Recruitment\RO2.Recruitment.Domain\RO2.Recruitment.Domain.csproj" />
+    <ProjectReference Include="..\..\source\ReadyCheck\RO2.ReadyCheck.Domain\RO2.ReadyCheck.Domain.csproj" />
+    <ProjectReference Include="..\..\source\ReadyCheck\RO2.ReadyCheck.Application\RO2.ReadyCheck.Application.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <RootNamespace>RO2.ReadyChecks.Application</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+  <!-- ReadyCheck bounded context: Application adapts the shared party roster port to the Domain's inputs. Never the Zone host. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.ReadyCheck.Domain\RO2.ReadyCheck.Domain.csproj" />
+    <ProjectReference Include="..\..\Party\RO2.Party.Application\RO2.Party.Application.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+  </ItemGroup>
+
+</Project>
