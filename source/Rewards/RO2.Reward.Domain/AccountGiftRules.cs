@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Rewards.Domain;
 
 /// <summary>
 /// The pure expiry rules of the account gift box. The record's u8 @38 is the days left: 7 on the day of filing and

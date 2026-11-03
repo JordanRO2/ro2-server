@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Rewards.Domain;
 
 /// <summary>
 /// An account's daily attendance state, stored with its gift box. A positional record, so callers can deconstruct it

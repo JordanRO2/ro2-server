@@ -1,4 +1,4 @@
-using RO2.Domain.Entities;
+using RO2.Rewards.Domain;
 using RO2.Persistence.Postgres.Repositories;
 using Xunit;
 

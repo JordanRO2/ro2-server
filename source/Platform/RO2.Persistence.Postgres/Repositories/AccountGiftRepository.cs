@@ -1,6 +1,6 @@
 using Npgsql;
 using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
+using RO2.Rewards.Domain;
 
 namespace RO2.Persistence.Postgres.Repositories;
 

@@ -1,5 +1,5 @@
 using RO2.Network.Packets;
-using RO2.Domain.Entities;
+using RO2.Rewards.Domain;
 
 namespace RO2.Server.Zone.Services;
 

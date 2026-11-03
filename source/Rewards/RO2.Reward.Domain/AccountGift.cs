@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Rewards.Domain;
 
 /// <summary>One gift in an account's gift box ("Item Box Storage"), as its 43-byte 2799 record lists it.</summary>
 public sealed class AccountGift

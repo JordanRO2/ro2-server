@@ -1,5 +1,5 @@
 using System.Buffers.Binary;
-using RO2.Domain.Entities;
+using RO2.Rewards.Domain;
 using RO2.Server.Zone.Services;
 using Xunit;
 

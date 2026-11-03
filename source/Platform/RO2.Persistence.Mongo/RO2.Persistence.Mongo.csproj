@@ -17,6 +17,7 @@
     <ProjectReference Include="..\..\Inventory\RO2.Inventory.Domain\RO2.Inventory.Domain.csproj" />
     <ProjectReference Include="..\..\World\RO2.World.Domain\RO2.World.Domain.csproj" />
     <ProjectReference Include="..\..\World\RO2.World.Application\RO2.World.Application.csproj" />
+    <ProjectReference Include="..\..\Rewards\RO2.Reward.Domain\RO2.Reward.Domain.csproj" />
   </ItemGroup>
 
 </Project>

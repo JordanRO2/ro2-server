@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Rewards.Domain;
 
 /// <summary>
 /// Persisted play-time reward progress of one account, shared across its characters and sessions.
