@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Plural namespace: a namespace "RO2.Companion" would shadow any future Companion type in every RO2.* file (CS0118). -->
+    <RootNamespace>RO2.Companions.Application</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Companion bounded context: Application holds the ports and, later, the use cases (reins grant, extend ticket, glider ride).
+       It references its own Domain + the shared kernels + the Domain projects of the ports it reuses (IWallet, ICharacterRepository,
+       IInventoryRepository) + Collection.Application (ICollectionBookView). The wire, the live registries (MountService, RideOwners)
+       and the order of the side effects stay in the Zone host. Never the Zone host. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Companion.Domain\RO2.Companion.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+    <ProjectReference Include="..\..\Character\RO2.Character.Domain\RO2.Character.Domain.csproj" />
+    <ProjectReference Include="..\..\Inventory\RO2.Inventory.Domain\RO2.Inventory.Domain.csproj" />
+    <ProjectReference Include="..\..\Collection\RO2.Collection.Application\RO2.Collection.Application.csproj" />
+  </ItemGroup>
+
+</Project>
