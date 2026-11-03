@@ -1,3 +1,4 @@
+using RO2.Socials.Application;
 using RO2.Socials.Domain;
 using RO2.Application.Interfaces;
 using System.Buffers.Binary;
@@ -89,7 +90,6 @@ public class ReqAddFriendHandler : ChatRmiHandlerBase<ReqAddFriendHandler>
         var presence = services.GetRequiredService<IChannelPresenceStore>();
         var friends = services.GetRequiredService<FriendStore>();
         var broadcast = services.GetRequiredService<ChatBroadcastService>();
-        var blocks = services.GetRequiredService<BlockListRepository>();
 
         // A full list is answered 33 BEFORE the name is looked up, so an unknown name on a full list gets 33
         // and the same name gets 18 once a delete has made room (see FriendStore.MaxFriends).
@@ -130,20 +130,19 @@ public class ReqAddFriendHandler : ChatRmiHandlerBase<ReqAddFriendHandler>
             return;
         }
 
-        switch (await friends.AddAsync(ownerId, target.Id))
+        var added = await services.GetRequiredService<AddFriendUseCase>()
+            .ExecuteAsync(ownerId, target.Id, !string.IsNullOrEmpty(session.Username), ct);
+        if (!added.Added)
         {
-            case AddOutcome.AlreadyFriend:
+            if (added.ResultCode == FriendStore.AddResultAlreadyFriend)
                 Logger.LogInformation("Session {Id}: add friend \"{Name}\": already a friend", session.SessionId, target.Name);
-                await session.SendInternalRmiAsync(ChatS2COpcodes.AnsAddFriend,
-                    SocialPackets.BuildAddFriendAnswer(FriendStore.AddResultAlreadyFriend, null));
-                return;
-            case AddOutcome.ListFull:
+            else
                 // A concurrent add slipped past the pre-lookup count check and filled the last slot; the
                 // atomic size guard caught it. Answer 33, the same list-full result as the pre-check.
                 Logger.LogInformation("Session {Id}: add friend \"{Name}\": list full (atomic guard)", session.SessionId, target.Name);
-                await session.SendInternalRmiAsync(ChatS2COpcodes.AnsAddFriend,
-                    SocialPackets.BuildAddFriendAnswer(FriendStore.AddResultListFull, null));
-                return;
+            await session.SendInternalRmiAsync(ChatS2COpcodes.AnsAddFriend,
+                SocialPackets.BuildAddFriendAnswer(added.ResultCode, null));
+            return;
         }
 
         Logger.LogInformation("Session {Id}: {Owner} added friend {Friend} ({FriendId})",
@@ -151,33 +150,22 @@ public class ReqAddFriendHandler : ChatRmiHandlerBase<ReqAddFriendHandler>
         // The record's uid is the friend's GID, as in 23505 (ReqFriendListHandler.WithGids): it is above
         // 2^32, and the client keys the new friend by it.
         await session.SendInternalRmiAsync(ChatS2COpcodes.AnsAddFriend,
-            SocialPackets.BuildAddFriendAnswer(FriendStore.AddResultOk,
+            SocialPackets.BuildAddFriendAnswer(added.ResultCode,
                 FriendStore.Entry(target, FriendStore.IsOnline(broadcast, target.Id),
                         (await presence.GetLocationsAsync(new[] { target.Id }, ct)).GetValueOrDefault(target.Id))
                     with { Uid = CharacterGid.Of(ownerGid, target.Id) }));
 
-        // Tell the added player who added them. The body is the requester's own name, so without a
-        // resolved name (ChatAuthHandler could not load the character) there is nothing to send.
-        if (string.IsNullOrEmpty(session.Username)) return;
-
-        // No notice on an add-back: when the added player already lists the requester, no 23512 is sent.
-        if (await friends.ListsFriendAsync(target.Id, ownerId, ct))
-        {
+        // Tell the added player who added them, unless the use case withheld the notice (no resolved requester
+        // name, the added player already lists the requester, or the added player blocks the requester).
+        if (added.TargetListsRequester)
             Logger.LogDebug("Session {Id}: {Friend} already lists {Owner}, no 23512",
                 session.SessionId, target.Name, session.Username);
-            return;
-        }
-
-        // Defensive: if the added player has blocked the requester, do not tell them they were added.
-        // The add still succeeds for the requester; only the 23512 to the target is withheld.
-        if (await blocks.BlocksAsync(target.Id, ownerId, ct))
-        {
+        if (added.TargetBlocksRequester)
             Logger.LogDebug("Session {Id}: {Friend} blocks {Owner}, no 23512",
                 session.SessionId, target.Name, session.Username);
-            return;
-        }
+        if (!added.ShouldNotify) return;
 
-        var notify = SocialPackets.BuildNfyAddFriend(session.Username);
+        var notify = SocialPackets.BuildNfyAddFriend(session.Username!);
         foreach (var other in broadcast.Sessions)
         {
             if (other.IsConnected && other.CharacterId == target.Id)

@@ -1,3 +1,4 @@
+using RO2.Socials.Application;
 using RO2.Socials.Domain;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
@@ -92,13 +93,14 @@ public class ReqAddBlockHandler : ChatRmiHandlerBase<ReqAddBlockHandler>
             return;
         }
 
-        switch (await repo.AddAsync(ownerId, target.Id, target.Name, ct))
+        var added = await services.GetRequiredService<AddBlockUseCase>().ExecuteAsync(ownerId, target.Id, target.Name, ct);
+        switch (added.Outcome)
         {
             case BlockAddOutcome.AlreadyRegistered:
                 Logger.LogInformation("Session {Id}: character {Owner} already blocks {Target} ({TargetId}) - refused with {Result}",
                     session.SessionId, ownerId, target.Name, target.Id, BlockListPackets.AddBlockResultAlreadyRegistered);
                 await session.SendInternalRmiAsync(ChatS2COpcodes.AnsAddBlock,
-                    BlockListPackets.BuildAddBlockRefusal(BlockListPackets.AddBlockResultAlreadyRegistered));
+                    BlockListPackets.BuildAddBlockRefusal(added.RefusalCode!.Value));
                 return;
             case BlockAddOutcome.ListFull:
                 // There is no block-list-full frame and no client result code for it; the defensive cap

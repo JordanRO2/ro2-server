@@ -59,6 +59,8 @@ public static class Program
             RO2.Socials.Infrastructure.Postgres.PostgresBlockListRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddScoped<FriendStore>();
         services.AddScoped<BlockListRepository>();
+        services.AddScoped<RO2.Socials.Application.AddFriendUseCase>();
+        services.AddScoped<RO2.Socials.Application.AddBlockUseCase>();
         services.AddSingleton<FriendPresence>();
         services.AddProviderRepository<IChannelColorRepository,
             RO2.Persistence.Mongo.Repositories.ChannelColorRepository,

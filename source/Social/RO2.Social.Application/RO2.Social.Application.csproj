@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Plural namespace: a namespace "RO2.Social" would shadow any future Social type in every RO2.* file (CS0118). -->
+    <RootNamespace>RO2.Socials.Application</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Social bounded context: Application holds the add-friend / add-block decisions over the Domain repository ports.
+       The throttles, name lookup, projections and wire stay in the Chat host. Never the Chat host. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Social.Domain\RO2.Social.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+  </ItemGroup>
+
+</Project>

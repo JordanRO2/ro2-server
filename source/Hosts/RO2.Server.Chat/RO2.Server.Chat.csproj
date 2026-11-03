@@ -22,6 +22,7 @@
     <ProjectReference Include="..\..\Platform\RO2.Infrastructure\RO2.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Platform\RO2.Persistence.Mongo\RO2.Persistence.Mongo.csproj" />
     <ProjectReference Include="..\..\Platform\RO2.Network\RO2.Network.csproj" />
+    <ProjectReference Include="..\..\Social\RO2.Social.Application\RO2.Social.Application.csproj" />
     <ProjectReference Include="..\..\Social\RO2.Social.Domain\RO2.Social.Domain.csproj" />
     <ProjectReference Include="..\..\Social\RO2.Social.Infrastructure.Mongo\RO2.Social.Infrastructure.Mongo.csproj" />
     <ProjectReference Include="..\..\Social\RO2.Social.Infrastructure.Postgres\RO2.Social.Infrastructure.Postgres.csproj" />
