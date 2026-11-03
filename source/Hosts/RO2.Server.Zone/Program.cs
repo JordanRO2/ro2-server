@@ -253,6 +253,7 @@ public static class Program
         services.AddSingleton<RO2.Parties.Application.IGuildNameLookup, GuildNameLookup>();
         services.AddSingleton<RO2.Parties.Application.IClock, PartyClock>();
         services.AddSingleton<PartyService>();
+        services.AddSingleton<RO2.Parties.Application.IPartyRoster, PartyRosterAdapter>();
         services.AddSingleton<CombatService>();
         services.AddSingleton<LootService>();
         services.AddSingleton<IQuestObjectiveEvents, QuestObjectiveEvents>();

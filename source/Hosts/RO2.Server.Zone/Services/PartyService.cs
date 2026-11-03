@@ -145,6 +145,9 @@ public partial class PartyService
                 : null);
     }
 
+    /// <summary>The party with that ID, or null when it no longer exists.</summary>
+    public PartyState? GetParty(uint partyId) => _parties.GetValueOrDefault(partyId);
+
     public PartyState? GetPlayerParty(uint sessionId)
     {
         if (_playerToParty.TryGetValue(sessionId, out var partyId))
