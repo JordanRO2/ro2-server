@@ -10,7 +10,6 @@ using RO2.Domain.Entities;
 using RO2.Kharas.Domain;
 using RO2.GameData;
 using RO2.GameData.Tables;
-using RO2.Persistence.Mongo.Persistence;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;

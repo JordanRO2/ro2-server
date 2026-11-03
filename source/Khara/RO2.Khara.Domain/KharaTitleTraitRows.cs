@@ -10,8 +10,6 @@ namespace RO2.Kharas.Domain;
 /// </summary>
 public static class KharaTitleTraitRows
 {
-    /// <summary>NationEnable bit that marks the Khara title row used by the service.</summary>
-    private const int RetailNationBit = 4;
 
     /// <summary>Cache of the TraitInfo rows each title grants, per loaded game data store.</summary>
     private static readonly ConditionalWeakTable<GameDataStore, Dictionary<uint, List<(byte Kind, byte Type, float Value)>>>
@@ -41,7 +39,7 @@ public static class KharaTitleTraitRows
             {
                 first.TryAdd(row.Title_ID, row);
                 if (!retail.ContainsKey(row.Title_ID)
-                    && (row.NationEnable == 0 || (row.NationEnable & RetailNationBit) != 0))
+                    && KharaCatalog.IsRetail(row.NationEnable))
                     retail[row.Title_ID] = row;
             }
 

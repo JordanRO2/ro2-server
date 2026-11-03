@@ -86,9 +86,6 @@ public static class KharaTitleRules
     /// <see cref="Decide"/>).</summary>
     public const uint SlotNotApplied = 0xFFFFFFFF;
 
-    /// <summary>The NationEnable bit of the service the retail data targets (the same rule as KharaCatalog's retail
-    /// block): a block whose main row carries it, or carries 0, is the one used.</summary>
-    private const int RetailNationBit = 4;
 
     private static readonly ConditionalWeakTable<IReadOnlyList<KharaInfo>, RetailTitles> TitlesByTable = new();
 
@@ -186,7 +183,7 @@ public static class KharaTitleRules
             {
                 var opensBlock = first.TryAdd(row.Quest_ID, row) || row.Quest_Type != 0;
                 if (opensBlock && !retail.ContainsKey(row.Quest_ID)
-                    && (row.NationEnable == 0 || (row.NationEnable & RetailNationBit) != 0))
+                    && KharaCatalog.IsRetail(row.NationEnable))
                     retail[row.Quest_ID] = row;
             }
             var byKhara = new Dictionary<uint, uint>();

@@ -115,6 +115,10 @@ public sealed class KharaCatalog
  /// <summary>NationEnable bit of the service that the Khara block is used for.</summary>
     public const int RetailNationBit = 4;
 
+ /// <summary>The one retail-block rule shared by the catalog, the title grants and the title traits: a row whose
+ /// NationEnable is 0 or carries the service bit is the one the service uses.</summary>
+    public static bool IsRetail(uint nationEnable) => nationEnable == 0 || (nationEnable & RetailNationBit) != 0;
+
  /// <summary>
  /// The active block of one Khara's rows. Each block starts at a row with a non-zero Quest_Type and runs to the next such row.
  /// The block whose main row has NationEnable 0 or the service bit is used. The first block is used when none matches.
@@ -129,7 +133,7 @@ public sealed class KharaCatalog
                 if (retail is not null) break;
                 current = new List<KharaInfo>();
                 first ??= current;
-                if (row.NationEnable == 0 || (row.NationEnable & RetailNationBit) != 0) retail = current;
+                if (IsRetail(row.NationEnable)) retail = current;
             }
             current.Add(row);
         }
