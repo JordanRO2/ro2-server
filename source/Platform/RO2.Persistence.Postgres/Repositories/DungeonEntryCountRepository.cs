@@ -1,3 +1,4 @@
+using RO2.Dungeons.Domain;
 using System.Globalization;
 using Npgsql;
 using RO2.Application.Interfaces;
@@ -12,7 +13,7 @@ namespace RO2.Persistence.Postgres.Repositories;
 /// lazily, no timer), and an entry recorded in a different window starts a fresh object.
 /// </summary>
 /// <remarks>
-/// The daily reset instant is 10:00 UTC, a measured constant (no table holds it); <see cref="WindowStart"/>
+/// The daily reset instant is 10:00 UTC, a measured constant (no table holds it); <see cref="DungeonEntryWindow.WindowStart"/>
 /// is the same computation the Mongo provider uses. The <c>uint</c> character id maps to <c>bigint</c>
 /// (Postgres has no unsigned integers) and is the primary key, the way it was the Mongo <c>_id</c>; the
 /// DungeonID is only ever a jsonb key (its decimal text), exactly as it is a document key in Mongo.
@@ -28,20 +29,9 @@ public sealed class DungeonEntryCountRepository : IDungeonEntryCountRepository
 {
     public const string TableName = "character_dungeon_entries";
 
- /// <summary>Retail's daily reset instant as a UTC time of day.</summary>
-    public static readonly TimeSpan ResetTimeOfDayUtc = TimeSpan.FromHours(10);
-
     private readonly PostgresDbContext _db;
 
     public DungeonEntryCountRepository(PostgresDbContext db) => _db = db;
-
- /// <summary>The start of the daily window <paramref name="utcNow"/> falls in: the latest 10:00 UTC at or before it.</summary>
-    public static DateTime WindowStart(DateTime utcNow)
-    {
-        var utc = utcNow.Kind == DateTimeKind.Local ? utcNow.ToUniversalTime() : DateTime.SpecifyKind(utcNow, DateTimeKind.Utc);
-        var today = DateTime.SpecifyKind(utc.Date, DateTimeKind.Utc) + ResetTimeOfDayUtc;
-        return utc >= today ? today : today.AddDays(-1);
-    }
 
     public async Task<int> GetUsedAsync(uint characterId, uint dungeonId, DateTime utcNow, CancellationToken ct = default)
     {
@@ -51,7 +41,7 @@ public sealed class DungeonEntryCountRepository : IDungeonEntryCountRepository
             $"SELECT (counts ->> @k::text)::integer FROM {TableName} WHERE character_id = @c AND window_start_utc = @w",
             conn);
         cmd.Parameters.AddWithValue("c", (long)characterId);
-        cmd.Parameters.AddWithValue("w", WindowStart(utcNow));
+        cmd.Parameters.AddWithValue("w", DungeonEntryWindow.WindowStart(utcNow));
         cmd.Parameters.AddWithValue("k", Key(dungeonId));
         var scalar = await cmd.ExecuteScalarAsync(ct);
         return scalar is int used ? used : 0;
@@ -74,7 +64,7 @@ public sealed class DungeonEntryCountRepository : IDungeonEntryCountRepository
             "RETURNING (e.counts ->> @k::text)::integer",
             conn);
         cmd.Parameters.AddWithValue("c", (long)characterId);
-        cmd.Parameters.AddWithValue("w", WindowStart(utcNow));
+        cmd.Parameters.AddWithValue("w", DungeonEntryWindow.WindowStart(utcNow));
         cmd.Parameters.AddWithValue("k", Key(dungeonId));
         cmd.Parameters.AddWithValue("u", DateTime.UtcNow);
         var count = await cmd.ExecuteScalarAsync(ct);

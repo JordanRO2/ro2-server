@@ -34,7 +34,7 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 /// </para>
 /// <para>
 /// THE ENTRY COUNT. Lists 21 / 22 / 23 (Category 5, Party_Num 1) enter DungeonIDs 63 / 79 / 81, all Enter_Count 3, on
-/// maps 410104 / 412104 / 421104, which are Map_List.Map_Type 1 (<see cref="DungeonEntryGate.InstanceMapType"/>).
+/// maps 410104 / 412104 / 421104, which are Map_List.Map_Type 1 (<see cref="DungeonEntryRules.InstanceMapType"/>).
 /// A join is refused once the entry count is used up: a lone 2556 <c>1e212e00 474a</c> + zeros (result
 /// 19015, string_ui 15801 "The max. entered number exceeded.") and no 2824, no 2938. Joins with fewer than 3 entries
 /// used all get the 2824. So the gate is 1531's Enter_Count
@@ -78,7 +78,7 @@ public class PartyMatchingFindDungeonJoinSelectBtnHandler : ZoneRmiHandlerBase<P
     /// <summary>DungeonInfo.Enter_Count value meaning the dungeon has no entry limit.</summary>
     private const int NoEntryLimit = 0;
 
-    /// <summary><see cref="DungeonEntryGate.CheckEnterCount"/> result meaning the entry is allowed.</summary>
+    /// <summary><see cref="DungeonEntryRules.CheckEnterCount"/> result meaning the entry is allowed.</summary>
     private const ushort EntryAllowed = 0;
 
     public PartyMatchingFindDungeonJoinSelectBtnHandler(IServiceScopeFactory s, ILogger<PartyMatchingFindDungeonJoinSelectBtnHandler> l, PlayerStateManager pm, BroadcastService bc) : base(s, l, pm, bc) { }
@@ -122,7 +122,7 @@ public class PartyMatchingFindDungeonJoinSelectBtnHandler : ZoneRmiHandlerBase<P
         }
 
         
-        var isInstance = map.Map_Type == DungeonEntryGate.InstanceMapType;
+        var isInstance = map.Map_Type == DungeonEntryRules.InstanceMapType;
         var owner = DungeonInstanceOwner.For(
             services.GetRequiredService<PartyService>().GetPlayerParty(player.SessionId)?.PartyId, player.CharacterId);
         var counts = isInstance && dungeon.Enter_Count != NoEntryLimit
@@ -132,7 +132,7 @@ public class PartyMatchingFindDungeonJoinSelectBtnHandler : ZoneRmiHandlerBase<P
         {
             
             var used = await counts.GetUsedAsync(player.CharacterId, dungeon.DungeonID, DateTime.UtcNow, ct);
-            var refusal = DungeonEntryGate.CheckEnterCount(dungeon, wouldCount: true, used);
+            var refusal = DungeonEntryRules.CheckEnterCount(dungeon, wouldCount: true, used);
             if (refusal != EntryAllowed)
             {
                 

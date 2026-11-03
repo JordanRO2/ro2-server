@@ -1,3 +1,4 @@
+using RO2.Dungeons.Domain;
 using RO2.Persistence.Postgres.Repositories;
 using Xunit;
 
@@ -29,13 +30,13 @@ public sealed class PostgresDungeonEntryCountTests
     public void WindowStart_is_the_latest_10_utc_at_or_before_now()
     {
         Assert.Equal(new DateTime(2026, 7, 10, 10, 0, 0, DateTimeKind.Utc),
-            DungeonEntryCountRepository.WindowStart(new DateTime(2026, 7, 11, 2, 50, 45, DateTimeKind.Utc)));
+            DungeonEntryWindow.WindowStart(new DateTime(2026, 7, 11, 2, 50, 45, DateTimeKind.Utc)));
         Assert.Equal(new DateTime(2026, 7, 11, 10, 0, 0, DateTimeKind.Utc),
-            DungeonEntryCountRepository.WindowStart(new DateTime(2026, 7, 11, 12, 21, 55, DateTimeKind.Utc)));
+            DungeonEntryWindow.WindowStart(new DateTime(2026, 7, 11, 12, 21, 55, DateTimeKind.Utc)));
         Assert.Equal(new DateTime(2026, 7, 11, 10, 0, 0, DateTimeKind.Utc),
-            DungeonEntryCountRepository.WindowStart(new DateTime(2026, 7, 11, 10, 0, 0, DateTimeKind.Utc)));
+            DungeonEntryWindow.WindowStart(new DateTime(2026, 7, 11, 10, 0, 0, DateTimeKind.Utc)));
         Assert.Equal(new DateTime(2026, 7, 10, 10, 0, 0, DateTimeKind.Utc),
-            DungeonEntryCountRepository.WindowStart(new DateTime(2026, 7, 11, 9, 59, 59, DateTimeKind.Utc)));
+            DungeonEntryWindow.WindowStart(new DateTime(2026, 7, 11, 9, 59, 59, DateTimeKind.Utc)));
     }
 
     [Fact]

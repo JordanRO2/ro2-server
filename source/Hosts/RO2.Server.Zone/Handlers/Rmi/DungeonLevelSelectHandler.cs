@@ -79,9 +79,9 @@ public class DungeonLevelSelectHandler : ZoneRmiHandlerBase<DungeonLevelSelectHa
         var accountId = session.AccountId ?? player.AccountId;
         
         
-        var trainingGround = DungeonEntryGate.IsEntryControlled(data, pos.Area_ID);
+        var trainingGround = DungeonEntryRules.IsEntryControlled(data, pos.Area_ID);
 
-        if (map.Map_Type != DungeonEntryGate.InstanceMapType && !trainingGround)
+        if (map.Map_Type != DungeonEntryRules.InstanceMapType && !trainingGround)
         {
             
             
@@ -111,9 +111,9 @@ public class DungeonLevelSelectHandler : ZoneRmiHandlerBase<DungeonLevelSelectHa
                 .Contains(row.Need_Quest_ID);
         
         
-        var refusal = DungeonEntryGate.CheckEntryControl(data, pos.Area_ID, party is not null);
+        var refusal = DungeonEntryRules.CheckEntryControl(data, pos.Area_ID, party is not null);
         if (refusal == 0)
-            refusal = DungeonEntryGate.CheckInstanceEntry(row, player.Level, questDone, wouldCount, used);
+            refusal = DungeonEntryRules.CheckInstanceEntry(row, player.Level, questDone, wouldCount, used);
         if (refusal != 0)
         {
             await DungeonEntryGate.RefuseAsync(session, accountId, refusal);

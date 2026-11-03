@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using RO2.Dungeons.Domain;
 using RO2.GameData;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
@@ -21,9 +22,6 @@ namespace RO2.Server.Zone.Services;
 /// </remarks>
 public class DungeonBindResetService : BackgroundService
 {
- /// Daily reset instant, as a UTC time of day.
-    private static readonly TimeSpan ResetTimeOfDayUtc = TimeSpan.FromHours(16);
-
  /// <summary>
  /// Longest single wait. The clock is re-read at least this often, so a clock correction moves the send to the
  /// right instant.
@@ -46,10 +44,10 @@ public class DungeonBindResetService : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var next = NextResetAfter(DateTimeOffset.UtcNow);
+        var next = DungeonEntryWindow.NextResetAfter(DateTimeOffset.UtcNow);
         _logger.LogInformation(
             "Dungeon bind reset service started (NfyDungeonBindReset 2774 daily at {Time} UTC, next {Next:u}, bound dungeons [{Ids}])",
-            ResetTimeOfDayUtc, next, string.Join(", ", BoundDungeonIds()));
+            DungeonEntryWindow.BindResetTimeOfDayUtc, next, string.Join(", ", DungeonEntryWindow.BoundDungeonIds(_gameData)));
 
         try
         {
@@ -66,7 +64,7 @@ public class DungeonBindResetService : BackgroundService
 
                 
                 
-                next = NextResetAfter(DateTimeOffset.UtcNow);
+                next = DungeonEntryWindow.NextResetAfter(DateTimeOffset.UtcNow);
             }
         }
         catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
@@ -75,26 +73,9 @@ public class DungeonBindResetService : BackgroundService
         }
     }
 
- /// <summary>The first reset instant strictly after <paramref name="nowUtc"/>.</summary>
-    private static DateTimeOffset NextResetAfter(DateTimeOffset nowUtc)
-    {
-        var utc = nowUtc.ToUniversalTime();
-        var today = new DateTimeOffset(utc.Date, TimeSpan.Zero) + ResetTimeOfDayUtc;
-        return today > utc ? today : today.AddDays(1);
-    }
-
- /// <summary>DungeonInfo rows with a Bind_Value, in DungeonID order.</summary>
-    private List<uint> BoundDungeonIds() =>
-        _gameData.DungeonInfo
-            .Where(d => !string.IsNullOrWhiteSpace(d.Bind_Value)
-                        && !d.Bind_Value.Equals("NULL", StringComparison.OrdinalIgnoreCase))
-            .Select(d => (uint)d.DungeonID)
-            .OrderBy(id => id)
-            .ToList();
-
     private async Task SendResetAsync(CancellationToken ct)
     {
-        var ids = BoundDungeonIds();
+        var ids = DungeonEntryWindow.BoundDungeonIds(_gameData);
         if (ids.Count == 0)
         {
             _logger.LogWarning("Dungeon bind reset due but no DungeonInfo row has a Bind_Value; nothing sent");

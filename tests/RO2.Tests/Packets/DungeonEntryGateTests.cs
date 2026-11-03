@@ -1,3 +1,4 @@
+using RO2.Dungeons.Domain;
 using RO2.Persistence.Mongo.Repositories;
 using RO2.GameData;
 using RO2.GameData.Tables;
@@ -41,9 +42,9 @@ public class DungeonEntryGateTests
         Assert.Equal(5, row.DungeonID);
 
         
-        Assert.Equal(DungeonEntryGate.ResultWrongLevel, DungeonEntryGate.CheckInstanceEntry(row, 1, true, true, 0));
-        Assert.Equal(0, DungeonEntryGate.CheckInstanceEntry(row, row.Map_Min_Level, true, true, 0));
-        Assert.Equal(0, DungeonEntryGate.CheckInstanceEntry(row, 50, true, true, 0));
+        Assert.Equal(DungeonEntryRules.ResultWrongLevel, DungeonEntryRules.CheckInstanceEntry(row, 1, true, true, 0));
+        Assert.Equal(0, DungeonEntryRules.CheckInstanceEntry(row, row.Map_Min_Level, true, true, 0));
+        Assert.Equal(0, DungeonEntryRules.CheckInstanceEntry(row, 50, true, true, 0));
     }
 
     [Fact]
@@ -55,8 +56,8 @@ public class DungeonEntryGateTests
         Assert.NotEqual(0u, row.Need_Quest_ID);
 
         
-        Assert.Equal(DungeonEntryGate.ResultQuestRequired, DungeonEntryGate.CheckInstanceEntry(row, 50, false, true, 0));
-        Assert.Equal(0, DungeonEntryGate.CheckInstanceEntry(row, 50, true, true, 0));
+        Assert.Equal(DungeonEntryRules.ResultQuestRequired, DungeonEntryRules.CheckInstanceEntry(row, 50, false, true, 0));
+        Assert.Equal(0, DungeonEntryRules.CheckInstanceEntry(row, 50, true, true, 0));
     }
 
     [Fact]
@@ -68,15 +69,15 @@ public class DungeonEntryGateTests
         Assert.Equal(2, row.Enter_Count);
 
         
-        Assert.Equal(DungeonEntryGate.ResultEnterCountExceeded, DungeonEntryGate.CheckInstanceEntry(row, 50, true, true, 2));
-        Assert.Equal(DungeonEntryGate.ResultEnterCountExceeded, DungeonEntryGate.CheckEnterCount(row, true, 2));
+        Assert.Equal(DungeonEntryRules.ResultEnterCountExceeded, DungeonEntryRules.CheckInstanceEntry(row, 50, true, true, 2));
+        Assert.Equal(DungeonEntryRules.ResultEnterCountExceeded, DungeonEntryRules.CheckEnterCount(row, true, 2));
         
-        Assert.Equal(0, DungeonEntryGate.CheckInstanceEntry(row, 50, true, true, 1));
+        Assert.Equal(0, DungeonEntryRules.CheckInstanceEntry(row, 50, true, true, 1));
         
         
-        Assert.Equal(0, DungeonEntryGate.CheckInstanceEntry(row, 50, true, false, 2));
+        Assert.Equal(0, DungeonEntryRules.CheckInstanceEntry(row, 50, true, false, 2));
         
-        Assert.Equal(0, DungeonEntryGate.CheckEnterCount(Row(data, 42, 3) with { Enter_Count = 0 }, true, 99));
+        Assert.Equal(0, DungeonEntryRules.CheckEnterCount(Row(data, 42, 3) with { Enter_Count = 0 }, true, 99));
     }
 
     [Fact]
@@ -88,19 +89,19 @@ public class DungeonEntryGateTests
         var map = arrival.Area_ID;
         Assert.Equal(4110u, map);
         Assert.Equal(5, data.GetMap(map)!.Map_Type);
-        Assert.True(DungeonEntryGate.IsEntryControlled(data, map));
+        Assert.True(DungeonEntryRules.IsEntryControlled(data, map));
         
         Assert.Equal((100f, 100f, 100f, 0), (arrival.Position_X, arrival.Position_Y, arrival.Position_Z, arrival.Direction));
 
         
         
-        Assert.Equal(DungeonEntryGate.ResultInstanceMapFailed, DungeonEntryGate.CheckEntryControl(data, map, inParty: false));
+        Assert.Equal(DungeonEntryRules.ResultInstanceMapFailed, DungeonEntryRules.CheckEntryControl(data, map, inParty: false));
         
         
-        Assert.Equal(0, DungeonEntryGate.CheckEntryControl(data, map, inParty: true));
+        Assert.Equal(0, DungeonEntryRules.CheckEntryControl(data, map, inParty: true));
         
-        Assert.False(DungeonEntryGate.IsEntryControlled(data, 426101));
-        Assert.Equal(0, DungeonEntryGate.CheckEntryControl(data, 426101, inParty: false));
+        Assert.False(DungeonEntryRules.IsEntryControlled(data, 426101));
+        Assert.Equal(0, DungeonEntryRules.CheckEntryControl(data, 426101, inParty: false));
     }
 
     [Fact]
@@ -152,13 +153,13 @@ public class DungeonEntryGateTests
     {
         
         Assert.Equal(new DateTime(2026, 7, 10, 10, 0, 0, DateTimeKind.Utc),
-            DungeonEntryCountRepository.WindowStart(new DateTime(2026, 7, 11, 2, 50, 45, DateTimeKind.Utc)));
+            DungeonEntryWindow.WindowStart(new DateTime(2026, 7, 11, 2, 50, 45, DateTimeKind.Utc)));
         Assert.Equal(new DateTime(2026, 7, 11, 10, 0, 0, DateTimeKind.Utc),
-            DungeonEntryCountRepository.WindowStart(new DateTime(2026, 7, 11, 12, 21, 55, DateTimeKind.Utc)));
+            DungeonEntryWindow.WindowStart(new DateTime(2026, 7, 11, 12, 21, 55, DateTimeKind.Utc)));
         Assert.Equal(new DateTime(2026, 7, 11, 10, 0, 0, DateTimeKind.Utc),
-            DungeonEntryCountRepository.WindowStart(new DateTime(2026, 7, 11, 10, 0, 0, DateTimeKind.Utc)));
+            DungeonEntryWindow.WindowStart(new DateTime(2026, 7, 11, 10, 0, 0, DateTimeKind.Utc)));
         Assert.Equal(new DateTime(2026, 7, 10, 10, 0, 0, DateTimeKind.Utc),
-            DungeonEntryCountRepository.WindowStart(new DateTime(2026, 7, 11, 9, 59, 59, DateTimeKind.Utc)));
+            DungeonEntryWindow.WindowStart(new DateTime(2026, 7, 11, 9, 59, 59, DateTimeKind.Utc)));
     }
 
     [Fact]

@@ -57,7 +57,7 @@ public class DungeonFinderReauditTests
         public (ushort Refusal, DungeonInstanceEntry? Entry) Join(string utc)
         {
             Clock.At(utc);
-            var refusal = DungeonEntryGate.CheckEnterCount(_row, wouldCount: true, Used);
+            var refusal = DungeonEntryRules.CheckEnterCount(_row, wouldCount: true, Used);
             if (refusal != 0) return (refusal, null);
             var entry = Registry.EnterFinder(Owner, _row.DungeonID, _arrivalMap, _character);
             if (entry.CountsForCharacter) Used++;
@@ -87,7 +87,7 @@ public class DungeonFinderReauditTests
         Assert.Equal(3, row.Enter_Count);
         var arrival = data.Positions[row.Position_ID];
         Assert.Equal(410104u, arrival.Area_ID);                                 
-        Assert.Equal(DungeonEntryGate.InstanceMapType, data.GetMap(arrival.Area_ID)!.Map_Type);
+        Assert.Equal(DungeonEntryRules.InstanceMapType, data.GetMap(arrival.Area_ID)!.Map_Type);
         return new FinderReplay(row, arrival.Area_ID, character, startUtc);
     }
 
@@ -164,7 +164,7 @@ public class DungeonFinderReauditTests
             Assert.Equal(read, r.Read3035());
         }
         var (fourth, none) = r.Join("2026-08-03T19:51:06.314");
-        Assert.Equal(DungeonEntryGate.ResultEnterCountExceeded, fourth);
+        Assert.Equal(DungeonEntryRules.ResultEnterCountExceeded, fourth);
         Assert.Null(none);
     }
 
@@ -218,14 +218,14 @@ public class DungeonFinderReauditTests
         var row = Assert.Single(data.DungeonInfo, d => d.DungeonID == 63);
 
         Assert.Equal("3f00000003000300", Hex(DungeonEntranceInfoHandler.Build3035(63, 3, row.Enter_Count)));
-        var code = DungeonEntryGate.CheckEnterCount(row, wouldCount: true, 3);
-        Assert.Equal(DungeonEntryGate.ResultEnterCountExceeded, code);
+        var code = DungeonEntryRules.CheckEnterCount(row, wouldCount: true, 3);
+        Assert.Equal(DungeonEntryRules.ResultEnterCountExceeded, code);
         Assert.Equal(19015, code);
         Assert.Equal("1e212e00474a" + new string('0', 75 * 2), Hex(DungeonEntryGate.BuildRefusal2556(0x002E211Eu, code)));
         Assert.Equal("03", Hex(DungeonFinderPackets.BuildJoinFail2810(DungeonFinderPackets.JoinFailMoveFailed)));
         
         foreach (var below in new[] { 0, 1, 2 })
-            Assert.Equal(0, DungeonEntryGate.CheckEnterCount(row, true, below));
+            Assert.Equal(0, DungeonEntryRules.CheckEnterCount(row, true, below));
     }
 
     [Fact]

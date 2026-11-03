@@ -97,7 +97,7 @@ public class PartyDungeonTeleportHandler : ZoneRmiHandlerBase<PartyDungeonTelepo
         }
 
         // The party's instance and the entry count, for an instance-dungeon row (see the summary).
-        var isInstance = data.GetMap(arrival.Area_ID)?.Map_Type == DungeonEntryGate.InstanceMapType;
+        var isInstance = data.GetMap(arrival.Area_ID)?.Map_Type == DungeonEntryRules.InstanceMapType;
         DungeonInstanceEntry? entry = null;
         IDungeonEntryCountRepository? counts = null;
         if (isInstance)
@@ -110,12 +110,12 @@ public class PartyDungeonTeleportHandler : ZoneRmiHandlerBase<PartyDungeonTelepo
             {
                 counts = services.GetRequiredService<IDungeonEntryCountRepository>();
                 var used = wouldCount ? await counts.GetUsedAsync(player.CharacterId, dungeon.DungeonID, DateTime.UtcNow, ct) : 0;
-                var refusal = DungeonEntryGate.CheckEnterCount(dungeon, wouldCount, used);
+                var refusal = DungeonEntryRules.CheckEnterCount(dungeon, wouldCount, used);
                 if (refusal != 0)
                 {
                     await DungeonEntryGate.RefuseAsync(session, session.AccountId ?? player.AccountId, refusal);
                     Logger.LogInformation("{Name} tried to enter dungeon group {Group} (DungeonID {Dun}) with {Used}/{Limit} entries used: refused {Result}",
-                        player.Name, groupId, dungeon.DungeonID, used, dungeon.Enter_Count, DungeonEntryGate.ResultEnterCountExceeded);
+                        player.Name, groupId, dungeon.DungeonID, used, dungeon.Enter_Count, DungeonEntryRules.ResultEnterCountExceeded);
                     return;
                 }
             }

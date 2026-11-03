@@ -35,7 +35,7 @@ public class DungeonInstanceRegistryTests
         {
             var row = DungeonEntryGateTests.Row(data, group, level);
             var wouldCount = registry.WouldCount(owner, row.DungeonID, Character);
-            var code = DungeonEntryGate.CheckInstanceEntry(row, 50, true, wouldCount, used.GetValueOrDefault(row.DungeonID));
+            var code = DungeonEntryRules.CheckInstanceEntry(row, 50, true, wouldCount, used.GetValueOrDefault(row.DungeonID));
             if (code != 0) return code;
             var entry = registry.Enter(owner, row.DungeonID, data.Positions[row.Position_ID].Area_ID, Character);
             Assert.True(entry.IsNewInstance);
@@ -61,7 +61,7 @@ public class DungeonInstanceRegistryTests
         Assert.Equal(new[] { "40000000" }, Reset());                           
         Assert.Empty(Reset());                                                 
         Assert.Equal("4000000002000200", Answer3035(0x40));                    
-        Assert.Equal(DungeonEntryGate.ResultEnterCountExceeded, Enter(42, 1)); 
+        Assert.Equal(DungeonEntryRules.ResultEnterCountExceeded, Enter(42, 1)); 
         Assert.Equal("4100000000000200", Answer3035(0x41));                    
     }
 

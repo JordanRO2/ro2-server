@@ -1,3 +1,4 @@
+using RO2.Dungeons.Domain;
 using System.Globalization;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
@@ -17,7 +18,7 @@ internal sealed class DungeonEntryCountDocument
     public uint Id { get; set; }
 
  /// <summary>The start of the window the counts belong to
- /// (<see cref="DungeonEntryCountRepository.WindowStart"/>).</summary>
+ /// (<see cref="DungeonEntryWindow.WindowStart"/>).</summary>
     public DateTime WindowStartUtc { get; set; }
 
  /// <summary>Entries per DungeonID, keyed by the id in decimal (Mongo document keys are strings).</summary>
@@ -41,9 +42,6 @@ public sealed class DungeonEntryCountRepository : IDungeonEntryCountRepository
 {
     private const string CollectionName = "character_dungeon_entries";
 
- /// <summary>Retail's daily reset instant as a UTC time of day.</summary>
-    public static readonly TimeSpan ResetTimeOfDayUtc = TimeSpan.FromHours(10);
-
     private readonly IMongoCollection<DungeonEntryCountDocument> _docs;
 
     public DungeonEntryCountRepository(MongoDbContext context)
@@ -51,19 +49,11 @@ public sealed class DungeonEntryCountRepository : IDungeonEntryCountRepository
         _docs = context.GetCollection<DungeonEntryCountDocument>(CollectionName);
     }
 
- /// <summary>The start of the daily window <paramref name="utcNow"/> falls in: the latest 10:00 UTC at or before it.</summary>
-    public static DateTime WindowStart(DateTime utcNow)
-    {
-        var utc = utcNow.Kind == DateTimeKind.Local ? utcNow.ToUniversalTime() : DateTime.SpecifyKind(utcNow, DateTimeKind.Utc);
-        var today = DateTime.SpecifyKind(utc.Date, DateTimeKind.Utc) + ResetTimeOfDayUtc;
-        return utc >= today ? today : today.AddDays(-1);
-    }
-
  /// <summary>The count <paramref name="doc"/> holds for <paramref name="dungeonId"/> in the window of
  /// <paramref name="utcNow"/>: zero for no document, a document of an earlier window, or no entry yet.</summary>
     internal static int UsedIn(DungeonEntryCountDocument? doc, uint dungeonId, DateTime utcNow)
     {
-        if (doc is null || doc.WindowStartUtc != WindowStart(utcNow))
+        if (doc is null || doc.WindowStartUtc != DungeonEntryWindow.WindowStart(utcNow))
             return 0;
         return doc.Counts.GetValueOrDefault(Key(dungeonId));
     }
@@ -76,7 +66,7 @@ public sealed class DungeonEntryCountRepository : IDungeonEntryCountRepository
 
     public async Task<int> RecordEntryAsync(uint characterId, uint dungeonId, DateTime utcNow, CancellationToken ct = default)
     {
-        var window = WindowStart(utcNow);
+        var window = DungeonEntryWindow.WindowStart(utcNow);
         var doc = await _docs.Find(d => d.Id == characterId).FirstOrDefaultAsync(ct);
         if (doc is null || doc.WindowStartUtc != window)
             doc = new DungeonEntryCountDocument { Id = characterId, WindowStartUtc = window };
