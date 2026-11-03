@@ -24,18 +24,18 @@ public sealed class PostgresVehicleTests
     
     private static uint NewCharacterId() => (uint)Random.Shared.NextInt64(2_200_000_000L, 4_200_000_000L);
 
-    [Fact]
+    [DockerFact]
     public async Task Get_with_nothing_stored_is_empty()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new VehicleRepository(_fx.Db!);
         Assert.Empty(await repo.GetAsync(NewCharacterId()));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Grant_new_timed_vehicle_adds_now_plus_days_as_float32_and_persists()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new VehicleRepository(_fx.Db!);
         var id = NewCharacterId();
 
@@ -50,10 +50,10 @@ public sealed class PostgresVehicleTests
         Assert.Equal(v.ExpiryOle, stored.ExpiryOle); 
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Grant_adds_to_current_expiry_when_not_expired_and_to_now_when_expired()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new VehicleRepository(_fx.Db!);
         var id = NewCharacterId();
 
@@ -66,10 +66,10 @@ public sealed class PostgresVehicleTests
         Assert.Equal((double)(float)(later + 5), third.ExpiryOle);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Grant_permanent_and_timed_on_permanent_stay_permanent()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new VehicleRepository(_fx.Db!);
         var id = NewCharacterId();
 
@@ -84,10 +84,10 @@ public sealed class PostgresVehicleTests
         Assert.Equal(0d, Assert.Single(await repo.GetAsync(id)).ExpiryOle);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Grant_returns_list_sorted_by_riding_id_and_keeps_others()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new VehicleRepository(_fx.Db!);
         var id = NewCharacterId();
 
@@ -102,10 +102,10 @@ public sealed class PostgresVehicleTests
         Assert.Equal(0d, result[2].ExpiryOle);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Characters_are_independent()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new VehicleRepository(_fx.Db!);
         var a = NewCharacterId();
         var b = a == uint.MaxValue ? a - 1 : a + 1;
@@ -116,10 +116,10 @@ public sealed class PostgresVehicleTests
         Assert.Empty(await repo.GetAsync(b));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task TryExtendTimed_null_when_not_owned_and_stores_nothing()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new VehicleRepository(_fx.Db!);
         var id = NewCharacterId();
 
@@ -131,10 +131,10 @@ public sealed class PostgresVehicleTests
         Assert.Equal(90280000u, Assert.Single(await repo.GetAsync(id)).RidingId);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task TryExtendTimed_null_when_permanent_and_leaves_it_untouched()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new VehicleRepository(_fx.Db!);
         var id = NewCharacterId();
 
@@ -144,10 +144,10 @@ public sealed class PostgresVehicleTests
         Assert.Equal(0d, Assert.Single(await repo.GetAsync(id)).ExpiryOle);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task TryExtendTimed_extends_a_timed_vehicle_and_keeps_the_others()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new VehicleRepository(_fx.Db!);
         var id = NewCharacterId();
 
@@ -165,10 +165,10 @@ public sealed class PostgresVehicleTests
         Assert.Equal(extended[1].ExpiryOle, stored.Single(v => v.RidingId == 90190000).ExpiryOle);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task TryExtendTimed_on_an_expired_vehicle_counts_from_now()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new VehicleRepository(_fx.Db!);
         var id = NewCharacterId();
 
@@ -180,10 +180,10 @@ public sealed class PostgresVehicleTests
         Assert.Equal((double)(float)(later + 3), Assert.Single(extended!).ExpiryOle);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task LoadAndCut_with_nothing_stored_is_empty_and_writes_nothing()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new VehicleRepository(_fx.Db!);
         var id = NewCharacterId();
 
@@ -192,10 +192,10 @@ public sealed class PostgresVehicleTests
         Assert.Equal(0L, await CountRowsAsync(id)); 
     }
 
-    [Fact]
+    [DockerFact]
     public async Task LoadAndCut_cuts_to_whole_seconds_and_stores_the_cut_list()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new VehicleRepository(_fx.Db!);
         var id = NewCharacterId();
 
@@ -221,10 +221,10 @@ public sealed class PostgresVehicleTests
         Assert.Equal(expectedCut, again.Single(v => v.RidingId == 90190000).ExpiryOle);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task LoadAndCut_leaves_whole_second_expiries_bit_for_bit()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new VehicleRepository(_fx.Db!);
         var id = NewCharacterId();
 
@@ -240,10 +240,10 @@ public sealed class PostgresVehicleTests
             BitConverter.DoubleToInt64Bits(Assert.Single(await repo.GetAsync(id)).ExpiryOle));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Get_returns_the_stored_order_unsorted()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new VehicleRepository(_fx.Db!);
         var id = NewCharacterId();
 
@@ -255,10 +255,10 @@ public sealed class PostgresVehicleTests
         Assert.Equal(46000.5, stored[1].ExpiryOle);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Concurrent_grants_for_different_vehicles_all_land()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new VehicleRepository(_fx.Db!);
         var id = NewCharacterId();
 
@@ -271,10 +271,10 @@ public sealed class PostgresVehicleTests
         Assert.Equal(ids, stored.Select(v => v.RidingId));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task A_concurrent_cut_never_loses_a_grant()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new VehicleRepository(_fx.Db!);
         var id = NewCharacterId();
         await repo.GrantAsync(id, 90190000, 5, NowHalfSecond); 
