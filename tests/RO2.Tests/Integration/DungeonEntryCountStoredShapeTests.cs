@@ -1,10 +1,11 @@
+using RO2.Dungeons.Application;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Npgsql;
 using RO2.Persistence.Mongo.Persistence;
-using RO2.Persistence.Mongo.Repositories;
+using RO2.Dungeons.Infrastructure.Mongo;
 using Xunit;
-using PgRepo = RO2.Persistence.Postgres.Repositories.DungeonEntryCountRepository;
+using PgRepo = RO2.Dungeons.Infrastructure.Postgres.DungeonEntryCountRepository;
 
 namespace RO2.Tests.Integration;
 

@@ -2,10 +2,10 @@ using RO2.Dungeons.Domain;
 using System.Globalization;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
-using RO2.Application.Interfaces;
+using RO2.Dungeons.Application;
 using RO2.Persistence.Mongo.Persistence;
 
-namespace RO2.Persistence.Mongo.Repositories;
+namespace RO2.Dungeons.Infrastructure.Mongo;
 
 /// <summary>
 /// A character's instance-dungeon entries in the current daily window: one count per DungeonInfo DungeonID.

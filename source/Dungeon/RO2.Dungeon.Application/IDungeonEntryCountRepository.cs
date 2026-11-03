@@ -1,4 +1,4 @@
-namespace RO2.Application.Interfaces;
+namespace RO2.Dungeons.Application;
 
 /// <summary>
 /// A character's instance-dungeon entries in the current daily window: one count per DungeonInfo DungeonID,

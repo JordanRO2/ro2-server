@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <RootNamespace>RO2.Dungeons.Application</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Dungeon bounded context: Application holds the IDungeonEntryCountRepository port. Never the Zone host. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Dungeon.Domain\RO2.Dungeon.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+</Project>

@@ -1,5 +1,6 @@
+using RO2.Dungeons.Application;
 using RO2.Dungeons.Domain;
-using RO2.Persistence.Postgres.Repositories;
+using RO2.Dungeons.Infrastructure.Postgres;
 using Xunit;
 
 namespace RO2.Tests.Integration;

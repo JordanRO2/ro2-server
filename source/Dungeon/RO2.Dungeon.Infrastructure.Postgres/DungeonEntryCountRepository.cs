@@ -1,9 +1,10 @@
 using RO2.Dungeons.Domain;
 using System.Globalization;
 using Npgsql;
-using RO2.Application.Interfaces;
+using RO2.Dungeons.Application;
+using RO2.Persistence.Postgres;
 
-namespace RO2.Persistence.Postgres.Repositories;
+namespace RO2.Dungeons.Infrastructure.Postgres;
 
 /// <summary>
 /// PostgreSQL implementation of <see cref="IDungeonEntryCountRepository"/>: one row per character in the

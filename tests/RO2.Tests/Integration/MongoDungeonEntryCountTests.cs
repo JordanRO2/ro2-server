@@ -1,5 +1,6 @@
+using RO2.Dungeons.Application;
 using RO2.Persistence.Mongo.Persistence;
-using RO2.Persistence.Mongo.Repositories;
+using RO2.Dungeons.Infrastructure.Mongo;
 using Xunit;
 
 namespace RO2.Tests.Integration;

@@ -1,5 +1,5 @@
 using RO2.Dungeons.Domain;
-using RO2.Persistence.Mongo.Repositories;
+using RO2.Dungeons.Infrastructure.Mongo;
 using RO2.GameData;
 using RO2.GameData.Tables;
 using RO2.Server.Zone.Handlers.Rmi;

@@ -67,6 +67,9 @@
     <ProjectReference Include="..\..\Rewards\RO2.Reward.Infrastructure.Postgres\RO2.Reward.Infrastructure.Postgres.csproj" />
     <ProjectReference Include="..\..\Ranking\RO2.Rankings.Infrastructure.Mongo\RO2.Rankings.Infrastructure.Mongo.csproj" />
     <ProjectReference Include="..\..\Ranking\RO2.Rankings.Infrastructure.Postgres\RO2.Rankings.Infrastructure.Postgres.csproj" />
+    <ProjectReference Include="..\..\Dungeon\RO2.Dungeon.Application\RO2.Dungeon.Application.csproj" />
+    <ProjectReference Include="..\..\Dungeon\RO2.Dungeon.Infrastructure.Mongo\RO2.Dungeon.Infrastructure.Mongo.csproj" />
+    <ProjectReference Include="..\..\Dungeon\RO2.Dungeon.Infrastructure.Postgres\RO2.Dungeon.Infrastructure.Postgres.csproj" />
     <ProjectReference Include="..\..\Khara\RO2.Khara.Domain\RO2.Khara.Domain.csproj" />
     <ProjectReference Include="..\..\Khara\RO2.Khara.Application\RO2.Khara.Application.csproj" />
     <ProjectReference Include="..\..\Khara\RO2.Khara.Infrastructure.Mongo\RO2.Khara.Infrastructure.Mongo.csproj" />
