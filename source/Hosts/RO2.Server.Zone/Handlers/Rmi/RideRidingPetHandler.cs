@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using RO2.Companions.Domain;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
@@ -20,13 +21,13 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 public class RideRidingPetHandler : ZoneRmiHandlerBase<RideRidingPetHandler>
 {
  /// <summary>2719 result of a successful mount.</summary>
-    internal const ushort ResultMounted = 0;
+    internal const ushort ResultMounted = RidingRules.ResultMounted;
 
  /// <summary>2719 result for a request that dismounted the player from the requested vehicle.</summary>
-    internal const ushort ResultDismounted = 21801; 
+    internal const ushort ResultDismounted = RidingRules.ResultDismounted;
 
  /// <summary>2719 result for a request naming another vehicle while riding. The ride is dropped and nothing is mounted.</summary>
-    internal const ushort ResultSwitchDropped = 17;
+    internal const ushort ResultSwitchDropped = RidingRules.ResultSwitchDropped;
 
  /// <summary>C2S 1510 body length.</summary>
     private const int RequestLen = 24;
@@ -46,7 +47,8 @@ public class RideRidingPetHandler : ZoneRmiHandlerBase<RideRidingPetHandler>
         
         var current = RidingService.CurrentRide(session, player);
 
-        if (current is null)
+        var action = RidingRules.Decide(current?.PetActorHandle, vehicleId);
+        if (action == RideAction.Mount)
         {
             
             await RidingService.MountAsync(session, player, vehicleId, skillId, services);
@@ -58,13 +60,12 @@ public class RideRidingPetHandler : ZoneRmiHandlerBase<RideRidingPetHandler>
 
         
         
-        bool sameVehicle = current.PetActorHandle == vehicleId;
         await RidingService.DropAsync(session, player, services);
         Logger.LogInformation("{Name} gets off riding vehicle {Old} (skill {OldSkill}); request named {Vehicle} (skill {Skill})",
-            player.Name, current.PetActorHandle, current.PetId, vehicleId, skillId);
+            player.Name, current!.PetActorHandle, current.PetId, vehicleId, skillId);
         await session.SendRmiAsync(ZoneS2COpcodes.AnsRideRidingPet,
             writer => writer.WriteBytes(BuildAnsRideRidingPet2719(
-                sameVehicle ? ResultDismounted : ResultSwitchDropped, vehicleId, skillId)));
+                RidingRules.ResultCode(action), vehicleId, skillId)));
     }
 
  /// <summary>Builds the 18-byte 2719 AnsRideRidingPet body: <c>[u16 result][u32 vehicleId][u32 skillId][u32 0][u32 0]</c>.</summary>

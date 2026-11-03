@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.DependencyInjection;
+using RO2.Companions.Domain;
 using RO2.GameData;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
@@ -67,15 +68,7 @@ public static class RidingService
  /// </summary>
  /// <remarks>Nine vehicles have two rows.</remarks>
     internal static RO2.GameData.Tables.RidingInfo? RideRow(GameDataStore store, uint vehicleId)
-    {
-        RO2.GameData.Tables.RidingInfo? row = null;
-        foreach (var r in store.RidingInfo)
-        {
-            if (r.ID == vehicleId && (r.NationEnable & 1) != 0)
-                row = r;
-        }
-        return row;
-    }
+        => RidingRules.RideRow(store.RidingInfo, vehicleId);
 
  /// <summary>
  /// The mounted 2497 speed of <paramref name="vehicleId"/>: <c>RiderBaseSpeed × (Speed × (1 +
@@ -116,17 +109,7 @@ public static class RidingService
  /// (RidingSkill.Skill_ID) or a vehicle's own summon skill (RidingInfo.Skill_ID).
  /// </summary>
     internal static bool KeepsRide(GameDataStore store, uint skillId)
-    {
-        foreach (var r in store.RidingSkill)
-        {
-            if (r.Skill_ID == skillId) return true;
-        }
-        foreach (var r in store.RidingInfo)
-        {
-            if (r.Skill_ID == skillId) return true;
-        }
-        return false;
-    }
+        => RidingRules.KeepsRide(store.RidingSkill, store.RidingInfo, skillId);
 
  /// <summary>The caller sends the 2719 after it.</summary>
  /// <remarks>
