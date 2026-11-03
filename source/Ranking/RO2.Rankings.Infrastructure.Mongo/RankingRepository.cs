@@ -6,7 +6,7 @@ using RO2.Rankings.Application;
 using RO2.Rankings.Domain;
 using RO2.Persistence.Mongo.Persistence;
 
-namespace RO2.Persistence.Mongo.Repositories;
+namespace RO2.Rankings.Infrastructure.Mongo;
 
 /// <summary>
 /// One character's counter on one ranking type for one period (collection <c>ranking_scores</c>).

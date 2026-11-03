@@ -8,8 +8,8 @@ using RO2.Rankings.Domain;
 using RO2.Persistence.Mongo.Persistence;
 using RO2.Server.Zone.Services;
 using Xunit;
-using MongoRankingRepository = RO2.Persistence.Mongo.Repositories.RankingRepository;
-using PgRankingRepository = RO2.Persistence.Postgres.Repositories.RankingRepository;
+using MongoRankingRepository = RO2.Rankings.Infrastructure.Mongo.RankingRepository;
+using PgRankingRepository = RO2.Rankings.Infrastructure.Postgres.RankingRepository;
 
 namespace RO2.Tests.Integration;
 

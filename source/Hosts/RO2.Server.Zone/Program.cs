@@ -220,7 +220,7 @@ public static class Program
         services.AddProviderRepository<IKharaTraceRepository, RO2.Kharas.Infrastructure.Mongo.KharaTraceRepository, RO2.Kharas.Infrastructure.Postgres.KharaTraceRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IWorldEventStateRepository, RO2.Persistence.Mongo.Repositories.WorldEventStateRepository, RO2.Persistence.Postgres.Repositories.WorldEventStateRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IIllusionPyramidStateRepository, RO2.Persistence.Mongo.Repositories.IllusionPyramidStateRepository, RO2.Persistence.Postgres.Repositories.IllusionPyramidStateRepository>(config.Database.Provider, ServiceLifetime.Singleton);
-        services.AddProviderRepository<IRankingRepository, RO2.Persistence.Mongo.Repositories.RankingRepository, RO2.Persistence.Postgres.Repositories.RankingRepository>(config.Database.Provider, ServiceLifetime.Singleton);
+        services.AddProviderRepository<IRankingRepository, RO2.Rankings.Infrastructure.Mongo.RankingRepository, RO2.Rankings.Infrastructure.Postgres.RankingRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         // Auction store: Zone-only. AuctionService is built per call (AuctionService.From, and a fresh scope per expiry-sweep
         // pass), and the repository ctor retries its index build until one succeeds, so keep it transient like the
         // per-call `new AuctionRepository(ctx)` it replaces.

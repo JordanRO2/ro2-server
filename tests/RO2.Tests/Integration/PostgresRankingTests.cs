@@ -1,7 +1,7 @@
 using RO2.Domain.Entities;
 using RO2.Rankings.Application;
 using RO2.Rankings.Domain;
-using RO2.Persistence.Postgres.Repositories;
+using RO2.Rankings.Infrastructure.Postgres;
 using Xunit;
 
 namespace RO2.Tests.Integration;
