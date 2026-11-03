@@ -34,6 +34,9 @@ public interface IAuctionLog
     /// <summary>A displaced bid's refund mail could not be stored; the failure is swallowed and recorded.</summary>
     void RefundMailFailed(ulong articleUid, long bid, uint bidderCharId, Exception ex);
 
+    /// <summary>A wallet write after a bid or instant buy failed; the in-memory wallet stays the truth and the settlement still ran.</summary>
+    void WalletNotPersisted(ulong articleUid, uint charId, long gold, Exception ex);
+
     /// <summary>An expired article could not be mailed during the sweep; it is not re-opened and is recorded for recovery.</summary>
     void ExpirySettleFailed(ulong articleUid, uint itemId, int count, uint sellerCharId, uint topBidderCharId, Exception ex);
 }

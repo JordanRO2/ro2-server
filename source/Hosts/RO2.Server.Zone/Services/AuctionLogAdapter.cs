@@ -57,6 +57,11 @@ public sealed class AuctionLogAdapter(ILogger log) : IAuctionLog
             articleUid, bid, bidderCharId);
 
     /// <inheritdoc />
+    public void WalletNotPersisted(ulong articleUid, uint charId, long gold, Exception ex)
+        => _log.LogError(ex, "Auction {Uid}: wallet of char {Char} ({Gold} zeny) could not be saved; kept in memory",
+            articleUid, charId, gold);
+
+    /// <inheritdoc />
     public void ExpirySettleFailed(ulong articleUid, uint itemId, int count, uint sellerCharId, uint topBidderCharId, Exception ex)
         => _log.LogError(ex, "Auction {Uid} expired but its item {ItemId} x{Count} (seller {Seller}, top bidder {Bidder}) could not be mailed",
             articleUid, itemId, count, sellerCharId, topBidderCharId);

@@ -346,6 +346,16 @@ public sealed class AuctionApplicationService(
     }
 
     /// <summary>
+    /// The wallet write is best-effort: the repository change is already durable, so the refund, award and mail
+    /// steps that follow must still run. The in-memory wallet is the truth and is saved again later, as in trade.
+    /// </summary>
+    private async Task PersistWalletAsync(Func<Task> persist, ulong articleUid, uint charId, IWallet wallet)
+    {
+        try { await persist(); }
+        catch (Exception ex) { _log.WalletNotPersisted(articleUid, charId, wallet.Gold, ex); }
+    }
+
+    /// <summary>
     /// Places a bid. The zeny is taken from <paramref name="wallet"/> only after the article accepts the bid
     /// atomically, the new balance is persisted through <paramref name="persistWalletAsync"/>, and any displaced
     /// bid is refunded by mail. A bid at the instant price closes the article at once. A request for an article
@@ -391,7 +401,7 @@ public sealed class AuctionApplicationService(
             return Refused(open ? AuctionCodes.ResultBidItemMismatch : AuctionCodes.ResultArticleGone, "changed meanwhile");
         }
 
-        await persistWalletAsync();
+        await PersistWalletAsync(persistWalletAsync, updated.Uid, cmd.BidderCharId, wallet);
 
         if (article.TopBidderCharId != 0)
             await RefundTopBidAsync(article, AuctionMailKinds.OutbidRefund, AuctionCodes.NotifyOutbid, notifyBidder: true, now);
@@ -449,7 +459,7 @@ public sealed class AuctionApplicationService(
             return (BuyResult.Gone, null);
         }
 
-        await persistWalletAsync();
+        await PersistWalletAsync(persistWalletAsync, sold.Uid, cmd.BuyerCharId, wallet);
 
         await DeliverAsync(cmd.BuyerCharId, cmd.BuyerName, sold, AuctionMailKinds.Purchased, withItem: true, gold: 0, now);
 
