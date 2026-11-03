@@ -160,13 +160,13 @@ public class NpcCombatDecisionCharacterizationTests
     }
 
     [Fact]
-    public void SelectVictim_IteratingDeadPlayer_IsStillSelected_TodaysBehaviour()
+    public void SelectVictim_IteratingDeadPlayer_IsNotSelected()
     {
-        // Only the aggro branch tests IsDead; the iterating branch checks map + reach only.
+        // A player an earlier monster already killed this tick must not be re-killed through the iterating branch.
         var (c, players) = New();
         var npc = Npc(); npc.AttackReach = 3f;
         var iter = Pc(players, 2, 1f, 0f); iter.IsDead = true;
-        Assert.Same(iter, c.SelectVictim(npc, iter));
+        Assert.Null(c.SelectVictim(npc, iter));
     }
 
     // ---- AcquireNearest ---------------------------------------------------------------------------

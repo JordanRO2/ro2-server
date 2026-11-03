@@ -57,8 +57,8 @@ public class SwingReachRulesTests
     }
 
     [Fact]
-    public void Select_IteratingDead_IsStillSelected_TodaysBehaviour()
-        => Assert.Equal(SwingVictim.Iterating, SwingReachRules.Select(0f, 0f, 2f, null, C(dead: true)));
+    public void Select_IteratingDead_IsNone()
+        => Assert.Equal(SwingVictim.None, SwingReachRules.Select(0f, 0f, 2f, null, C(dead: true)));
 
     [Fact]
     public void Select_NullsOrOutOfGate_None()

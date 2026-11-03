@@ -38,7 +38,8 @@ public static class SwingReachRules
 
     /// <summary>
     /// The top-threat target when it is alive, on the map and in reach; otherwise the iterating player when it is on
-    /// the map and in reach (its IsDead is NOT checked, as today); otherwise none. A null candidate (stale or
+    /// the map and in reach and alive (the iterating player may be the same, already-dead aggro target when a
+    /// previous monster killed it earlier in the tick); otherwise none. A null candidate (stale or
     /// unregistered handle) never wins.
     /// </summary>
     public static SwingVictim Select(float posX, float posY, float attackReach,
@@ -46,7 +47,7 @@ public static class SwingReachRules
     {
         if (aggro is { } a && !a.IsDead && a.SameMap && InReach(posX, posY, attackReach, a.X, a.Y))
             return SwingVictim.Aggro;
-        if (iterating is { } i && i.SameMap && InReach(posX, posY, attackReach, i.X, i.Y))
+        if (iterating is { } i && !i.IsDead && i.SameMap && InReach(posX, posY, attackReach, i.X, i.Y))
             return SwingVictim.Iterating;
         return SwingVictim.None;
     }
