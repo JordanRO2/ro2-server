@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Kharas.Domain;
 
 /// <summary>
 /// A character's selected Khara titles and the two clocks retail's 1438/2582 answers depend on.

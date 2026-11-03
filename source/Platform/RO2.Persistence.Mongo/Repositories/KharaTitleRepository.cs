@@ -1,6 +1,7 @@
 using MongoDB.Driver;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
+using RO2.Kharas.Domain;
 using RO2.Persistence.Mongo.Persistence;
 
 namespace RO2.Persistence.Mongo.Repositories;

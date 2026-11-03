@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Kharas.Domain;
 
 /// <summary>
 /// One accepted, not yet completed Khara of a character: the element of the 2310 accepted-Khara vector.
