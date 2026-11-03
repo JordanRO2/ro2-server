@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Collections.Domain;
 
 /// <summary>One of the two incubator slots of the pet-collection window.</summary>
 public sealed class PetIncubatorSlot

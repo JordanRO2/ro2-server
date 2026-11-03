@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Collections.Domain;
 
 /// <summary>
 /// Pure slot rules of the pet incubators (place, put an egg in, collect) over a character's slot list.

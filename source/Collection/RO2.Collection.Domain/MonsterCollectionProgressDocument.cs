@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Collections.Domain;
 
 /// <summary>
 /// Per-character monster-collection progress, one Mongo document per character in its own

@@ -1,5 +1,5 @@
 using RO2.GameData;
-using RO2.Domain.Entities;
+using RO2.Collections.Domain;
 using RO2.Server.Zone.Services;
 using Xunit;
 

@@ -2,7 +2,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using Microsoft.Extensions.Logging.Abstractions;
-using RO2.Domain.Entities;
+using RO2.Collections.Domain;
 using RO2.GameData;
 using RO2.GameData.Tables;
 using RO2.Persistence.Mongo.Persistence;

@@ -2,7 +2,7 @@ using System.Text.Json;
 using Npgsql;
 using NpgsqlTypes;
 using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
+using RO2.Collections.Domain;
 
 namespace RO2.Persistence.Postgres.Repositories;
 

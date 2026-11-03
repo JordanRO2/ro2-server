@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Collections.Domain;
 
 /// <summary>Summon level + DNA exp of one monster collection, keyed by the collection's NpcID.</summary>
 public sealed class MonsterCollectionEntry

@@ -1,4 +1,4 @@
-using RO2.Domain.Entities;
+using RO2.Collections.Domain;
 using RO2.Inventory.Domain;
 using RO2.Network.Protocol;
 using RO2.Server.Zone.Services;

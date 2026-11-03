@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Collections.Domain;
 
 /// <summary>
 /// One document per character holding all pet/monster Collection progress. Persisted to the

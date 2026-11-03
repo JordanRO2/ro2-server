@@ -1,5 +1,5 @@
 using Npgsql;
-using RO2.Domain.Entities;
+using RO2.Collections.Domain;
 using RO2.Persistence.Postgres.Repositories;
 using Xunit;
 

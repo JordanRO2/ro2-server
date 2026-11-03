@@ -1,4 +1,5 @@
 using RO2.Domain.Entities;
+using RO2.Collections.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;

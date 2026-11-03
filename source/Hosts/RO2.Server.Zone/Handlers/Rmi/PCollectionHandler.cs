@@ -45,7 +45,7 @@ public class PCollectionHandler : ZoneRmiHandlerBase<PCollectionHandler>
         
         
         var incubators = services.GetRequiredService<IPetIncubatorRepository>();
-        IReadOnlyList<RO2.Domain.Entities.PetIncubatorSlot>? slots;
+        IReadOnlyList<RO2.Collections.Domain.PetIncubatorSlot>? slots;
         using (await PetIncubatorStore.LockAsync(player.CharacterId, ct))
             slots = await PetIncubatorStore.LoadAsync(incubators, player.CharacterId, Logger, ct);
         await PetIncubatorStore.SendListAsync(session, slots, ct);
