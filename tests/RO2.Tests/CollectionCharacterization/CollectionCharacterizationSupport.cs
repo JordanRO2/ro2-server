@@ -161,16 +161,27 @@ internal sealed class FakeMonsterProgressRepo : IMonsterCollectionProgressReposi
 {
     private readonly object _gate = new();
     private readonly Dictionary<uint, MonsterCollectionProgressDocument> _docs = [];
+    private TaskCompletionSource? _release;
+    private int _waiting, _barrier;
     public bool ThrowOnGet { get; set; }
     public bool ThrowOnSave { get; set; }
 
     public MonsterCollectionProgressDocument? Stored(uint id) { lock (_gate) return _docs.TryGetValue(id, out var d) ? Clone(d) : null; }
     public void Seed(MonsterCollectionProgressDocument d) { lock (_gate) _docs[d.Id] = Clone(d); }
 
-    public Task<MonsterCollectionProgressDocument?> GetAsync(uint characterId, CancellationToken ct = default)
+    /// <summary>Makes the next <paramref name="n"/> progress loads wait until all n have been served, so n feeds read the same
+    /// stored progress before any writes: the lost-update interleaving of the non-atomic read-modify-write (deterministic).</summary>
+    public void HoldLoadsUntil(int n) { _barrier = n; _waiting = 0; _release = new(TaskCreationOptions.RunContinuationsAsynchronously); }
+
+    public async Task<MonsterCollectionProgressDocument?> GetAsync(uint characterId, CancellationToken ct = default)
     {
         if (ThrowOnGet) throw new IOException("injected load failure");
-        lock (_gate) return Task.FromResult(_docs.TryGetValue(characterId, out var d) ? Clone(d) : null);
+        MonsterCollectionProgressDocument? doc;
+        lock (_gate) doc = _docs.TryGetValue(characterId, out var d) ? Clone(d) : null;
+        var release = _release;
+        if (release is not null && Interlocked.Increment(ref _waiting) >= _barrier) release.TrySetResult();
+        if (release is not null) await release.Task.WaitAsync(Generous, ct);
+        return doc;
     }
 
     public Task SaveAsync(MonsterCollectionProgressDocument doc, CancellationToken ct = default)

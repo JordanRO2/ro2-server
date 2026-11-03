@@ -254,7 +254,8 @@ public class CollectionServiceCharacterizationTests
         repo.Seed(new CollectionDocument { Id = C, RegisteredMonsterIds = { Mon } });
         var uc = Uc(repo, progress);
 
-        repo.HoldLoadsUntil(2);                                        // both feeds load the book before either saves progress
+        repo.HoldLoadsUntil(2);                                        // both feeds load the book before either saves
+        progress.HoldLoadsUntil(2);                                    // and both read the same progress (exp 0) before either saves it
         var results = await Task.WhenAll(uc.FeedAsync(C, Mon, rows), uc.FeedAsync(C, Mon, rows));
 
         Assert.All(results, r => Assert.Equal((MonsterFeedKind.ExpGained, (byte)1, 1u), (r.Kind, r.Level, r.Exp)));   // each saw exp 0 and answered exp 1
