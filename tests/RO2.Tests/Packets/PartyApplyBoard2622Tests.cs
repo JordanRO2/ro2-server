@@ -1,3 +1,4 @@
+using RO2.Recruitments.Domain;
 using System.Buffers.Binary;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
@@ -50,7 +51,7 @@ public class PartyApplyBoard2622Tests
     {
         var board = new PartyApplyBoard();
         var posting = board.Post(70, Convert.FromHexString(Retail1458));
-        Assert.Equal(new PartyApplyBoard.Posting(70, 0, 2, 0, 0, "WL Open 19:08"), posting);
+        Assert.Equal(new ApplyNotice(70, 0, 2, 0, 0, "WL Open 19:08"), posting);
 
         
         
@@ -98,7 +99,7 @@ public class PartyApplyBoard2622Tests
     {
         
         Assert.True(PartyApplyBoard.TryParseSearch(Convert.FromHexString("000000010000000000"), out var f));
-        Assert.Equal(new PartyApplyBoard.SearchFilter(0, 0, 0, 1, 0), f);
+        Assert.Equal(new ApplyFilter(0, 0, 0, 1, 0), f);
         Assert.False(PartyApplyBoard.TryParseSearch(new byte[8], out _));
     }
 
@@ -110,7 +111,7 @@ public class PartyApplyBoard2622Tests
         board.Post(42, ApplyMsg(0, 4, 0, 0, "second"));
 
         Assert.Equal(1, board.Count);
-        Assert.Equal(new PartyApplyBoard.Posting(42, 0, 4, 0, 0, "second"), board.Snapshot().Single());
+        Assert.Equal(new ApplyNotice(42, 0, 4, 0, 0, "second"), board.Snapshot().Single());
         Assert.Null(board.Post(43, new byte[PartyApplyBoard.ApplyMsgBytes - 1]));
     }
 
@@ -131,9 +132,9 @@ public class PartyApplyBoard2622Tests
 
         Assert.NotNull(board.Post(1, ApplyMsg(3, 1, 3, 0, "t")));
         for (var c = 0; c <= byte.MaxValue; c++)
-            Assert.Equal(c <= 3, PartyApplyBoard.IsListable((byte)c, 0));
+            Assert.Equal(c <= 3, ApplyRules.IsListable((byte)c, 0));
         for (var d = 0; d <= byte.MaxValue; d++)
-            Assert.Equal(d < PartyApplyBoard.DifficultyCount, PartyApplyBoard.IsListable(0, (byte)d));
+            Assert.Equal(d < ApplyRules.DifficultyCount, ApplyRules.IsListable(0, (byte)d));
     }
 
     [Fact]
@@ -152,15 +153,15 @@ public class PartyApplyBoard2622Tests
     [Fact]
     public void Matches_TreatsZeroAsAll_AndRolesAsAnOverlap()
     {
-        var p = new PartyApplyBoard.Posting(1, Category: 2, RoleFlags: 6, Difficulty: 3, Destination: 11, Title: "t");
+        var p = new ApplyNotice(1, Category: 2, RoleFlags: 6, Difficulty: 3, Destination: 11, Title: "t");
 
-        Assert.True(PartyApplyBoard.Matches(p, new PartyApplyBoard.SearchFilter(0, 0, 0, 1, 0)));
-        Assert.True(PartyApplyBoard.Matches(p, new PartyApplyBoard.SearchFilter(2, 4, 3, 1, 11)));
-        Assert.True(PartyApplyBoard.Matches(p, new PartyApplyBoard.SearchFilter(0, 3, 0, 1, 0)));
-        Assert.False(PartyApplyBoard.Matches(p, new PartyApplyBoard.SearchFilter(0, 1, 0, 1, 0)));
-        Assert.False(PartyApplyBoard.Matches(p, new PartyApplyBoard.SearchFilter(1, 0, 0, 1, 0)));
-        Assert.False(PartyApplyBoard.Matches(p, new PartyApplyBoard.SearchFilter(0, 0, 2, 1, 0)));
-        Assert.False(PartyApplyBoard.Matches(p, new PartyApplyBoard.SearchFilter(0, 0, 0, 1, 10)));
+        Assert.True(ApplyRules.Matches(p, new ApplyFilter(0, 0, 0, 1, 0)));
+        Assert.True(ApplyRules.Matches(p, new ApplyFilter(2, 4, 3, 1, 11)));
+        Assert.True(ApplyRules.Matches(p, new ApplyFilter(0, 3, 0, 1, 0)));
+        Assert.False(ApplyRules.Matches(p, new ApplyFilter(0, 1, 0, 1, 0)));
+        Assert.False(ApplyRules.Matches(p, new ApplyFilter(1, 0, 0, 1, 0)));
+        Assert.False(ApplyRules.Matches(p, new ApplyFilter(0, 0, 2, 1, 0)));
+        Assert.False(ApplyRules.Matches(p, new ApplyFilter(0, 0, 0, 1, 10)));
     }
 
     [Fact]

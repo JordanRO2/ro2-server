@@ -1,6 +1,6 @@
 using System.Buffers.Binary;
 using System.Collections.Concurrent;
-using System.Text;
+using RO2.Recruitments.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -42,7 +42,7 @@ public sealed class PartyMatchingBoard
     public const int TextChars = 21;
 
     /// <summary>Maximum number of rows per 2621 page; matches the client's result window of 10 row controls.</summary>
-    public const int PageSize = 10;
+    public const int PageSize = Paginator.PageSize;
 
     // 1554 body offsets.
     private const int InviteCategoryOff = 0;
@@ -56,21 +56,7 @@ public sealed class PartyMatchingBoard
     private const int SearchPageOff = 2;
     private const int SearchDestinationOff = 4;
 
-    /// <summary>Filter value that matches every category, difficulty or destination (the "All" combo item).</summary>
-    private const int FilterAny = 0;
-
-    /// <summary>A recruit notice posted by a character.</summary>
-    /// <param name="CharacterId">Poster's character ID.</param>
-    /// <param name="Category">Category, from the 1554 body.</param>
-    /// <param name="Difficulty">Difficulty, from the 1554 body.</param>
-    /// <param name="Destination">Destination, from the 1554 body.</param>
-    /// <param name="Title">Title, decoded up to its terminator.</param>
-    public sealed record Posting(uint CharacterId, byte Category, byte Difficulty, uint Destination, string Title);
-
-    /// <summary>Search filter carried by a 1560 request.</summary>
-    public readonly record struct SearchFilter(byte Difficulty, byte Category, ushort Page, uint Destination);
-
-    private readonly ConcurrentDictionary<uint, Posting> _byCharacter = new();
+    private readonly ConcurrentDictionary<uint, RecruitNotice> _byCharacter = new();
 
     /// <summary>Number of postings currently held.</summary>
     public int Count => _byCharacter.Count;
@@ -108,11 +94,11 @@ public sealed class PartyMatchingBoard
     /// +4 u32 destination 0 = any
     /// </code>
     /// </summary>
-    public static bool TryParseSearch(ReadOnlySpan<byte> body, out SearchFilter filter)
+    public static bool TryParseSearch(ReadOnlySpan<byte> body, out RecruitFilter filter)
     {
         filter = default;
         if (body.Length < SearchBytes) return false;
-        filter = new SearchFilter(body[SearchDifficultyOff], body[SearchCategoryOff],
+        filter = new RecruitFilter(body[SearchDifficultyOff], body[SearchCategoryOff],
             BinaryPrimitives.ReadUInt16LittleEndian(body[SearchPageOff..]),
             BinaryPrimitives.ReadUInt32LittleEndian(body[SearchDestinationOff..]));
         return true;
@@ -122,11 +108,11 @@ public sealed class PartyMatchingBoard
     /// Posts or replaces a character's recruit notice from a 1554 body.
     /// </summary>
     /// <returns>The stored posting, or null when the body is too short.</returns>
-    public Posting? Post(uint characterId, ReadOnlySpan<byte> inviteMsgBody)
+    public RecruitNotice? Post(uint characterId, ReadOnlySpan<byte> inviteMsgBody)
     {
         if (!TryParseInviteMsg(inviteMsgBody, out var category, out var difficulty, out var destination, out var title))
             return null;
-        var posting = new Posting(characterId, category, difficulty, destination, title);
+        var posting = new RecruitNotice(characterId, category, difficulty, destination, title);
         _byCharacter[characterId] = posting;
         return posting;
     }
@@ -134,18 +120,10 @@ public sealed class PartyMatchingBoard
     public bool Remove(uint characterId) => _byCharacter.TryRemove(characterId, out _);
 
     /// <summary>Removes <paramref name="posting"/> only if it is still the character's current one.</summary>
-    public bool Remove(Posting posting)
-        => _byCharacter.TryRemove(new KeyValuePair<uint, Posting>(posting.CharacterId, posting));
+    public bool Remove(RecruitNotice posting)
+        => _byCharacter.TryRemove(new KeyValuePair<uint, RecruitNotice>(posting.CharacterId, posting));
 
-    public IReadOnlyList<Posting> Snapshot() => _byCharacter.Values.ToList();
-
-    /// <summary>
-    /// Tests whether a posting passes a search filter. A value of 0 in the filter matches any value.
-    /// </summary>
-    public static bool Matches(Posting p, SearchFilter f)
-        => (f.Difficulty == FilterAny || p.Difficulty == f.Difficulty)
-        && (f.Category == FilterAny || p.Category == f.Category)
-        && (f.Destination == FilterAny || p.Destination == f.Destination);
+    public IReadOnlyList<RecruitNotice> Snapshot() => _byCharacter.Values.ToList();
 
     /// <summary>
     /// Orders matching postings by poster GID, descending, and returns the requested 1-based page.
@@ -153,22 +131,7 @@ public sealed class PartyMatchingBoard
     /// </summary>
     public static (ushort Page, ushort Pages, List<PartyMatchingListing> Rows) Page(
         IEnumerable<PartyMatchingListing> rows, ushort requestedPage)
-    {
-        var ordered = rows.OrderByDescending(r => r.PosterGid).ToList();
-        var pages = Math.Max(1, (ordered.Count + PageSize - 1) / PageSize);
-        pages = Math.Min(pages, ushort.MaxValue);
-        var page = Math.Clamp((int)requestedPage, 1, pages);
-        var slice = ordered.Skip((page - 1) * PageSize).Take(PageSize).ToList();
-        return ((ushort)page, (ushort)pages, slice);
-    }
+        => Paginator.Page(rows, r => r.PosterGid, requestedPage);
 
-    private static string ReadWide(ReadOnlySpan<byte> buffer)
-    {
-        var chars = 0;
-        // At most TextChars - 1: the stored text must always fit a buffer that keeps its NUL.
-        while (chars < TextChars - 1 && chars * 2 + 1 < buffer.Length
-               && (buffer[chars * 2] != 0 || buffer[chars * 2 + 1] != 0))
-            chars++;
-        return Encoding.Unicode.GetString(buffer[..(chars * 2)]);
-    }
+    private static string ReadWide(ReadOnlySpan<byte> buffer) => WideText.Read(buffer, TextChars);
 }

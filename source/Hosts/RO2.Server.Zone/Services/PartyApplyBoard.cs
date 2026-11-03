@@ -1,6 +1,6 @@
 using System.Buffers.Binary;
 using System.Collections.Concurrent;
-using System.Text;
+using RO2.Recruitments.Domain;
 using RO2.Server.Zone.Models;
 using RO2.Characters.Domain;
 
@@ -42,35 +42,9 @@ public sealed class PartyApplyBoard
  /// <summary>
  /// Rows per 2622 page. The result window has 10 row controls, so a page never carries more than 10.
  /// </summary>
-    public const int PageSize = 10;
+    public const int PageSize = Paginator.PageSize;
 
- /// <summary>Number of difficulty levels the client's search form offers (All, Easy, Normal, Hard).</summary>
-    public const int DifficultyCount = 4;
-
- /// <summary>
- /// Category ids of the client's Find_Party_Category table. Every viewer builds its category list from that table,
- /// so a row whose category is missing from it cannot be drawn.
- /// </summary>
- /// <remarks>
- /// This is the client's own table, not <c>GameDataStore.FindPartyCategory</c>. If a client build adds a category,
- /// this list must follow it.
- /// </remarks>
-    public static ReadOnlySpan<byte> ClientCategoryIds => [0, 1, 2, 3];
-
- /// <param name="CharacterId">Character that made the posting.</param>
- /// <param name="Category">Category id.</param>
- /// <param name="RoleFlags">Role flags.</param>
- /// <param name="Difficulty">Difficulty index.</param>
- /// <param name="Destination">Destination id.</param>
- /// <param name="Title">Title, up to its NUL terminator.</param>
-    public sealed record Posting(uint CharacterId, byte Category, byte RoleFlags, byte Difficulty, uint Destination,
-        string Title);
-
- /// <summary>The search filter carried by a 1460 request.</summary>
-    public readonly record struct SearchFilter(byte Category, byte RoleFlags, byte Difficulty, ushort Page,
-        uint Destination);
-
-    private readonly ConcurrentDictionary<uint, Posting> _byCharacter = new();
+    private readonly ConcurrentDictionary<uint, ApplyNotice> _byCharacter = new();
 
  /// <summary>Number of postings currently held.</summary>
     public int Count => _byCharacter.Count;
@@ -101,34 +75,27 @@ public sealed class PartyApplyBoard
  /// Parses a 1460 body: category (u8), role flags (u8), difficulty (u8), page (u16) and destination (u32).
  /// An all-zero filter with page 1 means "All" for every field.
  /// </summary>
-    public static bool TryParseSearch(ReadOnlySpan<byte> body, out SearchFilter filter)
+    public static bool TryParseSearch(ReadOnlySpan<byte> body, out ApplyFilter filter)
     {
         filter = default;
         if (body.Length < SearchBytes) return false;
-        filter = new SearchFilter(body[0], body[1], body[2], BinaryPrimitives.ReadUInt16LittleEndian(body[3..]),
+        filter = new ApplyFilter(body[0], body[1], body[2], BinaryPrimitives.ReadUInt16LittleEndian(body[3..]),
             BinaryPrimitives.ReadUInt32LittleEndian(body[5..]));
         return true;
     }
 
  /// <summary>
- /// Whether every viewer can draw a row with this category and difficulty. A category outside
- /// <see cref="ClientCategoryIds"/> or a difficulty at or above <see cref="DifficultyCount"/> cannot be drawn by the client.
- /// </summary>
-    public static bool IsListable(byte category, byte difficulty)
-        => difficulty < DifficultyCount && ClientCategoryIds.Contains(category);
-
- /// <summary>
  /// Posts, or replaces, <paramref name="characterId"/>'s notice from a 1458 body.
  /// </summary>
  /// <returns>The stored posting, or null when the body is too short or holds a category or difficulty that cannot be listed.</returns>
-    public Posting? Post(uint characterId, ReadOnlySpan<byte> applyMsgBody)
+    public ApplyNotice? Post(uint characterId, ReadOnlySpan<byte> applyMsgBody)
     {
         if (!TryParseApplyMsg(applyMsgBody, out var category, out var roleFlags, out var difficulty,
                 out var destination, out var title))
             return null;
-        if (!IsListable(category, difficulty))
+        if (!ApplyRules.IsListable(category, difficulty))
             return null;
-        var posting = new Posting(characterId, category, roleFlags, difficulty, destination, title);
+        var posting = new ApplyNotice(characterId, category, roleFlags, difficulty, destination, title);
         _byCharacter[characterId] = posting;
         return posting;
     }
@@ -136,20 +103,10 @@ public sealed class PartyApplyBoard
     public bool Remove(uint characterId) => _byCharacter.TryRemove(characterId, out _);
 
  /// <summary>Removes <paramref name="posting"/> when it is still the character's current one.</summary>
-    public bool Remove(Posting posting)
-        => _byCharacter.TryRemove(new KeyValuePair<uint, Posting>(posting.CharacterId, posting));
+    public bool Remove(ApplyNotice posting)
+        => _byCharacter.TryRemove(new KeyValuePair<uint, ApplyNotice>(posting.CharacterId, posting));
 
-    public IReadOnlyList<Posting> Snapshot() => _byCharacter.Values.ToList();
-
- /// <summary>
- /// Whether <paramref name="p"/> matches <paramref name="f"/>. Item 0 of each choice list means "any", and role
- /// flags of 0 mean any role.
- /// </summary>
-    public static bool Matches(Posting p, SearchFilter f)
-        => (f.Category == 0 || p.Category == f.Category)
-        && (f.RoleFlags == 0 || (p.RoleFlags & f.RoleFlags) != 0)
-        && (f.Difficulty == 0 || p.Difficulty == f.Difficulty)
-        && (f.Destination == 0 || p.Destination == f.Destination);
+    public IReadOnlyList<ApplyNotice> Snapshot() => _byCharacter.Values.ToList();
 
  /// <summary>
  /// Builds the listing rows from the board and the posters' live state. The name, class and GID are read now, so a
@@ -158,7 +115,7 @@ public sealed class PartyApplyBoard
  /// <remarks>
  /// A posting whose poster is no longer online is removed from the board.
  /// </remarks>
-    public List<PartyApplyListing> ResolveListings(Func<uint, PlayerState?> lookupByCharacterId, SearchFilter filter)
+    public List<PartyApplyListing> ResolveListings(Func<uint, PlayerState?> lookupByCharacterId, ApplyFilter filter)
     {
         var rows = new List<PartyApplyListing>();
         foreach (var posting in Snapshot())
@@ -170,7 +127,7 @@ public sealed class PartyApplyBoard
                 Remove(posting);
                 continue;
             }
-            if (!Matches(posting, filter)) continue;
+            if (!ApplyRules.Matches(posting, filter)) continue;
 
             rows.Add(new PartyApplyListing(posting.Category, posting.RoleFlags, posting.Difficulty,
                 PartyMatchingDetailPackets.MemberOf(poster).Job, posting.Destination, poster.Name, posting.Title,
@@ -185,22 +142,7 @@ public sealed class PartyApplyBoard
  /// </summary>
     public static (ushort Page, ushort Pages, List<PartyApplyListing> Rows) Page(
         IEnumerable<PartyApplyListing> rows, ushort requestedPage)
-    {
-        var ordered = rows.OrderByDescending(r => r.PosterGid).ToList();
-        var pages = Math.Max(1, (ordered.Count + PageSize - 1) / PageSize);
-        pages = Math.Min(pages, ushort.MaxValue);
-        var page = Math.Clamp((int)requestedPage, 1, pages);
-        var slice = ordered.Skip((page - 1) * PageSize).Take(PageSize).ToList();
-        return ((ushort)page, (ushort)pages, slice);
-    }
+        => Paginator.Page(rows, r => r.PosterGid, requestedPage);
 
-    private static string ReadWide(ReadOnlySpan<byte> buffer)
-    {
-        var chars = 0;
-        
-        while (chars < TextChars - 1 && chars * 2 + 1 < buffer.Length
-               && (buffer[chars * 2] != 0 || buffer[chars * 2 + 1] != 0))
-            chars++;
-        return Encoding.Unicode.GetString(buffer[..(chars * 2)]);
-    }
+    private static string ReadWide(ReadOnlySpan<byte> buffer) => WideText.Read(buffer, TextChars);
 }

@@ -1,3 +1,4 @@
+using RO2.Recruitments.Domain;
 using System.Buffers.Binary;
 using System.Text;
 using RO2.Network.Packets;
@@ -83,7 +84,7 @@ public static class PartyMatchingDetailPackets
  /// Finds the online player whose recruit notice a 1461 or 1462 names, matched by GID.
  /// </summary>
     public static PlayerState? FindPoster(IEnumerable<PlayerState> players,
-        IEnumerable<PartyMatchingBoard.Posting> postings, ulong posterGid)
+        IEnumerable<RecruitNotice> postings, ulong posterGid)
     {
         if (posterGid == 0) return null;
         var posters = postings.Select(p => p.CharacterId).ToHashSet();

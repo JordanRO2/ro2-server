@@ -1,3 +1,4 @@
+using RO2.Recruitments.Domain;
 using RO2.Server.Zone.Services;
 using Xunit;
 
@@ -105,7 +106,7 @@ public class PartyMatchingBoard2621Tests
     {
         
         Assert.True(PartyMatchingBoard.TryParseSearch(Convert.FromHexString("0000010000000000"), out var f));
-        Assert.Equal(new PartyMatchingBoard.SearchFilter(0, 0, 1, 0), f);
+        Assert.Equal(new RecruitFilter(0, 0, 1, 0), f);
         Assert.False(PartyMatchingBoard.TryParseSearch(new byte[7], out _));
     }
 
@@ -118,7 +119,7 @@ public class PartyMatchingBoard2621Tests
         var p = board.Post(42, body);
 
         Assert.NotNull(p);
-        Assert.Equal(new PartyMatchingBoard.Posting(42, 2, 3, 11, "for kara"), p);
+        Assert.Equal(new RecruitNotice(42, 2, 3, 11, "for kara"), p);
         board.Post(42, InviteMsg(0, 0, 0, "second"));
         Assert.Equal(1, board.Count);
         Assert.Equal("second", board.Snapshot().Single().Title);
@@ -138,8 +139,8 @@ public class PartyMatchingBoard2621Tests
 
         var p = board.Post(5, body);
 
-        Assert.Equal(new PartyMatchingBoard.Posting(5, 0, 0, 0, "Test"), p);
-        Assert.True(PartyMatchingBoard.Matches(p!, new PartyMatchingBoard.SearchFilter(0, 0, 1, 0)));
+        Assert.Equal(new RecruitNotice(5, 0, 0, 0, "Test"), p);
+        Assert.True(RecruitRules.Matches(p!, new RecruitFilter(0, 0, 1, 0)));
         var row = new PartyMatchingListing(1, p!.Category, p.Difficulty, 0, p.Destination, 1, "n", p.Title);
         var built = PartyStatePackets.BuildAnsPartyMemberSearch(1, 1, [row]);
         
@@ -163,13 +164,13 @@ public class PartyMatchingBoard2621Tests
     [Fact]
     public void Matches_TreatsZeroAsAll()
     {
-        var p = new PartyMatchingBoard.Posting(1, Category: 2, Difficulty: 3, Destination: 11, Title: "t");
+        var p = new RecruitNotice(1, Category: 2, Difficulty: 3, Destination: 11, Title: "t");
 
-        Assert.True(PartyMatchingBoard.Matches(p, new PartyMatchingBoard.SearchFilter(0, 0, 1, 0)));
-        Assert.True(PartyMatchingBoard.Matches(p, new PartyMatchingBoard.SearchFilter(3, 2, 1, 11)));
-        Assert.False(PartyMatchingBoard.Matches(p, new PartyMatchingBoard.SearchFilter(2, 0, 1, 0)));
-        Assert.False(PartyMatchingBoard.Matches(p, new PartyMatchingBoard.SearchFilter(0, 1, 1, 0)));
-        Assert.False(PartyMatchingBoard.Matches(p, new PartyMatchingBoard.SearchFilter(0, 0, 1, 10)));
+        Assert.True(RecruitRules.Matches(p, new RecruitFilter(0, 0, 1, 0)));
+        Assert.True(RecruitRules.Matches(p, new RecruitFilter(3, 2, 1, 11)));
+        Assert.False(RecruitRules.Matches(p, new RecruitFilter(2, 0, 1, 0)));
+        Assert.False(RecruitRules.Matches(p, new RecruitFilter(0, 1, 1, 0)));
+        Assert.False(RecruitRules.Matches(p, new RecruitFilter(0, 0, 1, 10)));
     }
 
     [Fact]

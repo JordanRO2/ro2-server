@@ -1,3 +1,4 @@
+using RO2.Recruitments.Domain;
 using RO2.Domain.Entities;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
@@ -110,7 +111,7 @@ public class PartyMatchingDetailPacketsTests
     {
         var poster = new PlayerState { SessionId = 7, CharacterId = 70, CharacterUid = Gid, Name = "Azuv" };
         var other = new PlayerState { SessionId = 8, CharacterId = 80, CharacterUid = Gid + 1, Name = "Other" };
-        var postings = new[] { new PartyMatchingBoard.Posting(70, 0, 0, 0, "t") };
+        var postings = new[] { new RecruitNotice(70, 0, 0, 0, "t") };
 
         Assert.Same(poster, PartyMatchingDetailPackets.FindPoster([other, poster], postings, Gid));
         

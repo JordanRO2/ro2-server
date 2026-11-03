@@ -1,3 +1,4 @@
+using RO2.Recruitments.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Network.Packets;
@@ -61,7 +62,7 @@ public class PartyMatchingSearchInviteHandler : ZoneRmiHandlerBase<PartyMatching
  /// now, so a poster who joined or left a party since posting is shown as they are. A posting whose
  /// poster is no longer in the world is removed: its row could not be whispered or invited.
  /// </summary>
-    private List<PartyMatchingListing> ResolveListings(IServiceProvider services, PartyMatchingBoard.SearchFilter filter)
+    private List<PartyMatchingListing> ResolveListings(IServiceProvider services, RecruitFilter filter)
     {
         var board = PartyMatchingBoard.Instance;
         var parties = services.GetRequiredService<PartyService>();
@@ -75,7 +76,7 @@ public class PartyMatchingSearchInviteHandler : ZoneRmiHandlerBase<PartyMatching
                 board.Remove(posting);
                 continue;
             }
-            if (!PartyMatchingBoard.Matches(posting, filter)) continue;
+            if (!RecruitRules.Matches(posting, filter)) continue;
 
             
             

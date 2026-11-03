@@ -1,3 +1,4 @@
+using RO2.Recruitments.Domain;
 using System.Text;
 using RO2.Server.Zone.Services;
 using Xunit;
@@ -37,23 +38,23 @@ public class RecruitmentRulesTests
     [Fact]
     public void RecruitMatches_ChecksDifficultyCategoryDestinationOnly()
     {
-        var p = new PartyMatchingBoard.Posting(1, Category: 2, Difficulty: 3, Destination: 11, Title: "t");
+        var p = new RecruitNotice(1, Category: 2, Difficulty: 3, Destination: 11, Title: "t");
 
-        Assert.True(PartyMatchingBoard.Matches(p, new PartyMatchingBoard.SearchFilter(3, 2, 1, 11)));
-        Assert.True(PartyMatchingBoard.Matches(p, new PartyMatchingBoard.SearchFilter(0, 0, 9, 0)));   // page ignored
-        Assert.False(PartyMatchingBoard.Matches(p, new PartyMatchingBoard.SearchFilter(3, 2, 1, 12)));
+        Assert.True(RecruitRules.Matches(p, new RecruitFilter(3, 2, 1, 11)));
+        Assert.True(RecruitRules.Matches(p, new RecruitFilter(0, 0, 9, 0)));   // page ignored
+        Assert.False(RecruitRules.Matches(p, new RecruitFilter(3, 2, 1, 12)));
     }
 
     [Fact]
     public void ApplyMatches_RoleFilterIsABitIntersect_AndAPostingWithNoRoleNeverMatchesARoleFilter()
     {
-        var f = new PartyApplyBoard.SearchFilter(0, 7, 0, 1, 0);
+        var f = new ApplyFilter(0, 7, 0, 1, 0);
 
-        Assert.True(PartyApplyBoard.Matches(new PartyApplyBoard.Posting(1, 0, 1, 0, 0, "t"), f));
-        Assert.True(PartyApplyBoard.Matches(new PartyApplyBoard.Posting(1, 0, 4, 0, 0, "t"), f));
-        Assert.False(PartyApplyBoard.Matches(new PartyApplyBoard.Posting(1, 0, 0, 0, 0, "t"), f));
-        Assert.True(PartyApplyBoard.Matches(new PartyApplyBoard.Posting(1, 0, 0, 0, 0, "t"),
-            new PartyApplyBoard.SearchFilter(0, 0, 0, 1, 0)));
+        Assert.True(ApplyRules.Matches(new ApplyNotice(1, 0, 1, 0, 0, "t"), f));
+        Assert.True(ApplyRules.Matches(new ApplyNotice(1, 0, 4, 0, 0, "t"), f));
+        Assert.False(ApplyRules.Matches(new ApplyNotice(1, 0, 0, 0, 0, "t"), f));
+        Assert.True(ApplyRules.Matches(new ApplyNotice(1, 0, 0, 0, 0, "t"),
+            new ApplyFilter(0, 0, 0, 1, 0)));
     }
 
     [Fact]
@@ -64,7 +65,7 @@ public class RecruitmentRulesTests
         body[1] = 200;    // difficulty outside the client's table
 
         Assert.NotNull(new PartyMatchingBoard().Post(1, body));
-        Assert.False(PartyApplyBoard.IsListable(200, 200));
+        Assert.False(ApplyRules.IsListable(200, 200));
     }
 
     [Fact]
