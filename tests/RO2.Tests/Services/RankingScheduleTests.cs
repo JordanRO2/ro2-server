@@ -169,17 +169,17 @@ public class RankingScheduleTests
         var t0 = Utc(2026, 8, 8, 13, 0);
         var standings = new[]
         {
-            new RankingService.Standing(10, 30, t0.AddMinutes(5), "B", 6, 1, "G"),
-            new RankingService.Standing(11, 64, t0, "A", 12, 2, "LoneMyth"),
-            new RankingService.Standing(12, 30, t0.AddMinutes(1), "C", 7, 3, ""),   
-            new RankingService.Standing(13, 0, t0, "Z", 8, 4, ""),                   
+            new Standing(10, 30, t0.AddMinutes(5), "B", 6, 1, "G"),
+            new Standing(11, 64, t0, "A", 12, 2, "LoneMyth"),
+            new Standing(12, 30, t0.AddMinutes(1), "C", 7, 3, ""),   
+            new Standing(13, 0, t0, "Z", 8, 4, ""),                   
         };
         var replaced = new List<RankingSnapshotRow>
         {
             new() { CharId = 11, Rank = 2 },
             new() { CharId = 10, Rank = 83 },
         };
-        var rows = RankingService.RankRows(standings, replaced);
+        var rows = RankingBoard.RankRows(standings, replaced);
         Assert.Equal(new uint[] { 11, 12, 10 }, rows.Select(r => r.CharId));
         Assert.Equal(new uint[] { 1, 2, 3 }, rows.Select(r => r.Rank));
         Assert.Equal(new uint[] { 2, 0, 83 }, rows.Select(r => r.PreviousRank));
@@ -205,25 +205,24 @@ public class RankingScheduleTests
         
         
         var cards = LoadData<CardInfo>("CardInfo.json").Select(c => c.Card_ID).ToHashSet();
-        Assert.Equal(1, RankingService.CardRowsToCount(22310012, 1, cards));
-        Assert.Equal(0, RankingService.CardRowsToCount(22310012, 0, cards));   
-        Assert.Equal(0, RankingService.CardRowsToCount(11111111, 1, cards));   
+        Assert.Equal(1, CardCounting.CardRowsToCount(22310012, 1, cards));
+        Assert.Equal(0, CardCounting.CardRowsToCount(22310012, 0, cards));   
+        Assert.Equal(0, CardCounting.CardRowsToCount(11111111, 1, cards));   
     }
 
     [Fact]
     public void CardCollector_NewRowsOfALanding_AreTheStacksHoldingNoMoreThanTheLandedCount()
     {
         
-        Assert.Equal(1, RankingService.NewRowsOf(new[] { Stack(1) }, 1));
+        Assert.Equal(1, CardCounting.NewRowsOf(new[] { 1 }, 1));
         
-        Assert.Equal(0, RankingService.NewRowsOf(new[] { Stack(4) }, 1));
+        Assert.Equal(0, CardCounting.NewRowsOf(new[] { 4 }, 1));
         
-        Assert.Equal(3, RankingService.NewRowsOf(new[] { Stack(10), Stack(10), Stack(5) }, 25));
+        Assert.Equal(3, CardCounting.NewRowsOf(new[] { 10, 10, 5 }, 25));
         
-        Assert.Equal(0, RankingService.NewRowsOf(Array.Empty<InventoryItem>(), 1));
-        Assert.Equal(0, RankingService.NewRowsOf(new[] { Stack(1) }, 0));
+        Assert.Equal(0, CardCounting.NewRowsOf(Array.Empty<int>(), 1));
+        Assert.Equal(0, CardCounting.NewRowsOf(new[] { 1 }, 0));
 
-        static InventoryItem Stack(int count) => new() { ItemId = 22310012, Count = count, StorageType = 0 };
     }
 
     private static RankingReset ResetRow(byte resetType) =>

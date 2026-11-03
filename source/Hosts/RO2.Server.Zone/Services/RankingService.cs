@@ -92,22 +92,9 @@ public static class RankingService
         int landedCount, IReadOnlyList<InventoryItem> landed, ILogger logger)
     {
         var store = services.GetService<GameDataStore>();
-        int n = store is null ? 0 : CardRowsToCount(itemId, NewRowsOf(landed, landedCount), CardIds(store));
+        int n = store is null ? 0 : CardCounting.CardRowsToCount(itemId, CardCounting.NewRowsOf(landed.Select(s => s.Count).ToList(), landedCount), CardIds(store));
         return n > 0 ? AddAsync(services, player.CharacterId, player.Name, RankingSchedule.TypeCardCollector, n, logger) : Task.CompletedTask;
     }
-
- /// <summary>
- /// The new rows among the stacks a landing of <paramref name="landedCount"/> items wrote: the stacks that hold no more
- /// than the landed count. A planner that puts the whole count into an existing stack leaves that stack above the landed
- /// count, so only the rows opened by the landing match.
- /// </summary>
-    internal static int NewRowsOf(IReadOnlyList<InventoryItem> landed, int landedCount)
-        => landedCount <= 0 ? 0 : landed.Count(s => s.Count <= landedCount);
-
- /// <summary>What <paramref name="newRows"/> new rows of <paramref name="itemId"/> add to type 4: the rows when
- /// the item is a card, else 0.</summary>
-    internal static int CardRowsToCount(uint itemId, int newRows, IReadOnlySet<uint> cardIds)
-        => newRows > 0 && cardIds.Contains(itemId) ? newRows : 0;
 
     private static async Task AddAsync(IServiceProvider services, uint characterId, string name, byte rankingType, int amount,
         ILogger logger)
@@ -188,7 +175,7 @@ public static class RankingService
         var list = new List<RankRow>(RankingPackets.BoardSize);
         foreach (var row in rows)
         {
-            if (!Matches(row, filter)) continue;
+            if (!RankingBoard.Matches(row, filter)) continue;
             list.Add(row.ToRankRow());
             if (list.Count == RankingPackets.BoardSize) break;
         }
@@ -207,7 +194,7 @@ public static class RankingService
         uint position = 0;
         foreach (var row in rows)
         {
-            if (!Matches(row, filter)) continue;
+            if (!RankingBoard.Matches(row, filter)) continue;
             position++;
             if (row.CharId != charId) continue;
             var r = row.ToRankRow();
@@ -216,55 +203,6 @@ public static class RankingService
         return null;
     }
 
-    private static bool Matches(RankingSnapshotRow row, byte filter)
-    {
-        var (selection, filterType) = RankingSchedule.DecodeFilter(filter);
-        if (selection == 0) return true;
-        return filterType switch
-        {
-            RankingSchedule.FilterByClass => row.ClassId == selection,
-            RankingSchedule.FilterByProfession => row.Profession == selection,
-            _ => true,
-        };
-    }
-
-    
- /// <summary>A character's standing at the roll, before ranking.</summary>
-    internal readonly record struct Standing(uint CharId, long Score, DateTime ReachedUtc, string Name, byte ClassId,
-        byte Profession, string Guild);
-
- /// <summary>
- /// Ranks <paramref name="standings"/> into a board: scores above 0 only, highest first, then the earliest reached, then
- /// the lower character id. Ranks run 1..n with no gaps. The previous rank is the character's rank in
- /// <paramref name="previous"/>, or 0 when it was not on it.
- /// </summary>
-    internal static List<RankingSnapshotRow> RankRows(IEnumerable<Standing> standings,
-        IReadOnlyList<RankingSnapshotRow>? previous)
-    {
-        var before = new Dictionary<uint, uint>();
-        if (previous != null)
-            foreach (var p in previous)
-                before.TryAdd(p.CharId, p.Rank);
-
-        var rows = new List<RankingSnapshotRow>();
-        uint rank = 0;
-        foreach (var s in standings.Where(s => s.Score > 0)
-                     .OrderByDescending(s => s.Score).ThenBy(s => s.ReachedUtc).ThenBy(s => s.CharId))
-        {
-            rows.Add(new RankingSnapshotRow
-            {
-                CharId = s.CharId,
-                Rank = ++rank,
-                PreviousRank = before.GetValueOrDefault(s.CharId),
-                ClassId = s.ClassId,
-                Profession = s.Profession,
-                Score = s.Score,
-                Name = s.Name,
-                Guild = s.Guild,
-            });
-        }
-        return rows;
-    }
 
  /// <summary>
  /// Starts the roll clock once per process. Resolves only singletons, so the scope that provides them may end. Does
@@ -426,7 +364,7 @@ public static class RankingService
             Type = rankingType,
             PeriodStartUtc = period,
             RolledUtc = now,
-            Rows = RankRows(standings, replaced?.Rows),
+            Rows = RankingBoard.RankRows(standings, replaced?.Rows),
         };
     }
 
