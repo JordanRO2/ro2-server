@@ -204,6 +204,7 @@ public static class Program
         services.AddProviderRepository<IPresentPasswordRepository, RO2.Persistence.Mongo.Repositories.PresentPasswordRepository, RO2.Persistence.Postgres.Repositories.PresentPasswordRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IMailRepository, RO2.Mails.Infrastructure.Mongo.MailRepository, RO2.Mails.Infrastructure.Postgres.MailRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IDungeonEntryCountRepository, RO2.Dungeons.Infrastructure.Mongo.DungeonEntryCountRepository, RO2.Dungeons.Infrastructure.Postgres.DungeonEntryCountRepository>(config.Database.Provider, ServiceLifetime.Singleton);
+        services.AddScoped<RecordDungeonEntryUseCase>();
         services.AddProviderRepository<ICraftRecipeRepository, RO2.Economy.Infrastructure.Mongo.CraftRecipeRepository, RO2.Economy.Infrastructure.Postgres.CraftRecipeRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<ICardBookChargeRepository, RO2.Persistence.Mongo.Repositories.CardBookChargeRepository, RO2.Persistence.Postgres.Repositories.CardBookChargeRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IPrivateShopCraftRepository, RO2.Economy.Infrastructure.Mongo.PrivateShopCraftRepository, RO2.Economy.Infrastructure.Postgres.PrivateShopCraftRepository>(config.Database.Provider, ServiceLifetime.Singleton);

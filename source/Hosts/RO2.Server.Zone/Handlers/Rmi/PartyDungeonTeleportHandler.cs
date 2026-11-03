@@ -136,7 +136,7 @@ public class PartyDungeonTeleportHandler : ZoneRmiHandlerBase<PartyDungeonTelepo
         await DungeonChannelHandOff.EnterAsync(session, player, arrival, services, Logger, ct, leaveP2PGroup: true);
 
         if (entry is { CountsForCharacter: true } && counts is not null)
-            await DungeonLevelSelectHandler.CountEntryAsync(counts, player, dungeon, Logger, ct);
+            await services.GetRequiredService<RecordDungeonEntryUseCase>().RecordAsync(player.CharacterId, dungeon.DungeonID, player.Name, dungeon.Enter_Count, ct);
     }
 
  /// <summary>

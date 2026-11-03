@@ -155,22 +155,6 @@ public class DungeonLevelSelectHandler : ZoneRmiHandlerBase<DungeonLevelSelectHa
         await DungeonChannelHandOff.EnterAsync(session, player, pos, services, Logger, ct);
 
         if (entry is { CountsForCharacter: true } && counts is not null)
-            await CountEntryAsync(counts, player, row, Logger, ct);
-    }
-
- /// <summary>Records an entry that has already been handed off. A storage failure is logged, not thrown.</summary>
-    internal static async Task CountEntryAsync(IDungeonEntryCountRepository counts, PlayerState player,
-        RO2.GameData.Tables.DungeonInfo row, ILogger logger, CancellationToken ct)
-    {
-        try
-        {
-            var now = await counts.RecordEntryAsync(player.CharacterId, row.DungeonID, DateTime.UtcNow, ct);
-            logger.LogInformation("{Name}: DungeonID {Dun} entries {Used}/{Limit} since the last reset",
-                player.Name, row.DungeonID, now, row.Enter_Count);
-        }
-        catch (Exception ex) when (ex is not OperationCanceledException)
-        {
-            logger.LogWarning(ex, "{Name}: could not count the entry into DungeonID {Dun}", player.Name, row.DungeonID);
-        }
+            await services.GetRequiredService<RecordDungeonEntryUseCase>().RecordAsync(player.CharacterId, row.DungeonID, player.Name, row.Enter_Count, ct);
     }
 }

@@ -41,7 +41,7 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 /// used all get the 2824. So the gate is 1531's Enter_Count
 /// check, applied to every join: a finder join always opens a new instance and always counts
 /// (<see cref="DungeonInstanceRegistry.EnterFinder"/>; the registry's remarks hold the details). An accepted join is counted after
-/// the hand-off, through <see cref="DungeonLevelSelectHandler.CountEntryAsync"/>, exactly as 1521 / 1531 count theirs,
+/// the hand-off, through <see cref="RecordDungeonEntryUseCase"/>, exactly as 1521 / 1531 count theirs,
 /// and a later 1534 resets its instance with 2771 [DungeonID] unless
 /// its boss died more than <see cref="DungeonInstanceRegistry.ClearedInstanceLifetime"/> before (DungeonFinderReward
 /// ends the run, which starts that clock).
@@ -165,7 +165,7 @@ public class PartyMatchingFindDungeonJoinSelectBtnHandler : ZoneRmiHandlerBase<P
         await DungeonChannelHandOff.EnterAsync(session, player, pos, services, Logger, ct);
 
         if (entry is { CountsForCharacter: true } && counts is not null)
-            await DungeonLevelSelectHandler.CountEntryAsync(counts, player, dungeon, Logger, ct);
+            await services.GetRequiredService<RecordDungeonEntryUseCase>().RecordAsync(player.CharacterId, dungeon.DungeonID, player.Name, dungeon.Enter_Count, ct);
     }
 
  /// <summary>
