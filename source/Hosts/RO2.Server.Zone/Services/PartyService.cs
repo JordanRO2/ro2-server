@@ -3,6 +3,8 @@ using System.Collections.Concurrent;
 using Microsoft.Extensions.Logging;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
+using RO2.Parties.Application;
+using RO2.Parties.Domain;
 using RO2.Server.Zone.Models;
 using RO2.Characters.Domain;
 
@@ -28,6 +30,9 @@ public class PartyState : IPartyView
 
  /// <summary>When each locked member went away, keyed by character GID so it follows the member across a key change.</summary>
     public ConcurrentDictionary<ulong, DateTime> LockedSince { get; } = new();
+
+    /// <summary>Held while a party decision reads the party into the aggregate and writes the outcome back (no await inside).</summary>
+    internal readonly object Gate = new();
 
     /// <summary>Loot mode a new party starts with (roster header payload+10, set later by 2363).</summary>
     public const byte DefaultItemRule = 2;
@@ -81,21 +86,14 @@ public enum HelperDeclareResult
     NotEligible,
 }
 
-/// <summary>Manages party state and operations.</summary>
-public class PartyService
+/// <summary>
+/// Manages party state and operations. It keeps the live registry (<see cref="PartyState"/>, the session and
+/// detached-key map), the lock-expiry timer and the wire builders; the decisions are made by
+/// <see cref="RO2.Parties.Domain.PartyAggregate"/> (see <c>PartyService.Decisions.cs</c>).
+/// </summary>
+public partial class PartyService
 {
     private readonly ConcurrentDictionary<uint, PartyState> _parties = new();
-
-
-
-
-
-
-
-
-
-
-
     private readonly ConcurrentDictionary<uint, uint> _playerToParty = new();
     private uint _nextPartyId = 1;
 
@@ -105,75 +103,24 @@ public class PartyService
     private readonly PlayerStateManager _playerManager;
     private readonly BroadcastService _broadcast;
     private readonly ILogger<PartyService> _logger;
+    private readonly IGuildNameLookup _guildNames;
+    private readonly RO2.Parties.Application.IClock _clock;
 
  /// <summary>Open invitations, keyed by the target's session. A target can have at most one open invitation.</summary>
     private readonly ConcurrentDictionary<uint, PendingInvite> _pendingInvites = new();
 
- /// <summary>An open party invitation.</summary>
- /// <param name="InviterSessionId">Session of the inviter.</param>
- /// <param name="RequestedName">Target name as the request carried it.</param>
-    private sealed record PendingInvite(uint InviterSessionId, string RequestedName, DateTime CreatedAt,
-        uint InviterPartyId);
-
- /// <summary>How long an open invitation can still be answered.</summary>
-    private static readonly TimeSpan InviteLifetime = TimeSpan.FromSeconds(30);
-
-
-
-
-    private const ushort InviteAnswerAccept = 0;
-    private const ushort InviteAnswerDecline = 1;
-    private const ushort InviteAnswerTimedOut = 2;
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /// <summary>2346 result 0: the invitation was accepted and the target joined.</summary>
-    private const short InviteCodeAccepted = 0;
-
-    private const short InviteCodePartyFull = 15707;
-    private const short InviteCodeInviterNotFound = 15708;
-    private const short InviteCodeTargetInParty = 15710;
-    private const short InviteCodeDeclined = 15715;
-    private const short InviteCodeTimedOut = 15716;
-    private const short InviteCodeAlreadyInvited = 15717;
-
- /// <summary>Result 15719: a raid was requested while the leader is on a dungeon map.</summary>
-    private const ushort TypeChangeRefusedOnDungeonMap = 15719;
+ /// <summary>An open party invitation: the inviter's session beside the invitation the aggregate decides on.</summary>
+    private sealed record PendingInvite(uint InviterSessionId, PartyInvite Invite);
 
     /// <summary>2902 AnsHelperDeclare result 0: the declaration was accepted.</summary>
     private const ushort HelperDeclareResultOk = 0;
 
-    /// <summary>Party type 0, a normal party.</summary>
-    private const byte PartyTypeNormal = 0;
-
-    /// <summary>Party type 2, a raid. Roster headers of parties above 5 members always carry this value.</summary>
-    private const byte PartyTypeRaid = 2;
-
-    /// <summary>Member cap of a normal party.</summary>
-    private const int NormalPartyMaxMembers = 5;
-
-    /// <summary>Member cap of a raid. Also the highest frame slot a member can hold.</summary>
-    private const int RaidMaxMembers = 20;
-
  /// <summary>Maximum number of members: 20 for a raid, 5 otherwise.</summary>
     public static int MaxMembers(PartyState party)
-        => party.PartyType == PartyTypeRaid ? RaidMaxMembers : NormalPartyMaxMembers;
+        => party.PartyType == PartyAggregate.PartyTypeRaid ? PartyAggregate.RaidMaxMembers : PartyAggregate.NormalMaxMembers;
 
- /// <summary>Seconds a locked member stays in its party. With the sweep period below, a lock is dropped 595 to 600 s after it began.</summary>
-    private const int LockedMemberLifetimeSeconds = 595;
-
- /// <summary>How long a locked member stays in its party before it is removed.</summary>
-    public static readonly TimeSpan LockedMemberLifetime = TimeSpan.FromSeconds(LockedMemberLifetimeSeconds);
+ /// <summary>How long a locked member stays in its party before it is removed (595 s; with the 5 s sweep, dropped 595 to 600 s after the lock began).</summary>
+    public static readonly TimeSpan LockedMemberLifetime = PartyAggregate.LockedMemberLifetime;
 
  /// <summary>Seconds between expiry sweeps; removals land on this grid.</summary>
     private const int LockedMemberSweepSeconds = 5;
@@ -181,21 +128,16 @@ public class PartyService
  /// <summary>How often expired locked members are checked.</summary>
     public static readonly TimeSpan LockedMemberSweepPeriod = TimeSpan.FromSeconds(LockedMemberSweepSeconds);
 
-    /// <summary>
-    /// 2358 OnPartyNotifyDestroy is sent twice when a party disbands. A kick already sent its first copy from the
-    /// kick handler, so only one more follows here.
-    /// </summary>
-    private const int DestroyCopiesOnDisband = 2;
-    private const int DestroyCopiesAfterKick = 1;
-
     private int _lockSweepAlive;
 
-    public PartyService(PlayerStateManager playerManager, BroadcastService broadcast, ILogger<PartyService> logger)
+    public PartyService(PlayerStateManager playerManager, BroadcastService broadcast, ILogger<PartyService> logger,
+        IGuildNameLookup? guildNames = null, RO2.Parties.Application.IClock? clock = null)
     {
         _playerManager = playerManager;
         _broadcast = broadcast;
         _logger = logger;
-
+        _guildNames = guildNames ?? new GuildNameLookup(new GuildDirectory());
+        _clock = clock ?? new PartyClock(new SystemClock());
 
         PcRecordParty.Register(this, p =>
             ReferenceEquals(_playerManager.GetPlayer(p.SessionId), p) && GetPlayerParty(p.SessionId) is { } party
@@ -230,365 +172,6 @@ public class PartyService
     }
 
  /// <summary>
- /// Handles a 1504 frame move: the mover takes <paramref name="targetSlot"/> and the occupant (0 for none) takes
- /// the mover's old slot, then the requester gets the 1504 answer and every member the 2705 notice.
- /// </summary>
-    public async Task SwapFrameSlotsAsync(PartyState party, ProudSession requester, ulong movedGid, uint moverId, uint occupantId, byte targetSlot)
-    {
-        var moverOldSlot = GetFrameSlot(party, moverId);
-        byte slot1, slot2;
-        ulong gid2;
-        if (occupantId != 0)
-        {
-            slot1 = GetFrameSlot(party, occupantId);
-            slot2 = moverOldSlot;
-            gid2 = PartyAnswerPackets.MemberGid(KnownMember(party, occupantId));
-            party.FrameSlots[moverId] = slot1;
-            party.FrameSlots[occupantId] = slot2;
-        }
-        else
-        {
-            slot1 = targetSlot;
-            slot2 = 0;
-            gid2 = 0;
-            party.FrameSlots[moverId] = slot1;
-        }
-
-        await requester.SendInternalRmiAsync(ZoneS2COpcodes.AnsPartyFrameMove, new byte[] { 0, 0 });
-
-        await BroadcastBodyToPartyAsync(party, ZoneS2COpcodes.NfyPartyFrameMove,
-            PartyAnswerPackets.BuildNfyPartyFrameMove2705(movedGid, slot1, gid2, slot2));
-    }
-
- /// <summary>Handles a 1382 invitation: <paramref name="inviter"/> invites the target found by the requested name.</summary>
-    public async Task InviteToPartyAsync(PlayerState inviter, PlayerState target, string requestedName)
-    {
-        if (target.SessionId == inviter.SessionId) return;
-
-        var inviterSession = _broadcast.GetSession(inviter.SessionId);
-        var inviterParty = GetPlayerParty(inviter.SessionId);
-        var partyType = inviterParty?.PartyType ?? PartyTypeNormal;
-
-        if (inviterParty != null && inviterParty.MemberSessionIds.Count >= MaxMembers(inviterParty))
-        {
-            _logger.LogDebug("{Inviter} invited {Target}, but party {PartyId} is full", inviter.Name, target.Name,
-                inviterParty.PartyId);
-            await SendInviteResultAsync(inviterSession, inviter, InviteCodePartyFull, requestedName, partyType);
-            return;
-        }
-
-        if (_playerToParty.ContainsKey(target.SessionId))
-        {
-            _logger.LogDebug("{Inviter} invited {Target}, who is already in a party", inviter.Name, target.Name);
-            await SendInviteResultAsync(inviterSession, inviter, InviteCodeTargetInParty, requestedName, partyType);
-            return;
-        }
-
-        var targetSession = _broadcast.GetSession(target.SessionId);
-        if (targetSession == null) return;
-
-
-        var now = DateTime.UtcNow;
-        var fresh = new PendingInvite(inviter.SessionId, requestedName, now, inviterParty?.PartyId ?? 0);
-        var stored = _pendingInvites.AddOrUpdate(target.SessionId, fresh,
-            (_, open) => now - open.CreatedAt < InviteLifetime ? open : fresh);
-        if (!ReferenceEquals(stored, fresh))
-        {
-            _logger.LogDebug("{Inviter} invited {Target}, who already has an invitation open", inviter.Name, target.Name);
-            await SendInviteResultAsync(inviterSession, inviter, InviteCodeAlreadyInvited, requestedName, partyType);
-            return;
-        }
-
-        await targetSession.SendInternalRmiAsync(ZoneS2COpcodes.OnPartyJoin,
-            PartyStatePackets.BuildOnPartyJoin(SynthPcHandle(target.SessionId), MemberGid(inviter), partyType, inviter.Name));
-
-        _logger.LogInformation("{Inviter} invited {Target} to party", inviter.Name, target.Name);
-    }
-
- /// <summary>
- /// Handles a 1383 answer from <paramref name="responder"/> to a party invitation. Honored only while the invitation is open.
- /// </summary>
-    public async Task AnswerInviteAsync(PlayerState responder, uint responderHandle, ushort answer,
-        ulong inviterGid, string inviterName)
-    {
-        if (!_pendingInvites.TryGetValue(responder.SessionId, out var pending))
-        {
-            _logger.LogDebug("{Name} answered {Answer} to an invitation that is not open", responder.Name, answer);
-            return;
-        }
-
-        var inviter = _playerManager.GetPlayer(pending.InviterSessionId);
-        if (inviter == null)
-        {
-
-
-
-
-
-            if (!_pendingInvites.TryRemove(new KeyValuePair<uint, PendingInvite>(responder.SessionId, pending)))
-                return;
-            _logger.LogDebug("{Name} answered an invitation whose inviter is no longer online", responder.Name);
-            if (answer == InviteAnswerAccept)
-                await SendPartyErrorAsync(responder, responderHandle, InviteCodeInviterNotFound, inviterName);
-            return;
-        }
-        if (MemberGid(inviter) != inviterGid)
-        {
-
-            _logger.LogDebug("{Name} answered a dialog for GID {Gid}, open invitation is from {Inviter}",
-                responder.Name, inviterGid, inviter.Name);
-            return;
-        }
-        if (!_pendingInvites.TryRemove(new KeyValuePair<uint, PendingInvite>(responder.SessionId, pending)))
-            return;
-
-        switch (answer)
-        {
-            case InviteAnswerAccept:
-                var refusal = await JoinPartyAsync(inviter, responder, pending.InviterPartyId);
-                if (refusal != InviteCodeAccepted)
-                    await SendPartyErrorAsync(responder, responderHandle, refusal, inviterName);
-                break;
-            case InviteAnswerDecline:
-            case InviteAnswerTimedOut:
-                var code = answer == InviteAnswerDecline ? InviteCodeDeclined : InviteCodeTimedOut;
-                await SendPartyErrorAsync(responder, responderHandle, code, inviterName);
-                await SendInviteResultAsync(_broadcast.GetSession(inviter.SessionId), inviter, code,
-                    pending.RequestedName, GetPlayerParty(inviter.SessionId)?.PartyType ?? PartyTypeNormal);
-                _logger.LogInformation("{Target} {Verb} {Inviter}'s party invitation", responder.Name,
-                    answer == InviteAnswerDecline ? "declined" : "let time out", inviter.Name);
-                break;
-            default:
-                _logger.LogDebug("{Name} sent unknown invitation answer {Answer}", responder.Name, answer);
-                break;
-        }
-    }
-
- /// <summary>Sends the 2346 result to the inviter.</summary>
-    private static async Task SendInviteResultAsync(RO2.Network.ProudNet.ProudSession? inviterSession,
-        PlayerState inviter, short result, string targetName, byte partyType)
-    {
-        if (inviterSession == null) return;
-        await inviterSession.SendInternalRmiAsync(ZoneS2COpcodes.OnPartyInvite,
-            PartyStatePackets.BuildOnPartyInvite(SynthPcHandle(inviter.SessionId), result, targetName, partyType));
-    }
-
- /// <summary>Sends a 2348 error to the sender of a 1383 answer.</summary>
-    private async Task SendPartyErrorAsync(PlayerState responder, uint responderHandle, short code, string inviterName)
-    {
-        var responderSession = _broadcast.GetSession(responder.SessionId);
-        if (responderSession != null)
-            await responderSession.SendInternalRmiAsync(ZoneS2COpcodes.OnPartyError,
-                PartyStatePackets.BuildOnPartyError(responderHandle, code, inviterName));
-    }
-
- /// <summary>
- /// Accepted invitation: <paramref name="joiner"/> joins the inviter's party, which is created with the inviter as
- /// leader when needed.
- /// </summary>
-    private async Task<short> JoinPartyAsync(PlayerState inviter, PlayerState joiner, uint invitationPartyId)
-    {
-        if (_playerToParty.ContainsKey(joiner.SessionId))
-        {
-            _logger.LogDebug("{Joiner} accepted {Inviter}'s invitation while already in a party", joiner.Name, inviter.Name);
-            return InviteCodeTargetInParty;
-        }
-
-        var party = GetPlayerParty(inviter.SessionId);
-        if (invitationPartyId != 0 && party?.PartyId != invitationPartyId)
-        {
-            _logger.LogDebug("{Joiner} accepted {Inviter}'s invitation to party {PartyId}, which the inviter is no longer in",
-                joiner.Name, inviter.Name, invitationPartyId);
-            return InviteCodeInviterNotFound;
-        }
-        var created = false;
-
-        if (party == null)
-        {
-
-            var partyId = Interlocked.Increment(ref _nextPartyId);
-            party = new PartyState
-            {
-                PartyId = partyId,
-                LeaderSessionId = inviter.SessionId,
-                FounderGid = MemberGid(inviter),
-            };
-            AddMember(party, inviter);
-            _parties[partyId] = party;
-            created = true;
-        }
-
-
-
-
-
-
-
-        var staleSessionId = created ? 0u : FindOfflineMemberByGid(party, MemberGid(joiner));
-        if (staleSessionId != 0)
-            ReplaceMemberSession(party, staleSessionId, joiner);
-        else if (!created && party.MemberSessionIds.Count >= MaxMembers(party))
-        {
-            _logger.LogDebug("{Joiner} accepted {Inviter}'s invitation, but party {PartyId} is full",
-                joiner.Name, inviter.Name, party.PartyId);
-            return InviteCodePartyFull;
-        }
-        else
-            AddMember(party, joiner);
-
-        var inviterSession = _broadcast.GetSession(inviter.SessionId);
-        if (created)
-        {
-            await SendInviteResultAsync(inviterSession, inviter, InviteCodeAccepted, joiner.Name, party.PartyType);
-
-            await BroadcastRosterAsync(party, create: true);
-        }
-        else
-        {
-
-
-            await SendInternalToPartyExceptAsync(party, joiner.SessionId, ZoneS2COpcodes.OnPartyNotifyJoin,
-                BuildJoinDeltaBody(party, joiner));
-            await SendInviteResultAsync(inviterSession, inviter, InviteCodeAccepted, joiner.Name, party.PartyType);
-
-            var joinerSession = _broadcast.GetSession(joiner.SessionId);
-            if (joinerSession != null)
-                await joinerSession.SendInternalRmiAsync(ZoneS2COpcodes.OnPartyNotifyCreate,
-                    BuildRosterBody(party, create: true));
-        }
-
-        _logger.LogInformation("{Joiner} joined party {PartyId} (invited by {Inviter})",
-            joiner.Name, party.PartyId, inviter.Name);
-        return InviteCodeAccepted;
-    }
-
-    public async Task LeavePartyAsync(uint sessionId, PartyLeaveReason reason)
-    {
-        if (!_playerToParty.TryRemove(sessionId, out var partyId))
-            return;
-
-        if (!_parties.TryGetValue(partyId, out var party))
-            return;
-
-        party.MemberSessionIds.Remove(sessionId);
-        party.FrameSlots.TryRemove(sessionId, out _);
-
-
-        party.Members.TryRemove(sessionId, out var member);
-        var player = member ?? _playerManager.GetPlayer(sessionId);
-        var playerName = player?.Name ?? "Unknown";
-
-
-        if (MemberGid(player) is var leaverFlagGid and not 0)
-        {
-            party.HelperFlags.TryRemove(leaverFlagGid, out _);
-            party.LapsedHelperGids.TryRemove(leaverFlagGid, out _);
-
-
-
-            lock (party.SubMasterGids)
-            {
-                var subMasterSlot = Array.IndexOf(party.SubMasterGids, leaverFlagGid);
-                if (subMasterSlot >= 0) party.SubMasterGids[subMasterSlot] = 0;
-            }
-        }
-
-
-
-
-
-
-
-
-
-
-        if (reason == PartyLeaveReason.Left)
-        {
-            var leaverGid = MemberGid(player);
-            if (leaverGid != 0)
-                await SendInternalToPartyAsync(party, PartyNotifyOutPackets.Opcode,
-                    PartyNotifyOutPackets.BuildPartyNotifyOut2360(
-                        SynthPartyHandle(party), leaverGid, PartyNotifyOutPackets.KindRemoved));
-        }
-
-
-
-
-
-
-        if (party.MemberSessionIds.Count <= 1)
-        {
-
-
-
-
-
-
-
-
-
-
-
-
-            var partyHandle = SynthPartyHandle(party);
-            var destroyCopies = reason == PartyLeaveReason.Kicked ? DestroyCopiesAfterKick : DestroyCopiesOnDisband;
-            var destroyBody = PartyStatePackets.BuildOnPartyNotifyDestroy2358(partyHandle);
-            foreach (var memberId in party.MemberSessionIds.ToArray())
-            {
-                _playerToParty.TryRemove(memberId, out _);
-
-
-                if (GetOnlineMember(party, memberId) == null) continue;
-                var memberSession = _broadcast.GetSession(memberId);
-                if (memberSession == null) continue;
-                for (var copy = 0; copy < destroyCopies; copy++)
-                    await memberSession.SendInternalRmiAsync(PartyStatePackets.OpcodeOnPartyNotifyDestroy,
-                        destroyBody);
-            }
-            _parties.TryRemove(partyId, out _);
-            _logger.LogInformation("Party {PartyId} disbanded", partyId);
-        }
-        else
-        {
-            if (party.LeaderSessionId == sessionId)
-            {
-
-
-
-
-
-
-
-
-                var nextLeader = party.MemberSessionIds[0];
-                foreach (var memberId in party.MemberSessionIds)
-                {
-                    if (GetOnlineMember(party, memberId) == null) continue;
-                    nextLeader = memberId;
-                    break;
-                }
-                party.LeaderSessionId = nextLeader;
-                var newLeader = KnownMember(party, nextLeader);
-                _logger.LogInformation("Party {PartyId} leader changed to {Name}",
-                    partyId, newLeader?.Name ?? "?");
-                await BroadcastLeaderChangeAsync(party, newLeader);
-            }
-
-
-
-
-
-
-
-
-
-            await BroadcastRosterAsync(party);
-        }
-
-        _logger.LogInformation("{Name} left party {PartyId}", playerName, partyId);
-    }
-
- /// <summary>
  /// Notifies the other members that a member's zone session has ended. The member is locked in place (2360, kind 1).
  /// </summary>
     public Task NotifyMemberOfflineAsync(PlayerState departed) => MemberWentOfflineAsync(departed, detachSession: false);
@@ -597,55 +180,6 @@ public class PartyService
  /// Handles a 1418 character switch: the character leaves for character select while the connection stays open.
  /// </summary>
     public Task NotifyMemberSwitchedCharacterAsync(PlayerState departed) => MemberWentOfflineAsync(departed, detachSession: true);
-
-    private async Task MemberWentOfflineAsync(PlayerState departed, bool detachSession)
-    {
-        var party = GetPlayerParty(departed.SessionId);
-        if (party == null) return;
-
-        var gid = MemberGid(departed);
-
-
-
-
-
-
-
-        if (party.Members.TryGetValue(departed.SessionId, out var joined) && MemberGid(joined) != gid)
-        {
-            _logger.LogDebug("{Name} went offline on session {Id}, which holds another member of party {PartyId}; nothing to lock",
-                departed.Name, departed.SessionId, party.PartyId);
-            return;
-        }
-
-
-
-        party.Members[departed.SessionId] = departed;
-
-
-        var memberKey = detachSession ? DetachFromSession(party, departed.SessionId) : departed.SessionId;
-
-        if (gid == 0) return;
-
-
-
-
-        party.LockedSince[gid] = DateTime.UtcNow;
-        EnsureLockedMemberSweep();
-
-
-
-
-
-
-
-
-        await SendInternalToPartyExceptAsync(party, memberKey, PartyNotifyOutPackets.Opcode,
-            PartyNotifyOutPackets.BuildPartyNotifyOut2360(
-                SynthPartyHandle(party), gid, PartyNotifyOutPackets.KindLocked));
-        _logger.LogInformation("{Name} went offline; party {PartyId} told to lock the member",
-            departed.Name, party.PartyId);
-    }
 
  /// <summary>
  /// Moves the member on a session onto a new detached key, keeping its roster position, frame slot and leader role.
@@ -680,10 +214,13 @@ public class PartyService
 
         foreach (var party in _parties.Values)
         {
-            var staleKey = FindOfflineMemberByGid(party, gid);
-            if (staleKey == 0) continue;
-
-            ReplaceMemberSession(party, staleKey, player);
+            uint staleKey;
+            lock (party.Gate)
+            {
+                staleKey = FindOfflineMemberByGid(party, gid);
+                if (staleKey == 0) continue;
+                ReplaceMemberSession(party, staleKey, player);
+            }
 
 
 
@@ -719,52 +256,6 @@ public class PartyService
             left++;
         }
         return left;
-    }
-
- /// <summary>Removes every member locked for at least the lock lifetime at the given time.</summary>
-    public async Task<int> ExpireLockedMembersAsync(DateTime nowUtc)
-    {
-        var dropped = 0;
-        foreach (var party in _parties.Values)
-        {
-            foreach (var (gid, since) in party.LockedSince.ToArray())
-            {
-                if (nowUtc - since < LockedMemberLifetime) continue;
-
-
-                if (!party.LockedSince.TryRemove(KeyValuePair.Create(gid, since))) continue;
-
-                var key = FindOfflineMemberByGid(party, gid);
-                if (key == 0) continue;
-
-                if (!_parties.ContainsKey(party.PartyId)) break;
-                await DropLockedMemberAsync(party, key, nowUtc - since);
-                dropped++;
-            }
-        }
-        return dropped;
-    }
-
-    private async Task DropLockedMemberAsync(PartyState party, uint key, TimeSpan lockedFor)
-    {
-        var name = party.Members.GetValueOrDefault(key)?.Name ?? "?";
-        if (party.LeaderSessionId == key)
-        {
-            foreach (var memberId in party.MemberSessionIds.ToArray())
-            {
-                if (memberId == key) continue;
-                var successor = GetOnlineMember(party, memberId);
-                if (successor == null) continue;
-                party.LeaderSessionId = memberId;
-                _logger.LogInformation("Party {PartyId} leader changed to {Name}: the leader stayed away too long",
-                    party.PartyId, successor.Name);
-                await BroadcastLeaderChangeAsync(party, successor);
-                break;
-            }
-        }
-        _logger.LogInformation("{Name} was locked for {Seconds:F0} s; dropped from party {PartyId}",
-            name, lockedFor.TotalSeconds, party.PartyId);
-        await LeavePartyAsync(key, PartyLeaveReason.Left);
     }
 
  /// <summary>Starts the lock expiry loop unless it is already running.</summary>
@@ -803,39 +294,6 @@ public class PartyService
     }
 
  /// <summary>
- /// Handles a 1614 helper declaration: sets the member's Helper flag (1 declared, 0 withdrawn).
- /// </summary>
-    public async Task<HelperDeclareResult> SetHelperFlagAsync(PlayerState member, byte flag)
-    {
-        var party = GetPlayerParty(member.SessionId);
-        if (party == null) return HelperDeclareResult.NotInParty;
-        var gid = MemberGid(member);
-
-        if (gid == 0 || FindMemberByGid(party, gid) != member.SessionId || GetOnlineMember(party, member.SessionId) == null)
-            return HelperDeclareResult.NotInParty;
-
-        if (flag == HelperPackets.FlagQuit)
-        {
-            party.HelperFlags.TryRemove(gid, out _);
-        }
-        else
-        {
-            if (!MeetsHelperRule(party, member)) return HelperDeclareResult.NotEligible;
-            party.HelperFlags[gid] = flag;
-        }
-
-        party.LapsedHelperGids.TryRemove(gid, out _);
-
-        var session = _broadcast.GetSession(member.SessionId);
-        if (session != null)
-            await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsHelperDeclare,
-                HelperPackets.BuildAnsHelperDeclare2902(gid, flag, HelperDeclareResultOk));
-        await BroadcastRosterAsync(party);
-        _logger.LogInformation("{Name} set the Helper flag to {Flag} in party {PartyId}", member.Name, flag, party.PartyId);
-        return HelperDeclareResult.Done;
-    }
-
- /// <summary>
  /// After a member gains a level, removes the Helper flag from party members who no longer meet the Helper rule.
  /// </summary>
     public async Task RevokeLapsedHelpersAsync(PlayerState leveler)
@@ -849,19 +307,20 @@ public class PartyService
         var lapsedBefore = party.LapsedHelperGids.Keys.ToArray();
 
         var revoked = new List<(ulong Gid, uint SessionId)>();
-        foreach (var (gid, _) in party.HelperFlags.ToArray())
-        {
-            var helperId = FindMemberByGid(party, gid);
-            var helper = helperId != 0 ? KnownMember(party, helperId) : null;
-
-            if (helper == null || MeetsHelperRule(party, helper)) continue;
-
-            if (party.HelperFlags.TryRemove(gid, out _))
+        lock (party.Gate)
+            foreach (var (gid, _) in party.HelperFlags.ToArray())
             {
-                revoked.Add((gid, helperId));
-                party.LapsedHelperGids[gid] = 0;
+                var helperId = FindMemberByGid(party, gid);
+                var helper = helperId != 0 ? KnownMember(party, helperId) : null;
+
+                if (helper == null || MeetsHelperRule(party, helper)) continue;
+
+                if (party.HelperFlags.TryRemove(gid, out _))
+                {
+                    revoked.Add((gid, helperId));
+                    party.LapsedHelperGids[gid] = 0;
+                }
             }
-        }
         if (revoked.Count > 0)
         {
             foreach (var (gid, helperId) in revoked)
@@ -980,92 +439,6 @@ public class PartyService
         return true;
     }
 
- /// <summary>Handles a 1497 party type change requested by a member.</summary>
-    public async Task ChangeTypeAsync(uint sessionId, byte partyType, bool requesterOnDungeonMap)
-    {
-        var party = GetPlayerParty(sessionId);
-        if (party == null || party.LeaderSessionId != sessionId) return;
-
-        var leaderSession = _broadcast.GetSession(sessionId);
-        if (requesterOnDungeonMap)
-        {
-            if (leaderSession != null)
-                await leaderSession.SendInternalRmiAsync(ZoneS2COpcodes.AnsPartyTypeChange,
-                    PartyStatePackets.BuildAnsPartyTypeChange(partyType, TypeChangeRefusedOnDungeonMap));
-            _logger.LogInformation("Party {PartyId}: type change to {Type} refused, the leader is on a dungeon map",
-                party.PartyId, partyType);
-            return;
-        }
-
-        party.PartyType = partyType;
-
-
-        if (leaderSession != null)
-            await leaderSession.SendInternalRmiAsync(ZoneS2COpcodes.AnsPartyTypeChange,
-                PartyStatePackets.BuildAnsPartyTypeChange(partyType));
-
-        await SendInternalToPartyExceptAsync(party, sessionId, ZoneS2COpcodes.NfyPartyTypeChange,
-            PartyStatePackets.BuildNfyPartyTypeChange(partyType));
-        await BroadcastRosterAsync(party);
-        _logger.LogInformation("Party {PartyId}: type changed to {Type}", party.PartyId, partyType);
-    }
-
- /// <summary>Number of secondary leader slots in a party.</summary>
-    public const int MaxSubMasters = 3;
-
- /// <summary>Handles a 1503 request: the leader promotes the named member to secondary leader.</summary>
-    public async Task<bool> SetSubMasterAsync(uint sessionId, ulong targetGid)
-    {
-        var party = GetPlayerParty(sessionId);
-        if (party == null || party.LeaderSessionId != sessionId) return false;
-        var target = FindMemberByGid(party, targetGid);
-        if (target == 0 || target == party.LeaderSessionId) return false;
-        lock (party.SubMasterGids)
-        {
-
-            for (var i = 0; i < party.SubMasterGids.Length; i++)
-                if (party.SubMasterGids[i] != 0 && FindMemberByGid(party, party.SubMasterGids[i]) == 0)
-                    party.SubMasterGids[i] = 0;
-
-            var free = Array.IndexOf(party.SubMasterGids, 0UL);
-            if (Array.IndexOf(party.SubMasterGids, targetGid) >= 0 || free < 0) return false;
-            party.SubMasterGids[free] = targetGid;
-        }
-
-        var leaderSession = _broadcast.GetSession(sessionId);
-        if (leaderSession != null)
-            await leaderSession.SendInternalRmiAsync(ZoneS2COpcodes.AnsPartySubMaster,
-                PartyStatePackets.BuildAnsPartySubMaster2702());
-        await SendInternalToPartyAsync(party, ZoneS2COpcodes.NfyPartySubMaster,
-            PartyStatePackets.BuildNfyPartySubMaster(targetGid));
-        _logger.LogInformation("Party {PartyId}: GID {Gid} made a secondary leader", party.PartyId, targetGid);
-        return true;
-    }
-
- /// <summary>Handles a 1505 request: the leader removes the secondary leader role from the named member.</summary>
-    public async Task<bool> DismissSubMasterAsync(uint sessionId, ulong targetGid)
-    {
-        var party = GetPlayerParty(sessionId);
-        if (party == null || party.LeaderSessionId != sessionId) return false;
-        if (FindMemberByGid(party, targetGid) == 0) return false;
-        lock (party.SubMasterGids)
-        {
-
-            var slot = Array.IndexOf(party.SubMasterGids, targetGid);
-            if (slot < 0) return false;
-            party.SubMasterGids[slot] = 0;
-        }
-
-        var leaderSession = _broadcast.GetSession(sessionId);
-        if (leaderSession != null)
-            await leaderSession.SendInternalRmiAsync(ZoneS2COpcodes.AnsPartyDismissSubMaster,
-                PartyStatePackets.BuildAnsPartyDismissSubMaster2706());
-        await SendInternalToPartyAsync(party, ZoneS2COpcodes.NfyPartyDismissSubmaster,
-            PartyStatePackets.BuildNfyPartyDismissSubmaster(targetGid));
-        _logger.LogInformation("Party {PartyId}: GID {Gid} is no longer a secondary leader", party.PartyId, targetGid);
-        return true;
-    }
-
  /// <summary>Returns the secondary leader slots of the party, each a character GID or 0 for a free slot.</summary>
     public ulong[] SubMastersInRoster(PartyState party)
     {
@@ -1074,40 +447,6 @@ public class PartyService
         for (var i = 0; i < slots.Length; i++)
             if (slots[i] != 0 && FindMemberByGid(party, slots[i]) == 0) slots[i] = 0;
         return slots;
-    }
-
- /// <summary>Handles a 1387 request: the leader hands leadership to the named member.</summary>
-    public async Task ChangeLeaderAsync(uint sessionId, uint requesterHandle, ulong newLeaderGid)
-    {
-        var party = GetPlayerParty(sessionId);
-        if (party == null || party.LeaderSessionId != sessionId) return;
-
-        PlayerState? newLeader = null;
-        foreach (var memberId in party.MemberSessionIds)
-        {
-            if (memberId == sessionId) continue;
-            var member = GetOnlineMember(party, memberId);
-            if (member != null && MemberGid(member) == newLeaderGid)
-            {
-                newLeader = member;
-                break;
-            }
-        }
-        if (newLeader == null)
-        {
-            _logger.LogDebug("Party {PartyId}: leader change to GID {Gid} names no online member", party.PartyId, newLeaderGid);
-            return;
-        }
-
-        party.LeaderSessionId = newLeader.SessionId;
-
-        var session = _broadcast.GetSession(sessionId);
-        if (session != null)
-            await session.SendInternalRmiAsync(ZoneS2COpcodes.OnPartyChangeMaster,
-                PartyStatePackets.BuildOnPartyChangeMasterAck(requesterHandle));
-        await BroadcastLeaderChangeAsync(party, newLeader);
-        await BroadcastRosterAsync(party);
-        _logger.LogInformation("Party {PartyId}: leader changed to {Name}", party.PartyId, newLeader.Name);
     }
 
  /// <summary>Returns the member's live state while its character is in the world, or null otherwise.</summary>
@@ -1188,15 +527,6 @@ public class PartyService
         _playerToParty[joiner.SessionId] = party.PartyId;
     }
 
- /// <summary>Broadcasts the leader change (2365) to every member.</summary>
-    private async Task BroadcastLeaderChangeAsync(PartyState party, PlayerState? newLeader)
-    {
-        var gid = MemberGid(newLeader);
-        if (gid == 0) return;
-        await SendInternalToPartyAsync(party, ZoneS2COpcodes.OnPartyNotifyChangeMaster,
-            PartyStatePackets.BuildOnPartyNotifyChangeMaster2365(SynthPartyHandle(party), gid));
-    }
-
  /// <summary>Broadcasts a game server-to-client message to every current party member.</summary>
     public async Task BroadcastToPartyAsync(PartyState party, ushort opcode, Action<RO2.Network.Packets.PacketWriter> writeAction)
     {
@@ -1270,26 +600,31 @@ public class PartyService
 
     private static ulong MemberGid(PlayerState? p) => PartyAnswerPackets.MemberGid(p);
 
- /// <summary>Builds one member's 208-byte record with identity and stat fields. Shared by the roster broadcasts.</summary>
-    private static byte[] BuildMemberRecordFor(uint memberSessionId, PlayerState? p, byte frameSlot, bool online,
-        byte helperFlag)
+ /// <summary>What a member's record shows of <paramref name="p"/>; the guild name comes through the guild port.</summary>
+    private MemberView ToView(PlayerState p, bool online)
     {
-        if (p == null)
+        var c = p.Character;
+        var (proJobLevel, proJobId) = c != null ? CharacterSerializer.WireProJob(c) : ((byte)0, (byte)0);
+        return new MemberView(MemberGid(p), p.Name, p.Level, c != null ? CharacterHeadRules.CombatJobByte(c) : p.Job,
+            (uint)Math.Max(0, p.Hp), (uint)Math.Max(0, p.MaxHp), (uint)Math.Max(0, p.Mp), (uint)Math.Max(0, p.MaxMp),
+            p.MapId, p.X, p.Y, p.Z,
+            c != null ? CharacterHeadRules.CreationProfessionByte(c) : (byte)0, proJobLevel, proJobId,
+            _guildNames.GuildNameOf(p.CharacterId), online);
+    }
+
+ /// <summary>Builds one member's 208-byte record with identity and stat fields. Shared by the roster broadcasts.</summary>
+    private static byte[] BuildMemberRecordFor(uint memberSessionId, MemberView? v, byte frameSlot, byte helperFlag)
+    {
+        if (v == null)
             return PartyNotifyPackets.BuildMemberRecord(SynthPcHandle(memberSessionId), 0UL, string.Empty);
 
-        var c = p.Character;
         var record = PartyStatePackets.BuildPartyMemberRecord(
-            SynthPcHandle(memberSessionId), MemberGid(p), p.Name,
-            p.Level, c != null ? CharacterHeadRules.CombatJobByte(c) : p.Job,
-            (uint)Math.Max(0, p.Hp), (uint)Math.Max(0, p.MaxHp),
-            (uint)Math.Max(0, p.Mp), (uint)Math.Max(0, p.MaxMp),
-            p.MapId, p.X, p.Y, p.Z,
+            SynthPcHandle(memberSessionId), v.Gid, v.Name,
+            v.Level, v.Job,
+            v.Hp, v.MaxHp, v.Mp, v.MaxMp,
+            v.MapId, v.X, v.Y, v.Z,
             frameSlot);
-        var (proJobLevel, proJobId) = c != null ? CharacterSerializer.WireProJob(c) : ((byte)0, (byte)0);
-        PartyNotifyPackets.ApplyMemberState(record, online,
-            c != null ? CharacterHeadRules.CreationProfessionByte(c) : (byte)0,
-            proJobLevel, proJobId,
-            GuildService.Instance.GetByCharId(p.CharacterId)?.Name);
+        PartyNotifyPackets.ApplyMemberState(record, v.Online, v.Profession, v.ProJobLevel, v.ProJobId, v.GuildName);
         record[HelperPackets.RecHelperFlagOff] = helperFlag;
         return record;
     }
@@ -1305,8 +640,9 @@ public class PartyService
         foreach (var memberId in party.MemberSessionIds)
         {
             var known = KnownMember(party, memberId);
-            records.Add(BuildMemberRecordFor(memberId, known, GetFrameSlot(party, memberId),
-                online: GetOnlineMember(party, memberId) != null, HelperFlagOf(party, known)));
+            records.Add(BuildMemberRecordFor(memberId,
+                known == null ? null : ToView(known, online: GetOnlineMember(party, memberId) != null),
+                GetFrameSlot(party, memberId), HelperFlagOf(party, known)));
         }
         return records;
     }
@@ -1371,8 +707,8 @@ public class PartyService
     {
 
 
-        var record = BuildMemberRecordFor(joiner.SessionId, joiner, GetFrameSlot(party, joiner.SessionId), online: true,
-            HelperFlagOf(party, joiner));
+        var record = BuildMemberRecordFor(joiner.SessionId, ToView(joiner, online: true),
+            GetFrameSlot(party, joiner.SessionId), HelperFlagOf(party, joiner));
         return PartyNotifyPackets.BuildPartyNotifyJoin2359(
             SynthPartyHandle(party), new byte[PartyNotifyPackets.JoinHeaderLen], record);
     }

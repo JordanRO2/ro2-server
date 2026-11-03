@@ -68,6 +68,8 @@
     <ProjectReference Include="..\..\Khara\RO2.Khara.Infrastructure.Postgres\RO2.Khara.Infrastructure.Postgres.csproj" />
     <ProjectReference Include="..\..\Chat\RO2.Chat.Application\RO2.Chat.Application.csproj" />
     <ProjectReference Include="..\..\Chat\RO2.Chat.Domain\RO2.Chat.Domain.csproj" />
+    <ProjectReference Include="..\..\Party\RO2.Party.Application\RO2.Party.Application.csproj" />
+    <ProjectReference Include="..\..\Party\RO2.Party.Domain\RO2.Party.Domain.csproj" />
   </ItemGroup>
 
 </Project>

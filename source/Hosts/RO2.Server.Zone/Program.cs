@@ -236,6 +236,8 @@ public static class Program
         services.AddSingleton<BroadcastService>();
         services.AddSingleton<PlayerSpawnService>();
         services.AddSingleton<NpcSpawnService>();
+        services.AddSingleton<RO2.Parties.Application.IGuildNameLookup, GuildNameLookup>();
+        services.AddSingleton<RO2.Parties.Application.IClock, PartyClock>();
         services.AddSingleton<PartyService>();
         services.AddSingleton<CombatService>();
         services.AddSingleton<LootService>();

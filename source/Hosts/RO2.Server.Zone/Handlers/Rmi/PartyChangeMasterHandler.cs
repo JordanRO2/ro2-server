@@ -50,24 +50,15 @@ public class PartyChangeMasterHandler : ZoneRmiHandlerBase<PartyChangeMasterHand
         
         
         var party = partyService.GetPlayerParty(session.SessionId);
+        var refusedAsWoe = false;
         if (party != null && party.LeaderSessionId == session.SessionId)
         {
             var targetId = partyService.FindMemberByGid(party, newLeaderGid);
             var target = targetId == 0 || targetId == session.SessionId ? null : partyService.GetOnlineMember(party, targetId);
-            if (target != null && RefusedAsWoe(services.GetRequiredService<GameDataStore>(), player.MapId, target.MapId))
-            {
-                Logger.LogDebug("{Name}: leader change to {Target} refused, WoE map {Map} vs {TargetMap}",
-                    player.Name, target.Name, player.MapId, target.MapId);
-                await session.SendInternalRmiAsync(ZoneS2COpcodes.OnPartyChangeMaster,
-                    PartyAnswerPackets.BuildResultAck(PartyStatePackets.MsgTagOnPartyChangeMaster, requesterHandle,
-                        PartyAnswerPackets.ResultChangeMasterWoeMap));
-                return;
-            }
+            refusedAsWoe = target != null && RefusedAsWoe(services.GetRequiredService<GameDataStore>(), player.MapId, target.MapId);
         }
 
-        
-        
-        await partyService.ChangeLeaderAsync(session.SessionId, requesterHandle, newLeaderGid);
+        await partyService.ChangeLeaderAsync(session.SessionId, requesterHandle, newLeaderGid, refusedAsWoe);
     }
 
  /// <summary>Map_List.Map_Type of the WoE fortresses 3101 and 3201, the only rows that carry it.</summary>

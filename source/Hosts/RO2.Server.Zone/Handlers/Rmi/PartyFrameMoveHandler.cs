@@ -37,42 +37,7 @@ public class PartyFrameMoveHandler : ZoneRmiHandlerBase<PartyFrameMoveHandler>
         var partyService = services.GetRequiredService<PartyService>();
         var party = partyService.GetPlayerParty(session.SessionId);
         if (party == null) return;
-        if (targetSlot > PartyService.MaxMembers(party)) return;
 
-        
-        
-        
-        var moverId = partyService.FindMemberByGid(party, movedGid);
-        if (moverId == 0) return;
-        var occupantId = occupantGid == 0 ? 0u : partyService.FindMemberByGid(party, occupantGid);
-        if (occupantGid != 0 && occupantId == 0) return;
-
-        
-        
-        
-        
-        if (occupantId == 0)
-        {
-            
-            
-            foreach (var (memberId, slot) in party.FrameSlots)
-            {
-                if (slot != targetSlot || memberId == moverId) continue;
-                occupantId = memberId;
-                Logger.LogDebug("{Name} frame move: client sees slot {Slot} empty, server holds session {Id} there",
-                    player.Name, targetSlot, memberId);
-                break;
-            }
-        }
-
-        if (occupantId != 0)
-        {
-            var serverSlot = PartyService.GetFrameSlot(party, occupantId);
-            if (serverSlot != targetSlot)
-                Logger.LogDebug("{Name} frame move: client slot {Client} but server holds the occupant at {Server}",
-                    player.Name, targetSlot, serverSlot);
-        }
-
-        await partyService.SwapFrameSlotsAsync(party, session, movedGid, moverId, occupantId, targetSlot);
+        await partyService.SwapFrameSlotsAsync(party, session.SessionId, movedGid, occupantGid, targetSlot);
     }
 }

@@ -56,6 +56,23 @@ public sealed partial class PartyAggregate
         AddMember(founderGid);
     }
 
+    /// <summary>Rebuilds the aggregate from state the host holds (the members in roster order, the GID-keyed tables).</summary>
+    public static PartyAggregate Restore(uint id, ulong founderGid, DateTime createdAt, ulong leaderGid, byte partyType,
+        IEnumerable<ulong> members, IReadOnlyDictionary<ulong, byte> slots, IReadOnlyDictionary<ulong, byte> helpers,
+        IEnumerable<ulong> lapsedHelpers, IReadOnlyDictionary<ulong, DateTime> lockedSince, IReadOnlyList<ulong> subMasters)
+    {
+        var party = new PartyAggregate(id, founderGid, createdAt) { LeaderGid = leaderGid, PartyType = partyType };
+        party._members.Clear();
+        party._slots.Clear();
+        party._members.AddRange(members);
+        foreach (var (gid, slot) in slots) party._slots[gid] = slot;
+        foreach (var (gid, flag) in helpers) party._helpers[gid] = flag;
+        party._lapsedHelpers.UnionWith(lapsedHelpers);
+        foreach (var (gid, since) in lockedSince) party._lockedSince[gid] = since;
+        for (var i = 0; i < party._subMasters.Length && i < subMasters.Count; i++) party._subMasters[i] = subMasters[i];
+        return party;
+    }
+
     public uint Id { get; }
     public ulong LeaderGid { get; private set; }
     public ulong FounderGid { get; }

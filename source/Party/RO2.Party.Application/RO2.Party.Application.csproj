@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <RootNamespace>RO2.Parties.Application</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Party bounded context: Application. The ports the Zone host implements, and the dispatch of a decision's effects onto them. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Party.Domain\RO2.Party.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+  </ItemGroup>
+
+</Project>
