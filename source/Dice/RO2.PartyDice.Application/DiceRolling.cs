@@ -12,6 +12,9 @@ public static class DiceRolling
     /// </summary>
     public static IReadOnlyList<DiceEffect> Answer(DiceRound round, uint sessionId, ulong gid, byte choice, Random? rng = null)
     {
+        // The roll happens before round.Answer decides eligibility, so an ineligible answerer (settled/non-participant/
+        // already answered) still draws once. Harmless under Random.Shared; do NOT share one seeded Random across the
+        // answers of a round in tests, or an ineligible draw would shift a later eligible roll.
         var rolled = PartyDiceRolls.TryRoll(choice, rng ?? Random.Shared, out var roll);
         if (!rolled && choice != PartyDiceRolls.ChoicePass) return [];
         return round.Answer(sessionId, gid, rolled, roll);
