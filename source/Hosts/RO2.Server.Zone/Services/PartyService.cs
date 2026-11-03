@@ -2,12 +2,13 @@ using System.Buffers.Binary;
 using System.Collections.Concurrent;
 using Microsoft.Extensions.Logging;
 using RO2.Network.Protocol;
+using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Characters.Domain;
 
 namespace RO2.Server.Zone.Services;
 
-public class PartyState
+public class PartyState : IPartyView
 {
     public uint PartyId { get; set; }
     public uint LeaderSessionId { get; set; }
@@ -53,6 +54,11 @@ public class PartyState
     public string Notice { get; set; } = string.Empty;
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+    public uint LeaderKey => LeaderSessionId;
+    public IReadOnlyList<uint> MemberKeys => MemberSessionIds.ToArray();
+    public byte FrameSlot(uint memberKey) => FrameSlots.GetValueOrDefault(memberKey);
+    public bool IsLeader(uint memberKey) => LeaderSessionId == memberKey;
 }
 
 /// <summary>Why a member left the party. Each reason is announced to the remaining members differently.</summary>
@@ -202,6 +208,56 @@ public class PartyService
         if (_playerToParty.TryGetValue(sessionId, out var partyId))
             return _parties.GetValueOrDefault(partyId);
         return null;
+    }
+
+ /// <summary>The read-only view of the session's party, or null when it is in none.</summary>
+    public IPartyView? GetPartyView(uint sessionId) => GetPlayerParty(sessionId);
+
+ /// <summary>
+ /// Handles a 1385 loot-rule change: stores the rule and quality, answers the requester (1385 ack), then tells
+ /// every member (2363).
+ /// </summary>
+    public async Task SetItemRuleAsync(PartyState party, ProudSession requester, uint requesterHandle, byte lootMode, byte quality)
+    {
+        party.ItemRule = lootMode;
+        party.ItemQuality = quality;
+
+        await requester.SendInternalRmiAsync(ZoneS2COpcodes.OnPartyChangeItem,
+            PartyAnswerPackets.BuildResultAck(PartyStatePackets.MsgTagOnPartyChangeItem, requesterHandle));
+
+        await BroadcastBodyToPartyAsync(party, ZoneS2COpcodes.OnPartyNotifyChangeItem,
+            PartyAnswerPackets.BuildPartyNotifyChangeItem2363(PartyAnswerPackets.PartyHandle(party), lootMode, quality));
+    }
+
+ /// <summary>
+ /// Handles a 1504 frame move: the mover takes <paramref name="targetSlot"/> and the occupant (0 for none) takes
+ /// the mover's old slot, then the requester gets the 1504 answer and every member the 2705 notice.
+ /// </summary>
+    public async Task SwapFrameSlotsAsync(PartyState party, ProudSession requester, ulong movedGid, uint moverId, uint occupantId, byte targetSlot)
+    {
+        var moverOldSlot = GetFrameSlot(party, moverId);
+        byte slot1, slot2;
+        ulong gid2;
+        if (occupantId != 0)
+        {
+            slot1 = GetFrameSlot(party, occupantId);
+            slot2 = moverOldSlot;
+            gid2 = PartyAnswerPackets.MemberGid(KnownMember(party, occupantId));
+            party.FrameSlots[moverId] = slot1;
+            party.FrameSlots[occupantId] = slot2;
+        }
+        else
+        {
+            slot1 = targetSlot;
+            slot2 = 0;
+            gid2 = 0;
+            party.FrameSlots[moverId] = slot1;
+        }
+
+        await requester.SendInternalRmiAsync(ZoneS2COpcodes.AnsPartyFrameMove, new byte[] { 0, 0 });
+
+        await BroadcastBodyToPartyAsync(party, ZoneS2COpcodes.NfyPartyFrameMove,
+            PartyAnswerPackets.BuildNfyPartyFrameMove2705(movedGid, slot1, gid2, slot2));
     }
 
  /// <summary>Handles a 1382 invitation: <paramref name="inviter"/> invites the target found by the requested name.</summary>

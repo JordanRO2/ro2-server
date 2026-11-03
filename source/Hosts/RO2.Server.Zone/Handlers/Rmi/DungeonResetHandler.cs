@@ -24,7 +24,7 @@ public class DungeonResetHandler : ZoneRmiHandlerBase<DungeonResetHandler>
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
-        var party = services.GetRequiredService<PartyService>().GetPlayerParty(player.SessionId);
+        var party = services.GetRequiredService<PartyService>().GetPartyView(player.SessionId);
         var owner = DungeonInstanceOwner.For(party, player.CharacterId);
         var reset = DungeonInstanceRegistry.Shared.Reset(owner, player.MapId, player.CharacterId);
         if (reset.Count == 0)

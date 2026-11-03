@@ -59,7 +59,7 @@ public static class KharaFailPackets
             var parties = services.GetService<PartyService>();
             if (parties?.GetPlayerParty(victim.SessionId) is { } party)
             {
-                foreach (var memberId in party.MemberSessionIds.ToArray())
+                foreach (var memberId in party.MemberKeys)
                 {
                     if (memberId == victim.SessionId) continue;
                     if (parties.GetOnlineMember(party, memberId) is { } member) receivers.Add(member);

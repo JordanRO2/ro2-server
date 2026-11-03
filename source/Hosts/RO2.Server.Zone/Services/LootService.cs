@@ -465,7 +465,7 @@ public class LootService
             return Array.Empty<PlayerState>();
 
         var members = new List<PlayerState>();
-        foreach (var memberId in party.MemberSessionIds.ToArray())
+        foreach (var memberId in party.MemberKeys)
         {
             if (_party.GetOnlineMember(party, memberId) is not { } m) continue;
             if (m.SessionId == killer.SessionId || m.CharacterId == killer.CharacterId) continue;
@@ -1136,7 +1136,7 @@ public class LootService
  /// </summary>
     private async Task GrantKillExpAsync(PlayerState killer, ulong expReward)
     {
-        var party = _party.GetPlayerParty(killer.SessionId);
+        var party = _party.GetPartyView(killer.SessionId);
         if (party == null)
         {
             
@@ -1147,7 +1147,7 @@ public class LootService
         
         
         var members = new List<PlayerState>();
-        foreach (var memberId in party.MemberSessionIds.ToArray())
+        foreach (var memberId in party.MemberKeys)
         {
             var m = _players.GetPlayer(memberId);
             if (m != null && m.MapId == killer.MapId && !m.IsDead)

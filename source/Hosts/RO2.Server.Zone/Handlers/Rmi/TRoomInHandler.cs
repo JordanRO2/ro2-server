@@ -163,7 +163,7 @@ public sealed class TrainingRoomQueue
  /// </summary>
     public RegisterResult Register(PlayerState player, PartyService parties)
     {
-        var party = parties.GetPlayerParty(player.SessionId);
+        var party = parties.GetPartyView(player.SessionId);
         lock (_gate)
         {
             var existing = FindLocked(player, party?.PartyId, parties);
@@ -172,7 +172,7 @@ public sealed class TrainingRoomQueue
                 existing.Shown = null;
                 return RegisterResult.AlreadyRegistered;
             }
-            if (existing is null && party is not null && party.LeaderSessionId != player.SessionId)
+            if (existing is null && party is not null && !party.IsLeader(player.SessionId))
                 return RegisterResult.NotLeader;
             if (existing is not null) _entries.Remove(existing);
             _entries.Add(new Entry(player, player.MapId));
@@ -238,8 +238,8 @@ public sealed class TrainingRoomQueue
                 }
                 else
                 {
-                    var memberIds = party.MemberSessionIds.ToArray();
-                    size = memberIds.Length;
+                    var memberIds = party.MemberKeys;
+                    size = memberIds.Count;
                     online = [];
                     foreach (var id in memberIds)
                         if (parties.GetOnlineMember(party, id) is { } member)

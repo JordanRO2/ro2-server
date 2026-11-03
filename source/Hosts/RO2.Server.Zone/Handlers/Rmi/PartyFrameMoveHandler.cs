@@ -51,7 +51,6 @@ public class PartyFrameMoveHandler : ZoneRmiHandlerBase<PartyFrameMoveHandler>
         
         
         
-        var moverOldSlot = PartyService.GetFrameSlot(party, moverId);
         if (occupantId == 0)
         {
             
@@ -66,34 +65,14 @@ public class PartyFrameMoveHandler : ZoneRmiHandlerBase<PartyFrameMoveHandler>
             }
         }
 
-        byte slot1, slot2;
-        ulong gid2;
         if (occupantId != 0)
         {
-            
-            slot1 = PartyService.GetFrameSlot(party, occupantId);
-            slot2 = moverOldSlot;
-            gid2 = PartyAnswerPackets.MemberGid(partyService.GetOnlineMember(party, occupantId)
-                ?? party.Members.GetValueOrDefault(occupantId));
-            if (slot1 != targetSlot)
+            var serverSlot = PartyService.GetFrameSlot(party, occupantId);
+            if (serverSlot != targetSlot)
                 Logger.LogDebug("{Name} frame move: client slot {Client} but server holds the occupant at {Server}",
-                    player.Name, targetSlot, slot1);
-            party.FrameSlots[moverId] = slot1;
-            party.FrameSlots[occupantId] = slot2;
-        }
-        else
-        {
-            
-            slot1 = targetSlot;
-            slot2 = 0;
-            gid2 = 0;
-            party.FrameSlots[moverId] = slot1;
+                    player.Name, targetSlot, serverSlot);
         }
 
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsPartyFrameMove, new byte[] { 0, 0 });
-
-        
-        await partyService.BroadcastBodyToPartyAsync(party, ZoneS2COpcodes.NfyPartyFrameMove,
-            PartyAnswerPackets.BuildNfyPartyFrameMove2705(movedGid, slot1, gid2, slot2));
+        await partyService.SwapFrameSlotsAsync(party, session, movedGid, moverId, occupantId, targetSlot);
     }
 }

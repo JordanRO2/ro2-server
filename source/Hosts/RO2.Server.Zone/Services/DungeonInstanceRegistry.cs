@@ -10,7 +10,7 @@ namespace RO2.Server.Zone.Services;
 public readonly record struct DungeonInstanceOwner(bool IsParty, uint Id)
 {
  /// <summary>The owner an entry or a reset by <paramref name="characterId"/> resolves to.</summary>
-    public static DungeonInstanceOwner For(PartyState? party, uint characterId)
+    public static DungeonInstanceOwner For(IPartyView? party, uint characterId)
         => party is not null ? new DungeonInstanceOwner(true, party.PartyId) : new DungeonInstanceOwner(false, characterId);
 
     public override string ToString() => IsParty ? $"party {Id}" : $"character {Id}";

@@ -42,20 +42,7 @@ public class PartyChangeItemRuleHandler : ZoneRmiHandlerBase<PartyChangeItemRule
         
         
         
-        party.ItemRule = lootMode;
-        party.ItemQuality = quality;
-
-        
-        
-        await session.SendInternalRmiAsync(ZoneS2COpcodes.OnPartyChangeItem,
-            PartyAnswerPackets.BuildResultAck(PartyStatePackets.MsgTagOnPartyChangeItem, handle));
-
-        
-        
-        
-        
-        await partyService.BroadcastBodyToPartyAsync(party, ZoneS2COpcodes.OnPartyNotifyChangeItem,
-            PartyAnswerPackets.BuildPartyNotifyChangeItem2363(PartyAnswerPackets.PartyHandle(party), lootMode, quality));
+        await partyService.SetItemRuleAsync(party, session, handle, lootMode, quality);
 
         Logger.LogInformation("Party {PartyId}: item rule {Mode} quality {Quality} (request looter GID {Gid})",
             party.PartyId, lootMode, quality, looterGid);

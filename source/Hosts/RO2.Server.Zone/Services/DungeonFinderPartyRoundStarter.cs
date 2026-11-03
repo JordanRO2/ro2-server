@@ -37,7 +37,7 @@ public static class DungeonFinderPartyRoundStarter
         var parties = services.GetRequiredService<PartyService>();
         if (parties.GetPlayerParty(session.SessionId) is not { } party) return false;
         var others = new List<PlayerState>();
-        foreach (var memberId in party.MemberSessionIds.ToArray())
+        foreach (var memberId in party.MemberKeys)
             if (memberId != session.SessionId && parties.GetOnlineMember(party, memberId) is { } member)
                 others.Add(member);
         if (others.Count == 0) return false;

@@ -192,15 +192,15 @@ public class ChatHandler : ZoneRmiHandlerBase<ChatHandler>
  /// <paramref name="senderKey"/>: the online members (<paramref name="isOnline"/>), and on a raid's Party channel
  /// only the members of the sender's frame group. The sender is always included.
  /// </summary>
-    internal static List<uint> PartyAudience(PartyState party, uint senderKey, byte channel, Func<uint, bool> isOnline)
+    internal static List<uint> PartyAudience(IPartyView party, uint senderKey, byte channel, Func<uint, bool> isOnline)
     {
         bool senderGroupOnly = channel == ChatPackets.ChannelParty && party.PartyType == RaidPartyType;
-        int senderGroup = FrameGroup(PartyService.GetFrameSlot(party, senderKey));
+        int senderGroup = FrameGroup(party.FrameSlot(senderKey));
         var audience = new List<uint>();
-        foreach (var memberKey in party.MemberSessionIds.ToArray())
+        foreach (var memberKey in party.MemberKeys)
         {
             if (!isOnline(memberKey)) continue;
-            if (senderGroupOnly && FrameGroup(PartyService.GetFrameSlot(party, memberKey)) != senderGroup) continue;
+            if (senderGroupOnly && FrameGroup(party.FrameSlot(memberKey)) != senderGroup) continue;
             audience.Add(memberKey);
         }
         return audience;

@@ -73,7 +73,7 @@ public class DungeonLevelSelectHandler : ZoneRmiHandlerBase<DungeonLevelSelectHa
         }
 
         var map = data.GetMap(pos.Area_ID)!; 
-        var party = services.GetRequiredService<PartyService>().GetPlayerParty(player.SessionId);
+        var party = services.GetRequiredService<PartyService>().GetPartyView(player.SessionId);
         
         var accountId = session.AccountId ?? player.AccountId;
         

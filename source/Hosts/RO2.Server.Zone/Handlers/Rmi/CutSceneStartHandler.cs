@@ -45,12 +45,12 @@ public class CutSceneStartHandler : ZoneRmiHandlerBase<CutSceneStartHandler>
         var scene = services.GetRequiredService<GameDataStore>().SceneInfo.FirstOrDefault(s => s.Index == sceneIndex);
         if (scene is null || scene.Party != 1) return;
 
-        var party = services.GetRequiredService<PartyService>().GetPlayerParty(session.SessionId);
+        var party = services.GetRequiredService<PartyService>().GetPartyView(session.SessionId);
         if (party is null) return;
 
         var sent = 0;
         
-        foreach (var memberId in party.MemberSessionIds.ToArray())
+        foreach (var memberId in party.MemberKeys)
         {
             if (memberId == session.SessionId) continue;
             var member = PlayerManager.GetPlayer(memberId);

@@ -57,11 +57,11 @@ public static class DungeonLevelSelectInfoNotify
  /// Returns the number of members of <paramref name="party"/> currently in the world, including the leader.
  /// Offline members are not counted.
  /// </summary>
-    public static int InWorldMemberCount(PartyState party, PlayerStateManager players)
+    public static int InWorldMemberCount(IPartyView party, PlayerStateManager players)
     {
         var count = 0;
         
-        foreach (var memberId in party.MemberSessionIds.ToArray())
+        foreach (var memberId in party.MemberKeys)
         {
             if (players.GetPlayer(memberId) is not null)
                 count++;
@@ -77,8 +77,8 @@ public static class DungeonLevelSelectInfoNotify
     public static async Task<int> SendToPartyAsync(PlayerState sender, uint dungeonGroupId, ushort mapLevel,
         IServiceProvider services, ILogger logger)
     {
-        var party = services.GetRequiredService<PartyService>().GetPlayerParty(sender.SessionId);
-        if (party is null || party.LeaderSessionId != sender.SessionId)
+        var party = services.GetRequiredService<PartyService>().GetPartyView(sender.SessionId);
+        if (party is null || !party.IsLeader(sender.SessionId))
             return 0;
 
         var players = services.GetRequiredService<PlayerStateManager>();
@@ -87,7 +87,7 @@ public static class DungeonLevelSelectInfoNotify
         var copies = InWorldMemberCount(party, players);
         var sent = 0;
         
-        foreach (var memberId in party.MemberSessionIds.ToArray())
+        foreach (var memberId in party.MemberKeys)
         {
             if (memberId == sender.SessionId) continue;
             
