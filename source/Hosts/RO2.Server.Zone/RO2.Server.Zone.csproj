@@ -79,6 +79,7 @@
     <ProjectReference Include="..\..\Chat\RO2.Chat.Domain\RO2.Chat.Domain.csproj" />
     <ProjectReference Include="..\..\Party\RO2.Party.Application\RO2.Party.Application.csproj" />
     <ProjectReference Include="..\..\Party\RO2.Party.Domain\RO2.Party.Domain.csproj" />
+    <ProjectReference Include="..\..\Recruitment\RO2.Recruitment.Domain\RO2.Recruitment.Domain.csproj" />
     <ProjectReference Include="..\..\DungeonFinder\RO2.DungeonFinder.Domain\RO2.DungeonFinder.Domain.csproj" />
     <ProjectReference Include="..\..\DungeonFinder\RO2.DungeonFinder.Application\RO2.DungeonFinder.Application.csproj" />
   </ItemGroup>
