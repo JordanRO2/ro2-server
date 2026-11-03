@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using RO2.Companions.Domain;
 using RO2.Server.Zone.Models;
 
 namespace RO2.Server.Zone.Services;
@@ -20,21 +21,10 @@ namespace RO2.Server.Zone.Services;
 /// </remarks>
 public static class GliderRideStore
 {
-    /// <summary>
-    /// How long a 1515 flight token stays valid: every 1528 that is not a duplicate follows a 1515 within 17 s
-    /// (GliderTeleportHandler). That is the observed maximum, so it is also the bound; the token is used once, so
-    /// this is the replay window, not a rate.
-    /// </summary>
-    public static readonly TimeSpan FlightTokenLifetime = TimeSpan.FromSeconds(17);
+    /// <summary>The 1515 flight-token window; the value lives with the rule in <see cref="GliderRideState"/>.</summary>
+    public static readonly TimeSpan FlightTokenLifetime = GliderRideState.FlightTokenLifetime;
 
-    private sealed class Entry
-    {
-        public ushort? Route;
-        public ushort? TokenStation;
-        public DateTime TokenExpiryUtc;
-    }
-
-    private static readonly ConditionalWeakTable<PlayerState, Entry> Entries = new();
+    private static readonly ConditionalWeakTable<PlayerState, GliderRideState> Entries = new();
 
     // ---- Ride record: 1313 TakeGlider -> 1314 GetOffGlider ---------------------------------------------------
 
@@ -42,9 +32,9 @@ public static class GliderRideStore
     /// index of a ride row), replacing any earlier record.</summary>
     public static void PutRide(PlayerState player, ushort route)
     {
-        var e = Entries.GetValue(player, _ => new Entry());
+        var e = Entries.GetValue(player, _ => new GliderRideState());
         lock (e)
-            e.Route = route;
+            e.PutRide(route);
     }
 
     /// <summary>Whether <paramref name="player"/> holds a ride record: the "already mounted" signal 1313 checks.</summary>
@@ -52,7 +42,7 @@ public static class GliderRideStore
     {
         if (!Entries.TryGetValue(player, out var e)) return false;
         lock (e)
-            return e.Route.HasValue;
+            return e.HasRide;
     }
 
     /// <summary>
@@ -64,12 +54,7 @@ public static class GliderRideStore
         route = 0;
         if (!Entries.TryGetValue(player, out var e)) return false;
         lock (e)
-        {
-            if (e.Route is not { } r) return false;
-            route = r;
-            e.Route = null;
-            return true;
-        }
+            return e.TryTakeRide(out route);
     }
 
     // ---- Flight token: 1515 TakeFarGlider -> 1528 GliderTeleport ---------------------------------------------
@@ -78,12 +63,9 @@ public static class GliderRideStore
     /// replacing any earlier one (a newer 1515 supersedes the older flight).</summary>
     public static void IssueFlightToken(PlayerState player, ushort station, DateTime expiryUtc)
     {
-        var e = Entries.GetValue(player, _ => new Entry());
+        var e = Entries.GetValue(player, _ => new GliderRideState());
         lock (e)
-        {
-            e.TokenStation = station;
-            e.TokenExpiryUtc = expiryUtc;
-        }
+            e.IssueFlightToken(station, expiryUtc);
     }
 
     /// <summary>
@@ -96,16 +78,6 @@ public static class GliderRideStore
     {
         if (!Entries.TryGetValue(player, out var e)) return false;
         lock (e)
-        {
-            if (e.TokenStation is not { } held) return false;
-            if (now > e.TokenExpiryUtc)
-            {
-                e.TokenStation = null;
-                return false;
-            }
-            if (held != station) return false;
-            e.TokenStation = null;
-            return true;
-        }
+            return e.TryConsumeFlightToken(station, now);
     }
 }
