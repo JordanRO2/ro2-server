@@ -77,6 +77,7 @@
     <ProjectReference Include="..\..\source\Chat\RO2.Chat.Application\RO2.Chat.Application.csproj" />
     <ProjectReference Include="..\..\source\Chat\RO2.Chat.Infrastructure.Mongo\RO2.Chat.Infrastructure.Mongo.csproj" />
     <ProjectReference Include="..\..\source\Chat\RO2.Chat.Infrastructure.Postgres\RO2.Chat.Infrastructure.Postgres.csproj" />
+    <ProjectReference Include="..\..\source\Party\RO2.Party.Domain\RO2.Party.Domain.csproj" />
   </ItemGroup>
 
 </Project>
