@@ -167,6 +167,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Reward.Infrastructure.M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Reward.Infrastructure.Postgres", "source\Rewards\RO2.Reward.Infrastructure.Postgres\RO2.Reward.Infrastructure.Postgres.csproj", "{6888ED5B-5622-44A4-93F6-663933A7FE46}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Reward.Application", "source\Rewards\RO2.Reward.Application\RO2.Reward.Application.csproj", "{5061F4E7-46D9-4A8B-8343-44DD6C22C716}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -945,6 +947,18 @@ Global
 		{6888ED5B-5622-44A4-93F6-663933A7FE46}.Release|x64.Build.0 = Release|Any CPU
 		{6888ED5B-5622-44A4-93F6-663933A7FE46}.Release|x86.ActiveCfg = Release|Any CPU
 		{6888ED5B-5622-44A4-93F6-663933A7FE46}.Release|x86.Build.0 = Release|Any CPU
+		{5061F4E7-46D9-4A8B-8343-44DD6C22C716}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5061F4E7-46D9-4A8B-8343-44DD6C22C716}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5061F4E7-46D9-4A8B-8343-44DD6C22C716}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5061F4E7-46D9-4A8B-8343-44DD6C22C716}.Debug|x64.Build.0 = Debug|Any CPU
+		{5061F4E7-46D9-4A8B-8343-44DD6C22C716}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5061F4E7-46D9-4A8B-8343-44DD6C22C716}.Debug|x86.Build.0 = Debug|Any CPU
+		{5061F4E7-46D9-4A8B-8343-44DD6C22C716}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5061F4E7-46D9-4A8B-8343-44DD6C22C716}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5061F4E7-46D9-4A8B-8343-44DD6C22C716}.Release|x64.ActiveCfg = Release|Any CPU
+		{5061F4E7-46D9-4A8B-8343-44DD6C22C716}.Release|x64.Build.0 = Release|Any CPU
+		{5061F4E7-46D9-4A8B-8343-44DD6C22C716}.Release|x86.ActiveCfg = Release|Any CPU
+		{5061F4E7-46D9-4A8B-8343-44DD6C22C716}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1002,5 +1016,6 @@ Global
 		{A1AE2E88-0C23-42F1-AC97-8A49BAA7A51B} = {61AE66F3-6D17-B387-ED78-006B020AD4C6}
 		{0D97340E-A7EE-4C43-83C0-5598DA2D4CD8} = {8B7795A8-B2FA-E8CE-275C-05BBFE2D2256}
 		{6888ED5B-5622-44A4-93F6-663933A7FE46} = {8B7795A8-B2FA-E8CE-275C-05BBFE2D2256}
+		{5061F4E7-46D9-4A8B-8343-44DD6C22C716} = {61AE66F3-6D17-B387-ED78-006B020AD4C6}
 	EndGlobalSection
 EndGlobal

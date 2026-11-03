@@ -38,8 +38,8 @@ public class ShowAttendanceStateHandler : ZoneRmiHandlerBase<ShowAttendanceState
         {
             try
             {
-                var gifts = services.GetRequiredService<IAccountGiftRepository>();
-                (attendedDays, _, streakBrokenAfter) = await gifts.GetAttendanceAsync(player.AccountId, ct);
+                var state = await services.GetRequiredService<RO2.Rewards.Application.GetAttendanceStateUseCase>().ExecuteAsync(player.AccountId, ct);
+                (attendedDays, streakBrokenAfter) = (state.AttendedDays, state.StreakBrokenAfter);
             }
             catch (Exception ex) when (ex is not OperationCanceledException)
             {

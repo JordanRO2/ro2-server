@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Plural namespace: a namespace "RO2.Reward" would shadow any future Reward type in every RO2.* file (CS0118). -->
+    <RootNamespace>RO2.Rewards.Application</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Rewards bounded context: Application holds the attendance use cases over IAccountGiftRepository. The clock, the popup wire
+       and the Zone host's per-process cache stay in the Zone host. Never the Zone host. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Reward.Domain\RO2.Reward.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+  </ItemGroup>
+
+</Project>

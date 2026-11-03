@@ -410,7 +410,8 @@ public class AnsMapLoadingHandler : Base1304
             
             
             var giftBox = services.GetRequiredService<IAccountGiftRepository>();
-            var attendanceGift = await SendMapLoadNotifiesAsync(session, player, character, store, giftBox, ct);
+            var attendanceGift = await SendMapLoadNotifiesAsync(session, player, character, store,
+                services.GetRequiredService<RO2.Rewards.Application.AttendTodayUseCase>(), ct);
 
             
             
@@ -544,7 +545,7 @@ public class AnsMapLoadingHandler : Base1304
  /// </para>
  /// </remarks>
     private async Task<AccountGift?> SendMapLoadNotifiesAsync(ProudSession session, RO2.Server.Zone.Models.PlayerState player,
-        RO2.Characters.Domain.Character? character, RO2.GameData.GameDataStore store, IAccountGiftRepository giftBox,
+        RO2.Characters.Domain.Character? character, RO2.GameData.GameDataStore store, RO2.Rewards.Application.AttendTodayUseCase attendToday,
         CancellationToken ct)
     {
         await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyServerTime,
@@ -558,7 +559,7 @@ public class AnsMapLoadingHandler : Base1304
         AttendanceDayGate.AttendedDay? attended = null;
         try
         {
-            attended = await AttendanceDayGate.TryAttendTodayAsync(giftBox, player.AccountId, ServerWallClock.Now().DateTime, ct);
+            attended = await AttendanceDayGate.TryAttendTodayAsync(attendToday, player.AccountId, ServerWallClock.Now().DateTime, ct);
         }
         catch (Exception ex) when (ex is not OperationCanceledException)
         {

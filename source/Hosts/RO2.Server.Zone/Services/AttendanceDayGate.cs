@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using RO2.Application.Interfaces;
+using RO2.Rewards.Application;
 using RO2.Rewards.Domain;
 
 namespace RO2.Server.Zone.Services;
@@ -26,7 +27,7 @@ public static class AttendanceDayGate
  /// <summary>
  /// Source code of attendance rewards in gift records (2799 record offset 39, 2800 offset 55).
  /// </summary>
-    public const byte SourceAttendance = 4;
+    public const byte SourceAttendance = AttendTodayUseCase.SourceAttendance;
 
     
     
@@ -45,11 +46,11 @@ public static class AttendanceDayGate
  /// <remarks>
  /// Returns null when the day was already attended, and for account 0. A storage error propagates, so the caller sends no popup that cannot be backed by a stored record.
  /// </remarks>
- /// <param name="gifts">Gift repository.</param>
+ /// <param name="attend">The attendance claim use case.</param>
  /// <param name="accountId">Account to attend.</param>
  /// <param name="serverNow">Current server local wall clock time.</param>
  /// <returns>What was recorded, or null when nothing was recorded.</returns>
-    public static async Task<AttendedDay?> TryAttendTodayAsync(IAccountGiftRepository gifts, uint accountId, DateTime serverNow,
+    public static async Task<AttendedDay?> TryAttendTodayAsync(AttendTodayUseCase attend, uint accountId, DateTime serverNow,
         CancellationToken ct = default)
     {
         if (accountId == 0) return null;
@@ -58,29 +59,15 @@ public static class AttendanceDayGate
 
         
         
-        for (int attempt = 0; attempt < 3; attempt++)
+        var result = await attend.ExecuteAsync(accountId, today, DateTime.UtcNow, Convert.ToHexString(System.Guid.NewGuid().ToByteArray()), ct);
+        if (result is null) return null;
+        if (!result.Recorded)
         {
-            var (attendedDays, lastDay, brokenAfter) = await gifts.GetAttendanceAsync(accountId, ct);
-            if (lastDay >= today)
-            {
-                KnownAttendedDay[accountId] = lastDay;
-                return null;
-            }
-
-            int next = AttendanceRules.NextAttendedDays(attendedDays, AttendanceCalendar.Days);
-            int nextBrokenAfter = AttendanceRules.NextStreakBrokenAfter(attendedDays, lastDay, today, brokenAfter, next);
-            
-            
-            var popup = EconomyMiscPackets.BuildShowAttendanceState(next, nextBrokenAfter);
-            var reward = AttendanceCalendar.RewardOf(next, nextBrokenAfter) is { } r
-                ? AccountGiftStore.NewGift(r.ItemId, r.Count, SourceAttendance, DateTime.UtcNow)
-                : null;
-            if (await gifts.TryRecordAttendanceAsync(accountId, lastDay, today, next, nextBrokenAfter, reward, ct))
-            {
-                KnownAttendedDay[accountId] = today;
-                return new AttendedDay(next, popup, reward);
-            }
+            if (result.State.LastAttendedDay >= today) KnownAttendedDay[accountId] = result.State.LastAttendedDay;
+            return null;
         }
-        return null;
+        KnownAttendedDay[accountId] = today;
+        return new AttendedDay(result.State.AttendedDays,
+            EconomyMiscPackets.BuildShowAttendanceState(result.State.AttendedDays, result.State.StreakBrokenAfter), result.Reward);
     }
 }
