@@ -14,6 +14,7 @@ namespace RO2.Tests.CollectionCharacterization;
 /// their ORDER, the result codes (30001 loyalty-capped / no active pet, 30004 no egg), the SILENT 1626 refusals, 1629 answering result 0
 /// even when it refused, the ActivePetFlag re-derived from the loyalty on every load (never trusted), and the storage-failure policy.
 /// </summary>
+[Collection(CollectionCharacterizationCollection.Name)]
 public class PetCollectionHandlerCharacterizationTests
 {
     private static void AssertFrames(List<(ushort Op, byte[] Body)> actual, params (ushort Op, byte[] Body)[] expected)

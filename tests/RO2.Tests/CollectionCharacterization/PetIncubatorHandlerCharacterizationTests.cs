@@ -12,6 +12,7 @@ namespace RO2.Tests.CollectionCharacterization;
 /// handlers and <see cref="PetIncubatorStore"/> over a loopback session. Every answer is one 2926 whose result is always 0: a refusal
 /// changes nothing and still answers the CURRENT list. A store that cannot be read answers nothing. Times are compared by window, not by value.
 /// </summary>
+[Collection(CollectionCharacterizationCollection.Name)]
 public class PetIncubatorHandlerCharacterizationTests
 {
     private static readonly ushort Op2926 = ZoneS2COpcodes.AnsPCollectionIncubator;

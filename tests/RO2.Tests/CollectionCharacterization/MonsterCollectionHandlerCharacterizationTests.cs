@@ -14,6 +14,7 @@ namespace RO2.Tests.CollectionCharacterization;
 /// codes (30004 no-DNA, 30005 max level, 30008 registered, 30009 exp gained), the SILENT 1622 refusals (no reply, nothing taken), the
 /// stored state after each call and the storage-failure policy. Every value was observed from the current code.
 /// </summary>
+[Collection(CollectionCharacterizationCollection.Name)]
 public class MonsterCollectionHandlerCharacterizationTests
 {
     private static void AssertFrames(List<(ushort Op, byte[] Body)> actual, params (ushort Op, byte[] Body)[] expected)

@@ -15,6 +15,15 @@ using static RO2.Tests.Packets.ReauditShared;
 
 namespace RO2.Tests.CollectionCharacterization;
 
+/// <summary>The xUnit collection for the collection/pet/incubator characterization classes. They run one at a time, never
+/// in parallel with other classes, because each <see cref="CollRig"/> calls GameDataStore.LoadAsync, which swaps the
+/// process-wide GameDataStore.Loaded that the item-record writer reads — a parallel swap corrupts the asserted frames.</summary>
+[Xunit.CollectionDefinition(CollectionCharacterizationCollection.Name, DisableParallelization = true)]
+public sealed class CollectionCharacterizationCollection
+{
+    public const string Name = "CollectionCharacterization";
+}
+
 /// <summary>
 /// B10 S1 data: a tiny synthetic GameData that the tests control, so every expected value below traces to a row written here and
 /// to the current code, not to the shipped tables. Cells: bag 1 slot 50 is flat bag slot 0, slot 51 is flat 1, ...
