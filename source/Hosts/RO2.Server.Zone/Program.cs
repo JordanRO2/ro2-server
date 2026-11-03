@@ -307,6 +307,8 @@ public static class Program
         // so a bare hosted registration is enough. Its dependencies (PlayerStateManager, BroadcastService,
         // EffectService, GameDataStore, MongoDbContext) are the singletons above.
         services.AddHostedService<TimedEnchantService>();
+        // Starts the ranking reset clock at boot (RankingService.EnsureClockRunning is idempotent; the lazy callers stay as a safety net).
+        services.AddHostedService<RankingClockHostedService>();
 
         // Central variable-rate game loop (TickConfig, 20-128 Hz, like modern shooters). The
         // simulation subsystems below register as ITickable and are advanced by the loop instead of
