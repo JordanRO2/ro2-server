@@ -5,12 +5,11 @@
     <RootNamespace>RO2.Collections.Domain</RootNamespace>
   </PropertyGroup>
 
-  <!-- Collection bounded context: Domain references ONLY RO2.BuildingBlocks + the shared RO2.GameData kernel + the foundational RO2.Inventory.Domain.
+  <!-- Collection bounded context: Domain references ONLY RO2.BuildingBlocks + the shared RO2.GameData kernel.
        No Mongo, no ProudNet, no host. -->
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
     <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
-    <ProjectReference Include="..\..\Inventory\RO2.Inventory.Domain\RO2.Inventory.Domain.csproj" />
   </ItemGroup>
 
 </Project>
