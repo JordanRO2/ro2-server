@@ -1,6 +1,7 @@
 using System.Buffers.Binary;
 using System.Net.Sockets;
 using System.Text;
+using RO2.Chats.Domain;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
@@ -61,47 +62,25 @@ namespace RO2.Server.Chat;
 public static class CloseRangeChatRoomMembers
 {
     /// <summary>23538 result 0: joined.</summary>
-    public const ushort ResultJoined = 0;
+    public const ushort ResultJoined = CloseRangeChatRoom.ResultJoined;
 
     /// <summary>23538 result 10: string 9726 "Cannot find channel room."</summary>
-    public const ushort ResultRoomNotFound = 10;
+    public const ushort ResultRoomNotFound = CloseRangeChatRoom.ResultRoomNotFound;
 
     /// <summary>23538 result 19: string 9736 "Please enter your password correctly."</summary>
-    public const ushort ResultWrongPassword = 19;
+    public const ushort ResultWrongPassword = CloseRangeChatRoom.ResultWrongPassword;
 
     /// <summary>23538 result 23: string 9516 "Already participating in the target channel."</summary>
-    public const ushort ResultAlreadyMember = 23;
+    public const ushort ResultAlreadyMember = CloseRangeChatRoom.ResultAlreadyMember;
 
     /// <summary>23538 result 29: string 9758 "Cannot enter because the room is full."</summary>
-    public const ushort ResultRoomFull = 29;
+    public const ushort ResultRoomFull = CloseRangeChatRoom.ResultRoomFull;
 
-    /// <summary>Most rooms one character may be in at once. The client keeps a single current room;
-    /// 3 leaves headroom for a hand-off. Over it the join is answered 23 (already participating).</summary>
-    public const int MaxRoomsPerCharacter = 3;
+    /// <summary>Most rooms one character may be in at once (see <see cref="CloseRangeChatRoom.MaxRoomsPerCharacter"/>).</summary>
+    public const int MaxRoomsPerCharacter = CloseRangeChatRoom.MaxRoomsPerCharacter;
 
     /// <summary>One queued send, built under the lock and delivered after it is released.</summary>
     public readonly record struct Send(ProudSession Session, ushort Opcode, byte[] Body);
-
-    /// <summary>What <see cref="Leave"/> did.</summary>
-    public enum LeaveOutcome
-    {
-        /// <summary>No member list for that room here (nobody joined it through this process).</summary>
-        UnknownRoom,
-        /// <summary>The room is known but the leaver is not in it.</summary>
-        NotAMember,
-        /// <summary>A member left; the others were told (23520).</summary>
-        MemberLeft,
-        /// <summary>The owner left an empty room: the room is closed here.</summary>
-        OwnerLeft,
-        /// <summary>The owner left a room others are still in: the lowest remaining uid is its owner now, the room
-        /// stays open, and whoever stayed was told (23520).</summary>
-        HandedOff,
-    }
-
-    /// <summary>What <see cref="Leave"/> did: the outcome, the member count left (owner included; 0 unless
-    /// <see cref="LeaveOutcome.MemberLeft"/> or <see cref="LeaveOutcome.HandedOff"/>) and, for a hand-off, the new
-    /// owner's database id (0 otherwise).</summary>
-    public readonly record struct Departure(LeaveOutcome Outcome, int MemberCount, uint NewMasterCharacterId);
 
     /// <summary>A master hand-off made because the owner's Chat connection closed (<see cref="OnSessionClosed"/>),
     /// for the exit signal to the Zone.</summary>
@@ -114,18 +93,15 @@ public static class CloseRangeChatRoomMembers
     /// <summary>The room as the Zone published it (CloseRangeRoomSignals open signal).</summary>
     public readonly record struct OpenedRoom(byte[] Guid, byte Capacity, byte[] Password);
 
-    private sealed class Room
+    /// <summary>A registered room: the id-only domain aggregate plus the uid -> connection map the domain does not know.</summary>
+    private sealed class Entry(CloseRangeChatRoom room)
     {
-        public required byte[] GuidBytes;
-        public required ulong OwnerUid; // the opener, or the member a hand-off made owner since
-        public required byte Capacity;
-        public required byte[] Password;
-        // Keyed and ordered by uid, as PrivateChatRooms lists everyone after the master.
-        public readonly SortedDictionary<ulong, Member> Members = new();
+        public readonly CloseRangeChatRoom Room = room;
+        public readonly SortedDictionary<ulong, ProudSession> Sessions = new();
     }
 
     private static readonly Lock Gate = new();
-    private static readonly Dictionary<Guid, Room> Rooms = new();
+    private static readonly Dictionary<Guid, Entry> Rooms = new();
 
     /// <summary>Whether this process holds a member list for room <paramref name="roomGuid"/>, with its owner
     /// still connected.</summary>
@@ -150,14 +126,8 @@ public static class CloseRangeChatRoomMembers
         {
             var id = new Guid(room.Guid);
             if (Rooms.ContainsKey(id)) return;
-            var created = new Room
-            {
-                GuidBytes = room.Guid,
-                OwnerUid = owner.Uid,
-                Capacity = room.Capacity,
-                Password = room.Password,
-            };
-            created.Members[owner.Uid] = owner;
+            var created = new Entry(new CloseRangeChatRoom(room.Guid, room.Capacity, room.Password, ToDomain(owner)));
+            created.Sessions[owner.Uid] = owner.Session;
             Rooms[id] = created;
         }
     }
@@ -173,52 +143,32 @@ public static class CloseRangeChatRoomMembers
         lock (Gate)
         {
             PruneDisconnectedLocked();
-            ushort result;
-            Room? room = null;
-            if (roomGuid.Length != 16 || !Rooms.TryGetValue(new Guid(roomGuid), out room))
-                result = ResultRoomNotFound;
-            else if (room.Members.ContainsKey(joiner.Uid))
-                result = ResultAlreadyMember;
-            else if (RoomsOfLocked(joiner.CharacterId) >= MaxRoomsPerCharacter)
-                result = ResultAlreadyMember;
-            else if (!password.SequenceEqual(room.Password))
-                result = ResultWrongPassword;
-            else if (room.Members.Count >= room.Capacity)
-                result = ResultRoomFull;
-            else
-                result = ResultJoined;
-
-            sends.Add(new Send(joiner.Session, ChatS2COpcodes.AnsJoinCloseRangeChatRoom, BuildJoinAnswer23538(result)));
-            if (result != ResultJoined || room is null) return (result, 0);
-
-            room.Members[joiner.Uid] = joiner;
-            sends.Add(new Send(joiner.Session, ChatS2COpcodes.AnsPrivateRoomInMember,
-                BuildMemberList23517(room.GuidBytes, room.OwnerUid, room.Capacity, OwnerFirst(room))));
-            var joinUser = BuildJoinUser23516(room.GuidBytes, joiner.Uid, joiner.Name);
-            foreach (var m in room.Members.Values)
-                sends.Add(new Send(m.Session, ChatS2COpcodes.NfyPrivateChatRoomJoinUser, joinUser));
-            return (result, room.Members.Count);
+            Entry? entry = null;
+            if (roomGuid.Length == 16) Rooms.TryGetValue(new Guid(roomGuid), out entry);
+            var (result, effects) = CloseRangeChatRoom.Join(entry?.Room, ToDomain(joiner), password, RoomsOfLocked(joiner.CharacterId));
+            if (result == ResultJoined) entry!.Sessions[joiner.Uid] = joiner.Session;
+            QueueLocked(entry, joiner.Session, effects, sends);
+            return (result, result == ResultJoined ? entry!.Room.Members.Count : 0);
         }
     }
 
     /// <summary>
     /// 23022: the member whose database id is <paramref name="characterId"/> leaves room
     /// <paramref name="roomGuid"/>. Queues 23520 to the members who stay. When the leaver is the owner and members
-    /// remain, the lowest remaining uid becomes the owner (<see cref="LeaveOutcome.HandedOff"/>).
+    /// remain, the lowest remaining uid becomes the owner (<see cref="CloseRangeLeaveOutcome.HandedOff"/>).
     /// </summary>
-    public static Departure Leave(ReadOnlySpan<byte> roomGuid, uint characterId, List<Send> sends)
+    public static CloseRangeDeparture Leave(ReadOnlySpan<byte> roomGuid, uint characterId, List<Send> sends)
     {
         lock (Gate)
         {
             PruneDisconnectedLocked();
-            if (roomGuid.Length != 16) return new Departure(LeaveOutcome.UnknownRoom, 0, 0);
+            if (roomGuid.Length != 16) return new CloseRangeDeparture(CloseRangeLeaveOutcome.UnknownRoom, 0, 0);
             var id = new Guid(roomGuid);
-            if (!Rooms.TryGetValue(id, out var room)) return new Departure(LeaveOutcome.UnknownRoom, 0, 0);
-            Member? leaver = null;
-            foreach (var m in room.Members.Values)
-                if (m.CharacterId == characterId) { leaver = m; break; }
-            if (leaver is not { } gone) return new Departure(LeaveOutcome.NotAMember, 0, 0);
-            return DepartLocked(id, room, gone, sends);
+            if (!Rooms.TryGetValue(id, out var entry)) return new CloseRangeDeparture(CloseRangeLeaveOutcome.UnknownRoom, 0, 0);
+            var (departure, effects) = entry.Room.Leave(characterId);
+            QueueLocked(entry, null, effects, sends);
+            SettleLocked(id, entry, departure);
+            return departure;
         }
     }
 
@@ -235,26 +185,18 @@ public static class CloseRangeChatRoomMembers
         var handOffs = new List<OwnerGoneHandOff>();
         lock (Gate)
         {
-            foreach (var (id, room) in Rooms.ToList())
+            foreach (var (id, entry) in Rooms.ToList())
             {
-                Member? found = null;
-                foreach (var m in room.Members.Values)
-                    if (ReferenceEquals(m.Session, closing)) { found = m; break; }
-                if (found is not { } gone) continue;
+                var found = entry.Sessions.Where(kv => ReferenceEquals(kv.Value, closing)).Select(kv => (ulong?)kv.Key).FirstOrDefault();
+                if (found is not { } goneUid) continue;
 
-                // Other members already gone first, so neither the notice nor the ownership goes to a dead one.
-                foreach (var dead in room.Members.Values
-                             .Where(m => m.Uid != gone.Uid && m.Uid != room.OwnerUid && !m.Session.IsConnected).ToList())
-                    room.Members.Remove(dead.Uid);
-
-                if (gone.Uid != room.OwnerUid)
-                {
-                    room.Members.Remove(gone.Uid);
-                    continue;
-                }
-                var departure = DepartLocked(id, room, gone, sends);
-                if (departure.Outcome == LeaveOutcome.HandedOff)
-                    handOffs.Add(new OwnerGoneHandOff(room.GuidBytes, gone.CharacterId, departure.NewMasterCharacterId,
+                var goneCharacterId = entry.Room.Members[goneUid].CharacterId;
+                var dead = entry.Sessions.Where(kv => !kv.Value.IsConnected).Select(kv => kv.Key).ToHashSet();
+                var (departure, effects) = entry.Room.Close(goneUid, dead);
+                QueueLocked(entry, null, effects, sends);
+                SettleLocked(id, entry, departure);
+                if (departure.Outcome == CloseRangeLeaveOutcome.HandedOff)
+                    handOffs.Add(new OwnerGoneHandOff(entry.Room.GuidBytes, goneCharacterId, departure.NewMasterCharacterId,
                         departure.MemberCount));
             }
         }
@@ -271,8 +213,8 @@ public static class CloseRangeChatRoomMembers
         if (roomGuid.Length != 16) return Array.Empty<ProudSession>();
         lock (Gate)
         {
-            if (!Rooms.TryGetValue(new Guid(roomGuid), out var room)) return Array.Empty<ProudSession>();
-            return room.Members.Values.Select(m => m.Session).Where(s => s.IsConnected).ToList();
+            if (!Rooms.TryGetValue(new Guid(roomGuid), out var entry)) return Array.Empty<ProudSession>();
+            return entry.Sessions.Values.Where(s => s.IsConnected).ToList();
         }
     }
 
@@ -296,49 +238,54 @@ public static class CloseRangeChatRoomMembers
 
     // ---------------------------------------------------------------- state (callers hold Gate)
 
-    /// <summary>
-    /// <paramref name="gone"/> leaves <paramref name="room"/>: 23520 to every member who stays, then, when it was the
-    /// owner, the room closes if nobody is left or passes to the lowest remaining uid (the room keeps its GUID,
-    /// capacity and password).
-    /// </summary>
-    private static Departure DepartLocked(Guid id, Room room, Member gone, List<Send> sends)
-    {
-        room.Members.Remove(gone.Uid);
-        var notice = BuildExitMemberInfo23520(room.GuidBytes, gone.Uid);
-        foreach (var m in room.Members.Values)
-            sends.Add(new Send(m.Session, ChatS2COpcodes.NfyChatRoomExitMmeberInfo, notice));
+    private static CloseRangeMember ToDomain(Member m) => new(m.Uid, m.CharacterId, m.Name);
 
-        if (gone.Uid != room.OwnerUid)
-            return new Departure(LeaveOutcome.MemberLeft, room.Members.Count, 0);
-        if (room.Members.Count == 0)
+    /// <summary>Maps the domain's ordered effects to sends. A null recipient is <paramref name="requester"/>.</summary>
+    private static void QueueLocked(Entry? entry, ProudSession? requester, List<CloseRangeEffect> effects, List<Send> sends)
+    {
+        foreach (var e in effects)
         {
-            Rooms.Remove(id);
-            return new Departure(LeaveOutcome.OwnerLeft, 0, 0);
+            var session = e.Recipient is { } uid ? entry!.Sessions[uid] : requester!;
+            var room = entry?.Room;
+            sends.Add(e.Message switch
+            {
+                CloseRangeMessage.JoinAnswer => new Send(session, ChatS2COpcodes.AnsJoinCloseRangeChatRoom, BuildJoinAnswer23538(e.Code)),
+                CloseRangeMessage.MemberList => new Send(session, ChatS2COpcodes.AnsPrivateRoomInMember,
+                    BuildMemberList23517(room!.GuidBytes, room.OwnerUid, room.Capacity, room.OwnerFirst())),
+                CloseRangeMessage.JoinUser => new Send(session, ChatS2COpcodes.NfyPrivateChatRoomJoinUser,
+                    BuildJoinUser23516(room!.GuidBytes, e.Uid, e.Text)),
+                _ => new Send(session, ChatS2COpcodes.NfyChatRoomExitMmeberInfo, BuildExitMemberInfo23520(room!.GuidBytes, e.Uid)),
+            });
         }
-        room.OwnerUid = room.Members.Keys.First(); // lowest remaining uid (SortedDictionary)
-        return new Departure(LeaveOutcome.HandedOff, room.Members.Count, room.Members[room.OwnerUid].CharacterId);
     }
 
-    private static int RoomsOfLocked(uint characterId)
+    /// <summary>After a departure: forget the connections of members the room no longer lists, and drop the
+    /// room when its owner left it empty.</summary>
+    private static void SettleLocked(Guid id, Entry entry, CloseRangeDeparture departure)
     {
-        int n = 0;
-        foreach (var room in Rooms.Values)
-            foreach (var m in room.Members.Values)
-                if (m.CharacterId == characterId) { n++; break; }
-        return n;
+        SyncSessions(entry);
+        if (departure.Outcome == CloseRangeLeaveOutcome.OwnerLeft) Rooms.Remove(id);
     }
+
+    private static void SyncSessions(Entry entry)
+    {
+        foreach (var uid in entry.Sessions.Keys.Where(k => !entry.Room.Members.ContainsKey(k)).ToList())
+            entry.Sessions.Remove(uid);
+    }
+
+    private static int RoomsOfLocked(uint characterId) => Rooms.Values.Count(e => e.Room.HasCharacter(characterId));
 
     private static void PruneDisconnectedLocked()
     {
-        foreach (var (id, room) in Rooms.ToList())
+        foreach (var (id, entry) in Rooms.ToList())
         {
-            if (!room.Members.TryGetValue(room.OwnerUid, out var owner) || !owner.Session.IsConnected)
+            if (!entry.Sessions.TryGetValue(entry.Room.OwnerUid, out var owner) || !owner.IsConnected)
             {
                 Rooms.Remove(id);
                 continue;
             }
-            foreach (var gone in room.Members.Values.Where(m => !m.Session.IsConnected).ToList())
-                room.Members.Remove(gone.Uid);
+            entry.Room.Drop(entry.Sessions.Where(kv => !kv.Value.IsConnected).Select(kv => kv.Key).ToList());
+            SyncSessions(entry);
         }
     }
 
@@ -352,15 +299,6 @@ public static class CloseRangeChatRoomMembers
         return body;
     }
 
-    /// <summary>The members as 23517 lists them: the owner first, then the others in uid order.</summary>
-    private static List<(ulong Uid, string Name)> OwnerFirst(Room room)
-    {
-        var list = new List<(ulong Uid, string Name)>(room.Members.Count);
-        if (room.Members.TryGetValue(room.OwnerUid, out var owner)) list.Add((owner.Uid, owner.Name));
-        foreach (var m in room.Members.Values)
-            if (m.Uid != room.OwnerUid) list.Add((m.Uid, m.Name));
-        return list;
-    }
 
     /// <summary>
     /// 23517 AnsPrivateRoomInMember for a close-range room: <c>[u16 0][u32 len-6][u64 masterUid][guid16][u32

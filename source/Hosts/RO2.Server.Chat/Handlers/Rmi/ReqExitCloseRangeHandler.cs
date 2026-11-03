@@ -5,6 +5,7 @@ using RO2.Network.Handlers;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Characters.Domain;
+using RO2.Chats.Domain;
 
 namespace RO2.Server.Chat.Handlers.Rmi;
 
@@ -74,11 +75,11 @@ public class ReqExitCloseRangeHandler : ChatRmiHandlerBase<ReqExitCloseRangeHand
         string why;
         switch (outcome)
         {
-            case CloseRangeChatRoomMembers.LeaveOutcome.NotAMember:
+            case CloseRangeLeaveOutcome.NotAMember:
                 accepted = false;
                 why = "not in the room's member list";
                 break;
-            case CloseRangeChatRoomMembers.LeaveOutcome.UnknownRoom:
+            case CloseRangeLeaveOutcome.UnknownRoom:
                 if (!CloseRangeExitCheck.TryAdmitUnknownRoomExit(session.SessionId))
                 {
                     // A flood of exits for rooms unknown here. Dropped: there is no refusal frame for it.
@@ -133,7 +134,7 @@ public class ReqExitCloseRangeHandler : ChatRmiHandlerBase<ReqExitCloseRangeHand
         // random GUID pushes real 'open' signals out of the capped bus. Cost: a real exit whose open signal already
         // aged out does not update the Zone's sign (it has aged out too).
         if (noRecord && !readError) return;
-        if (outcome != CloseRangeChatRoomMembers.LeaveOutcome.UnknownRoom)
+        if (outcome != CloseRangeLeaveOutcome.UnknownRoom)
             Logger.LogDebug("Session {Id}: close-range exit {Outcome}, {Count} member(s) left, new master {Master}",
                 session.SessionId, outcome, memberCount, newMaster);
 

@@ -1,4 +1,5 @@
 using RO2.Domain.Entities;
+using RO2.Chats.Domain;
 using RO2.Kharas.Domain;
 using System.Net;
 using System.Net.Sockets;
@@ -154,7 +155,7 @@ public class CloseRangeChat2766Tests
         sends.Clear();
         var departure = CloseRangeChatRoomMembers.Leave(guid, (uint)ownerUid, sends);
 
-        Assert.Equal(new CloseRangeChatRoomMembers.Departure(CloseRangeChatRoomMembers.LeaveOutcome.HandedOff, 1, (uint)memberUid),
+        Assert.Equal(new CloseRangeDeparture(CloseRangeLeaveOutcome.HandedOff, 1, (uint)memberUid),
             departure);
         
         var notice = Assert.Single(sends);
@@ -172,7 +173,7 @@ public class CloseRangeChat2766Tests
             [(memberUid, "Member"), (laterUid, "Later")]), list.Body);
 
         
-        Assert.Equal(CloseRangeChatRoomMembers.LeaveOutcome.NotAMember,
+        Assert.Equal(CloseRangeLeaveOutcome.NotAMember,
             CloseRangeChatRoomMembers.Leave(guid, (uint)ownerUid, []).Outcome);
     }
 
@@ -189,10 +190,10 @@ public class CloseRangeChat2766Tests
 
         
         
-        Assert.Equal(new CloseRangeChatRoomMembers.Departure(CloseRangeChatRoomMembers.LeaveOutcome.MemberLeft, 1, 0),
+        Assert.Equal(new CloseRangeDeparture(CloseRangeLeaveOutcome.MemberLeft, 1, 0),
             CloseRangeChatRoomMembers.Leave(guid, (uint)u[1], []));
         var sends = new List<CloseRangeChatRoomMembers.Send>();
-        Assert.Equal(new CloseRangeChatRoomMembers.Departure(CloseRangeChatRoomMembers.LeaveOutcome.OwnerLeft, 0, 0),
+        Assert.Equal(new CloseRangeDeparture(CloseRangeLeaveOutcome.OwnerLeft, 0, 0),
             CloseRangeChatRoomMembers.Leave(guid, (uint)u[0], sends));
         Assert.Empty(sends);
         Assert.False(CloseRangeChatRoomMembers.IsOpen(guid));
@@ -229,7 +230,7 @@ public class CloseRangeChat2766Tests
         Assert.Equal(CloseRangeChatRoomMembers.BuildExitMemberInfo23520(guid, ownerUid), notice.Body);
 
         
-        Assert.Equal(CloseRangeChatRoomMembers.LeaveOutcome.OwnerLeft,
+        Assert.Equal(CloseRangeLeaveOutcome.OwnerLeft,
             CloseRangeChatRoomMembers.Leave(guid, (uint)lowUid, []).Outcome);
     }
 
