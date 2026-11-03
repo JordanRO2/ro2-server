@@ -20,7 +20,7 @@ public sealed class MongoChannelColorStoredShapeTests
     private readonly ITestOutputHelper _out;
     public MongoChannelColorStoredShapeTests(MongoMailFixture fx, ITestOutputHelper output) { _fx = fx; _out = output; }
 
-    // Mongo's UInt32Serializer writes Int32 and throws above int.MaxValue, so owner ids stay within int.MaxValue.
+    // uint is Int32 up to int.MaxValue and Int64 above (LenientUInt32Serializer); owner ids stay small so One() can look them up as Int32.
     private static uint New() => (uint)Interlocked.Increment(ref _seq);
 
     private ChannelColorRepository Open()
@@ -111,7 +111,7 @@ public sealed class MongoChannelColorStoredShapeTests
     }
 
     [DockerFact]
-    public async Task Argb_and_owner_are_stored_as_Int32_and_a_value_above_int_max_is_rejected()
+    public async Task Argb_and_owner_are_stored_as_Int32_and_a_value_above_int_max_is_stored_as_Int64()
     {
         var repo = Open();
         var owner = New();
@@ -122,8 +122,13 @@ public sealed class MongoChannelColorStoredShapeTests
         Assert.Equal(0u, colors[0]);
         Assert.Equal(new[] { 65535, 0 }, One(owner)["Colors"].AsBsonArray.Select(v => v["Index"].AsInt32).ToArray());
 
-        // The unsigned-to-Int32 bound (a Mongo/Postgres divergence: Postgres bigint stores 0xFFxxxxxx opaque colours and uint.MaxValue).
-        Assert.IsType<OverflowException>(await Record.ExceptionAsync(() => repo.SetColorAsync(New(), 12, 0xFF112233u)));
-        Assert.IsType<OverflowException>(await Record.ExceptionAsync(() => repo.SetColorAsync(New(), 12, uint.MaxValue)));
+        // Opaque 0xFFxxxxxx colours and uint.MaxValue are stored as Int64, like Postgres bigint, and read back exactly.
+        var wide = New();
+        await repo.SetColorAsync(wide, 12, 0xFF112233u);
+        await repo.SetColorAsync(wide, 13, uint.MaxValue);
+        var wideColors = await repo.GetColorsAsync(wide);
+        Assert.Equal(0xFF112233u, wideColors[12]);
+        Assert.Equal(uint.MaxValue, wideColors[13]);
+        Assert.All(One(wide)["Colors"].AsBsonArray, v => Assert.Equal(BsonType.Int64, v["Argb"].BsonType));
     }
 }

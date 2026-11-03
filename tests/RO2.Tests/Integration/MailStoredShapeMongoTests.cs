@@ -84,8 +84,7 @@ public sealed class MongoMailStoredShapeTests
     private readonly ITestOutputHelper _out;
     public MongoMailStoredShapeTests(MongoMailFixture fx, ITestOutputHelper output) { _fx = fx; _out = output; }
 
-    // Mongo's UInt32Serializer writes Int32 and throws above int.MaxValue (see Uints_above_int_max_throw...), so every uint id
-    // used as a stored value stays within int.MaxValue.
+    // uint is Int32 up to int.MaxValue and Int64 above (LenientUInt32Serializer); the sequence ids here stay small.
     private static uint NewReceiver() => (uint)Interlocked.Increment(ref _receiverSeq);
 
     private (MailRepository repo, IMongoCollection<BsonDocument> raw) Open()
@@ -286,19 +285,16 @@ public sealed class MongoMailStoredShapeTests
     }
 
     [DockerFact]
-    public async Task Uints_above_int_max_throw_on_insert_and_the_consumed_id_is_not_reused()
+    public async Task Uints_above_int_max_insert_as_Int64_and_read_back()
     {
         var (repo, raw) = Open();
         var before = await repo.AddAsync(Draft(NewReceiver()));
 
-        // The uint ReceiverCharId (here 3e9) cannot be written as Int32: the provider limit the Quest twin documents. The id
-        // was drawn from the sequence before the insert failed.
-        var ex = await Assert.ThrowsAsync<BsonSerializationException>(() => repo.AddAsync(Draft(3_000_000_000u)));
-        Assert.IsType<OverflowException>(ex.InnerException);
-
-        var after = await repo.AddAsync(Draft(NewReceiver()));
-        Assert.Equal(before.Id + 2, after.Id);                                // one id burnt by the failed insert
-        Assert.Equal(0, raw.CountDocuments(Builders<BsonDocument>.Filter.Eq("Uid", (long)((0x0E4B4B8BUL << 32) | (before.Id + 1)))));
+        // The uint ReceiverCharId (here 3e9) is stored as Int64, and no sequence id is burnt.
+        var big = await repo.AddAsync(Draft(3_000_000_000u));
+        Assert.Equal(before.Id + 1, big.Id);
+        Assert.Equal(BsonType.Int64, raw.Find(Builders<BsonDocument>.Filter.Eq("Uid", (long)((0x0E4B4B8BUL << 32) | big.Id))).Single()["ReceiverCharId"].BsonType);
+        Assert.Equal(3_000_000_000u, big.ReceiverCharId);
     }
 
     // ------------------------------------------------------------------------------------------------ ids and uids

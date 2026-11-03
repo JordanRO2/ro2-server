@@ -31,8 +31,7 @@ public sealed class MongoAccountGiftStoredShapeTests
     private readonly ITestOutputHelper _out;
     public MongoAccountGiftStoredShapeTests(MongoMailFixture fx, ITestOutputHelper output) { _fx = fx; _out = output; }
 
-    // Mongo's UInt32Serializer writes Int32 and throws above int.MaxValue (see Uint_ids_above_int_max_throw...), so every uint id used as
-    // a stored value stays within int.MaxValue (the Postgres twin's 3e9..4e9 account ids do NOT work here).
+    // uint is Int32 up to int.MaxValue and Int64 above (LenientUInt32Serializer); the sequence ids here stay small.
     private static uint NewAccount() => (uint)Interlocked.Increment(ref _accSeq);
 
     private static AccountGift Gift(int daysAgo, uint itemId = 501, ushort count = 3, byte source = 1) => new()
@@ -422,7 +421,7 @@ public sealed class MongoAccountGiftStoredShapeTests
     // ------------------------------------------------------------------------------------------------ the uint -> Int32 bound
 
     [DockerFact]
-    public async Task Uint_ids_above_int_max_throw_and_int_max_is_the_last_good_id()
+    public async Task Uint_ids_above_int_max_round_trip_as_Int64_and_int_max_stays_Int32()
     {
         var repo = Repo();
 
@@ -434,17 +433,18 @@ public sealed class MongoAccountGiftStoredShapeTests
         Assert.Equal(int.MaxValue, raw["Gifts"][0]["ItemId"].AsInt32);
         Assert.Equal((uint)int.MaxValue, Assert.Single(await repo.GetLiveAsync(account, NowLocal)).ItemId);
 
-        // An item id above it sits in the DOCUMENT: BsonSerializationException wrapping the OverflowException, nothing stored.
+        // An item id above it is stored as Int64 in the element and reads back exactly.
         var id = NewAccount();
-        var bad = await Assert.ThrowsAsync<BsonSerializationException>(() => repo.FileAsync(id, new[] { Gift(0, itemId: 3_000_000_000u) }, NowLocal));
-        var inner = bad.InnerException;
-        while (inner is BsonSerializationException) inner = inner.InnerException;
-        Assert.IsType<OverflowException>(inner);
-        Assert.Equal(0, Count(id));
+        await repo.FileAsync(id, new[] { Gift(0, itemId: 3_000_000_000u) }, NowLocal);
+        Assert.Equal(BsonType.Int64, Raw().Find(new BsonDocument("_id", (int)id)).Single()["Gifts"][0]["ItemId"].BsonType);
+        Assert.Equal(3_000_000_000u, Assert.Single(await repo.GetLiveAsync(id, NowLocal)).ItemId);
 
-        // An account id above it sits in the FILTER: the raw OverflowException, on a read and on a write alike.
-        await Assert.ThrowsAsync<OverflowException>(() => repo.GetLiveAsync(3_000_000_000u, NowLocal));
-        await Assert.ThrowsAsync<OverflowException>(() => repo.GetAttendanceAsync(3_000_000_000u));
-        await Assert.ThrowsAsync<OverflowException>(() => repo.TryTakeAsync(3_000_000_000u, "X"));
+        // An account id above it is an Int64 _id and works in the read and write filters.
+        var bigId = 3_000_000_000u + NewAccount();
+        await repo.FileAsync(bigId, new[] { Gift(0) }, NowLocal);
+        Assert.Equal(BsonType.Int64, Raw().Find(new BsonDocument("_id", (long)bigId)).Single()["_id"].BsonType);
+        Assert.Single(await repo.GetLiveAsync(bigId, NowLocal));
+        await repo.GetAttendanceAsync(bigId);
+        await repo.TryTakeAsync(bigId, "X");
     }
 }

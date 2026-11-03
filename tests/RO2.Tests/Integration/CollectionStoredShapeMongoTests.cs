@@ -34,8 +34,7 @@ public sealed class CollectionStoredShapeMongoTests
     private readonly ITestOutputHelper _out;
     public CollectionStoredShapeMongoTests(MongoMailFixture fx, ITestOutputHelper output) { _fx = fx; _out = output; }
 
-    // Mongo's UInt32Serializer writes Int32 and throws above int.MaxValue (see Uint_ids_above_int_max_throw...), so every id used
-    // as a stored value stays within int.MaxValue.
+    // uint is Int32 up to int.MaxValue and Int64 above (LenientUInt32Serializer); the ids here stay small.
     private static uint NewChar() => (uint)Interlocked.Increment(ref _charSeq);
 
     private MongoDbContext Context()
@@ -468,7 +467,7 @@ public sealed class CollectionStoredShapeMongoTests
     // ------------------------------------------------------------------------------------------------ the uint -> Int32 bound
 
     [DockerFact]
-    public async Task Uint_ids_above_int_max_throw_on_save_and_int_max_is_the_last_good_id()
+    public async Task Uint_ids_above_int_max_round_trip_as_Int64_and_int_max_stays_Int32()
     {
         var ctx = Context();
 
@@ -477,25 +476,24 @@ public sealed class CollectionStoredShapeMongoTests
         await new CollectionRepository(ctx).SaveAsync(new CollectionDocument { Id = okId });
         Assert.Equal(BsonType.Int32, Raw("collections").Find(new BsonDocument("_id", int.MaxValue)).Single()["_id"].BsonType);
 
-        // The id sits in the ReplaceOne FILTER (d.Id == doc.Id): the driver converts it while translating the filter, so a too-big id
-        // surfaces as the raw OverflowException, before any document is serialised.
-        await Assert.ThrowsAsync<OverflowException>(() =>
-            new CollectionRepository(ctx).SaveAsync(new CollectionDocument { Id = (uint)int.MaxValue + 1 }));
-        await Assert.ThrowsAsync<OverflowException>(() =>
-            new MonsterCollectionProgressRepository(ctx).SaveAsync(new MonsterCollectionProgressDocument { Id = 3_000_000_000u }));
-        await Assert.ThrowsAsync<OverflowException>(() => new CollectionRepository(ctx).GetOrCreateAsync(3_000_000_000u));   // a Find filter too
-        await Assert.ThrowsAsync<OverflowException>(() => new MonsterCollectionProgressRepository(ctx).GetAsync(3_000_000_000u));
-        await Assert.ThrowsAsync<OverflowException>(() => Incubators(ctx).GetSlotsAsync(3_000_000_000u));
+        // The id sits in the ReplaceOne FILTER (d.Id == doc.Id) and is stored as an Int64 _id above int.MaxValue.
+        var bigA = 3_000_000_000u + NewChar();
+        var bigB = 3_000_000_000u + NewChar();
+        await new CollectionRepository(ctx).SaveAsync(new CollectionDocument { Id = (uint)int.MaxValue + 1 });
+        await new MonsterCollectionProgressRepository(ctx).SaveAsync(new MonsterCollectionProgressDocument { Id = bigA });
+        Assert.Equal(BsonType.Int64, Raw("collections").Find(new BsonDocument("_id", (long)int.MaxValue + 1)).Single()["_id"].BsonType);
+        Assert.Equal(bigA, (await new MonsterCollectionProgressRepository(ctx).GetAsync(bigA))!.Id);       // a Find filter too
+        Assert.Equal(bigB, (await new CollectionRepository(ctx).GetOrCreateAsync(bigB)).Id);
+        await Incubators(ctx).GetSlotsAsync(bigB);
 
-        // A too-big uint inside the DOCUMENT (a list element, a slot field) is a BsonSerializationException wrapping the OverflowException.
-        var bad = await Assert.ThrowsAsync<BsonSerializationException>(() =>
-            new CollectionRepository(ctx).SaveAsync(new CollectionDocument { Id = NewChar(), RegisteredMonsterIds = { 3_000_000_000u } }));
-        Assert.IsType<OverflowException>(bad.InnerException);
-        await Assert.ThrowsAsync<BsonSerializationException>(() =>
-            Incubators(ctx).TryPlaceIncubatorAsync(NewChar(), 0, 3_000_000_000u, 2, Base));
-        await Assert.ThrowsAsync<BsonSerializationException>(() =>
-            new MonsterCollectionProgressRepository(ctx).SaveAsync(new MonsterCollectionProgressDocument
-                { Id = NewChar(), Entries = { new MonsterCollectionEntry { NpcId = 1, Exp = 3_000_000_000u } } }));
+        // A big uint inside the DOCUMENT (a list element, a slot field) round-trips exactly.
+        var withList = NewChar();
+        await new CollectionRepository(ctx).SaveAsync(new CollectionDocument { Id = withList, RegisteredMonsterIds = { 3_000_000_000u } });
+        Assert.Equal(new uint[] { 3_000_000_000u }, (await new CollectionRepository(ctx).GetOrCreateAsync(withList)).RegisteredMonsterIds);
+        var withEntry = NewChar();
+        await new MonsterCollectionProgressRepository(ctx).SaveAsync(new MonsterCollectionProgressDocument
+            { Id = withEntry, Entries = { new MonsterCollectionEntry { NpcId = 1, Exp = 3_000_000_000u } } });
+        Assert.Equal(3_000_000_000u, Assert.Single((await new MonsterCollectionProgressRepository(ctx).GetAsync(withEntry))!.Entries).Exp);
     }
 
     // ------------------------------------------------------------------------------------------------ helpers

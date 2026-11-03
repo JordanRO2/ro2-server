@@ -6,7 +6,7 @@ using Xunit;
 namespace RO2.Tests.Integration;
 
 // B18 A-S1: the Mongo twin of PostgresDungeonEntryCountTests, against a REAL mongo:7 container (MongoMailFixture).
-// Every uint stays within int.MaxValue (Mongo's UInt32Serializer writes Int32 and throws above it).
+// uint is Int32 up to int.MaxValue and Int64 above (LenientUInt32Serializer); the ids here stay small.
 
 [Collection("MongoMail")]
 public sealed class MongoDungeonEntryCountTests

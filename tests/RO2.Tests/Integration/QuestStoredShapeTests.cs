@@ -83,8 +83,7 @@ internal static class QuestShapeCases
 
     public static uint NewChar() => (uint)Random.Shared.NextInt64(int.MaxValue + 1L, uint.MaxValue);
 
-    // Mongo's UInt32Serializer writes Int32 and throws OverflowException above int.MaxValue (pre-existing provider
-    // limit, unchanged by the move), so the Mongo twin keeps every uint id within int.MaxValue.
+    // The Mongo twin keeps uint ids within int.MaxValue so raw lookups can use an Int32 _id (above it a uint is stored as Int64).
     public static uint NewMongoChar() => (uint)Random.Shared.NextInt64(1_000_000, int.MaxValue);
     public static ulong NewIdBase() => (ulong)Random.Shared.NextInt64(int.MaxValue + 1L, long.MaxValue / 16) * 8;
 }

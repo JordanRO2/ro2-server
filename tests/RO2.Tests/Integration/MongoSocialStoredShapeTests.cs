@@ -31,7 +31,7 @@ public sealed class MongoFriendListStoredShapeTests
     private readonly ITestOutputHelper _out;
     public MongoFriendListStoredShapeTests(MongoMailFixture fx, ITestOutputHelper output) { _fx = fx; _out = output; }
 
-    // Mongo's UInt32Serializer writes Int32 and throws above int.MaxValue, so every uint stored value stays within int.MaxValue.
+    // uint is Int32 up to int.MaxValue and Int64 above (LenientUInt32Serializer); the sequence ids here stay small.
     private static uint New() => (uint)Interlocked.Increment(ref _seq);
 
     private (MongoFriendListRepository store, FakeCharacterRepository chars) Open()
@@ -151,11 +151,16 @@ public sealed class MongoFriendListStoredShapeTests
     }
 
     [DockerFact]
-    public async Task Uint_ids_above_int_max_throw_so_stored_ids_must_stay_within_int_max()
+    public async Task Uint_ids_above_int_max_are_stored_as_Int64_and_int_max_stays_Int32()
     {
         var (store, _) = Open();
-        await Assert.ThrowsAnyAsync<Exception>(() => store.AddAsync(New(), (uint)int.MaxValue + 1));
-        await store.AddAsync(New(), int.MaxValue);                                                // the boundary itself is fine
+        var owner = New();
+        Assert.Equal(AddOutcome.Added, await store.AddAsync(owner, int.MaxValue));                // the boundary itself is Int32
+        Assert.Equal(AddOutcome.Added, await store.AddAsync(owner, (uint)int.MaxValue + 1));      // above it is Int64, no longer an overflow
+        var ids = One(owner)["FriendIds"].AsBsonArray;
+        Assert.Equal(BsonType.Int32, ids[0].BsonType);
+        Assert.Equal(BsonType.Int64, ids[1].BsonType);
+        Assert.True(await store.ListsFriendAsync(owner, (uint)int.MaxValue + 1, CancellationToken.None));
     }
 }
 

@@ -41,7 +41,6 @@ public sealed class AccountAccessRepository : IAccountAccessRepository
     public sealed class AccountAccessDoc
     {
         [BsonId]
-        [BsonRepresentation(BsonType.Int32)]
         public uint Id { get; set; }
 
         public byte AccessLevel { get; set; }

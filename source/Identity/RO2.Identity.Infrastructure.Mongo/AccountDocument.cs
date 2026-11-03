@@ -15,7 +15,6 @@ public sealed class AccountDocument
 {
  /// <summary>The account id, stored as the Mongo <c>_id</c>.</summary>
     [BsonId]
-    [BsonRepresentation(BsonType.Int32)]
     public uint Id { get; set; }
 
  /// <summary>The login key.</summary>

@@ -29,8 +29,7 @@ public sealed class MongoVehicleStoredShapeTests
     private readonly ITestOutputHelper _out;
     public MongoVehicleStoredShapeTests(MongoMailFixture fx, ITestOutputHelper output) { _fx = fx; _out = output; }
 
-    // Mongo's UInt32Serializer writes Int32 and throws above int.MaxValue (see Uints_above_int_max_throw...), so every uint id used
-    // as a stored value stays within int.MaxValue (the Postgres twin's 2.2e9..4.2e9 ids do NOT work here).
+    // uint is Int32 up to int.MaxValue and Int64 above (LenientUInt32Serializer); the sequence ids here stay small.
     private static uint NewChar() => (uint)Interlocked.Increment(ref _charSeq);
 
     private VehicleRepository Repo(string db = Db)
@@ -326,7 +325,7 @@ public sealed class MongoVehicleStoredShapeTests
     // ------------------------------------------------------------------------------------------------ the uint -> Int32 bound
 
     [DockerFact]
-    public async Task Uint_ids_above_int_max_throw_and_int_max_is_the_last_good_id()
+    public async Task Uint_ids_above_int_max_round_trip_as_Int64_and_int_max_stays_Int32()
     {
         var repo = Repo();
 
@@ -338,17 +337,17 @@ public sealed class MongoVehicleStoredShapeTests
         Assert.Equal(int.MaxValue, raw["Vehicles"][0]["RidingId"].AsInt32);
         Assert.Equal((uint)int.MaxValue, Assert.Single(await repo.GetAsync(okChar)).RidingId);
 
-        // A riding id above it sits in the DOCUMENT: BsonSerializationException wrapping the OverflowException, nothing stored.
+        // A riding id above it is stored as Int64 in the element and reads back exactly.
         var id = NewChar();
-        var bad = await Assert.ThrowsAsync<BsonSerializationException>(() => repo.GrantAsync(id, 3_000_000_000u, null, Now));
-        var inner = bad.InnerException;
-        while (inner is BsonSerializationException) inner = inner.InnerException;                  // wrapped once per nesting level (element, then document)
-        Assert.IsType<OverflowException>(inner);
-        Assert.Equal(0, Count(id));
+        await repo.GrantAsync(id, 3_000_000_000u, null, Now);
+        Assert.Equal(BsonType.Int64, Raw().Find(new BsonDocument("_id", (int)id)).Single()["Vehicles"][0]["RidingId"].BsonType);
+        Assert.Equal(3_000_000_000u, Assert.Single(await repo.GetAsync(id)).RidingId);
 
-        // A character id above it sits in the FILTER: the raw OverflowException, on a read and on a write alike.
-        await Assert.ThrowsAsync<OverflowException>(() => repo.GetAsync(3_000_000_000u));
-        await Assert.ThrowsAsync<OverflowException>(() => repo.GrantAsync(3_000_000_000u, 90190000, null, Now));
-        await Assert.ThrowsAsync<OverflowException>(() => repo.LoadAndCutToWholeSecondsAsync(3_000_000_000u));
+        // A character id above it is an Int64 _id, and the same value works in filters on a read and on a write.
+        var bigChar = 3_000_000_000u + NewChar();
+        await repo.GrantAsync(bigChar, 90190000, null, Now);
+        Assert.Equal(BsonType.Int64, Raw().Find(new BsonDocument("_id", (long)bigChar)).Single()["_id"].BsonType);
+        Assert.Equal(90190000u, Assert.Single(await repo.GetAsync(bigChar)).RidingId);
+        await repo.LoadAndCutToWholeSecondsAsync(bigChar);
     }
 }

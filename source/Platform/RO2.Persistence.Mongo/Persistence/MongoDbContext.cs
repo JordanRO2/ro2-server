@@ -1,3 +1,4 @@
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using MongoDB.Bson.Serialization.Conventions;
 using RO2.Domain.Entities;
@@ -19,6 +20,9 @@ public class MongoDbContext
 
     static MongoDbContext()
     {
+        // uint above int.MaxValue is Int64 instead of an OverflowException (see LenientUInt32Serializer).
+        BsonSerializer.RegisterSerializationProvider(new LenientNumericSerializationProvider());
+
         // Schema-drift safety: a server still running an older version of an entity must not fail when it
         // deserializes a document that carries newer fields (for example a Character field added after that
         // server was built). IgnoreExtraElements makes unknown document fields a no-op for every mapped type.

@@ -42,7 +42,7 @@ public sealed class MongoDungeonEntryCountStoredShapeTests
 
         var doc = Raw().Find(new BsonDocument("_id", 5001)).Single();
         Assert.Equal(new[] { "_id", "WindowStartUtc", "Counts", "UpdatedUtc" }, doc.Names.ToArray());
-        // _id is the CLR uint characterId with no serializer: it lands as Int32 (the driver throws above int.MaxValue).
+        // _id is the CLR uint characterId with no serializer: it lands as Int32 (Int64 above int.MaxValue).
         Assert.Equal(BsonType.Int32, doc["_id"].BsonType);
         Assert.Equal(5001, doc["_id"].AsInt32);
 

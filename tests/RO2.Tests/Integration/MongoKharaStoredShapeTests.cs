@@ -30,8 +30,7 @@ public sealed class MongoKharaStateStoredShapeTests
     private readonly ITestOutputHelper _out;
     public MongoKharaStateStoredShapeTests(MongoMailFixture fx, ITestOutputHelper output) { _fx = fx; _out = output; }
 
-    // Mongo's UInt32Serializer writes Int32 and throws above int.MaxValue (see Uint_values_above_int_max_throw...), so every uint stored
-    // value stays within int.MaxValue (the Postgres twin's 2.2e9..4.2e9 character ids do NOT work here).
+    // uint is Int32 up to int.MaxValue and Int64 above (LenientUInt32Serializer); the sequence ids here stay small.
     private static uint NewChar() => (uint)Interlocked.Increment(ref _charSeq);
 
     private KharaStateRepository Repo()
@@ -228,7 +227,7 @@ public sealed class MongoKharaStateStoredShapeTests
     // ------------------------------------------------------------------------------------------------ the uint -> Int32 bound
 
     [DockerFact]
-    public async Task Uint_values_above_int_max_throw_and_int_max_is_the_last_good_value()
+    public async Task Uint_values_above_int_max_round_trip_as_Int64_and_int_max_stays_Int32()
     {
         var repo = Repo();
 
@@ -243,16 +242,17 @@ public sealed class MongoKharaStateStoredShapeTests
         Assert.Equal(int.MaxValue, Assert.Single(raw["Completed"].AsBsonArray).AsInt32);
         Assert.Equal((uint)int.MaxValue, (await repo.GetAsync(id))!.Points);
 
-        // A value above it sits in the DOCUMENT: BsonSerializationException wrapping the OverflowException, nothing stored.
-        var bad = NewChar();
-        var ex = await Assert.ThrowsAsync<BsonSerializationException>(() => repo.SaveAsync(new KharaStateDocument { Id = bad, Points = 3_000_000_000u, UpdatedUtc = Stamp }));
-        var inner = ex.InnerException;
-        while (inner is BsonSerializationException) inner = inner.InnerException;
-        Assert.IsType<OverflowException>(inner);
-        Assert.Equal(0, Count(bad));
+        // A value above it is stored as Int64 in the document and reads back exactly.
+        var big = NewChar();
+        await repo.SaveAsync(new KharaStateDocument { Id = big, Points = 3_000_000_000u, UpdatedUtc = Stamp });
+        Assert.Equal(BsonType.Int64, Raw().Find(new BsonDocument("_id", (int)big)).Single()["Points"].BsonType);
+        Assert.Equal(3_000_000_000u, (await repo.GetAsync(big))!.Points);
 
-        // A character id above it sits in the FILTER: the raw OverflowException, on a read.
-        await Assert.ThrowsAsync<OverflowException>(() => repo.GetAsync(3_000_000_000u));
+        // A character id above it is an Int64 _id and works in the read filter.
+        var bigId = 3_000_000_000u + NewChar();
+        await repo.SaveAsync(new KharaStateDocument { Id = bigId, Points = 1, UpdatedUtc = Stamp });
+        Assert.Equal(BsonType.Int64, Raw().Find(new BsonDocument("_id", (long)bigId)).Single()["_id"].BsonType);
+        Assert.Equal(1u, (await repo.GetAsync(bigId))!.Points);
     }
 }
 
@@ -535,7 +535,7 @@ public sealed class MongoKharaTitleStoredShapeTests
     // ------------------------------------------------------------------------------------------------ the uint -> Int32 bound
 
     [DockerFact]
-    public async Task Uint_values_above_int_max_throw_and_int_max_is_the_last_good_value()
+    public async Task Uint_values_above_int_max_round_trip_as_Int64_and_int_max_stays_Int32()
     {
         var repo = Repo();
 
@@ -546,15 +546,17 @@ public sealed class MongoKharaTitleStoredShapeTests
         Assert.Equal(int.MaxValue, raw["KharaA"].AsInt32);
         Assert.Equal((uint)int.MaxValue, (await repo.GetAsync(id))!.KharaB);
 
-        var bad = NewChar();
-        var ex = await Assert.ThrowsAsync<BsonSerializationException>(() => repo.SaveAsync(new KharaTitleDocument { Id = bad, KharaA = 3_000_000_000u, UpdatedUtc = Utc(2026, 1, 1, 0, 0, 0) }));
-        var inner = ex.InnerException;
-        while (inner is BsonSerializationException) inner = inner.InnerException;
-        Assert.IsType<OverflowException>(inner);
-        Assert.Equal(0, Count(bad));
+        // Above it: Int64 in the document, and an Int64 _id that works in the read and play-clock filters.
+        var big = NewChar();
+        await repo.SaveAsync(new KharaTitleDocument { Id = big, KharaA = 3_000_000_000u, UpdatedUtc = Utc(2026, 1, 1, 0, 0, 0) });
+        Assert.Equal(BsonType.Int64, Raw().Find(new BsonDocument("_id", (int)big)).Single()["KharaA"].BsonType);
+        Assert.Equal(3_000_000_000u, (await repo.GetAsync(big))!.KharaA);
 
-        await Assert.ThrowsAsync<OverflowException>(() => repo.GetAsync(3_000_000_000u));
-        await Assert.ThrowsAsync<OverflowException>(() => repo.StorePlayClockAsync(3_000_000_000u, Utc(2026, 1, 1, 0, 0, 0), Utc(2026, 1, 1, 0, 0, 0)));
+        var bigId = 3_000_000_000u + NewChar();
+        await repo.SaveAsync(new KharaTitleDocument { Id = bigId, KharaA = 1, UpdatedUtc = Utc(2026, 1, 1, 0, 0, 0) });
+        Assert.Equal(BsonType.Int64, Raw().Find(new BsonDocument("_id", (long)bigId)).Single()["_id"].BsonType);
+        Assert.Equal(1u, (await repo.GetAsync(bigId))!.KharaA);
+        await repo.StorePlayClockAsync(bigId, Utc(2026, 1, 1, 0, 0, 0), Utc(2026, 1, 1, 0, 0, 0));
     }
 }
 
@@ -664,7 +666,7 @@ public sealed class MongoKharaTraceStoredShapeTests
     // ------------------------------------------------------------------------------------------------ the uint -> Int32 bound
 
     [DockerFact]
-    public async Task Uint_values_above_int_max_throw_and_int_max_is_the_last_good_value()
+    public async Task Uint_values_above_int_max_round_trip_as_Int64_and_int_max_stays_Int32()
     {
         var repo = Repo();
 
@@ -675,13 +677,15 @@ public sealed class MongoKharaTraceStoredShapeTests
         Assert.Equal(int.MaxValue, Assert.Single(raw["KharaIds"].AsBsonArray).AsInt32);
         Assert.Equal(new uint[] { int.MaxValue }, await repo.GetAsync(id));
 
-        var bad = NewChar();
-        var ex = await Assert.ThrowsAsync<BsonSerializationException>(() => repo.SaveAsync(bad, new uint[] { 3_000_000_000u }));
-        var inner = ex.InnerException;
-        while (inner is BsonSerializationException) inner = inner.InnerException;
-        Assert.IsType<OverflowException>(inner);
-        Assert.Equal(0, Count(bad));
+        // Above it: Int64 in the array, and an Int64 _id that works in the read filter.
+        var big = NewChar();
+        await repo.SaveAsync(big, new uint[] { 3_000_000_000u });
+        Assert.Equal(BsonType.Int64, Assert.Single(Raw().Find(new BsonDocument("_id", (int)big)).Single()["KharaIds"].AsBsonArray).BsonType);
+        Assert.Equal(new uint[] { 3_000_000_000u }, await repo.GetAsync(big));
 
-        await Assert.ThrowsAsync<OverflowException>(() => repo.GetAsync(3_000_000_000u));
+        var bigId = 3_000_000_000u + NewChar();
+        await repo.SaveAsync(bigId, new uint[] { 1 });
+        Assert.Equal(BsonType.Int64, Raw().Find(new BsonDocument("_id", (long)bigId)).Single()["_id"].BsonType);
+        Assert.Equal(new uint[] { 1 }, await repo.GetAsync(bigId));
     }
 }

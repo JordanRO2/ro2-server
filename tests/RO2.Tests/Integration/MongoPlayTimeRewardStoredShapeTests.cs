@@ -29,8 +29,7 @@ public sealed class MongoPlayTimeRewardStoredShapeTests
     private readonly ITestOutputHelper _out;
     public MongoPlayTimeRewardStoredShapeTests(MongoMailFixture fx, ITestOutputHelper output) { _fx = fx; _out = output; }
 
-    // Mongo's UInt32Serializer writes Int32 and throws above int.MaxValue (see Uint_ids_above_int_max_throw...), so every uint Id/SlotId
-    // stays within int.MaxValue (the Postgres twin's ids up to uint.MaxValue do NOT work here).
+    // uint is Int32 up to int.MaxValue and Int64 above (LenientUInt32Serializer); the sequence ids here stay small.
     private static uint NewId() => (uint)Interlocked.Increment(ref _idSeq);
 
     private static PlayTimeRewardDocument Doc(uint id, uint slot, double seconds, DateTime period, DateTime updated)
@@ -177,7 +176,7 @@ public sealed class MongoPlayTimeRewardStoredShapeTests
     // ------------------------------------------------------------------------------------------------ the uint -> Int32 bound
 
     [DockerFact]
-    public async Task Uint_ids_above_int_max_throw_and_int_max_is_the_last_good_id_while_AccumulatedSeconds_is_an_unbounded_double()
+    public async Task Uint_ids_above_int_max_round_trip_as_Int64_and_int_max_stays_Int32_while_AccumulatedSeconds_is_an_unbounded_double()
     {
         var repo = Repo();
 
@@ -192,18 +191,16 @@ public sealed class MongoPlayTimeRewardStoredShapeTests
         Assert.Equal((uint)int.MaxValue, got!.SlotId);
         Assert.Equal(5_000_000_000d, got.AccumulatedSeconds);
 
-        // A slot id above it sits in the DOCUMENT: BsonSerializationException wrapping the OverflowException, nothing stored.
+        // A slot id above it is stored as Int64 in the document and reads back exactly.
         var id = NewId();
-        var bad = await Assert.ThrowsAsync<BsonSerializationException>(
-            () => repo.SaveDocumentAsync(Doc(id, 3_000_000_000u, 1, Utc(2026, 10, 1), Utc(2026, 10, 1))));
-        var inner = bad.InnerException;
-        while (inner is BsonSerializationException) inner = inner.InnerException;
-        Assert.IsType<OverflowException>(inner);
-        Assert.Equal(0, Count(id));
+        await repo.SaveDocumentAsync(Doc(id, 3_000_000_000u, 1, Utc(2026, 10, 1), Utc(2026, 10, 1)));
+        Assert.Equal(BsonType.Int64, Raw().Find(new BsonDocument("_id", (int)id)).Single()["SlotId"].BsonType);
+        Assert.Equal(3_000_000_000u, (await repo.GetDocumentAsync(id))!.SlotId);
 
-        // An account id above it sits in the FILTER: the raw OverflowException, on a read and on a write alike.
-        await Assert.ThrowsAsync<OverflowException>(() => repo.GetDocumentAsync(3_000_000_000u));
-        await Assert.ThrowsAsync<OverflowException>(
-            () => repo.SaveDocumentAsync(Doc(3_000_000_000u, 1, 1, Utc(2026, 10, 1), Utc(2026, 10, 1))));
+        // An account id above it is an Int64 _id, and works in the read and write filters.
+        var bigId = 3_000_000_000u + NewId();
+        await repo.SaveDocumentAsync(Doc(bigId, 1, 1, Utc(2026, 10, 1), Utc(2026, 10, 1)));
+        Assert.Equal(BsonType.Int64, Raw().Find(new BsonDocument("_id", (long)bigId)).Single()["_id"].BsonType);
+        Assert.Equal(1u, (await repo.GetDocumentAsync(bigId))!.SlotId);
     }
 }
