@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>RO2.DungeonFinder.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+  <!-- DungeonFinder bounded context: Domain references only BuildingBlocks, the GameData kernel and Dungeon.Domain. -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+    <ProjectReference Include="..\..\Dungeon\RO2.Dungeon.Domain\RO2.Dungeon.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
