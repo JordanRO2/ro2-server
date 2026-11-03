@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.GameData;
+using RO2.Rewards.Domain;
 using RO2.Persistence.Mongo.Persistence;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
@@ -68,6 +69,6 @@ public class ReqPlayTimeRewardHandler : Base1642
 
         Logger.LogDebug("{Name}: {Handler} -> slot {Slot}, {Seconds}s left", player.Name, Name, a.Slot, a.RemainingSeconds);
         await session.SendRmiAsync(ZoneS2COpcodes.AnsPlayTimeReward,
-            PlayTimeRewardChain.BuildAnswer(PlayTimeRewardChain.ResultOk, a.Slot, a.RemainingSeconds), ct);
+            PlayTimeRewardPackets.BuildAnswer(PlayTimeRewardChain.ResultOk, a.Slot, a.RemainingSeconds), ct);
     }
 }

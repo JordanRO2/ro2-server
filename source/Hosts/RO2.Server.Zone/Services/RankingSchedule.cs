@@ -1,3 +1,4 @@
+using RO2.Rewards.Domain;
 using RO2.GameData;
 using RO2.GameData.Tables;
 

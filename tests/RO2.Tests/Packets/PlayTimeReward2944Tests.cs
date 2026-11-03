@@ -44,9 +44,9 @@ public class PlayTimeReward2944Tests
         return answer.Value;
     }
 
-    private static byte[] Body(PlayTimeRewardChain.ClaimResult c) => PlayTimeRewardChain.BuildAnswer(c.Result, c.Slot, c.Seconds);
+    private static byte[] Body(PlayTimeRewardChain.ClaimResult c) => PlayTimeRewardPackets.BuildAnswer(c.Result, c.Slot, c.Seconds);
 
-    private static byte[] Body((uint Slot, uint Seconds) a) => PlayTimeRewardChain.BuildAnswer(PlayTimeRewardChain.ResultOk, a.Slot, a.Seconds);
+    private static byte[] Body((uint Slot, uint Seconds) a) => PlayTimeRewardPackets.BuildAnswer(PlayTimeRewardChain.ResultOk, a.Slot, a.Seconds);
 
     [Fact]
     public void Chain_IsTheTypeOneRowsInIdOrder()

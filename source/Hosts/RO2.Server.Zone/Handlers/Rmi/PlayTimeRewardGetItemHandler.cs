@@ -91,7 +91,7 @@ public class PlayTimeRewardGetItemHandler : ZoneRmiHandlerBase<PlayTimeRewardGet
         }
 
         await session.SendRmiAsync(ZoneS2COpcodes.AnsPlayTimeRewardGetItem,
-            PlayTimeRewardChain.BuildAnswer(claim.Result, claim.Slot, claim.Seconds), ct);
+            PlayTimeRewardPackets.BuildAnswer(claim.Result, claim.Slot, claim.Seconds), ct);
 
         if (giftsInBox is > 0)
             await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyAccountGiftReceived, AccountGiftPackets.Build2798(giftsInBox.Value), ct);

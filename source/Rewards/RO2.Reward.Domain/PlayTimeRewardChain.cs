@@ -1,8 +1,7 @@
-using System.Buffers.Binary;
 using RO2.GameData;
 using RO2.GameData.Tables;
 
-namespace RO2.Server.Zone.Services;
+namespace RO2.Rewards.Domain;
 
 /// <summary>
 /// Per-account progress through the play-time reward chain. Shared by all characters of the account
@@ -153,19 +152,6 @@ public static class PlayTimeRewardChain
             return new ClaimResult(ResultChainComplete, 0, 0, row);
         var next = chain[p.Index];
         return new ClaimResult(ResultOk, next.ID, next.Time, row);
-    }
-
- /// <summary>
- /// Body of 2944 AnsPlayTimeReward and 2945 AnsPlayTimeRewardGetItem: fixed 10 bytes,
- /// <c>[u16 result][u32 slot][u32 seconds]</c>.
- /// </summary>
-    public static byte[] BuildAnswer(ushort result, uint slot, uint seconds)
-    {
-        var body = new byte[10];
-        BinaryPrimitives.WriteUInt16LittleEndian(body, result);
-        BinaryPrimitives.WriteUInt32LittleEndian(body.AsSpan(2), slot);
-        BinaryPrimitives.WriteUInt32LittleEndian(body.AsSpan(6), seconds);
-        return body;
     }
 
  /// <summary>Converts a stored slot id back to its chain index; 0 when the row no longer exists in the data.</summary>

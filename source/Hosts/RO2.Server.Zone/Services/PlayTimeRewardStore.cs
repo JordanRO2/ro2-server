@@ -272,7 +272,7 @@ public sealed class PlayTimeRewardStore
             try
             {
                 await session.SendRmiAsync(ZoneS2COpcodes.AnsPlayTimeReward,
-                    PlayTimeRewardChain.BuildAnswer(PlayTimeRewardChain.ResultOk, a.Slot, a.RemainingSeconds), ct);
+                    PlayTimeRewardPackets.BuildAnswer(PlayTimeRewardChain.ResultOk, a.Slot, a.RemainingSeconds), ct);
                 pushed++;
             }
             catch (Exception ex) when (ex is not OperationCanceledException)
