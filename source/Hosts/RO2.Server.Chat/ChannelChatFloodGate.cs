@@ -1,4 +1,4 @@
-using System.Buffers.Binary;
+using RO2.Chats.Domain;
 using RO2.Network.ProudNet;
 using RO2.Network.Throttling;
 
@@ -22,13 +22,13 @@ namespace RO2.Server.Chat;
 public static class ChannelChatFloodGate
 {
     /// <summary>Delivered lines a sender may have inside the window; the next one is refused.</summary>
-    public const int MaxLinesPerWindow = 4;
+    public const int MaxLinesPerWindow = FloodPolicy.MaxLinesPerWindow;
 
     /// <summary>Window length. Sliding-window length in milliseconds.</summary>
-    public const long WindowMs = 5000;
+    public const long WindowMs = FloodPolicy.WindowMs;
 
     /// <summary>23536 result code the client shows as string 8669, "Chat scrolling is too fast."</summary>
-    public const ushort ChatScrollingTooFast = 22;
+    public const ushort ChatScrollingTooFast = FloodPolicy.ChatScrollingTooFast;
 
     private static readonly SlidingWindowRateLimiter<uint> Windows = new(MaxLinesPerWindow, WindowMs);
 
@@ -44,10 +44,5 @@ public static class ChannelChatFloodGate
     public static bool TryAdmit(uint characterId, long nowMs) => Windows.TryAcquire(characterId, nowMs);
 
     /// <summary>S2C 23536 body for a refused line: [u16 22] (bytes <c>16 00</c>).</summary>
-    public static byte[] RefusalBody()
-    {
-        var body = new byte[2];
-        BinaryPrimitives.WriteUInt16LittleEndian(body, ChatScrollingTooFast);
-        return body;
-    }
+    public static byte[] RefusalBody() => FloodPolicy.RefusalBody();
 }

@@ -1,3 +1,4 @@
+using RO2.Chats.Domain;
 using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -104,7 +105,7 @@ public class ReqPublicChatRoomJoinHandler : ChatRmiHandlerBase<ReqPublicChatRoom
  /// The 23518 result for <paramref name="session"/> asking to join <paramref name="channel"/> (null: the GUID is no
  /// channel), joining it on <see cref="ResultJoined"/>.
  /// </summary>
-    public static ushort Decide(ProudSession session, CommunityChannels.Channel? channel)
+    public static ushort Decide(ProudSession session, CommunityChannelCatalog.Channel? channel)
     {
         if (channel is null) return ResultChannelNotFound;
         return CommunityChannelMembership.Join(session, channel.Index) ? ResultJoined : ResultAlreadyParticipating;

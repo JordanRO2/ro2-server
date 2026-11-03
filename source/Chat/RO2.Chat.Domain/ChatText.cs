@@ -1,4 +1,4 @@
-namespace RO2.Server.Chat;
+namespace RO2.Chats.Domain;
 
 /// <summary>
 /// Content check for a chat line before it is relayed. The three send paths (23528 channel, 23529 private

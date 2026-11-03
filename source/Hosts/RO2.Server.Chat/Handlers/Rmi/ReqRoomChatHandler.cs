@@ -1,3 +1,4 @@
+using RO2.Chats.Domain;
 using System.Buffers.Binary;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
