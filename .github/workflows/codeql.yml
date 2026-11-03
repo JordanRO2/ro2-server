@@ -1,0 +1,57 @@
+name: CodeQL
+
+# Static security analysis of the C# code. Results appear under the repo's
+# Security tab -> Code scanning alerts. Uses build-mode: manual because the
+# solution targets net11.0 (a release candidate), which the default autobuild
+# runner does not have; the build steps mirror ci.yml.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Weekly, so advisories published after the last push still get caught.
+    - cron: '27 4 * * 1'
+
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  DOTNET_NOLOGO: 1
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+
+jobs:
+  analyze:
+    name: Analyze (csharp)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    permissions:
+      security-events: write
+      contents: read
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '11.0.x'
+          dotnet-quality: 'preview'
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: csharp
+          build-mode: manual
+
+      # Mirrors ci.yml so the preview SDK resolves net11.0.
+      - name: Build
+        run: |
+          dotnet restore RO2_Server.sln
+          dotnet build RO2_Server.sln --no-restore -c Release
+
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:csharp"
