@@ -1,6 +1,7 @@
 using System.Buffers.Binary;
 using System.Net.Sockets;
 using System.Text;
+using RO2.Chats.Domain;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
@@ -83,7 +84,7 @@ namespace RO2.Server.Chat;
 public static class PrivateChatRooms
 {
  /// <summary>23517's u32 capacity field, 100.</summary>
-    public const int MaxMembers = 100;
+    public const int MaxMembers = PrivateRoom.MaxMembers;
 
  /// <summary>
  /// Private rooms one client can hold at once: the client's room manager sizes its room-slot
@@ -91,10 +92,10 @@ public static class PrivateChatRooms
  /// does not test that null, so an invite
  /// must never push an 11th room on a client.
  /// </summary>
-    public const int ClientRoomSlots = 10;
+    public const int ClientRoomSlots = PrivateRoom.ClientRoomSlots;
 
  /// <summary>The longest room name the 23532 reader keeps: it clamps nChars at 50.</summary>
-    public const int InviteRoomNameMaxChars = 50;
+    public const int InviteRoomNameMaxChars = PrivateRoom.InviteRoomNameMaxChars;
 
  /// <summary>
  /// The longest member name the client's member reader keeps ([u64 uid][u8 n, clamped at 20]
@@ -103,42 +104,25 @@ public static class PrivateChatRooms
  /// longer name would push every following entry out of phase, so the builders cut at the same place.
  /// Our own character names stop at 16 (CharacterRepository), so today this never cuts one.
  /// </summary>
-    public const int MemberNameMaxChars = 20;
+    public const int MemberNameMaxChars = PrivateRoom.MemberNameMaxChars;
 
  /// <summary>23014's password: the client's dialog sends at most 4 wchar and
  /// the reader clamps n at 4; string 9551 says the 4 are digits.</summary>
-    public const int PasswordMaxChars = 4;
+    public const int PasswordMaxChars = PrivateRoom.PasswordMaxChars;
 
-    
-    
-    
-    public const ushort ResultOk = 0;
- /// <summary>9512 "Target does not exist."</summary>
-    public const ushort ResultTargetMissing = 1;
- /// <summary>9722 "The maximum number of channels that can be generated has been exceeded."</summary>
-    public const ushort ResultRoomLimit = 9;
- /// <summary>9726 "Cannot find channel room."</summary>
-    public const ushort ResultNoRoom = 10;
- /// <summary>9551 "Channel passwords can only be 4 numbers."</summary>
-    public const ushort ResultBadPassword = 12;
- /// <summary>9518 "You do not have the authorization to do so"</summary>
-    public const ushort ResultNotMaster = 15;
- /// <summary>9521 "Option only available in channels you are participating."</summary>
-    public const ushort ResultNotMember = 17;
- /// <summary>9574 "The character name you've entered does not exist." Also the code retail sends in 23508
- /// for an unknown name, read by the same result-code switch.</summary>
-    public const ushort ResultNoSuchCharacter = 18;
- /// <summary>9736 "Please enter your password correctly." 23515: a join with a password that is not the
- /// room's (no retail frame).</summary>
-    public const ushort ResultWrongPassword = 19;
- /// <summary>9516 "Already participating in the target channel." 23515: the joiner's uid is already listed in
- /// the room.</summary>
-    public const ushort ResultAlreadyInRoom = 23;
- /// <summary>9735 "Private channel. Please enter your password." 23515: a join with no password into a room
- /// that has one (no retail frame).</summary>
-    public const ushort ResultPasswordRequired = 26;
- /// <summary>9758 "Cannot enter because the room is full."</summary>
-    public const ushort ResultRoomFull = 29;
+    // The result codes live in RO2.Chats.Domain.PrivateRoom (each one's client string is documented there).
+    public const ushort ResultOk = PrivateRoom.ResultOk;
+    public const ushort ResultTargetMissing = PrivateRoom.ResultTargetMissing;
+    public const ushort ResultRoomLimit = PrivateRoom.ResultRoomLimit;
+    public const ushort ResultNoRoom = PrivateRoom.ResultNoRoom;
+    public const ushort ResultBadPassword = PrivateRoom.ResultBadPassword;
+    public const ushort ResultNotMaster = PrivateRoom.ResultNotMaster;
+    public const ushort ResultNotMember = PrivateRoom.ResultNotMember;
+    public const ushort ResultNoSuchCharacter = PrivateRoom.ResultNoSuchCharacter;
+    public const ushort ResultWrongPassword = PrivateRoom.ResultWrongPassword;
+    public const ushort ResultAlreadyInRoom = PrivateRoom.ResultAlreadyInRoom;
+    public const ushort ResultPasswordRequired = PrivateRoom.ResultPasswordRequired;
+    public const ushort ResultRoomFull = PrivateRoom.ResultRoomFull;
 
  /// <summary>An online messenger character a 23016 names: what <see cref="Join"/> stores per member.</summary>
     public readonly record struct Invitee(ProudSession Session, uint CharacterId, ulong Uid, string Name);
@@ -146,32 +130,16 @@ public static class PrivateChatRooms
  /// <summary>One queued send, built under the lock and delivered after it is released.</summary>
     public readonly record struct Send(ProudSession Session, ushort Opcode, byte[] Body);
 
-    public enum JoinOutcome { Joined, WrongPassword, Full, AlreadyInRoom }
-
-    private sealed class Member
+ /// <summary>A registered room: the id-only domain aggregate plus the uid -> connection map the domain does not know.</summary>
+    private sealed class Entry(PrivateRoom room)
     {
- /// <summary>The wire uid: the member's full 64-bit 23001 uid (its GID), never truncated.</summary>
-        public ulong Uid;
- /// <summary>The member's database id (session.CharacterId), what 23013's caller identifies it by.</summary>
-        public uint CharacterId;
-        public string Name = "";
-        public ProudSession Session = null!;
-    }
-
-    private sealed class Room
-    {
-        public Guid Id;
-        public byte[] GuidBytes = null!;
-        public string Name = "";
-        public string Password = "";
-        public ulong MasterUid;
-        
-        public readonly SortedDictionary<ulong, Member> Members = new();
+        public readonly PrivateRoom Room = room;
+        public readonly SortedDictionary<ulong, ProudSession> Sessions = new();
     }
 
     private static readonly Lock Gate = new();
-    private static readonly Dictionary<string, Room> ByName = new(StringComparer.Ordinal);
-    private static readonly Dictionary<Guid, Room> ById = new();
+    private static readonly Dictionary<string, Entry> ByName = new(StringComparer.Ordinal);
+    private static readonly Dictionary<Guid, Entry> ById = new();
 
  /// <summary>
  /// 23011: join the room called <paramref name="roomName"/>, creating it if nobody holds it.
@@ -186,37 +154,18 @@ public static class PrivateChatRooms
         lock (Gate)
         {
             PruneDisconnectedLocked(sends, closing: null);
-            if (!ByName.TryGetValue(roomName, out var room))
+            if (!ByName.TryGetValue(roomName, out var entry))
             {
                 var id = Guid.NewGuid();
-                room = new Room { Id = id, GuidBytes = id.ToByteArray(), Name = roomName, Password = password, MasterUid = uid };
-                ByName[roomName] = room;
-                ById[id] = room;
-            }
-            else
-            {
-                
-                
-                var (outcome, code) = room.Members.ContainsKey(uid) ? (JoinOutcome.AlreadyInRoom, ResultAlreadyInRoom)
-                    : !string.Equals(room.Password, password, StringComparison.Ordinal)
-                        ? (JoinOutcome.WrongPassword, password.Length == 0 ? ResultPasswordRequired : ResultWrongPassword)
-                    : room.Members.Count >= MaxMembers ? (JoinOutcome.Full, ResultRoomFull)
-                    : (JoinOutcome.Joined, ResultOk);
-                if (outcome != JoinOutcome.Joined)
-                {
-                    sends.Add(new Send(session, ChatS2COpcodes.AnsPrivateChatRoomJoin, BuildJoinRefusal(code)));
-                    return outcome;
-                }
+                entry = new Entry(new PrivateRoom(id, roomName, password, uid));
+                ByName[roomName] = entry;
+                ById[id] = entry;
             }
 
-            room.Members[uid] = new Member { Uid = uid, CharacterId = characterId, Name = memberName, Session = session };
-
-            sends.Add(new Send(session, ChatS2COpcodes.AnsPrivateChatRoomJoin, BuildJoinAnswer(room)));
-            var joinUser = BuildJoinUser(room.GuidBytes, uid, memberName);
-            foreach (var m in room.Members.Values)
-                sends.Add(new Send(m.Session, ChatS2COpcodes.NfyPrivateChatRoomJoinUser, joinUser));
-            sends.Add(new Send(session, ChatS2COpcodes.AnsPrivateRoomInMember, BuildMemberList(room)));
-            return JoinOutcome.Joined;
+            var (outcome, effects) = entry.Room.Join(uid, characterId, memberName, password);
+            if (outcome == JoinOutcome.Joined) entry.Sessions[uid] = session;
+            QueueLocked(entry, session, effects, default, sends);
+            return outcome;
         }
     }
 
@@ -226,8 +175,8 @@ public static class PrivateChatRooms
         lock (Gate)
         {
             PruneDisconnectedLocked(sends, closing: null);
-            if (!ById.TryGetValue(new Guid(roomGuid), out var room)) return false;
-            sends.Add(new Send(requester, ChatS2COpcodes.AnsPrivateRoomInMember, BuildMemberList(room)));
+            if (!ById.TryGetValue(new Guid(roomGuid), out var entry)) return false;
+            QueueLocked(entry, requester, entry.Room.MemberList(), default, sends);
             return true;
         }
     }
@@ -244,14 +193,11 @@ public static class PrivateChatRooms
         lock (Gate)
         {
             PruneDisconnectedLocked(sends, closing: null);
-            if (!ById.TryGetValue(new Guid(roomGuid), out var room)) return false;
-            var leaver = room.Members.Values.FirstOrDefault(m => m.CharacterId == characterId);
-            if (leaver is null) return false;
-            room.Members.Remove(leaver.Uid);
-            var gone = BuildGuidUid(room.GuidBytes, leaver.Uid);
-            foreach (var m in room.Members.Values)
-                sends.Add(new Send(m.Session, ChatS2COpcodes.NfyChatRoomExitMmeberInfo, gone));
-            AfterDepartureLocked(room, masterLeft: room.MasterUid == leaver.Uid, sends);
+            if (!ById.TryGetValue(new Guid(roomGuid), out var entry)) return false;
+            var (left, effects) = entry.Room.Leave(characterId);
+            if (!left) return false;
+            QueueLocked(entry, null, effects, default, sends);
+            SettleLocked(entry);
             return true;
         }
     }
@@ -264,8 +210,8 @@ public static class PrivateChatRooms
     {
         lock (Gate)
         {
-            if (!ById.TryGetValue(new Guid(roomGuid), out var room)) return Array.Empty<ProudSession>();
-            return room.Members.Values.Select(m => m.Session).Where(s => s.IsConnected).ToList();
+            if (!ById.TryGetValue(new Guid(roomGuid), out var entry)) return Array.Empty<ProudSession>();
+            return entry.Sessions.Values.Where(s => s.IsConnected).ToList();
         }
     }
 
@@ -297,25 +243,13 @@ public static class PrivateChatRooms
         lock (Gate)
         {
             PruneDisconnectedLocked(sends, closing: null);
-            ById.TryGetValue(new Guid(roomGuid), out var room);
-            ushort result = room is null ? ResultNoRoom
-                : !room.Members.ContainsKey(inviterUid) ? ResultNotMember
-                : room.MasterUid != inviterUid ? ResultNotMaster
-                : invitee is not { } who || !who.Session.IsConnected ? ResultNoSuchCharacter
-                : room.Members.ContainsKey(who.Uid) ? ResultAlreadyInRoom
-                : room.Members.Count >= MaxMembers ? ResultRoomFull
-                : RoomsHeldLocked(who.Uid) >= ClientRoomSlots ? ResultRoomLimit
-                : ResultOk;
-            sends.Add(new Send(inviter, ChatS2COpcodes.AnsPrivateChatRoomInvite, BuildResult(result)));
-            if (result != ResultOk) return result;
-
-            var added = invitee!.Value;
-            var notice = BuildJoinUser(room!.GuidBytes, added.Uid, added.Name);
-            foreach (var m in room.Members.Values)
-                sends.Add(new Send(m.Session, ChatS2COpcodes.NfyPrivateChatRoomInvate_InRoomMember, notice));
-            room.Members[added.Uid] = new Member { Uid = added.Uid, CharacterId = added.CharacterId, Name = added.Name, Session = added.Session };
-            sends.Add(new Send(added.Session, ChatS2COpcodes.NfyInviteRoomInfo, BuildInviteRoomInfo(room)));
-            return ResultOk;
+            ById.TryGetValue(new Guid(roomGuid), out var entry);
+            var online = invitee is { } i && i.Session.IsConnected ? invitee : null;
+            PrivateRoomMember? who = online is { } o ? new PrivateRoomMember(o.Uid, o.CharacterId, o.Name) : null;
+            var (result, effects) = PrivateRoom.Invite(entry?.Room, inviterUid, who, who is { } w ? RoomsHeldLocked(w.Uid) : 0);
+            if (result == ResultOk) entry!.Sessions[online!.Value.Uid] = online.Value.Session;
+            QueueLocked(entry, inviter, effects, default, sends);
+            return result;
         }
     }
 
@@ -330,24 +264,11 @@ public static class PrivateChatRooms
         lock (Gate)
         {
             PruneDisconnectedLocked(sends, closing: null);
-            ById.TryGetValue(new Guid(roomGuid), out var room);
-            Member? target = null;
-            ushort result = room is null ? ResultNoRoom
-                : !room.Members.ContainsKey(kickerUid) ? ResultNotMember
-                : room.MasterUid != kickerUid ? ResultNotMaster
-                : targetUid == kickerUid || !room.Members.TryGetValue(targetUid, out target) ? ResultTargetMissing
-                : ResultOk;
-            sends.Add(new Send(kicker, ChatS2COpcodes.AnsPrivateChatRoomInUserKick, BuildResult(result)));
-            if (result != ResultOk) return result;
-
-            room!.Members.Remove(targetUid);
-            sends.Add(new Send(target!.Session, ChatS2COpcodes.NfyPrivateChatRoomMessage_ToKickUser, room.GuidBytes.AsSpan().ToArray()));
-            var kicked = BuildGuidUid(room.GuidBytes, targetUid);
-            foreach (var m in room.Members.Values)
-                sends.Add(new Send(m.Session, ChatS2COpcodes.NfyPrivateChatRoomKickUser, kicked));
-            
-            AfterDepartureLocked(room, masterLeft: false, sends);
-            return ResultOk;
+            ById.TryGetValue(new Guid(roomGuid), out var entry);
+            var (result, effects) = PrivateRoom.Kick(entry?.Room, kickerUid, targetUid);
+            QueueLocked(entry, kicker, effects, default, sends);
+            if (entry is not null) SettleLocked(entry);
+            return result;
         }
     }
 
@@ -363,23 +284,12 @@ public static class PrivateChatRooms
         lock (Gate)
         {
             PruneDisconnectedLocked(sends, closing: null);
-            ById.TryGetValue(new Guid(roomGuid), out var room);
-            ushort result = room is null ? ResultNoRoom
-                : !room.Members.ContainsKey(uid) ? ResultNotMember
-                : room.MasterUid != uid ? ResultNotMaster
-                : !IsValidPassword(password) ? ResultBadPassword
-                : ResultOk;
-            if (result == ResultOk) room!.Password = password;
-            sends.Add(new Send(requester, ChatS2COpcodes.AnsPrivateChatRoomChangePass,
-                BuildChangePassAnswer(result, roomGuid, result == ResultOk ? password : "")));
+            ById.TryGetValue(new Guid(roomGuid), out var entry);
+            var (result, effects) = PrivateRoom.ChangePassword(entry?.Room, uid, password);
+            QueueLocked(entry, requester, effects, roomGuid, sends);
             return result;
         }
     }
-
- /// <summary>1 to <see cref="PasswordMaxChars"/> decimal digits (string 9551). The dialog never sends an
- /// empty one: it shows 9552 and sends nothing.</summary>
-    private static bool IsValidPassword(string password)
-        => password.Length is >= 1 and <= PasswordMaxChars && password.All(char.IsAsciiDigit);
 
  /// <summary>
  /// Remove a closing Chat session from every room at once and announce it (23504, plus 23533 when it
@@ -406,52 +316,73 @@ public static class PrivateChatRooms
             }
             catch (Exception ex) when (ex is ObjectDisposedException or SocketException)
             {
-                
-                
-                
-                
+
+
+
+
             }
         }
     }
 
-    
+
     private static void PruneDisconnectedLocked(List<Send> sends, ProudSession? closing)
     {
-        foreach (var room in ById.Values.ToList())
+        foreach (var entry in ById.Values.ToList())
         {
-            var gone = room.Members.Values
-                .Where(m => !m.Session.IsConnected || ReferenceEquals(m.Session, closing)).ToList();
+            var gone = entry.Sessions
+                .Where(kv => !kv.Value.IsConnected || ReferenceEquals(kv.Value, closing))
+                .Select(kv => kv.Key).ToHashSet();
             if (gone.Count == 0) continue;
-            
-            foreach (var g in gone)
-                room.Members.Remove(g.Uid);
-            foreach (var g in gone)
-            {
-                var notice = BuildUidGuid(g.Uid, room.GuidBytes);
-                foreach (var m in room.Members.Values)
-                    sends.Add(new Send(m.Session, ChatS2COpcodes.NfyLogoutPlayer_PrivateChatRoom, notice));
-            }
-            AfterDepartureLocked(room, masterLeft: gone.Any(g => g.Uid == room.MasterUid), sends);
+            QueueLocked(entry, null, entry.Room.Depart(gone), default, sends);
+            SettleLocked(entry);
         }
     }
 
-    private static void AfterDepartureLocked(Room room, bool masterLeft, List<Send> sends)
+ /// <summary>After a departure: forget the sessions of members the room dropped, and drop an emptied room from the registry.</summary>
+    private static void SettleLocked(Entry entry)
     {
-        if (room.Members.Count == 0)
+        foreach (var uid in entry.Sessions.Keys.Where(k => !entry.Room.Members.ContainsKey(k)).ToList())
+            entry.Sessions.Remove(uid);
+        if (!entry.Room.IsEmpty) return;
+        ByName.Remove(entry.Room.Name);
+        ById.Remove(entry.Room.Id);
+    }
+
+ /// <summary>
+ /// Turn the domain's ordered effects into sends: each recipient uid resolves to its connection (null recipient =
+ /// <paramref name="requester"/>), each message to its opcode and wire bytes. <paramref name="requestGuid"/> is
+ /// the guid the request carried, which 23521 echoes even when no room matched it.
+ /// </summary>
+    private static void QueueLocked(Entry? entry, ProudSession? requester, List<PrivateRoomEffect> effects, ReadOnlySpan<byte> requestGuid, List<Send> sends)
+    {
+        var room = entry?.Room;
+        foreach (var e in effects)
         {
-            ByName.Remove(room.Name);
-            ById.Remove(room.Id);
-            return;
+            var session = e.Recipient is { } r ? entry!.Sessions[r] : requester!;
+            var (opcode, body) = e.Message switch
+            {
+                PrivateRoomMessage.JoinRefusal => (ChatS2COpcodes.AnsPrivateChatRoomJoin, BuildJoinRefusal(e.Code)),
+                PrivateRoomMessage.JoinAnswer => (ChatS2COpcodes.AnsPrivateChatRoomJoin, BuildJoinAnswer(room!)),
+                PrivateRoomMessage.JoinUser => (ChatS2COpcodes.NfyPrivateChatRoomJoinUser, BuildJoinUser(room!.GuidBytes, e.Uid, e.Text)),
+                PrivateRoomMessage.MemberList => (ChatS2COpcodes.AnsPrivateRoomInMember, BuildMemberList(room!)),
+                PrivateRoomMessage.ExitMemberInfo => (ChatS2COpcodes.NfyChatRoomExitMmeberInfo, BuildGuidUid(room!.GuidBytes, e.Uid)),
+                PrivateRoomMessage.ChangeRoomMaster => (ChatS2COpcodes.NfyPrivateChatRoom_ChangeRoomMaster, BuildUidGuid(e.Uid, room!.GuidBytes)),
+                PrivateRoomMessage.LogoutPlayer => (ChatS2COpcodes.NfyLogoutPlayer_PrivateChatRoom, BuildUidGuid(e.Uid, room!.GuidBytes)),
+                PrivateRoomMessage.InviteResult => (ChatS2COpcodes.AnsPrivateChatRoomInvite, BuildResult(e.Code)),
+                PrivateRoomMessage.InviteInRoomMember => (ChatS2COpcodes.NfyPrivateChatRoomInvate_InRoomMember, BuildJoinUser(room!.GuidBytes, e.Uid, e.Text)),
+                PrivateRoomMessage.InviteRoomInfo => (ChatS2COpcodes.NfyInviteRoomInfo, BuildInviteRoomInfo(room!)),
+                PrivateRoomMessage.KickResult => (ChatS2COpcodes.AnsPrivateChatRoomInUserKick, BuildResult(e.Code)),
+                PrivateRoomMessage.KickToUser => (ChatS2COpcodes.NfyPrivateChatRoomMessage_ToKickUser, room!.GuidBytes.AsSpan().ToArray()),
+                PrivateRoomMessage.KickUser => (ChatS2COpcodes.NfyPrivateChatRoomKickUser, BuildGuidUid(room!.GuidBytes, e.Uid)),
+                PrivateRoomMessage.ChangePassAnswer => (ChatS2COpcodes.AnsPrivateChatRoomChangePass, BuildChangePassAnswer(e.Code, requestGuid, e.Text)),
+                _ => throw new InvalidOperationException($"unmapped private-room message {e.Message}"),
+            };
+            sends.Add(new Send(session, opcode, body));
         }
-        if (!masterLeft) return;
-        room.MasterUid = room.Members.Keys.First(); 
-        var change = BuildUidGuid(room.MasterUid, room.GuidBytes);
-        foreach (var m in room.Members.Values)
-            sends.Add(new Send(m.Session, ChatS2COpcodes.NfyPrivateChatRoom_ChangeRoomMaster, change));
     }
 
  /// <summary>How many rooms list <paramref name="uid"/> as a member: the room slots its client has in use.</summary>
-    private static int RoomsHeldLocked(ulong uid) => ById.Values.Count(r => r.Members.ContainsKey(uid));
+    private static int RoomsHeldLocked(ulong uid) => ById.Values.Count(e => e.Room.Members.ContainsKey(uid));
 
     
  /// <summary>23519 AnsChatRoomExit: [u16 0][guid16], the request's guid echoed.</summary>
@@ -477,7 +408,7 @@ public static class PrivateChatRooms
         return body;
     }
 
-    private static byte[] BuildJoinAnswer(Room room)
+    private static byte[] BuildJoinAnswer(PrivateRoom room)
     {
         using var w = new PacketWriter();
         w.WriteUInt16(0);
@@ -503,7 +434,7 @@ public static class PrivateChatRooms
         return w.ToArray();
     }
 
-    private static byte[] BuildMemberList(Room room)
+    private static byte[] BuildMemberList(PrivateRoom room)
     {
         using var w = new PacketWriter();
         w.WriteUInt16(0);
@@ -527,7 +458,7 @@ public static class PrivateChatRooms
  /// record carries 0. The 23532 consumer reads only the guid, the master and the members, so the
  /// field is cosmetic either way.
  /// </remarks>
-    private static byte[] BuildInviteRoomInfo(Room room)
+    private static byte[] BuildInviteRoomInfo(PrivateRoom room)
     {
         using var w = new PacketWriter();
         var lenPos = w.Reserve(4);
@@ -543,7 +474,7 @@ public static class PrivateChatRooms
  /// name8}, master first, then ascending uid. The u32 is
  /// <paramref name="capacity"/>: 100 in 23517, 0 in retail's 23532.
  /// </summary>
-    private static void WriteRoomRecord(PacketWriter w, Room room, uint capacity)
+    private static void WriteRoomRecord(PacketWriter w, PrivateRoom room, uint capacity)
     {
         w.WriteUInt64(room.MasterUid);
         w.WriteBytes(room.GuidBytes);
@@ -556,7 +487,7 @@ public static class PrivateChatRooms
                 WriteMember(w, m);
     }
 
-    private static void WriteMember(PacketWriter w, Member m)
+    private static void WriteMember(PacketWriter w, PrivateRoomMember m)
     {
         w.WriteUInt64(m.Uid);
         WriteName8(w, m.Name, MemberNameMaxChars);

@@ -1,3 +1,4 @@
+using RO2.Chats.Domain;
 using System.Buffers.Binary;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
@@ -53,7 +54,7 @@ public class ReqPrivateChatRoomJoinHandler : ChatRmiHandlerBase<ReqPrivateChatRo
 
         var sends = new List<PrivateChatRooms.Send>();
         var outcome = PrivateChatRooms.Join(session, characterId, uid, session.Username, roomName, password, sends);
-        if (outcome == PrivateChatRooms.JoinOutcome.Joined)
+        if (outcome == JoinOutcome.Joined)
             Logger.LogInformation("Session {Id}: {Who} joined private chat room \"{Room}\"", session.SessionId, session.Username, roomName);
         else
             Logger.LogInformation("Session {Id}: {Who} refused from private chat room \"{Room}\": {Why} (a lone 23515 with the refusal code)",

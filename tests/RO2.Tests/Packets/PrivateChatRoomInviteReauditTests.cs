@@ -1,3 +1,4 @@
+using RO2.Chats.Domain;
 using Microsoft.Extensions.Logging.Abstractions;
 using NameFilterRow = RO2.GameData.Tables.NameFilter;
 using RO2.Network.Protocol;
@@ -52,7 +53,7 @@ public class PrivateChatRoomInviteReauditTests
 
         var sends = new List<PrivateChatRooms.Send>();
         for (int i = 0; i < members.Length; i++)
-            Assert.Equal(PrivateChatRooms.JoinOutcome.Joined,
+            Assert.Equal(JoinOutcome.Joined,
                 PrivateChatRooms.Join(sessions[i], (uint)members[i].uid, members[i].uid, members[i].name, room, "", sends));
         var guid = sends.First(s => ReferenceEquals(s.Session, sessions[0]) && s.Opcode == ChatS2COpcodes.AnsPrivateChatRoomJoin)
             .Body.AsSpan(6, 16).ToArray();

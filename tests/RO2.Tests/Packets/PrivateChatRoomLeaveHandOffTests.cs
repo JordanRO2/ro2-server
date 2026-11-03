@@ -1,3 +1,4 @@
+using RO2.Chats.Domain;
 using System.Buffers.Binary;
 using System.Net;
 using System.Net.Sockets;
@@ -99,7 +100,7 @@ public class PrivateChatRoomLeaveHandOffTests
     private static byte[] JoinRoom(ProudSession session, ulong uid, string name, string room)
     {
         var sends = new List<PrivateChatRooms.Send>();
-        Assert.Equal(PrivateChatRooms.JoinOutcome.Joined, PrivateChatRooms.Join(session, (uint)uid, uid, name, room, "", sends));
+        Assert.Equal(JoinOutcome.Joined, PrivateChatRooms.Join(session, (uint)uid, uid, name, room, "", sends));
         return sends.First(s => ReferenceEquals(s.Session, session) && s.Opcode == ChatS2COpcodes.AnsPrivateChatRoomJoin)
             .Body.AsSpan(6, 16).ToArray();
     }

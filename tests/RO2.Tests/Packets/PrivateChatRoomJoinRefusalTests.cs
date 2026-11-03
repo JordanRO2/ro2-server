@@ -1,3 +1,4 @@
+using RO2.Chats.Domain;
 using System.Buffers.Binary;
 using System.Net;
 using System.Net.Sockets;
@@ -52,7 +53,7 @@ public class PrivateChatRoomJoinRefusalTests
         JoinRoom(oldLogin, u[1], "Bravo", room);
 
         var sends = new List<PrivateChatRooms.Send>();
-        Assert.Equal(PrivateChatRooms.JoinOutcome.AlreadyInRoom,
+        Assert.Equal(JoinOutcome.AlreadyInRoom,
             PrivateChatRooms.Join(newLogin, (uint)u[1], u[1], "Bravo", room, "", sends));
 
         
@@ -79,7 +80,7 @@ public class PrivateChatRoomJoinRefusalTests
         JoinRoom(a, u[0], "Alpha", room);
 
         var sends = new List<PrivateChatRooms.Send>();
-        Assert.Equal(PrivateChatRooms.JoinOutcome.AlreadyInRoom,
+        Assert.Equal(JoinOutcome.AlreadyInRoom,
             PrivateChatRooms.Join(a, (uint)u[0], u[0], "Alpha", room, "", sends));
         Assert.Equal(RetailRefusal23, Hex(Assert.Single(Mine(sends, a)).Body));
     }
@@ -100,7 +101,7 @@ public class PrivateChatRoomJoinRefusalTests
         await oldLogin.DisposeAsync();
 
         var sends = new List<PrivateChatRooms.Send>();
-        Assert.Equal(PrivateChatRooms.JoinOutcome.Joined,
+        Assert.Equal(JoinOutcome.Joined,
             PrivateChatRooms.Join(newLogin, (uint)u[1], u[1], "Bravo", room, "", sends));
         var mine = Mine(sends, master, newLogin);
         
@@ -124,11 +125,11 @@ public class PrivateChatRoomJoinRefusalTests
         var guid = JoinRoom(a, u[0], "Alpha", room);
         Assert.Equal(PrivateChatRooms.ResultOk, PrivateChatRooms.ChangePassword(guid, a, u[0], "0427", []));
 
-        AssertRefused(d, u[1], room, "", PrivateChatRooms.JoinOutcome.WrongPassword, PrivateChatRooms.ResultPasswordRequired, a);
-        AssertRefused(d, u[1], room, "1111", PrivateChatRooms.JoinOutcome.WrongPassword, PrivateChatRooms.ResultWrongPassword, a);
+        AssertRefused(d, u[1], room, "", JoinOutcome.WrongPassword, PrivateChatRooms.ResultPasswordRequired, a);
+        AssertRefused(d, u[1], room, "1111", JoinOutcome.WrongPassword, PrivateChatRooms.ResultWrongPassword, a);
 
         var sends = new List<PrivateChatRooms.Send>();
-        Assert.Equal(PrivateChatRooms.JoinOutcome.Joined, PrivateChatRooms.Join(d, (uint)u[1], u[1], "Delta", room, "0427", sends));
+        Assert.Equal(JoinOutcome.Joined, PrivateChatRooms.Join(d, (uint)u[1], u[1], "Delta", room, "0427", sends));
     }
 
     [Fact]
@@ -143,7 +144,7 @@ public class PrivateChatRoomJoinRefusalTests
         var guid = JoinRoom(a, u[0], "Alpha", room);
         Assert.Equal(PrivateChatRooms.ResultOk, PrivateChatRooms.ChangePassword(guid, a, u[0], "0427", []));
 
-        AssertRefused(again, u[0], room, "9999", PrivateChatRooms.JoinOutcome.AlreadyInRoom, PrivateChatRooms.ResultAlreadyInRoom, a);
+        AssertRefused(again, u[0], room, "9999", JoinOutcome.AlreadyInRoom, PrivateChatRooms.ResultAlreadyInRoom, a);
     }
 
     [Fact]
@@ -163,14 +164,14 @@ public class PrivateChatRoomJoinRefusalTests
         sessions.Add(late);
 
         var sends = new List<PrivateChatRooms.Send>();
-        Assert.Equal(PrivateChatRooms.JoinOutcome.Full, PrivateChatRooms.Join(late, (uint)u[^1], u[^1], "Late", room, "", sends));
+        Assert.Equal(JoinOutcome.Full, PrivateChatRooms.Join(late, (uint)u[^1], u[^1], "Late", room, "", sends));
         var only = Assert.Single(Mine(sends, [.. sessions]));
         Assert.Same(late, only.Session);
         Assert.Equal(PrivateChatRooms.BuildJoinRefusal(PrivateChatRooms.ResultRoomFull), only.Body);
     }
 
     private static void AssertRefused(ProudSession session, ulong uid, string room, string password,
-        PrivateChatRooms.JoinOutcome outcome, ushort code, params ProudSession[] others)
+        JoinOutcome outcome, ushort code, params ProudSession[] others)
     {
         var sends = new List<PrivateChatRooms.Send>();
         Assert.Equal(outcome, PrivateChatRooms.Join(session, (uint)uid, uid, session.Username ?? "", room, password, sends));
@@ -184,7 +185,7 @@ public class PrivateChatRoomJoinRefusalTests
     private static byte[] JoinRoom(ProudSession session, ulong uid, string name, string room)
     {
         var sends = new List<PrivateChatRooms.Send>();
-        Assert.Equal(PrivateChatRooms.JoinOutcome.Joined, PrivateChatRooms.Join(session, (uint)uid, uid, name, room, "", sends));
+        Assert.Equal(JoinOutcome.Joined, PrivateChatRooms.Join(session, (uint)uid, uid, name, room, "", sends));
         var answer = Mine(sends, session).First(s => s.Opcode == ChatS2COpcodes.AnsPrivateChatRoomJoin);
         return answer.Body.AsSpan(6, 16).ToArray();
     }

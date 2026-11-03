@@ -1,3 +1,4 @@
+using RO2.Chats.Domain;
 using System.Buffers.Binary;
 using System.Net;
 using System.Net.Sockets;
@@ -103,7 +104,7 @@ public class PrivateChatRoomOwnerOpsTests
         var invited = Mine(sends, a).Single(s => s.Opcode == ChatS2COpcodes.NfyPrivateChatRoomInvate_InRoomMember).Body;
 
         sends.Clear();
-        Assert.Equal(PrivateChatRooms.JoinOutcome.Joined, PrivateChatRooms.Join(joiner, (uint)u[2], u[2], "Delta", room, "", sends));
+        Assert.Equal(JoinOutcome.Joined, PrivateChatRooms.Join(joiner, (uint)u[2], u[2], "Delta", room, "", sends));
         var joined = Mine(sends, a).Single(s => s.Opcode == ChatS2COpcodes.NfyPrivateChatRoomJoinUser).Body;
 
         
@@ -127,7 +128,7 @@ public class PrivateChatRoomOwnerOpsTests
         var room = "long-" + Guid.NewGuid().ToString("N")[..8];
 
         var sends = new List<PrivateChatRooms.Send>();
-        Assert.Equal(PrivateChatRooms.JoinOutcome.Joined, PrivateChatRooms.Join(a, (uint)u[0], u[0], longName, room, "", sends));
+        Assert.Equal(JoinOutcome.Joined, PrivateChatRooms.Join(a, (uint)u[0], u[0], longName, room, "", sends));
         var guid = Mine(sends, a).First(s => s.Opcode == ChatS2COpcodes.AnsPrivateChatRoomJoin).Body.AsSpan(6, 16).ToArray();
         Assert.Equal(Cat(guid, U32(8 + 1 + 40), U64(u[0]), [20], Utf16(cut)),
             Mine(sends, a).Single(s => s.Opcode == ChatS2COpcodes.NfyPrivateChatRoomJoinUser).Body);
@@ -287,10 +288,10 @@ public class PrivateChatRoomOwnerOpsTests
 
         
         sends.Clear();
-        Assert.Equal(PrivateChatRooms.JoinOutcome.WrongPassword,
+        Assert.Equal(JoinOutcome.WrongPassword,
             PrivateChatRooms.Join(d, (uint)u[1], u[1], "Delta", room, "", sends));
         sends.Clear();
-        Assert.Equal(PrivateChatRooms.JoinOutcome.Joined,
+        Assert.Equal(JoinOutcome.Joined,
             PrivateChatRooms.Join(d, (uint)u[1], u[1], "Delta", room, "0427", sends));
         var joinAnswer = Mine(sends, d).First(s => s.Opcode == ChatS2COpcodes.AnsPrivateChatRoomJoin).Body;
         var joinInner = Cat(guid, U64(u[0]), [(byte)room.Length], Utf16(room), [4], Utf16("0427"));
@@ -321,7 +322,7 @@ public class PrivateChatRoomOwnerOpsTests
         var lateUid = NewUids(1)[0];
         var late = await net.ConnectAsync(lateUid, "Echo");
         var sends = new List<PrivateChatRooms.Send>();
-        Assert.Equal(PrivateChatRooms.JoinOutcome.Joined,
+        Assert.Equal(JoinOutcome.Joined,
             PrivateChatRooms.Join(late, (uint)lateUid, lateUid, "Echo", room, "", sends));
     }
 
@@ -412,7 +413,7 @@ public class PrivateChatRoomOwnerOpsTests
     private static byte[] JoinRoom(ProudSession session, ulong uid, string name, string room)
     {
         var sends = new List<PrivateChatRooms.Send>();
-        Assert.Equal(PrivateChatRooms.JoinOutcome.Joined, PrivateChatRooms.Join(session, (uint)uid, uid, name, room, "", sends));
+        Assert.Equal(JoinOutcome.Joined, PrivateChatRooms.Join(session, (uint)uid, uid, name, room, "", sends));
         var answer = Mine(sends, session).First(s => s.Opcode == ChatS2COpcodes.AnsPrivateChatRoomJoin);
         return answer.Body.AsSpan(6, 16).ToArray();
     }
