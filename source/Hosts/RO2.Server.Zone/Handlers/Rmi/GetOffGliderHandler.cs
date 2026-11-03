@@ -97,7 +97,7 @@ public class GetOffGliderHandler : ZoneRmiHandlerBase<GetOffGliderHandler>
         // One ride on the daily Kafra-transport board (ranking type 1), see RankingService.
         // Counted where the route is taken, once per mounted ride, so a repeated 1314 does not count it twice.
         if (route != NoRoute)
-            await RankingService.CountAsync(services, player, RankingSchedule.TypeKafraTransport, Logger);
+            await services.GetRequiredService<RO2.Companions.Application.IRankingCounter>().CountAsync(player.CharacterId, RankingSchedule.TypeKafraTransport);
 
         var body = BuildOnUnmountGlider(player.EntityId, x, y, z, player.Gold, route);
         await session.SendRmiAsync(ZoneS2COpcodes.OnUnmountGlider, writer => writer.WriteBytes(body));

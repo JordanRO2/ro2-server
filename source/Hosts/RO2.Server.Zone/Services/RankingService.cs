@@ -70,7 +70,11 @@ public static class RankingService
  /// without a database or for a type with no schedule. Storage errors are logged, not thrown.
  /// </summary>
     public static Task CountAsync(IServiceProvider services, PlayerState player, byte rankingType, ILogger logger)
-        => AddAsync(services, player, rankingType, 1, logger);
+        => AddAsync(services, player.CharacterId, player.Name, rankingType, 1, logger);
+
+ /// <summary>The same count for a character known by id and display name (the IRankingCounter adapter's entry).</summary>
+    public static Task CountAsync(IServiceProvider services, uint characterId, string name, byte rankingType, ILogger logger)
+        => AddAsync(services, characterId, name, rankingType, 1, logger);
 
  /// <summary>
  /// Type 4: <paramref name="landedCount"/> items of <paramref name="itemId"/> just reached the bag, as
@@ -87,7 +91,7 @@ public static class RankingService
     {
         var store = services.GetService<GameDataStore>();
         int n = store is null ? 0 : CardRowsToCount(itemId, NewRowsOf(landed, landedCount), CardIds(store));
-        return n > 0 ? AddAsync(services, player, RankingSchedule.TypeCardCollector, n, logger) : Task.CompletedTask;
+        return n > 0 ? AddAsync(services, player.CharacterId, player.Name, RankingSchedule.TypeCardCollector, n, logger) : Task.CompletedTask;
     }
 
  /// <summary>
@@ -103,7 +107,7 @@ public static class RankingService
     internal static int CardRowsToCount(uint itemId, int newRows, IReadOnlySet<uint> cardIds)
         => newRows > 0 && cardIds.Contains(itemId) ? newRows : 0;
 
-    private static async Task AddAsync(IServiceProvider services, PlayerState player, byte rankingType, int amount,
+    private static async Task AddAsync(IServiceProvider services, uint characterId, string name, byte rankingType, int amount,
         ILogger logger)
     {
         var repo = services.GetService<IRankingRepository>();
@@ -118,11 +122,11 @@ public static class RankingService
         var period = RankingSchedule.PeriodStart(reset, now);
         try
         {
-            await repo.AddScoreAsync(rankingType, period, player.CharacterId, amount, now);
+            await repo.AddScoreAsync(rankingType, period, characterId, amount, now);
         }
         catch (Exception ex)
         {
-            logger.LogWarning(ex, "{Name}: ranking type {Type} counter could not be stored", player.Name, rankingType);
+            logger.LogWarning(ex, "{Name}: ranking type {Type} counter could not be stored", name, rankingType);
         }
     }
 

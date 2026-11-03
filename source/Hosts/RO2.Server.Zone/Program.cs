@@ -161,6 +161,9 @@ public static class Program
         services.AddScoped<RO2.Companions.Application.GrantReinsUseCase>();
         services.AddScoped<RO2.Companions.Application.ListVehiclesUseCase>();
         services.AddScoped<RO2.Companions.Application.ExtendRidingUseCase>();
+        // Companion.Application IRankingCounter (glider Kafra-transport count) over the Zone RankingService; scoped, as RankingService resolves from the caller's scope.
+        services.AddScoped<RO2.Companions.Application.IRankingCounter>(sp => new RankingCounterAdapter(sp, sp.GetRequiredService<PlayerStateManager>(),
+            sp.GetRequiredService<ILoggerFactory>().CreateLogger(typeof(RankingService).FullName!)));
         // Inbound system-mail seam for Dungeon Finder / Illusion Pyramid / Economy; no 2449 unless the draft asks. Scoped: the notify path builds a MailService (scoped ICharacterRepository).
         services.AddScoped<RO2.Mails.Application.ISendMail>(sp => new SendMailAdapter(sp.GetRequiredService<IMailRepository>(),
             id => MailService.From(sp, sp.GetRequiredService<PlayerStateManager>(), sp.GetRequiredService<BroadcastService>(),

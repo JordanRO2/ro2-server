@@ -127,7 +127,7 @@ public class GliderTeleportHandler : ZoneRmiHandlerBase<GliderTeleportHandler>
         // One flight on the daily Kafra-transport board (ranking type 1), which counts 1515 ReqTakeFarGlider flights
         // (RankingService). Counted here, past the once-per-flight de-dupe and where the fare is taken, because the
         // 1528 is one per flight too: every 1528 that is not the duplicate follows a 1515.
-        await RankingService.CountAsync(services, player, RankingSchedule.TypeKafraTransport, Logger);
+        await services.GetRequiredService<RO2.Companions.Application.IRankingCounter>().CountAsync(player.CharacterId, RankingSchedule.TypeKafraTransport);
 
         // SAME-MAP hop: the station resolves to the map the player is already on. Nothing is replied
         // here — the client just moves itself to the destination point on the current map. A full
