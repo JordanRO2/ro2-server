@@ -50,7 +50,7 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 ///   nothing.</item>
 /// <item>An item the party loot rule sends to the dice (<see cref="GroundItemService.CorpseItem.DiceBound"/>):
 ///   no pickup but a <c>2468</c> roll, opened by <see cref="PartyDiceService.OpenAsync"/>; the rule is
-///   PartyDiceRolls.SendsToDice.</item>
+///   <see cref="LootService.RollsForParty"/> (PartyDiceRolls.SendsToDice).</item>
 /// <item>An item whose roll is still open: nothing.</item>
 /// </list>
 /// The 2333 carries the uid of the stack the item landed in, which is a held stack's uid on a merge; the 2334
