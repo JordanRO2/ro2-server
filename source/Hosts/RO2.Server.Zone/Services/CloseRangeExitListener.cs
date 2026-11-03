@@ -1,4 +1,6 @@
 using Microsoft.Extensions.Hosting;
+using RO2.Chats.Domain;
+using RO2.Chats.Application;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;

@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Chats.Domain;
 
 /// <summary>
 /// One close-range chat room signal passed between the Zone and Chat servers: which room (the GUID the

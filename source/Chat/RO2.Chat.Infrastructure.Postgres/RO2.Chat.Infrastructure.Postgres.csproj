@@ -8,6 +8,7 @@
     <ProjectReference Include="..\RO2.Chat.Application\RO2.Chat.Application.csproj" />
     <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
     <ProjectReference Include="..\..\Platform\RO2.Persistence.Postgres\RO2.Persistence.Postgres.csproj" />
+    <ProjectReference Include="..\..\Platform\RO2.Persistence.Redis\RO2.Persistence.Redis.csproj" />
   </ItemGroup>
 
   <ItemGroup>

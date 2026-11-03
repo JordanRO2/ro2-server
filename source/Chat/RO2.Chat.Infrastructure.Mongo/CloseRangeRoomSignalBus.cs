@@ -1,10 +1,11 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
-using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
+using RO2.Chats.Application;
+using RO2.Chats.Domain;
+using RO2.Persistence.Mongo.Persistence;
 
-namespace RO2.Persistence.Mongo.Persistence;
+namespace RO2.Chats.Infrastructure.Mongo;
 
 /// <summary>
 /// The channel between the Zone and Chat servers for close-range ("local") chat rooms: a capped MongoDB

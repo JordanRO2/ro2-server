@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Chats.Domain;
 
 /// <summary>
 /// The kinds of <see cref="CloseRangeRoomSignal"/> and the rule for who owns a room after a run of them.

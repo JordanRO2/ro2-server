@@ -1,4 +1,5 @@
 using System.Net.Sockets;
+using RO2.Chats.Domain;
 using Microsoft.Extensions.Logging.Abstractions;
 using MongoDB.Bson;
 using RO2.Domain.Entities;

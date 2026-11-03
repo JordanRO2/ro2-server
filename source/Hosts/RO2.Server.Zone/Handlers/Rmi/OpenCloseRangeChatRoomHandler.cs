@@ -1,4 +1,5 @@
 using System.Buffers.Binary;
+using RO2.Chats.Application;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

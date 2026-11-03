@@ -1,6 +1,6 @@
-using RO2.Domain.Entities;
+using RO2.Chats.Domain;
 
-namespace RO2.Application.Interfaces;
+namespace RO2.Chats.Application;
 
 /// <summary>
 /// The channel between the Zone and Chat servers for close-range ("local") chat rooms: the Zone publishes the

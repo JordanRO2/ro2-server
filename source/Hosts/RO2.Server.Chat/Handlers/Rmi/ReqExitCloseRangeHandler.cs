@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using RO2.Chats.Application;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
 using RO2.Network.Handlers;

@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using RO2.Chats.Application;
 using RO2.Application.Configuration;
 using RO2.Application.Interfaces;
 using RO2.Infrastructure;
@@ -33,7 +34,7 @@ public sealed class ProviderWiringTests
         Assert.Equal("RO2.Persistence.Postgres.Repositories.AccountAccessRepository", ImplOf<IAccountAccessRepository>(s));
         Assert.Equal("RO2.Persistence.Postgres.Repositories.OneShotTokenStore", ImplOf<IOneShotTokenStore>(s));
         
-        Assert.Equal("RO2.Persistence.Redis.RedisCloseRangeRoomSignalBus", ImplOf<ICloseRangeRoomSignals>(s));
+        Assert.Equal("RO2.Chats.Infrastructure.Postgres.RedisCloseRangeRoomSignalBus", ImplOf<ICloseRangeRoomSignals>(s));
     }
 
     [Fact]
@@ -47,7 +48,7 @@ public sealed class ProviderWiringTests
         Assert.Equal("RO2.Persistence.Mongo.Persistence.ChannelPresenceStore", ImplOf<IChannelPresenceStore>(s));
         Assert.Equal("RO2.Persistence.Mongo.Repositories.OnlineAccountRegistry", ImplOf<IOnlineAccountRegistry>(s));
         Assert.Equal("RO2.Persistence.Mongo.Persistence.OneShotTokenStore", ImplOf<IOneShotTokenStore>(s));
-        Assert.Equal("RO2.Persistence.Mongo.Persistence.CloseRangeRoomSignalBus", ImplOf<ICloseRangeRoomSignals>(s));
+        Assert.Equal("RO2.Chats.Infrastructure.Mongo.CloseRangeRoomSignalBus", ImplOf<ICloseRangeRoomSignals>(s));
     }
 
     [Fact]

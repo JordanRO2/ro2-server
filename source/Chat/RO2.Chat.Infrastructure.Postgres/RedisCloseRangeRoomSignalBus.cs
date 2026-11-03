@@ -1,8 +1,9 @@
-using RO2.Application.Interfaces;
-using RO2.Domain.Entities;
+using RO2.Chats.Application;
+using RO2.Chats.Domain;
+using RO2.Persistence.Redis;
 using StackExchange.Redis;
 
-namespace RO2.Persistence.Redis;
+namespace RO2.Chats.Infrastructure.Postgres;
 
 /// <summary>
 /// Close-range room signal bus backed by a Redis Stream. Implements <see cref="ICloseRangeRoomSignals"/>.

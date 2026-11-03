@@ -38,7 +38,7 @@ public static class PersistenceServiceCollectionExtensions
                 services.AddSingleton(new MongoPersist.MongoDbContext(config.ConnectionString, config.DatabaseName));
                 
                 
-                services.AddSingleton<ICloseRangeRoomSignals, MongoPersist.CloseRangeRoomSignalBus>();
+                services.AddSingleton<RO2.Chats.Application.ICloseRangeRoomSignals, RO2.Chats.Infrastructure.Mongo.CloseRangeRoomSignalBus>();
                 break;
             case "Postgres":
                 
@@ -46,7 +46,7 @@ public static class PersistenceServiceCollectionExtensions
                 
                 
                 services.AddSingleton(new RO2.Persistence.Redis.RedisConnection(config.RedisConnectionString));
-                services.AddSingleton<ICloseRangeRoomSignals, RO2.Persistence.Redis.RedisCloseRangeRoomSignalBus>();
+                services.AddSingleton<RO2.Chats.Application.ICloseRangeRoomSignals, RO2.Chats.Infrastructure.Postgres.RedisCloseRangeRoomSignalBus>();
                 break;
             default:
                 throw new NotSupportedException($"Unknown Database:Provider '{config.Provider}'");
