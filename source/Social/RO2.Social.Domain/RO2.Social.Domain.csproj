@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Plural namespace: a namespace "RO2.Social" would shadow any future Social type in every RO2.* file (CS0118), as RO2.Rewards / RO2.Companions avoid. -->
+    <RootNamespace>RO2.Socials.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Lets the stored-shape tests reach the documents' internals. -->
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+  <!-- Social bounded context: Domain references ONLY RO2.BuildingBlocks + the shared RO2.GameData kernel.
+       No Mongo, no ProudNet, no host. -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+  </ItemGroup>
+
+</Project>

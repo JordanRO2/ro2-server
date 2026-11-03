@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using MongoDB.Driver;
 using RO2.Persistence.Mongo.Persistence;
+using RO2.Socials.Domain;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 
@@ -146,8 +147,8 @@ public sealed class FriendPresence
     private async Task<List<ProudSession>> OnlineOwnersAsync(
         ChatBroadcastService broadcast, uint charId, ProudSession subject)
     {
-        var ownerIds = await _db.GetCollection<FriendStore.FriendListDocument>(FriendStore.CollectionName)
-            .Find(Builders<FriendStore.FriendListDocument>.Filter.AnyEq(d => d.FriendIds, charId))
+        var ownerIds = await _db.GetCollection<FriendListDocument>(FriendStore.CollectionName)
+            .Find(Builders<FriendListDocument>.Filter.AnyEq(d => d.FriendIds, charId))
             .Project(d => d.Id)
             .ToListAsync();
         if (ownerIds.Count == 0) return new List<ProudSession>();

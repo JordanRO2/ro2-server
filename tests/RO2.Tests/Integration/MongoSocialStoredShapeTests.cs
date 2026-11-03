@@ -5,6 +5,7 @@ using RO2.Domain.Entities;
 using RO2.Characters.Domain;
 using RO2.Persistence.Mongo.Persistence;
 using RO2.Server.Chat;
+using RO2.Socials.Domain;
 using RO2.Tests.Economy;
 using Xunit;
 using Xunit.Abstractions;
@@ -17,7 +18,7 @@ namespace RO2.Tests.Integration;
 // not exist yet (S7), so the both-provider round-trip is DEFERRED to S7: S1 pins the MONGO shape only. Every test reports SKIPPED without
 // Docker and asserts the fixture started when Docker is up.
 
-/// <summary>The <c>chat_friend_lists</c> collection: <see cref="FriendStore.FriendListDocument"/> (_id = owner Character.Id, FriendIds).</summary>
+/// <summary>The <c>chat_friend_lists</c> collection: <see cref="FriendListDocument"/> (_id = owner Character.Id, FriendIds).</summary>
 [Collection("MongoMail")]
 public sealed class MongoFriendListStoredShapeTests
 {
@@ -72,7 +73,7 @@ public sealed class MongoFriendListStoredShapeTests
         Assert.DoesNotContain("\"_t\"", raw.ToJson());
         Assert.Equal(1, Raw().CountDocuments(new BsonDocument("_id", (int)owner)));
 
-        var typed = _fx.Client!.GetDatabase(Db).GetCollection<FriendStore.FriendListDocument>(Coll)
+        var typed = _fx.Client!.GetDatabase(Db).GetCollection<FriendListDocument>(Coll)
             .Find(d => d.Id == owner).Single();
         Assert.Equal(owner, typed.Id);
         Assert.Equal(new uint[] { 30, 10, 20 }, typed.FriendIds);
@@ -117,7 +118,7 @@ public sealed class MongoFriendListStoredShapeTests
     public async Task A_legacy_document_with_extra_fields_or_without_FriendIds_reads_its_defaults()
     {
         var (store, _) = Open();
-        var typed = _fx.Client!.GetDatabase(Db).GetCollection<FriendStore.FriendListDocument>(Coll);
+        var typed = _fx.Client!.GetDatabase(Db).GetCollection<FriendListDocument>(Coll);
 
         var noArray = New();
         Raw().InsertOne(new BsonDocument { { "_id", (int)noArray }, { "RetiredField", "x" } });   // [BsonIgnoreExtraElements]

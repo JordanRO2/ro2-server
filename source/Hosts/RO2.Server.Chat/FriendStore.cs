@@ -2,7 +2,6 @@ using System.Buffers.Binary;
 using System.Text;
 using System.Text.RegularExpressions;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
@@ -10,6 +9,7 @@ using RO2.Persistence.Mongo.Persistence;
 using RO2.Persistence.Mongo.Repositories;
 using RO2.Network.Packets;
 using RO2.Characters.Domain;
+using RO2.Socials.Domain;
 
 namespace RO2.Server.Chat;
 
@@ -88,15 +88,6 @@ public sealed class FriendStore
 
     /// <summary>True when a list of <paramref name="count"/> friends (<see cref="CountAsync"/>) takes no more.</summary>
     public static bool IsListFull(int count) => count >= MaxFriends;
-
-    /// <summary>One owner's friend list. <c>Id</c> is the owner's CharacterId.</summary>
-    [BsonIgnoreExtraElements]
-    public sealed class FriendListDocument
-    {
-        [BsonId]
-        public uint Id { get; set; }
-        public List<uint> FriendIds { get; set; } = new();
-    }
 
     private readonly MongoDbContext _db;
     private readonly ICharacterRepository _characters;
