@@ -27,30 +27,34 @@ public class AddFriendBlockUseCaseTests
         public Task<IReadOnlySet<uint>> OwnersBlockingAsync(IReadOnlyCollection<uint> ownerIds, uint characterId, CancellationToken ct = default) => throw new NotSupportedException();
     }
 
-    private static Task<AddFriendResult> Friend(AddOutcome o, bool hasName, bool lists, bool blocks) =>
-        new AddFriendUseCase(new FakeFriends(o, lists), new FakeBlocks(BlockAddOutcome.Added, blocks)).ExecuteAsync(1, 2, hasName);
+    private static AddFriendUseCase Make(AddOutcome o, bool lists, bool blocks, out FakeFriends friends)
+        => new(friends = new FakeFriends(o, lists), new FakeBlocks(BlockAddOutcome.Added, blocks));
 
-    [Fact]
-    public async Task AddFriend_maps_AlreadyFriend_to_6_and_ListFull_to_33_without_notice()
+    [Theory]
+    [InlineData(AddOutcome.AlreadyFriend, (ushort)6, false)]
+    [InlineData(AddOutcome.ListFull, (ushort)33, false)]
+    [InlineData(AddOutcome.Added, (ushort)0, true)]
+    public async Task AddFriend_maps_the_outcome_to_the_23508_code_without_reading_the_gate(AddOutcome o, ushort code, bool added)
     {
-        Assert.Equal(new AddFriendResult(6, false, false), await Friend(AddOutcome.AlreadyFriend, true, false, false));
-        Assert.Equal(new AddFriendResult(33, false, false), await Friend(AddOutcome.ListFull, true, false, false));
+        var uc = Make(o, true, true, out var friends);
+        Assert.Equal(new AddFriendResult(code, added), await uc.ExecuteAsync(1, 2));
+        Assert.Equal(0, friends.ListsCalls);
     }
 
     [Fact]
-    public async Task AddFriend_added_notifies_only_with_a_name_and_no_add_back_and_no_block()
+    public async Task Gate_notifies_only_with_a_name_and_no_add_back_and_no_block()
     {
-        Assert.Equal(new AddFriendResult(0, true, true), await Friend(AddOutcome.Added, true, false, false));
-        Assert.Equal(new AddFriendResult(0, true, false), await Friend(AddOutcome.Added, false, false, false));
-        Assert.Equal(new AddFriendResult(0, true, false, TargetListsRequester: true), await Friend(AddOutcome.Added, true, true, true));
-        Assert.Equal(new AddFriendResult(0, true, false, TargetBlocksRequester: true), await Friend(AddOutcome.Added, true, false, true));
+        Assert.Equal(new FriendNoticeDecision(true), await Make(AddOutcome.Added, false, false, out _).ShouldNotifyAsync(1, 2, true));
+        Assert.Equal(new FriendNoticeDecision(false), await Make(AddOutcome.Added, false, false, out _).ShouldNotifyAsync(1, 2, false));
+        Assert.Equal(new FriendNoticeDecision(false, TargetListsRequester: true), await Make(AddOutcome.Added, true, true, out _).ShouldNotifyAsync(1, 2, true));
+        Assert.Equal(new FriendNoticeDecision(false, TargetBlocksRequester: true), await Make(AddOutcome.Added, false, true, out _).ShouldNotifyAsync(1, 2, true));
     }
 
     [Fact]
-    public async Task AddFriend_without_a_name_does_not_read_the_target_list()
+    public async Task Gate_without_a_name_does_not_read_the_target_list()
     {
-        var friends = new FakeFriends(AddOutcome.Added, false);
-        await new AddFriendUseCase(friends, new FakeBlocks(BlockAddOutcome.Added, false)).ExecuteAsync(1, 2, false);
+        var uc = Make(AddOutcome.Added, false, false, out var friends);
+        await uc.ShouldNotifyAsync(1, 2, false);
         Assert.Equal(0, friends.ListsCalls);
     }
 

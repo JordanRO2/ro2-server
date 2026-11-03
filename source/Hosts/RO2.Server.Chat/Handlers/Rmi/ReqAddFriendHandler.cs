@@ -130,8 +130,8 @@ public class ReqAddFriendHandler : ChatRmiHandlerBase<ReqAddFriendHandler>
             return;
         }
 
-        var added = await services.GetRequiredService<AddFriendUseCase>()
-            .ExecuteAsync(ownerId, target.Id, !string.IsNullOrEmpty(session.Username), ct);
+        var addFriend = services.GetRequiredService<AddFriendUseCase>();
+        var added = await addFriend.ExecuteAsync(ownerId, target.Id);
         if (!added.Added)
         {
             if (added.ResultCode == FriendStore.AddResultAlreadyFriend)
@@ -155,15 +155,16 @@ public class ReqAddFriendHandler : ChatRmiHandlerBase<ReqAddFriendHandler>
                         (await presence.GetLocationsAsync(new[] { target.Id }, ct)).GetValueOrDefault(target.Id))
                     with { Uid = CharacterGid.Of(ownerGid, target.Id) }));
 
-        // Tell the added player who added them, unless the use case withheld the notice (no resolved requester
+        // Tell the added player who added them, unless the use case withholds the notice (no resolved requester
         // name, the added player already lists the requester, or the added player blocks the requester).
-        if (added.TargetListsRequester)
+        var notice = await addFriend.ShouldNotifyAsync(ownerId, target.Id, !string.IsNullOrEmpty(session.Username), ct);
+        if (notice.TargetListsRequester)
             Logger.LogDebug("Session {Id}: {Friend} already lists {Owner}, no 23512",
                 session.SessionId, target.Name, session.Username);
-        if (added.TargetBlocksRequester)
+        if (notice.TargetBlocksRequester)
             Logger.LogDebug("Session {Id}: {Friend} blocks {Owner}, no 23512",
                 session.SessionId, target.Name, session.Username);
-        if (!added.ShouldNotify) return;
+        if (!notice.ShouldNotify) return;
 
         var notify = SocialPackets.BuildNfyAddFriend(session.Username!);
         foreach (var other in broadcast.Sessions)
