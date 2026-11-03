@@ -22,7 +22,7 @@ public sealed class DockerFactAttribute : FactAttribute
 
     public DockerFactAttribute()
     {
-        if (!DockerUp.Value) Skip = "Docker daemon not reachable: the Mongo mail twin did NOT run";
+        if (!DockerUp.Value) Skip = "Docker daemon not reachable: the container-backed (Mongo/Postgres) test did NOT run";
     }
 
     private static bool Probe()

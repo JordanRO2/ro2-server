@@ -20,18 +20,18 @@ public sealed class PostgresPetIncubatorTests
 
     private static uint NewCharId() => (uint)Random.Shared.NextInt64(2_200_000_000L, 4_294_967_000L);
 
-    [Fact]
+    [DockerFact]
     public async Task GetSlots_unknown_character_is_empty()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PetIncubatorRepository(_fx.Db!);
         Assert.Empty(await repo.GetSlotsAsync(NewCharId()));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Place_stores_fresh_incubator_with_no_egg()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PetIncubatorRepository(_fx.Db!);
         var ch = NewCharId();
         
@@ -48,10 +48,10 @@ public sealed class PostgresPetIncubatorTests
         Assert.Equal(DateTimeKind.Utc, s.StartUtc.Kind);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Place_truncates_times_to_milliseconds_like_a_bson_date()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PetIncubatorRepository(_fx.Db!);
         var ch = NewCharId();
         var withTicks = T0.AddTicks(4567); 
@@ -61,10 +61,10 @@ public sealed class PostgresPetIncubatorTests
         Assert.Equal(T0, s.EndUtc);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Place_refuses_slot_two_or_more_and_stores_nothing()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PetIncubatorRepository(_fx.Db!);
         var ch = NewCharId();
         Assert.False(await repo.TryPlaceIncubatorAsync(ch, 2, 10, 3, T0));
@@ -72,20 +72,20 @@ public sealed class PostgresPetIncubatorTests
         Assert.Empty(await repo.GetSlotsAsync(ch));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Place_refuses_zero_charges_and_stores_nothing()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PetIncubatorRepository(_fx.Db!);
         var ch = NewCharId();
         Assert.False(await repo.TryPlaceIncubatorAsync(ch, 0, 10, 0, T0));
         Assert.Empty(await repo.GetSlotsAsync(ch));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Place_refuses_occupied_slot_and_keeps_the_original()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PetIncubatorRepository(_fx.Db!);
         var ch = NewCharId();
         Assert.True(await repo.TryPlaceIncubatorAsync(ch, 0, 10, 3, T0));
@@ -97,10 +97,10 @@ public sealed class PostgresPetIncubatorTests
         Assert.Equal(T0, s.StartUtc);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Place_both_slots_keeps_insertion_order()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PetIncubatorRepository(_fx.Db!);
         var ch = NewCharId();
         Assert.True(await repo.TryPlaceIncubatorAsync(ch, 1, 11, 2, T0));
@@ -114,10 +114,10 @@ public sealed class PostgresPetIncubatorTests
         Assert.Equal(10u, slots[1].IncubatorId);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task StartIncubation_sets_egg_and_window_without_touching_charges()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PetIncubatorRepository(_fx.Db!);
         var ch = NewCharId();
         Assert.True(await repo.TryPlaceIncubatorAsync(ch, 0, 10, 3, T0));
@@ -133,10 +133,10 @@ public sealed class PostgresPetIncubatorTests
         Assert.Equal(end, s.EndUtc);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task StartIncubation_refuses_missing_slot_wrong_incubator_or_zero_egg()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PetIncubatorRepository(_fx.Db!);
         var ch = NewCharId();
         
@@ -154,10 +154,10 @@ public sealed class PostgresPetIncubatorTests
         Assert.Equal(T0, s.EndUtc);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task StartIncubation_refuses_a_slot_that_already_holds_an_egg()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PetIncubatorRepository(_fx.Db!);
         var ch = NewCharId();
         Assert.True(await repo.TryPlaceIncubatorAsync(ch, 0, 10, 3, T0));
@@ -170,10 +170,10 @@ public sealed class PostgresPetIncubatorTests
         Assert.Equal(end, s.EndUtc);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Collect_takes_one_charge_empties_the_slot_and_returns_the_previous_state()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PetIncubatorRepository(_fx.Db!);
         var ch = NewCharId();
         var end = T0.AddHours(1);
@@ -198,10 +198,10 @@ public sealed class PostgresPetIncubatorTests
         Assert.Equal(now, s.EndUtc);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Collect_exactly_at_the_hatch_instant_is_allowed()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PetIncubatorRepository(_fx.Db!);
         var ch = NewCharId();
         var end = T0.AddHours(1);
@@ -210,10 +210,10 @@ public sealed class PostgresPetIncubatorTests
         Assert.NotNull(await repo.TryCollectAsync(ch, 0, 10, end));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Collect_before_hatch_is_null_and_stores_nothing()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PetIncubatorRepository(_fx.Db!);
         var ch = NewCharId();
         var end = T0.AddHours(1);
@@ -228,10 +228,10 @@ public sealed class PostgresPetIncubatorTests
         Assert.Equal(end, s.EndUtc);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Collect_refuses_missing_slot_wrong_incubator_and_empty_incubator()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PetIncubatorRepository(_fx.Db!);
         var ch = NewCharId();
         var now = T0.AddDays(1);
@@ -252,10 +252,10 @@ public sealed class PostgresPetIncubatorTests
         Assert.Equal((byte)2, s.Charges);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Collect_of_the_last_charge_removes_the_slot_and_frees_it_for_a_new_incubator()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PetIncubatorRepository(_fx.Db!);
         var ch = NewCharId();
         var end = T0.AddHours(1);
@@ -274,10 +274,10 @@ public sealed class PostgresPetIncubatorTests
         Assert.Equal((byte)4, s.Charges);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Restore_puts_back_a_removed_slot()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PetIncubatorRepository(_fx.Db!);
         var ch = NewCharId();
         var end = T0.AddHours(1);
@@ -300,10 +300,10 @@ public sealed class PostgresPetIncubatorTests
         Assert.NotNull(await repo.TryCollectAsync(ch, 0, 10, end));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Restore_replaces_the_current_slot_and_moves_it_to_the_end_of_the_list()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PetIncubatorRepository(_fx.Db!);
         var ch = NewCharId();
         var end = T0.AddHours(1);
@@ -324,10 +324,10 @@ public sealed class PostgresPetIncubatorTests
         Assert.Equal(end, slots[1].EndUtc);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Restore_on_a_character_with_no_row_creates_it()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PetIncubatorRepository(_fx.Db!);
         var ch = NewCharId();
         await repo.RestoreSlotAsync(ch, new PetIncubatorSlot
@@ -343,10 +343,10 @@ public sealed class PostgresPetIncubatorTests
         Assert.Equal(T0.AddHours(1), s.EndUtc);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Characters_are_isolated_from_each_other()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PetIncubatorRepository(_fx.Db!);
         var a = NewCharId();
         var b = a + 1;

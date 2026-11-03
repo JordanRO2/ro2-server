@@ -30,10 +30,10 @@ public sealed class PostgresCollectionTests
         return (long)(await cmd.ExecuteScalarAsync())!;
     }
 
-    [Fact]
+    [DockerFact]
     public async Task GetOrCreate_unknown_character_returns_default_and_does_not_store()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new CollectionRepository(_fx.Db!);
         var id = NewId();
 
@@ -50,10 +50,10 @@ public sealed class PostgresCollectionTests
         Assert.Equal(0, await RowCountAsync(id)); 
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Save_then_GetOrCreate_round_trips_every_field()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new CollectionRepository(_fx.Db!);
         var id = NewId();
         var doc = new CollectionDocument
@@ -93,10 +93,10 @@ public sealed class PostgresCollectionTests
         Assert.Equal(1, await RowCountAsync(id));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Save_preserves_list_order_and_duplicates()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new CollectionRepository(_fx.Db!);
         var id = NewId();
 
@@ -110,10 +110,10 @@ public sealed class PostgresCollectionTests
         Assert.Equal(new uint[] { 30, 10, 20, 10, 30 }, back.RegisteredMonsterIds);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Save_twice_replaces_the_whole_document()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new CollectionRepository(_fx.Db!);
         var id = NewId();
 
@@ -148,10 +148,10 @@ public sealed class PostgresCollectionTests
         Assert.Equal(1, await RowCountAsync(id)); 
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Save_default_document_creates_a_row_that_reads_back_empty()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new CollectionRepository(_fx.Db!);
         var id = NewId();
 
@@ -165,10 +165,10 @@ public sealed class PostgresCollectionTests
         Assert.Equal(0u, back.ActivePetId);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Characters_are_isolated()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new CollectionRepository(_fx.Db!);
         var a = NewId();
         var b = NewId();
@@ -184,10 +184,10 @@ public sealed class PostgresCollectionTests
         Assert.Equal(2u, backB.ActivePetId);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Save_mutated_loaded_document_persists_the_change()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new CollectionRepository(_fx.Db!);
         var id = NewId();
 
@@ -210,10 +210,10 @@ public sealed class PostgresCollectionTests
         Assert.Equal((ushort)300, again.LoyaltyOf(77));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Concurrent_first_saves_do_not_fail_and_leave_one_row()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new CollectionRepository(_fx.Db!);
         var id = NewId();
 
@@ -230,10 +230,10 @@ public sealed class PostgresCollectionTests
         Assert.InRange(back.ActivePetId, 1u, 8u); 
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Cancelled_token_throws_instead_of_saving()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new CollectionRepository(_fx.Db!);
         var id = NewId();
         using var cts = new CancellationTokenSource();

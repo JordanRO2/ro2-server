@@ -22,18 +22,18 @@ public sealed class PostgresMonsterCollectionProgressTests
     private static MonsterCollectionEntry Entry(uint npcId, byte level, uint exp) =>
         new() { NpcId = npcId, Level = level, Exp = exp };
 
-    [Fact]
+    [DockerFact]
     public async Task Get_unknown_character_is_null()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new MonsterCollectionProgressRepository(_fx.Db!);
         Assert.Null(await repo.GetAsync(NewCharacterId()));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Save_then_get_round_trips_entries_in_order()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new MonsterCollectionProgressRepository(_fx.Db!);
         var id = NewCharacterId();
         await repo.SaveAsync(new MonsterCollectionProgressDocument
@@ -57,10 +57,10 @@ public sealed class PostgresMonsterCollectionProgressTests
             e => { Assert.Equal(11004185u, e.NpcId); Assert.Equal((byte)1, e.Level); Assert.Equal(0u, e.Exp); });
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Saved_document_is_usable_through_Find()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new MonsterCollectionProgressRepository(_fx.Db!);
         var id = NewCharacterId();
         await repo.SaveAsync(new MonsterCollectionProgressDocument { Id = id, Entries = { Entry(42, 3, 9) } });
@@ -74,10 +74,10 @@ public sealed class PostgresMonsterCollectionProgressTests
         Assert.Null(got.Find(43));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Save_twice_replaces_the_whole_document()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new MonsterCollectionProgressRepository(_fx.Db!);
         var id = NewCharacterId();
         await repo.SaveAsync(new MonsterCollectionProgressDocument
@@ -97,10 +97,10 @@ public sealed class PostgresMonsterCollectionProgressTests
         Assert.Equal(99u, only.Exp);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Save_empty_entries_stores_an_empty_document()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new MonsterCollectionProgressRepository(_fx.Db!);
         var id = NewCharacterId();
         await repo.SaveAsync(new MonsterCollectionProgressDocument { Id = id, Entries = { Entry(5, 2, 2) } });
@@ -113,10 +113,10 @@ public sealed class PostgresMonsterCollectionProgressTests
         Assert.Empty(got.Entries);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Characters_are_isolated()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new MonsterCollectionProgressRepository(_fx.Db!);
         var a = NewCharacterId();
         var b = a == uint.MaxValue ? a - 1 : a + 1;
