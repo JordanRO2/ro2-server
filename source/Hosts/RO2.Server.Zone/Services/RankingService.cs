@@ -50,76 +50,7 @@ public static class RankingService
     private static readonly ConcurrentDictionary<byte, RankingSnapshotDocument> Published = new();
     private static readonly SemaphoreSlim RollGate = new(1, 1);
     private static int _clockStarted;
-    private static (GameDataStore Store, HashSet<uint> Ids)? _cardIds;
 
-    internal enum Feed { None, Counter }
-
- /// <summary>What feeds <paramref name="rankingType"/> on this server (see the type remarks).</summary>
-    internal static Feed FeedOf(byte rankingType) => rankingType switch
-    {
-        RankingSchedule.TypeKafraTransport or RankingSchedule.TypeMonsterHunt or RankingSchedule.TypeCardCollector
-            => Feed.Counter,
-        _ => Feed.None,
-    };
-
- /// <summary>The types with a feed, the only ones the roll publishes.</summary>
-    internal static readonly byte[] FedTypes =
-        { RankingSchedule.TypeKafraTransport, RankingSchedule.TypeMonsterHunt, RankingSchedule.TypeCardCollector };
-
-    
- /// <summary>
- /// Adds one to <paramref name="player"/>'s counter on <paramref name="rankingType"/> for the current period. A no-op
- /// without a database or for a type with no schedule. Storage errors are logged, not thrown.
- /// </summary>
-    public static Task CountAsync(IServiceProvider services, PlayerState player, byte rankingType, ILogger logger)
-        => AddAsync(services, player.CharacterId, player.Name, rankingType, 1, logger);
-
- /// <summary>The same count for a character known by id and display name (the IRankingCounter adapter's entry).</summary>
-    public static Task CountAsync(IServiceProvider services, uint characterId, string name, byte rankingType, ILogger logger)
-        => AddAsync(services, characterId, name, rankingType, 1, logger);
-
- /// <summary>
- /// Type 4: <paramref name="landedCount"/> items of <paramref name="itemId"/> just reached the bag, as
- /// <paramref name="landed"/> shows the stacks now. Adds the new rows among them when the item is a card. A stack that
- /// only grew adds nothing.
- /// </summary>
- /// <remarks>
- /// Two paths land a kill's drop in the bag, and each calls this once per landing: the corpse pickup and party roll
- /// (ItemPickUpHandler.NotifyLandedAsync), and the kill's auto-loot fallback (LootService.ProcessKillDropsAsync). Other
- /// bag writes do not count, since the measure is card pickups.
- /// </remarks>
-    public static Task CountCardLandingAsync(IServiceProvider services, PlayerState player, uint itemId,
-        int landedCount, IReadOnlyList<InventoryItem> landed, ILogger logger)
-    {
-        var store = services.GetService<GameDataStore>();
-        int n = store is null ? 0 : CardCounting.CardRowsToCount(itemId, CardCounting.NewRowsOf(landed.Select(s => s.Count).ToList(), landedCount), CardIds(store));
-        return n > 0 ? AddAsync(services, player.CharacterId, player.Name, RankingSchedule.TypeCardCollector, n, logger) : Task.CompletedTask;
-    }
-
-    private static async Task AddAsync(IServiceProvider services, uint characterId, string name, byte rankingType, int amount,
-        ILogger logger)
-    {
-        var repo = services.GetService<IRankingRepository>();
-        var store = services.GetService<GameDataStore>();
-        if (repo is null || store is null || amount <= 0 || FeedOf(rankingType) != Feed.Counter)
-            return;
-        EnsureClockRunning(services);
-        if (RankingSchedule.ResetRowOf(store, rankingType) is not { } reset)
-            return;
-
-        var now = DateTime.UtcNow;
-        var period = RankingSchedule.PeriodStart(reset, now);
-        try
-        {
-            await repo.AddScoreAsync(rankingType, period, characterId, amount, now);
-        }
-        catch (Exception ex)
-        {
-            logger.LogWarning(ex, "{Name}: ranking type {Type} counter could not be stored", name, rankingType);
-        }
-    }
-
-    
  /// <summary>
  /// The board a 1654 asks for: the first <see cref="RankingPackets.BoardSize"/> rows of the published snapshot,
  /// keeping their global ranks, restricted to the class or profession the filter names. Empty for a type with
@@ -146,7 +77,7 @@ public static class RankingService
         long score = 0;
         try
         {
-            if (FeedOf(rankingType) == Feed.Counter)
+            if (RankingFeeds.FeedOf(rankingType) == RankingFeed.Counter)
                 score = await RunningCountAsync(services, player.CharacterId, rankingType, ct);
         }
         catch (Exception ex) when (ex is not OperationCanceledException)
@@ -233,7 +164,7 @@ public static class RankingService
         while (!ct.IsCancellationRequested)
         {
             
-            foreach (var type in FedTypes)
+            foreach (var type in RankingFeeds.FedTypes)
             {
                 try { await GetPublishedCoreAsync(repo, guilds, scopes, store, type, logger, ct); }
                 catch (OperationCanceledException) when (ct.IsCancellationRequested) { return; }
@@ -253,7 +184,7 @@ public static class RankingService
     private static DateTime NextRollAfter(GameDataStore store, DateTime nowUtc)
     {
         var next = nowUtc.AddDays(1);
-        foreach (var type in FedTypes)
+        foreach (var type in RankingFeeds.FedTypes)
             if (RankingSchedule.ResetRowOf(store, type) is { } reset)
             {
                 var at = RankingSchedule.NextResetAfter(reset, nowUtc);
@@ -265,7 +196,7 @@ public static class RankingService
     private static async Task<RankingSnapshotDocument?> GetPublishedAsync(IServiceProvider services, byte rankingType,
         ILogger logger, CancellationToken ct)
     {
-        if (FeedOf(rankingType) == Feed.None)
+        if (RankingFeeds.FeedOf(rankingType) == RankingFeed.None)
             return null;
         var repo = services.GetService<IRankingRepository>();
         var store = services.GetService<GameDataStore>();
@@ -335,16 +266,5 @@ public static class RankingService
         if (repo is null || store is null || RankingSchedule.ResetRowOf(store, rankingType) is not { } reset)
             return 0;
         return await repo.GetRunningScoreAsync(rankingType, RankingSchedule.PeriodStart(reset, DateTime.UtcNow), charId, ct);
-    }
-
- /// <summary>The CardInfo.json Card_IDs, built once per loaded store.</summary>
-    private static HashSet<uint> CardIds(GameDataStore store)
-    {
-        var cached = _cardIds;
-        if (cached is { } c && ReferenceEquals(c.Store, store))
-            return c.Ids;
-        var ids = store.CardInfo.Select(r => r.Card_ID).ToHashSet();
-        _cardIds = (store, ids);
-        return ids;
     }
 }

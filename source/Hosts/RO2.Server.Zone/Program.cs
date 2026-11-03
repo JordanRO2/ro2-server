@@ -176,7 +176,10 @@ public static class Program
         services.AddScoped<RO2.Companions.Application.ListVehiclesUseCase>();
         services.AddScoped<RO2.Companions.Application.ExtendRidingUseCase>();
         // Companion.Application IRankingCounter (glider Kafra-transport count) over the Zone RankingService; scoped, as RankingService resolves from the caller's scope.
-        services.AddScoped<RO2.Companions.Application.IRankingCounter>(sp => new RankingCounterAdapter(sp, sp.GetRequiredService<PlayerStateManager>(),
+        services.AddScoped<RO2.Companions.Application.IRankingCounter>(sp => new RankingCounterAdapter(sp.GetRequiredService<IRankingFeed>(), sp.GetRequiredService<PlayerStateManager>()));
+        // Rankings.Application count feed: the use case is a singleton (its card-id cache persists); the adapter is scoped, as the feeders resolve it from their scope.
+        services.AddSingleton<RO2.Rankings.Application.CountRankingUseCase>();
+        services.AddScoped<RO2.Rankings.Application.IRankingFeed>(sp => new RankingFeedAdapter(sp, sp.GetRequiredService<RO2.Rankings.Application.CountRankingUseCase>(),
             sp.GetRequiredService<ILoggerFactory>().CreateLogger(typeof(RankingService).FullName!)));
         // Rankings.Application roll decision and its two outbound ports; scoped because the character lookup wraps the scoped ICharacterRepository.
         services.AddScoped<RO2.Rankings.Application.ICharacterRankingLookup, CharacterRankingLookupAdapter>();

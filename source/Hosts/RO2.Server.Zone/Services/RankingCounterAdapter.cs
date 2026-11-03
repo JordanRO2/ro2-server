@@ -1,11 +1,12 @@
 using Microsoft.Extensions.Logging;
 using RO2.Companions.Application;
+using RO2.Rankings.Application;
 
 namespace RO2.Server.Zone.Services;
 
-/// <summary>Backs <see cref="IRankingCounter"/> with <see cref="RankingService.CountAsync(IServiceProvider, uint, string, byte, ILogger)"/>; the log name comes from the online player.</summary>
-internal sealed class RankingCounterAdapter(IServiceProvider services, PlayerStateManager players, ILogger logger) : IRankingCounter
+/// <summary>Backs <see cref="IRankingCounter"/> with <see cref="IRankingFeed.CountAsync"/>; the log name comes from the online player.</summary>
+internal sealed class RankingCounterAdapter(IRankingFeed feed, PlayerStateManager players) : IRankingCounter
 {
     public Task CountAsync(uint characterId, byte rankingType)
-        => RankingService.CountAsync(services, characterId, players.GetPlayerByCharacterId(characterId)?.Name ?? string.Empty, rankingType, logger);
+        => feed.CountAsync(characterId, players.GetPlayerByCharacterId(characterId)?.Name ?? string.Empty, rankingType, 1);
 }

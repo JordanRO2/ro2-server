@@ -5,6 +5,7 @@ using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.GameData;
 using RO2.Network.Packets;
+using RO2.Rankings.Application;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
@@ -424,7 +425,8 @@ public class ItemPickUpHandler : ZoneRmiHandlerBase<ItemPickUpHandler>
             services, logger);
 
         // Ranking type 4 (Collector) counts the card rows this landing opened; the corpse pickup and the dice
-        // award are where a kill's card reaches the bag while corpse loot is on (RankingService.CountCardLandingAsync).
-        await RankingService.CountCardLandingAsync(services, player, itemTemplateId, count, landed, logger);
+        // award are where a kill's card reaches the bag while corpse loot is on (IRankingFeed.CountCardLandingAsync).
+        await (services.GetService<IRankingFeed>()?.CountCardLandingAsync(player.CharacterId, player.Name, itemTemplateId, count,
+            landed.Select(s => s.Count).ToList()) ?? Task.CompletedTask);
     }
 }

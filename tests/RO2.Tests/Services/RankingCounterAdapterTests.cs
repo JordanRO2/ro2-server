@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using RO2.Characters.Domain;
 using RO2.Companions.Application;
+using RO2.Rankings.Application;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using Xunit;
@@ -21,7 +22,7 @@ public class RankingCounterAdapterTests
     public async Task Count_WithoutRepository_IsANoOp_ForOnlineAndUnknownCharacters()
     {
         var players = new PlayerStateManager(new NoDirtySink());
-        IRankingCounter counter = new RankingCounterAdapter(new ServiceCollection().BuildServiceProvider(), players, NullLogger.Instance);
+        IRankingCounter counter = new RankingCounterAdapter(new RankingFeedAdapter(new ServiceCollection().BuildServiceProvider(), new CountRankingUseCase(), NullLogger.Instance), players);
 
         await counter.CountAsync(114, 1);
         await counter.CountAsync(0, 99);

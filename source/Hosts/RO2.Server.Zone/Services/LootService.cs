@@ -1,3 +1,4 @@
+using RO2.Rankings.Application;
 using RO2.Rankings.Domain;
 using System.Collections.Concurrent;
 using Microsoft.Extensions.DependencyInjection;
@@ -256,7 +257,8 @@ public class LootService
                 
                 
                 if (services != null)
-                    await RankingService.CountCardLandingAsync(services, killer, itemId, count, landed, _logger);
+                    await (services.GetService<IRankingFeed>()?.CountCardLandingAsync(killer.CharacterId, killer.Name, itemId, count,
+                        landed.Select(s => s.Count).ToList()) ?? Task.CompletedTask);
 
                 
                 itemsOnCorpse--;
@@ -430,7 +432,7 @@ public class LootService
     private async Task CountRankingKillAsync(PlayerState killer)
     {
         using var scope = _scopeFactory.CreateScope();
-        await RankingService.CountAsync(scope.ServiceProvider, killer, RankingSchedule.TypeMonsterHunt, _logger);
+        await (scope.ServiceProvider.GetService<IRankingFeed>()?.CountAsync(killer.CharacterId, killer.Name, RankingSchedule.TypeMonsterHunt, 1) ?? Task.CompletedTask);
     }
 
  /// <summary>

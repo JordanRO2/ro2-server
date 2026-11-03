@@ -191,11 +191,11 @@ public class RankingScheduleTests
     [Fact]
     public void Feeds_OnlyTypesOneThreeAndFour()
     {
-        Assert.Equal(RankingService.Feed.Counter, RankingService.FeedOf(1));
-        Assert.Equal(RankingService.Feed.Counter, RankingService.FeedOf(3));
-        Assert.Equal(RankingService.Feed.Counter, RankingService.FeedOf(4));
+        Assert.Equal(RankingFeed.Counter, RankingFeeds.FeedOf(1));
+        Assert.Equal(RankingFeed.Counter, RankingFeeds.FeedOf(3));
+        Assert.Equal(RankingFeed.Counter, RankingFeeds.FeedOf(4));
         foreach (byte t in new byte[] { 2, 8, 9, 10, 11, 12, 108, 109, 110 })
-            Assert.Equal(RankingService.Feed.None, RankingService.FeedOf(t));
+            Assert.Equal(RankingFeed.None, RankingFeeds.FeedOf(t));
     }
 
     [Fact]
