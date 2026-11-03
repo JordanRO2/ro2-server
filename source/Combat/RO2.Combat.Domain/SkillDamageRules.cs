@@ -24,7 +24,8 @@ public static class SkillDamageRules
     /// <summary>
     /// One damage record's amount when a cast's full damage is split over <paramref name="records"/>:
     /// <c>max(1, round(full / records, AwayFromZero))</c>, so the element's records together carry the rate once.
+    /// A full hit of 0 (the invulnerable returning monster's miss) stays 0 rather than flooring to 1.
     /// </summary>
     public static int RecordDamage(int fullDamage, int records)
-        => Math.Max(1, (int)Math.Round((double)fullDamage / Math.Max(1, records), MidpointRounding.AwayFromZero));
+        => fullDamage <= 0 ? 0 : Math.Max(1, (int)Math.Round((double)fullDamage / Math.Max(1, records), MidpointRounding.AwayFromZero));
 }

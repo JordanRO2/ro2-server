@@ -163,6 +163,7 @@ public class Reaudit2_A0_Tests
     [InlineData(7811, 2, 3906)]   
     [InlineData(47184, 5, 9437)]
     [InlineData(1, 5, 1)]
+    [InlineData(0, 5, 0)]
     [InlineData(500, 0, 500)]     
     public void RecordDamage_IsTheFullHitOverTheRecordCount(int full, int records, int expected)
         => Assert.Equal(expected, SkillDamageRules.RecordDamage(full, records));
