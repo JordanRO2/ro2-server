@@ -110,24 +110,24 @@ public sealed class FriendStore
 
     /// <summary>
     /// The owner's friends as 23505 records, in the order they were added. Deleted characters are skipped.
-    /// For ReqFriendListHandler's 23505 body (<see cref="CommunityChannels.BuildFriendListBody"/>).
+    /// For ReqFriendListHandler's 23505 body (<see cref="SocialPackets.BuildFriendListBody"/>).
     /// The location of each online friend is the channel label the Zone recorded for it at its last world
     /// entry (<see cref="ChannelPresenceStore"/>), read in one query for all of them; offline friends are
     /// not looked up, as their record carries no location.
     /// </summary>
-    public async Task<IReadOnlyList<CommunityChannels.FriendEntry>> GetEntriesAsync(
+    public async Task<IReadOnlyList<SocialPackets.FriendEntry>> GetEntriesAsync(
         ChatBroadcastService broadcast, uint ownerId, CancellationToken ct)
     {
         var friendIds = await _lists.LoadAsync(ownerId, ct);
         if (friendIds.Count == 0)
-            return Array.Empty<CommunityChannels.FriendEntry>();
+            return Array.Empty<SocialPackets.FriendEntry>();
 
         var byId = (await _characters.GetLiveByIdsAsync(friendIds, ct)).ToDictionary(c => c.Id);
 
         var online = byId.Keys.Where(id => IsOnline(broadcast, id)).ToHashSet();
         var locations = await _presence.GetLocationsAsync(online, ct);
 
-        var entries = new List<CommunityChannels.FriendEntry>(friendIds.Count);
+        var entries = new List<SocialPackets.FriendEntry>(friendIds.Count);
         foreach (var id in friendIds)
             if (byId.TryGetValue(id, out var c))
                 entries.Add(Entry(c, online.Contains(id), locations.GetValueOrDefault(id)));
@@ -140,7 +140,7 @@ public sealed class FriendStore
     /// ReqAddFriendHandler builds its record with <see cref="Entry"/> and <see cref="ChannelPresenceStore"/>
     /// instead; this location-less form has no caller on the live path.
     /// </summary>
-    public static CommunityChannels.FriendEntry ToEntry(Character c, ChatBroadcastService broadcast)
+    public static SocialPackets.FriendEntry ToEntry(Character c, ChatBroadcastService broadcast)
         => Entry(c, IsOnline(broadcast, c.Id), location: null);
 
     /// <summary>
@@ -152,7 +152,7 @@ public sealed class FriendStore
     /// says the same. Filling them needs a persisted ProJob level/id on Character (the Chat server cannot call
     /// the Zone's WireProJob), which does not exist yet.
     /// </summary>
-    public static CommunityChannels.FriendEntry Entry(Character c, bool online, string? location)
+    public static SocialPackets.FriendEntry Entry(Character c, bool online, string? location)
         => new((ulong)c.Id, c.Name, online, c.Level, c.Job,
                Location: online ? location ?? "" : "", TrailerA: NoProJobLevel, TrailerB: NoProJobId);
 

@@ -32,7 +32,7 @@ public class FriendListLocation23505Tests
         var entry = FriendStore.Entry(greeLuck, online: true, location: "Channel 1")
             with { Uid = CharacterGid.Of(0x0DE0B6B300000000UL, greeLuck.Id) };
 
-        Assert.Equal(retail, CommunityChannels.BuildFriendListBody(new[] { entry }));
+        Assert.Equal(retail, SocialPackets.BuildFriendListBody(new[] { entry }));
     }
 
     [Fact]
@@ -54,7 +54,7 @@ public class FriendListLocation23505Tests
             with { Uid = 0x0DE0B6B3A7C66941UL, TrailerA = 40, TrailerB = 4 };
 
         Assert.Equal("", offline.Location);
-        Assert.Equal(retail, CommunityChannels.BuildFriendListBody(new[] { online, offline }));
+        Assert.Equal(retail, SocialPackets.BuildFriendListBody(new[] { online, offline }));
     }
 
     [Fact]

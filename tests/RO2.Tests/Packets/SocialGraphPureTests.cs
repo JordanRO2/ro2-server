@@ -81,12 +81,12 @@ public class SocialGraphPureTests
     [Fact]
     public void AddFriend_success_carries_the_record_and_innerLen_is_length_minus_6()
     {
-        var entry = new CommunityChannels.FriendEntry(0x0DE0B6B3A7F46769UL, "Bob", true, 5, 4, "Channel 1", 0, 0);
+        var entry = new SocialPackets.FriendEntry(0x0DE0B6B3A7F46769UL, "Bob", true, 5, 4, "Channel 1", 0, 0);
         var body = SocialPackets.BuildAddFriendAnswer(FriendStore.AddResultOk, entry);
         Assert.Equal((ushort)0, BinaryPrimitives.ReadUInt16LittleEndian(body));
         Assert.Equal((uint)(body.Length - 6), BinaryPrimitives.ReadUInt32LittleEndian(body.AsSpan(2)));
         // the record is the one-entry 23505 body from byte 8 on
-        Assert.Equal(CommunityChannels.BuildFriendListBody(new[] { entry })[8..], body[6..]);
+        Assert.Equal(SocialPackets.BuildFriendListBody(new[] { entry })[8..], body[6..]);
     }
 
     [Fact]
@@ -108,7 +108,7 @@ public class SocialGraphPureTests
     [Fact]
     public void WithGids_rewrites_every_uid_to_ownerGid_high_dword_plus_the_low_dword_id_and_is_idempotent()
     {
-        var bare = new CommunityChannels.FriendEntry(7, "A", false, 1, 1, "", 0, 0);
+        var bare = new SocialPackets.FriendEntry(7, "A", false, 1, 1, "", 0, 0);
         var gid = bare with { Uid = 0x1111111100000009UL, Name = "B" };   // already a GID of another high dword
         var once = ReqFriendListHandler.WithGids(new[] { bare, gid }, KnownGid);
         Assert.Equal(new[] { 0x0DE0B6B300000007UL, 0x0DE0B6B300000009UL }, once.Select(e => e.Uid).ToArray());

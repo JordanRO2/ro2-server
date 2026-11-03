@@ -47,7 +47,7 @@ public class ReqFriendListHandler : BaseFriend
         
         
         
-        IReadOnlyList<CommunityChannels.FriendEntry> friends = Array.Empty<CommunityChannels.FriendEntry>();
+        IReadOnlyList<SocialPackets.FriendEntry> friends = Array.Empty<SocialPackets.FriendEntry>();
         if (session.CharacterId is uint ownerId && MessengerUid.TryGet(session, out var ownerGid))
         {
             
@@ -67,7 +67,7 @@ public class ReqFriendListHandler : BaseFriend
             Logger.LogWarning("Session {Id}: 23003 before messenger login, sending the empty roster", session.SessionId);
         }
 
-        await session.SendInternalRmiAsync(ChatS2COpcodes.AnsFriendList, CommunityChannels.BuildFriendListBody(friends));
+        await session.SendInternalRmiAsync(ChatS2COpcodes.AnsFriendList, SocialPackets.BuildFriendListBody(friends));
     }
 
  /// <summary>
@@ -79,10 +79,10 @@ public class ReqFriendListHandler : BaseFriend
  /// display correctly. The block list and the other friend-related messages carry GIDs as well. An entry that
  /// already carries a GID maps to itself.
  /// </remarks>
-    internal static IReadOnlyList<CommunityChannels.FriendEntry> WithGids(
-        IReadOnlyList<CommunityChannels.FriendEntry> entries, ulong ownerGid)
+    internal static IReadOnlyList<SocialPackets.FriendEntry> WithGids(
+        IReadOnlyList<SocialPackets.FriendEntry> entries, ulong ownerGid)
     {
-        var withGids = new List<CommunityChannels.FriendEntry>(entries.Count);
+        var withGids = new List<SocialPackets.FriendEntry>(entries.Count);
         foreach (var e in entries)
             withGids.Add(e with { Uid = CharacterGid.Of(ownerGid, CharacterGid.CharacterIdOf(e.Uid)) });
         return withGids;

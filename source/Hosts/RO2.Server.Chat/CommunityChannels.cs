@@ -25,7 +25,6 @@ public static class CommunityChannels
     // Channel-list (RMI 23513) record fields.
     private const byte ChannelTypeCommunity = 1;    // the "type" byte of every channel record
     private const ushort ReservedHeader = 0;        // leading u16 of the 23513 and 23505 bodies
-    private const byte ReservedByte = 0;            // always-zero byte inside a friend record
 
  /// <summary>
  /// Builds the body of RMI 23513, the channel list that populates the client's default tabs. Each channel is written
@@ -56,47 +55,5 @@ public static class CommunityChannels
         }
         w.WriteAt(lenPos, (uint)(w.Length - start));
         return w.GetWrittenSpan().ToArray();
-    }
-
- /// <summary>One friend in a friend list, as sent in RMI 23505.</summary>
-    public sealed record FriendEntry(ulong Uid, string Name, bool Online, byte Level, byte Job,
-        string Location, byte TrailerA, byte TrailerB);
-
- /// <summary>
- /// Builds the body of RMI 23505 AnsFriendList, the reply to 23003. The body is a u16 zero, a u32 inner length, a u16
- /// count and one record per friend. An empty list is encoded with the same header and a zero count.
- /// Record layout: [uid:u64][nameLen:u8][name:UTF-16LE][0:u8][online:u8][level:u8][job:u8][0:u8]
- /// [locationLen:u8][location:UTF-16LE][trailerA:u8][trailerB:u8]. The location is non-empty only for an online friend.
- /// </summary>
-    public static byte[] BuildFriendListBody(IReadOnlyList<FriendEntry> friends)
-    {
-        using var w = new PacketWriter();
-        w.WriteUInt16(ReservedHeader);
-        var lenPos = w.Reserve(4);              // inner length, filled in below
-        int start = w.Length;
-        w.WriteUInt16((ushort)friends.Count);
-        foreach (var f in friends)
-        {
-            w.WriteUInt64(f.Uid);
-            WriteLen8UnicodeString(w, f.Name);
-            w.WriteByte(ReservedByte);
-            w.WriteBool(f.Online);
-            w.WriteByte(f.Level);
-            w.WriteByte(f.Job);
-            w.WriteByte(ReservedByte);
-            // Location is sent only while the friend is online.
-            WriteLen8UnicodeString(w, f.Online ? f.Location : "");
-            w.WriteByte(f.TrailerA);
-            w.WriteByte(f.TrailerB);
-        }
-        w.WriteAt(lenPos, (uint)(w.Length - start));
-        return w.GetWrittenSpan().ToArray();
-    }
-
-    private static void WriteLen8UnicodeString(PacketWriter w, string? s)
-    {
-        var bytes = Encoding.Unicode.GetBytes(s ?? "");
-        w.WriteByte((byte)(bytes.Length / 2));
-        w.WriteBytes(bytes);
     }
 }
