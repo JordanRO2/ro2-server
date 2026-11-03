@@ -22,6 +22,7 @@ namespace RO2.Tests.Packets;
 /// completion-item rules (1378), the prize bag check, and the u16 count of 2425. Expected frames use the wire layout
 /// of each response. Shipped tables are found by walking up from the test output directory.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class QuestAcceptAndPrizeReauditTests
 {
     

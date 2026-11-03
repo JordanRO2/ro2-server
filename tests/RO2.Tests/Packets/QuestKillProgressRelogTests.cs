@@ -17,6 +17,7 @@ namespace RO2.Tests.Packets;
 /// <summary>
 /// Kill quest progress across a relog (QuestProgressStore): the quest element of the 2310 login list, and the 2425 counter that continues from it. Quest_Info comes from the shipped data tables.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public sealed class QuestKillProgressRelogTests
 {
     private static readonly TimeSpan Generous = TimeSpan.FromSeconds(10);

@@ -21,6 +21,7 @@ namespace RO2.Tests.Packets;
 /// <summary>
 /// Deliver-item progress ticks (2428) and the death and forbidden-kill quest failures (2434).
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class QuestDeliverAndFailReauditTests
 {
     

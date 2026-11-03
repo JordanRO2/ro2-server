@@ -21,6 +21,7 @@ namespace RO2.Tests.Packets;
 /// <summary>
 /// Khara auto-accept and condition rules for RMI 2574 and 2575 (Khara ids 6, 22, 26, 27 and 43).
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class KharaAutoAcceptReauditTests
 {
     

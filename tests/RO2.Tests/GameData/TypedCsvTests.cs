@@ -9,6 +9,7 @@ namespace RO2.Tests.GameData;
 /// The typed-CSV reader (RO2.GameData.TypedCsv) that GameDataStore prefers over a table's JSON:
 /// quoting, empty cells, conversion to the PROPERTY's type, header tolerance, and the JSON-name mapping.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class TypedCsvTests
 {
     private sealed record Row

@@ -64,7 +64,7 @@ public sealed class MongoMailFixture : IAsyncLifetime
     public async Task DisposeAsync() => await _container.DisposeAsync();
 }
 
-[CollectionDefinition("MongoMail")]
+[CollectionDefinition("MongoMail", DisableParallelization = true)]
 public sealed class MongoMailCollection : ICollectionFixture<MongoMailFixture> { }
 
 /// <summary>

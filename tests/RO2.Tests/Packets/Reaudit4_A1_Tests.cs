@@ -20,6 +20,7 @@ namespace RO2.Tests.Packets;
 /// <remarks>
 /// The sweep tests pin this server's order and bytes against the form of the reference frames. The 322 ms timing is the median of the measured state-5 to state-1 gaps, not a per-frame match.
 /// </remarks>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class Reaudit4_A1_Tests
 {
     private static readonly TimeSpan Generous = TimeSpan.FromSeconds(10);

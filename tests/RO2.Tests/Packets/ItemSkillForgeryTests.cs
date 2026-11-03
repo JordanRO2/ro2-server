@@ -17,6 +17,7 @@ namespace RO2.Tests.Packets;
 /// <summary>
 /// Item skills (Skill_ID_1 of 2,000,000 or more, such as potions, warp and revival wings and town scrolls) must start through RMI 1561 ReqSkillStart_Item, which verifies that the caster owns the item and consumes it before recording the pending cast. A raw 1508 ReqSkillStart for such a skill is refused, and the learned-skill check covers item skills. These tests pin the refusal and confirm that the 1561 path and the class-skill 1508 flow are unaffected.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class ItemSkillForgeryTests
 {
     

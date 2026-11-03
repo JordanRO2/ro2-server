@@ -14,6 +14,7 @@ namespace RO2.Tests.Packets;
 /// refusal, the 3035 and 2771 bodies, and the daily entry-count window
 /// (<see cref="DungeonEntryCountRepository"/>).
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class DungeonEntryGateTests
 {
     private static string Hex(byte[] b) => Convert.ToHexString(b).ToLowerInvariant();

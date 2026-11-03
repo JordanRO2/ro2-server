@@ -11,6 +11,7 @@ namespace RO2.Tests.Packets;
 /// 1456 ReqCardComposition (<see cref="CardCompositionHandler"/>): the plan and its refusal codes, where the result
 /// goes (<see cref="CardStacks"/>), and the emptied-cell 2379 record (<see cref="EmptiedItemRecord"/>).
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class UnitA9CardCompositionTests
 {
     private const uint Owner = 7;

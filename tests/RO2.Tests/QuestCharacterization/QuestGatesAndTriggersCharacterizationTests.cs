@@ -12,6 +12,7 @@ namespace RO2.Tests.QuestCharacterization;
 /// B8 S1: characterization of the accept gates (2431 refusal codes), the repeat gate, the Start_Type 4 level grant, the quest
 /// fail triggers and the Quest_Info action-row selectors, as the host has them today.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class QuestGatesAndTriggersCharacterizationTests
 {
     private const uint LevelRefusal = 21702;

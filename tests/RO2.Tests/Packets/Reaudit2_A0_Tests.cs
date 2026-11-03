@@ -20,6 +20,7 @@ namespace RO2.Tests.Packets;
 /// <summary>
 /// Tests for NPC targeting and armour wear on skill casts: the NPC victim set of a skill (SkillDamageHandler.SelectNpcVictims), the damage records of an NPC element (max(1, Number_Of_Normal_Influences)), the armour wear of the PCs an element lists (DurabilityService.SkillWearPcHandles), and the template value of an unset armour row.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class Reaudit2_A0_Tests
 {
     private static readonly TimeSpan Generous = TimeSpan.FromSeconds(10);

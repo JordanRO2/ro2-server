@@ -27,6 +27,7 @@ namespace RO2.Tests.Packets;
 /// The buff is applied in the reply to the 1304 (2499, 2499, 2498, 2492 after the 2986) and removed
 /// 10.4 s later (2498, 2493, 2494).
 /// </remarks>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class Reaudit_B1_Tests
 {
     private static readonly TimeSpan Generous = TimeSpan.FromSeconds(10);

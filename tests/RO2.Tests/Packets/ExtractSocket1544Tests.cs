@@ -20,6 +20,7 @@ namespace RO2.Tests.Packets;
 /// 2 target item not found, 4 wrong socket slot index, 7 item storage not retrieved. Items come from the
 /// shipped data: Rune Pincers (60000203), the rune 22264024 and the sword 11100001.
 /// </remarks>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class ExtractSocket1544Tests
 {
     private const uint Owner = 7;

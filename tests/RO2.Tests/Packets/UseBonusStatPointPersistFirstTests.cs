@@ -21,6 +21,7 @@ namespace RO2.Tests.Packets;
 /// the character's Bonus*/primaries and the runtime primaries are unchanged, the answer is a BadState 2680 and no
 /// 2595/2498 goes out; when it succeeds there is one save and the 2595 + 2498 + Ok 2680 follow.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class UseBonusStatPointPersistFirstTests
 {
     private const byte Job = 4;        // has a Standard_Stat row

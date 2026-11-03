@@ -18,6 +18,7 @@ namespace RO2.Tests.Packets;
 /// Rename availability checks for 1564 ReqCanRenameChaName and 1563 ReqRenameChaName (<see cref="CharacterRename"/>).
 /// The expected 4-byte result is the 2814 AnsCanRenameChaName code returned for each request body.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class CharacterRenameCodesTests
 {
     

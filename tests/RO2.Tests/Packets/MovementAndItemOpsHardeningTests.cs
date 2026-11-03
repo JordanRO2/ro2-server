@@ -22,6 +22,7 @@ namespace RO2.Tests.Packets;
 /// Cluster D hardening: MV-1 (1526 length + map-loaded gate), CB-H9-refine (1668 eligibility and catalyst location),
 /// CB-H11 (1565 magnitude guard) and CB-H12 (1682 defensive Equip_Slot rule).
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public sealed class MovementAndItemOpsHardeningTests
 {
     private sealed class NoDirtySink : IDirtySink

@@ -12,6 +12,7 @@ namespace RO2.Tests.Packets;
 /// 2786 record, how its timer runs, and that its bonus counts only while it is live. Rows are the shipped
 /// data/ItemReinforceInfo.json and ItemReinforceTraitInfo.json.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class TimedEnchant2786Tests
 {
     private static readonly Lazy<Task<GameDataStore>> Store = new(LoadAsync);

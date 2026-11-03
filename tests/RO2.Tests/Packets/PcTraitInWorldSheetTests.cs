@@ -17,6 +17,7 @@ namespace RO2.Tests.Packets;
 /// <remarks>
 /// Uses the full shipped data directory, so the gear indices StatService builds come from the real tables.
 /// </remarks>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class PcTraitInWorldSheetTests
 {
     private const int BlobStart = 3;   

@@ -16,6 +16,7 @@ namespace RO2.Tests.MailCharacterization;
 /// quirks the carve must not "fix": 2448 goes out even when nothing was deleted, a zeny claim of a missing mail still answers a
 /// success 2617, an unknown uid on a read answers 16203 while an unparseable body answers nothing at all.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class MailReadClaimDeleteCharacterizationTests
 {
     private const ulong ItemUid = 9001;

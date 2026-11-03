@@ -13,6 +13,7 @@ namespace RO2.Tests.Packets;
 /// The expected bodies are those of the ranking buff 50603, which sends five 2499 lines in the order given
 /// by Effect_Table, not sorted by trait.
 /// </remarks>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class EffectTraitLines2499Tests
 {
  /// <summary>The five 2499 bodies of the ranking buff 50603 (Trait_Kind 4, 1000.0 each).</summary>

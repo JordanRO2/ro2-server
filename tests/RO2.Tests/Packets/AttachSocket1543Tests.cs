@@ -12,6 +12,7 @@ namespace RO2.Tests.Packets;
 /// the target item, 3 not a rune item, 4 wrong socket slot index, 5 rune not valid for the socket type,
 /// 6 unable to equip to the target item. Fixtures are rows from the shipped data.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class AttachSocket1543Tests
 {
     private const uint Owner = 7;

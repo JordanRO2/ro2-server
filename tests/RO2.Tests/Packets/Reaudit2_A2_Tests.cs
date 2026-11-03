@@ -16,6 +16,7 @@ namespace RO2.Tests.Packets;
 /// <remarks>
 /// Where a test pins a rule rather than a reference frame, it says so.
 /// </remarks>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class Reaudit2_A2_Tests
 {
     

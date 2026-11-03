@@ -22,6 +22,7 @@ namespace RO2.Tests.QuestCharacterization;
 /// private entry points that have no other seam: LootService.AdvanceKillQuestsAsync and ItemUseHandler.AdvanceUseItemQuestsAsync;
 /// a carve must keep those names (or move these tests with them).
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class QuestHandlerFlowCharacterizationTests
 {
     private const ushort OpMonster = ZoneS2COpcodes.OnQuestMonsterOrGO;         // 2425

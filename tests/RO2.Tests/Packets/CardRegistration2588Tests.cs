@@ -11,6 +11,7 @@ namespace RO2.Tests.Packets;
 /// cards are announced (<see cref="CardRegistrationNotifier.CardsToAnnounce"/>), and which held cards are
 /// announced at world entry (<see cref="CardRegistrationNotifier.HeldMvpCards"/>).
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class CardRegistration2588Tests
 {
  /// <summary>Socket removal of MVP card 22320029 (1544).</summary>

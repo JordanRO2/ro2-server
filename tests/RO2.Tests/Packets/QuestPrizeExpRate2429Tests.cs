@@ -12,6 +12,7 @@ namespace RO2.Tests.Packets;
 /// <remarks>
 /// Frames are framed with the header rule for the connection's encryption state (3 bytes unencrypted, 5 bytes otherwise), and the opcode is read from the frame bytes. The reference case has three Exp_Rate effect lines (effects 40009, 102001 and 105010) that together give a rate of 6,000 (+60%).
 /// </remarks>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class QuestPrizeExpRate2429Tests
 {
  /// <summary>The three active lines at the levels that give the reference values: 40009 is Level x 100 (level 10), 102001 is Level x 2000 (level 1), and 105010 is a flat 3000.</summary>

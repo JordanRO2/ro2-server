@@ -16,6 +16,7 @@ namespace RO2.Tests.QuestCharacterization;
 /// kill closure, QuestUseItemProgress, QuestTalkProgress, QuestCollectDropTicks, QuestPrizeHandler). Every expected value was
 /// read from the code and confirmed by running it. Quirks are pinned on purpose and marked "QUIRK".
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class QuestObjectiveRulesCharacterizationTests
 {
     private const uint Qid = 990000001;

@@ -32,6 +32,7 @@ internal static class ItemLookTestData
 /// the effect is stored (record+113, VEC28 +23). The handler sends, in order, 2435 (the fee), 2329 (the effect
 /// item used up, useSource 3) and the 3039 echo.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class GiveEffectToItem1702Tests
 {
     private static string Hex(byte[] b) => Convert.ToHexString(b).ToLowerInvariant();
@@ -152,6 +153,7 @@ public class GiveEffectToItem1702Tests
 /// and the dye colours (<see cref="DyeColorCatalog"/>, data/dye/ColorPicker.json). Dye and the FX enchant
 /// share this file because both write per-item looks into the same item record and worn record.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class UseDyeItem1575Tests
 {
     private const uint Owner = 9;

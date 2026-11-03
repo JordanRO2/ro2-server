@@ -12,6 +12,7 @@ namespace RO2.Tests.GameData;
 /// Job 6 (Swordsman) rows used here: 1102 (max 5, unlock 1), 1101 (max 3, unlock 1), 1204 (max 5, unlock
 /// 25); 6301 is a job-18 row only. The point budget is intentionally not a gate (see the method remarks).
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class TalentAllocationValidationTests
 {
     [Fact]

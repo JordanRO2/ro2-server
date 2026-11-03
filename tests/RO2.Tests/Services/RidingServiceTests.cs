@@ -431,7 +431,7 @@ public class RidingServiceTests
 }
 
 /// <summary>The test classes that hold MountService entries; see <see cref="RidingServiceTests"/>.</summary>
-[CollectionDefinition(Name)]
+[CollectionDefinition(Name, DisableParallelization = true)]
 public sealed class MountStateCollection
 {
     public const string Name = "MountService state";

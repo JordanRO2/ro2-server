@@ -17,6 +17,7 @@ namespace RO2.Tests.Packets;
 /// The field duel's fight (FieldPvPCombat, CombatService.ResolvePvpHit): who can hit whom, the HP-1 rule, and the
 /// fought-out end on the wire.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class FieldPvPCombatTests
 {
     private static readonly TimeSpan Generous = TimeSpan.FromSeconds(10);

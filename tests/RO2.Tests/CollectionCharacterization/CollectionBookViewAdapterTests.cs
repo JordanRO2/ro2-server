@@ -8,6 +8,7 @@ using static RO2.Tests.CollectionCharacterization.CollData;
 namespace RO2.Tests.CollectionCharacterization;
 
 /// <summary>B10 S7: the read port the world-entry and warp bursts take the book counts and the active pet from returns the same values CollectionService.GetStateAsync gave them.</summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class CollectionBookViewAdapterTests
 {
     private const uint C = 7;

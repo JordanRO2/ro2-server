@@ -15,6 +15,7 @@ namespace RO2.Tests.CollectionCharacterization;
 /// incubator slot rules. They are what a later slice MOVES (MonsterCollectionRules, PetCollectionBook, PetIncubatorRules,
 /// CollectionDocument members), so a byte-identical move keeps them green. Expected values were observed from the code, quirks included.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class CollectionRulesCharacterizationTests
 {
     private static readonly DateTime T0 = new(2026, 3, 1, 12, 0, 0, DateTimeKind.Utc);

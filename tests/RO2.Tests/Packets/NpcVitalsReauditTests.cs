@@ -22,6 +22,7 @@ namespace RO2.Tests.Packets;
 /// Vitals of the NPC 2506, 2317 and 2319 records and of 2643, the active-effect list of the 2319 record, and the
 /// wait before a gatherable corpse leaves.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class NpcVitalsReauditTests
 {
     

@@ -17,6 +17,7 @@ namespace RO2.Tests.Packets;
 /// Each case compares the sheet before an effect run with the sheet after it. Only the fields named by the run's rows
 /// may differ.
 /// </remarks>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class PcTraitEffectFold2498Tests
 {
     private const int BlobStart = 3;   

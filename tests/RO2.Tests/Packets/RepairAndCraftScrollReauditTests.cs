@@ -19,6 +19,7 @@ using RO2.Characters.Domain;
 namespace RO2.Tests.Packets;
 
 /// <summary>Tests the 2336 head (talent points, level, wallet) and the 2538 craft scroll resolved from a blueprint.</summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class RepairAndCraftScrollReauditTests
 {
     

@@ -12,6 +12,7 @@ namespace RO2.Tests.Packets;
 /// Byte-exact tests for 1542 ReqOpenItemSocket and its answer 2785 AnsOpenItemSocket (<see cref="OpenItemSocketHandler"/>).
 /// The refusal code selects a message from the UI string table. Item rows are copied from the shipped item data.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class OpenItemSocket1542Tests
 {
     private const uint Owner = 7;
@@ -212,6 +213,7 @@ public class FriendListFull23508Tests
 /// Reinforce transfer (1682, <see cref="TransferReinforceItemHandler"/>, <see cref="RefineTransferRules"/>).
 /// Item rows are copied from the shipped item, card enforce, refine and config data.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class RefineTransfer1682Tests
 {
     private const uint Owner = 7;

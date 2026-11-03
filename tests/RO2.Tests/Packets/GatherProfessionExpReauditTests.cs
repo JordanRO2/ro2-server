@@ -21,6 +21,7 @@ namespace RO2.Tests.Packets;
 /// Profession experience of a gather (2526). Expected hex strings are reference frames. Shipped tables are
 /// found by walking up from the test output directory.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class GatherProfessionExpReauditTests
 {
     

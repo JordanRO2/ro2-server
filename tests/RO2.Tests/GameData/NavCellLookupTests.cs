@@ -11,6 +11,7 @@ namespace RO2.Tests.GameData;
 /// Two sources are used: the observed wire table, which takes precedence, and the table computed from the client navmesh, which fills gaps.
 /// The real-data tests confirm that the shipped tables still agree.
 /// </remarks>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class NavCellLookupTests
 {
     private static async Task<GameDataStore> LoadAsync(

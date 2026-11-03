@@ -21,6 +21,7 @@ namespace RO2.Tests.Packets;
 /// <summary>
 /// Tests the death wear: the per-hit armour durability step and the death burst of worn-slot durability loss.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class DeathWearReauditTests
 {
     

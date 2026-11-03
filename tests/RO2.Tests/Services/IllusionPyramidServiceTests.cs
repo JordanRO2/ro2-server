@@ -21,6 +21,7 @@ namespace RO2.Tests.Services;
 /// Illusion Pyramid behavior: the reward catalog and odds, the draw rules, the 2907, 2908 and 2909 bodies,
 /// and the unsolicited 2909 close when the player leaves.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class IllusionPyramidServiceTests
 {
     private static readonly TimeSpan Generous = TimeSpan.FromSeconds(10);

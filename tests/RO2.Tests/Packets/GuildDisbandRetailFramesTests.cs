@@ -17,6 +17,7 @@ namespace RO2.Tests.Packets;
 /// The guild tests run on GuildService.Instance without Mongo (InitAsync is never called, so every
 /// write-through is skipped); the guild a test creates is disbanded again.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class GuildDisbandRetailFramesTests
 {
     private static int _nextChar = 1_980_000_000;

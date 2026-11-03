@@ -19,6 +19,7 @@ namespace RO2.Tests.Packets;
 /// <summary>
 /// Tests for the 1531 departure removals, the per-player 1561 repeat window, the guild-exit refresh sent on a 1432 leave, and the cooldown refusal codes of a 1508 cast (2715 and 2962).
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class Reaudit2_A4_Tests
 {
     private static readonly TimeSpan Generous = TimeSpan.FromSeconds(10);

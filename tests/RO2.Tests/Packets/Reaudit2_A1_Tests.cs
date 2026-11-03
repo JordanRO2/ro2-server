@@ -21,6 +21,7 @@ namespace RO2.Tests.Packets;
 /// <summary>
 /// Tests for the Khara engine: the catalog's rows and PC_Job gate (2574), the Complete_Type 14, 15 and 30 conditions (2575 and 2577), the profession EXP rate on a craft, the class, profession, Job_Master and start-item gates of 1374, and the talk refusal and side-close of 1378.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class Reaudit2_A1_Tests
 {
     private static readonly TimeSpan Generous = TimeSpan.FromSeconds(10);

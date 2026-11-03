@@ -23,6 +23,7 @@ namespace RO2.Tests.Packets;
 /// <remarks>
 /// A self removal whose 2498 moved the max is followed by the PC's 2315, between that 2498 and the 2493. The 2315's max HP and max SP equal the 2498's. Removals of effects with no max row send no 2315. The record itself is pinned by OnPcViewData2315RecordTests; these tests pin the trigger, the order, and the recipients (the owner and the viewers on the map, as with the 2494). The trigger compares the sheet with the effect against the sheet without it, never the stored PlayerState.MaxHp or MaxMp, so a stored max that no sheet set cannot turn the removal of an effect with no max row into a 2315. The 2498 bodies come from this server's own sheet, so they are compared on their max fields only.
 /// </remarks>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public sealed class Reaudit3_A0_Tests
 {
     private static readonly TimeSpan Generous = TimeSpan.FromSeconds(10);

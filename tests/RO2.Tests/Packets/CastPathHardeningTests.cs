@@ -21,6 +21,7 @@ namespace RO2.Tests.Packets;
 /// and the 1561 item-skill ownership (CB-H10). Oracle throughout: the exploit is refused — a gate result, a silent
 /// 2715 (20152) with the pending-cast count unchanged, no broadcast frame, or an item left unconsumed.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class CastPathHardeningTests
 {
     private const uint Map = 1100;

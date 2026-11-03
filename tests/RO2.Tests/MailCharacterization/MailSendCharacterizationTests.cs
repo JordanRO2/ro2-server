@@ -16,6 +16,7 @@ namespace RO2.Tests.MailCharacterization;
 /// tradeability of the attachment, recipient resolution, mailbox-full, item take, store, notify. Every refusal is the one 2445
 /// frame (<see cref="MailPackets.BuildMailSendFailed2445"/>) and hands the charge back.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class MailSendCharacterizationTests
 {
     private const uint Recipient = 50;

@@ -10,6 +10,7 @@ namespace RO2.Tests.Packets;
 /// The destination block (map, position, direction) is the DungeonInfo row of the offered level at its
 /// Position_Info point (<see cref="DungeonChannelHandOff"/>, <see cref="PartyDungeonTeleportHandler.ResolveArrival"/>).
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class DungeonHandOff2556Tests
 {
  /// <summary>The 2556 answering the 1531 of group 42, which offered level 3.</summary>

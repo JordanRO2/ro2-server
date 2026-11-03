@@ -13,6 +13,7 @@ namespace RO2.Tests.Packets;
 /// Packet bodies are compared byte for byte. The header size follows the encryption mode: 3 bytes when unencrypted,
 /// 5 bytes for RC4 or AES.
 /// </remarks>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class PetLoyaltyFeedTests
 {
     private const uint Pet83000005 = 83000005, Pet83000015 = 83000015, Pet83000016 = 83000016, Pet83000019 = 83000019;

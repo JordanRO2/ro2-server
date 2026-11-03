@@ -14,6 +14,7 @@ namespace RO2.Tests.Packets;
 /// The combat class (create[19], Character.Job) and the creation profession (create[21]) kept apart: the stored-row
 /// heal at login, the char list [65]/[73], and the 2683 profession block.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class CharacterClassProfessionTests
 {
  /// <summary>A row as CharacterCreateHandler stores it: the 23-byte create block kept verbatim, create[0] in

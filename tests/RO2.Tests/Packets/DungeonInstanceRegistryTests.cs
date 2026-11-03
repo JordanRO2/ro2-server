@@ -12,6 +12,7 @@ namespace RO2.Tests.Packets;
 /// replayed on representative sequences. Entry counts are kept in a dictionary, standing in for
 /// DungeonEntryCountRepository within one daily window.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class DungeonInstanceRegistryTests
 {
     private static string Hex(byte[] b) => Convert.ToHexString(b).ToLowerInvariant();

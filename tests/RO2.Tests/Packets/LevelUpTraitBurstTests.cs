@@ -22,6 +22,7 @@ namespace RO2.Tests.Packets;
 /// The level-up burst is 2595, 2498, 2394, 2395 and 2542, followed by 2726 when applicable. The 2498 is the sheet at the new level,
 /// and the 2394 refills HP and SP to that sheet's maximum. The stat-reset scroll is answered with 2595, 2498 and 2329.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public sealed class LevelUpTraitBurstTests
 {
     private static readonly TimeSpan Generous = TimeSpan.FromSeconds(10);

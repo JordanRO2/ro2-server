@@ -17,6 +17,7 @@ namespace RO2.Tests.Packets;
 /// that closes after <see cref="DungeonInstanceRegistry.ClearedInstanceLifetime"/>. The entry count is kept
 /// in a local standing in for DungeonEntryCountRepository within one daily window. Tables come from data/.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class DungeonFinderReauditTests
 {
     private static string Hex(byte[] b) => Convert.ToHexString(b).ToLowerInvariant();

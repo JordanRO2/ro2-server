@@ -21,6 +21,7 @@ namespace RO2.Tests.Packets;
 /// <summary>
 /// Tests for the 2498 rate slots (PcTraitRates), the stats of worn Khara titles on every sheet and in the 2498 of an accepted 1438 (KharaTitleTraits, KharaTitleSelectHandler.AnswerAsync), and the quest objective closes kept across a relog (QuestProgressStore).
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public sealed class Reaudit4_B0_Tests
 {
     private static readonly TimeSpan Generous = TimeSpan.FromSeconds(10);

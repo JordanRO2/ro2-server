@@ -18,6 +18,7 @@ namespace RO2.Tests.Packets;
 /// 1301 and stay off Dark Whisper - Lower Floor 4302. Templates 1200 and 1201 are listed by the reference
 /// server even though a count of 2512s per map load never sees their rows, so those rows must stay.
 /// </remarks>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class FuncObjectRegistryTests
 {
  /// <summary>

@@ -30,6 +30,7 @@ namespace RO2.Tests.Packets;
 /// The head and death-sequence tests pin this server's layout and order; they are not byte comparisons with a retail
 /// frame, except where a retail body is quoted.
 /// </remarks>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class Reaudit2_B0_Tests
 {
     private static readonly TimeSpan Generous = TimeSpan.FromSeconds(10);

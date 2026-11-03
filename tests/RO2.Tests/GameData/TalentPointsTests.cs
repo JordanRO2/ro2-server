@@ -11,6 +11,7 @@ namespace RO2.Tests.GameData;
 /// <remarks>
 /// Covers the skill reset, the talent spend, and the pool sent at login. One known divergence, a point source the server does not model, is tested through the spend path instead.
 /// </remarks>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class TalentPointsTests
 {
     [Theory]

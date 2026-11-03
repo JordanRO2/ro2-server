@@ -24,6 +24,7 @@ namespace RO2.Tests.Packets;
 /// Persistence of private-shop craft offers per character (PrivateShopCraftStore, PrivateShopRegistry.LoadCrafts), and
 /// the 2646 AnsOpenPrivateShopSellerUI response that lists them.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class PrivateShopCraftPersistenceTests
 {
     private static List<PrivateShopCraftOffer> OffersOf(byte[] body)

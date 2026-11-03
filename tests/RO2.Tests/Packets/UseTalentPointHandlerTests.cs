@@ -20,6 +20,7 @@ namespace RO2.Tests.Packets;
 /// refused -> nothing persisted, nothing applied, no 2543; accepted -> exactly one batch, the mirror applied, one 2543.
 /// Job 6 (Swordsman) rows of the shipped Talent_Table: 1102 (no parent), 1117 (needs 1102), 1108 (needs 1117), 1110.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public sealed class UseTalentPointHandlerTests
 {
     private const uint CharId = 777001u;

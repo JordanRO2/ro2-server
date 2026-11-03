@@ -16,6 +16,7 @@ namespace RO2.Tests.Packets;
 /// 1387 ReqPartyChangeMaster refused on a WoE map (PartyChangeMasterHandler): 2352 with result 24324 and no
 /// leader change, checked against the expected refusal frame and the shipped data/Map_List.json.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class PartyChangeMaster2352WoeTests
 {
     private static readonly TimeSpan Generous = TimeSpan.FromSeconds(10);

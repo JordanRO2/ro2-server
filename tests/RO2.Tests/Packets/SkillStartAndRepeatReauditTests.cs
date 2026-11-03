@@ -22,6 +22,7 @@ namespace RO2.Tests.Packets;
 /// position echo, and the answer to a burst-duplicate 1508 (2715). Shipped data tables are found by walking up from the
 /// test output directory.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class SkillStartAndRepeatReauditTests
 {
     

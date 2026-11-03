@@ -10,6 +10,7 @@ using RO2.Characters.Domain;
 namespace RO2.Tests.Validation;
 
 /// <summary>INV-H12 (<see cref="InventoryRequest.Validate"/>), INV-H2 (worn-slot stat cap) and the per-session bank-open mark.</summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class InventoryRequestTests
 {
     private const ushort Tag = 58024;

@@ -24,6 +24,7 @@ namespace RO2.Tests.Packets;
 /// material gains, which carry the template's Abili_val at record offset 69. That field belongs to the shared
 /// record writer (see the ItemChangeExchange remarks).
 /// </remarks>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class ExtendCacheChangeItem1584Tests
 {
     private const uint Owner = 7;

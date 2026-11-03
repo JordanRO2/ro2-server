@@ -13,6 +13,7 @@ namespace RO2.Tests.Packets;
 /// also accept 140, 141/142 and 145/22300104. The rows use the shipped data (data/ItemInfo.json Item_Type,
 /// data/CardInfo.json Grade_Type, data/CardCompose.json Card_Grade, data/CardEnforce.json grade-0 rows).
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class CardEnforceMaterials1611Tests
 {
  /// <summary>Queen Serenia Card [Epic+]: Item_Type 13, CardInfo Grade_Type 4, EnforceID 450.</summary>

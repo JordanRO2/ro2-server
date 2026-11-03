@@ -13,6 +13,7 @@ namespace RO2.Tests.CollectionCharacterization;
 /// / feed / activate decisions, the log-and-swallow storage policy, and the NON-ATOMIC whole-document read-modify-write (a lost update
 /// is pinned as the known, preserved behaviour; there is no compare-and-set on any of the three ports).
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)]
 public class CollectionServiceCharacterizationTests
 {
     private const uint C = 7;
