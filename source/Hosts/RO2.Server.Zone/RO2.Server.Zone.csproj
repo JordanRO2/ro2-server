@@ -82,6 +82,7 @@
     <ProjectReference Include="..\..\Recruitment\RO2.Recruitment.Domain\RO2.Recruitment.Domain.csproj" />
     <ProjectReference Include="..\..\ReadyCheck\RO2.ReadyCheck.Domain\RO2.ReadyCheck.Domain.csproj" />
     <ProjectReference Include="..\..\ReadyCheck\RO2.ReadyCheck.Application\RO2.ReadyCheck.Application.csproj" />
+    <ProjectReference Include="..\..\TacticsMarks\RO2.TacticsMark.Domain\RO2.TacticsMark.Domain.csproj" />
     <ProjectReference Include="..\..\DungeonFinder\RO2.DungeonFinder.Domain\RO2.DungeonFinder.Domain.csproj" />
     <ProjectReference Include="..\..\DungeonFinder\RO2.DungeonFinder.Application\RO2.DungeonFinder.Application.csproj" />
   </ItemGroup>
