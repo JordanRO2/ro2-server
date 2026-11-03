@@ -14,7 +14,6 @@ using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 
 using RO2.Inventory.Domain;
-using RO2.Application.Interfaces;
 using RO2.Quests.Domain;
 using RO2.Characters.Domain;
 

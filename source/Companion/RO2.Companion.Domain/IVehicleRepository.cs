@@ -1,6 +1,4 @@
-using RO2.Companions.Domain;
-
-namespace RO2.Application.Interfaces;
+namespace RO2.Companions.Domain;
 
 /// <summary>
 /// Persistence for the vehicles each character owns. The list is sent on every map load (2522, after 2523).

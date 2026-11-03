@@ -1,5 +1,4 @@
 using MongoDB.Driver;
-using RO2.Application.Interfaces;
 using RO2.Companions.Domain;
 using RO2.Persistence.Mongo.Persistence;
 

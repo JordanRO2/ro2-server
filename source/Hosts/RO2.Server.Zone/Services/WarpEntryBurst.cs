@@ -1,6 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using RO2.Application.Interfaces;
 using RO2.Companions.Domain;
 using RO2.Collections.Domain;
 using RO2.Collections.Application;
