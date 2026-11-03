@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Namespace RO2.PartyDice: no GameData row is named PartyDice, so it cannot collide (CS0118) once RO2.GameData is imported. -->
+    <RootNamespace>RO2.PartyDice.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="RO2.Tests" />
+  </ItemGroup>
+
+  <!-- Dice bounded context: Domain references ONLY RO2.BuildingBlocks + the shared RO2.GameData kernel. -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+  </ItemGroup>
+
+</Project>

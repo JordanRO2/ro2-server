@@ -4,6 +4,7 @@ using RO2.Domain.Entities;
 using RO2.GameData;
 using RO2.GameData.Tables;
 using RO2.Server.Zone.Handlers.Rmi;
+using RO2.PartyDice.Domain;
 using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using Xunit;
@@ -551,9 +552,9 @@ public class CorpseLootTests
     public void LootRule_NeedsAPartyAndAnItemRow()
     {
         var party = new PartyState { ItemRule = 2, ItemQuality = 2 };
-        Assert.True(PartyDiceRolls.SendsToDice(party, new ItemData { ID = 22300102, Grade = 3 }));
-        Assert.False(PartyDiceRolls.SendsToDice(null, new ItemData { ID = 22300102, Grade = 3 }));
-        Assert.False(PartyDiceRolls.SendsToDice(party, null));
+        Assert.True(LootService.RollsForParty(party, new ItemData { ID = 22300102, Grade = 3 }));
+        Assert.False(LootService.RollsForParty(null, new ItemData { ID = 22300102, Grade = 3 }));
+        Assert.False(LootService.RollsForParty(party, null));
     }
 
     [Fact]

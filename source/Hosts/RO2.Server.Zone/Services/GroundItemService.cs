@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
+using RO2.PartyDice.Domain;
 
 namespace RO2.Server.Zone.Services;
 

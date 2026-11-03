@@ -91,6 +91,8 @@
     <ProjectReference Include="..\..\source\Recruitment\RO2.Recruitment.Domain\RO2.Recruitment.Domain.csproj" />
     <ProjectReference Include="..\..\source\ReadyCheck\RO2.ReadyCheck.Domain\RO2.ReadyCheck.Domain.csproj" />
     <ProjectReference Include="..\..\source\ReadyCheck\RO2.ReadyCheck.Application\RO2.ReadyCheck.Application.csproj" />
+    <ProjectReference Include="..\..\source\Dice\RO2.PartyDice.Domain\RO2.PartyDice.Domain.csproj" />
+    <ProjectReference Include="..\..\source\Dice\RO2.PartyDice.Application\RO2.PartyDice.Application.csproj" />
     <ProjectReference Include="..\..\source\TacticsMarks\RO2.TacticsMark.Domain\RO2.TacticsMark.Domain.csproj" />
   </ItemGroup>
 

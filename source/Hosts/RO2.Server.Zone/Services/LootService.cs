@@ -7,6 +7,7 @@ using RO2.Domain.Entities;
 using RO2.GameData;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
+using RO2.PartyDice.Domain;
 using RO2.Server.Zone.Handlers.Rmi;
 using RO2.Server.Zone.Models;
 using RO2.Inventory.Domain;
@@ -108,7 +109,7 @@ public class LootService
                 }
 
                 
-                var diceBound = PartyDiceRolls.SendsToDice(party, _data.GetItem(itemId));
+                var diceBound = RollsForParty(party, _data.GetItem(itemId));
                 GroundItemService.AddCorpseItem(killer.MapId, npcEntityId, itemId, count, diceBound);
                 _logger.LogDebug("{Name}: {Count}x item {Id} left on corpse {Corpse:X}{Dice}",
                     killer.Name, count, itemId, npcEntityId, diceBound ? " for the party roll" : "");
@@ -386,6 +387,13 @@ public class LootService
         }
         return landings;
     }
+
+ /// <summary>
+ /// True when the killer's party rolls for an item of this row (<see cref="PartyDiceRolls.SendsToDice"/>). False when
+ /// there is no party or no ItemInfo row.
+ /// </summary>
+    internal static bool RollsForParty(PartyState? party, ItemData? item)
+        => party != null && item != null && PartyDiceRolls.SendsToDice(party.ItemRule, party.ItemQuality, item.Grade);
 
  /// <summary>
  /// Creates a bag row for looted items in <paramref name="slot"/>, or with an automatically chosen slot when -1.
