@@ -1,5 +1,6 @@
 using RO2.Domain.Entities;
 using RO2.Collections.Domain;
+using RO2.Collections.Application;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -150,7 +151,7 @@ public static class WarpService
         // The messages from the map-load trigger on, in the plan's order. The vehicle and collection loads run
         // just before the first message that reads them, so a load error falls back to the empty form at the same point.
         IReadOnlyList<OwnedVehicle> vehicles = Array.Empty<OwnedVehicle>();
-        CollectionDocument? collection = null;
+        CollectionBook? collection = null;
         foreach (var step in decision.MapLoadSteps)
         {
             var opcode = WorldEntryStepOpcodes.Of(step);
@@ -189,19 +190,19 @@ public static class WarpService
                 case WorldEntryStep.MonsterCollection:
                     try
                     {
-                        collection = await CollectionService.From(services, logger).GetStateAsync(player.CharacterId);
+                        collection = await services.GetRequiredService<ICollectionBookView>().GetBookAsync(player.CharacterId);
                     }
                     catch (Exception ex)
                     {
                         logger.LogError(ex, "{Name} warp: could not load the collection state", player.Name);
                     }
                     await session.SendInternalRmiAsync(opcode,
-                        CollectionPackets.BuildNfyMCollection2913(collection?.RegisteredMonsterIds.Count ?? 0, data));
+                        CollectionPackets.BuildNfyMCollection2913(collection?.RegisteredMonsterCount ?? 0, data));
                     break;
 
                 case WorldEntryStep.PetCollection:
                     await session.SendInternalRmiAsync(opcode,
-                        CollectionPackets.BuildNfyPCollection(collection?.RegisteredPetIds.Count ?? 0));
+                        CollectionPackets.BuildNfyPCollection(collection?.RegisteredPetCount ?? 0));
                     break;
 
                 case WorldEntryStep.ActivePet:

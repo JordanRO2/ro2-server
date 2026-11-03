@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
 using RO2.Domain.Entities;
 using RO2.Collections.Domain;
+using RO2.Collections.Application;
 using RO2.GameData;
 using RO2.Persistence.Mongo.Persistence;
 using RO2.Network.Protocol;
@@ -29,7 +30,7 @@ public static class WarpEntryBurst
  /// <summary>Data read by <see cref="SendAsync"/> and <see cref="SendInPlaceAsync"/>, loaded by <see cref="PrepareAsync"/>.</summary>
     public sealed class Loaded
     {
-        internal Loaded(Character character, IReadOnlyList<CharacterQuickSlot> quickSlots, CollectionDocument collection,
+        internal Loaded(Character character, IReadOnlyList<CharacterQuickSlot> quickSlots, CollectionBook collection,
             KeyConfigDocument? keyConfig, IReadOnlyList<OwnedVehicle>? vehicles, IReadOnlyList<InventoryItem> equipped,
             IReadOnlyList<InventoryItem> bag)
         {
@@ -49,7 +50,7 @@ public static class WarpEntryBurst
         public IReadOnlyList<CharacterQuickSlot> QuickSlots { get; }
 
  /// <summary>Monster book, pet book and active pet.</summary>
-        public CollectionDocument Collection { get; }
+        public CollectionBook Collection { get; }
 
  /// <summary>Saved key bindings. Null sends the no-config form.</summary>
         public KeyConfigDocument? KeyConfig { get; }
@@ -80,7 +81,7 @@ public static class WarpEntryBurst
 
         var quickSlots = await services.GetRequiredService<IQuickSlotRepository>().GetByCharacterAsync(player.CharacterId);
         
-        var collection = await CollectionService.From(services, logger).GetStateAsync(player.CharacterId, ct);
+        var collection = await services.GetRequiredService<ICollectionBookView>().GetBookAsync(player.CharacterId, ct);
 
         KeyConfigDocument? keyConfig = null;
         try

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Plural namespace: a namespace "RO2.Collection" would shadow any future Collection type in every RO2.* file (CS0118). -->
+    <RootNamespace>RO2.Collections.Application</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Collection bounded context: Application holds the read port and, later, the use cases. It references its own Domain only.
+       The wire, the live registries and the order of the side effects stay in the Zone host. Never the Zone host. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Collection.Domain\RO2.Collection.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using RO2.Application.Interfaces;
-using RO2.Collections.Domain;
+using RO2.Collections.Application;
 using RO2.GameData.Tables;
 using RO2.GameData;
 using RO2.Network.Protocol;
@@ -98,7 +98,7 @@ public class EscapeDepartureReauditTests
     }
 
     private static WarpEntryBurst.Loaded Loaded(PlayerState player) => new(player.Character!,
-        Array.Empty<CharacterQuickSlot>(), new CollectionDocument { Id = player.CharacterId }, keyConfig: null,
+        Array.Empty<CharacterQuickSlot>(), new CollectionBook(0, 0, 0, 0), keyConfig: null,
         vehicles: null, Array.Empty<InventoryItem>(), Array.Empty<InventoryItem>());
 
     private static async Task<GameDataStore> LoadDataAsync()

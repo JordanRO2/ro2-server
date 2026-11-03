@@ -3,6 +3,7 @@ using RO2.Skills.Domain;
 using Microsoft.Extensions.Logging;
 using RO2.Domain.Entities;
 using RO2.Collections.Domain;
+using RO2.Collections.Application;
 using RO2.Quests.Domain;
 using RO2.GameData;
 using RO2.Network.Packets;
@@ -61,7 +62,7 @@ public static class WorldEntryService
         IReadOnlyList<RO2.Characters.Domain.CharacterQuickSlot>? quickSlots = null,
         bool isWarp = false,
         (uint MapId, float X, float Y, float Z)? warpSpawn = null,
-        CollectionDocument? collection = null,
+        CollectionBook? collection = null,
         KeyConfigDocument? keyConfig = null,
         DateTime? cardBookChargedUntil = null,
         byte[]? warpPcTrait2498 = null,
@@ -229,12 +230,12 @@ public static class WorldEntryService
 
                 case WorldEntryStep.MonsterCollection:
                     await session.SendInternalRmiAsync(opcode,
-                        CollectionPackets.BuildNfyMCollection2913(collection?.RegisteredMonsterIds.Count ?? 0, gameData));
+                        CollectionPackets.BuildNfyMCollection2913(collection?.RegisteredMonsterCount ?? 0, gameData));
                     break;
 
                 case WorldEntryStep.PetCollection:
                     await session.SendInternalRmiAsync(opcode,
-                        CollectionPackets.BuildNfyPCollection(collection?.RegisteredPetIds.Count ?? 0));
+                        CollectionPackets.BuildNfyPCollection(collection?.RegisteredPetCount ?? 0));
                     break;
 
                 case WorldEntryStep.ActivePet:

@@ -10,6 +10,7 @@ using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
+using RO2.Collections.Application;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -158,7 +159,7 @@ public class GliderTeleportHandler : ZoneRmiHandlerBase<GliderTeleportHandler>
         var quickSlots = await services.GetRequiredService<IQuickSlotRepository>().GetByCharacterAsync(player.CharacterId);
         // Collection state for the 2913/2919/2918 the warp burst re-sends on a
         // glider re-entry too. Not passing it made them always say "nothing registered, no active pet".
-        var collection = await CollectionService.From(services, Logger).GetStateAsync(player.CharacterId, ct);
+        var collection = await services.GetRequiredService<ICollectionBookView>().GetBookAsync(player.CharacterId, ct);
         // Saved key bindings for the warp burst's 2558: the list is re-sent on a glider re-entry,
         // so the empty form here would drop them.
         KeyConfigDocument? keyConfig = null;

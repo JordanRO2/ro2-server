@@ -4,6 +4,7 @@ using RO2.Skills.Domain;
 using RO2.Skills.Application;
 using RO2.Domain.Entities;
 using RO2.Collections.Domain;
+using RO2.Collections.Application;
 using RO2.Application.Interfaces;
 using RO2.Quests.Domain;
 using Microsoft.Extensions.DependencyInjection;
@@ -465,7 +466,7 @@ public class LoginPCHandler : NetworkZoneRmiBase
         // ends with. Without it those three always went out in the "registered nothing" form, even for a
         // character whose CollectionDocument holds registrations or an active pet.
         // GetStateAsync never throws: a storage error yields the empty document, i.e. those empty forms.
-        var collection = await CollectionService.From(services, Logger).GetStateAsync(characterId, ct);
+        var collection = await services.GetRequiredService<ICollectionBookView>().GetBookAsync(characterId, ct);
 
         // The character's Khara state (points, accepted Kharas with their progress, completed Kharas), loaded
         // into KharaService's cache before the burst. The 2310 carries all three: the balance at

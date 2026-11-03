@@ -161,6 +161,10 @@ public static class Program
             id => MailService.From(sp, sp.GetRequiredService<PlayerStateManager>(), sp.GetRequiredService<BroadcastService>(),
                 sp.GetRequiredService<ILoggerFactory>().CreateLogger("Mail")).NotifyNewMailAsync(id)));
 
+        // Collection.Application: the read port the login / warp / glider bursts take the book counts and the active pet from. Scoped, as CollectionService.From resolves the scoped ICollectionRepository.
+        services.AddScoped<RO2.Collections.Application.ICollectionBookView>(sp => new CollectionBookViewAdapter(
+            CollectionService.From(sp, sp.GetRequiredService<ILoggerFactory>().CreateLogger("Collection"))));
+
         // Instance stores over the singleton MongoDbContext (DB Phase 0, pass 2b). Stateless apart from their
         // collection handles, so singletons; handlers resolve them from the per-message scope, never into a field.
         services.AddProviderRepository<ICashMallRepository, RO2.Economy.Infrastructure.Mongo.CashMallRepository, RO2.Economy.Infrastructure.Postgres.CashMallRepository>(config.Database.Provider, ServiceLifetime.Singleton);
