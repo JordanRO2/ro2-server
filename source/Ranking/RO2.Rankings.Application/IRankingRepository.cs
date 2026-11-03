@@ -1,6 +1,6 @@
-using RO2.Domain.Entities;
+using RO2.Rankings.Domain;
 
-namespace RO2.Application.Interfaces;
+namespace RO2.Rankings.Application;
 
 /// <summary>
 /// Document persistence for the ranking boards: the per-period counters the game feeds and the published

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Plural namespace: RO2.GameData already has a type named Ranking, so a namespace "RO2.Ranking" raises CS0118. -->
+    <RootNamespace>RO2.Rankings.Application</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Ranking bounded context: Application holds the IRankingRepository port. Never the Zone host. -->
+  <ItemGroup>
+    <ProjectReference Include="..\RO2.Rankings.Domain\RO2.Rankings.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.BuildingBlocks\RO2.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
+  </ItemGroup>
+
+</Project>

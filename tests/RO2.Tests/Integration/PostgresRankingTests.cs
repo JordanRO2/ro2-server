@@ -1,4 +1,6 @@
 using RO2.Domain.Entities;
+using RO2.Rankings.Application;
+using RO2.Rankings.Domain;
 using RO2.Persistence.Postgres.Repositories;
 using Xunit;
 

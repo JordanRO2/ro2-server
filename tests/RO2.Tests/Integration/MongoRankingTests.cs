@@ -1,5 +1,7 @@
 using MongoDB.Driver;
 using RO2.Domain.Entities;
+using RO2.Rankings.Application;
+using RO2.Rankings.Domain;
 using RO2.Persistence.Mongo.Persistence;
 using RO2.Persistence.Mongo.Repositories;
 using Xunit;

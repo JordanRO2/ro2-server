@@ -16,6 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Ranking\RO2.Rankings.Domain\RO2.Rankings.Domain.csproj" />
+    <ProjectReference Include="..\..\Ranking\RO2.Rankings.Application\RO2.Rankings.Application.csproj" />
                         <ProjectReference Include="..\..\Quest\RO2.Quest.Application\RO2.Quest.Application.csproj" />
     <ProjectReference Include="..\..\Quest\RO2.Quest.Domain\RO2.Quest.Domain.csproj" />
     <ProjectReference Include="..\..\Mail\RO2.Mail.Infrastructure.Mongo\RO2.Mail.Infrastructure.Mongo.csproj" />

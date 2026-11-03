@@ -1,4 +1,4 @@
-namespace RO2.Domain.Entities;
+namespace RO2.Rankings.Domain;
 
 /// <summary>One ranked character in a published board.</summary>
 public sealed class RankingSnapshotRow

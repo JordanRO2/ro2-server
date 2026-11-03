@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using RO2.Rankings.Application;
 using RO2.Rewards.Domain;
 using RO2.Guilds.Domain;
 using RO2.Skills.Domain;
