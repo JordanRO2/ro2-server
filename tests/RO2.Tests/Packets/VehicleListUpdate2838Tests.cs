@@ -62,8 +62,8 @@ public class VehicleListUpdate2838Tests
         var expiredTick = Server(2026, 9, 26, 8, 20, 47, 895);
         AssertTick(Expired311f, owned, lastSoon, expiredTick);
         
-        Assert.Empty(VehicleExpiryNotifier.Due(owned, expiredTick, expiredTick + 60.0 / 86400));
-        Assert.Empty(VehicleExpiryNotifier.Due(owned, expiredTick, Server(2026, 9, 26, 9, 41, 17, 454)));
+        Assert.Empty(VehicleRules.Due(owned, expiredTick, expiredTick + 60.0 / 86400));
+        Assert.Empty(VehicleRules.Due(owned, expiredTick, Server(2026, 9, 26, 9, 41, 17, 454)));
     }
 
     [Fact]
@@ -74,7 +74,7 @@ public class VehicleListUpdate2838Tests
         var owned = new[] { new OwnedVehicle { RidingId = Vehicle311f, ExpiryOle = Expiry311f } };
         var login = Server(2026, 9, 26, 6, 0, 0, 0);
 
-        Assert.Empty(VehicleExpiryNotifier.Due(owned, login, Server(2026, 9, 26, 7, 12, 55, 42)));
+        Assert.Empty(VehicleRules.Due(owned, login, Server(2026, 9, 26, 7, 12, 55, 42)));
         AssertTick(Soon311f, owned, login, Server(2026, 9, 26, 7, 20, 58, 986));
     }
 
@@ -91,9 +91,9 @@ public class VehicleListUpdate2838Tests
             new OwnedVehicle { RidingId = Vehicle311f, ExpiryOle = Expiry311f },       
         };
 
-        var due = VehicleExpiryNotifier.Due(owned, since, now);
+        var due = VehicleRules.Due(owned, since, now);
 
-        Assert.Equal(new[] { (Vehicle311f, VehiclePackets.StateExpired), (90280000u, VehiclePackets.StateExpiringSoon) },
+        Assert.Equal(new[] { (Vehicle311f, VehicleRules.StateExpired), (90280000u, VehicleRules.StateExpiringSoon) },
             due.Select(r => (r.RidingId, r.State)).ToArray());
         Assert.Equal(Expiry311f, due[0].ExpiryOle);
     }
@@ -105,11 +105,11 @@ public class VehicleListUpdate2838Tests
         
         var now = Expiry311f - 30.0 / 1440;
         var owned = new[] { new OwnedVehicle { RidingId = Vehicle311f, ExpiryOle = Expiry311f } };
-        Assert.Single(VehicleExpiryNotifier.Due(owned, now - 60.0 / 86400, now));
+        Assert.Single(VehicleRules.Due(owned, now - 60.0 / 86400, now));
 
         var extended = VehicleRules.Grant(owned, Vehicle311f, 7, now);
 
-        Assert.Empty(VehicleExpiryNotifier.Due(extended, now, now + 60.0 / 86400));
+        Assert.Empty(VehicleRules.Due(extended, now, now + 60.0 / 86400));
     }
 
     [Fact]
@@ -225,7 +225,7 @@ public class VehicleListUpdate2838Tests
 
     private static void AssertTick(string retail, IReadOnlyList<OwnedVehicle> owned, double since, double now)
     {
-        var due = VehicleExpiryNotifier.Due(owned, since, now);
+        var due = VehicleRules.Due(owned, since, now);
         var record = Assert.Single(due);
         Assert.Equal(retail, Convert.ToHexStringLower(VehiclePackets.BuildVehicleListUpdate2838(new[] { record })));
     }

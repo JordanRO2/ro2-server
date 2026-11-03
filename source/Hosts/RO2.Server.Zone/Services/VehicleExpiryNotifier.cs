@@ -20,9 +20,6 @@ namespace RO2.Server.Zone.Services;
 /// </remarks>
 internal sealed class VehicleExpiryNotifier
 {
- /// <summary>Announcement window for state 8: 60 minutes.</summary>
-    internal static readonly double ExpiringSoonWindowDays = TimeSpan.FromMinutes(60).TotalDays;
-
     private readonly IVehicleRepository _vehicles;
     private readonly ILogger _logger;
     private readonly VehicleExpiryWatch _watch = new();
@@ -44,7 +41,7 @@ internal sealed class VehicleExpiryNotifier
             return;
 
         var owned = await _vehicles.GetAsync(player.CharacterId, ct);
-        foreach (var record in Due(owned, since, nowOle))
+        foreach (var record in VehicleRules.Due(owned, since, nowOle))
         {
             
             
@@ -75,31 +72,6 @@ internal sealed class VehicleExpiryNotifier
     {
         _watch.Retain(online);
         VehicleClientList.Retain(online, clientListVersion);
-    }
-
- /// <summary>
- /// The records to send at the given time, sorted by vehicle id: state 8 for a timed vehicle expiring within the window,
- /// and state 4 for a vehicle whose expiry fell since the last evaluation. Permanent vehicles are never sent.
- /// </summary>
-    internal static IReadOnlyList<VehicleListRecord> Due(IReadOnlyList<OwnedVehicle> owned, double sinceOle, double nowOle)
-    {
-        var due = new List<VehicleListRecord>();
-        foreach (var v in owned.OrderBy(v => v.RidingId))
-        {
-            var expiry = VehiclePackets.WholeSecondExpiry(v.ExpiryOle);
-            if (expiry == 0)
-                continue;
-            if (expiry > nowOle)
-            {
-                if (expiry - nowOle <= ExpiringSoonWindowDays)
-                    due.Add(new VehicleListRecord(v.RidingId, expiry, VehiclePackets.StateExpiringSoon));
-            }
-            else if (expiry > sinceOle)
-            {
-                due.Add(new VehicleListRecord(v.RidingId, expiry, VehiclePackets.StateExpired));
-            }
-        }
-        return due;
     }
 }
 

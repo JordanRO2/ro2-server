@@ -105,7 +105,7 @@ public class RidingExtendItemHandler : ZoneRmiHandlerBase<RidingExtendItemHandle
         pw.WriteUInt32(ridingId);
         pw.WriteDouble(expiryOle);
         pw.WriteByte(1);
-        pw.WriteByte(VehiclePackets.StateOf(expiryOle, nowOle));
+        pw.WriteByte(VehicleRules.StateOf(expiryOle, nowOle));
         pw.WriteByte(0);
         return pw.ToArray();
     }

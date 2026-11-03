@@ -246,7 +246,7 @@ public class VehicleOwnership2522Tests
     [InlineData(46300.0, 2)]
     [InlineData(43121.933587962965, 4)]
     public void State_FollowsTheExpiry(double expiry, byte state)
-        => Assert.Equal(state, VehiclePackets.StateOf(expiry, 46223.5));
+        => Assert.Equal(state, VehicleRules.StateOf(expiry, 46223.5));
 
     [Fact]
     public void NoVehicle_IsRetailsEmptyForm()

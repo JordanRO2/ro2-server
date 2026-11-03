@@ -176,10 +176,10 @@ public class VehicleCompanionCharacterizationTests
         Assert.Equal(4, VehiclePackets.EnvelopeLengthFieldLength);
         Assert.Equal((byte)1, VehiclePackets.RecordMarker);
         Assert.Equal((byte)0, VehiclePackets.RecordTail);
-        Assert.Equal((byte)1, VehiclePackets.StatePermanent);
-        Assert.Equal((byte)2, VehiclePackets.StateTimed);
-        Assert.Equal((byte)4, VehiclePackets.StateExpired);
-        Assert.Equal((byte)8, VehiclePackets.StateExpiringSoon);
+        Assert.Equal((byte)1, VehicleRules.StatePermanent);
+        Assert.Equal((byte)2, VehicleRules.StateTimed);
+        Assert.Equal((byte)4, VehicleRules.StateExpired);
+        Assert.Equal((byte)8, VehicleRules.StateExpiringSoon);
         Assert.Equal((byte)11, VehicleRules.ReinsItemType);
     }
 
@@ -193,14 +193,14 @@ public class VehicleCompanionCharacterizationTests
     [InlineData(99999.0, 2)]
     public void StateOf_is_permanent_timed_or_expired_and_never_expiring_soon(double expiry, byte state)
     {
-        Assert.Equal(state, VehiclePackets.StateOf(expiry, 46223.5));
+        Assert.Equal(state, VehicleRules.StateOf(expiry, 46223.5));
     }
 
     [Fact]
     public void ExpiringSoonWindow_is_sixty_minutes_and_the_tick_boundary_is_pinned()
     {
-        Assert.Equal(TimeSpan.FromMinutes(60).TotalDays, VehicleExpiryNotifier.ExpiringSoonWindowDays);
-        Assert.Equal("555555555555a53f", Bits(VehicleExpiryNotifier.ExpiringSoonWindowDays));   // 0.041666666666666664
+        Assert.Equal(TimeSpan.FromMinutes(60).TotalDays, VehicleRules.ExpiringSoonWindowDays);
+        Assert.Equal("555555555555a53f", Bits(VehicleRules.ExpiringSoonWindowDays));   // 0.041666666666666664
     }
 
     [Theory]
@@ -214,7 +214,7 @@ public class VehicleCompanionCharacterizationTests
         var now = new DateTime(2026, 9, 26, 7, 0, 0).ToOADate();
         var expiry = new DateTime(2026, 9, 26, 7, 0, 0).AddSeconds(secondsAfterNow).ToOADate();
 
-        var due = VehicleExpiryNotifier.Due(new[] { V(1, expiry) }, now - 1, now);
+        var due = VehicleRules.Due(new[] { V(1, expiry) }, now - 1, now);
 
         if (state == 0) Assert.Empty(due);
         else
@@ -232,20 +232,20 @@ public class VehicleCompanionCharacterizationTests
         var now = new DateTime(2026, 9, 26, 7, 0, 0).ToOADate();
 
         // expiry == since: already announced, never again.
-        Assert.Empty(VehicleExpiryNotifier.Due(new[] { V(1, since) }, since, now));
+        Assert.Empty(VehicleRules.Due(new[] { V(1, since) }, since, now));
         // expiry == now: not "> now", so it is the expired branch (state 4), announced because it is after since.
-        Assert.Equal(VehiclePackets.StateExpired, Assert.Single(VehicleExpiryNotifier.Due(new[] { V(1, now) }, since, now)).State);
+        Assert.Equal(VehicleRules.StateExpired, Assert.Single(VehicleRules.Due(new[] { V(1, now) }, since, now)).State);
         // one ulp after since still cuts back to since (the whole-second cut runs before the compare): nothing due.
-        Assert.Empty(VehicleExpiryNotifier.Due(new[] { V(1, Math.BitIncrement(since)) }, since, now));
+        Assert.Empty(VehicleRules.Due(new[] { V(1, Math.BitIncrement(since)) }, since, now));
         // one whole second after since: announced as expired.
         var oneSecondAfter = new DateTime(2026, 9, 26, 6, 59, 1).ToOADate();
-        Assert.Equal(VehiclePackets.StateExpired, Assert.Single(VehicleExpiryNotifier.Due(new[] { V(1, oneSecondAfter) }, since, now)).State);
+        Assert.Equal(VehicleRules.StateExpired, Assert.Single(VehicleRules.Due(new[] { V(1, oneSecondAfter) }, since, now)).State);
 
         // The expiry is cut to its whole second first: 07:00:00.900 is treated as 07:00:00 == now, so it is EXPIRED (not soon),
         // and the record carries the cut value.
         var fractional = new DateTime(2026, 9, 26, 7, 0, 0, 900).ToOADate();
-        var r = Assert.Single(VehicleExpiryNotifier.Due(new[] { V(1, fractional) }, since, now));
-        Assert.Equal(VehiclePackets.StateExpired, r.State);
+        var r = Assert.Single(VehicleRules.Due(new[] { V(1, fractional) }, since, now));
+        Assert.Equal(VehicleRules.StateExpired, r.State);
         Assert.Equal(Bits(now), Bits(r.ExpiryOle));
     }
 
@@ -261,9 +261,9 @@ public class VehicleCompanionCharacterizationTests
             V(100, now - 10.0 / 86400),     // expired since the last evaluation
         };
 
-        var due = VehicleExpiryNotifier.Due(owned, since, now);
+        var due = VehicleRules.Due(owned, since, now);
 
-        Assert.Equal(new[] { (100u, VehiclePackets.StateExpired), (300u, VehiclePackets.StateExpiringSoon) },
+        Assert.Equal(new[] { (100u, VehicleRules.StateExpired), (300u, VehicleRules.StateExpiringSoon) },
             due.Select(r => (r.RidingId, r.State)).ToArray());
         Assert.Equal(new[] { 300u, 200u, 100u }, owned.Select(v => v.RidingId));
     }

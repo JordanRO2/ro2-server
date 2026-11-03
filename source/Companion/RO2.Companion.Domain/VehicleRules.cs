@@ -13,6 +13,50 @@ public static class VehicleRules
  /// <summary>ItemInfo.Item_Type of the reins items that grant a vehicle.</summary>
     public const byte ReinsItemType = 11;
 
+ /// <summary>Record state of a permanent vehicle (1).</summary>
+    public const byte StatePermanent = 1;
+
+ /// <summary>Record state of a timed vehicle that has not yet expired (2).</summary>
+    public const byte StateTimed = 2;
+
+ /// <summary>Record state of a timed vehicle that has expired (4).</summary>
+    public const byte StateExpired = 4;
+
+ /// <summary>Record state of a 2838 for a timed vehicle expiring within the next 60 minutes (8).</summary>
+    public const byte StateExpiringSoon = 8;
+
+ /// <summary>Announcement window for state 8: 60 minutes.</summary>
+    public static readonly double ExpiringSoonWindowDays = TimeSpan.FromMinutes(60).TotalDays;
+
+ /// <summary>Record state for a vehicle with the given expiry at the given time.</summary>
+    public static byte StateOf(double expiryOle, double nowOle)
+        => expiryOle == 0 ? StatePermanent : expiryOle > nowOle ? StateTimed : StateExpired;
+
+ /// <summary>
+ /// The records to send at the given time, sorted by vehicle id: state 8 for a timed vehicle expiring within the window,
+ /// and state 4 for a vehicle whose expiry fell since the last evaluation. Permanent vehicles are never sent.
+ /// </summary>
+    public static IReadOnlyList<VehicleListRecord> Due(IReadOnlyList<OwnedVehicle> owned, double sinceOle, double nowOle)
+    {
+        var due = new List<VehicleListRecord>();
+        foreach (var v in owned.OrderBy(v => v.RidingId))
+        {
+            var expiry = WholeSecondExpiry(v.ExpiryOle);
+            if (expiry == 0)
+                continue;
+            if (expiry > nowOle)
+            {
+                if (expiry - nowOle <= ExpiringSoonWindowDays)
+                    due.Add(new VehicleListRecord(v.RidingId, expiry, StateExpiringSoon));
+            }
+            else if (expiry > sinceOle)
+            {
+                due.Add(new VehicleListRecord(v.RidingId, expiry, StateExpired));
+            }
+        }
+        return due;
+    }
+
  /// <summary>ItemCashInfo.Duration_Type of a permanent item.</summary>
     private const byte DurationPermanent = 0;
 

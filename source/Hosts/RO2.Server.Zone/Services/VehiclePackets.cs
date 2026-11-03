@@ -30,28 +30,10 @@ internal static class VehiclePackets
     /// <summary>Record +14: a constant byte, always 0.</summary>
     internal const byte RecordTail = 0;
 
-    /// <summary>Record state of a permanent vehicle (1).</summary>
-    internal const byte StatePermanent = 1;
-
-    /// <summary>Record state of a timed vehicle that has not yet expired (2).</summary>
-    internal const byte StateTimed = 2;
-
-    /// <summary>Record state of a timed vehicle that has expired (4).</summary>
-    internal const byte StateExpired = 4;
-
-    /// <summary>
-    /// Record state of a 2838 for a timed vehicle expiring within the next 60 minutes (8).
-    /// </summary>
-    internal const byte StateExpiringSoon = 8;
-
     /// <summary>
     /// The server's local wall clock as an OLE automation date.
     /// </summary>
     internal static double NowOle() => ServerWallClock.Now().DateTime.ToOADate();
-
-    /// <summary>Record state for a vehicle with the given expiry at the given time.</summary>
-    internal static byte StateOf(double expiryOle, double nowOle)
-        => expiryOle == 0 ? StatePermanent : expiryOle > nowOle ? StateTimed : StateExpired;
 
     /// <summary>
     /// The expiry cut to its whole second. 0 (permanent) stays 0, and a value already on a whole second is returned unchanged.
@@ -64,7 +46,7 @@ internal static class VehiclePackets
     /// </summary>
     internal static byte[] BuildAllVehicleList2522(IReadOnlyList<OwnedVehicle> vehicles, double nowOle)
         => BuildList(vehicles.OrderBy(v => v.RidingId)
-            .Select(v => new VehicleListRecord(v.RidingId, v.ExpiryOle, StateOf(v.ExpiryOle, nowOle)))
+            .Select(v => new VehicleListRecord(v.RidingId, v.ExpiryOle, VehicleRules.StateOf(v.ExpiryOle, nowOle)))
             .ToList());
 
     /// <summary>
@@ -99,8 +81,3 @@ internal static class VehiclePackets
     /// </summary>
     internal static byte[] BuildVehicleQuickSlot2523Empty() => BuildList(Array.Empty<VehicleListRecord>());
 }
-
-/// <summary>
-/// One 15-byte vehicle record: the RidingInfo id, the stored expiry (OLE date, 0 = permanent) and the state at +13.
-/// </summary>
-internal readonly record struct VehicleListRecord(uint RidingId, double ExpiryOle, byte State);
