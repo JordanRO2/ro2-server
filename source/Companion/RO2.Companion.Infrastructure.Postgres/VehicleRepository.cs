@@ -2,8 +2,9 @@ using System.Text.Json;
 using Npgsql;
 using NpgsqlTypes;
 using RO2.Companions.Domain;
+using RO2.Persistence.Postgres;
 
-namespace RO2.Persistence.Postgres.Repositories;
+namespace RO2.Companions.Infrastructure.Postgres;
 
 /// <summary>
 /// PostgreSQL implementation of <see cref="IVehicleRepository"/>: one row per character in the

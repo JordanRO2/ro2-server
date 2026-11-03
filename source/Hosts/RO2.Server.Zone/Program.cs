@@ -169,7 +169,7 @@ public static class Program
         // Instance stores over the singleton MongoDbContext (DB Phase 0, pass 2b). Stateless apart from their
         // collection handles, so singletons; handlers resolve them from the per-message scope, never into a field.
         services.AddProviderRepository<ICashMallRepository, RO2.Economy.Infrastructure.Mongo.CashMallRepository, RO2.Economy.Infrastructure.Postgres.CashMallRepository>(config.Database.Provider, ServiceLifetime.Singleton);
-        services.AddProviderRepository<IVehicleRepository, RO2.Companions.Infrastructure.Mongo.VehicleRepository, RO2.Persistence.Postgres.Repositories.VehicleRepository>(config.Database.Provider, ServiceLifetime.Singleton);
+        services.AddProviderRepository<IVehicleRepository, RO2.Companions.Infrastructure.Mongo.VehicleRepository, RO2.Companions.Infrastructure.Postgres.VehicleRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IKeyConfigRepository, RO2.Characters.Infrastructure.Mongo.KeyConfigRepository, RO2.Characters.Infrastructure.Postgres.KeyConfigRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IAccountGiftRepository, RO2.Persistence.Mongo.Repositories.AccountGiftRepository, RO2.Persistence.Postgres.Repositories.AccountGiftRepository>(config.Database.Provider, ServiceLifetime.Singleton);
         services.AddProviderRepository<IPresentPasswordRepository, RO2.Persistence.Mongo.Repositories.PresentPasswordRepository, RO2.Persistence.Postgres.Repositories.PresentPasswordRepository>(config.Database.Provider, ServiceLifetime.Singleton);

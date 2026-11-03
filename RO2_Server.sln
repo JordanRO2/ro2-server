@@ -153,6 +153,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Companion.Domain", "sou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Companion.Infrastructure.Mongo", "source\Companion\RO2.Companion.Infrastructure.Mongo\RO2.Companion.Infrastructure.Mongo.csproj", "{C0A1B2D3-4E5F-4A60-8B71-92C3D4E5F611}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RO2.Companion.Infrastructure.Postgres", "source\Companion\RO2.Companion.Infrastructure.Postgres\RO2.Companion.Infrastructure.Postgres.csproj", "{C0A1B2D3-4E5F-4A60-8B71-92C3D4E5F612}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -871,6 +873,18 @@ Global
 		{C0A1B2D3-4E5F-4A60-8B71-92C3D4E5F611}.Release|x64.Build.0 = Release|Any CPU
 		{C0A1B2D3-4E5F-4A60-8B71-92C3D4E5F611}.Release|x86.ActiveCfg = Release|Any CPU
 		{C0A1B2D3-4E5F-4A60-8B71-92C3D4E5F611}.Release|x86.Build.0 = Release|Any CPU
+		{C0A1B2D3-4E5F-4A60-8B71-92C3D4E5F612}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0A1B2D3-4E5F-4A60-8B71-92C3D4E5F612}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0A1B2D3-4E5F-4A60-8B71-92C3D4E5F612}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C0A1B2D3-4E5F-4A60-8B71-92C3D4E5F612}.Debug|x64.Build.0 = Debug|Any CPU
+		{C0A1B2D3-4E5F-4A60-8B71-92C3D4E5F612}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C0A1B2D3-4E5F-4A60-8B71-92C3D4E5F612}.Debug|x86.Build.0 = Debug|Any CPU
+		{C0A1B2D3-4E5F-4A60-8B71-92C3D4E5F612}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0A1B2D3-4E5F-4A60-8B71-92C3D4E5F612}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0A1B2D3-4E5F-4A60-8B71-92C3D4E5F612}.Release|x64.ActiveCfg = Release|Any CPU
+		{C0A1B2D3-4E5F-4A60-8B71-92C3D4E5F612}.Release|x64.Build.0 = Release|Any CPU
+		{C0A1B2D3-4E5F-4A60-8B71-92C3D4E5F612}.Release|x86.ActiveCfg = Release|Any CPU
+		{C0A1B2D3-4E5F-4A60-8B71-92C3D4E5F612}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -922,5 +936,6 @@ Global
 		{E7A3C915-2B64-4D80-9F1E-5A6B7C8D9E01} = {AC1F9C49-2FCC-6C79-CD75-1CAEC5B633F2}
 		{55987007-DDD4-4087-A17D-F5C04F8334F4} = {2E3208BA-65E8-6454-01E3-2E708A500844}
 		{C0A1B2D3-4E5F-4A60-8B71-92C3D4E5F611} = {2E3208BA-65E8-6454-01E3-2E708A500844}
+		{C0A1B2D3-4E5F-4A60-8B71-92C3D4E5F612} = {2E3208BA-65E8-6454-01E3-2E708A500844}
 	EndGlobalSection
 EndGlobal

@@ -45,6 +45,7 @@
 <ProjectReference Include="..\..\Shared\RO2.GameData\RO2.GameData.csproj" />
 <ProjectReference Include="..\..\Companion\RO2.Companion.Domain\RO2.Companion.Domain.csproj" />
 <ProjectReference Include="..\..\Companion\RO2.Companion.Infrastructure.Mongo\RO2.Companion.Infrastructure.Mongo.csproj" />
+<ProjectReference Include="..\..\Companion\RO2.Companion.Infrastructure.Postgres\RO2.Companion.Infrastructure.Postgres.csproj" />
 <ProjectReference Include="..\..\Game\RO2.Domain\RO2.Domain.csproj" />
     <ProjectReference Include="..\..\Game\RO2.Application\RO2.Application.csproj" />
     <ProjectReference Include="..\..\Platform\RO2.Infrastructure\RO2.Infrastructure.csproj" />

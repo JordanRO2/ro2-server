@@ -1,5 +1,5 @@
 using RO2.Companions.Domain;
-using RO2.Persistence.Postgres.Repositories;
+using RO2.Companions.Infrastructure.Postgres;
 using Xunit;
 
 namespace RO2.Tests.Integration;
