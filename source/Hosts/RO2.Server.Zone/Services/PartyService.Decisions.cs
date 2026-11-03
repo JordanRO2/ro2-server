@@ -396,6 +396,10 @@ public partial class PartyService
             var snap = Snapshot(party);
             var player = party.Members.GetValueOrDefault(sessionId) ?? _playerManager.GetPlayer(sessionId);
             playerName = player?.Name ?? "Unknown";
+            // A leaver with no valid GID (0 = unknown/offline player) must not reach CommitLeave: DecideLeave(0)
+            // emits no effects but CommitLeave would still drop a key and could dangle the leader.
+            if (MemberGid(player) == 0)
+                return;
             (outcome, effects) = snap.Aggregate.DecideLeave(MemberGid(player), ToDomain(reason), snap.Online);
             CommitLeave(party, snap, sessionId, outcome);
             keys = snap.KeyOf;
