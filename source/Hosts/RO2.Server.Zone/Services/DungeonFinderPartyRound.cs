@@ -1,3 +1,4 @@
+using RO2.DungeonFinder.Domain;
 using RO2.GameData.Tables;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
@@ -111,27 +112,26 @@ public sealed class DungeonFinderPartyRound
         ArgumentOutOfRangeException.ThrowIfZero(others.Count);
         lock (_gate)
         {
-            var sends = PruneLocked(isSeated, out _);
+            var effects = PruneLocked(isSeated, out _);
             if (_rounds.Exists(r => r.PartyId == partyId))
-                return new OpenOutcome(OpenStatus.AlreadyOpen, 0, 0, sends);
+                return new OpenOutcome(OpenStatus.AlreadyOpen, 0, 0, Translate(effects));
 
             var seats = new List<Seat>(others.Count + 1) { new(searcher.SessionId, searcher) };
             foreach (var member in others)
                 seats.Add(new Seat(member.SessionId, member));
             var role = FirstFreeRole(row, seats, searcherFlags);
             if (role == 0)
-                return new OpenOutcome(OpenStatus.SearcherHasNoSlot, 0, 0, sends);
+                return new OpenOutcome(OpenStatus.SearcherHasNoSlot, 0, 0, Translate(effects));
             seats[0].Role = role;
 
             var round = new Round(++_lastRoundId, partyId, row, seats);
             _rounds.Add(round);
-            sends.Add(new Outgoing(searcher.SessionId, searcherAnswerOpcode,
-                SearcherAnswer(searcherAnswerOpcode, DungeonFinderPackets.ResultAccepted)));
+            effects.Add(new SearchAnswered(searcher.SessionId, DungeonFinderPackets.ResultAccepted,
+                searcherAnswerOpcode == ZoneS2COpcodes.AnsPartyMatchingFindDungeonRandom ? SearchKind.Random : SearchKind.Normal));
             foreach (var seat in seats.Skip(1))
-                sends.Add(new Outgoing(seat.SessionId, ZoneS2COpcodes.NfyFindParty_Party_Dungeon_SelectRolePlease,
-                    FindPartyRolePackets.SelectRolePlease2822.ToArray()));
-            AddStateLocked(round, sends);
-            return new OpenOutcome(OpenStatus.Opened, role, round.Id, sends);
+                effects.Add(new SelectRolePlease(seat.SessionId));
+            AddStateLocked(round, effects);
+            return new OpenOutcome(OpenStatus.Opened, role, round.Id, Translate(effects));
         }
     }
 
@@ -143,16 +143,15 @@ public sealed class DungeonFinderPartyRound
     {
         lock (_gate)
         {
-            var sends = PruneLocked(isSeated, out var told);
+            var effects = PruneLocked(isSeated, out var told);
             var round = RoundOfLocked(member);
             if (round is null)
             {
                 
-                sends.Add(new Outgoing(member.SessionId, ZoneS2COpcodes.AnsFindParty_Party_SelectRole,
-                    FindPartyRolePackets.BuildSelectRoleAnswer2834(FindPartyRolePackets.SelectRoleSlotTaken)));
+                effects.Add(new SelectRoleAnswered(member.SessionId, FindPartyRolePackets.SelectRoleSlotTaken));
                 if (!told.Contains(member.SessionId))
-                    sends.Add(RoundFailedTo(member.SessionId));
-                return new SelectOutcome(SelectStatus.NoRound, 0, sends);
+                    effects.Add(new RoundFailed(member.SessionId));
+                return new SelectOutcome(SelectStatus.NoRound, 0, Translate(effects));
             }
 
             var seat = round.Seats.Find(s => ReferenceEquals(s.Player, member))!;
@@ -161,21 +160,19 @@ public sealed class DungeonFinderPartyRound
             if (role == 0)
             {
                 _rounds.Remove(round);
-                sends.Add(new Outgoing(member.SessionId, ZoneS2COpcodes.AnsFindParty_Party_SelectRole,
-                    FindPartyRolePackets.BuildSelectRoleAnswer2834(FindPartyRolePackets.SelectRoleSlotTaken)));
+                effects.Add(new SelectRoleAnswered(member.SessionId, FindPartyRolePackets.SelectRoleSlotTaken));
                 foreach (var s in round.Seats)
-                    sends.Add(RoundFailedTo(s.SessionId));
-                return new SelectOutcome(SelectStatus.SlotTaken, 0, sends);
+                    effects.Add(new RoundFailed(s.SessionId));
+                return new SelectOutcome(SelectStatus.SlotTaken, 0, Translate(effects));
             }
 
             seat.Role = role;
-            sends.Add(new Outgoing(member.SessionId, ZoneS2COpcodes.AnsFindParty_Party_SelectRole,
-                FindPartyRolePackets.BuildSelectRoleAnswer2834(FindPartyRolePackets.SelectRoleAccepted)));
-            AddStateLocked(round, sends);
+            effects.Add(new SelectRoleAnswered(member.SessionId, FindPartyRolePackets.SelectRoleAccepted));
+            AddStateLocked(round, effects);
             if (!round.Seats.TrueForAll(s => s.Role != 0))
-                return new SelectOutcome(SelectStatus.Accepted, role, sends);
+                return new SelectOutcome(SelectStatus.Accepted, role, Translate(effects));
             _rounds.Remove(round);
-            return new SelectOutcome(SelectStatus.Completed, role, sends);
+            return new SelectOutcome(SelectStatus.Completed, role, Translate(effects));
         }
     }
 
@@ -187,13 +184,13 @@ public sealed class DungeonFinderPartyRound
     {
         lock (_gate)
         {
-            var sends = PruneLocked(isSeated, out _);
+            var effects = PruneLocked(isSeated, out _);
             if (RoundOfLocked(member) is not { } round)
-                return new CancelOutcome(false, sends);
+                return new CancelOutcome(false, Translate(effects));
             _rounds.Remove(round);
             foreach (var s in round.Seats)
-                sends.Add(RoundFailedTo(s.SessionId));
-            return new CancelOutcome(true, sends);
+                effects.Add(new RoundFailed(s.SessionId));
+            return new CancelOutcome(true, Translate(effects));
         }
     }
 
@@ -206,13 +203,13 @@ public sealed class DungeonFinderPartyRound
         lock (_gate)
         {
             var round = _rounds.Find(r => r.Id == roundId);
-            var sends = PruneLocked(isSeated, out _);
+            var effects = PruneLocked(isSeated, out _);
             if (round is null)
-                return new CancelOutcome(false, sends);
+                return new CancelOutcome(false, Translate(effects));
             if (_rounds.Remove(round))
                 foreach (var s in round.Seats)
-                    sends.Add(RoundFailedTo(s.SessionId));
-            return new CancelOutcome(true, sends);
+                    effects.Add(new RoundFailed(s.SessionId));
+            return new CancelOutcome(true, Translate(effects));
         }
     }
 
@@ -265,16 +262,15 @@ public sealed class DungeonFinderPartyRound
     }
 
  /// <summary>Sends the round's counts to every member, each with its own role.</summary>
-    private static void AddStateLocked(Round round, List<Outgoing> sends)
+    private static void AddStateLocked(Round round, List<FinderEffect> effects)
     {
         var filled = Filled(round.Seats);
         foreach (var s in round.Seats)
-            sends.Add(new Outgoing(s.SessionId, ZoneS2COpcodes.AnsPartyMatchingInProgressInfo,
-                DungeonFinderPackets.BuildInProgressInfo2806(0, filled, s.Role)));
+            effects.Add(new InProgress(s.SessionId, 0, filled.Tanks, filled.Healers, filled.Dealers, s.Role));
     }
 
-    private static Outgoing RoundFailedTo(uint sessionId)
-        => new(sessionId, ZoneS2COpcodes.NfyResult_FindParty_Party_SelectRole, FindPartyRolePackets.BuildRoundFailed2831());
+    private static List<Outgoing> Translate(List<FinderEffect> effects)
+        => effects.Select(FinderEffectTranslator.ToFrame).ToList();
 
     private Round? RoundOfLocked(PlayerState member)
         => _rounds.Find(r => r.Seats.Exists(s => ReferenceEquals(s.Player, member)));
@@ -283,9 +279,9 @@ public sealed class DungeonFinderPartyRound
  /// Drops every round with a member that <paramref name="isSeated"/> rejects, and returns a closing notice for each
  /// member of those rounds still in the world. <paramref name="told"/> receives their sessions.
  /// </summary>
-    private List<Outgoing> PruneLocked(SeatCheck isSeated, out HashSet<uint> told)
+    private List<FinderEffect> PruneLocked(SeatCheck isSeated, out HashSet<uint> told)
     {
-        var sends = new List<Outgoing>();
+        var sends = new List<FinderEffect>();
         told = [];
         for (int i = 0; i < _rounds.Count;)
         {
@@ -299,7 +295,7 @@ public sealed class DungeonFinderPartyRound
             _rounds.RemoveAt(i);
             foreach (var s in present)
             {
-                sends.Add(RoundFailedTo(s.SessionId));
+                sends.Add(new RoundFailed(s.SessionId));
                 told.Add(s.SessionId);
             }
         }
