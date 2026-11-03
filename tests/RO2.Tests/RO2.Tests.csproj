@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\source\Dungeon\RO2.Dungeon.Domain\RO2.Dungeon.Domain.csproj" />
     <ProjectReference Include="..\..\source\Ranking\RO2.Rankings.Domain\RO2.Rankings.Domain.csproj" />
+    <ProjectReference Include="..\..\source\Colosseum\RO2.Colosseum.Domain\RO2.Colosseum.Domain.csproj" />
     <ProjectReference Include="..\..\source\Ranking\RO2.Rankings.Application\RO2.Rankings.Application.csproj" />
                         <ProjectReference Include="..\..\source\Quest\RO2.Quest.Domain\RO2.Quest.Domain.csproj" />
                         <ProjectReference Include="..\..\source\Mail\RO2.Mail.Infrastructure.Mongo\RO2.Mail.Infrastructure.Mongo.csproj" />

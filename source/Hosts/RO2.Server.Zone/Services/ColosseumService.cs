@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using RO2.Colosseum.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -27,9 +28,6 @@ public static class ColosseumService
 
  /// <summary>Default ready-state byte of a queued registrant. It is a stable non-zero "queued" marker.</summary>
     public const byte DefaultReadyState = 1;
-
- /// <summary>Highest score a scoreboard row carries: each row holds a single byte.</summary>
-    public const int ScoreMax = byte.MaxValue;
 
  /// <summary>Result of toggling a queue registration.</summary>
     public enum JoinResult { Registered, Cancelled }
@@ -110,10 +108,7 @@ public static class ColosseumService
 
  /// <summary>Returns the ranking value sent with the ranking update.</summary>
     public static byte RankingByte()
-    {
-        int n = _scores.Count;
-        return (byte)(n & byte.MaxValue);
-    }
+        => ColosseumScoreboard.RankingByte(_scores.Count);
 
  /// <summary>Records a score for a player and updates the ranking.</summary>
     public static void RecordScore(string name, int delta = 1)
@@ -127,20 +122,6 @@ public static class ColosseumService
  /// Returns the scoreboard rows: the current registrants first, then other ranked players, ordered by score from highest to lowest.
  /// </summary>
     public static IReadOnlyList<ColosseumPackets.ScoreEntry> Scoreboard()
-    {
-        var rows = new List<ColosseumPackets.ScoreEntry>();
-        var seen = new HashSet<string>();
-        foreach (var r in GetRegistrants())
-        {
-            if (string.IsNullOrEmpty(r.Name) || !seen.Add(r.Name)) continue;
-            _scores.TryGetValue(r.Name, out int sc);
-            rows.Add(new ColosseumPackets.ScoreEntry(r.Name, (byte)System.Math.Clamp(sc, 0, ScoreMax)));
-        }
-        foreach (var kv in _scores.OrderByDescending(k => k.Value))
-        {
-            if (!seen.Add(kv.Key)) continue;
-            rows.Add(new ColosseumPackets.ScoreEntry(kv.Key, (byte)System.Math.Clamp(kv.Value, 0, ScoreMax)));
-        }
-        return rows;
-    }
+        => ColosseumScoreboard.Order(GetRegistrants().Select(r => r.Name).ToList(), _scores)
+            .Select(s => new ColosseumPackets.ScoreEntry(s.Name, s.Score)).ToList();
 }

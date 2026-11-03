@@ -1,3 +1,4 @@
+using RO2.Colosseum.Domain;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RO2.Companions.Domain;

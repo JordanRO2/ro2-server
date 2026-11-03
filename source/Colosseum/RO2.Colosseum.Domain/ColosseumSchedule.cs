@@ -1,6 +1,6 @@
 using RO2.GameData;
 
-namespace RO2.Server.Zone.Services;
+namespace RO2.Colosseum.Domain;
 
 /// <summary>
 /// Colosseum opening hours and the start notification (2879, <c>NfyColosseumStart</c>) that announces them.
@@ -10,7 +10,7 @@ namespace RO2.Server.Zone.Services;
 /// The notification body is one byte: 01 when the Colosseum is open, 00 when it is closed.
 /// </para>
 /// <para>
-/// The opening hours are fixed in this class (01:00, 13:00 and 18:00, one hour each; they are in no data table). The Colosseum is open during the hours of <see cref="IsOpen"/>, based on <see cref="ServerWallClock"/>. The server sends the state change about once a minute, and players who enter during opening hours are told it is open (see <see cref="AnnouncesOnEntry"/>).
+/// The opening hours are fixed in this class (01:00, 13:00 and 18:00, one hour each; they are in no data table). The Colosseum is open during the hours of <see cref="IsOpen"/>, based on <see cref="System.DateTimeOffset"/>. The server sends the state change about once a minute, and players who enter during opening hours are told it is open (see <see cref="AnnouncesOnEntry"/>).
 /// </para>
 /// </remarks>
 public static class ColosseumSchedule
