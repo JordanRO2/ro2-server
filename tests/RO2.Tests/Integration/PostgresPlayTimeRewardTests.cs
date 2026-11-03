@@ -24,18 +24,18 @@ public sealed class PostgresPlayTimeRewardTests
     private static DateTime Utc(int year, int month, int day, int hour = 0, int minute = 0, int second = 0)
         => new(year, month, day, hour, minute, second, DateTimeKind.Utc);
 
-    [Fact]
+    [DockerFact]
     public async Task Get_missing_account_is_null()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PlayTimeRewardRepository(_fx.Db!);
         Assert.Null(await repo.GetDocumentAsync(NewId()));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Save_then_get_round_trips_every_field()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PlayTimeRewardRepository(_fx.Db!);
         var id = NewId();
         var period = Utc(2026, 10, 18, 5);
@@ -53,10 +53,10 @@ public sealed class PostgresPlayTimeRewardTests
         Assert.Equal(DateTimeKind.Utc, got.UpdatedUtc.Kind);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Save_with_large_account_id_round_trips()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PlayTimeRewardRepository(_fx.Db!);
         var id = 4_294_000_000u + (uint)Random.Shared.Next(0, 900_000);
         await repo.SaveDocumentAsync(Doc(id, 1, 0, Utc(2026, 1, 1), Utc(2026, 1, 1)));
@@ -65,10 +65,10 @@ public sealed class PostgresPlayTimeRewardTests
         Assert.Equal(id, got.Id);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Save_overwrites_existing_document_without_duplicating()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PlayTimeRewardRepository(_fx.Db!);
         var id = NewId();
         await repo.SaveDocumentAsync(Doc(id, 10, 100, Utc(2026, 10, 1), Utc(2026, 10, 1, 1)));
@@ -88,10 +88,10 @@ public sealed class PostgresPlayTimeRewardTests
         Assert.Equal(1L, (long)(await cmd.ExecuteScalarAsync())!);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Save_normalizes_local_and_unspecified_kinds_to_utc()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PlayTimeRewardRepository(_fx.Db!);
         var id = NewId();
         var unspecified = new DateTime(2026, 10, 3, 4, 5, 6, DateTimeKind.Unspecified);
@@ -104,10 +104,10 @@ public sealed class PostgresPlayTimeRewardTests
         Assert.Equal(local.ToUniversalTime(), got.UpdatedUtc);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Documents_for_different_accounts_are_independent()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PlayTimeRewardRepository(_fx.Db!);
         var a = NewId();
         var b = a == uint.MaxValue ? a - 1 : a + 1;
@@ -119,18 +119,18 @@ public sealed class PostgresPlayTimeRewardTests
         Assert.Equal(2u, (await repo.GetDocumentAsync(b))!.SlotId);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task SaveMany_empty_is_a_noop()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PlayTimeRewardRepository(_fx.Db!);
         await repo.SaveManyDocumentsAsync(Array.Empty<PlayTimeRewardDocument>());
     }
 
-    [Fact]
+    [DockerFact]
     public async Task SaveMany_inserts_new_and_updates_existing()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PlayTimeRewardRepository(_fx.Db!);
         var existing = NewId();
         var fresh1 = existing == uint.MaxValue ? existing - 1 : existing + 1;
@@ -162,10 +162,10 @@ public sealed class PostgresPlayTimeRewardTests
         Assert.Equal(Utc(2026, 10, 5, 3), f2.UpdatedUtc);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task SaveMany_duplicate_id_last_document_wins()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new PlayTimeRewardRepository(_fx.Db!);
         var id = NewId();
         await repo.SaveManyDocumentsAsync(new[]

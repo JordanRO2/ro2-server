@@ -32,18 +32,18 @@ public sealed class PostgresAccountGiftTests
         Source = source,
     };
 
-    [Fact]
+    [DockerFact]
     public async Task GetLive_unknown_account_is_empty()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         Assert.Empty(await repo.GetLiveAsync(NewAccount(), NowLocal));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task File_creates_box_returns_live_count_and_round_trips_fields()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         var account = NewAccount();
         var gift = Gift(0, itemId: 4_000_000_001, count: ushort.MaxValue, source: 4);
@@ -59,10 +59,10 @@ public sealed class PostgresAccountGiftTests
         Assert.True((gift.ReceivedUtc - live.ReceivedUtc).Duration() < TimeSpan.FromMilliseconds(1));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task File_appends_to_existing_box_and_counts_all_live()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         var account = NewAccount();
 
@@ -71,10 +71,10 @@ public sealed class PostgresAccountGiftTests
         Assert.Equal(3, (await repo.GetLiveAsync(account, NowLocal)).Count);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task File_empty_list_creates_nothing_and_counts_zero()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         var account = NewAccount();
 
@@ -84,10 +84,10 @@ public sealed class PostgresAccountGiftTests
         Assert.False(await repo.TryTakeAsync(account, "anything"));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task File_does_not_count_expired_gifts()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         var account = NewAccount();
 
@@ -95,10 +95,10 @@ public sealed class PostgresAccountGiftTests
         Assert.Equal(1, await repo.FileAsync(account, new[] { Gift(7), Gift(8) }, NowLocal));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task GetLive_is_newest_first_and_purges_expired_from_storage()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         var account = NewAccount();
         var old = Gift(5);
@@ -116,10 +116,10 @@ public sealed class PostgresAccountGiftTests
         Assert.Equal(3, earlier.Count);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task GetLive_purge_leaves_other_accounts_untouched()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         var a = NewAccount();
         var b = NewAccount();
@@ -133,10 +133,10 @@ public sealed class PostgresAccountGiftTests
         Assert.Equal(expiredB.Guid, bAtEarlier.Guid);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task TryTake_removes_the_gift_once()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         var account = NewAccount();
         var keep = Gift(0);
@@ -149,18 +149,18 @@ public sealed class PostgresAccountGiftTests
         Assert.Equal(keep.Guid, live.Guid);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task TryTake_unknown_account_is_false()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         Assert.False(await repo.TryTakeAsync(NewAccount(), System.Guid.NewGuid().ToString("N")));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task TryTake_missing_guid_on_existing_box_is_true_and_removes_nothing()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         var account = NewAccount();
         var gift = Gift(0);
@@ -171,10 +171,10 @@ public sealed class PostgresAccountGiftTests
         Assert.Single(await repo.GetLiveAsync(account, NowLocal));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task TryTake_only_pulls_from_the_callers_account()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         var a = NewAccount();
         var b = NewAccount();
@@ -187,18 +187,18 @@ public sealed class PostgresAccountGiftTests
         Assert.Single(await repo.GetLiveAsync(a, NowLocal));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task GetAttendance_unknown_account_is_zeroes()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         Assert.Equal(new AccountAttendance(0, 0, 0), await repo.GetAttendanceAsync(NewAccount()));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task GetAttendance_box_filed_before_attendance_reads_as_never_attended()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         var account = NewAccount();
         await repo.FileAsync(account, new[] { Gift(0) }, NowLocal);
@@ -206,10 +206,10 @@ public sealed class PostgresAccountGiftTests
         Assert.Equal(new AccountAttendance(0, 0, 0), await repo.GetAttendanceAsync(account));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task RecordAttendance_first_day_creates_the_box_and_files_the_reward()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         var account = NewAccount();
         var reward = Gift(0, itemId: 607, count: 5, source: 4);
@@ -224,10 +224,10 @@ public sealed class PostgresAccountGiftTests
         Assert.Equal((byte)4, live.Source);
     }
 
-    [Fact]
+    [DockerFact]
     public async Task RecordAttendance_first_day_without_reward_files_nothing()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         var account = NewAccount();
 
@@ -237,10 +237,10 @@ public sealed class PostgresAccountGiftTests
         Assert.Empty(await repo.GetLiveAsync(account, NowLocal));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task RecordAttendance_first_day_on_existing_never_attended_box_keeps_its_gifts()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         var account = NewAccount();
         var existing = Gift(2);
@@ -254,10 +254,10 @@ public sealed class PostgresAccountGiftTests
         Assert.Equal(new AccountAttendance(1, 740_000, 0), await repo.GetAttendanceAsync(account));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task RecordAttendance_next_day_matches_only_the_day_the_caller_saw()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         var account = NewAccount();
         await repo.TryRecordAttendanceAsync(account, 0, 740_000, 1, 0, null);
@@ -278,10 +278,10 @@ public sealed class PostgresAccountGiftTests
         Assert.Single(await repo.GetLiveAsync(account, NowLocal));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task RecordAttendance_seen_zero_after_attending_is_false()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         var account = NewAccount();
         await repo.TryRecordAttendanceAsync(account, 0, 740_000, 1, 0, null);
@@ -292,10 +292,10 @@ public sealed class PostgresAccountGiftTests
         Assert.Empty(await repo.GetLiveAsync(account, NowLocal));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task RecordAttendance_seen_nonzero_without_a_box_is_false_and_creates_nothing()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         var account = NewAccount();
 
@@ -304,10 +304,10 @@ public sealed class PostgresAccountGiftTests
         Assert.Empty(await repo.GetLiveAsync(account, NowLocal));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task RecordAttendance_concurrent_first_day_has_exactly_one_winner_and_one_reward()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         var account = NewAccount();
 
@@ -319,10 +319,10 @@ public sealed class PostgresAccountGiftTests
         Assert.Single(await repo.GetLiveAsync(account, NowLocal)); 
     }
 
-    [Fact]
+    [DockerFact]
     public async Task RecordAttendance_concurrent_next_day_has_exactly_one_winner_and_one_reward()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         var account = NewAccount();
         await repo.TryRecordAttendanceAsync(account, 0, 740_000, 1, 0, null);
@@ -335,10 +335,10 @@ public sealed class PostgresAccountGiftTests
         Assert.Single(await repo.GetLiveAsync(account, NowLocal));
     }
 
-    [Fact]
+    [DockerFact]
     public async Task Filing_after_attendance_keeps_the_attendance()
     {
-        if (!_fx.Available) return;
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
         var account = NewAccount();
         await repo.TryRecordAttendanceAsync(account, 0, 740_000, 4, 2, null);
