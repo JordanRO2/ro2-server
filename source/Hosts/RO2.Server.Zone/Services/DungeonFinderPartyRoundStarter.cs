@@ -53,6 +53,8 @@ public static class DungeonFinderPartyRoundStarter
         var isSeated = DungeonFinderPartyRound.SeatCheckFor(view, services.GetRequiredService<ISeatLiveness>());
         var opened = DungeonFinderPartyRound.Shared.Open(party.PartyId, rows[0], SeatKeys.Of(player), roleFlags, others, isSeated,
             answerOpcode);
+        // Arm the expiry before the sends: a delivery that throws must not leave an open round with no timeout.
+        if (opened.Status == OpenStatus.Opened) _ = ExpireRoundWhenDueAsync(opened.RoundId, isSeated, broadcast, logger);
         await DungeonFinderPartyRound.DeliverAsync(opened.Sends, broadcast.GetSession);
         switch (opened.Status)
         {
@@ -62,7 +64,6 @@ public static class DungeonFinderPartyRoundStarter
                 return true;
             case OpenStatus.Opened:
                 
-                _ = ExpireRoundWhenDueAsync(opened.RoundId, isSeated, broadcast, logger);
                 logger.LogInformation("{Name} opened dungeon finder party round {Round} for lists {Lists} as role {Role}, asking {Count} member(s)",
                     player.Name, opened.RoundId, string.Join(",", rows.Select(r => r.List_ID)), opened.SearcherRole, others.Count);
                 return true;
