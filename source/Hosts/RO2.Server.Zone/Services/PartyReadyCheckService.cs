@@ -48,7 +48,13 @@ public sealed class PartyReadyCheckService(IPartyRoster parties, BroadcastServic
         var roster = parties.RosterOfParty(partyId);
         var effects = check.State.Start(alreadyChecking, ReadyCheckRoster.SessionIds(roster),
             id => ReadyCheckRoster.IsOnline(roster, id));
-        await SendAsync(effects, check, session);
+        try { await SendAsync(effects, check, session); }
+        catch
+        {
+            // No settle timer is armed yet: a throwing send would leave this check registered (and every later 1500 refused) for good.
+            if (!alreadyChecking) _running.TryRemove(new KeyValuePair<uint, Check>(partyId, check));
+            throw;
+        }
         if (alreadyChecking)
         {
             logger.LogDebug("{Name}: 1500 while party {Party}'s battle-ready check is running (2698 15727)", leader.Name, partyId);

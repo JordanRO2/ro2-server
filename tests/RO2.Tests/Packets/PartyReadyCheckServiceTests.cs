@@ -92,6 +92,19 @@ public class PartyReadyCheckServiceTests
         }
     }
 
+    /// <summary>Audit [43]: a send that throws during StartAsync must unwind the registration, not leave the party stuck on 15727.</summary>
+    [Fact]
+    public async Task AThrowingSendDuringStart_UnwindsTheRegistration()
+    {
+        await using var rig = await Rig.CreateAsync(null);
+        ((SemaphoreSlim)typeof(ProudSession).GetField("_sendLock", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!
+            .GetValue(rig.Sessions[1])!).Dispose(); // every send to member 1 now throws
+
+        await Assert.ThrowsAnyAsync<Exception>(() => rig.Service.StartAsync(Rig.PartyId, rig.Players[0], rig.Sessions[0]));
+        // Still registered, this would take the already-checking path (15727 to the leader, no throw); unwound, it tries again and throws again.
+        await Assert.ThrowsAnyAsync<Exception>(() => rig.Service.StartAsync(Rig.PartyId, rig.Players[0], rig.Sessions[0]));
+    }
+
     [Fact]
     public async Task Flow_LeaderStarts_MembersVote_AndTheResultFollowsTheLastVote()
     {
