@@ -66,6 +66,9 @@ internal sealed class RetailPc
     public uint UnionId => U32(173);
     public ulong UnionJoined => U64(177);
     public uint TitleB => U32(185);
+    public byte ProJobLevel => Head[189];
+    public byte ProJobId => Head[190];
+    public ulong JobMastery => U64(191);
 
     /// <summary>Parses a captured 2310 body (length word first). Null when it does not walk cleanly to its stat block.</summary>
     public static RetailPc? Parse(byte[] b)
@@ -223,11 +226,10 @@ internal static class RetailSeeder
             c.JobLevel = h[74];
             c.EquipHideFlag = BinaryPrimitives.ReadUInt16LittleEndian(h.AsSpan(75));
             c.MapId = BinaryPrimitives.ReadUInt32LittleEndian(h.AsSpan(67));
-            // The list shows only the unspent pool (header [89]); the allocation behind it is not on the wire for these characters.
-            // Decisión: put the spent points on VIT, the slot every full retail head here carries them in (0,0,0,0,375) — wrong stat
-            // mix costs nothing, the list and the head read the pool only.
-            var spent = Math.Max(0, CharacterStats.BonusStatPointsEarned(c.Level) - BinaryPrimitives.ReadUInt16LittleEndian(h.AsSpan(89)));
-            c.BonusVit = spent;
+            (c.ProJobLevel, c.LifeJob) = (h[100], h[101]);
+            // Header [77-88] carries the six allocated bonus-stat u16 (STR, AGI, INT, WIS, VIT, LUK).
+            ushort Bonus(int i) => BinaryPrimitives.ReadUInt16LittleEndian(h.AsSpan(77 + 2 * i));
+            (c.BonusStr, c.BonusAgi, c.BonusInt, c.BonusWis, c.BonusVit, c.BonusLuk) = (Bonus(0), Bonus(1), Bonus(2), Bonus(3), Bonus(4), Bonus(5));
 
             if (own) ApplyHead(c, seed.Own);
             await characters.SaveCharacterAsync(c);
@@ -254,6 +256,7 @@ internal static class RetailSeeder
         c.FacingYaw = (float)(pc.Facing * 2.0 * Math.PI / 180.0);   // inverse of CharacterHeadRules.FacingByte
         c.Gold = (long)pc.Wallet;
         c.BankSlots = pc.BankSlots;
+        (c.ProJobLevel, c.LifeJob, c.JobMasteryPoints) = (pc.ProJobLevel, pc.ProJobId, pc.JobMastery);
         var b = pc.Bonus5;
         (c.BonusStr, c.BonusAgi, c.BonusInt, c.BonusWis, c.BonusVit) = (b[0], b[1], b[2], b[3], b[4]);
     }

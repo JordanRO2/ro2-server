@@ -37,7 +37,7 @@ public sealed class CharacterRepository : ICharacterRepository
         "x, y, z, hp, max_hp, mp, max_mp, str, agi, vit, intel, wis, luk, " +
         "bonus_str, bonus_agi, bonus_int, bonus_wis, bonus_vit, bonus_luk, gold, bank_gold, bind_index, " +
         "facing_yaw, appearance_json, equip_hide_flag, allow_anyone_review, bank_slots, created_at, last_played, " +
-        "play_time_seconds, is_deleted, deleted_at";
+        "play_time_seconds, is_deleted, deleted_at, pro_job_level, job_mastery_points";
 
  /// <summary>Every column but the identity id: the SET list of the full-row replace.</summary>
     private static readonly string[] ReplaceColumns =
@@ -47,6 +47,7 @@ public sealed class CharacterRepository : ICharacterRepository
         "wis", "luk", "bonus_str", "bonus_agi", "bonus_int", "bonus_wis", "bonus_vit", "bonus_luk", "gold",
         "bank_gold", "bind_index", "facing_yaw", "appearance_json", "equip_hide_flag", "allow_anyone_review",
         "bank_slots", "created_at", "last_played", "play_time_seconds", "is_deleted", "deleted_at",
+        "pro_job_level", "job_mastery_points",
     ];
 
     private static readonly string ReplaceSql =
@@ -137,6 +138,8 @@ public sealed class CharacterRepository : ICharacterRepository
         PlayTimeSeconds = r.GetInt64(42),
         IsDeleted = r.GetBoolean(43),
         DeletedAt = r.IsDBNull(44) ? null : r.GetDateTime(44),
+        ProJobLevel = (byte)r.GetInt16(45),
+        JobMasteryPoints = unchecked((ulong)r.GetInt64(46)),
     };
 
     private async Task<List<Character>> QueryAsync(string where, Action<NpgsqlCommand> bind, string suffix, CancellationToken ct)
@@ -398,6 +401,8 @@ public sealed class CharacterRepository : ICharacterRepository
             Add(p, "play_time_seconds", character.PlayTimeSeconds);
             Add(p, "is_deleted", character.IsDeleted);
             AddTimestamp(p, "deleted_at", character.DeletedAt);
+            Add(p, "pro_job_level", character.ProJobLevel);
+            Add(p, "job_mastery_points", character.JobMasteryPoints);
         }, CancellationToken.None);
     }
 

@@ -20,6 +20,10 @@ public class Character
     public byte Race { get; set; } = DefaultRace;
     /// <summary>Profession (ProJob): 0 at creation, assigned in-game.</summary>
     public byte LifeJob { get; set; }
+    /// <summary>Profession level -&gt; 2310 head+189 / charlist[100]. Only meaningful while <see cref="LifeJob"/> is non-zero.</summary>
+    public byte ProJobLevel { get; set; }
+    /// <summary>Job-mastery point total -&gt; 2310 head+191 and the map-load 2986.</summary>
+    public ulong JobMasteryPoints { get; set; }
     /// <summary>Character gender.</summary>
     public byte Gender { get; set; }
     /// <summary>Base level.</summary>

@@ -37,9 +37,6 @@ public static class CharacterSerializer
     /// <summary>Header offsets 92-99: delete timer value (int64) for a character that is not being deleted.</summary>
     private const long DeleteTimerNone = -1;
 
-    /// <summary>Header offsets 77-88: size of the profession (ProJob) progress block, all zero while no profession is modelled.</summary>
-    private const int ProfessionBlockSize = 12;
-
     /// <summary>Size in bytes of the appearance block copied from the creation payload (header offsets 50-72).</summary>
     private const int AppearanceBlockSize = 23;
 
@@ -137,8 +134,10 @@ public static class CharacterSerializer
         // [75-76] equipment hide flag: the per-slot "hide equipment" bits, toggled by the client's costume-flag
         // request. An untouched character carries Character.DefaultEquipHideFlag.
         writer.WriteUInt16(character.EquipHideFlag);
-        // [77-88] profession (ProJob) progress block. No profession progress is stored, so it is all zero.
-        writer.WriteZeros(ProfessionBlockSize);
+        // [77-88] the six allocated bonus-stat u16 (STR, AGI, INT, WIS, VIT, LUK): the 2310 head +151..+160 plus LUK.
+        var (bonus5, _) = CharacterHeadRules.BonusStatBlock(character);
+        foreach (var b in bonus5) writer.WriteUInt16(b);
+        writer.WriteUInt16((ushort)Math.Clamp(character.BonusLuk, 0, ushort.MaxValue));
         // [89-90] unspent bonus stat points, derived the same way as the pool in the character stats message so
         // the list and the sheet agree.
         writer.WriteUInt16(UnspentBonusStatPoints(character));
@@ -222,9 +221,10 @@ public static class CharacterSerializer
  /// Returns the profession (ProJob) level and id sent to the client, at character-list offsets 100-101 and in the world-entry character record. Logic that depends on whether a character has a profession must use this value, not <see cref="Character.LifeJob"/>, so the server never acts on a profession the client was not told about.
  /// </summary>
  /// <remarks>
- /// Currently always (0, 0): professions are not modelled yet, and <see cref="Character.LifeJob"/> is not reliable on stored rows. When professions are implemented, derive both bytes here.
+ /// The id is <see cref="Character.LifeJob"/> and the level <see cref="Character.ProJobLevel"/>; id 0 forces level 0 (retail's invariant). Earning a profession is not implemented, so only a character that already stores one sends non-zero.
  /// </remarks>
-    internal static (byte Level, byte Id) WireProJob(Character character) => (0, 0);
+    internal static (byte Level, byte Id) WireProJob(Character character)
+        => (character.LifeJob == 0 ? (byte)0 : character.ProJobLevel, character.LifeJob);
 
     private static ushort UnspentBonusStatPoints(Character character)
     {

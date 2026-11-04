@@ -668,6 +668,8 @@ public sealed class PostgresCharacterTests
             Job = 9,
             Race = 1,
             LifeJob = 4,
+            ProJobLevel = 40,
+            JobMasteryPoints = ulong.MaxValue,
             Gender = 0,
             Level = 255,
             Exp = ulong.MaxValue,
@@ -716,6 +718,8 @@ public sealed class PostgresCharacterTests
         Assert.Equal((byte)9, got.Job);
         Assert.Equal((byte)1, got.Race);
         Assert.Equal((byte)4, got.LifeJob);
+        Assert.Equal((byte)40, got.ProJobLevel);
+        Assert.Equal(ulong.MaxValue, got.JobMasteryPoints);
         Assert.Equal((byte)0, got.Gender);
         Assert.Equal((byte)255, got.Level);
         Assert.Equal(ulong.MaxValue, got.Exp);

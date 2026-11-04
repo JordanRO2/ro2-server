@@ -579,7 +579,9 @@ public static class PostgresSchema
             last_played          timestamptz NULL,
             play_time_seconds    bigint      NOT NULL DEFAULT 0,
             is_deleted           boolean     NOT NULL DEFAULT false,
-            deleted_at           timestamptz NULL
+            deleted_at           timestamptz NULL,
+            pro_job_level        smallint    NOT NULL DEFAULT 0,
+            job_mastery_points   bigint      NOT NULL DEFAULT 0
         )
         """,
         """

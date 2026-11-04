@@ -58,12 +58,12 @@ internal static class CharacterHeadRules
     }
 
  /// <summary>
- /// The character's job-mastery point total. Always 0, because the server does not store mastery points yet.
+ /// The character's stored job-mastery point total (0 when none, or no character).
  /// </summary>
  /// <remarks>
- /// When mastery points are persisted, return them here. The total is shared with the job-mastery point change message, so both must read it from this method.
+ /// The total is shared with the job-mastery point change message, so both must read it from this method.
  /// </remarks>
-    internal static ulong JobMasteryPoints(Character? character) => 0;
+    internal static ulong JobMasteryPoints(Character? character) => character?.JobMasteryPoints ?? 0;
 
  /// <summary>
  /// Returns the combat class of the character: its job id, as the client reads it for the class name and job requirements.
