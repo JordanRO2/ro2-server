@@ -72,9 +72,13 @@ public class PlayerSpawnService
         // Fall back to every observer when the newcomer's position is not yet known (the box would exclude everyone).
         var half = AoiRules.HalfWidth(store.GetMap(newPlayer.MapId)?.Map_Type ?? 0);
         var boxed = newPlayer.X != 0f || newPlayer.Y != 0f;
+        // Flip each pair atomically up front, and exchange only with the peers this call actually paired. A peer that
+        // walked into the newcomer during this window already paired us (TryEnterPair returns false) and already sent
+        // the exchange from its move, so the spawn does not send it a second time.
         var existingPlayers = SpawnVisibilityUseCase
             .Observers(audience, _playerManager.GetPlayersOnMap(newPlayer.MapId), p => p.MapId, p => p.SessionId)
             .Where(p => !boxed || AoiRules.InView(newPlayer.X, newPlayer.Y, p.X, p.Y, half))
+            .Where(p => TryEnterPair(newPlayer, p))
             .ToList();
 
         var newcomerSpawn = await BuildSpawnBlobAsync(newPlayer, invRepo);
@@ -130,10 +134,6 @@ public class PlayerSpawnService
                 }
             }
         }
-
-        // Seed the per-viewer sets for every pair the loops above exchanged. TryEnterPair is atomic, so a peer that
-        // walked into the newcomer during this call is already paired and is not seeded (or sent) twice here.
-        foreach (var existing in existingPlayers) TryEnterPair(newPlayer, existing);
 
         _logger.LogInformation("Player '{Name}' (eid 0x{Eid:X8}) spawned on map {MapId}; exchanged OnPC_In with {Count} existing players.",
             newPlayer.Name, newPlayer.EntityId, newPlayer.MapId, existingPlayers.Count);

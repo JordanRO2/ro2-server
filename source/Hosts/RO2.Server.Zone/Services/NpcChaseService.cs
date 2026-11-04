@@ -168,7 +168,9 @@ public sealed class NpcChaseService : ITickable
         var originCell = NavCellAt(npc, npc.PosX, npc.PosY) ?? npc.NavCell;
         var body = NpcSpawnService.BuildOnMoveNpc2318(
             npc.EntityOid, npc.PosX, npc.PosY, originCell, dx, dy, destCell ?? originCell, speed);
-        await _broadcast.BroadcastToMapAsync(npc.MapId, ZoneS2COpcodes.OnMoveNPC, w => w.WriteBytes(body));
+        // Scoped to the players who hold this NPC's handle (see NpcMovementService), so a chase never references a
+        // culled NPC to an out-of-box client.
+        await _broadcast.BroadcastToNpcViewersAsync(npc.MapId, npc.EntityOid, ZoneS2COpcodes.OnMoveNPC, w => w.WriteBytes(body));
 
         npc.LastMove = new NpcMove(npc.PosX, npc.PosY, dx, dy, DateTime.UtcNow, speed);
         npc.PosX = dx;

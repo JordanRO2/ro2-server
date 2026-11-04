@@ -123,8 +123,11 @@ public class NpcSpawnService
             if (npcRuntime.Camp != CampFriendly) monsterCount++;   // Camp 1 = friendly NPC, 2 = monster
             alive.Add(npcRuntime);
         }
-        player.VisibleNpcs.Clear();
-        foreach (var npc in alive) player.VisibleNpcs.Add(npc.EntityOid);
+        lock (player.AoiGate)
+        {
+            player.VisibleNpcs.Clear();
+            foreach (var npc in alive) player.VisibleNpcs.Add(npc.EntityOid);
+        }
         player.AoiAnchorX = player.X;
         player.AoiAnchorY = player.Y;
 
@@ -169,13 +172,19 @@ public class NpcSpawnService
             }
         }
 
-        var enters = inBox.Where(n => !player.VisibleNpcs.Contains(n.EntityOid)).ToList();
-        var leaves = player.VisibleNpcs.Where(h => aliveIds.Contains(h) && !inBoxIds.Contains(h)).ToList();
-
-        // Drop dead/despawned handles silently (their OnNPC_Out came from the corpse path), then apply the box diff.
-        player.VisibleNpcs.RemoveWhere(h => !aliveIds.Contains(h));
-        foreach (var h in leaves) player.VisibleNpcs.Remove(h);
-        foreach (var n in enters) player.VisibleNpcs.Add(n.EntityOid);
+        // All of VisibleNpcs is read and mutated under the player's gate, because the NPC tick thread
+        // (BroadcastToNpcViewersAsync, respawn seeding) touches the same set concurrently.
+        List<NpcRuntimeState> enters;
+        List<uint> leaves;
+        lock (player.AoiGate)
+        {
+            enters = inBox.Where(n => !player.VisibleNpcs.Contains(n.EntityOid)).ToList();
+            leaves = player.VisibleNpcs.Where(h => aliveIds.Contains(h) && !inBoxIds.Contains(h)).ToList();
+            // Drop dead/despawned handles silently (their OnNPC_Out came from the corpse path), then apply the box diff.
+            player.VisibleNpcs.RemoveWhere(h => !aliveIds.Contains(h));
+            foreach (var h in leaves) player.VisibleNpcs.Remove(h);
+            foreach (var n in enters) player.VisibleNpcs.Add(n.EntityOid);
+        }
 
         foreach (var chunk in Chunk(enters, MaxRecordsPerFrame))
             await session.SendInternalRmiAsync(ZoneS2COpcodes.OnNPC_In, BuildOnNpcIn2506(chunk, WalkSpeedOf));
@@ -240,9 +249,13 @@ public class NpcSpawnService
     /// </remarks>
     public async Task SendNpcRespawnAsync(BroadcastService broadcast, NpcRuntimeState npc)
     {
+        var half = AoiRules.HalfWidth(_data.GetMap(npc.MapId)?.Map_Type ?? 0);
         var body = NpcLifecyclePackets.BuildRegenNpc2317(npc, WalkSpeedOf(npc));
-        await broadcast.BroadcastToMapAsync(npc.MapId, ZoneS2COpcodes.OnRegenNPC,
-            writer => writer.WriteBytes(body));
+        // Only players whose box contains the respawn point get the 2317, and the fresh handle is seeded into their
+        // VisibleNpcs so a later move does not re-announce it as an enter (2506). Out-of-box players pick it up via 2506
+        // when they walk toward it.
+        await broadcast.AnnounceNpcToBoxAsync(npc.MapId, npc.EntityOid, npc.PosX, npc.PosY, half,
+            ZoneS2COpcodes.OnRegenNPC, writer => writer.WriteBytes(body));
     }
 
     /// <summary>msgTag carried at blob+2 by RMI 2506 OnNPC_In.</summary>

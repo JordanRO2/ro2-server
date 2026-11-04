@@ -189,7 +189,9 @@ public class NpcMovementService : ITickable
                 var body = NpcSpawnService.BuildOnMoveNpc2318(
                     npc.EntityOid, npc.PosX, npc.PosY, originCell, dx, dy, destCell, DefaultSpeed);
 
-                await _broadcast.BroadcastToMapAsync(mapId, ZoneS2COpcodes.OnMoveNPC,
+                // Only the players who were announced this NPC (its handle is in their VisibleNpcs) get the move, so a
+                // culled NPC is never referenced by a handle the client would have to request via 1306.
+                await _broadcast.BroadcastToNpcViewersAsync(mapId, npc.EntityOid, ZoneS2COpcodes.OnMoveNPC,
                     w => w.WriteBytes(body));
 
                 // The server is authoritative about where the NPC now is, so the next step starts
