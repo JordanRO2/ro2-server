@@ -180,12 +180,27 @@ internal static class ConformanceReport
     {
         var m = (byte[])body.Clone();
         if (ClockBodies.Contains(op)) { Array.Clear(m); return m; }
+        if (op == 2307) MaskListUids(m);
         for (var i = 0; i + 4 <= m.Length; i++)
         {
             if (i + 8 <= m.Length && BitConverter.ToUInt64(m, i) == uid) { Array.Fill(m, (byte)0xBB, i, 8); i += 7; }
             else if (BitConverter.ToUInt32(m, i) == handle) { Array.Fill(m, (byte)0xAA, i, 4); i += 3; }
         }
         return m;
+    }
+
+    /// <summary>The 2307 lists every character of the account, each under its own uid; ours are built from the character id, so none of the 8-byte uids can match.</summary>
+    private static void MaskListUids(byte[] m)
+    {
+        if (m.Length < 10) return;
+        var count = BitConverter.ToUInt16(m, 8);
+        var o = 10;
+        for (var c = 0; c < count && o + 104 <= m.Length; c++)
+        {
+            Array.Fill(m, (byte)0xBB, o, 8);
+            o += 102;
+            o += 2 + 126 * BitConverter.ToUInt16(m, o);
+        }
     }
 
     public static string FormatBodies(IReadOnlyList<FrameDiff> diffs)

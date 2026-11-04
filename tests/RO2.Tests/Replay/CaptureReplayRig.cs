@@ -27,7 +27,7 @@ internal sealed class CaptureReplayRig : IAsyncDisposable
     /// <summary>Quiet time on the client socket that ends a drain. Handlers are awaited, so this only catches fire-and-forget sends.</summary>
     private static readonly TimeSpan Idle = TimeSpan.FromMilliseconds(120);
     private static readonly TimeSpan DispatchTimeout = TimeSpan.FromSeconds(20);
-    private const uint AccountId = 7_700_001;
+    private const uint StandInAccountId = 7_700_001;
 
     private readonly ServiceProvider _services;
     private readonly ReauditShared.Harness _harness;
@@ -37,17 +37,31 @@ internal sealed class CaptureReplayRig : IAsyncDisposable
     private readonly WarningLog _log;
     private Task<(ushort Op, byte[] Body)>? _pending;
 
+    private readonly string _previousCwd;
+
     public Character StandIn { get; }
+    /// <summary>What seeding the retail character recorded (items it could not model, titles it could not wear).</summary>
+    public IReadOnlyList<string> SeedNotes { get; }
 
     private CaptureReplayRig(ServiceProvider services, ReauditShared.Harness harness, RmiDispatcher dispatcher,
-        IMongoClient mongo, string database, WarningLog log, Character standIn)
+        IMongoClient mongo, string database, WarningLog log, Character standIn, IReadOnlyList<string> seedNotes, string previousCwd)
     {
         _services = services; _harness = harness; _dispatcher = dispatcher; _mongo = mongo; _database = database;
-        _log = log; StandIn = standIn;
+        _log = log; StandIn = standIn; SeedNotes = seedNotes; _previousCwd = previousCwd;
     }
 
-    public static async Task<CaptureReplayRig> StartAsync(string mongoConnectionString, Guid zoneAuthToken)
+    /// <summary>
+    /// With a <paramref name="seed"/> the account holds the retail characters (the logged-in one rebuilt from retail's own 2310/2307),
+    /// otherwise a single level-1 stand-in.
+    /// </summary>
+    public static async Task<CaptureReplayRig> StartAsync(string mongoConnectionString, Guid zoneAuthToken, RetailSeed? seed = null)
     {
+        // Handlers load data/mall, data/npc, data/ItemInfo.json ... by a path relative to the process, which under the test host is the
+        // bin folder: they came back empty (2866 had no body). The repo root is the parent of the data folder the store loads from.
+        var previousCwd = Directory.GetCurrentDirectory();
+        Directory.SetCurrentDirectory(Path.GetDirectoryName(ReauditShared.RequireDataDirectory())!);
+        var accountId = seed?.AccountId ?? StandInAccountId;
+
         var database = "ro2_replay_" + Guid.NewGuid().ToString("N");
         var config = new ZoneConfig();
         config.Database.ConnectionString = mongoConnectionString;
@@ -71,13 +85,24 @@ internal sealed class CaptureReplayRig : IAsyncDisposable
         provider.WireZoneHandlers(dispatcher, harness.Server, NullLogger.Instance);
 
         // Stand-in account and character; the real LoginPC handler builds the PlayerState from this row.
-        await provider.GetRequiredService<IZoneAuthTokenRepository>().IssueAsync(zoneAuthToken, AccountId, TimeSpan.FromMinutes(30));
-        var job = store.StandardStats.Keys.Order().First();
-        var (character, error) = await provider.GetRequiredService<ICharacterRepository>()
-            .CreateCharacterAsync(AccountId, "Replay" + Guid.NewGuid().ToString("N")[..6], job, 0, "{}");
-        if (character is null) throw new InvalidOperationException("could not create the stand-in character: " + error);
+        await provider.GetRequiredService<IZoneAuthTokenRepository>().IssueAsync(zoneAuthToken, accountId, TimeSpan.FromMinutes(30));
+        Character character;
+        IReadOnlyList<string> notes = [];
+        if (seed is null)
+        {
+            var job = store.StandardStats.Keys.Order().First();
+            var (created, error) = await provider.GetRequiredService<ICharacterRepository>()
+                .CreateCharacterAsync(accountId, "Replay" + Guid.NewGuid().ToString("N")[..6], job, 0, "{}");
+            character = created ?? throw new InvalidOperationException("could not create the stand-in character: " + error);
+        }
+        else
+        {
+            var (all, ownIndex, seedNotes) = await RetailSeeder.SeedAsync(provider, store, seed, accountId);
+            character = all[ownIndex];
+            notes = seedNotes;
+        }
 
-        return new CaptureReplayRig(provider, harness, dispatcher, new MongoClient(mongoConnectionString), database, log, character);
+        return new CaptureReplayRig(provider, harness, dispatcher, new MongoClient(mongoConnectionString), database, log, character, notes, previousCwd);
     }
 
     public bool HasHandler(ushort op) => _dispatcher.HasHandler(op);
@@ -167,6 +192,7 @@ internal sealed class CaptureReplayRig : IAsyncDisposable
         await _harness.DisposeAsync();
         await _services.DisposeAsync();
         try { await _mongo.DropDatabaseAsync(_database); } catch (Exception) { /* throwaway container */ }
+        Directory.SetCurrentDirectory(_previousCwd);
     }
 
     private sealed class StubLifetime : IHostApplicationLifetime

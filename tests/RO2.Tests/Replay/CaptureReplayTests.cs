@@ -94,7 +94,12 @@ public sealed class CaptureReplayTests(ITestOutputHelper output, ReplayMongoFixt
         var ambient = ConformanceReport.AmbientSet(connection.Frames);
         var windows = ConformanceReport.BuildWindows(connection.Frames, ambient);
 
-        await using var rig = await CaptureReplayRig.StartAsync(mongoConnectionString, token);
+        var seed = RetailSeed.From(connection.Frames);
+        output.WriteLine(seed is null
+            ? "Seed: no parseable retail 2307+2310 in this connection, replaying with a level-1 stand-in"
+            : $"Seed: retail account {seed.AccountId}, {seed.Characters.Length} character(s) from the 2307, logged in as '{seed.Own.Name}' (Lv{seed.Own.Level}, class {seed.Own.CombatClass}) from the 2310");
+        await using var rig = await CaptureReplayRig.StartAsync(mongoConnectionString, token, seed);
+        foreach (var note in rig.SeedNotes) output.WriteLine("Seed note: " + note);
         // Retail's own 2310 names its character uid (body+4) and actor handle (body+12): the identity to swap in C2S bodies.
         var own = connection.Frames.FirstOrDefault(f => !f.IsC2S && f.Op == 2310);
         if (own is { Body.Length: >= 16 })
@@ -150,6 +155,12 @@ public sealed class CaptureReplayTests(ITestOutputHelper output, ReplayMongoFixt
             var diffs = results.Take(worldEntry).SelectMany(r => ConformanceReport.CompareBodies(r,
                 BitConverter.ToUInt32(own.Body, 12), rig.OurHandle, retailUid, rig.StandInUid)).ToList();
             output.WriteLine(ConformanceReport.FormatBodies(diffs));
+            foreach (var (detail, op) in new (Func<byte[], byte[], string>, ushort)[] { (WorldEntryDetail.PcInfo, 2310), (WorldEntryDetail.CharList, 2307) })
+            {
+                var retailFrame = results.Take(worldEntry).SelectMany(r => r.ExpectedFrames).FirstOrDefault(f => f.Op == op);
+                var ourFrame = results.Take(worldEntry).SelectMany(r => r.OurFrames).FirstOrDefault(f => f.Op == op);
+                if (retailFrame is not null && ourFrame.Body is not null) output.WriteLine(detail(retailFrame.Body, ourFrame.Body));
+            }
         }
         var c2sOps = connection.Frames.Where(f => f.IsC2S).Select(f => f.Op).Distinct().Order().ToList();
         var unhandled = c2sOps.Where(o => !rig.HasHandler(o)).ToList();
