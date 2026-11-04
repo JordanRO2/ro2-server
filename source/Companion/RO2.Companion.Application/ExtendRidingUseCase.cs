@@ -42,7 +42,7 @@ public sealed class ExtendRidingUseCase(IVehicleRepository vehicles, IInventoryR
         CancellationToken ct = default)
     {
         var ticket = await inventory.GetByIdAsync(ticketUid);
-        if (ticket is null || ticket.CharacterId != characterId || ticket.StorageType == 1 || ticket.Count <= 0)
+        if (ticket is null || ticket.CharacterId != characterId || ticket.StorageType != 0 || ticket.Count <= 0)
             return new ExtendRidingResult(ExtendRidingStatus.TicketNotHeld, null, 0, 0, 0, null);
         if (!VehicleRules.ResolveExtension(extendGroups, cashInfo, ridings, reinsGroups, ridingId, ticket.ItemId, out var days))
             return new ExtendRidingResult(ExtendRidingStatus.NotExtendable, ticket, 0, 0, 0, null);

@@ -174,6 +174,7 @@ public class VehicleUseCaseTests
     [InlineData(false, 0u, 5u)]   // no row
     [InlineData(true, 0u, 6u)]    // another character's item
     [InlineData(true, 1u, 5u)]    // equipped (storage 1)
+    [InlineData(true, 2u, 5u)]    // bank (storage 2)
     [InlineData(true, 0u, 5u, 0)] // empty stack
     public async Task ExtendRiding_a_ticket_the_character_does_not_hold_in_a_bag_touches_nothing(bool row, uint storage, uint owner, int count = 1)
     {
