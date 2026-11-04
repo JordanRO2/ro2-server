@@ -56,7 +56,7 @@ public sealed class LevelUpTraitBurstTests
  /// the 2394 refills to the 2498 maximum, with the stat points of every level crossed and the EXP within the final level; one 2395 and one 2542 are sent for the final level;
  /// and one 2726 uses the last completed level's Base_Exp_Next divided by 100, not the sum over all levels.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task RetailMultiLevelBurst_FollowsFromItsSheetAndTheLevelsCrossed()
     {
         var store = await Store.Value;
@@ -88,7 +88,7 @@ public sealed class LevelUpTraitBurstTests
  /// (EffectService.RefreshPcTraitSheet) with the previous HP, the 2595 built from it, the 2394 at that sheet's maximum with current equal to max
  /// and the stat points of all three levels, the leveler's own 2395, and one 2542. A marker sent afterwards is the next frame, with no second 2394.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task GrantAcrossThreeLevels_SendsOneBurstInRetailsOrder()
     {
         var store = await Store.Value;
@@ -137,7 +137,7 @@ public sealed class LevelUpTraitBurstTests
  /// Without a scope factory, the burst carries no 2595 or 2498, since a sheet without the worn gear would remove every gear bonus.
  /// It is still one burst for the whole grant, refilled to the base-stat maximum of the final level.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task WithoutTheSheet_StillOneBurstForTheWholeGrant()
     {
         var store = await Store.Value;
@@ -184,7 +184,7 @@ public sealed class LevelUpTraitBurstTests
  /// The 2595 built by TraitPackets.BuildPcInitTrait2595 for a reset character (no unallocated points, one per primary stat),
  /// the 2498 sent after it with current HP and SP restored, and the 2329 naming the used scroll's cell.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void RetailStatReset_2595IsBuiltFromTheResetSheet()
     {
         Assert.Equal(Convert.FromHexString(ResetRetail2595),
@@ -198,7 +198,7 @@ public sealed class LevelUpTraitBurstTests
  /// A stat-reset scroll used through ItemUseHandler refunds the allocation. The answer is 2595, then 2498, then 2329, with nothing in between.
  /// The 2595 carries one point per primary stat and the 2498 carries the vitals. The 2329 matches the reference frame byte for byte.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task StatResetScroll_Answers2595Then2498BeforeThe2329()
     {
         var store = await Store.Value;

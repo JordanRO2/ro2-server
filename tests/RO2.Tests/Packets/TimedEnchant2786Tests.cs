@@ -35,7 +35,7 @@ public class TimedEnchant2786Tests
         }
     }
 
-    [Fact]
+    [DataFact]
     public async Task ThereAre38TimedRows_OneRowPerSource_AllWithTraitLines()
     {
         var store = await Store.Value;
@@ -48,7 +48,7 @@ public class TimedEnchant2786Tests
         }
     }
 
-    [Fact]
+    [DataFact]
     public async Task ARetailBlessing_WritesItsIdAndDuration_AtRecord17And19()
     {
         // A 1543 puts Reinforce_ID 30003 (Vulcan's blessing III, 22290033, Duration 300) on the worn dagger
@@ -62,7 +62,7 @@ public class TimedEnchant2786Tests
         Assert.Equal("cc615e06a83d040e59dbfe00ec2401000633752c01", Convert.ToHexString(record.AsSpan(0, 21)).ToLowerInvariant());
     }
 
-    [Fact]
+    [DataFact]
     public async Task ABlessingFits_ByItsPartsBit_AndTheTargetsLevel()
     {
         var store = await Store.Value;
@@ -78,7 +78,7 @@ public class TimedEnchant2786Tests
         Assert.False(TimedEnchant.Fits(vulcan, new ItemData { ID = 1, Equip_Slot = 38, Require_Level = 50 })); // 38 & 31 = 6
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData((ushort)300, (ushort)290)]
     [InlineData((ushort)10, (ushort)0)]
     [InlineData((ushort)5, (ushort)0)]
@@ -86,7 +86,7 @@ public class TimedEnchant2786Tests
     public void ATickTakes10Seconds_DownToZero(ushort before, ushort after)
         => Assert.Equal(after, TimedEnchant.AfterTick(before));
 
-    [Fact]
+    [DataFact]
     public async Task TheBonus_CountsOnlyWhileTheEnchantIsLiveOnAWornItem()
     {
         // 10014 = Tiger Embroidery II: Kind 1, Type 0 (STR), Value 2. Template 12611002 is Equip_Slot 2 with no
@@ -107,7 +107,7 @@ public class TimedEnchant2786Tests
         Assert.Equal(0, Str(Item(0, 2400)) - Str(none)); // in a bag
     }
 
-    [Fact]
+    [DataFact]
     public void ApplyingAgain_RestartsAtTheFullDuration_AndReplacesAnother()
     {
         var item = new InventoryItem { EnchantReinforceId = 30003, EnchantSeconds = 40 };

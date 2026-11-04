@@ -28,7 +28,7 @@ public class VehicleCompanionCharacterizationTests
 
     // ---------------------------------------------------------------------------------------------- Grant
 
-    [Theory]
+    [DataTheory]
     // current (null = not owned), days (-1 = permanent), expected expiry bits
     [InlineData(null, 5, "000000409292e640")]               // now + 5, rounded to float32 (46228.5703125, not 46228.572)
     [InlineData(null, 1, "000000401292e640")]
@@ -54,7 +54,7 @@ public class VehicleCompanionCharacterizationTests
         }
     }
 
-    [Fact]
+    [DataFact]
     public void Grant_returns_a_new_sorted_list_of_new_instances_and_never_touches_the_input()
     {
         var a = V(300, 46300.5);
@@ -75,7 +75,7 @@ public class VehicleCompanionCharacterizationTests
         Assert.Equal(new[] { 100u, 200u, 300u }, again.Select(v => v.RidingId));
     }
 
-    [Fact]
+    [DataFact]
     public void TryExtendTimed_is_null_for_not_owned_or_permanent_and_otherwise_a_Grant()
     {
         var owned = new List<OwnedVehicle> { V(100, 0), V(200, Now + 2), V(300, Now - 5) };
@@ -93,7 +93,7 @@ public class VehicleCompanionCharacterizationTests
 
     // ---------------------------------------------------------------------------------------------- whole-second cut
 
-    [Fact]
+    [DataFact]
     public void CutToWholeSeconds_returns_the_SAME_instance_when_nothing_changes()
     {
         var whole = new DateTime(2026, 7, 21, 8, 20, 37).ToOADate();
@@ -106,7 +106,7 @@ public class VehicleCompanionCharacterizationTests
         Assert.Same(unchanged, cut);                                                     // repos rely on ReferenceEquals to skip the write
     }
 
-    [Fact]
+    [DataFact]
     public void CutToWholeSeconds_builds_a_new_list_of_new_instances_in_the_same_order_when_one_expiry_changes()
     {
         var whole = new DateTime(2026, 7, 21, 8, 20, 37).ToOADate();
@@ -124,7 +124,7 @@ public class VehicleCompanionCharacterizationTests
         Assert.Equal(whole, first.ExpiryOle);
     }
 
-    [Fact]
+    [DataFact]
     public void CutToWholeSeconds_compares_bit_patterns_so_a_negative_zero_is_a_change()
     {
         // WholeSecondExpiry(-0.0) is +0.0 (== 0 returns the literal 0); the bit pattern differs, so the list is rebuilt.
@@ -137,7 +137,7 @@ public class VehicleCompanionCharacterizationTests
         Assert.Equal("0000000000000080", Bits(input[0].ExpiryOle));
     }
 
-    [Theory]
+    [DataTheory]
     // offset from a whole second in ms, expected whole-second delta: the value is first read to the millisecond (FromOADate rounds).
     [InlineData(-0.6, -1)]      // rounds to 36.999 -> cut to :36
     [InlineData(-0.4, 0)]       // rounds to 37.000 -> a whole second held a hair below is NOT cut to the second before
@@ -156,7 +156,7 @@ public class VehicleCompanionCharacterizationTests
         Assert.Equal(Bits(new DateTime(2026, 7, 21, 8, 20, 37).AddSeconds(deltaSeconds).ToOADate()), Bits(cut));
     }
 
-    [Fact]
+    [DataFact]
     public void WholeSecondExpiry_keeps_zero_and_a_whole_second_one_ulp_below_is_restored()
     {
         Assert.Equal(0d, VehicleRules.WholeSecondExpiry(0));
@@ -168,7 +168,7 @@ public class VehicleCompanionCharacterizationTests
 
     // ---------------------------------------------------------------------------------------------- state codes + 2838 selection
 
-    [Fact]
+    [DataFact]
     public void The_record_constants_and_state_codes_are_pinned()
     {
         Assert.Equal(15, VehiclePackets.RecordLength);
@@ -183,7 +183,7 @@ public class VehicleCompanionCharacterizationTests
         Assert.Equal((byte)11, VehicleRules.ReinsItemType);
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData(0.0, 1)]                  // permanent
     [InlineData(46223.5000001, 2)]        // a hair after now: timed
     [InlineData(46223.5, 4)]              // exactly now: expired (strictly greater is needed to be timed)
@@ -196,14 +196,14 @@ public class VehicleCompanionCharacterizationTests
         Assert.Equal(state, VehicleRules.StateOf(expiry, 46223.5));
     }
 
-    [Fact]
+    [DataFact]
     public void ExpiringSoonWindow_is_sixty_minutes_and_the_tick_boundary_is_pinned()
     {
         Assert.Equal(TimeSpan.FromMinutes(60).TotalDays, VehicleRules.ExpiringSoonWindowDays);
         Assert.Equal("555555555555a53f", Bits(VehicleRules.ExpiringSoonWindowDays));   // 0.041666666666666664
     }
 
-    [Theory]
+    [DataTheory]
     // seconds after "now" at which the vehicle expires -> the state of the single due record, 0 = nothing due
     [InlineData(1, 8)]
     [InlineData(3599, 8)]
@@ -225,7 +225,7 @@ public class VehicleCompanionCharacterizationTests
         }
     }
 
-    [Fact]
+    [DataFact]
     public void Due_expired_edge_is_strict_on_since_and_inclusive_of_now_on_the_whole_second()
     {
         var since = new DateTime(2026, 9, 26, 6, 59, 0).ToOADate();
@@ -249,7 +249,7 @@ public class VehicleCompanionCharacterizationTests
         Assert.Equal(Bits(now), Bits(r.ExpiryOle));
     }
 
-    [Fact]
+    [DataFact]
     public void Due_skips_permanent_sorts_by_id_and_does_not_mutate()
     {
         var since = new DateTime(2026, 9, 26, 6, 59, 0).ToOADate();
@@ -268,7 +268,7 @@ public class VehicleCompanionCharacterizationTests
         Assert.Equal(new[] { 300u, 200u, 100u }, owned.Select(v => v.RidingId));
     }
 
-    [Fact]
+    [DataFact]
     public void NowOle_is_the_local_wall_clock_not_utc()
     {
         var before = DateTime.Now.ToOADate();
@@ -308,7 +308,7 @@ public class VehicleCompanionCharacterizationTests
         new() { Item_ID = 6, Duration_Type = 1, Duration_Time = 0 },
     };
 
-    [Theory]
+    [DataTheory]
     [InlineData(1u, true, 100u, -1)]        // Duration_Type 0: permanent (days null); first vehicle row of the group, NationEnable not filtered
     [InlineData(2u, true, 100u, 14)]        // Duration_Type 1: Duration_Time days
     [InlineData(4u, true, 200u, 7)]
@@ -326,7 +326,7 @@ public class VehicleCompanionCharacterizationTests
         Assert.Equal(days < 0 ? (uint?)null : (uint)days, gotDays);
     }
 
-    [Fact]
+    [DataFact]
     public async Task TryResolveExtension_needs_a_DurationExtendGroup_bit_the_vehicles_reins_accept_and_Duration_Type_1()
     {
         var dir = Directory.CreateTempSubdirectory("ro2-ext-").FullName;
@@ -389,7 +389,7 @@ public class VehicleCompanionCharacterizationTests
 
     // ---------------------------------------------------------------------------------------------- mount toggle codes + MountService
 
-    [Fact]
+    [DataFact]
     public void The_1510_result_codes_and_the_2719_body_are_pinned()
     {
         Assert.Equal((ushort)0, RideRidingPetHandler.ResultMounted);
@@ -405,7 +405,7 @@ public class VehicleCompanionCharacterizationTests
             Convert.ToHexStringLower(RideRidingPetHandler.BuildAnsRideRidingPet2719(RideRidingPetHandler.ResultSwitchDropped, 0, 0)));
     }
 
-    [Fact]
+    [DataFact]
     public void MountService_keeps_one_ride_per_session_replaces_it_and_removes_it_once()
     {
         const uint session = 0xB11A0001;
@@ -432,13 +432,13 @@ public class VehicleCompanionCharacterizationTests
 
     // ---------------------------------------------------------------------------------------------- glider flight token
 
-    [Fact]
+    [DataFact]
     public void The_flight_token_lifetime_is_17_seconds()
     {
         Assert.Equal(TimeSpan.FromSeconds(17), GliderRideStore.FlightTokenLifetime);
     }
 
-    [Theory]
+    [DataTheory]
     // ticks after the instant the token was issued at (expiry = issue + FlightTokenLifetime)
     [InlineData(0L, true)]
     [InlineData(10_000_000L, true)]                // 1 s
@@ -456,7 +456,7 @@ public class VehicleCompanionCharacterizationTests
         Assert.False(GliderRideStore.TryConsumeFlightToken(player, 15, issuedAt));    // single use / dropped either way
     }
 
-    [Fact]
+    [DataFact]
     public void A_later_PutRide_replaces_the_route_and_an_expired_wrong_station_attempt_drops_the_token()
     {
         var player = new PlayerState();

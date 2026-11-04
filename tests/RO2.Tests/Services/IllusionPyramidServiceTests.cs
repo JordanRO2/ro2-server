@@ -26,7 +26,7 @@ public class IllusionPyramidServiceTests
 {
     private static readonly TimeSpan Generous = TimeSpan.FromSeconds(10);
 
-    [Fact]
+    [DataFact]
     public void CatalogHasRetailsFloorsAndOdds()
     {
         var rewards = IllusionPyramidCatalog.Rewards;
@@ -45,7 +45,7 @@ public class IllusionPyramidServiceTests
         Assert.Equal((30000267u, (byte)1, IllusionPyramidCatalog.MysticalMileageId, true), (first.ItemId, first.Count, first.MileageId, first.End));
     }
 
-    [Fact]
+    [DataFact]
     public void RollPicksSlotsByWeight()
     {
         
@@ -56,7 +56,7 @@ public class IllusionPyramidServiceTests
         Assert.Equal(3, IllusionPyramidCatalog.Roll(7, n => n - 1).Slot);
     }
 
-    [Fact]
+    [DataFact]
     public void EntriesStartOnTheirFloor()
     {
         Assert.Equal(IllusionPyramidCatalog.EntryKind.PhantomStone, IllusionPyramidCatalog.KindOf(0x10, 60000377));
@@ -75,7 +75,7 @@ public class IllusionPyramidServiceTests
  /// Replays a full pyramid session: every C2S draw, fetch and finish in order, with the 2907 code expected for
  /// each draw. Accepted draws receive the result the 2908 reports, so the end flags of the run follow it.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void ReplaysARetailSessionCodeForCode()
     {
         var events = new (string Time, string Op, string Body, ushort? Retail, (byte Floor, byte Slot)? Result)[]
@@ -133,7 +133,7 @@ public class IllusionPyramidServiceTests
         }
     }
 
-    [Fact]
+    [DataFact]
     public void RefusesWhatRetailRefuses()
     {
         var stoneStart = Draw("01107979889303");
@@ -171,7 +171,7 @@ public class IllusionPyramidServiceTests
         Assert.Equal(IllusionPyramidService.ResultAbnormalInformation, IllusionPyramidService.Check(slot, Draw("01127979889303"), 0));
     }
 
-    [Fact]
+    [DataFact]
     public void BodiesAreRetailsBytes()
     {
         
@@ -188,7 +188,7 @@ public class IllusionPyramidServiceTests
         Assert.Equal(Convert.FromHexString("4f7100"), IllusionPyramidService.Build2909(IllusionPyramidService.ResultNotExploring));
     }
 
-    [Fact]
+    [DataFact]
     public void MileageIsCappedAndTheTopRecordOnlyRises()
     {
         var state = new IllusionPyramidStateDocument { Mystical = 998, Bright = 5, TopRecord = 4 };
@@ -205,7 +205,7 @@ public class IllusionPyramidServiceTests
  /// The unsolicited close is <c>[u16 code][u8 1]</c>. Only codes 0 and 29016 are sent by this server; the other
  /// codes check that the layout holds for every code.
  /// </summary>
-    [Theory]
+    [DataTheory]
     [InlineData((ushort)0, "000001")]     
     [InlineData((ushort)29016, "587101")] 
     [InlineData((ushort)29005, "4d7101")] 
@@ -220,7 +220,7 @@ public class IllusionPyramidServiceTests
  /// 2909 close, a glider's 2938 that still gets <c>000001</c> with no request in between, and a 2938 that gets
  /// nothing. A new use arms it again.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task LeaveClosesFollowARetailSession()
     {
         await using var rig = await Rig.StartAsync();
@@ -260,7 +260,7 @@ public class IllusionPyramidServiceTests
  /// 2311 and the use stays armed, so a later logout still closes. A caller that closed ahead of its own 2938 gets
  /// no second close from the warp.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task AWarpClosesTheWayRetailsMoveDoes()
     {
         var data = await LoadMapsAsync(1100, 1113, 3101);
@@ -303,7 +303,7 @@ public class IllusionPyramidServiceTests
  /// A finish, a stone start, an advance, then a colosseum round's in-place 2311. The held item is settled
  /// (2329, 2333, then 2909 <c>587101</c>) and the run ends; the client's next 1619 is answered 29007.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void ALeaveSettlesAndClosesTheRun()
     {
         var slot = new IllusionPyramidRunStore.Slot { UsedSinceLeave = true };
@@ -343,7 +343,7 @@ public class IllusionPyramidServiceTests
  /// the form of the no-result 2908. The code is the start check's code for the same missing entry. No captured
  /// frame covers this case, so the 29001 bytes are derived.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void AnUnpayableResultIsRefused()
     {
         Assert.Equal(Convert.FromHexString("4f7100000000000000000000"),

@@ -41,7 +41,7 @@ public sealed class GuildEmergencyCallAnswerReauditTests
  /// The opening record is the shared builder's, compared byte for byte with the one built from the PlayerState
  /// before the departure.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task CrossMapAnswer_OpensWithTheSelf2315_BeforeAnyRemoval()
     {
         var data = new GameDataStore();

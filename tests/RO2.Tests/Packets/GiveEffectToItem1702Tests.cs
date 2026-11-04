@@ -37,7 +37,7 @@ public class GiveEffectToItem1702Tests
 {
     private static string Hex(byte[] b) => Convert.ToHexString(b).ToLowerInvariant();
 
-    [Theory]
+    [DataTheory]
     
     [InlineData("138a0100cc000000581947f8a73d040e9d3df30da83d040e", "0000cc000000581947f8a73d040e9d3df30da83d040e")]
     
@@ -52,7 +52,7 @@ public class GiveEffectToItem1702Tests
         Assert.Equal(answerHex, Hex(answer));
     }
 
-    [Fact]
+    [DataFact]
     public void AShortWallet_Is16209_OverTheSameEcho()
     {
         
@@ -60,7 +60,7 @@ public class GiveEffectToItem1702Tests
         Assert.Equal("513fcc000000581947f8a73d040e9d3df30da83d040e", Hex(answer));
     }
 
-    [Fact]
+    [DataFact]
     public void TheFee_Is1000PerTargetItemLevel_AsRetailCharged()
     {
         
@@ -75,7 +75,7 @@ public class GiveEffectToItem1702Tests
         Assert.Equal(40_325_781UL, BinaryPrimitives.ReadUInt64LittleEndian(retail2435.AsSpan(2 + 8))); 
     }
 
-    [Fact]
+    [DataFact]
     public async Task EveryFxTarget_HasAnItemLevel()
     {
         
@@ -97,7 +97,7 @@ public class GiveEffectToItem1702Tests
         }
     }
 
-    [Theory]
+    [DataTheory]
     
     [InlineData(0x0A547711u, 50001147u, (short)76, 1, 0x0E043DA80DF33D9DUL, "01161600a6e21177540a000015039d3df30da83d040e0003")]
     
@@ -110,7 +110,7 @@ public class GiveEffectToItem1702Tests
         Assert.Equal(retailHex, Hex(body));
     }
 
-    [Fact]
+    [DataFact]
     public void TheEffect_GoesToRecord113_AndToTheWornRecordAt23()
     {
         
@@ -128,7 +128,7 @@ public class GiveEffectToItem1702Tests
         Assert.Equal(204u, BinaryPrimitives.ReadUInt32LittleEndian(worn.AsSpan(23)));
     }
 
-    [Fact]
+    [DataFact]
     public void AnItemWithNoLook_KeepsTheOldRecordBytes()
     {
         
@@ -137,7 +137,7 @@ public class GiveEffectToItem1702Tests
             Assert.Equal(0u, BinaryPrimitives.ReadUInt32LittleEndian(record.AsSpan(off)) & (off is 0x11 or 0x13 ? 0xFFFFu : 0xFFFFFFFFu));
     }
 
-    [Fact]
+    [DataFact]
     public void CopyInstanceState_CarriesTheLookAndTheEnchant()
     {
         var source = new InventoryItem { DyeColor = 0xFFFE8C06, DyeColor2 = 0xFFB8A878, DyeColor3 = 0xFF550200, FxEnchantIndex = 169,
@@ -199,7 +199,7 @@ public class UseDyeItem1575Tests
           "00000001428b32100ea83d040e78a8b8ff00108e9fb00aa83d040e00" },
     };
 
-    [Theory]
+    [DataTheory]
     [MemberData(nameof(RetailDyes))]
     public async Task ADye_ResolvesRetailsColour_AndThe2835IsRetails(string frame, uint dyeTemplate, string requestHex, string answerHex)
     {
@@ -212,7 +212,7 @@ public class UseDyeItem1575Tests
         Assert.Equal(answerHex, Hex(DyePackets.Build2835Success(answer[2], req, colour.Value)));
     }
 
-    [Fact]
+    [DataFact]
     public void ARefusal_IsRetailsEchoForm()
     {
         
@@ -221,7 +221,7 @@ public class UseDyeItem1575Tests
             Hex(DyePackets.Build2835Refusal(DyePackets.ResultRefused, req)));
     }
 
-    [Fact]
+    [DataFact]
     public async Task APaletteNumberOutsideSelectNum_OrAPointOffTheBitmap_GivesNoColour()
     {
         var store = await Store.Value;
@@ -232,7 +232,7 @@ public class UseDyeItem1575Tests
         Assert.Null(Catalog.Value.Resolve(store, 11100001, 0x00015468)); 
     }
 
-    [Fact]
+    [DataFact]
     public async Task EveryDyeTemplate_HasABitmapInTheColourFile()
     {
         
@@ -243,7 +243,7 @@ public class UseDyeItem1575Tests
                 Assert.NotNull(Catalog.Value.Resolve(store, row.Group_ItemID, (n << 16) | (100u << 8) | 100u));
     }
 
-    [Fact]
+    [DataFact]
     public async Task Check_RefusesWhatIsNotAnOwnedDyeOnAnOwnedItem()
     {
         var store = await Store.Value;
@@ -262,7 +262,7 @@ public class UseDyeItem1575Tests
         Assert.Null(UseDyeItemHandler.Check(store, catalog, Owner, dye, banked, pick, 0, out _));        
     }
 
-    [Fact]
+    [DataFact]
     public void TheThreeDyeSlots_AreRecord17_101_105_AndWornRecord5_11_15()
     {
         var item = new InventoryItem { Id = 0x0E043DA884FF5433, ItemId = 11100001, Count = 1, StorageType = 1, Slot = 6 };
@@ -296,7 +296,7 @@ public class DyeColorBsonTests
     
     private const uint Premium7 = 0xFFFE8C06, MiddlePixel = 0xFFB8A878, Dark = 0xFF550200;
 
-    [Fact]
+    [DataFact]
     public void ADyedItemRow_SavesAsInt64_AndLoadsWithItsThreeColours()
     {
         DyeColorBson.Register();
@@ -315,7 +315,7 @@ public class DyeColorBsonTests
         Assert.Equal((Premium7, MiddlePixel, Dark), (back.DyeColor, back.DyeColor2, back.DyeColor3));
     }
 
-    [Fact]
+    [DataFact]
     public void ARowSavedBeforeTheMapping_StillLoads_AndAnUnknownFieldIsStillIgnored()
     {
         DyeColorBson.Register();
@@ -331,7 +331,7 @@ public class DyeColorBsonTests
         Assert.Equal((5ul, 11100001u, 0u, 0u, 0u), (back.Id, back.ItemId, back.DyeColor, back.DyeColor2, back.DyeColor3));
     }
 
-    [Fact]
+    [DataFact]
     public void TheAuctionMailAndVaultSnapshots_KeepADyedItemsColour()
     {
         DyeColorBson.Register();
@@ -348,7 +348,7 @@ public class DyeColorBsonTests
         Assert.Equal(Premium7, Assert.Single(back.Storage).DyeColor);
     }
 
-    [Fact]
+    [DataFact]
     public void EveryStoredType_HasItsDyeMembersMappedToInt64()
     {
         DyeColorBson.Register();

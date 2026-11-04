@@ -50,7 +50,7 @@ public class PcTraitInWorldSheetTests
     private static uint MaxHpOf(byte[] body) => BinaryPrimitives.ReadUInt32LittleEndian(body.AsSpan(BlobStart + 8));
     private static uint CurHpOf(byte[] body) => BinaryPrimitives.ReadUInt32LittleEndian(body.AsSpan(BlobStart + 72));
 
-    [Fact]
+    [DataFact]
     public async Task WithNoEffectItIsThePlainSheetAndThePlainCombatStats()
     {
         var (effects, store) = await ServiceAsync();
@@ -68,7 +68,7 @@ public class PcTraitInWorldSheetTests
     }
 
  /// <summary>Effect 40011 (+10% max HP at level 10): the sheet and the server max are +10%, current HP is not raised.</summary>
-    [Fact]
+    [DataFact]
     public async Task AMaxHpBuffStaysOnTheSheetAndTheServerMax()
     {
         var (effects, store) = await ServiceAsync();
@@ -89,7 +89,7 @@ public class PcTraitInWorldSheetTests
     }
 
  /// <summary>Effect 50603 (+10% on STR/AGI/INT/WIS/VIT): combat rolls the buffed primaries that the sheet shows.</summary>
-    [Fact]
+    [DataFact]
     public async Task APrimaryBuffReachesTheCombatCache()
     {
         var (effects, _) = await ServiceAsync();
@@ -109,7 +109,7 @@ public class PcTraitInWorldSheetTests
         Assert.Equal((int)MaxHpOf(body), player.MaxHp);
     }
 
-    [Fact]
+    [DataFact]
     public async Task AMapLoadKeepsAPlayerAtFullAtTheBuffedMax()
     {
         var (effects, store) = await ServiceAsync();
@@ -127,7 +127,7 @@ public class PcTraitInWorldSheetTests
         Assert.Equal(plainMax, swap.Hp);   
     }
 
-    [Fact]
+    [DataFact]
     public async Task ARemovalCutsCurrentHpToThePlainMax()
     {
         var (effects, store) = await ServiceAsync();
@@ -141,7 +141,7 @@ public class PcTraitInWorldSheetTests
         Assert.Equal(plainMax, player.Hp);
     }
 
-    [Fact]
+    [DataFact]
     public async Task AReviewSheetChangesNothingOnTheTarget()
     {
         var (effects, _) = await ServiceAsync();

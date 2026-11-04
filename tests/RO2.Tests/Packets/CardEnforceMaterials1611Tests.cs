@@ -65,7 +65,7 @@ public class CardEnforceMaterials1611Tests
         }
     }
 
-    [Theory]
+    [DataTheory]
     
     [InlineData(22300201u, 20, true)]
     [InlineData(22300201u, 19, false)]
@@ -77,7 +77,7 @@ public class CardEnforceMaterials1611Tests
         Assert.Equal(fits, CardEnforceItemHandler.MaterialFits(store, EpicCard, EpicRow, CardEnforceItemHandler.StoneSlot, item, count));
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData(66600000u, true)]   
     [InlineData(70000164u, true)]   
     [InlineData(66600012u, false)]  
@@ -89,7 +89,7 @@ public class CardEnforceMaterials1611Tests
         Assert.Equal(fits, CardEnforceItemHandler.MaterialFits(store, EpicCard, EpicRow, CardEnforceItemHandler.CoatingSlot, item, 1));
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData(66600002u, true)]   
     [InlineData(22300103u, true)]   
     [InlineData(22300102u, false)]  
@@ -102,7 +102,7 @@ public class CardEnforceMaterials1611Tests
         Assert.Equal(fits, CardEnforceItemHandler.MaterialFits(store, EpicCard, EpicRow, CardEnforceItemHandler.CatalystSlot, item, 1));
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData(CardEnforceItemHandler.StoneSlot, 66600018u, 5, true)]
     [InlineData(CardEnforceItemHandler.StoneSlot, 22300201u, 20, false)]
     [InlineData(CardEnforceItemHandler.CoatingSlot, 66600012u, 1, true)]   
@@ -116,7 +116,7 @@ public class CardEnforceMaterials1611Tests
         Assert.Equal(fits, CardEnforceItemHandler.MaterialFits(store, LegendaryCard, LegendaryRow, slot, item, count));
     }
 
-    [Fact]
+    [DataFact]
     public async Task AnEmptyStack_FitsNoSlot()
     {
         var store = await Store.Value;

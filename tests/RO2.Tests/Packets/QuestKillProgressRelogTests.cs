@@ -74,7 +74,7 @@ public sealed class QuestKillProgressRelogTests
     };
 
     
-    [Theory]
+    [DataTheory]
     
     [InlineData(212210010u, new byte[] { 4, 5 },
         "02005a11a60c020000000000000004000500000000000000000000000000000000000000000000000000000000000000000000000000")]
@@ -102,7 +102,7 @@ public sealed class QuestKillProgressRelogTests
         Assert.Equal(retail, ToHex(Element(Held(questId, Array.ConvertAll(kills, k => (ushort)k)), data)));
     }
 
-    [Theory]
+    [DataTheory]
     
     [InlineData(899990000u, new byte[] { 5, 5, 5 },
         "0300f0c1a4350100000000000000050005000500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006d94b23000000000")]
@@ -122,14 +122,14 @@ public sealed class QuestKillProgressRelogTests
         Assert.All(ours[54..], b => Assert.Equal(0, b));
     }
 
-    [Fact]
+    [DataFact]
     public void LoginElement_WithoutGameData_KeepsTheOneRecordForm()
     {
         Assert.Equal("01005a11a60c02000000000000000000000000000000000000000000000000000000",
             ToHex(Element(Held(212210010, 4, 5), data: null)));
     }
 
-    [Fact]
+    [DataFact]
     public void ProgressJson_RoundTripsAndToleratesForeignDocuments()
     {
         Assert.Equal("{\"kill\":[4,0,5]}", QuestProgressStore.Encode(new ushort[] { 4, 0, 5 }));
@@ -148,7 +148,7 @@ public sealed class QuestKillProgressRelogTests
     }
 
     
-    [Fact]
+    [DataFact]
     public async Task Restore_FillsTheSessionCounters()
     {
         var data = await QuestTable.Value;
@@ -172,7 +172,7 @@ public sealed class QuestKillProgressRelogTests
  /// <summary>
  /// A kill quest's progress is stored by the live kill path (LootService.ProcessKillCreditAsync) and loaded again at the next login as the 2310 element.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task KillAfterRestore_CountsOnFromThe2310_AndIsStored()
     {
         await using var rig = await Rig.StartAsync();
@@ -197,7 +197,7 @@ public sealed class QuestKillProgressRelogTests
     }
 
  /// <summary>A kill quest loaded as already met gets no 2425 at a kill of its target, and nothing is stored.</summary>
-    [Fact]
+    [DataFact]
     public async Task KillOfAMetQuest_SendsNoTick()
     {
         await using var rig = await Rig.StartAsync();

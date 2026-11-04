@@ -38,7 +38,7 @@ public class EscapeDepartureReauditTests
  /// line(s) and one 2498, then the 2558 burst. The 2315 and 2497 per visible removal are not sent (see
  /// WarpEntryBurst).
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task EscapeDeparture_DropsWarpEffectsThenSendsKeptRuns()
     {
         var data = await Data.Value;
@@ -80,7 +80,7 @@ public class EscapeDepartureReauditTests
     }
 
  /// <summary>A departure with no effect active: 2938, self 2505, then the 2558 burst.</summary>
-    [Fact]
+    [DataFact]
     public async Task EscapeDeparture_WithNoEffectsGoesStraightToTheBurst()
     {
         var data = await Data.Value;

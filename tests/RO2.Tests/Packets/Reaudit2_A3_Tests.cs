@@ -48,7 +48,7 @@ public class Reaudit2_A3_Tests
     /// attachment left the bag, so the held-count hook MailSendHandler now calls reports the new count; this pins
     /// that the engine turns "35000005 is no longer held" into the retail bytes.
     /// </summary>
-    [Fact]
+    [DataFact]
     public void MailSend_AttachmentLeavingTheBag_IsRetails2577()
     {
         var state = new KharaStateDocument { Id = 1, Active = new List<KharaActiveDocument> { Active(570, 0, 1) } };
@@ -65,7 +65,7 @@ public class Reaudit2_A3_Tests
     /// 2575 593 (<c>51020000</c>) and 2575 588, all before the claim's 2447. The claimed item landing is the held-count
     /// change MailGetItemHandler now reports; 598 completing then completes the Complete_Type 40 chain 593 -> 588.
     /// </summary>
-    [Fact]
+    [DataFact]
     public void MailClaim_ItemLanding_Is2577ThenTheCompletionChain()
     {
         var state = new KharaStateDocument
@@ -97,7 +97,7 @@ public class Reaudit2_A3_Tests
     /// watcher on the map is told whoever hit, and the attacker and its party are told only if they opened that
     /// meter. A watcher on another map is not (same-map bound), and no monster (handle 0) has no audience.
     /// </summary>
-    [Fact]
+    [DataFact]
     public void AggroRecipients_AreThePlayersWhoseOpenMeterIsTheMonster()
     {
         const uint monster = 0x01636313, other = 0x01636213;
@@ -124,7 +124,7 @@ public class Reaudit2_A3_Tests
     /// never opened the meter and Y, X's party member, opened another monster's: neither gets anything before a
     /// marker sent once Z and W have theirs.
     /// </summary>
-    [Fact]
+    [DataFact]
     public async Task AggroFlush_ReachesTheOpenMeters_NotTheAttackerOrItsParty()
     {
         await using var net = await Harness.StartAsync(4);
@@ -196,7 +196,7 @@ public class Reaudit2_A3_Tests
     /// level-up below 50 ends with the same 2903 to the member only, and no roster, and the
     /// level-up to 50 sends none. The Helper gets no 2903 on a repeat.
     /// </summary>
-    [Fact]
+    [DataFact]
     public async Task LapsedHelper_IsRepeatedAtEachLevelUpBelowIt_AndNotAtItsLevel()
     {
         await using var net = await Harness.StartAsync(2);
@@ -252,7 +252,7 @@ public class Reaudit2_A3_Tests
 
     /// <summary>The repeat test on its own: helper 50 against member 41..49 true, 50 false; a Helper still 10 or more
     /// above is not lapsed (it meets the client's rule, HelperPackets.CanBeHelper).</summary>
-    [Fact]
+    [DataFact]
     public void LapsedHelperStillAbove_IsTheClientRuleSeenFromTheMember()
     {
         for (byte m = 41; m <= 49; m++)
@@ -262,7 +262,7 @@ public class Reaudit2_A3_Tests
     }
 
     /// <summary>A new declaration (or quit) ends the lapsed state, so the repeat stops.</summary>
-    [Fact]
+    [DataFact]
     public async Task Redeclaring_ClearsTheLapsedGid()
     {
         var players = new PlayerStateManager(new NoDirtySink());
@@ -289,7 +289,7 @@ public class Reaudit2_A3_Tests
     /// (RidingInfo Speed 1.4, ×1.0) is sent 2497 7.0 (the mount RidingServiceTests pins), so its record now carries
     /// 7.0 too; on foot it is the modal 6.0 again.
     /// </summary>
-    [Fact]
+    [DataFact]
     public async Task PcRecordSpeed_IsTheSpeedOfThePcs2497()
     {
         var data = await Data.Value;

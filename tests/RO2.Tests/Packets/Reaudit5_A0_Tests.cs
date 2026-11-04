@@ -38,7 +38,7 @@ public class Reaudit5_A0_Tests
 
     // ============================================================ R2315: the effects a death ends
 
-    [Fact]
+    [DataFact]
     public async Task AfterDeathHandlingZero_IsWhatADeathEnds()
     {
         var data = await Data.Value;
@@ -65,7 +65,7 @@ public class Reaudit5_A0_Tests
     /// this character's own sheet (opcode and length), and the one 2315 (the ranker buff 50603 moves the max HP) is
     /// compared on its msgTag, zero and handle.
     /// </summary>
-    [Fact]
+    [DataFact]
     public async Task DotDeath_EndsTheAdh0Effects_AscendingBetweenThe2837AndThe2392_Archive5bb3706a()
     {
         var data = await Data.Value;
@@ -133,7 +133,7 @@ public class Reaudit5_A0_Tests
     /// before the second state-6 2398 and the 2392 (killer 0, blob+16 the fall's damage). There is no tracked
     /// ADH-0 effect of its own to replay, so only the placement and the ids are pinned here.
     /// </summary>
-    [Fact]
+    [DataFact]
     public async Task FallDeath_EndsTheAdh0Effects_BeforeTheSecondStateSixAndThe2392()
     {
         var data = await Data.Value;
@@ -167,7 +167,7 @@ public class Reaudit5_A0_Tests
     /// does (TalentResetEffects). The order is this server's own choice; no reference frame exists for a death while
     /// riding.
     /// </summary>
-    [Fact]
+    [DataFact]
     public async Task DeathWhileRiding_EndsTheRide_ThenDismounts()
     {
         var data = await Data.Value;
@@ -202,7 +202,7 @@ public class Reaudit5_A0_Tests
     /// A tick queued in the same pass as a death does not run once the death removed its effect; an effect that expired in
     /// this pass (it left ActiveEffects before its last tick) still gets its tick.
     /// </summary>
-    [Fact]
+    [DataFact]
     public void QueuedTick_OfAnEffectTheDeathRemoved_IsSkipped()
     {
         var player = new PlayerState();
@@ -224,7 +224,7 @@ public class Reaudit5_A0_Tests
     /// 4 x (3 x 64,650 + 1) under Aura Armor's +30,000; with no stance, 3 x 64,650 + 1. Rate 0 and 1 are both x1
     /// (max(1, rate)), and a normal hit has neither column.
     /// </summary>
-    [Fact]
+    [DataFact]
     public void AddAggroRate_MultipliesTheDamage_BeforeTheAddAggro()
     {
         var bytes = File.ReadAllBytes(Path.Combine(RequireDataDirectory(), "Skill_Table_SkillLevel.json"));
@@ -252,7 +252,7 @@ public class Reaudit5_A0_Tests
     /// in its millisecond). The 2630 body is AggroPackets' layout
     /// <c>[u32 monster][u32 target][01 01][01][u32 pc][WStr name][u32 total]</c> with the hit's threat, its damage x1.
     /// </summary>
-    [Fact]
+    [DataFact]
     public async Task NormalHit_SendsItsStep_RightBeforeThe2696()
     {
         var data = await Data.Value;
@@ -286,7 +286,7 @@ public class Reaudit5_A0_Tests
     /// The flush sends a queued step at once, and a killing hit's step never goes out. The killing hit's own step is dropped
     /// because the monster is dead when the handler flushes, right before its damage frame.
     /// </summary>
-    [Fact]
+    [DataFact]
     public async Task Flush_SendsAtOnce_AndAKillingHitHasNoStep()
     {
         var data = await Data.Value;
@@ -312,7 +312,7 @@ public class Reaudit5_A0_Tests
     /// A watcher with the meter open AND the monster selected (its 1307) gets the first hit's acquisition 2643 AFTER the
     /// frame: [2630, 2696, 2643]. Retail never sends the 2643 between the step and the frame.
     /// </summary>
-    [Fact]
+    [DataFact]
     public async Task NormalHit_SelectedWatcher_GetsTheAcquisitionAfterTheFrame()
     {
         var data = await Data.Value;
@@ -344,7 +344,7 @@ public class Reaudit5_A0_Tests
     /// <see cref="NpcCombatService.PushPendingTargetChangesAsync"/> (after the frame) the target change, once. For a 2797
     /// retail puts the target-change 2643 after the frame.
     /// </summary>
-    [Fact]
+    [DataFact]
     public async Task StepsOnly_ThenThePendingTargetChange()
     {
         var data = await Data.Value;
@@ -375,7 +375,7 @@ public class Reaudit5_A0_Tests
     /// gets 2771 [64] too. The second answer is what the per-character release gives; closing the party's instance on
     /// the first reset left it silent.
     /// </summary>
-    [Fact]
+    [DataFact]
     public void TwoMembersResets_AreBothAnswered_Live0927_1e8df2ee()
     {
         const uint first = 8425599, second = 8509175, world = 1221, instanceMap = 426101;
@@ -397,7 +397,7 @@ public class Reaudit5_A0_Tests
     /// DungeonInstanceRegistry.Reset). A party member never counted in an instance (it joined the party later) is not
     /// answered for it.
     /// </summary>
-    [Fact]
+    [DataFact]
     public void Burst_FirstFrameAnswered_RestSilent_AndTheReleasedMemberCountsAgain()
     {
         const uint leader = 0xC9F4_0001u, member = 0xC9F4_0002u, late = 0xC9F4_0003u, world = 1221, instanceMap = 426101;
@@ -420,7 +420,7 @@ public class Reaudit5_A0_Tests
 
     /// <summary>A finder run ends with its character's own 1534 even while a party member keeps the instance open
     /// (DungeonFinderPendingStore.GetRun asks IsBound). Uses the shared registry, with character ids no other test uses.</summary>
-    [Fact]
+    [DataFact]
     public void FinderRun_EndsWithTheMembersOwnReset_WhileTheInstanceStaysOpen()
     {
         const uint a = 0x5A50_0001u, b = 0x5A50_0002u;

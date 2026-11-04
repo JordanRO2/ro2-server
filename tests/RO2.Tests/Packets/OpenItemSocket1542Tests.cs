@@ -72,7 +72,7 @@ public class OpenItemSocket1542Tests
     private static InventoryItem Item(uint itemId, ulong uid = 1010000008436940464, byte storage = 0, short slot = 108) =>
         new() { Id = uid, CharacterId = Owner, ItemId = itemId, Count = 1, StorageType = storage, Slot = slot, Durability = 0 };
 
-    [Fact]
+    [DataFact]
     public async Task ThreeSuperPunches_OnACostumeWing_ReproduceRetailsThree2785s()
     {
         
@@ -99,7 +99,7 @@ public class OpenItemSocket1542Tests
             OpenItemSocketHandler.Check(store, AbiliVal, Owner, Puncher(60000202), wing, out _, out _));
     }
 
-    [Fact]
+    [DataFact]
     public async Task NoPuncher_IsCode1_OverAZeroRecord()
     {
         
@@ -114,7 +114,7 @@ public class OpenItemSocket1542Tests
             OpenItemSocketHandler.Check(store, AbiliVal, Owner, Puncher(22260005, count: 0), Item(16702297), out _, out _));
     }
 
-    [Fact]
+    [DataFact]
     public async Task ARuneAsTheTarget_IsCode4_NotCode6()
     {
         
@@ -126,7 +126,7 @@ public class OpenItemSocket1542Tests
         Assert.Equal(Convert.FromHexString("0400" + new string('0', 252)), OpenItemSocketHandler.BuildRefusal2785(4));
     }
 
-    [Fact]
+    [DataFact]
     public async Task AGearPuncherOnAWornCostume_IsCode6()
     {
         
@@ -139,7 +139,7 @@ public class OpenItemSocket1542Tests
         Assert.Null(costume.CardsJson);
     }
 
-    [Fact]
+    [DataFact]
     public async Task EachPuncherPart_OpensOnlyItsOwnHighCategory()
     {
         
@@ -155,7 +155,7 @@ public class OpenItemSocket1542Tests
         Assert.Equal(OpenItemSocketHandler.Opened, OpenItemSocketHandler.Check(store, _ => null, Owner, Puncher(22260006), Item(16702297), out _, out _));
     }
 
-    [Fact]
+    [DataFact]
     public async Task ATargetAboveThePunchersLevel_IsCode5()
     {
         
@@ -165,7 +165,7 @@ public class OpenItemSocket1542Tests
             OpenItemSocketHandler.Check(store, AbiliVal, Owner, Puncher(22260002), Item(16702297), out _, out _));
     }
 
-    [Fact]
+    [DataFact]
     public async Task ATargetInTheBank_IsCode3()
     {
         var store = await Store.Value;
@@ -175,7 +175,7 @@ public class OpenItemSocket1542Tests
             OpenItemSocketHandler.Check(store, AbiliVal, Owner, Puncher(22260005), Item(16702297, storage: 2), out _, out _));
     }
 
-    [Fact]
+    [DataFact]
     public void ThePuncherPart_ComesFromRequireLevelAndAbiliVal()
     {
         
@@ -191,7 +191,7 @@ public class OpenItemSocket1542Tests
 /// </summary>
 public class FriendListFull23508Tests
 {
-    [Fact]
+    [DataFact]
     public void AFullList_IsAnswered33_OverTheAllZeroRecord()
     {
         
@@ -200,7 +200,7 @@ public class FriendListFull23508Tests
         Assert.Equal(retail, SocialPackets.BuildAddFriendAnswer(FriendStore.AddResultListFull, null));
     }
 
-    [Fact]
+    [DataFact]
     public void TheLimit_IsTheLargestRetailList()
     {
         
@@ -272,7 +272,7 @@ public class RefineTransfer1682Tests
     private static InventoryItem Bag(ulong uid, uint itemId, byte grade, int count = 1, short slot = 60) =>
         new() { Id = uid, CharacterId = Owner, ItemId = itemId, Count = count, StorageType = 0, Slot = slot, Refine = grade, Durability = 10000 };
 
-    [Fact]
+    [DataFact]
     public async Task ASuccess_ReproducesRetails2379_2329_And3014()
     {
         
@@ -295,7 +295,7 @@ public class RefineTransfer1682Tests
             TransferReinforceItemHandler.BuildAnswer3014(0, ItemWorkbench.RecordWithRuneholes(target, store)));
     }
 
-    [Fact]
+    [DataFact]
     public void ASub10000Ticket_GivesWhatRetailGave()
     {
         
@@ -310,7 +310,7 @@ public class RefineTransfer1682Tests
         Assert.Equal(9, RefineTransferRules.Outcome(eight));
     }
 
-    [Fact]
+    [DataFact]
     public async Task RetailsRefusals_AreRefused()
     {
         var store = await Store.Value;
@@ -324,7 +324,7 @@ public class RefineTransfer1682Tests
             TransferReinforceItemHandler.BuildAnswer3014(TransferReinforceItemHandler.TransferRefused, null));
     }
 
-    [Fact]
+    [DataFact]
     public async Task TheClientsGates_AndAFee_AreRefused()
     {
         var store = await Store.Value;
@@ -337,7 +337,7 @@ public class RefineTransfer1682Tests
         Assert.Equal(5000, terms.Fee);
     }
 
-    [Fact]
+    [DataFact]
     public async Task ArmourOntoArmour_Passes()
     {
         
@@ -348,7 +348,7 @@ public class RefineTransfer1682Tests
         Assert.Equal(new RefineTransferRules.Terms(0, 10, 10), terms);
     }
 
-    [Fact]
+    [DataFact]
     public void ItemLevelsAndAbiliVal_LoadFromTheShippedItemInfo()
     {
         var dir = new DirectoryInfo(AppContext.BaseDirectory);

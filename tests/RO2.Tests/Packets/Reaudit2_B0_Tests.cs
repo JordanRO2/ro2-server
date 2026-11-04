@@ -49,7 +49,7 @@ public class Reaudit2_B0_Tests
 
     // ---- head+107: the facing byte ---------------------------------------------------------------------------------
 
-    [Theory]
+    [DataTheory]
     [InlineData(0f, 0)]
     [InlineData(MathF.PI / 2, 45)]           // 90 deg
     [InlineData(MathF.PI, 90)]               // 180 deg
@@ -66,7 +66,7 @@ public class Reaudit2_B0_Tests
         Assert.Equal(expected, CharacterHeadRules.FacingByte(yaw));
     }
 
-    [Fact]
+    [DataFact]
     public void FacingByte_NeverReaches180()
     {
         for (int i = -4000; i <= 4000; i++)
@@ -90,7 +90,7 @@ public class Reaudit2_B0_Tests
         return w.ToArray();
     }
 
-    [Fact]
+    [DataFact]
     public void Head2310_CarriesBindIndex_Facing_AndZerosTo111()
     {
         var head = Head(Hero());
@@ -101,7 +101,7 @@ public class Reaudit2_B0_Tests
         Assert.Equal((ulong)0, BinaryPrimitives.ReadUInt64LittleEndian(head.AsSpan(112)));   // wallet untouched (Gold 0)
     }
 
-    [Fact]
+    [DataFact]
     public void Head2310_NoBindNoFacing_KeepsTheOldZeros()
     {
         var c = Hero();
@@ -110,7 +110,7 @@ public class Reaudit2_B0_Tests
         Assert.Equal("00000000000000", Hex(Head(c)[105..112]));
     }
 
-    [Fact]
+    [DataFact]
     public void Head2310_BonusBlock_EqualsThe2498Fields()
     {
         // The bonus-stat block mirrors the 2498 trait blob: head[151..160] == blob+26..34, head[161..162] == blob+36,
@@ -127,7 +127,7 @@ public class Reaudit2_B0_Tests
         Assert.Equal("ffffffffffffffff", Hex(head[165..173]));    // the sentinels still follow
     }
 
-    [Fact]
+    [DataFact]
     public void Head2310_UnspentNeverNegative()
     {
         var c = Hero();
@@ -137,7 +137,7 @@ public class Reaudit2_B0_Tests
         Assert.Equal((ushort)7, BinaryPrimitives.ReadUInt16LittleEndian(head.AsSpan(159)));   // VIT still reported
     }
 
-    [Fact]
+    [DataFact]
     public void Head2487_StampsTheLiveBindAndFacing_OverAStaleSnapshot()
     {
         var stale = Hero();                       // the DB row: bind 103, facing 45
@@ -151,7 +151,7 @@ public class Reaudit2_B0_Tests
         Assert.Equal((byte)90, head[107]);
     }
 
-    [Fact]
+    [DataFact]
     public void Head2391_CarriesTheVictimsLiveBindAndFacing()
     {
         var victim = new PlayerState
@@ -168,7 +168,7 @@ public class Reaudit2_B0_Tests
 
     // ---- state feeding the head ---------------------------------------------------------------------------------
 
-    [Fact]
+    [DataFact]
     public void Move1526_TracksFacing_IntoStateAndSnapshot()
     {
         var player = new PlayerState { Character = new Character() };
@@ -185,7 +185,7 @@ public class Reaudit2_B0_Tests
         Assert.Equal(-2.5f, player.FacingYaw);
     }
 
-    [Fact]
+    [DataFact]
     public void FacingYaw_IsPersistent()
     {
         var sink = new CountingSink();
@@ -198,7 +198,7 @@ public class Reaudit2_B0_Tests
 
     // ---- 2498 blob+68: 1 + the weapon's Auto_Attack_Range ------------------------------------------------------------
 
-    [Theory]
+    [DataTheory]
     [InlineData(0, 1.0f)]    // unarmed: 1.0
     [InlineData(2, 3.0f)]    // melee (TraitInfo 42 = 2.0): 3.0
     [InlineData(20, 21.0f)]  // bow (20.0): 21.0
@@ -212,7 +212,7 @@ public class Reaudit2_B0_Tests
         Assert.Equal(expected, BinaryPrimitives.ReadSingleLittleEndian(body.AsSpan(3 + 68)));
     }
 
-    [Fact]
+    [DataFact]
     public void PcTrait2498_NoGearInformation_KeepsTheTemplateReach()
     {
         var template = Convert.FromHexString(Retail2498);
@@ -224,7 +224,7 @@ public class Reaudit2_B0_Tests
     // ---- 1677 / glider: neither the warp burst nor the login burst carries 2497 or 2435 (retail sends neither at
     //      entry; 2497 arrives in the 1304 map-load reply and the wallet rides in the 2310 head) ---------------------
 
-    [Fact]
+    [DataFact]
     public async Task NeitherWarpNorLoginBurst_Sends2497Or2435()
     {
         var data = await Data.Value;
@@ -249,7 +249,7 @@ public class Reaudit2_B0_Tests
 
     // ---- a lethal DoT tick on a player ---------------------------------------------------------------------------
 
-    [Fact]
+    [DataFact]
     public async Task LethalDotTick_RunsTheDeathSequence_KillerIsTheCaster()
     {
         var data = await Data.Value;
@@ -300,7 +300,7 @@ public class Reaudit2_B0_Tests
             Assert.False(npc.Threat.ContainsKey(player.EntityId));
     }
 
-    [Fact]
+    [DataFact]
     public async Task LethalDotTick_OnACorpse_OrWithoutADeathRunner_DoesNotKill()
     {
         var data = await Data.Value;
@@ -316,7 +316,7 @@ public class Reaudit2_B0_Tests
         Assert.Single(frames, f => f.Op == ZoneS2COpcodes.OnDotDamageNotify);
     }
 
-    [Fact]
+    [DataFact]
     public async Task NonLethalDotTick_OnlyLowersHp()
     {
         var data = await Data.Value;

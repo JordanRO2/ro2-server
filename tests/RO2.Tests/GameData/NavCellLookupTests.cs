@@ -38,7 +38,7 @@ public class NavCellLookupTests
         }
     }
 
-    [Fact]
+    [DataFact]
     public async Task WireMeasuredCell_BeatsMeshCell_ForTheSameSpawn()
     {
         
@@ -52,7 +52,7 @@ public class NavCellLookupTests
         Assert.Equal(0, store.MeshNavCellCount);
     }
 
-    [Fact]
+    [DataFact]
     public async Task MeshCell_FillsSpawnsRetailNeverRevealed()
     {
         var store = await LoadAsync(
@@ -66,7 +66,7 @@ public class NavCellLookupTests
         Assert.Equal(2, store.MeshNavCellCount);
     }
 
-    [Fact]
+    [DataFact]
     public async Task CellsOutsideRetailsObservedRange_AreDropped_FromEitherSource()
     {
         
@@ -91,7 +91,7 @@ public class NavCellLookupTests
         Assert.Equal(1, store.MeshNavCellCount);
     }
 
-    [Fact]
+    [DataFact]
     public async Task MalformedKeys_AreIgnored_WithoutTakingTheRestDown()
     {
         var store = await LoadAsync(
@@ -102,7 +102,7 @@ public class NavCellLookupTests
         Assert.Equal(1, store.MeasuredNavCellCount);
     }
 
-    [Fact]
+    [DataFact]
     public async Task MissingFiles_LeaveTheTableEmptyRatherThanThrowing()
     {
         var store = await LoadAsync(measuredJson: null, meshJson: null);
@@ -113,7 +113,7 @@ public class NavCellLookupTests
         Assert.Equal(0, store.MeshNavCellCount);
     }
 
-    [Fact]
+    [DataFact]
     public void NavCellKey_SeparatesMapsThatShareASpawnIndex()
     {
         
@@ -154,7 +154,7 @@ public class NavCellLookupTests
     private static Dictionary<string, int> ReadTable(string path)
         => JsonSerializer.Deserialize<Dictionary<string, int>>(File.ReadAllText(path))!;
 
-    [Fact]
+    [DataFact]
     public void ShippedMeshTable_StaysInsideTheRangeTheClientCanSurvive()
     {
         var mesh = ReadTable(RequireMeshTable());
@@ -164,7 +164,7 @@ public class NavCellLookupTests
             Assert.InRange(cell, 0, GameDataStore.MaxKnownNavCell);
     }
 
-    [Fact]
+    [DataFact]
     public void ShippedMeshTable_ReproducesTheWireMeasurements()
     {
         
@@ -193,7 +193,7 @@ public class NavCellLookupTests
             + "wiring decision was made on (measured 6,709/6,715 = 99.91%)");
     }
 
-    [Fact]
+    [DataFact]
     public async Task ShippedTables_ResolveTheRetailRecordUsedByTheByteLayoutGate()
     {
         

@@ -44,7 +44,7 @@ public class Reaudit2_A2_Tests
         Spawn = new SpawnEntry { MapId = 1100u, Index = 1, AssetIndex = asset, PosX = 217.79f, PosY = 228.39f, Rot = 100.0f },
     };
 
-    [Fact]
+    [DataFact]
     public void Regen2317_GatherableCampTwo_IsTheRetailFrameByteForByte()
     {
         
@@ -54,7 +54,7 @@ public class Reaudit2_A2_Tests
         Assert.Equal(3u, BinaryPrimitives.ReadUInt32LittleEndian(body.AsSpan(10 + 72)));
     }
 
-    [Fact]
+    [DataFact]
     public void Regen2317_NotGatherable_CarriesZeroAt66()
     {
         var body = NpcLifecyclePackets.BuildRegenNpc2317(Npc(0x01CE7513u, 45170000u, camp: 2, gatherable: false), walkSpeed: 1.0f);
@@ -63,7 +63,7 @@ public class Reaudit2_A2_Tests
         Assert.Equal(expected, body);
     }
 
-    [Theory]
+    [DataTheory]
     
     
     [InlineData(0, 1)]
@@ -77,7 +77,7 @@ public class Reaudit2_A2_Tests
         Assert.Equal(expected, NpcSpawnService.CampByte(Npc(0x00015D13u, 30060000u, camp, gatherable: false)));
     }
 
-    [Fact]
+    [DataFact]
     public void ViewData2319_CampThree_CarriesOneAt72()
     {
         
@@ -88,7 +88,7 @@ public class Reaudit2_A2_Tests
         Assert.Equal(0, body[10 + 68]);
     }
 
-    [Fact]
+    [DataFact]
     public async Task Tracking_SetsGatherableFromNpcInfo_AndTheRespawnAndCorpseKeepIt()
     {
         const uint map = 900771;
@@ -140,7 +140,7 @@ public class Reaudit2_A2_Tests
     private static AuctionPackets.SearchKey Key(ulong uid, uint template, long current, long instant, long minutes)
         => new(uid - ArticleBase, template, current, instant, minutes, minutes * TimeSpan.TicksPerMinute);
 
-    [Fact]
+    [DataFact]
     public void TiedSameTemplate_MostRemainingTimeFirst_EvenWhenOlder_ArchiveCf625f50()
     {
         
@@ -158,7 +158,7 @@ public class Reaudit2_A2_Tests
         Assert.Equal(retail.Select(k => k.Id), sorted.Select(k => k.Id));
     }
 
-    [Fact]
+    [DataFact]
     public void TiedDifferentTemplates_TemplateAscendingBeforeTheExpiry_ArchiveA7cf380c()
     {
         
@@ -175,7 +175,7 @@ public class Reaudit2_A2_Tests
         Assert.Equal(retail.Select(k => k.Id), sorted.Select(k => k.Id));
     }
 
-    [Fact]
+    [DataFact]
     public void OrderForList_UsesTheExpiryFromTheArticle()
     {
         
@@ -187,7 +187,7 @@ public class Reaudit2_A2_Tests
     }
 
     
-    [Fact]
+    [DataFact]
     public void CorpseAudience_SplitsLootersFromBystanders_AndEachViewerGetsOne2507()
     {
         
@@ -202,7 +202,7 @@ public class Reaudit2_A2_Tests
         Assert.Empty(audience.Claim(audience.Bystanders));
     }
 
-    [Fact]
+    [DataFact]
     public void CorpseAudience_LootClockFirst_CoversTheBystandersToo()
     {
         var audience = LootService.CorpseAudience.Capture(new uint[] { 5, 9 }, killerSession: 5, sharerSessions: Array.Empty<uint>());
@@ -210,7 +210,7 @@ public class Reaudit2_A2_Tests
         Assert.Empty(audience.Claim(audience.Bystanders));
     }
 
-    [Fact]
+    [DataFact]
     public void BystanderDelay_CountsTheStayFromTheDeath()
     {
         
@@ -227,7 +227,7 @@ public class Reaudit2_A2_Tests
 
     private static bool Any(uint _) => true;
 
-    [Fact]
+    [DataFact]
     public void ReSelectInsideTheTimer_ASlotNotApplied_Live3364()
     {
         
@@ -242,7 +242,7 @@ public class Reaudit2_A2_Tests
         Assert.Equal(new KharaTitleState(0x23C, 0x26B, T0, T0.AddMilliseconds(11391)), again.NewState);
     }
 
-    [Fact]
+    [DataFact]
     public void ClearInsideTheCooldown_BSlotNotApplied_ThenEchoes_Live0452()
     {
         
@@ -264,7 +264,7 @@ public class Reaudit2_A2_Tests
         Assert.Equal(Convert.FromHexString("1164420e000000002a020000"), KharaTitleSelectPackets.Build2592(handle, later));
     }
 
-    [Fact]
+    [DataFact]
     public void ReSelectWithBFromZero_ASlotNotApplied_Live00cca2d7()
     {
         
@@ -282,7 +282,7 @@ public class Reaudit2_A2_Tests
         Assert.Equal(0x265u, again.NewState.KharaB);
     }
 
-    [Fact]
+    [DataFact]
     public void DifferentAInsideTheTimer_IsNotApplied_RulePin()
     {
         
@@ -297,7 +297,7 @@ public class Reaudit2_A2_Tests
         Assert.Equal(90000u, other.Timer);
     }
 
-    [Fact]
+    [DataFact]
     public void DifferentAInsideTheTimerAndTheCooldown_AppliesNothing_IsRefused()
     {
         

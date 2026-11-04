@@ -98,7 +98,7 @@ public class DungeonFinderReauditTests
  /// next 3035 reads 1 with no 1534 or 2771 in between. A second join made while the first run's instance is
  /// still open also counts, so the following 3035 reads 2.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task Replay_9896fe5b_14f214ee_TheJoinCounts_WithNoReset()
     {
         var r = await ReplayAsync(0xA7FA6E78u, "2026-08-05T12:14:13.641");
@@ -122,7 +122,7 @@ public class DungeonFinderReauditTests
  /// A reset 94 seconds after the kill is answered, and the 1534s sent after the cleared lifetime are silent.
  /// The run counted all the same.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task Replay_d414c84e_0a3de40a_ACleared_Instance_ClosesOnItsOwn()
     {
         var r = await ReplayAsync(0xA7E8421Cu, "2026-07-31T20:07:35.591");
@@ -146,7 +146,7 @@ public class DungeonFinderReauditTests
  /// Three runs, each reset right after; the 3035 steps 0, 1, 2, 3, and the fourth join is refused with the
  /// lone 2556 19015.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task Replay_d414c84e_19a9bbaf_ThreeRuns_ThenTheLimit()
     {
         var r = await ReplayAsync(0xA7EA3299u, "2026-08-03T19:41:37.550");
@@ -177,7 +177,7 @@ public class DungeonFinderReauditTests
  /// (see the DungeonInstanceRegistry remarks). It does not reach a 19015 in this sequence.
  /// Every 2771 the reference sent is reproduced.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task Replay_d414c84e_052fb38a_EveryFinderAndResetFrame()
     {
         var r = await ReplayAsync(0xA7ECF196u, "2026-07-18T01:03:40.426");
@@ -213,7 +213,7 @@ public class DungeonFinderReauditTests
  /// A 3035 reading 3 at 09:26:16. The 1559s that follow are each refused with the lone 2556 19015 and no 2824,
  /// and the 2810s that follow carry 03.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task UsedUpFinderJoin_IsRefusedWith19015_And2810Reason3()
     {
         var data = await FinderDataAsync();
@@ -230,7 +230,7 @@ public class DungeonFinderReauditTests
             Assert.Equal(0, DungeonEntryRules.CheckEnterCount(row, true, below));
     }
 
-    [Fact]
+    [DataFact]
     public void ClearedLifetime_ClosesOnlyClearedInstances_AtTenMinutes()
     {
         var clock = new ManualClock(new DateTimeOffset(2026, 7, 31, 20, 0, 0, TimeSpan.Zero));
@@ -262,7 +262,7 @@ public class DungeonFinderReauditTests
  /// The finder's 2824 body: <c>[u32 List_ID][u8 healers][u8 dealers][u8 tanks]</c>, for example
  /// <c>15000000 000100</c> (list 21) or <c>16000000 000100</c> (list 22).
  /// </summary>
-    [Theory]
+    [DataTheory]
     [InlineData(21u, "15000000000100")]
     [InlineData(22u, "16000000000100")]
     public void JoinMsg2824_IsRetails(uint listId, string retail)
@@ -273,7 +273,7 @@ public class DungeonFinderReauditTests
  /// The finder join's hand-off 2556: account, ticket, host and port, then the destination block taken from
  /// Position_Info for the dungeon's position point (map, position, direction) and the character GID.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task FinderHandOff2556_IsRetails()
     {
         const string retail = "ad274d00" + "0000"                                 
@@ -299,7 +299,7 @@ public class DungeonFinderReauditTests
  /// The finder run outlives the hand-off: a reconnect creates a new PlayerState for the same character, and
  /// the boss kill must still find the run. A 1534 that resets the run's instance ends it.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void FinderRun_IsKeptPerCharacter_AndEndsWithItsInstance()
     {
         const uint character = 0x5A1F_0001u;
@@ -318,7 +318,7 @@ public class DungeonFinderReauditTests
     }
 
  /// <summary>A later finder join replaces the run's instance, so the old run is over.</summary>
-    [Fact]
+    [DataFact]
     public void FinderRun_EndsWhenANewJoinReplacesItsInstance()
     {
         const uint character = 0x5A1F_0004u;
@@ -334,7 +334,7 @@ public class DungeonFinderReauditTests
     }
 
  /// <summary>The boss kill ends the run once and starts the instance's cleared lifetime.</summary>
-    [Fact]
+    [DataFact]
     public void FinderRun_IsPaidOnce_AndItsInstanceStaysOpenAfterTheKill()
     {
         const uint character = 0x5A1F_0002u;
@@ -356,7 +356,7 @@ public class DungeonFinderReauditTests
     }
 
  /// <summary>The pending match belongs to the connection's PlayerState: a new one (relog) has none.</summary>
-    [Fact]
+    [DataFact]
     public void PendingMatch_IsPerPlayerState()
     {
         var player = new PlayerState { CharacterId = 0x5A1F_0003u };

@@ -55,7 +55,7 @@ public class UseBonusStatPointPersistFirstTests
     private static BonusRequest Req(params (byte Stat, int Amount)[] entries)
         => new(entries.Length, entries.Select(e => new BonusEntry(e.Stat, e.Amount)).ToList());
 
-    [Fact]
+    [DataFact]
     public void Price_RequestThatFits_IsOk_AndLeavesTheInputUntouched()
     {
         int[] current = [0, 0, 0, 0, 0, 0];
@@ -67,7 +67,7 @@ public class UseBonusStatPointPersistFirstTests
         Assert.Equal(new[] { 0, 0, 0, 0, 0, 0 }, current);
     }
 
-    [Fact]
+    [DataFact]
     public void Price_PastThePool_IsTooFewPoints_ShortVectorIsBadState_BadStatOrZeroCostIsOverCap()
     {
         int[] none = [0, 0, 0, 0, 0, 0];
@@ -85,7 +85,7 @@ public class UseBonusStatPointPersistFirstTests
             BonusStatRules.Price(Req((0, 1)), none, unspent: 9, static _ => 0).Outcome);
     }
 
-    [Fact]
+    [DataFact]
     public async Task Persist_SaveThrows_PutsTheCharacterBack_AndReturnsTheError()
     {
         var c = NewCharacter();
@@ -98,7 +98,7 @@ public class UseBonusStatPointPersistFirstTests
         AssertUntouched(c);                                    // ...and it was rolled back
     }
 
-    [Fact]
+    [DataFact]
     public async Task Persist_SaveSucceeds_WritesBonusAndEffectivePrimaries()
     {
         var c = NewCharacter();
@@ -187,7 +187,7 @@ public class UseBonusStatPointPersistFirstTests
         }
     }
 
-    [Fact]
+    [DataFact]
     public async Task Handler_SaveThrows_NothingMirrored_No2498_BadState2680()
     {
         await using var rig = await Rig.StartAsync(failSave: true);
@@ -210,7 +210,7 @@ public class UseBonusStatPointPersistFirstTests
         Assert.Equal((ZoneS2COpcodes.OnLevelUp, "5a"), Hexed(await rig.Net.Readers[0].NextAsync()));
     }
 
-    [Fact]
+    [DataFact]
     public async Task Handler_Accepted_OneSave_Mirrors_Sends2595Then2498Then2680Ok()
     {
         await using var rig = await Rig.StartAsync(failSave: false);
@@ -232,7 +232,7 @@ public class UseBonusStatPointPersistFirstTests
             QuestProgressPackets.BonusStatResultOk, request.AsSpan(13, QuestProgressPackets.BonusStatEchoLength)), ack.Body);
     }
 
-    [Fact]
+    [DataFact]
     public async Task Handler_RefusedByPricing_PersistsNothing_AndSendsOnlyTheRefusal()
     {
         await using var rig = await Rig.StartAsync(failSave: false);

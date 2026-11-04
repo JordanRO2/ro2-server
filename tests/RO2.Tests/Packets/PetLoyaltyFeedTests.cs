@@ -24,7 +24,7 @@ public class PetLoyaltyFeedTests
  /// A feed adds 10 loyalty and stops at PetInfo.LoyaltyLevel_1 (500 for pets 83000016 and 83000019, 100 for 83000001).
  /// At the cap there is nothing to feed.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task FeedAddsTenUpToTheTopLevelThreshold()
     {
         var store = await LoadPetInfoAsync();
@@ -46,7 +46,7 @@ public class PetLoyaltyFeedTests
  /// The responses to one feed of a pet at loyalty 10 are 2920, 2918, 2919 and 2925, with flag 2 and message 16093
  /// ("@1 Egg successfully fed to @2.").
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task FeedWindowBodiesAreRetailsFrames()
     {
         var store = await LoadPetInfoAsync();
@@ -66,7 +66,7 @@ public class PetLoyaltyFeedTests
  /// The feed that reaches the threshold switches the record to LoyaltyEffect_1 and level 1. A level-1 pet reports 1 in
  /// its 2918 body.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task FeedToTheThresholdRaisesTheLevel()
     {
         var store = await LoadPetInfoAsync();
@@ -88,7 +88,7 @@ public class PetLoyaltyFeedTests
  /// <summary>
  /// The 2916 book lists each pet's stored loyalty, ascending by id regardless of registration order.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task BookCarriesTheStoredLoyalties()
     {
         var store = await LoadPetInfoAsync();
@@ -115,7 +115,7 @@ public class PetLoyaltyFeedTests
  /// <summary>
  /// A pet never fed keeps the unfed record: LoyaltyEffect_0 210027, level 0, loyalty 0.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task UnfedPetIsTheLoyaltyZeroRecord()
     {
         var store = await LoadPetInfoAsync();

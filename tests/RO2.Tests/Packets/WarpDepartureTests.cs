@@ -31,7 +31,7 @@ public class WarpDepartureTests
     private static readonly TimeSpan Generous = TimeSpan.FromSeconds(10);
     private static readonly Lazy<Task<GameDataStore>> Data = new(LoadDataAsync);
 
-    [Fact]
+    [DataFact]
     public async Task WarpHandlingZeroIsWhatAWarpEnds()
     {
         var data = await Data.Value;
@@ -49,7 +49,7 @@ public class WarpDepartureTests
  /// compared on its msgTag, zero bytes and handle. The 2498 frames are the character's own sheet, so only their
  /// opcode and length are compared. All other bodies must match the reference byte for byte.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task DepartureIsRetails1615Window()
     {
         var data = await Data.Value;
@@ -119,7 +119,7 @@ public class WarpDepartureTests
  /// <summary>
  /// With nothing to drop and nothing kept, the departure consists of 2938 and the self 2505 alone.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task BareDepartureIsTheAckAndTheSelfOut()
     {
         var data = await Data.Value;
@@ -140,7 +140,7 @@ public class WarpDepartureTests
  /// collection store the trio carries the forms of a character that registered nothing and has no active pet
  /// (2918 result 30001).
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task WarpSendsNoNpcsAndEndsWithTheCollectionTrio()
     {
         var data = await Data.Value;
@@ -171,7 +171,7 @@ public class WarpDepartureTests
  /// (see WorldEntryPackets.BuildMapLoad2311). All other bodies must match byte for byte. The 2311 is followed by
  /// 2472 2523 2522 and the collection trio.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task GateRequestIsRetails1371Window()
     {
         var data = await Data.Value;
@@ -237,7 +237,7 @@ public class WarpDepartureTests
  /// The reference gate on these teleporters depends on the destination and the requester. This server keeps no siege
  /// ownership (see MultiTeleportNpcHandler), so every player receives the refusal.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task UnservedTeleporterIsRefusedWithTheVictoriousGuildCode()
     {
         var data = await Data.Value;
@@ -260,7 +260,7 @@ public class WarpDepartureTests
  /// The (NPC, slot) to Position_Info rows served by MultiTeleportNpcHandler, each matching the destination observed in
  /// the reference traffic, and the agit groups it refuses.
  /// </summary>
-    [Theory]
+    [DataTheory]
     [InlineData(17260000u, 1, 274u)]
     [InlineData(17260000u, 4, 327u)]
     [InlineData(28950000u, 1, 275u)]

@@ -365,7 +365,7 @@ public sealed class PostgresSocialProviderSelectionTests
         return services.BuildServiceProvider(new ServiceProviderOptions { ValidateOnBuild = true, ValidateScopes = true });
     }
 
-    [Fact]
+    [DataFact]
     public void Provider_Postgres_boots_the_Chat_container_with_the_Postgres_repositories()
     {
         using var sp = Boot("Postgres", "Host=127.0.0.1;Port=1;Database=x;Username=x;Password=x");   // never connected: no I/O at resolve time
@@ -374,7 +374,7 @@ public sealed class PostgresSocialProviderSelectionTests
         Assert.NotNull(sp.GetRequiredService<RO2.Server.Chat.FriendPresence>());                    // the singleton consumer resolves
     }
 
-    [Fact]
+    [DataFact]
     public void Provider_Mongo_keeps_the_Mongo_repositories()
     {
         using var sp = Boot("Mongo", "mongodb://127.0.0.1:1/?serverSelectionTimeoutMS=100&connectTimeoutMS=100");

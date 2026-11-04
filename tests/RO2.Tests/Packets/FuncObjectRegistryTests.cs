@@ -70,7 +70,7 @@ public class FuncObjectRegistryTests
     private static readonly Lazy<List<FuncObjectInfo>> FuncObjectInfoTable =
         new(() => WorldEventTrigger3030Tests.Table<FuncObjectInfo>("FuncObjectInfo.json"));
 
-    [Fact]
+    [DataFact]
     public void Map4302_KeepsTheElevenRowsRetailLists_AndDropsBothGatheringTemplates()
     {
         var rows = MapRows(4302);
@@ -86,7 +86,7 @@ public class FuncObjectRegistryTests
         Assert.DoesNotContain(objects, o => o.TemplateId is 80010690 or 80010700);
     }
 
-    [Fact]
+    [DataFact]
     public void Map4302_MapLoadReply_IsRetailsFrame_WithoutTheRowsNextToTheEntryPoint()
     {
         var map2311 = Convert.FromHexString(Retail2311Onto4302);
@@ -113,7 +113,7 @@ public class FuncObjectRegistryTests
         Assert.Equal(Retail4302MapLoad, Frame(objects, (5, 0x0015A614), (4, 0x0015A714)));
     }
 
-    [Fact]
+    [DataFact]
     public void Map1301_KeepsBothTemplates_AndReproducesRetailsFrames()
     {
         var objects = Build(MapRows(1301));
@@ -127,7 +127,7 @@ public class FuncObjectRegistryTests
             (2607, 0x00125614), (2677, 0x00128714), (2601, 0x00271314), (2679, 0x00271B14), (2747, 0x001E8814)));
     }
 
-    [Fact]
+    [DataFact]
     public void Map1200_KeepsRow36_WhichRetailLists()
     {
         var objects = Build(MapRows(1200));
@@ -136,7 +136,7 @@ public class FuncObjectRegistryTests
         Assert.Equal(Retail1200Row36, Frame(objects, (36, 0x000A1714)));
     }
 
-    [Fact]
+    [DataFact]
     public void Map1201_KeepsTheFiveTemplatesRetailListsThere()
     {
         var objects = Build(MapRows(1201));
@@ -152,7 +152,7 @@ public class FuncObjectRegistryTests
         Assert.Equal(Retail1201Row2, Frame(objects, (2, 0x000A2814), (1792, 0x000CCE14)));
     }
 
-    [Fact]
+    [DataFact]
     public void RetailUnlistedOnMap_NamesTemplatesRetailListsOnAnotherMap()
     {
         var funcObjectIds = FuncObjectInfoTable.Value.Select(r => r.ID).ToHashSet();
@@ -173,7 +173,7 @@ public class FuncObjectRegistryTests
         Assert.Equal(63, spawns.Count(s => FuncObjectRegistry.RetailUnlistedOnMap.Contains((s.MapId, s.AssetIndex))));
     }
 
-    [Fact]
+    [DataFact]
     public async Task ForMap_LeavesThePairsOutOnTheLivePath()
     {
         

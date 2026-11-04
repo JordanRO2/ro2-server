@@ -118,13 +118,13 @@ public class GuildDisbandRetailFramesTests
         Assert.Equal(skillsHex, ToHex(burst[3].Body));
     }
 
-    [Fact]
+    [DataFact]
     public void Burst_02e3869a_is_byte_exact() => AssertBurst(Bar02e3869a, Skills02e3869a);
 
-    [Fact]
+    [DataFact]
     public void Burst_04396557_is_byte_exact_with_an_item_cell() => AssertBurst(Bar04396557, Skills04396557);
 
-    [Fact]
+    [DataFact]
     public void An_empty_bar_still_sends_the_2472_and_an_unreadable_one_does_not()
     {
         var skills = ParseSkills(Hex(Skills02e3869a)).Select(kv => (kv.Key, kv.Value)).ToArray();
@@ -144,7 +144,7 @@ public class GuildDisbandRetailFramesTests
                      unread.Select(b => b.Opcode).ToArray());
     }
 
-    [Fact]
+    [DataFact]
     public async Task Disband_takes_the_guilds_link_skills_out_of_the_2488()
     {
         var store = await LoadGuildSkillLevelAsync();
@@ -180,7 +180,7 @@ public class GuildDisbandRetailFramesTests
         finally { await GuildService.Instance.DisbandAsync(g); }
     }
 
-    [Fact]
+    [DataFact]
     public void DelPossible_codes_are_the_ones_the_2688_consumer_has_texts_for()
     {
         
@@ -211,7 +211,7 @@ public class GuildDisbandRetailFramesTests
         Assert.Equal((ushort)0, GuildDelPossibleHandler.DisbandRefusal(lone, master));
     }
 
-    [Fact]
+    [DataFact]
     public void Delete_answers_the_vault_refusal_with_the_code_ShowResultCodeMessage_Guild_reads_as_7861()
     {
         

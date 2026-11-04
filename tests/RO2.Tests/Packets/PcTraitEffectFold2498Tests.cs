@@ -46,7 +46,7 @@ public class PcTraitEffectFold2498Tests
     private static EffectService.EffectSheetModifiers Flat(params (byte Trait, double Value)[] rows)
         => new(rows.ToDictionary(r => r.Trait, r => r.Value), new Dictionary<byte, double>());
 
-    [Fact]
+    [DataFact]
     public void AMaxHpPercentRowGivesRetailsClosingSheet()
     {
         var body = EffectService.FoldSheetModifiers(Convert.FromHexString(RetailPlain), Percent((21, 1000.0)),
@@ -55,7 +55,7 @@ public class PcTraitEffectFold2498Tests
         Assert.Equal(Convert.FromHexString(RetailAfter40011), body);
     }
 
-    [Fact]
+    [DataFact]
     public void AnAttackPercentRowGivesRetailsClosingSheet()
     {
         var body = EffectService.FoldSheetModifiers(Convert.FromHexString(RetailAfter40011),
@@ -64,7 +64,7 @@ public class PcTraitEffectFold2498Tests
         Assert.Equal(Convert.FromHexString(RetailAfter40012), body);
     }
 
-    [Fact]
+    [DataFact]
     public void AFlatMaxHpRowAddsItsAmount()
     {
         var body = EffectService.FoldSheetModifiers(Convert.FromHexString(RetailBefore60037), Flat((21, 1000.0)),
@@ -77,7 +77,7 @@ public class PcTraitEffectFold2498Tests
  /// End to end over the shipped Effect_Table: effects 40011 and 40012 at level 10, both active and folded into the
  /// plain sheet, produce the expected sheet with both applied.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task TheShippedRowsOfTwoActiveBuffsGiveRetailsSheet()
     {
         var effects = new EffectService(players: null!, broadcast: null!, data: await LoadStoreAsync("Effect_Table.json"),
@@ -100,7 +100,7 @@ public class PcTraitEffectFold2498Tests
     }
 
  /// <summary>Rows for traits the sheet has no slot for, such as walk and move speed, are left out of it.</summary>
-    [Fact]
+    [DataFact]
     public async Task RowsOffTheSheetAreLeftOut()
     {
         var effects = new EffectService(players: null!, broadcast: null!, data: await LoadStoreAsync("Effect_Table.json"),
@@ -117,7 +117,7 @@ public class PcTraitEffectFold2498Tests
  /// <summary>
  /// Removal: the sheet without the buff carries the lower max, and current HP above it is clamped to that max.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void RemovingTheBuffCutsCurrentHpToThePlainMax()
     {
         var body = EffectService.FoldSheetModifiers(Convert.FromHexString(RetailPlain),
@@ -127,7 +127,7 @@ public class PcTraitEffectFold2498Tests
     }
 
  /// <summary>A u16 stat saturates at 65,535: a buff that would exceed it leaves the field at the maximum.</summary>
-    [Fact]
+    [DataFact]
     public void AU16StatSaturates()
     {
         var plain = Convert.FromHexString(RetailPlain);
@@ -141,7 +141,7 @@ public class PcTraitEffectFold2498Tests
  /// <summary>
  /// With no effect rows the builder produces the plain in-world sheet, byte for byte.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task WithNoRowItIsThePlainSheet()
     {
         var store = await LoadStoreAsync("PCBaseStatus.json", "NpcLevelScaling.json");
@@ -158,7 +158,7 @@ public class PcTraitEffectFold2498Tests
  /// primaries and, through them, max HP/SP and the derived stats. Effect 50603 takes STR from 201 to 221 and max HP
  /// up by VitHPValue per extra VIT.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task APrimaryRowCascadesThroughTheClassFormula()
     {
         var store = await LoadStoreAsync("PCBaseStatus.json", "NpcLevelScaling.json");

@@ -18,7 +18,7 @@ public class SkillMoveAndChannelMoveTests
 {
     private static float F(uint bits) => BitConverter.UInt32BitsToSingle(bits);
 
-    [Fact]
+    [DataFact]
     public void NfySkillMoveEnd2749_PcForm_PutsSkillAndMoveKindWhereTheConsumerReadsThem()
     {
         // Wire layout of 2749 NfySkillMoveEnd: blob+8 caster handle, blob+12 skill, blob+16 move kind,
@@ -30,7 +30,7 @@ public class SkillMoveAndChannelMoveTests
         Assert.Equal(expected, body);
     }
 
-    [Fact]
+    [DataFact]
     public void NfySkillMoveEnd2749_RetailOverload_IsThePcFormWithSkill0AndKind0x0E()
     {
         // The NPC form pinned by ActorCrashSweepTests: skill 0, kind 0x0E.
@@ -42,7 +42,7 @@ public class SkillMoveAndChannelMoveTests
             0x019DF013u, F(0x442420A4u), F(0x43AA4E14u), F(0x423A6A4Du), F(0xBED3277Eu)));
     }
 
-    [Fact]
+    [DataFact]
     public void SkillMoveNotify1523_ParsesTheBuildersLayout()
     {
         // Wire layout of 1523 ReqSkillMoveNotify: +0 target handle, +4 skill, +8 move kind byte,
@@ -58,7 +58,7 @@ public class SkillMoveAndChannelMoveTests
         Assert.False(SkillMoveNotifyHandler.TryParse(body.AsSpan(0, 24), out _, out _, out _, out _, out _, out _));
     }
 
-    [Fact]
+    [DataFact]
     public void SkillMoveTracker_GivesTheMovedActorToTheEndOnce()
     {
         var caster = new PlayerState { EntityId = 0x00100111u };
@@ -72,7 +72,7 @@ public class SkillMoveAndChannelMoveTests
         Assert.False(SkillMoveTracker.TryTake(new PlayerState(), 630410, out _));
     }
 
-    [Fact]
+    [DataFact]
     public void ApplyToMovedActor_MovesTheCasterOnlyWhenItIsTheNamedActor()
     {
         var npcs = new NpcStateManager(new GameDataStore(), NullLogger<NpcStateManager>.Instance);
@@ -91,7 +91,7 @@ public class SkillMoveAndChannelMoveTests
         SkillMoveTracker.ReachTableOverride = null;
     }
 
-    [Fact]
+    [DataFact]
     public void SelfMove_IsBoundedByTheCastOrigin_SoHopsCannotChain()
     {
         UseShippedReachTable();
@@ -115,7 +115,7 @@ public class SkillMoveAndChannelMoveTests
         SkillMoveTracker.ReachTableOverride = SkillMoveTracker.LoadReach(Path.Combine(dir!.FullName, "data", "Skill_Table_Base.json"));
     }
 
-    [Fact]
+    [DataFact]
     public void NpcMoveRefusal_TakesOnlyTheLatestCastTargetOfTheSameMap()
     {
         UseShippedReachTable();
@@ -145,7 +145,7 @@ public class SkillMoveAndChannelMoveTests
         SkillMoveTracker.ReachTableOverride = null;
     }
 
-    [Fact]
+    [DataFact]
     public void LoadReach_IsSkillRangePlusInfluenceBound()
     {
         var dir = new DirectoryInfo(AppContext.BaseDirectory);
@@ -156,7 +156,7 @@ public class SkillMoveAndChannelMoveTests
         Assert.Equal(35f, reach[6304]); // Skill_Range 25 + Influence_Bound_Length 10
     }
 
-    [Theory]
+    [DataTheory]
     // A 1526 walk during a 6304 channel, answered by its own 2585: the avatar moved.
     [InlineData(668.52734375f, 893.0862426757812f, 668.52734375f, 893.0862426757812f, 670.1732788085938f, 895.5944213867188f, true)]
     // Destination == current point == the last point: a turn on the spot, which must not cancel.
@@ -170,7 +170,7 @@ public class SkillMoveAndChannelMoveTests
         Assert.Equal(moved, ViewGroupMoveHandler.DisplacesChannel(lastX, lastY, curX, curY, destX, destY));
     }
 
-    [Fact]
+    [DataFact]
     public void ImmovableGroups_HoldBothChannelledGroups()
     {
         var set = SkillChannelingPackets.LoadImmovableSkillGroups(Path.Combine(RequireDataDirectory(), "Skill_Table_Base.json"));
@@ -179,7 +179,7 @@ public class SkillMoveAndChannelMoveTests
         Assert.Contains(73721u, set);  // 7372101
     }
 
-    [Fact]
+    [DataFact]
     public void ImmovableGroups_MissingTable_IsNull()
     {
         Assert.Null(SkillChannelingPackets.LoadImmovableSkillGroups(Path.Combine(Path.GetTempPath(), "no-such-dir", "Skill_Table_Base.json")));

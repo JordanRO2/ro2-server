@@ -35,7 +35,7 @@ public class Reaudit2_A0_Tests
 
     
  /// <summary>Every listed PC handle, in element order, once; NPC handles and the zero handle never.</summary>
-    [Fact]
+    [DataFact]
     public void SkillWearPcHandles_AreTheListedPcs_InElementOrder_Deduplicated()
     {
         const uint caster = 0x06FC0E11, other = 0x06FC0F11, npc = 0x00112E13;
@@ -51,7 +51,7 @@ public class Reaudit2_A0_Tests
     }
 
  /// <summary>A cast whose element lists only monsters wears no PC, and an empty vector wears none either.</summary>
-    [Fact]
+    [DataFact]
     public void SkillWearPcHandles_NpcOnlyOrEmpty_WearsNobody()
     {
         var npcs = new[] { new SkillDamageHit(0x00112E13, 1, 1, [new SkillHitEffect(1, 5)]) };
@@ -60,7 +60,7 @@ public class Reaudit2_A0_Tests
     }
 
  /// <summary>A type-10 cast that names one PC gives that PC the single all-zero element, and the named PC's armour wears when it is cast on itself.</summary>
-    [Fact]
+    [DataFact]
     public void SkillWearPcHandles_SingleZeroCast_WearsTheNamedPc()
     {
         var request = SkillDamageHandler.ParseRequest(Convert.FromHexString(
@@ -73,7 +73,7 @@ public class Reaudit2_A0_Tests
     }
 
  /// <summary>A buff that the caster casts on itself lists the caster, so the caster's own armour wears.</summary>
-    [Fact]
+    [DataFact]
     public void SkillWearPcHandles_SelfBuff_WearsTheCaster()
     {
         var request = SkillDamageHandler.ParseRequest(Convert.FromHexString(
@@ -86,7 +86,7 @@ public class Reaudit2_A0_Tests
     }
 
  /// <summary>An unset (-1) durability row stands for its template's Durability, including 0. With no template, the 10000 ceiling applies.</summary>
-    [Fact]
+    [DataFact]
     public void UnsetDurability_IsTheTemplateValue_ZeroIncluded()
     {
         Assert.Equal(0, DurabilityService.UnsetDurabilityOf(new ItemData { Durability = 0 }));
@@ -98,7 +98,7 @@ public class Reaudit2_A0_Tests
  /// <summary>
  /// The armour burst with two unset rows: a template Durability of 0 is sent as 0 and the row is not rewritten; the next row (Durability 10000) is sent at 9998, persisted, in ascending slot order. The 2503 frame shape is that of ItemPackets.BuildItemDurability2503.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task ArmourWear_UnsetTemplateZeroPiece_GoesOutAtZero_AndANormalPieceStepsFromItsTemplate()
     {
         var store = await LoadStoreAsync("ItemInfo.json");
@@ -135,7 +135,7 @@ public class Reaudit2_A0_Tests
 
     
  /// <summary>The Skill_Table_SkillLevel columns as the handler reads them: 0 counts as 1, and an unknown skill gets one record with no quantity limit.</summary>
-    [Fact]
+    [DataFact]
     public void SkillLevelColumns_ReadTheShippedTable()
     {
         var rows = SkillLevelColumns.Parse(File.ReadAllBytes(Path.Combine(RequireDataDirectory(), "Skill_Table_SkillLevel.json")));
@@ -157,7 +157,7 @@ public class Reaudit2_A0_Tests
  /// <summary>
  /// The records of one NPC element share the skill's DamageRate. Each carries the full hit divided by N, so together they carry it once. Never below 1, as in CombatService.
  /// </summary>
-    [Theory]
+    [DataTheory]
     [InlineData(9000, 1, 9000)]
     [InlineData(9000, 3, 3000)]
     [InlineData(7811, 2, 3906)]   
@@ -169,7 +169,7 @@ public class Reaudit2_A0_Tests
         => Assert.Equal(expected, SkillDamageRules.RecordDamage(full, records));
 
  /// <summary>Whatever the count, the records of one element add up to the full hit within rounding, never N times it.</summary>
-    [Fact]
+    [DataFact]
     public void RecordDamage_RecordsSumToTheFullHit()
     {
         foreach (var full in new[] { 10, 999, 3905, 23592, 100000 })
@@ -180,7 +180,7 @@ public class Reaudit2_A0_Tests
  /// <summary>
  /// Influence_Target_Type 9 (the two Detection skills) has NPC elements with no damage record. Every other type-1 NPC element has at least one. An ordinary attack skill is type 1.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void InfluenceTargetTypes_DetectionIsNine_AttackSkillsAreNot()
     {
         var types = SkillLevelColumns.ParseInfluenceTargetTypes(
@@ -197,7 +197,7 @@ public class Reaudit2_A0_Tests
  /// <summary>
  /// A cast aimed at an NPC primary lists the primary alone, not the whole hit list.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void NpcVictims_PrimaryNpc_IsThePrimaryAlone_AndTheElementIsTheArchiveFrame()
     {
         var request = SkillDamageHandler.ParseRequest(Convert.FromHexString(
@@ -215,7 +215,7 @@ public class Reaudit2_A0_Tests
     }
 
  /// <summary>A primary that is another PC damages no NPC; the caster as primary is an area cast over the hit list.</summary>
-    [Fact]
+    [DataFact]
     public void NpcVictims_PrimaryOtherPc_IsNone_AndTheCasterAsPrimaryIsTheHitList()
     {
         const uint caster = 0x06FC0E11;
@@ -229,7 +229,7 @@ public class Reaudit2_A0_Tests
  /// <summary>
  /// A ground cast keeps the hit list in order, minus dead NPCs and anything past Skill_Damage_Quantity. A friendly NPC (Camp 1) is left out and does not count. An unknown skill is capped at 20.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void NpcVictims_GroundCast_SkipsTheDeadAndFriendly_AndStopsAtTheQuantity()
     {
         var npcs = LiveNpcs(0x00000113, 0x00000213, 0x00000313, 0x00000413, 0x00000513);
@@ -249,7 +249,7 @@ public class Reaudit2_A0_Tests
  /// <summary>
  /// The hit list is the client's: a monster on another map takes no damage and does not spend a Skill_Damage_Quantity slot.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void NpcVictims_GroundCast_SkipsMonstersOnAnotherMap()
     {
         var npcs = LiveNpcs(0x00000113, 0x00000213, 0x00000313);
@@ -262,7 +262,7 @@ public class Reaudit2_A0_Tests
  /// <summary>
  /// The 2718 NPC element carries max(1, Number_Of_Normal_Influences) records, each rolled on its own, so a crit can land on any one of them. Frames with 2, 3 and 5 records are checked byte for byte.
  /// </summary>
-    [Theory]
+    [DataTheory]
     [InlineData("2f000000f54106000113932f00000000000000000000000000e88668bf8a2bd63e000000000000000000000000000001000000",
         0x070F5211u, 0x0001CE77u, 0x32F1u, new[] { 4, 7811, 1, 3905 },
         "015959004be400000000f541060011520f070113932f000000000000000000000000000000000000000000000100000113932f00"

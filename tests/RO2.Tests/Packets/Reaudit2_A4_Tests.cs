@@ -39,7 +39,7 @@ public class Reaudit2_A4_Tests
  /// <summary>
  /// The member's 1531 departure removes the Warp_Handling 0 effect from its PC, sending 2493 and 2494 before the hand-off. PartyDungeonTeleportHandler calls WarpDeparture.DropWarpEffectsAsync ahead of DungeonChannelHandOff.EnterAsync to do this.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task DungeonTeleport_DropsWarpHandling0Effects_WithRetailsRemovalFrames()
     {
         var store = await LoadStoreAsync("Effect_Table.json");
@@ -53,7 +53,7 @@ public class Reaudit2_A4_Tests
  /// <summary>
  /// The repeat window is per player: after an answered 9000211, a 1561 of another item skill within 1,000 ms is a repeat too. A refusal does not move the window.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void ItemSkillRepeat_IsOneWindowPerPlayer_AcrossItemSkills()
     {
         var player = new PlayerState();
@@ -69,7 +69,7 @@ public class Reaudit2_A4_Tests
  /// <summary>
  /// Through the handler: an answered 1561 opens the window, and a 1561 of a different item skill inside it gets the lone 2711 before the item is looked up. The 2711 has the shape 01 10 1000 49e4 00000000 [caster] [skill] (see the SkillStartItemHandler remarks).
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task ItemSkillRepeat_OfAnotherSkill_GetsTheLone2711()
     {
         await using var net = await Harness.StartAsync(1);
@@ -155,7 +155,7 @@ public class Reaudit2_A4_Tests
         return skills;
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData(LeaveBar7448b82e, LeaveSkills7448b82e)]
     [InlineData(LeaveBarD414c84e, LeaveSkillsD414c84e)]
     public void GuildLeave_Burst_IsTheArchives_2472_2488_2472_2488(string barHex, string skillsHex)
@@ -183,7 +183,7 @@ public class Reaudit2_A4_Tests
  /// <summary>
  /// The 2488 of a guild leave is built after RemoveMemberByCharIdAsync, since the burst is sent only on result 0, past the removal. The guild's link skills are in the member's list while it is a member and gone afterwards. The guild runs on GuildService.Instance without a database: InitAsync is never called, so the write-through is skipped.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task GuildLeave_2488_IsTheGuildlessList_OnceTheMemberIsRemoved()
     {
         var store = await LoadStoreAsync("Guild_Skill_Level.json");
@@ -245,7 +245,7 @@ public class Reaudit2_A4_Tests
     }
 
  /// <summary>The idle caster of a refused cast gets the 20032 code in both the 2715 and the 2962.</summary>
-    [Fact]
+    [DataFact]
     public async Task CooldownRefusal_OfAnIdleCaster_IsRetails20032()
     {
         var (net, handler, caster, services) = await StartSkillHandlerAsync();
@@ -269,7 +269,7 @@ public class Reaudit2_A4_Tests
  /// <remarks>
  /// No assertion depends on wall-clock time. The handler stamps the record with its own DateTime.UtcNow, so the test brackets that stamp between before and after, and checks the window at times derived from them: busy at before and at before + 1,000 ms, idle at after + 1,001 ms. This pins a window of exactly 1 s at a start inside the bracket. The refusal half re-records the caster as inside a cast that cannot run out during the test (<see cref="Generous"/>). A slow host that stalls more than 1 s between the accepted 1508 and the next one lets the window lapse, which turns the expected 20152 into 20032.
  /// </remarks>
-    [Fact]
+    [DataFact]
     public async Task CooldownRefusal_InsideTheLastAcceptedCast_Stays20152()
     {
         var (net, handler, caster, services) = await StartSkillHandlerAsync();
@@ -300,7 +300,7 @@ public class Reaudit2_A4_Tests
     }
 
  /// <summary>The window: idle with no record, busy until the duration has passed, idle strictly after it.</summary>
-    [Fact]
+    [DataFact]
     public void CasterBusyWindow_IsIdleOnlyPastTheLastCastsDuration()
     {
         var player = new PlayerState();

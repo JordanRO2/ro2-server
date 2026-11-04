@@ -58,7 +58,7 @@ public sealed class Reaudit4_B0_Tests
     ];
 
  /// <summary>The rate slots, wiped and stamped again from their constants, come back byte for byte.</summary>
-    [Theory]
+    [DataTheory]
     [InlineData(RetailLeff50, 50)]
     [InlineData(RetailLeff90, 90)]
     public void Rates_StampedFromTheConsts_AreRetails(string retail, int effectiveLevel)
@@ -75,7 +75,7 @@ public sealed class Reaudit4_B0_Tests
     }
 
  /// <summary>The vigor rate R(C) = floor(100 x C / (0.005 x C + 0.2 x Leff + 10)), with R(0) = 0. Vigor stops at 7500.</summary>
-    [Fact]
+    [DataFact]
     public void Rates_Formula_AndTheVigorCap()
     {
         Assert.Equal(0, TraitRates.Rate(0, 50));
@@ -89,7 +89,7 @@ public sealed class Reaudit4_B0_Tests
  /// <summary>
  /// The in-world sheet with effects: the Trait_Kind 3 rate lines land in their slots after the fold. Crit (+60) and hit (+62) are the sums of their lines alone, and the cast rate is R(const) plus its line. Effect ids are not needed here, since the lines are already summed.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task Rates_KindThreeLines_AreAddedAfterTheEffectFold()
     {
         var store = await SheetStore.Value;
@@ -105,7 +105,7 @@ public sealed class Reaudit4_B0_Tests
     }
 
  /// <summary>The world-entry sheet stamps the rates from its own constants at the character's level, with no effect line: a penetration constant of 50 from gear at level 27 gives 319.</summary>
-    [Fact]
+    [DataFact]
     public async Task Rates_GearSheet_StampsThePenRate()
     {
         var store = await SheetStore.Value;
@@ -123,7 +123,7 @@ public sealed class Reaudit4_B0_Tests
     
     
  /// <summary>KHARA_Title_Info 203 (Khara 556) -> Option_1 -> TraitInfo: STR 80, AGI 30, INT 80, WIS 30, VIT 30.</summary>
-    [Fact]
+    [DataFact]
     public async Task TitleTraits_Title203_AreItsTraitInfoRows()
     {
         var store = await SheetStore.Value;
@@ -136,7 +136,7 @@ public sealed class Reaudit4_B0_Tests
  /// <summary>
  /// The world-entry 2498 with title 203 worn in slot B: primaries 81/31/81/31/31 (base 1 plus 80/30/80/30/30) and max SP 558 (WisSPValue 18 x WIS 31). The same primaries and max SP come out for a WisSPValue-18 class with all primaries at 1.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task Sheet_WornTitle_IsInTheWorldEntryPrimaries()
     {
         var store = await SheetStore.Value;
@@ -164,7 +164,7 @@ public sealed class Reaudit4_B0_Tests
  /// <summary>
  /// Trait 21 and 22 flat rows add to the class max: title 237 grants WIS +150 and max SP +200, and title 234 grants VIT +200 and max HP +1000. A gear percent multiplies a title's flat: STR +10 % over title 203's +80 on a base of 1 gives round(81 x 1.1) = 89. The combat cache reads the same numbers.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task Sheet_TitleMaxHpSpAndGearPercent_AndTheCombatCacheAgrees()
     {
         var store = await SheetStore.Value;
@@ -200,7 +200,7 @@ public sealed class Reaudit4_B0_Tests
  /// <summary>
  /// An accepted 1438 answers 2592, then 2498 with the owner's sheet including the new title, then 2582. A refusal is the 2582 alone. The 2592 and 2582 bodies are built by KharaTitleSelectPackets, and the 2498 by the sheet builder with the title.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task Select_Success_Is2592_2498_2582_AndARefusalIs2582Alone()
     {
         var store = await SheetStore.Value;
@@ -273,7 +273,7 @@ public sealed class Reaudit4_B0_Tests
         [new InventoryItem { Id = 77, CharacterId = 941, ItemId = itemId, Count = count, StorageType = storageType, Slot = 3 }];
 
  /// <summary>Collect / deliver progress is the bag: min(held, Value2), state 1 at the need.</summary>
-    [Theory]
+    [DataTheory]
     
     [InlineData(613010010u, 40001020u, 7, "01005aca892401000000000000000700000000000000000000000000000000000000")]
     
@@ -291,7 +291,7 @@ public sealed class Reaudit4_B0_Tests
     }
 
  /// <summary>A talk or use-item close stored in an earlier login loads at state 1 with 1 at its row; unclosed, state 2.</summary>
-    [Theory]
+    [DataTheory]
     
     [InlineData(911010020u, "{\"kill\":[0],\"met\":[1]}", "0100e4e84c3601000000000000000100000000000000000000000000000000000000")]
     
@@ -307,7 +307,7 @@ public sealed class Reaudit4_B0_Tests
     }
 
  /// <summary>The closes are stored from the session state and put back by the next login's restore.</summary>
-    [Fact]
+    [DataFact]
     public async Task ObjectiveState_IsStoredAndRestored()
     {
         var data = await QuestStore.Value;
@@ -338,7 +338,7 @@ public sealed class Reaudit4_B0_Tests
     }
 
  /// <summary>A multi-talk quest's partial meets and a multi-row use-item quest's uses survive the relog.</summary>
-    [Fact]
+    [DataFact]
     public async Task PartialMeetsAndUses_AreKept()
     {
         var data = await QuestStore.Value;
@@ -374,7 +374,7 @@ public sealed class Reaudit4_B0_Tests
  /// <summary>
  /// A talk quest closed in an earlier login (stored close, restored at login) is turned in with no 2432 or 2427. This is driven through the bag-full branch of 1378, so no payout is needed: the quest answers only 2431 20020 and 2431 21708, where an unclosed one would also answer 2432 and 2427.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task TurnIn_OfARestoredClosedTalkQuest_SendsNo2432Or2427()
     {
         var data = await QuestStore.Value;
@@ -420,7 +420,7 @@ public sealed class Reaudit4_B0_Tests
  /// <summary>
  /// The talk-elsewhere refusal (21712 and 21708) applies to a quest carried over a relog whose run state is stored, and not to one whose document predates the stored closes. Quest 123000059: talk 11004275, Reward NPC 11004261.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task TalkElsewhereRefusal_FollowsTheStoredRunState()
     {
         var data = await QuestStore.Value;

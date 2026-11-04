@@ -15,7 +15,7 @@ namespace RO2.Tests.GameData;
 [Collection(GameDataStoreLoadedCollection.Name)]
 public class TalentAllocationValidationTests
 {
-    [Fact]
+    [DataFact]
     public async Task LegalAllocationOfClassSkillsPasses()
     {
         var store = await LoadShippedTalentTableAsync();
@@ -25,7 +25,7 @@ public class TalentAllocationValidationTests
         Assert.Equal("", reason);
     }
 
-    [Fact]
+    [DataFact]
     public async Task ZeroGroupOrLevelEntriesAreIgnored()
     {
         var store = await LoadShippedTalentTableAsync();
@@ -35,7 +35,7 @@ public class TalentAllocationValidationTests
             store, job: 6, level: 50, [(0u, (byte)5), (1102u, (byte)0)], held: null, out _));
     }
 
-    [Fact]
+    [DataFact]
     public async Task CrossClassSkillIsRefused()
     {
         var store = await LoadShippedTalentTableAsync();
@@ -46,7 +46,7 @@ public class TalentAllocationValidationTests
         Assert.Contains("not a talent skill", reason);
     }
 
-    [Fact]
+    [DataFact]
     public async Task JunkSkillIdIsRefused()
     {
         var store = await LoadShippedTalentTableAsync();
@@ -56,7 +56,7 @@ public class TalentAllocationValidationTests
         Assert.Contains("not a talent skill", reason);
     }
 
-    [Fact]
+    [DataFact]
     public async Task LevelAboveTheSkillCapIsRefused()
     {
         var store = await LoadShippedTalentTableAsync();
@@ -67,7 +67,7 @@ public class TalentAllocationValidationTests
         Assert.Contains("exceeds its max", reason);
     }
 
-    [Fact]
+    [DataFact]
     public async Task SkillTakenBelowItsUnlockLevelIsRefused()
     {
         var store = await LoadShippedTalentTableAsync();
@@ -78,7 +78,7 @@ public class TalentAllocationValidationTests
         Assert.Contains("unlocks at character level 25", reason);
     }
 
-    [Fact]
+    [DataFact]
     public async Task SkillAtItsUnlockLevelPasses()
     {
         var store = await LoadShippedTalentTableAsync();
@@ -87,7 +87,7 @@ public class TalentAllocationValidationTests
             store, job: 6, level: 25, [(1204u, (byte)1)], Held((1201, 1)), out var reason), reason);
     }
 
-    [Fact]
+    [DataFact]
     public async Task OutOfRangeJobIsRefused()
     {
         var store = await LoadShippedTalentTableAsync();
@@ -101,7 +101,7 @@ public class TalentAllocationValidationTests
     private static Dictionary<uint, byte> Held(params (uint Group, byte Level)[] tree)
         => tree.ToDictionary(t => t.Group, t => t.Level);
 
-    [Fact]
+    [DataFact]
     public async Task PrerequisiteChainInOneBatchIsLegal()
     {
         var store = await LoadShippedTalentTableAsync();
@@ -111,7 +111,7 @@ public class TalentAllocationValidationTests
             store, job: 6, level: 50, [(1102u, (byte)1), (1117u, (byte)1), (1108u, (byte)1)], Held(), out var reason), reason);
     }
 
-    [Fact]
+    [DataFact]
     public async Task ChainOrderInTheVectorDoesNotMatter()
     {
         var store = await LoadShippedTalentTableAsync();
@@ -120,7 +120,7 @@ public class TalentAllocationValidationTests
             store, job: 6, level: 50, [(1108u, (byte)1), (1117u, (byte)1), (1102u, (byte)1)], held: null, out var reason), reason);
     }
 
-    [Fact]
+    [DataFact]
     public async Task CrossJobPrerequisiteThatThisJobCannotLearnIsNotEnforced()
     {
         var store = await LoadShippedTalentTableAsync();
@@ -135,7 +135,7 @@ public class TalentAllocationValidationTests
             store, job: 17, level: 50, [(6102u, (byte)1)], held: null, out _));
     }
 
-    [Fact]
+    [DataFact]
     public async Task ChildAloneWithoutItsParentIsRefused()
     {
         var store = await LoadShippedTalentTableAsync();
@@ -146,7 +146,7 @@ public class TalentAllocationValidationTests
         Assert.Contains("1108", reason);
     }
 
-    [Fact]
+    [DataFact]
     public async Task ChildIsLegalWhenItsParentIsAlreadyHeld()
     {
         var store = await LoadShippedTalentTableAsync();
@@ -155,7 +155,7 @@ public class TalentAllocationValidationTests
             store, job: 6, level: 50, [(1108u, (byte)1)], Held((1117, 1)), out var reason), reason);
     }
 
-    [Fact]
+    [DataFact]
     public async Task ParentRequestedAtLevelZeroDoesNotCountAsHeld()
     {
         var store = await LoadShippedTalentTableAsync();
@@ -165,7 +165,7 @@ public class TalentAllocationValidationTests
             store, job: 6, level: 50, [(1117u, (byte)0), (1108u, (byte)1)], Held(), out _));
     }
 
-    [Fact]
+    [DataFact]
     public async Task LoweringAHeldLevelIsRefused()
     {
         var store = await LoadShippedTalentTableAsync();
@@ -175,7 +175,7 @@ public class TalentAllocationValidationTests
         Assert.Contains("below the held level 3", reason);
     }
 
-    [Fact]
+    [DataFact]
     public async Task KeepingOrRaisingAHeldLevelIsLegal()
     {
         var store = await LoadShippedTalentTableAsync();

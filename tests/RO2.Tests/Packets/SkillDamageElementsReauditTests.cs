@@ -32,7 +32,7 @@ public class SkillDamageElementsReauditTests
  /// A buff (Skill_Type 4) that the caster applies to itself. The 2718 echoes the request's position and index fields
  /// (index 0), lists the caster with its HP and SP, and carries no effect record.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void SkillDamage2718_BuffOnSelf_IsTheArchiveFrame()
     {
         var request = SkillDamageHandler.ParseRequest(Convert.FromHexString(
@@ -54,7 +54,7 @@ public class SkillDamageElementsReauditTests
     }
 
  /// <summary>A type-10 cast that names one PC gets a single all-zero element.</summary>
-    [Fact]
+    [DataFact]
     public void SkillDamage2718_Type10AtOnePc_IsTheArchiveFrame()
     {
         var request = SkillDamageHandler.ParseRequest(Convert.FromHexString(
@@ -70,7 +70,7 @@ public class SkillDamageElementsReauditTests
     }
 
  /// <summary>The skill index occupies bytes 43 and 44, and the hit count is the u16 at offset 45.</summary>
-    [Fact]
+    [DataFact]
     public void SkillDamageRequest_ReadsTheCountAt45AndTheIndexAt43()
     {
         var request = SkillDamageHandler.ParseRequest(Convert.FromHexString(
@@ -86,7 +86,7 @@ public class SkillDamageElementsReauditTests
  /// Element rules by Skill_Type: a buff lists the caster and other PCs, a debuff lists only the others, and a heal or
  /// attack lists none. Only attack (or unknown) types damage monsters, and a debuff lists them undamaged.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void SkillDamageElements_FollowTheSkillType()
     {
         var caster = new PlayerState { EntityId = 0x06FC0E11, Hp = 10, Mp = 70000 };

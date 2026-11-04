@@ -62,7 +62,7 @@ public class ExtractSocket1544Tests
 
     private static string Refusal(string codeHex) => codeHex + new string('0', 2 * 252);
 
-    [Fact]
+    [DataFact]
     public async Task PincersOnAnOpenedEmptyHole_Code4_IsRetailsFrame()
     {
         
@@ -78,7 +78,7 @@ public class ExtractSocket1544Tests
         Assert.Equal(Convert.FromHexString(Refusal("0400")), ExtractSocketHandler.BuildRefusal2787(code));
     }
 
-    [Fact]
+    [DataFact]
     public async Task ARuneSentAsTheTool_Code1_IsRetailsFrame()
     {
         
@@ -94,7 +94,7 @@ public class ExtractSocket1544Tests
         Assert.Equal(Convert.FromHexString(Refusal("0100")), ExtractSocketHandler.BuildRefusal2787(code));
     }
 
-    [Fact]
+    [DataFact]
     public async Task APincerStackAlreadyGone_Code1()
     {
         
@@ -112,7 +112,7 @@ public class ExtractSocket1544Tests
             ExtractSocketHandler.Check(store, Owner, Item(1, Pincers, 52, storage: 2), target, hole, out _));
     }
 
-    [Fact]
+    [DataFact]
     public async Task AMissingTarget_Code2_AClosedHole_Code4_AFilledHole_Extracts()
     {
         var store = await Store.Value;
@@ -131,7 +131,7 @@ public class ExtractSocket1544Tests
             ExtractSocketHandler.Check(store, Owner, tool, Item(2, 11100001, 5, storage: 1, holes: "[0,22264024]"), 1, out _));
     }
 
-    [Fact]
+    [DataFact]
     public async Task TheRuneJoinsAStackThatStillFits()
     {
         
@@ -146,7 +146,7 @@ public class ExtractSocket1544Tests
         Assert.Equal(-1, cell);
     }
 
-    [Fact]
+    [DataFact]
     public async Task AFullStack_OpensANewStackInTheFirstFreeCell()
     {
         var store = await Store.Value;
@@ -159,7 +159,7 @@ public class ExtractSocket1544Tests
         Assert.Equal((short)3, cell);
     }
 
-    [Fact]
+    [DataFact]
     public async Task AFullBag_HasNoCell_UnlessTheLastPincersFreeOne()
     {
         var store = await Store.Value;
@@ -205,7 +205,7 @@ public class GuildNotice1428Tests
         "75007200200044006900730063006f00720064003a002000680074007400700073003a002f002f0064006900730063006f00720064002e00670067002f0051007a0073006700" +
         "37004500320042005700320001f8";
 
-    [Fact]
+    [DataFact]
     public void ANoticeOf101Chars_IsRefused15_WithTheGuildGuid()
     {
         var body = Convert.FromHexString(Refused1428);
@@ -219,7 +219,7 @@ public class GuildNotice1428Tests
             GuildNoticeUpdateHandler.BuildAnsGuildUpdateNotice(GuildNoticeUpdateHandler.NoticeTooLong, Guid2dfbcba0));
     }
 
-    [Fact]
+    [DataFact]
     public void AnAcceptedNotice_Answers0000_AndBroadcastsRetails2564()
     {
         var request = Convert.FromHexString(Accepted1428);
@@ -235,7 +235,7 @@ public class GuildNotice1428Tests
         Assert.Equal(request, GuildPackets.BuildNfyGuildNoticeUpdated(guild));
     }
 
-    [Fact]
+    [DataFact]
     public void TheCeilingSitsBetweenRetailsLargestAcceptedAndItsRefusal()
     {
         
@@ -264,7 +264,7 @@ public class GuildInviteAnswer1430Tests
         throw new DirectoryNotFoundException("no ancestor of " + AppContext.BaseDirectory + " holds data/Config_Def.json");
     }
 
-    [Fact]
+    [DataFact]
     public async Task TheLifetimeIsConfigDef5_300Seconds()
     {
         await using var fs = File.OpenRead(Path.Combine(DataDir(), "Config_Def.json"));
@@ -274,7 +274,7 @@ public class GuildInviteAnswer1430Tests
         Assert.Null(GuildInviteYouAnsHandler.AnswerLifetime(Array.Empty<ConfigDef>()));
     }
 
-    [Theory]
+    [DataTheory]
     
     
     [InlineData("d003e843ff6eee4d93467b13c0bd4fdd8d684bb8f08fd14da2c744fae9c1e07c01",
@@ -295,7 +295,7 @@ public class GuildInviteAnswer1430Tests
             GuildInviteYouAnsHandler.BuildAnsGuildInviteYouAns(code, Convert.FromHexString(request1430)));
     }
 
-    [Fact]
+    [DataFact]
     public void RetailsSlowestAcceptedAnswer_IsStillValid()
     {
         
@@ -326,7 +326,7 @@ public class GuildStorageList1587Tests
         return g;
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData(0)]
     [InlineData(81)]
     [InlineData(82)]
@@ -345,7 +345,7 @@ public class GuildStorageList1587Tests
 /// <summary>1688 ReqGuildHouseResult: the empty answer, since no guild-house draw system exists.</summary>
 public class GuildHouseResult1688Tests
 {
-    [Fact]
+    [DataFact]
     public void TheEmptyAnswer_IsRetails4Bytes()
     {
         

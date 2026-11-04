@@ -27,7 +27,7 @@ public class QuestAcceptAndPrizeReauditTests
 {
     
  /// <summary>Refusal responses to request 1374: 2431 with flag 6, and 2421 with result 20020 or 20021. Accepting the quest keeps result 0.</summary>
-    [Fact]
+    [DataFact]
     public void QuestAcceptRefusals_AreTheArchiveFrames()
     {
         Assert.Equal("01141400c3e30000000044c54c36d554000006000000",
@@ -42,7 +42,7 @@ public class QuestAcceptAndPrizeReauditTests
  /// <summary>
  /// The daily reset is at 13:00 UTC. A quest can be accepted again after the reset, not after a fixed 24-hour cooldown.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void DailyGate_ResetsAt1300Utc()
     {
         static DateTime U(string s) => DateTime.SpecifyKind(DateTime.Parse(s, System.Globalization.CultureInfo.InvariantCulture), DateTimeKind.Utc);
@@ -59,7 +59,7 @@ public class QuestAcceptAndPrizeReauditTests
  /// End to end for a full bag: accepting quest 123000071, which grants item 70006007, is answered with 2421 result 20020
  /// alone, and the quest is not held.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task QuestAccept_WithAFullBag_IsRetails2421Result20020()
     {
         await using var net = await Harness.StartAsync(1);
@@ -91,7 +91,7 @@ public class QuestAcceptAndPrizeReauditTests
  /// Take rows: an Active_Type 1 / Action_Type 4 row naming an item is an accept take. An Active_Type 2 row is a completion
  /// take unless it names the quest's own deliver item. Rows naming the quest itself take nothing.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task QuestTakeRows_FollowTheShippedTable()
     {
         var store = await LoadStoreAsync("Quest_Info.json", "ItemInfo.json");
@@ -112,7 +112,7 @@ public class QuestAcceptAndPrizeReauditTests
  /// 2431 (20020) and 2431 (21708) are sent and nothing is paid. The quest stays held with its talk objective closed, so
  /// a later turn-in does not send 2427 again.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task QuestPrize_WithAFullBag_IsRetails2432_2427_20020_21708()
     {
         await using var net = await Harness.StartAsync(1);
@@ -152,7 +152,7 @@ public class QuestAcceptAndPrizeReauditTests
  /// The Start_Type 4 level grant: quest 911010020 is granted at base level 25 to 50 with job level 1 or higher, never
  /// below level 25. Quest 911010030 is not granted at base level 50 with job level 1, only from job level 50.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task LevelGrant_MeetsTheShippedStartType4Rows()
     {
         var store = await LoadStoreAsync("Quest_Info.json");
@@ -173,7 +173,7 @@ public class QuestAcceptAndPrizeReauditTests
     }
 
  /// <summary>The reward items a turn-in needs cells for, by Reward_Type, and the stacks a hand-over empties.</summary>
-    [Fact]
+    [DataFact]
     public void PrizeBagCheck_CountsRewardsAndEmptiedStacks()
     {
         var all = new QuestData { Quest_ID = 1, Reward_Type = 1, Reward_Item_ID1 = 11, Reward_Item_Count1 = 1, Reward_Item_ID2 = 12, Reward_Item_Count2 = 2 };
@@ -197,7 +197,7 @@ public class QuestAcceptAndPrizeReauditTests
  /// <summary>
  /// The count is written as a u16: 1 is unchanged, and 300 is sent as bytes 2c 01.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void QuestMonsterOrGo2425_CountIsAU16()
     {
         Assert.Equal("01121200dbe300000000d4aa3c266efdfa020100", Hex(QuestProgressPackets.BuildQuestMonsterOrGo2425(0x263CAAD4, 0x02FAFD6E, 1)));
@@ -208,7 +208,7 @@ public class QuestAcceptAndPrizeReauditTests
  /// Quest 211112314 has two kill rows of 1,000 each. The counters hold values up to 1,000: 1,000 and 1,000 complete the
  /// quest, 1,000 and 255 do not.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task KillCounters_CountTo1000()
     {
         var store = await LoadStoreAsync("Quest_Info.json");

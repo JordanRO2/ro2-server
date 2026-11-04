@@ -23,7 +23,7 @@ public class QuestPrizeExpRate2429Tests
         new() { EffectId = 105010, EffectLevel = 1 },
     };
 
-    [Fact]
+    [DataFact]
     public async Task ActiveLinesAreRetailsAndSumToTheRate()
     {
         var effects = await LoadEffectServiceAsync();
@@ -45,7 +45,7 @@ public class QuestPrizeExpRate2429Tests
  /// <summary>
  /// The three prizes of the reference case: Reward_EXP 276,000, 285,000 and 1,516,000 at +60% pay 441,600, 456,000 and 2,425,600 on the wire. Reward_Money and Reward_Dia are unaffected by the rate.
  /// </summary>
-    [Theory]
+    [DataTheory]
     [InlineData(613000100u, 276000, 12000u, "011c1c00bfe30000000000000000a4a3892400bd0600e02e000000000000")]
     [InlineData(613000120u, 285000, 12500u, "011c1c00bfe30000000000000000b8a3892440f50600d430000000000000")]
     [InlineData(613000130u, 1516000, 13200u, "011c1c00bfe30000000000000000c2a38924000325009033000000000000")]
@@ -61,7 +61,7 @@ public class QuestPrizeExpRate2429Tests
  /// <summary>
  /// With no rate active the prize pays Reward_EXP itself (quest 123000024: 180,000 EXP and 1,000 zeny).
  /// </summary>
-    [Fact]
+    [DataFact]
     public void UnboostedPrizeIsRewardExp()
     {
         Assert.Equal(180000u, EffectService.ApplyExpRate(180000, 0));

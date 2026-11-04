@@ -14,7 +14,7 @@ namespace RO2.Tests.GameData;
 [Collection(GameDataStoreLoadedCollection.Name)]
 public class TalentPointsTests
 {
-    [Theory]
+    [DataTheory]
     [InlineData(4, new uint[] { 4101, 4103, 4108 })]
     [InlineData(6, new uint[] { 1102, 1110, 1144 })]
     [InlineData(10, new uint[] { 3104, 3107, 3124 })]
@@ -29,7 +29,7 @@ public class TalentPointsTests
         Assert.Equal(expected, TalentRules.StarterSkillGroups(store, (byte)job));
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData(4, 43, new uint[] { 410101, 410301, 410801 }, 42)]            
     [InlineData(4, 50, new uint[] { 410101, 410301, 410801 }, 49)]            
     [InlineData(18, 50, new uint[] { 630101, 630901, 631701 }, 49)]           
@@ -44,7 +44,7 @@ public class TalentPointsTests
         Assert.Equal(retailPool, TalentRules.TalentPointsRemaining(store, (byte)job, level, FromWire(wireSkillIds)));
     }
 
-    [Fact]
+    [DataFact]
     public async Task TalentPointsSpent_OnRetailsPostReset1310State_IsThe69PointsItCost()
     {
         

@@ -33,7 +33,7 @@ public class RidingServiceTests
     private static readonly TimeSpan Generous = TimeSpan.FromSeconds(10);
     private static readonly Lazy<Task<GameDataStore>> Data = new(LoadDataAsync);
 
-    [Fact]
+    [DataFact]
     public async Task RideRowIsTheLastNationEnabledRow()
     {
         var data = await Data.Value;
@@ -50,7 +50,7 @@ public class RidingServiceTests
     }
 
  /// <summary>Mounted speed of vehicle 90020000 (Speed 1.4) at a multiplier of 1.0 is 7.0.</summary>
-    [Fact]
+    [DataFact]
     public async Task MountedSpeedWithoutARidingEffectIsRetailsPlainMount()
     {
         var data = await Data.Value;
@@ -65,7 +65,7 @@ public class RidingServiceTests
  /// multiplication order matches the reference: vehicle 90020000 gives 7.35, and vehicle 90240000 (Speed 1.7)
  /// gives 8.925, where multiplying 5 by 1.7 first would round differently.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task GuildRidingSpeedEffectGivesRetailsBoostedMount()
     {
         var data = await Data.Value;
@@ -77,7 +77,7 @@ public class RidingServiceTests
             TraitPackets.BuildActorMoveSpeed2497(0x07E7EC11u, RidingService.MountedSpeed(data, 90240000, guildSprint)!.Value));
     }
 
-    [Fact]
+    [DataFact]
     public async Task OnlyRidingSkillsKeepTheRide()
     {
         var data = await Data.Value;
@@ -87,7 +87,7 @@ public class RidingServiceTests
     }
 
  /// <summary>Mount: the 1510 is answered with exactly these four frames, in this order.</summary>
-    [Fact]
+    [DataFact]
     public async Task MountIsRetailsFourFrames()
     {
         var data = await Data.Value;
@@ -114,7 +114,7 @@ public class RidingServiceTests
  /// only its speed bytes differ from the reference. The 2498 is the character's own sheet, so only its opcode and
  /// length are compared.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task RepeatingTheVehicleIsRetailsDismount()
     {
         var data = await Data.Value;
@@ -149,7 +149,7 @@ public class RidingServiceTests
  /// Switch from vehicle 90190000 (skill 6002701) to 90150000 (skill 6002301): the old vehicle is dropped (its 2712
  /// names 6002701 and 90190000), the 2719 answer echoes the request with code 17, and nothing is mounted.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task AnotherVehicleWhileRidingIsRetailsSwitchDrop()
     {
         var data = await Data.Value;
@@ -182,7 +182,7 @@ public class RidingServiceTests
  /// <see cref="MountIsRetailsFourFrames"/>). The same holds when the player picks the same character again, which
  /// also creates a new PlayerState.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task TheNextCharacterOfTheConnectionMountsInsteadOfDismounting()
     {
         var data = await Data.Value;
@@ -213,7 +213,7 @@ public class RidingServiceTests
  /// character's ride is not its own, so its first cast sends no 2497, 2494 or 2712 for a vehicle it never rode. The
  /// entry is cleared all the same, without resolving any service.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task ARideAnEarlierCharacterLeftIsClearedWithoutAFrame()
     {
         var data = await Data.Value;
@@ -234,7 +234,7 @@ public class RidingServiceTests
  /// Dropping the ride of a player who is not riding sends nothing and resolves no service.
  /// WarpService.WarpAsync and the cast handlers call it on every move and cast.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task DropWhenNotRidingSendsNothing()
     {
         var data = await Data.Value;
@@ -246,7 +246,7 @@ public class RidingServiceTests
     }
 
     /// <summary>1510 for a vehicle the character does not own: 2719 code 17, nothing mounted.</summary>
-    [Fact]
+    [DataFact]
     public async Task AnUnownedVehicleIsRefusedAndNotMounted()
     {
         var data = await Data.Value;

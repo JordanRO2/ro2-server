@@ -28,7 +28,7 @@ public class QuestDeliverAndFailReauditTests
  /// <summary>
  /// Deliver quests tick to 0 when their item leaves the bag. QuestCollectDropTicks indexes type-5 rows next to the type-4 ones and plans these bodies.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task DeliverItemLeavingTheBag_TicksTheLiveFrames()
     {
         var store = await LoadStoreAsync("Quest_Info.json");
@@ -46,7 +46,7 @@ public class QuestDeliverAndFailReauditTests
     }
 
  /// <summary>The first-row counter is a u16 (2425) lowered without narrowing. A deliver quest's counter is lowered like a collect quest's, so its turn-in reads the objective as open again.</summary>
-    [Fact]
+    [DataFact]
     public void DropTick_LowersTheCounterWithoutNarrowing()
     {
         var player = new PlayerState();
@@ -63,7 +63,7 @@ public class QuestDeliverAndFailReauditTests
  /// <summary>
  /// Quest-fail frames with the u16 value 21714: Fail_Type 39 (escort), Fail_Type 26 (tail 0) and Fail_Type 2 (NPC 50001250).
  /// </summary>
-    [Fact]
+    [DataFact]
     public void QuestFailed2434_AreTheRetailFrames()
     {
         Assert.Equal(21714, QuestFailPackets.FailedCode);
@@ -79,7 +79,7 @@ public class QuestDeliverAndFailReauditTests
         QuestFailTriggers.ParseFailRows(File.ReadAllBytes(Path.Combine(RequireDataDirectory(), "Quest_Info.json")));
 
  /// <summary>A death fails each held Fail_Type 26 quest once, in ascending order, with tail 0. A quest without the row, or one already failed, is left alone.</summary>
-    [Fact]
+    [DataFact]
     public void Death_FailsHeldFailType26Quests()
     {
         var rows = ShippedFailRows();
@@ -91,7 +91,7 @@ public class QuestDeliverAndFailReauditTests
     }
 
  /// <summary>Killing the NPC that a held Fail_Type 2 row forbids fails the quest at that kill, with the NPC as the tail. Killing another NPC counts nothing, and a quest is failed once.</summary>
-    [Fact]
+    [DataFact]
     public void ForbiddenKill_FailsTheQuestAtItsCount()
     {
         var rows = ShippedFailRows();

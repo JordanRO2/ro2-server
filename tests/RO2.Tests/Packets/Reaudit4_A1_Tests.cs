@@ -42,7 +42,7 @@ public class Reaudit4_A1_Tests
         "460400001131ec0e371110a8b3b6e00d1131ec0e520049004b0041007300680069006e0061007a0061006b0069003300000000000000"
         + "00000000000000000202030eff00080000000601ff00011b5920000000000000";
 
-    [Fact]
+    [DataFact]
     public void Retail2391_HeadOffsets_LevelAt69_BaseExpAt70()
     {
         var body = Convert.FromHexString(Retail2391Prefix);
@@ -51,7 +51,7 @@ public class Reaudit4_A1_Tests
         Assert.Equal(8_281UL, BinaryPrimitives.ReadUInt64LittleEndian(head[70..]));
     }
 
-    [Fact]
+    [DataFact]
     public void DeadMe2391_StampsTheLiveExp_OverTheLoginSnapshot()
     {
         var victim = new PlayerState
@@ -73,7 +73,7 @@ public class Reaudit4_A1_Tests
  /// <summary>
  /// At the level cap head+70 is 0, while GrantExpAsync keeps banking EXP into PlayerState.Exp at level 50.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void DeadMe2391_AtTheLevelCap_CarriesZeroExp_NotTheBankedOverflow()
     {
         var victim = new PlayerState
@@ -100,7 +100,7 @@ public class Reaudit4_A1_Tests
     private const string RetailState5 = "011b1b00eae2000000001316f900050000000000000300000000000000";
     private const string RetailState1 = "011b1b00eae2000000001316f900010000000000000300000000000000";
 
-    [Fact]
+    [DataFact]
     public void ChangeState2398_ReturnAndLeave_AreRetailBytes()
     {
         Assert.Equal(5, CombatPackets.ActorState.NpcReturn);
@@ -110,7 +110,7 @@ public class Reaudit4_A1_Tests
             Hex(CombatPackets.BuildChangeState2398(0x00F91613, CombatPackets.ActorState.NpcLeaveCombat, trailing: 3)));
     }
 
-    [Fact]
+    [DataFact]
     public async Task Sweep_ClosesASurvivedEngagement_State5ThenState1()
     {
         var data = await Data.Value;
@@ -137,7 +137,7 @@ public class Reaudit4_A1_Tests
         Assert.Single(rig.States(await rig.FramesUntilMarkerAsync()));
     }
 
-    [Fact]
+    [DataFact]
     public async Task Sweep_ReEngagedDuringTheReturn_SendsNoState1()
     {
         var data = await Data.Value;
@@ -156,7 +156,7 @@ public class Reaudit4_A1_Tests
         Assert.Equal(new byte[] { CombatPackets.ActorState.NpcEnterCombat }, states);
     }
 
-    [Fact]
+    [DataFact]
     public async Task Sweep_KilledDuringTheReturn_SendsNoState1()
     {
         var data = await Data.Value;
@@ -174,7 +174,7 @@ public class Reaudit4_A1_Tests
         Assert.Empty(rig.States(await rig.FramesUntilMarkerAsync()));
     }
 
-    [Fact]
+    [DataFact]
     public async Task Sweep_DeadMonster_GetsNoState5()
     {
         var data = await Data.Value;
@@ -209,7 +209,7 @@ public class Reaudit4_A1_Tests
         + "a97609001177090071770900d777090039780900a178090002790900cd79090001093d0067093d00cd093d00950a3d00fb0a3d005f0b3d00"
         + "c30b3d00270c3d008e0c3d00f20c3d00560d3d00ba0d3d00";
 
-    [Fact]
+    [DataFact]
     public void KickBurst_ReproducesRetail_2472_2488_Twice()
     {
         var bar2472 = Convert.FromHexString(Retail2472);

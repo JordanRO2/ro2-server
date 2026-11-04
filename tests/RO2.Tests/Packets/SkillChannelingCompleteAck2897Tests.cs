@@ -10,7 +10,7 @@ namespace RO2.Tests.Packets;
 /// </summary>
 public class SkillChannelingCompleteAck2897Tests
 {
-    [Theory]
+    [DataTheory]
     [InlineData("8a9e09000000", 630410u, (ushort)0)] 
     [InlineData("859e09000000", 630405u, (ushort)0)]
     [InlineData("8a9e09000100", 630410u, (ushort)1)] 
@@ -20,7 +20,7 @@ public class SkillChannelingCompleteAck2897Tests
         Assert.Equal(Convert.FromHexString(hex), SkillChannelingPackets.BuildSkillChannelingCompleteAck2897(skillId, result));
     }
 
-    [Fact]
+    [DataFact]
     public void Channel_CompletesOnceForTheSkillInProgress()
     {
         var player = new PlayerState();
@@ -35,7 +35,7 @@ public class SkillChannelingCompleteAck2897Tests
         Assert.False(player.TryEndChannel(630410)); 
     }
 
-    [Fact]
+    [DataFact]
     public void Channel_NoneInProgress_NeverCompletes()
     {
         var player = new PlayerState();
@@ -43,7 +43,7 @@ public class SkillChannelingCompleteAck2897Tests
         Assert.False(player.TryEndChannel(0));
     }
 
-    [Fact]
+    [DataFact]
     public void ChannelledSkills_AreTheSkillDurationRows()
     {
         var set = SkillChannelingPackets.LoadChannelledSkills(Path.Combine(RequireDataDirectory(), "Skill_Table_SkillLevel.json"));
@@ -56,7 +56,7 @@ public class SkillChannelingCompleteAck2897Tests
         Assert.DoesNotContain(410801u, set); 
     }
 
-    [Fact]
+    [DataFact]
     public void ChannelledSkills_MissingTable_IsNull()
     {
         Assert.Null(SkillChannelingPackets.LoadChannelledSkills(Path.Combine(Path.GetTempPath(), "no-such-dir", "Skill_Table_SkillLevel.json")));

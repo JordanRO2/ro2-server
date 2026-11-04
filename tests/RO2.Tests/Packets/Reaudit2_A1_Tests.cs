@@ -34,7 +34,7 @@ public class Reaudit2_A1_Tests
  /// <summary>
  /// The catalog reads the NationEnable-4 block of the ids with two: 413 is the auto-accept for job 16 (PC_Job 32768), 403 has its three condition rows, 418 is the skill 6204 auto, and the single-block 360 and 180 keep their rows.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task KharaCatalog_ReadsTheRetailNationBlock()
     {
         var catalog = KharaCatalog.For(await LoadStoreAsync("Khara_Info.json"));
@@ -53,7 +53,7 @@ public class Reaudit2_A1_Tests
  /// <summary>
  /// A cast of skill group 6207 by a job-17 character auto-accepts 417 (PC_Job 65536), sending 2574 and then a 2577 for its row 0. A job-16 character gets nothing for that cast.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task KharaSkillAuto_417_IsTheLiveFrames_AndHonoursPcJob()
     {
         var catalog = KharaCatalog.For(await LoadStoreAsync("Khara_Info.json"));
@@ -69,7 +69,7 @@ public class Reaudit2_A1_Tests
  /// <summary>
  /// 413 (skill group 6106, PC_Job 32768) sends its first count on the cast. A job-17 character is never accepted, and the unknown class 0 or the Novice class has no PC_Job bit.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task KharaSkillAuto_413_ForJob16Only()
     {
         var catalog = KharaCatalog.For(await LoadStoreAsync("Khara_Info.json"));
@@ -92,7 +92,7 @@ public class Reaudit2_A1_Tests
  /// <summary>
  /// The "Combat level 50 achieved" condition completes when the level reaches 50: it sends 2575 and then 2576 with a zero reward. Below level 50 nothing is sent, and the row never sends a 2577.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task KharaBaseLevel_54_CompletesOnTheLevelUp()
     {
         var catalog = KharaCatalog.For(await LoadStoreAsync("Khara_Info.json"));
@@ -107,7 +107,7 @@ public class Reaudit2_A1_Tests
     }
 
  /// <summary>At accept, a level row is judged on the spot: 36 ("Combat level 30") accepted at level 30 spends its points, then completes.</summary>
-    [Fact]
+    [DataFact]
     public async Task KharaBaseLevel_CompletesAtAcceptWhenAlreadyMet()
     {
         var catalog = KharaCatalog.For(await LoadStoreAsync("Khara_Info.json"));
@@ -117,7 +117,7 @@ public class Reaudit2_A1_Tests
     }
 
  /// <summary>"Profession Level 10 achieved" stays accepted at job level 7 and completes once Character.JobLevel reaches 10.</summary>
-    [Fact]
+    [DataFact]
     public async Task KharaProfessionLevel_21_CompletesAtJobLevel10()
     {
         var catalog = KharaCatalog.For(await LoadStoreAsync("Khara_Info.json"));
@@ -133,7 +133,7 @@ public class Reaudit2_A1_Tests
  /// <summary>
  /// "Item repair number achieved" steps by the repair's item count (subject 0). Row 65 (target 5) goes from 0 to 5 on a six-item repair and then completes, sending 2575 and 2576 with 20 points. The 2577 bodies use the builder's 11-byte layout.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task KharaRepairCount_StepsByTheItemCount()
     {
         var catalog = KharaCatalog.For(await LoadStoreAsync("Khara_Info.json"));
@@ -156,7 +156,7 @@ public class Reaudit2_A1_Tests
  /// <summary>
  /// The craft EXP goes through the same rate as gathering (EffectService.ApplyExpRate with the trait-76 sum). With no rate it is the table value. At a rate of 3,000 (every VVIP effect), a gather's 86 becomes 111.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void ProfessionExpRate_IsTheRetailGains()
     {
         Assert.Equal(484u, EffectService.ApplyExpRate(484, 0));
@@ -173,7 +173,7 @@ public class Reaudit2_A1_Tests
  /// <summary>
  /// Refusals: 112116650 (PC_Job 229376) asked by a job-4 character, 111010020 (PC_Job 32767) by a job-17 character, 212116750 (PC_ProJob 3) by a profession-4 job-16 character, and 111000110 (Job_Master_Quest 1, Min 30) at master level 0 are each refused with a 2431 reason code: 21718 for class, 21719 for profession, 21702 for master level. A matching class, profession or level passes.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task QuestAcceptGates_AreTheArchiveRefusals()
     {
         var rows = await GateRowsAsync();
@@ -202,7 +202,7 @@ public class Reaudit2_A1_Tests
  /// <summary>
  /// The Job_Master range is checked before PC_Job. A quest that fails both gets the master-level code (21702), not the class code (21718).
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task QuestAcceptGates_JobMasterBeforePcJob_IsTheArchiveTwoGateFrame()
     {
         var rows = await GateRowsAsync();
@@ -218,7 +218,7 @@ public class Reaudit2_A1_Tests
  /// <summary>
  /// The PC_Job bit is Job_ID - 1, and the Novice class has none. The Job_Master range of a Job_Master_Quest 0 or 2 quest is checked against the base level, Min inclusive and Max exclusive.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task QuestAcceptGates_JobBitAndBaseLevelRange()
     {
         var rows = await GateRowsAsync();
@@ -241,7 +241,7 @@ public class Reaudit2_A1_Tests
  /// <summary>
  /// A Start_Type 2 quest needs its start item in the bag. Without it the accept is refused with 2421 result 20036.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task QuestStartItem_IsTheArchive2421Result20036()
     {
         var store = await LoadStoreAsync("Quest_Info.json");
@@ -257,7 +257,7 @@ public class Reaudit2_A1_Tests
  /// <summary>
  /// End to end: the 1378 talk of a quest whose talk NPC has not been met yet, at its Reward NPC, is answered 2431 21712 and then 2431 21708, and the quest stays held with nothing paid. The quest was accepted in the same login.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task QuestPrize_TalkMetElsewhere_IsTheArchive21712_21708()
     {
         await using var net = await Harness.StartAsync(1);
@@ -290,7 +290,7 @@ public class Reaudit2_A1_Tests
  /// <summary>
  /// The side-close: holding quest 059 and turning in quest 060 at the talk NPC also closes 059, sending 2432 and 2427 for 059 before the 2429 and 2435 of 060. The later turn-in of 059 at its own Reward NPC is then paid, with no 2432 or 2427. Without the side-close the same turn-in would be refused.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task QuestPrize_SideClose_IsTheArchiveBurst()
     {
         var store = await LoadStoreAsync("Quest_Info.json", "NPCInfo.json", "ZoneSpawn.json");
@@ -318,7 +318,7 @@ public class Reaudit2_A1_Tests
  /// <summary>
  /// The refusal's limits: a talk-met-elsewhere quest carried over a relog is not refused, since this server does not keep its close. A talk Value1 that no NPC can be met as is not refused either, and such quests are paid as before.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task QuestPrize_TalkMetElsewhere_OnlyForAMeetableNpcInARunBegunThisLogin()
     {
         var store = await LoadStoreAsync("Quest_Info.json", "NPCInfo.json", "ZoneSpawn.json");
@@ -345,7 +345,7 @@ public class Reaudit2_A1_Tests
     }
 
  /// <summary>A 1698 at the talk NPC of a single-row talk quest met elsewhere closes it. A talk row naming the Reward NPC, a Value3-1 row and a multi-objective quest are not tracked.</summary>
-    [Fact]
+    [DataFact]
     public async Task QuestTalkProgress_TracksTheSingleRowTalkQuestsMetElsewhere()
     {
         var store = await LoadStoreAsync("Quest_Info.json");

@@ -54,7 +54,7 @@ public class Reaudit_B1_Tests
 
     // ---- data ------------------------------------------------------------------------------------------------
 
-    [Fact]
+    [DataFact]
     public async Task MapMoveBuff_IsConfigDef65And66()
     {
         var data = await Data.Value;
@@ -63,7 +63,7 @@ public class Reaudit_B1_Tests
         Assert.Null(MapMoveBuff.Of(Array.Empty<RO2.GameData.Tables.ConfigDef>()));
     }
 
-    [Fact]
+    [DataFact]
     public async Task BuffLines_AreRetailsTwo2499s_InTableOrder()
     {
         var data = await Data.Value;
@@ -74,7 +74,7 @@ public class Reaudit_B1_Tests
 
     // ---- the 2498 slot -----------------------------------------------------------------------------------------
 
-    [Fact]
+    [DataFact]
     public void Fold_PutsTheKind4MissRateRawAtBlob64_RetailRunSheetFromTheRemovalOne()
     {
         // The removal sheet with the buff's trait-35 +10,000 folded in is the run's sheet, byte for byte: the two
@@ -90,7 +90,7 @@ public class Reaudit_B1_Tests
         Assert.Equal(Removal2498, Hex(EffectService.FoldSheetModifiers(removal, EffectService.EffectSheetModifiers.None, hp, sp)));
     }
 
-    [Fact]
+    [DataFact]
     public async Task InWorldSheet_WithTheBuff_DiffersFromThePlainOneOnlyAtBlob64()
     {
         var data = await Data.Value;
@@ -108,7 +108,7 @@ public class Reaudit_B1_Tests
         Assert.Equal(EffectService.FullMissRate, effects.MissRateOf(player));
     }
 
-    [Fact]
+    [DataFact]
     public async Task MissRate_IsZeroWithoutTheBuff_AndIgnoresKind3Rows()
     {
         var data = await Data.Value;
@@ -124,7 +124,7 @@ public class Reaudit_B1_Tests
 
     // ---- the run on the wire -----------------------------------------------------------------------------------
 
-    [Fact]
+    [DataFact]
     public async Task ApplyMapMoveBuff_SendsRetailsRun_AndRecordsTheTenSecondEffect()
     {
         var data = await Data.Value;
@@ -160,7 +160,7 @@ public class Reaudit_B1_Tests
             Assert.Single(player.ActiveEffects);
     }
 
-    [Fact]
+    [DataFact]
     public async Task CancelOfTheBuff_SendsTheRemovalSheetWithBlob64BackToZero()
     {
         // 60205 is Picking_Delete_Type 1, so a 1463 may end it early; the removal run is 2498 -> 2493 -> 2494 with the
@@ -185,7 +185,7 @@ public class Reaudit_B1_Tests
 
     // ---- what the buff grants ----------------------------------------------------------------------------------
 
-    [Fact]
+    [DataFact]
     public async Task MonsterHit_OnAPcHoldingTheBuff_IsAKind2MissWithNoWear()
     {
         // A monster's 2696 on a PC inside a 60205 window is kind 2, damage 0, with no 2503 after it. The 2696 layout:
@@ -213,7 +213,7 @@ public class Reaudit_B1_Tests
         Assert.False(player.IsDead);
     }
 
-    [Fact]
+    [DataFact]
     public async Task MonsterHit_WithoutTheBuff_StillLands()
     {
         var data = await Data.Value;

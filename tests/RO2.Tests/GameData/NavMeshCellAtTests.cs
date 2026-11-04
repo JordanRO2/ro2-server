@@ -26,7 +26,7 @@ public class NavMeshCellAtTests
 
     private sealed record Spawn(int MapId, int Index, double PosX, double PosY, double PosZ);
 
-    [Fact]
+    [DataFact]
     public void CellAt_MatchesPythonMeshCells_OnSampleMaps()
     {
         var (ok, total, misses) = ScoreAgainstMeshTable(SampleMaps);
@@ -36,7 +36,7 @@ public class NavMeshCellAtTests
             $"parity {ok}/{total} below 99%; first misses: {string.Join("; ", misses.Take(10))}");
     }
 
-    [Fact]
+    [DataFact]
     public void CellAt_MatchesPythonMeshCells_OnEveryMapWithAnArtifact()
     {
         var (ok, total, misses) = ScoreAgainstMeshTable(null);
@@ -46,7 +46,7 @@ public class NavMeshCellAtTests
             $"parity {ok}/{total} below 99%; first misses: {string.Join("; ", misses.Take(10))}");
     }
 
-    [Fact]
+    [DataFact]
     public void CellAt_AgreesWithRetailWireCells_AtThePythonValidatedRate()
     {
         // data/NpcNavCell.json holds the cell values sent on the wire for NPC spawns.
@@ -72,7 +72,7 @@ public class NavMeshCellAtTests
         Assert.True(ok >= total * 0.995, $"wire agreement {ok}/{total} below 99.5%");
     }
 
-    [Fact]
+    [DataFact]
     public void CellAt_NeverLeavesTheMesh_EvenFarOffIt()
     {
         // The client indexes an array with this value unchecked: -1 or >= PolyCount is a crash or (0,0,0).
@@ -81,7 +81,7 @@ public class NavMeshCellAtTests
             Assert.InRange(mesh.CellAt(x, y, 0f), 0, mesh.PolyCount - 1);
     }
 
-    [Fact]
+    [DataFact]
     public void CellAt_HandlesCrossingProductsBeyondInt32()
     {
         // For the interior point (20000, 20000) the hypotenuse edge gives
@@ -96,7 +96,7 @@ public class NavMeshCellAtTests
         Assert.Equal(0, mesh.CellAt(90_000, 90_000, 0f));
     }
 
-    [Fact]
+    [DataFact]
     public void CellAt_PicksTheClosestMeanZ_WhereRingsOverlap()
     {
         // Two stacked squares (a bridge over a road): same xy, different height.
@@ -107,7 +107,7 @@ public class NavMeshCellAtTests
         Assert.Equal(0, mesh.CellAt(500, 500, 250f));   // exact tie -> first polygon, like Python min()
     }
 
-    [Fact]
+    [DataFact]
     public void CellAt_WorldOverload_ScalesBy100()
     {
         var verts = new[] { (0, 0), (1000, 0), (1000, 1000), (0, 1000), (2000, 0), (2000, 1000) };
@@ -116,7 +116,7 @@ public class NavMeshCellAtTests
         Assert.Equal(1, mesh.CellAt(15.0, 5.0, 0.0));   // mesh (1500, 500)
     }
 
-    [Fact]
+    [DataFact]
     public void Load_RejectsGarbage_AndTryLoadReturnsNull()
     {
         var dir = Path.Combine(Path.GetTempPath(), "ro2-nav-" + Guid.NewGuid().ToString("N"));

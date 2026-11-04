@@ -44,13 +44,6 @@
 # The capture-replay conformance harness is corpus-facing — kept on disk for local runs, never published.
 /tests/RO2.Tests/Replay/
 
-!/data/
-/data/**
-!/data/**/
-!/data/**/*.json
-!/data/**/*.csv
-!/data/**/*.nav
-
 !/data-pipeline/
 /data-pipeline/**
 !/data-pipeline/**/

@@ -77,7 +77,7 @@ public class AttachSocket1543Tests
     private static InventoryItem Sword(byte storage = 0, string? holes = "[0]") =>
         new() { Id = 1010000008442911772, CharacterId = Owner, ItemId = 11100001, Count = 1, StorageType = storage, Slot = 51, CardsJson = holes };
 
-    [Fact]
+    [DataFact]
     public async Task ARuneIntoAMatchingOpenHole_IsAccepted()
     {
         var store = await Store.Value;
@@ -85,7 +85,7 @@ public class AttachSocket1543Tests
         Assert.Equal(AttachSocketHandler.Attached, AttachSocketHandler.Check(store, Owner, Rune(22261001), Sword(storage: 1), 0, out _));
     }
 
-    [Fact]
+    [DataFact]
     public async Task ACard_IsNotARune_Code3()
     {
         
@@ -93,7 +93,7 @@ public class AttachSocket1543Tests
         Assert.Equal((ushort)3, AttachSocketHandler.Check(store, Owner, Rune(22310892, 1), Sword(), 0, out _));
     }
 
-    [Fact]
+    [DataFact]
     public async Task AGoneOrForeignRuneStack_CannotBeFound_Code1()
     {
         
@@ -103,7 +103,7 @@ public class AttachSocket1543Tests
         Assert.Equal((ushort)1, AttachSocketHandler.Check(store, Owner + 1, Rune(22261001), Sword(), 0, out _));
     }
 
-    [Fact]
+    [DataFact]
     public async Task AMissingTarget_Code2_AClosedHole_Code4_AWrongKind_Code5()
     {
         var store = await Store.Value;
@@ -118,7 +118,7 @@ public class AttachSocket1543Tests
     private static InventoryItem SeedSword() =>
         new() { Id = 1010000008442911773, CharacterId = Owner, ItemId = 11100029, Count = 1, StorageType = 1, Slot = 6, CardsJson = "[0,0]" };
 
-    [Fact]
+    [DataFact]
     public async Task ABlessing_OnATargetOfItsParts_IsAccepted_WhateverTheHoles()
     {
         
@@ -128,7 +128,7 @@ public class AttachSocket1543Tests
         Assert.Equal(AttachSocketHandler.Attached, AttachSocketHandler.Check(store, Owner, Rune(22290033), Sword(storage: 1), 0, out _));
     }
 
-    [Fact]
+    [DataFact]
     public async Task ABlessing_OnTheWrongPartOrLevel_IsCode6_AndWithNoTarget_Code2()
     {
         
@@ -141,7 +141,7 @@ public class AttachSocket1543Tests
         Assert.Equal((ushort)2, AttachSocketHandler.Check(store, Owner, Rune(22290033), Sword(storage: 2), 0, out _));
     }
 
-    [Fact]
+    [DataFact]
     public async Task ASeedRune_IsCheckedAgainstTheHoleLikeAnyRune()
     {
         var store = await Store.Value;
@@ -149,7 +149,7 @@ public class AttachSocket1543Tests
         Assert.Equal((ushort)5, AttachSocketHandler.Check(store, Owner, Rune(22261100), SeedSword(), 0, out _));
     }
 
-    [Fact]
+    [DataFact]
     public async Task ASeedRuneWithNothingToRoll_IsRefusedWithCode6()
     {
         
@@ -158,7 +158,7 @@ public class AttachSocket1543Tests
         Assert.Equal((ushort)6, AttachSocketHandler.Check(store, Owner, Rune(22261200), SeedSword(), 1, out _));
     }
 
-    [Fact]
+    [DataFact]
     public async Task SeedRuneMembers_AreItsRandomSetRunesOfItsSocketType_WithTheirRatio()
     {
         var store = await Store.Value;
@@ -167,7 +167,7 @@ public class AttachSocket1543Tests
         Assert.Empty(AttachSocketHandler.SeedRuneMembers(store, 22261001)); 
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData(0L, 22261101u)]
     [InlineData(40L, 22261101u)]
     [InlineData(41L, 22261102u)]
@@ -179,7 +179,7 @@ public class AttachSocket1543Tests
         Assert.Equal(expected, AttachSocketHandler.PickByRatio(members, draw));
     }
 
-    [Fact]
+    [DataFact]
     public async Task EverySeedRuneOfTheShippedData_RollsFromItsWholeRandomSet()
     {
         
@@ -214,7 +214,7 @@ public class AttachSocket1543Tests
         }
     }
 
-    [Theory]
+    [DataTheory]
     
     [InlineData((ushort)3)]
     

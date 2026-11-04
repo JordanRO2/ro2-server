@@ -28,14 +28,14 @@ public class PartyChangeMaster2352WoeTests
     private const ulong TargetGid = 0x0DE0B6B3A79883F2UL;
     private const ulong RequesterGid = 0x0DE0B6B3A7E7D981UL; // the GID that became leader through a 2365
 
-    [Fact]
+    [DataFact]
     public void WoeRefusal_IsRetailsFrame()
     {
         Assert.Equal(Convert.FromHexString(Retail2352Woe), PartyAnswerPackets.BuildResultAck(
             PartyStatePackets.MsgTagOnPartyChangeMaster, 0x0789FC11u, PartyAnswerPackets.ResultChangeMasterWoeMap));
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData(3101u, 1100u, true)]   // Prontera Fortress [WoE] -> Prontera
     [InlineData(3201u, 1300u, true)]   // Morroc Fortress [WoE], the other Map_Type 4 row
     [InlineData(3101u, 3101u, false)]  // both in the same WoE map: what string 11342 allows
@@ -53,7 +53,7 @@ public class PartyChangeMaster2352WoeTests
     /// answered with exactly the expected 2352 and changes nothing. Once the leader is on 1100 the same request goes
     /// through (2352 result 0), and the member's FIRST frame is that 2365, so the refusal sent it nothing.
     /// </summary>
-    [Fact]
+    [DataFact]
     public async Task RefusedOnWoeMap_ThenDelegatedOnceOffIt()
     {
         await using var server = new ProudServer("Test", NullLogger.Instance);

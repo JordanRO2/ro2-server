@@ -26,7 +26,7 @@ public class EffectTraitLines2499Tests
         "01191900fde300000000040000000300000000007a44abc5000001",   
     };
 
-    [Fact]
+    [DataFact]
     public async Task RankingBuffLinesAreRetailsFiveFramesInTableOrder()
     {
         var effects = await LoadEffectServiceAsync();
@@ -44,7 +44,7 @@ public class EffectTraitLines2499Tests
  /// Cure's effect 6319 has a tick period and a heal direction but no stat-modifier row, so its application
  /// sends no 2499 line and no closing 2498.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task EffectWithoutModifierRowsSendsNoLine()
     {
         var effects = await LoadEffectServiceAsync();

@@ -33,7 +33,7 @@ public sealed class MovementAndItemOpsHardeningTests
 
     // ============================== MV-1: 1526 ==============================
 
-    [Fact]
+    [DataFact]
     public void Mv1_OnlyThe97ByteLengthIsCanonical()
     {
         foreach (var len in new[] { 0, 8, 60, 93, 96, 98, 101 })
@@ -43,7 +43,7 @@ public sealed class MovementAndItemOpsHardeningTests
         Assert.Equal(93, ViewGroupMoveHandler.BuildMoveBody(1, new byte[97]).Length);
     }
 
-    [Fact]
+    [DataFact]
     public void Mv1_MovesAreNotAcceptedBeforeMapLoadedOrDuringAGliderReentry()
     {
         Assert.False(ViewGroupMoveHandler.AcceptsMoves(new PlayerState { MapLoaded = false }));
@@ -61,7 +61,7 @@ public sealed class MovementAndItemOpsHardeningTests
         return p;
     }
 
-    [Fact]
+    [DataFact]
     public async Task Mv1_OnlyA97ByteFrameFromALoadedMapIsRelayed()
     {
         await using var net = await Harness.StartAsync(2);
@@ -191,7 +191,7 @@ public sealed class MovementAndItemOpsHardeningTests
         => fx.Inventory.Rows.OrderBy(r => r.Id)
             .Select(r => $"{r.Id}:{r.ItemId}:x{r.Count}:st{r.StorageType}:slot{r.Slot}:+{r.Refine}").ToList();
 
-    [Fact]
+    [DataFact]
     public async Task Refine_ControlA_ArmourWithABagCatalystIsRefined()
     {
         // Positive control: proves the refusals below are caused by the new rules, not by an earlier reject.
@@ -205,7 +205,7 @@ public sealed class MovementAndItemOpsHardeningTests
         Assert.Equal(StartZeny - 100, rig.Player.Gold);
     }
 
-    [Fact]
+    [DataFact]
     public async Task Refine_APotionIsRefusedAndNothingIsConsumed()
     {
         await using var rig = await StartRefineAsync();
@@ -220,7 +220,7 @@ public sealed class MovementAndItemOpsHardeningTests
         Assert.Equal(before, Shape(rig.Fx));
     }
 
-    [Fact]
+    [DataFact]
     public async Task Refine_AWornCatalystIsRefusedAndNothingIsConsumed()
     {
         await using var rig = await StartRefineAsync();
@@ -235,7 +235,7 @@ public sealed class MovementAndItemOpsHardeningTests
         Assert.Equal(before, Shape(rig.Fx));
     }
 
-    [Fact]
+    [DataFact]
     public async Task Refine_ABankedThirdPowderIsRefusedAndNothingIsConsumed()
     {
         await using var rig = await StartRefineAsync();
@@ -253,7 +253,7 @@ public sealed class MovementAndItemOpsHardeningTests
 
     // ============================== CB-H11: 1565 fall magnitude ==============================
 
-    [Fact]
+    [DataFact]
     public void Fall_NonFiniteOrNegativeIsRejectedAndHugeIsClamped()
     {
         Assert.Equal(0, FallDamagePackets.RetailFallDamage(float.PositiveInfinity, 66293));
@@ -274,7 +274,7 @@ public sealed class MovementAndItemOpsHardeningTests
         Assert.Equal(15.7f, kept);
     }
 
-    [Fact]
+    [DataFact]
     public async Task Fall_AForgedInfinityDoesNotKillTheFaller()
     {
         await using var net = await Harness.StartAsync(1);
@@ -340,7 +340,7 @@ public sealed class MovementAndItemOpsHardeningTests
     private static InventoryItem Bag(ulong uid, uint itemId, byte grade) =>
         new() { Id = uid, CharacterId = 7, ItemId = itemId, Count = 1, StorageType = 0, Slot = 60, Refine = grade, Durability = 10000 };
 
-    [Fact]
+    [DataFact]
     public async Task Transfer_NonCardPairOutsideEquipSlot1To7IsRefused_ButCardsAndArmourPass()
     {
         var store = await TransferStoreAsync();

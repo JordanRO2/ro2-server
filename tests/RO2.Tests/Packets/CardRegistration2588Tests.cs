@@ -20,7 +20,7 @@ public class CardRegistration2588Tests
  /// <summary>Quest reward card 22310555 (1378), new to the card book.</summary>
     private const string RetailCard22310555 = "0a00000001009b6e540102000000";
 
-    [Theory]
+    [DataTheory]
     [InlineData(22320029u, RetailMvp22320029)]
     [InlineData(22310555u, RetailCard22310555)]
     public void TheBodyIsRetailsForBothCardTypes(uint cardId, string retail)
@@ -33,7 +33,7 @@ public class CardRegistration2588Tests
         _ => null,                                                    
     };
 
-    [Fact]
+    [DataFact]
     public void ANewListableCardIsRegisteredAsNewAndAnnouncedOnce()
     {
         var registry = new List<CardRegistryEntry>();
@@ -47,7 +47,7 @@ public class CardRegistration2588Tests
         Assert.Equal(CardRegistryStore.StateNew, entry.State);
     }
 
-    [Fact]
+    [DataFact]
     public void ARegisteredCardIsNotAnnouncedAgain()
     {
         var registry = new List<CardRegistryEntry> { new() { CardId = 22310555u, State = CardRegistryStore.StateSeen } };
@@ -59,7 +59,7 @@ public class CardRegistration2588Tests
         Assert.Equal(CardRegistryStore.StateSeen, Assert.Single(registry).State);
     }
 
-    [Fact]
+    [DataFact]
     public void AnMvpCardIsAnnouncedEveryTimeAndNeverStored()
     {
         var registry = new List<CardRegistryEntry>();
@@ -74,7 +74,7 @@ public class CardRegistration2588Tests
         Assert.Empty(registry);
     }
 
-    [Fact]
+    [DataFact]
     public void ItemsThatAreNoCardsGetNothing()
     {
         var registry = new List<CardRegistryEntry>();
@@ -84,7 +84,7 @@ public class CardRegistration2588Tests
         Assert.Equal(new[] { 22310556u }, announce);
     }
 
-    [Fact]
+    [DataFact]
     public async Task WorldEntryAnnouncesTheMvpCardsInTheBagOnly()
     {
         var store = await CardStoreAsync();

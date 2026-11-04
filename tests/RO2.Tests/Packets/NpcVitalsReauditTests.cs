@@ -31,7 +31,7 @@ public class NpcVitalsReauditTests
          "maxSpByLevel":[{"level":50,"value":3843,"n":9,"share":0.9}]}
         """;
 
-    [Fact]
+    [DataFact]
     public void ResolveVitals_UsesRetailsPair_ThenTheLevelsSp_ThenTheOldMirror()
     {
         var manager = new NpcStateManager(new GameDataStore(), NullLogger<NpcStateManager>.Instance)
@@ -49,7 +49,7 @@ public class NpcVitalsReauditTests
         Assert.Equal((563, 563), bare.ResolveVitals(10050004, 10, 563));
     }
 
-    [Fact]
+    [DataFact]
     public void RetailVitalsTable_RejectsDuplicatesAndOutOfRangeSp()
     {
         Assert.Throws<InvalidDataException>(() => NpcRetailVitals.Parse(Encoding.UTF8.GetBytes(
@@ -59,7 +59,7 @@ public class NpcVitalsReauditTests
     }
 
  /// <summary>Checks the shipped NPC vitals table against the values the audit was based on.</summary>
-    [Fact]
+    [DataFact]
     public void ShippedRetailVitals_CarryTheMeasuredPairs()
     {
         var table = NpcRetailVitals.Load(Path.Combine(RequireDataDirectory(), "npc", "NpcRetailVitals.json"));
@@ -79,7 +79,7 @@ public class NpcVitalsReauditTests
  /// <summary>
  /// A standing 2319 for a level 50 NPC. With the NPC's SP set, the whole 93-byte body matches the expected layout.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void NpcViewData2319_WithTheMeasuredSp_IsTheArchiveFrameByteForByte()
     {
         const string retail = "015b5b0098e20000000013a74901bef8fa0232b5f40100c8cd0100cb050000b5f40100c8cd0100cb050000" +
@@ -100,7 +100,7 @@ public class NpcVitalsReauditTests
     }
 
  /// <summary>A 2643 for a level 30 NPC at full HP and SP with no target. The icon block restates the NPC's own vitals.</summary>
-    [Fact]
+    [DataFact]
     public void ActorIconInfo2643_OfAnNpc_RestatesItsVitals_AsTheArchiveFrame()
     {
         var npc = new NpcRuntimeState
@@ -111,7 +111,7 @@ public class NpcVitalsReauditTests
         Assert.Equal("131f000024080000240800005a095a091e00000000", Hex(ReqActorDetailInfoHandler.BuildIconOf(npc)));
     }
 
-    [Fact]
+    [DataFact]
     public void RegenNpc2317_CarriesTheMeasuredSp_CurEqualsMax_AndNoExtension()
     {
         var npc = new NpcRuntimeState
@@ -135,7 +135,7 @@ public class NpcVitalsReauditTests
 
     
  /// <summary>A 116-byte 2319 whose extension list holds one active effect with its remaining duration and source skill.</summary>
-    [Fact]
+    [DataFact]
     public void NpcViewData2319_WithOneEffect_IsRetails116ByteForm()
     {
         var now = new DateTime(2026, 9, 27, 8, 59, 7, 45, DateTimeKind.Utc);
@@ -157,7 +157,7 @@ public class NpcVitalsReauditTests
  /// A 140-byte 2319 with two effects in ascending id behind a 2-byte compact length. Only the HP fields
  /// differ from the fixed layout.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void NpcViewData2319_WithTwoEffects_IsRetails140ByteForm()
     {
         const string retail =
@@ -195,7 +195,7 @@ public class NpcVitalsReauditTests
         Assert.Equal(new[] { 68, 72, 73 }, differing);
     }
 
-    [Fact]
+    [DataFact]
     public void NpcViewData2319_OfADeadNpc_CarriesNoEffects()
     {
         var npc = StandingNpc(0x00959013u);
@@ -215,7 +215,7 @@ public class NpcVitalsReauditTests
 
     
  /// <summary>Config_Def type 30 (corpse gathering wait) is 40 seconds in the shipped data: the extra stay of a gatherable corpse.</summary>
-    [Fact]
+    [DataFact]
     public async Task CorpseGatherWait_IsConfigDefType30_FortySeconds()
     {
         var source = RequireDataDirectory();

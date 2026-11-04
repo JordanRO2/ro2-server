@@ -34,7 +34,7 @@ public sealed class Reaudit3_A0_Tests
  /// <summary>
  /// Effect 105207 (a buff with trait 21 +500 and trait 22 +300 rows) removed by the server: the owner gets 2498, 2315, 2493 and 2494; a viewer on the same map gets the same 2315 and the 2494.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task RemovalThatMovesTheMax_SendsThePcRecordBetweenTheSheetAndThe2493()
     {
         var data = await Data.Value;
@@ -81,7 +81,7 @@ public sealed class Reaudit3_A0_Tests
  /// <summary>
  /// Effect 60205 (a map-move buff with miss and guard rows, and no max row) leaves the max unchanged: the removal sends 2498, 2493 and 2494, and no 2315.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task RemovalThatLeavesTheMax_SendsNoRecord()
     {
         var data = await Data.Value;
@@ -103,7 +103,7 @@ public sealed class Reaudit3_A0_Tests
  /// <summary>
  /// The live expiry path with two max-moving buffs due together: they leave ActiveEffects in one step, and each removal still carries its 2315, because each effect moves the max against the set still active. Both records show the PC after the burst, listing neither effect.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task ExpiryBurst_CarriesARecordOnEachRemovalWhoseEffectMovesTheMax()
     {
         var data = await Data.Value;
@@ -135,7 +135,7 @@ public sealed class Reaudit3_A0_Tests
  /// <summary>
  /// A burst of two buffs ending together: 40012 (attack traits) and then 40011 (+10 % max HP). 40012 sends 2498, 2493 and 2494; 40011 sends 2498, 2315, 2493 and 2494. The stored max has already dropped by the 40012 removal, and the 2315 still lands on the change made by 40011.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task GuildBuffBurst_PutsTheRecordOnTheMaxHpBuffOnly()
     {
         var data = await Data.Value;
@@ -164,7 +164,7 @@ public sealed class Reaudit3_A0_Tests
  /// <summary>
  /// Removals made by the riding, warp-departure and emergency-call paths (effects 100, 40013 and 60205) send no 2315, even when the stored max is not the sheet's. The removal's 2498 resets the stored max to the sheet's value, which is not a max change of the effect.
  /// </summary>
-    [Theory]
+    [DataTheory]
     [InlineData(100u)]
     [InlineData(40013u)]
     [InlineData(60205u)]
@@ -189,7 +189,7 @@ public sealed class Reaudit3_A0_Tests
  /// <summary>
  /// Adding the same buff sends its 2499 run, one 2498 and the 2492, and no 2315. The max rises with the sheet.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task AddThatMovesTheMax_SendsNoRecord()
     {
         var data = await Data.Value;

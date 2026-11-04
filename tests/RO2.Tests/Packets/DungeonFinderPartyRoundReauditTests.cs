@@ -26,7 +26,7 @@ public class DungeonFinderPartyRoundReauditTests
     private static readonly JsonSerializerOptions JsonOptions = new() { PropertyNameCaseInsensitive = true };
 
     /// <summary>A 1417 re-login on the same session and character builds a new PlayerState: the old seat must go stale.</summary>
-    [Fact]
+    [DataFact]
     public void SameSessionSameCharacterRelogin_MakesTheOldSeatStale()
     {
         var players = new PlayerStateManager(new NoDirtySink());
@@ -46,7 +46,7 @@ public class DungeonFinderPartyRoundReauditTests
 
     
  /// <summary>2598 NotifyChangeP2PGroupID with no group: a single u32 of 0.</summary>
-    [Fact]
+    [DataFact]
     public void LeaveP2PGroup_IsRetails2598Body()
         => Assert.Equal("00000000", Hex(DungeonChannelHandOff.LeaveP2PGroup2598.ToArray()));
 
@@ -55,7 +55,7 @@ public class DungeonFinderPartyRoundReauditTests
  /// A random search (1556) by a party member opens a round like a 1555, but the searcher's answer is sent
  /// as 2805 with a u16 result of 0. The members' frames (2822 and the List_ID 0 2806) are the same as for 1555.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void RandomSearchRound_AnswersTheSearcherOn2805()
     {
         var row = FindDungeonRows().First(r => r.Category_ID == 2 && r.Party_Num == 5);
@@ -76,7 +76,7 @@ public class DungeonFinderPartyRoundReauditTests
     }
 
  /// <summary>The 2805 refusal codes are the two bytes of the 2804 answer.</summary>
-    [Theory]
+    [DataTheory]
     [InlineData(0, "0000")]
     [InlineData(9, "0900")]
     public void SearcherAnswer_IsTheResultU16OnEitherOpcode(int result, string hex)

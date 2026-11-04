@@ -45,7 +45,7 @@ public class RevivalSkill3016Tests
     private static PlayerState DeadPlayer(uint handle, uint sessionId, uint mapId = 1100) =>
         new() { EntityId = handle, SessionId = sessionId, MapId = mapId, Hp = 0, Mp = 0, IsDead = true };
 
-    [Theory]
+    [DataTheory]
     [InlineData("23983744223b3944215e5d42115ffe07e5618c00", 0x07FE5F11u, 9200101u)] 
     [InlineData("032c38446d1f53441fd7b64111ca7c0de5618c00", 0x0D7CCA11u, 9200101u)] 
     [InlineData("47423544a7bd56441839c1411144290b9d830300", 0x0B294411u, 230301u)]  
@@ -60,7 +60,7 @@ public class RevivalSkill3016Tests
         Assert.Equal(RevivalSkillPackets.NfyRevivalSkillBodyLen, built.Length);
     }
 
-    [Fact]
+    [DataFact]
     public void RevivalLanding2718_OnADeadPc_ReproducesRetailFrameByteForByte()
     {
         var caster = new PlayerState { EntityId = Caster, SessionId = 1, MapId = 1100, Hp = 5000 };
@@ -73,7 +73,7 @@ public class RevivalSkill3016Tests
         Assert.Equal(Convert.FromHexString(Retail2718Hex), built);
     }
 
-    [Fact]
+    [DataFact]
     public void RevivalLanding2718_SecondCasterOfTheSameDeath_ReproducesRetailFrame()
     {
         
@@ -85,7 +85,7 @@ public class RevivalSkill3016Tests
         Assert.Equal(Convert.FromHexString(retail), built);
     }
 
-    [Fact]
+    [DataFact]
     public void RevivalLanding2718_OnAPcAlreadyRevived_CarriesTheEmptyElementRetailSends()
     {
         
@@ -101,7 +101,7 @@ public class RevivalSkill3016Tests
         Assert.Equal(Convert.FromHexString(retail), built);
     }
 
-    [Fact]
+    [DataFact]
     public void CanBeOffered_OnlyADeadPcOnTheCastersMapThatIsNotTheCaster()
     {
         var caster = new PlayerState { EntityId = Caster, SessionId = 1, MapId = 1100, Hp = 5000 };
@@ -114,7 +114,7 @@ public class RevivalSkill3016Tests
         Assert.False(RevivalSkillPackets.CanBeOffered(null, caster));
     }
 
-    [Fact]
+    [DataFact]
     public void Answer1684_ReproducesRetailBurstInOrderByteForByte()
     {
         var (x, y, z) = Xyz(Retail1684Hex, 1);
@@ -132,7 +132,7 @@ public class RevivalSkill3016Tests
             burst.Select(f => f.Opcode).ToArray());
     }
 
-    [Fact]
+    [DataFact]
     public void The1684Echo_MatchesTheOfferItAnswers()
     {
         var target = DeadPlayer(DeadPc, 2);
@@ -146,7 +146,7 @@ public class RevivalSkill3016Tests
         Assert.Equal(0, target.RevivalOfferCount);
     }
 
-    [Fact]
+    [DataFact]
     public void AnEarlierOfferStaysAcceptable_AndTheRevivalSpendsAllOfThem()
     {
         
@@ -166,7 +166,7 @@ public class RevivalSkill3016Tests
         Assert.False(target.TryTakeRevivalOffer(bx, by, bz, out _));
     }
 
-    [Fact]
+    [DataFact]
     public void A1684NamingNoOffer_TakesNothing()
     {
         var target = DeadPlayer(DeadPc, 2);
@@ -179,7 +179,7 @@ public class RevivalSkill3016Tests
         Assert.Equal(1, target.RevivalOfferCount);
     }
 
-    [Fact]
+    [DataFact]
     public void OffersAreDedupedCappedAndCleared()
     {
         var target = DeadPlayer(DeadPc, 2);
@@ -199,7 +199,7 @@ public class RevivalSkill3016Tests
         Assert.Equal(0, target.RevivalOfferCount);
     }
 
-    [Fact]
+    [DataFact]
     public void RevivalSkillGroups_AreTheShippedSkillFunction7Rows()
     {
         var groups = RevivalSkillPackets.ParseRevivalGroups(

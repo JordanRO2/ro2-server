@@ -22,7 +22,7 @@ public class DungeonHandOff2556Tests
         + "77800600" + "5cafb143d7a30e4300005242" + "5a"                        
         + "1c42e8a7b3b6e00d";                                                   
 
-    [Fact]
+    [DataFact]
     public async Task Builder_ReproducesTheRetailHandOff()
     {
         var data = await DungeonDataAsync();
@@ -38,7 +38,7 @@ public class DungeonHandOff2556Tests
         Assert.Equal(3, row.Map_Level);
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData("02d06ec2-275dd078-00014104 06:14:29.525", 13u, (ushort)2, "8e7c06000000d642000096420000884264")] 
     [InlineData("d414c84e-29dccad7-00004a74 14:24:28.809", 9u, (ushort)3, "bf740600000008430000ca430000204100")]  
     [InlineData("d414c84e-2f393288-00003550 15:46:41.063", 42u, (ushort)3, "778006005cafb143d7a30e43000052425a")] 
@@ -55,7 +55,7 @@ public class DungeonHandOff2556Tests
         Assert.True(retailBlock == Hex(body.AsSpan(56, 17).ToArray()), frame);
     }
 
-    [Fact]
+    [DataFact]
     public async Task NoOffer_EntersTheGroupsLowestLevel_AndAnUnknownGroupHasNoArrival()
     {
         var data = await DungeonDataAsync();
@@ -68,7 +68,7 @@ public class DungeonHandOff2556Tests
         Assert.Null(PartyDungeonTeleportHandler.ResolveArrival(data, 250, 1));
     }
 
-    [Fact]
+    [DataFact]
     public void Prelude_IsRetailsTwoFrames()
     {
         
@@ -76,7 +76,7 @@ public class DungeonHandOff2556Tests
             Hex(PlayerSpawnService.BuildActorOutList(0x08522611u, new[] { 0x08522611u })));
     }
 
-    [Fact]
+    [DataFact]
     public void Builder_RejectsATokenOfTheWrongSize()
     {
         var arrival = new PositionData { Area_ID = 426103 };

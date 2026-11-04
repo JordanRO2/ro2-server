@@ -37,7 +37,7 @@ public class SkillDamageTick2797RetailTests
 
     private static byte[] Hex(string s) => Convert.FromHexString(s);
 
-    [Fact]
+    [DataFact]
     public void TwoTargetRetailFrameIsReproducedByteForByte()
     {
         var body = SkillDamagePackets.BuildSkillDamageTick2797(
@@ -51,7 +51,7 @@ public class SkillDamageTick2797RetailTests
         Assert.Equal(Hex(Retail2797TwoTargetsHex), body);
     }
 
-    [Fact]
+    [DataFact]
     public void FiveTargetRetailFrameIsReproducedByteForByteWithTheWideCompactMarker()
     {
         var body = SkillDamagePackets.BuildSkillDamageTick2797(
@@ -75,7 +75,7 @@ public class SkillDamageTick2797RetailTests
  /// The gate reads Skill_Type from the shipped skill table. The skills named here cover the attack skills that
  /// receive damage ticks and the buff and heal skills that do not.
  /// </summary>
-    [Theory]
+    [DataTheory]
     [InlineData(521010u, true)]   
     [InlineData(631910u, false)]  
     [InlineData(510610u, false)]  
@@ -89,7 +89,7 @@ public class SkillDamageTick2797RetailTests
         Assert.Equal(damages, type == SkillDamagePackets.AttackSkillType);
     }
 
-    [Fact]
+    [DataFact]
     public void ParseSkillTypesKeysEveryShippedGroup()
     {
         var types = SkillDamagePackets.ParseSkillTypes(

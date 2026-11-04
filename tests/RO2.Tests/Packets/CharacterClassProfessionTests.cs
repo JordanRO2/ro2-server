@@ -52,7 +52,7 @@ public class CharacterClassProfessionTests
     private const string ZtRandom3Create = "0202060dff0006000000060eff00010000000010000200";
     private const string ZtRandom3RetailEntry50To76 = "0202060dff0006000000060eff000110014c040000000002010600";
 
-    [Fact]
+    [DataFact]
     public void Heal_TheOldHandlersAlterRow_BecomesAnAlter_Once()
     {
         var c = Created(Jordan1Create, job: 4);
@@ -64,7 +64,7 @@ public class CharacterClassProfessionTests
         Assert.Equal(16, c.Job);
     }
 
-    [Fact]
+    [DataFact]
     public void Heal_DoesNotMoveWhatTheClientIsTold()
     {
         var c = Created(Jordan1Create, job: 4);
@@ -80,7 +80,7 @@ public class CharacterClassProfessionTests
         Assert.Equal(4, professionBefore);
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData(ZtRandom3Create, 17)]  
     [InlineData(ZtRandom3Create, 16)]  
     [InlineData("0101010aff0001000000060fff00010000000004000400", 4)] 
@@ -91,7 +91,7 @@ public class CharacterClassProfessionTests
         Assert.Equal(job, c.Job);
     }
 
-    [Fact]
+    [DataFact]
     public void Heal_LeavesARowWithoutACreateBlockAlone()
     {
         var c = new Character { Name = "T", Job = 4 };
@@ -99,7 +99,7 @@ public class CharacterClassProfessionTests
         Assert.Equal(4, c.Job);
     }
 
-    [Fact]
+    [DataFact]
     public async Task HealedRow_DropsTheProfessionClassesSkills_KeepsItsOwnAndTheProfessionSkill()
     {
         
@@ -115,7 +115,7 @@ public class CharacterClassProfessionTests
         Assert.Equal(new uint[] { 6101, 6104, 6111 }, TalentRules.GroupsOutsideClass(store, 4, learned));
     }
 
-    [Fact]
+    [DataFact]
     public void CharList_ZtRandom3_Entry50To76_IsRetails()
     {
         
@@ -127,7 +127,7 @@ public class CharacterClassProfessionTests
         }
     }
 
-    [Fact]
+    [DataFact]
     public void CharList_65FollowsAJobChange_73DoesNot()
     {
         
@@ -143,7 +143,7 @@ public class CharacterClassProfessionTests
         Assert.Equal(2, after[73]);
     }
 
-    [Fact]
+    [DataFact]
     public void ChangeProJobInfo2683_CarriesTheProfessionBlock()
     {
         
@@ -158,7 +158,7 @@ public class CharacterClassProfessionTests
         Assert.Equal("0113130039e40000000002320807060504030201" + "00", Convert.ToHexString(body).ToLowerInvariant());
     }
 
-    [Fact]
+    [DataFact]
     public void NfyPCollectionSkill2920_IsThePetsBookRecord()
     {
         

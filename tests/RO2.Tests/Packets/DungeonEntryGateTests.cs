@@ -19,7 +19,7 @@ public class DungeonEntryGateTests
 {
     private static string Hex(byte[] b) => Convert.ToHexString(b).ToLowerInvariant();
 
-    [Theory]
+    [DataTheory]
     
     [InlineData(0x004CF01Fu, (ushort)19015, "1ff04c00474a")]
     
@@ -35,7 +35,7 @@ public class DungeonEntryGateTests
         Assert.All(body.AsSpan(6).ToArray(), b => Assert.Equal(0, b));
     }
 
-    [Fact]
+    [DataFact]
     public async Task LevelGate_RefusesBelowMapMinLevel_As19001()
     {
         var data = await DungeonDataAsync();
@@ -48,7 +48,7 @@ public class DungeonEntryGateTests
         Assert.Equal(0, DungeonEntryRules.CheckInstanceEntry(row, 50, true, true, 0));
     }
 
-    [Fact]
+    [DataFact]
     public async Task QuestGate_RefusesAnIncompleteNeedQuest_As19012()
     {
         var data = await DungeonDataAsync();
@@ -61,7 +61,7 @@ public class DungeonEntryGateTests
         Assert.Equal(0, DungeonEntryRules.CheckInstanceEntry(row, 50, true, true, 0));
     }
 
-    [Fact]
+    [DataFact]
     public async Task CountGate_RefusesOnlyAnEntryThatWouldCount_As19015()
     {
         var data = await DungeonDataAsync();
@@ -81,7 +81,7 @@ public class DungeonEntryGateTests
         Assert.Equal(0, DungeonEntryRules.CheckEnterCount(Row(data, 42, 3) with { Enter_Count = 0 }, true, 99));
     }
 
-    [Fact]
+    [DataFact]
     public async Task EntryControl_RefusesTheTrainingGroundToAPlayerInNoParty_As19004()
     {
         var data = await DungeonDataAsync();
@@ -105,7 +105,7 @@ public class DungeonEntryGateTests
         Assert.Equal(0, DungeonEntryRules.CheckEntryControl(data, 426101, inParty: false));
     }
 
-    [Fact]
+    [DataFact]
     public void TrainingRoom_OpensOnlyWhenNobodyButTheRequesterIsOnTheMap()
     {
         var leader = new PlayerState { SessionId = 7, MapId = 1111 };
@@ -121,7 +121,7 @@ public class DungeonEntryGateTests
         Assert.False(DungeonEntryGate.OpensTrainingRoom([member], leader.SessionId));
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData(42, 1, (byte)1)]  
     [InlineData(5, 3, (byte)1)]   
     [InlineData(27, 1, (byte)8)]  
@@ -133,7 +133,7 @@ public class DungeonEntryGateTests
         Assert.Equal(mapType, data.GetMap(data.Positions[row.Position_ID].Area_ID)!.Map_Type);
     }
 
-    [Theory]
+    [DataTheory]
     
     
     [InlineData(0x40u, (ushort)2, (ushort)2, "4000000002000200")]
@@ -142,14 +142,14 @@ public class DungeonEntryGateTests
     public void EntranceInfo3035_IsRetailsBody(uint dungeonId, ushort used, ushort limit, string retail)
         => Assert.Equal(retail, Hex(DungeonEntranceInfoHandler.Build3035(dungeonId, used, limit)));
 
-    [Theory]
+    [DataTheory]
     [InlineData(0x40u, "40000000")] 
     [InlineData(0x08u, "08000000")] 
     [InlineData(0x3Fu, "3f000000")] 
     public void Reset2771_IsRetailsBody(uint dungeonId, string retail)
         => Assert.Equal(retail, Hex(DungeonResetHandler.Build2771(dungeonId)));
 
-    [Fact]
+    [DataFact]
     public void CountWindow_StartsAt1000Utc()
     {
         
@@ -163,7 +163,7 @@ public class DungeonEntryGateTests
             DungeonEntryWindow.WindowStart(new DateTime(2026, 7, 11, 9, 59, 59, DateTimeKind.Utc)));
     }
 
-    [Fact]
+    [DataFact]
     public void CountWindow_AStoredCountReadsZeroOnceItsWindowHasPassed()
     {
         var doc = new DungeonEntryCountDocument

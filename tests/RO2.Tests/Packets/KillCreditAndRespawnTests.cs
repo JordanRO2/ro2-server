@@ -23,7 +23,7 @@ public sealed class KillCreditAndRespawnTests
     private static string ToHex(byte[] b) => Convert.ToHexString(b).ToLowerInvariant();
 
     
-    [Theory]
+    [DataTheory]
     
     [InlineData("01191900c8e211d21a0312852f000000000000e72d000000000000", 0x031AD211u, (byte)18, 12165UL, 11751UL)]
     
@@ -36,7 +36,7 @@ public sealed class KillCreditAndRespawnTests
         Assert.Equal(CompensationPackets.BodyLength, retail.Length / 2);
     }
 
-    [Fact]
+    [DataFact]
     public void Compensation2393_CarriesThePlayersOwnState()
     {
         var player = new PlayerState { EntityId = 0x031AD211u, Level = 18, Exp = 12165, Gold = 11751 };
@@ -50,7 +50,7 @@ public sealed class KillCreditAndRespawnTests
  /// ProcessNpcCorpseAsync then opens with the 2392. This is the skill path order (SkillDamageHandler: credit before the killing 2718, corpse after it).
  /// Quest 111010020 (kill 45170000, three times) and the EXP tables are read from data/.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task KillCredit_GoesOutBeforeTheCorpse_AndNamesNoCorpse()
     {
         const uint quest = 111010020, npcId = 45170000, map = 900041, corpseHandle = 0x00BB4113;
@@ -89,7 +89,7 @@ public sealed class KillCreditAndRespawnTests
         Assert.Equal(ToHex(ActorVitalsPackets.BuildDeadNotify2392(corpseHandle, player.EntityId)), ToHex(dead.Body));
     }
 
-    [Fact]
+    [DataFact]
     public async Task Compensation_IsNotSentAtTheLevelCap()
     {
         await using var rig = await Rig.StartAsync();
@@ -106,7 +106,7 @@ public sealed class KillCreditAndRespawnTests
  /// A respawn uses a fresh handle while the old corpse may still be on the client, so the corpse keeps the old handle: its loot stays reachable and it can no longer be hit.
  /// The respawned NPC is the same state object under the new handle, and the spawn slot follows it.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task Respawn_TakesAFreshHandle_AndLeavesTheCorpseItsOwn()
     {
         const uint map = 900042;
@@ -159,7 +159,7 @@ public sealed class KillCreditAndRespawnTests
         }
     }
 
-    [Fact]
+    [DataFact]
     public async Task Respawn_AfterTheCorpseLeft_KeepsNothingUnderTheOldHandle()
     {
         const uint map = 900043;
@@ -175,7 +175,7 @@ public sealed class KillCreditAndRespawnTests
         Assert.False(npcs.GetNpc(h2)!.IsDead);
     }
 
-    [Fact]
+    [DataFact]
     public void CorpseOnClients_TracksOnlyItsOwnDeath()
     {
         const uint handle = 0x00BB4213;

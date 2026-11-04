@@ -23,7 +23,7 @@ public class TeleportSavePointPacketsTests
         { "405f5455952dd8828d3f0000000000000000", 1245 }, 
     };
 
-    [Theory]
+    [DataTheory]
     [MemberData(nameof(RetailFrames))]
     public void Build_MatchesRetailFrame(string hex, long seconds)
     {
@@ -44,7 +44,7 @@ public class TeleportSavePointPacketsTests
         Assert.Equal(ClientMinutes(retailDays), ClientMinutes(builtDays));
     }
 
-    [Fact]
+    [DataFact]
     public void ClientMinutes_OfRetailFrames()
     {
         
@@ -52,7 +52,7 @@ public class TeleportSavePointPacketsTests
         Assert.Equal(1, ClientMinutes(BinaryPrimitives.ReadDoubleLittleEndian(Convert.FromHexString("a0aaaa2cf9c5523f"))));
     }
 
-    [Fact]
+    [DataFact]
     public void Length_IsConfigDef81InMinutes()
     {
         var config = JsonSerializer.Deserialize<List<ConfigDef>>(
@@ -61,13 +61,13 @@ public class TeleportSavePointPacketsTests
         Assert.Equal(TimeSpan.FromMinutes(60), EscapeCooldown.Length(config));
     }
 
-    [Fact]
+    [DataFact]
     public void Length_NoRow_IsNoCooldown()
     {
         Assert.Equal(TimeSpan.Zero, EscapeCooldown.Length(Array.Empty<ConfigDef>()));
     }
 
-    [Fact]
+    [DataFact]
     public void Cooldown_CountsDownToOneExpiry_AsRetailsTwoRefusals()
     {
         
@@ -91,7 +91,7 @@ public class TeleportSavePointPacketsTests
         Assert.Equal(escapedAt, previous);
     }
 
-    [Fact]
+    [DataFact]
     public void Release_GivesBackAClaimWhoseWarpFailed()
     {
         const uint character = 0xE5CA0002;
