@@ -326,7 +326,9 @@ public sealed class ProudCoreHardeningTests
 
         var (id, body) = await rig.NextPacketAsync();
         Assert.Equal(1371, id);
-        Assert.True(body.Length >= 40); // the intact one, and only it
+        // Exactly the 40-byte plaintext body: the AES pad + CRC32 + pad-length trailer must be stripped at dispatch,
+        // not handed to the handler (a regression that let the trailer through would make this 59 bytes).
+        Assert.Equal(40, body.Length);
         Assert.False(rig.PacketWaiting());
     }
 

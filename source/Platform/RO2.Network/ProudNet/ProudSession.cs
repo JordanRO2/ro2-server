@@ -518,7 +518,10 @@ public partial class ProudSession : IAsyncDisposable
                 if (_logger.IsEnabled(LogLevel.Debug))
                     Log.DecryptedData(_logger, SessionId, decrypted.Length, Convert.ToHexString(decrypted));
 
-                await DispatchDecryptedAsync(decrypted, counterBytes, rc4: false, inflated);
+                // Bound the message to plainLength: DecryptVerified has already checked the CRC32, so the pad, the
+                // CRC32 and the pad-length byte that follow the plaintext are not part of the RMI body and must not
+                // reach the handler (otherwise every AES RMI carries a trailer each handler would have to strip).
+                await DispatchDecryptedAsync(decrypted, plainLength, counterBytes, rc4: false, inflated);
             }
             else if (AllowWarning(WarnDecryptFailed))
             {
@@ -545,7 +548,8 @@ public partial class ProudSession : IAsyncDisposable
                 if (_logger.IsEnabled(LogLevel.Debug))
                     Log.Rc4DecryptedData(_logger, SessionId, decrypted.Length, Convert.ToHexString(decrypted));
 
-                await DispatchDecryptedAsync(decrypted, counterBytes, rc4: true, inflated);
+                // RC4 trailer handling is unchanged (NEEDS-RE): pass the whole decrypted length as before.
+                await DispatchDecryptedAsync(decrypted, decrypted.Length, counterBytes, rc4: true, inflated);
             }
             else if (AllowWarning(WarnDecryptFailed))
             {
@@ -606,9 +610,11 @@ public partial class ProudSession : IAsyncDisposable
     /// itself on it. The RMI id is read only for a type 0x01 message; a compressed message is
     /// inflated first and then dispatched by its own type byte.
     /// </summary>
-    private async Task DispatchDecryptedAsync(byte[] decrypted, int counterBytes, bool rc4, bool inflated)
+    private async Task DispatchDecryptedAsync(byte[] decrypted, int plainLength, int counterBytes, bool rc4, bool inflated)
     {
-        var message = decrypted.AsMemory(counterBytes);
+        // plainLength bounds the real plaintext (AES: past the CRC-verified body lies pad+CRC+padLen, not RMI data;
+        // RC4: the caller passes decrypted.Length, so behaviour is unchanged there).
+        var message = decrypted.AsMemory(counterBytes, plainLength - counterBytes);
         var messageType = message.Span[0];
 
         if (messageType == MessageTypeRmi)
