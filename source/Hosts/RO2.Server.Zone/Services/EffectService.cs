@@ -720,8 +720,9 @@ public sealed class EffectService : BackgroundService
     /// <para>
     /// WHY THE COMBAT CACHE FOLLOWS IT. Combat reads the cached primaries and derived stats, not the sheet. Left
     /// at StatService.EffectivePlayerStats they are the gear-only values, so a buff the sheet shows (a +10% STR
-    /// row) would not reach a hit. The attack rows (23/25, e.g. 40012's +10%) have no slot in the cache, since
-    /// the combat formula derives damage from STR/INT and the weapon, so they still show only on the sheet.
+    /// row) would not reach a hit. The GEAR FLAT attack rows (23/25) now ride the cache as CombatAtkBonus/
+    /// CombatMatkBonus and reach damage; attack BUFFS (effect rows on 23/25) still land only on the sheet, since
+    /// WithSheetDelta does not fold them into the attack bonus (a pre-existing gap, see BACKLOG).
     /// </para>
     /// </remarks>
     internal byte[] RefreshPcTraitSheet(PlayerState player, Character character, IReadOnlyList<InventoryItem> equipped)

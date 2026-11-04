@@ -17,7 +17,9 @@ namespace RO2.Characters.Domain;
 /// <param name="Pen">Penetration.</param>
 /// <param name="PvpDamageIncrease">PvP Damage Increase (trait 71) in additive percentage points (300 line = +3%), attacker-side.</param>
 /// <param name="PvpDamageReduction">PvP Damage Reduction (trait 72) in additive percentage points, victim-side.</param>
+/// <param name="AtkBonus">Gear flat Attack Power (trait 23), the AoV ATKBonus term added to APValue·STR.</param>
+/// <param name="MatkBonus">Gear flat Magic Power (trait 25), added to MAValue·INT.</param>
 public readonly record struct EffectiveStats(
     int Str, int Agi, int Int, int Wis, int Vit, int Luk,
     uint MaxHp, ushort MaxSp, int Defense, int Vigor, int Crit, int Parry, int Pen,
-    float PvpDamageIncrease, float PvpDamageReduction);
+    float PvpDamageIncrease, float PvpDamageReduction, int AtkBonus, int MatkBonus);

@@ -132,9 +132,9 @@ public class CombatService
     /// <para>
     /// PvP damage modifier: the attacker's PvP Damage Increase (trait 71) and the victim's PvP Damage Reduction
     /// (trait 72) scale the resolved hit as a FINAL multiplier (<see cref="CombatRateRules.ApplyPvpDamageRate"/>).
-    /// Everything else (base damage, defence mitigation, crit, parry) is the shared AoV formula. Retail runs the
-    /// summed rate through a diminishing-returns curve (not yet pinned) and stores the result in a u16; the
-    /// increase/reduction here are the near-linear low-end of that curve. See CharacterStats.EffectivePlayerStats.
+    /// Everything else (base damage, defence mitigation, crit, parry) is the shared AoV formula. The increase/
+    /// reduction here are already run through the diminishing curve 100*raw/(raw+5500) in
+    /// CharacterStats.PvpDamageRatePct (asymptote 100% from below); retail stores the resulting PvP damage in a u16.
     /// </para>
     /// </remarks>
     public (int Damage, byte Kind) ResolvePvpHit(PlayerState attacker, PlayerState victim, uint skillId)
@@ -499,6 +499,6 @@ public class CombatService
         // are the pure DamageFormulas.BaseDamage; the host keeps the skill-id decode, the DamageRate lookup and the
         // gear-adjusted stat reads above.
         return DamageFormulas.BaseDamage(pc is not null, pc?.APValue ?? 0, pc?.MAValue ?? 0, str, intel,
-            attacker.WeaponMinDamage, attacker.WeaponMaxDamage, skillMod);
+            attacker.WeaponMinDamage, attacker.WeaponMaxDamage, skillMod, attacker.CombatAtkBonus, attacker.CombatMatkBonus);
     }
 }

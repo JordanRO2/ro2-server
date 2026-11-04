@@ -8,18 +8,24 @@ public class DamageFormulasTests
 {
     [Theory]
     // No PCBaseStatus row, no weapon: STR·2 = 100.
-    [InlineData(false, 0, 0, 50, 0, 0, 0, 1.0, 100)]
+    [InlineData(false, 0, 0, 50, 0, 0, 0, 1.0, 0, 0, 100)]
     // PCBaseStatus row, APValue·STR = 100, no weapon.
-    [InlineData(true, 2, 0, 50, 0, 0, 0, 1.0, 100)]
+    [InlineData(true, 2, 0, 50, 0, 0, 0, 1.0, 0, 0, 100)]
     // With a weapon: 100·0.095 + (10+20)/2 = 24.5 -> banker's round to 24.
-    [InlineData(true, 2, 0, 50, 0, 10, 20, 1.0, 24)]
+    [InlineData(true, 2, 0, 50, 0, 10, 20, 1.0, 0, 0, 24)]
     // Skill modifier 3.3 over the raw attack: round(100·3.3) = 330.
-    [InlineData(false, 0, 0, 50, 0, 0, 0, 3.3, 330)]
+    [InlineData(false, 0, 0, 50, 0, 0, 0, 3.3, 0, 0, 330)]
     // Everything zero -> attack floored to 1 -> result 1.
-    [InlineData(true, 0, 0, 0, 0, 0, 0, 1.0, 1)]
+    [InlineData(true, 0, 0, 0, 0, 0, 0, 1.0, 0, 0, 1)]
+    // Gear flat +50 Attack Power (trait 23): APValue·STR 100 + 50 = 150, no weapon.
+    [InlineData(true, 2, 0, 50, 0, 0, 0, 1.0, 50, 0, 150)]
+    // Gear flat +50 Attack with a weapon: 150·0.095 + (10+20)/2 = 29.25 -> banker's round 29.
+    [InlineData(true, 2, 0, 50, 0, 10, 20, 1.0, 50, 0, 29)]
+    // Magic flat +40 (trait 25) on a magic class (MAValue·INT 80 + 40 = 120), no weapon.
+    [InlineData(true, 0, 2, 0, 40, 0, 0, 1.0, 0, 40, 120)]
     public void BaseDamage_MatchesRetail(bool hasPcRow, int ap, int ma, int str, int intel,
-        int wMin, int wMax, double skillMod, int expected)
-        => Assert.Equal(expected, DamageFormulas.BaseDamage(hasPcRow, ap, ma, str, intel, wMin, wMax, skillMod));
+        int wMin, int wMax, double skillMod, int atkPhys, int atkMag, int expected)
+        => Assert.Equal(expected, DamageFormulas.BaseDamage(hasPcRow, ap, ma, str, intel, wMin, wMax, skillMod, atkPhys, atkMag));
 
     [Theory]
     [InlineData(10, true, 5, (byte)3, 3)]     // class: min(10,5)=5, then min(5,3)=3

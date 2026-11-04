@@ -128,7 +128,10 @@ public static class CharacterStats
         // divided each line by 100, so x100 recovers the raw sum), then run each through the diminishing curve.
         float pvpInc = PvpDamageRatePct(eq.PercentOf(71) * 100f);
         float pvpRed = PvpDamageRatePct(eq.PercentOf(72) * 100f);
-        return new EffectiveStats(str, agi, intel, wis, vit, luk, maxHp, maxSp, defense, vigor, crit, parry, pen, pvpInc, pvpRed);
+        // Gear flat Attack Power / Magic Power (trait 23 / 25): the AoV ATKBonus, added to APValue·STR / MAValue·INT
+        // at damage time. The 2498 sheet already merges these into the shown Attack, so combat must too.
+        int atkBonus = eq.FlatOf(23), matkBonus = eq.FlatOf(25);
+        return new EffectiveStats(str, agi, intel, wis, vit, luk, maxHp, maxSp, defense, vigor, crit, parry, pen, pvpInc, pvpRed, atkBonus, matkBonus);
     }
 
     /// <summary>

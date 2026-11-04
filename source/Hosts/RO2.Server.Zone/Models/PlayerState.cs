@@ -473,6 +473,10 @@ public class PlayerState : IWallet
     /// <summary>Effective PvP Damage Reduction (trait 72) in percentage points: reduces damage this player takes
     /// from another PLAYER by this percent. 0 = none.</summary>
     public float CombatPvpDamageReduction { get; set; }
+    /// <summary>Gear flat Attack Power (trait 23, the AoV ATKBonus): added to APValue·STR in base damage. 0 = none.</summary>
+    public int CombatAtkBonus { get; set; }
+    /// <summary>Gear flat Magic Power (trait 25): added to MAValue·INT in base damage. 0 = none.</summary>
+    public int CombatMatkBonus { get; set; }
 
     /// <summary>Mirror the freshly-resolved gear-adjusted combat inputs onto the runtime state. Called at
     /// every point the 2498 sheet is recomputed so the combat path stays in lock-step with the sheet.</summary>
@@ -483,6 +487,7 @@ public class PlayerState : IWallet
         CombatDefense = s.Defense; CombatVigor = s.Vigor;
         CombatCrit = s.Crit; CombatParry = s.Parry; CombatPen = s.Pen;
         CombatPvpDamageIncrease = s.PvpDamageIncrease; CombatPvpDamageReduction = s.PvpDamageReduction;
+        CombatAtkBonus = s.AtkBonus; CombatMatkBonus = s.MatkBonus;
     }
 
     // Area-of-interest: the NPC handles (EntityOid) currently in this viewer's view box, seeded at map load and
