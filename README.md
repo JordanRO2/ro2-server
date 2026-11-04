@@ -34,6 +34,10 @@ dotnet build --no-restore
 
 If the NuGet cache gets corrupted: `dotnet restore --packages ".packages"`.
 
+## Game data
+
+This repository does not ship the game's data tables (they are derived from the client and not ours to redistribute). Generate your own `data/` from your RO2 client with the `data-pipeline/` project; it writes the JSON tables the server loads into `data/` (which is git-ignored). The server and the full test suite need `data/` present to run; without it the data-dependent tests skip rather than fail, so a clone builds and its remaining tests pass out of the box.
+
 ## Running
 
 ```bash
