@@ -443,6 +443,16 @@ public sealed class CharacterRepository : ICharacterRepository
                 Add(c.Parameters, "id", (long)characterId);
             }, CancellationToken.None);
 
+    public Task UpdateJobLevelExpAsync(uint characterId, byte jobLevel, ulong jobExp)
+        => ExecAsync(
+            "UPDATE characters SET job_level = @job_level, job_exp = @job_exp WHERE id = @id",
+            c =>
+            {
+                Add(c.Parameters, "job_level", jobLevel);
+                Add(c.Parameters, "job_exp", jobExp);
+                Add(c.Parameters, "id", (long)characterId);
+            }, CancellationToken.None);
+
     public async Task BulkSavePlayerStateAsync(IReadOnlyList<PlayerStateSave> saves)
     {
         if (saves.Count == 0) return;

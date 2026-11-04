@@ -75,6 +75,9 @@ public sealed class FakeCharacterRepository(RepoScheduler scheduler) : ICharacte
 
     public Task UpdateEquipHideFlagAsync(uint characterId, ushort hideFlag) => throw NotModelled(nameof(UpdateEquipHideFlagAsync));
 
+    public Task UpdateJobLevelExpAsync(uint characterId, byte jobLevel, ulong jobExp)
+        => throw NotModelled(nameof(UpdateJobLevelExpAsync));
+
     public async Task BulkSavePlayerStateAsync(IReadOnlyList<PlayerStateSave> saves)
     {
         await scheduler.PointAsync("Character.BulkSave");

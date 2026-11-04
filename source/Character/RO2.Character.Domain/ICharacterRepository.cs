@@ -41,6 +41,10 @@ public interface ICharacterRepository
  /// autosave bulk write, a stat allocation).</summary>
     Task UpdateEquipHideFlagAsync(uint characterId, ushort hideFlag);
 
+ /// <summary>Persist only the job level/exp pair (RMI 2526/2527): a targeted $set, so it cannot overwrite
+ /// what the autosave bulk write is writing to the same document.</summary>
+    Task UpdateJobLevelExpAsync(uint characterId, byte jobLevel, ulong jobExp);
+
  /// <summary>Persist many players' position + vitals + wallet in ONE unordered bulk write (a single
  /// DB round-trip, executed in parallel server-side). The scalable autosave path — replaces N players ×
  /// 3 sequential updates. No-op on an empty list.</summary>

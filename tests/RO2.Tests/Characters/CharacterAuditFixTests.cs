@@ -72,4 +72,40 @@ public class CharacterAuditFixTests
         Assert.IsType<IOException>(ex);
     }
 
+    // ---- [10] ----
+
+    private sealed class Data : ICharacterGameData
+    {
+        public IReadOnlyDictionary<byte, ExpTableEntry> ExpTable { get; } = new Dictionary<byte, ExpTableEntry>
+        {
+            [1] = new() { Base_Level = 1, Base_Exp_Next = 100 },
+            [2] = new() { Base_Level = 2, Base_Exp_Next = 100 },
+        };
+        public bool UnionExists(uint unionId) => throw new NotSupportedException();
+        public (int str, int agi, int intel, int wis, int vit, int luk)? ClassBasePrimaries(byte job) => throw new NotSupportedException();
+        public int BonusStatCost(int currentStatValue) => throw new NotSupportedException();
+        public bool IsAppearanceTicket(uint itemId) => throw new NotSupportedException();
+        public byte RequireSex(uint itemId) => throw new NotSupportedException();
+        public bool IsNameChangeScroll(uint itemId) => throw new NotSupportedException();
+        public (int hp, int mp, int str, int agi, int intel, int wis, int vit, int luk)? SeedStats(byte job) => throw new NotSupportedException();
+    }
+
+    private sealed class Notifier : IJobExpNotifier
+    {
+        public Task AnnounceAsync(JobExpRules.Result result, ulong gain) => Task.CompletedTask;
+        public void PersistFailed(Exception ex, uint characterId, JobExpRules.Result result) { }
+        public Task OnLevelUpAsync() => Task.CompletedTask;
+    }
+
+    [Fact]
+    public async Task JobExpGrant_WritesOnlyThePair_NoReadNoWholeRowSave()
+    {
+        var (repo, rec) = NewRepo();
+        var c = new Character { Id = 5, JobLevel = 1, JobExp = 10 };
+
+        Assert.True(await JobExpGrantFlow.GrantAsync(c, 20, new Data(), repo, new Notifier()));
+
+        Assert.Equal([nameof(ICharacterRepository.UpdateJobLevelExpAsync)], rec.Calls);
+        Assert.Equal((1, 30UL), (c.JobLevel, c.JobExp));
+    }
 }

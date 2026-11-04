@@ -242,6 +242,10 @@ public class CharacterRepository : ICharacterRepository
         await _characters.UpdateOneAsync(c => c.Id == characterId, update);
     }
 
+    public Task UpdateJobLevelExpAsync(uint characterId, byte jobLevel, ulong jobExp)
+        => _characters.UpdateOneAsync(c => c.Id == characterId,
+            Builders<Character>.Update.Set(c => c.JobLevel, jobLevel).Set(c => c.JobExp, jobExp));
+
     public async Task BulkSavePlayerStateAsync(IReadOnlyList<PlayerStateSave> saves)
     {
         if (saves.Count == 0) return;
