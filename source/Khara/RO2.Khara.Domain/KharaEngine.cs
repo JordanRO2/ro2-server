@@ -40,13 +40,14 @@ public sealed class KharaEngine
 
  /// <summary>
  /// Records a Khara the character has just accepted, sends the initial counts, spends the accept cost when the Khara has one,
- /// and completes it when every condition already holds. Returns false, with nothing sent, for an unknown or already
- /// accepted or completed Khara.
+ /// and completes it when every condition already holds. Returns false, with nothing sent, for an unknown, already
+ /// accepted or completed, or not yet allowed (level, class, profession, gate quest) Khara.
  /// </summary>
     public bool Accept(uint kharaId)
     {
         var def = _catalog.Get(kharaId);
         if (def is null || State.FindActive(kharaId) is not null || State.IsCompleted(kharaId)) return false;
+        if (!MeetsRequirements(def, _facts)) return false; // the 1433 manual accept comes through here too
 
         var entry = new KharaActiveDocument { KharaId = kharaId, State = KharaActiveDocument.StateInProgress };
         for (int i = 0; i < def.Conditions.Count; i++) entry.Counts.Add(0);
@@ -240,8 +241,14 @@ public sealed class KharaEngine
  /// </summary>
     public static bool AutoEligible(KharaStateDocument state, KharaDefinition def, KharaFacts facts)
         => def.AutoChallenge
-           && state.FindActive(def.Id) is null && !state.IsCompleted(def.Id) && def.LevelAllows(facts.Level)
-           && def.JobAllows(facts.CombatClass)
+           && state.FindActive(def.Id) is null && !state.IsCompleted(def.Id) && MeetsRequirements(def, facts);
+
+ /// <summary>
+ /// Whether the character meets the Khara's own requirements: level window, class mask, profession and gate quest.
+ /// Shared by auto-accept and the manual accept.
+ /// </summary>
+    private static bool MeetsRequirements(KharaDefinition def, KharaFacts facts)
+        => def.LevelAllows(facts.Level) && def.JobAllows(facts.CombatClass)
            && (def.Main.PC_ProJob == 0 || def.Main.PC_ProJob == facts.Profession)
            && (def.GateQuest is not { } gate || facts.IsQuestCompleted(gate));
 

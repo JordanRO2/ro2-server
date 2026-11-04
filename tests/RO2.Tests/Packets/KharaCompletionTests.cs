@@ -136,6 +136,24 @@ public class KharaCompletionTests
     }
 
     [Fact]
+    public void Accept_OutsideTheKharasLevelWindowOrClassMask_ChangesNothing()
+    {
+        // 118 needs base level 6; 424 is limited to classes 16 to 18 (mask 229376). The 1433 manual accept must obey both.
+        var tooLow = Engine(new KharaStateDocument { Id = 1 }, level: 5);
+        Assert.False(tooLow.Accept(118));
+        Assert.Empty(tooLow.State.Active);
+        Assert.False(tooLow.Changed);
+
+        var wrongClass = Engine(new KharaStateDocument { Id = 1 });
+        Assert.False(wrongClass.Accept(424));
+        Assert.Empty(wrongClass.State.Active);
+
+        var allowed = new KharaEngine(Catalog.Value, new KharaStateDocument { Id = 1 }, new KharaFacts { Level = 50, CombatClass = 16 });
+        Assert.True(allowed.Accept(424));
+        Assert.NotNull(allowed.State.FindActive(424));
+    }
+
+    [Fact]
     public void Accept_AlreadyAcceptedCompletedOrUnknown_ChangesNothing()
     {
         var state = new KharaStateDocument
@@ -385,6 +403,7 @@ public class KharaCompletionTests
         return new KharaEngine(Catalog.Value, state, new KharaFacts
         {
             Level = level,
+            CombatClass = 1, // Accept now enforces the class mask
             HeldCount = id => held.GetValueOrDefault(id),
             IsQuestCompleted = quests.Contains,
         });
