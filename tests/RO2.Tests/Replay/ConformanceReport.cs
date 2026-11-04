@@ -158,20 +158,27 @@ internal static class ConformanceReport
     public static List<FrameDiff> CompareBodies(WindowResult w, uint retailHandle, uint ourHandle, ulong retailUid, ulong ourUid)
     {
         var diffs = new List<FrameDiff>();
-        var used = new Dictionary<ushort, int>();
-        foreach (var expected in w.ExpectedFrames)
+        foreach (var op in w.ExpectedFrames.Select(f => f.Op).Distinct())
         {
-            var n = used.GetValueOrDefault(expected.Op);
-            var ours = w.OurFrames.Where(f => f.Op == expected.Op).Skip(n).Select(f => ((ushort, byte[])?)f).FirstOrDefault();
-            used[expected.Op] = n + 1;
-            if (ours is null) continue;
-            var a = Mask(expected.Op, expected.Body, retailHandle, retailUid);
-            var b = Mask(expected.Op, ours.Value.Item2, ourHandle, ourUid);
-            var common = Math.Min(a.Length, b.Length);
-            var bad = new List<int>();
-            for (var i = 0; i < common; i++) if (a[i] != b[i]) bad.Add(i);
-            diffs.Add(new FrameDiff(w.Index, expected.Op, a.Length, b.Length, bad.Count + Math.Abs(a.Length - b.Length), Math.Max(a.Length, b.Length),
-                string.Join(",", bad.Take(6)) + (bad.Count > 6 ? ",.." : "")));
+            var re = w.ExpectedFrames.Where(f => f.Op == op).ToList();
+            var ou = w.OurFrames.Where(f => f.Op == op).ToList();
+            if (ou.Count == 0) continue;
+            // Retail floods some opcodes during login (2498/2499 recompute as each stat lands) then settles on a final
+            // frame; we send the settled frame once. Pair the LAST k frames of each so our settled frame compares against
+            // retail's settled frame, not its first partial one. For 1:1 opcodes this is the same as head alignment.
+            var k = Math.Min(re.Count, ou.Count);
+            for (var j = 0; j < k; j++)
+            {
+                var exp = re[re.Count - k + j];
+                var our = ou[ou.Count - k + j];
+                var a = Mask(op, exp.Body, retailHandle, retailUid);
+                var b = Mask(op, our.Body, ourHandle, ourUid);
+                var common = Math.Min(a.Length, b.Length);
+                var bad = new List<int>();
+                for (var i = 0; i < common; i++) if (a[i] != b[i]) bad.Add(i);
+                diffs.Add(new FrameDiff(w.Index, op, a.Length, b.Length, bad.Count + Math.Abs(a.Length - b.Length), Math.Max(a.Length, b.Length),
+                    string.Join(",", bad.Take(6)) + (bad.Count > 6 ? ",.." : "")));
+            }
         }
         return diffs;
     }

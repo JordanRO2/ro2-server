@@ -1,5 +1,6 @@
 using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
+using RO2.Characters.Application;
 using RO2.Characters.Domain;
 using RO2.GameData;
 using RO2.Inventory.Domain;
@@ -230,6 +231,14 @@ internal static class RetailSeeder
             // Header [77-88] carries the six allocated bonus-stat u16 (STR, AGI, INT, WIS, VIT, LUK).
             ushort Bonus(int i) => BinaryPrimitives.ReadUInt16LittleEndian(h.AsSpan(77 + 2 * i));
             (c.BonusStr, c.BonusAgi, c.BonusInt, c.BonusWis, c.BonusVit, c.BonusLuk) = (Bonus(0), Bonus(1), Bonus(2), Bonus(3), Bonus(4), Bonus(5));
+
+            // Set the effective primaries the way our server builds them (class base + bonus, per BonusStatAllocationFlow),
+            // so the login path's ComputeBaseStats derives the real 2498/2595 sheet instead of the legacy stats=null defaults.
+            if (p.GetRequiredService<ICharacterGameData>().ClassBasePrimaries(c.Job) is { } cb)
+            {
+                c.Str = cb.str + c.BonusStr; c.Agi = cb.agi + c.BonusAgi; c.Int = cb.intel + c.BonusInt;
+                c.Wis = cb.wis + c.BonusWis; c.Vit = cb.vit + c.BonusVit; c.Luk = cb.luk + c.BonusLuk;
+            }
 
             if (own) ApplyHead(c, seed.Own);
             await characters.SaveCharacterAsync(c);
