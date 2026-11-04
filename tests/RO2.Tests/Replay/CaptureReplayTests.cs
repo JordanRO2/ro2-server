@@ -54,9 +54,6 @@ public sealed class ReplayMongoFixture : IAsyncLifetime
 [Collection(GameDataStoreLoadedCollection.Name)] // boots the Zone container + GameDataStore.LoadAsync (a process-wide Loaded setter); must not run parallel with other Loaded setters
 public sealed class CaptureReplayTests(ITestOutputHelper output, ReplayMongoFixture mongo) : IClassFixture<ReplayMongoFixture>
 {
-    /// <summary>Opcodes that end the replay: the client leaves (logout, channel move) and the stand-in session stops meaning anything.</summary>
-    private static readonly HashSet<ushort> StopAt = [1302, 1420, 1421];
-
     [CaptureReplayFact]
     public async Task Retail_sessions_replay_through_the_zone_dispatcher()
     {
@@ -105,46 +102,7 @@ public sealed class CaptureReplayTests(ITestOutputHelper output, ReplayMongoFixt
         if (own is { Body.Length: >= 16 })
             rig.SetRetailIdentity(BitConverter.ToUInt64(own.Body, 4), BitConverter.ToUInt32(own.Body, 12));
 
-        var results = new List<WindowResult>();
-        var replayed = 0;
-        foreach (var group in ConformanceReport.Group(windows))
-        {
-            if (group.Any(w => StopAt.Contains(w.C2S.Op))) break;
-            var ours = new List<ushort>();
-            var ourFrames = new List<(ushort Op, byte[] Body)>();
-            var warnings = new List<string>();
-            var missing = new List<ushort>();
-            var closed = false;
-            foreach (var w in group)
-            {
-                if (!rig.HasHandler(w.C2S.Op)) missing.Add(w.C2S.Op);
-                var (frames, warn, wasClosed) = await rig.SendAsync(w.C2S.Op, w.C2S.Body);
-                ours.AddRange(frames.Select(f => f.Op));
-                ourFrames.AddRange(frames);
-                warnings.AddRange(warn);
-                replayed++;
-                if (wasClosed) { closed = true; break; }
-            }
-            var ops = group.Select(w => w.C2S.Op).ToList();
-            results.Add(new WindowResult
-            {
-                Index = group[0].Index,
-                C2SOps = ops,
-                Handler = string.Join('+', ops.Distinct().Select(o => rig.HandlerName(o) ?? "(none)")),
-                Expected = group.SelectMany(w => w.Reactive).Select(f => f.Op).ToList(),
-                RetailAmbient = group.SelectMany(w => w.Ambient).Select(f => f.Op).ToList(),
-                Ours = ours,
-                OurFrames = ourFrames,
-                ExpectedFrames = group.SelectMany(w => w.Reactive).ToList(),
-                Warnings = warnings,
-                Note = string.Join("; ", new[]
-                {
-                    missing.Count > 0 ? "no handler registered for C2S " + string.Join(',', missing.Distinct()) : null,
-                    closed ? "SERVER CLOSED THE CONNECTION here; replay stops" : null,
-                }.Where(n => n is not null)) is { Length: > 0 } note ? note : null,
-            }.Score());
-            if (closed) break;
-        }
+        var (results, replayed) = await CaptureReplayDriver.ReplayAsync(rig, windows);
 
         var firstMapLoad = results.FindIndex(r => r.C2SOps.Contains(1304));
         var worldEntry = firstMapLoad < 0 ? results.Count : firstMapLoad + 1;
@@ -165,7 +123,7 @@ public sealed class CaptureReplayTests(ITestOutputHelper output, ReplayMongoFixt
         var c2sOps = connection.Frames.Where(f => f.IsC2S).Select(f => f.Op).Distinct().Order().ToList();
         var unhandled = c2sOps.Where(o => !rig.HasHandler(o)).ToList();
         output.WriteLine($"Handler coverage: {c2sOps.Count} distinct C2S opcodes in this capture, {c2sOps.Count - unhandled.Count} have a registered Zone handler; no handler: {(unhandled.Count == 0 ? "-" : string.Join(' ', unhandled))}");
-        output.WriteLine($"({windows.Count - replayed} of {windows.Count} C2S frame(s) not replayed: the replay stops at the first of {string.Join('/', StopAt)} or when the server drops the connection)");
+        output.WriteLine($"({windows.Count - replayed} of {windows.Count} C2S frame(s) not replayed: the replay stops at the first of {string.Join('/', CaptureReplayDriver.StopAt)} or when the server drops the connection)");
         return new Replayed(results, worldEntry);
     }
 }

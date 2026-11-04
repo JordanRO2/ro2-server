@@ -1,53 +1,41 @@
-using System.Collections.Concurrent;
 using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
-using MongoDB.Driver;
 using RO2.Application.Interfaces;
 using RO2.Characters.Domain;
 using RO2.GameData;
 using RO2.Network.ProudNet;
-using RO2.Server.Zone.Extensions;
 using RO2.Server.Zone.Services;
 using RO2.Tests.Packets;
-using ZoneConfig = RO2.Server.Zone.Configuration.ServerConfiguration;
-using ZoneProgram = RO2.Server.Zone.Program;
 
 namespace RO2.Tests.Replay;
 
 /// <summary>
-/// The real Zone container (every service and handler the host wires, against a throwaway Mongo) behind one loopback
-/// <see cref="ProudSession"/>. Captured C2S frames go through <see cref="RmiDispatcher.DispatchAsync"/>, the same entry point the
+/// One replayed session on a <see cref="ReplayHost"/> (the real Zone container, every service and handler the host wires, against a
+/// throwaway Mongo), behind one loopback <see cref="ProudSession"/>. Captured C2S frames go through <see cref="RmiDispatcher.DispatchAsync"/>, the same entry point the
 /// network loop uses, and the S2C frames our server wrote are read back off the client socket.
 /// </summary>
 internal sealed class CaptureReplayRig : IAsyncDisposable
 {
-    /// <summary>Quiet time on the client socket that ends a drain. Handlers are awaited, so this only catches fire-and-forget sends.</summary>
-    private static readonly TimeSpan Idle = TimeSpan.FromMilliseconds(120);
     private static readonly TimeSpan DispatchTimeout = TimeSpan.FromSeconds(20);
     private const uint StandInAccountId = 7_700_001;
 
-    private readonly ServiceProvider _services;
-    private readonly ReauditShared.Harness _harness;
-    private readonly RmiDispatcher _dispatcher;
-    private readonly IMongoClient _mongo;
-    private readonly string _database;
-    private readonly WarningLog _log;
+    private readonly ReplayHost _host;
+    private readonly bool _ownsHost;
+    private readonly System.Net.Sockets.Socket _client;
+    private readonly ProudSession _session;
+    private readonly ReauditShared.FrameReader _reader;
     private Task<(ushort Op, byte[] Body)>? _pending;
-
-    private readonly string _previousCwd;
 
     public Character StandIn { get; }
     /// <summary>What seeding the retail character recorded (items it could not model, titles it could not wear).</summary>
     public IReadOnlyList<string> SeedNotes { get; }
 
-    private CaptureReplayRig(ServiceProvider services, ReauditShared.Harness harness, RmiDispatcher dispatcher,
-        IMongoClient mongo, string database, WarningLog log, Character standIn, IReadOnlyList<string> seedNotes, string previousCwd)
+    private CaptureReplayRig(ReplayHost host, bool ownsHost, System.Net.Sockets.Socket client, ProudSession session,
+        Character standIn, IReadOnlyList<string> seedNotes)
     {
-        _services = services; _harness = harness; _dispatcher = dispatcher; _mongo = mongo; _database = database;
-        _log = log; StandIn = standIn; SeedNotes = seedNotes; _previousCwd = previousCwd;
+        _host = host; _ownsHost = ownsHost; _client = client; _session = session;
+        _reader = new ReauditShared.FrameReader(client);
+        StandIn = standIn; SeedNotes = seedNotes;
     }
 
     /// <summary>
@@ -56,57 +44,51 @@ internal sealed class CaptureReplayRig : IAsyncDisposable
     /// </summary>
     public static async Task<CaptureReplayRig> StartAsync(string mongoConnectionString, Guid zoneAuthToken, RetailSeed? seed = null)
     {
-        // Handlers load data/mall, data/npc, data/ItemInfo.json ... by a path relative to the process, which under the test host is the
-        // bin folder: they came back empty (2866 had no body). The repo root is the parent of the data folder the store loads from.
-        var previousCwd = Directory.GetCurrentDirectory();
-        Directory.SetCurrentDirectory(Path.GetDirectoryName(ReauditShared.RequireDataDirectory())!);
-        var accountId = seed?.AccountId ?? StandInAccountId;
-
-        var database = "ro2_replay_" + Guid.NewGuid().ToString("N");
-        var config = new ZoneConfig();
-        config.Database.ConnectionString = mongoConnectionString;
-        config.Database.DatabaseName = database;
-
-        RO2.Server.Zone.Services.DyeColorBson.Register();
-        var log = new WarningLog();
-        var services = new ServiceCollection();
-        services.AddLogging(b => b.AddProvider(log));
-        services.AddSingleton<IHostApplicationLifetime, StubLifetime>();
-        ZoneProgram.ConfigureServices(services, config);
-        var provider = services.BuildServiceProvider();
-
-        // Hosted services (ticks, regen, persistence loops) are deliberately NOT started: the only S2C we read is what a C2S caused.
-        var store = provider.GetRequiredService<GameDataStore>();
-        await store.LoadAsync(ReauditShared.RequireDataDirectory());
-
-        var harness = await ReauditShared.Harness.StartAsync(1);
-        provider.InitializeBroadcastService(harness.Server);
-        var dispatcher = new RmiDispatcher(NullLogger.Instance);
-        provider.WireZoneHandlers(dispatcher, harness.Server, NullLogger.Instance);
-
-        // Stand-in account and character; the real LoginPC handler builds the PlayerState from this row.
-        await provider.GetRequiredService<IZoneAuthTokenRepository>().IssueAsync(zoneAuthToken, accountId, TimeSpan.FromMinutes(30));
-        Character character;
-        IReadOnlyList<string> notes = [];
-        if (seed is null)
-        {
-            var job = store.StandardStats.Keys.Order().First();
-            var (created, error) = await provider.GetRequiredService<ICharacterRepository>()
-                .CreateCharacterAsync(accountId, "Replay" + Guid.NewGuid().ToString("N")[..6], job, 0, "{}");
-            character = created ?? throw new InvalidOperationException("could not create the stand-in character: " + error);
-        }
-        else
-        {
-            var (all, ownIndex, seedNotes) = await RetailSeeder.SeedAsync(provider, store, seed, accountId);
-            character = all[ownIndex];
-            notes = seedNotes;
-        }
-
-        return new CaptureReplayRig(provider, harness, dispatcher, new MongoClient(mongoConnectionString), database, log, character, notes, previousCwd);
+        var host = await ReplayHost.BootAsync(mongoConnectionString);
+        try { return await BeginAsync(host, true, zoneAuthToken, seed); }
+        catch { await host.DisposeAsync(); throw; }
     }
 
-    public bool HasHandler(ushort op) => _dispatcher.HasHandler(op);
-    public string? HandlerName(ushort op) => _dispatcher.GetOpcodeName(op);
+    /// <summary>
+    /// A session on an already booted <paramref name="host"/>: a fresh client socket and a character seeded from <paramref name="seed"/>.
+    /// Disposing the rig ends the session and wipes the host's mutable state; it does not dispose the host.
+    /// </summary>
+    public static Task<CaptureReplayRig> BeginAsync(ReplayHost host, Guid zoneAuthToken, RetailSeed? seed)
+        => BeginAsync(host, false, zoneAuthToken, seed);
+
+    private static async Task<CaptureReplayRig> BeginAsync(ReplayHost host, bool ownsHost, Guid zoneAuthToken, RetailSeed? seed)
+    {
+        var provider = host.Services;
+        var store = host.Store;
+        var accountId = seed?.AccountId ?? StandInAccountId;
+        var (client, session) = await host.ConnectAsync();
+        try
+        {
+            // Stand-in account and character; the real LoginPC handler builds the PlayerState from this row.
+            await provider.GetRequiredService<IZoneAuthTokenRepository>().IssueAsync(zoneAuthToken, accountId, TimeSpan.FromMinutes(30));
+            Character character;
+            IReadOnlyList<string> notes = [];
+            if (seed is null)
+            {
+                var job = store.StandardStats.Keys.Order().First();
+                var (created, error) = await provider.GetRequiredService<ICharacterRepository>()
+                    .CreateCharacterAsync(accountId, "Replay" + Guid.NewGuid().ToString("N")[..6], job, 0, "{}");
+                character = created ?? throw new InvalidOperationException("could not create the stand-in character: " + error);
+            }
+            else
+            {
+                // A reused host hands out ever-growing character ids (see ReplayHost.ResetAsync), so no ids need burning.
+                var (all, ownIndex, seedNotes) = await RetailSeeder.SeedAsync(provider, store, seed, accountId, burnIds: ownsHost);
+                character = all[ownIndex];
+                notes = seedNotes;
+            }
+            return new CaptureReplayRig(host, ownsHost, client, session, character, notes);
+        }
+        catch { client.Dispose(); throw; }
+    }
+
+    public bool HasHandler(ushort op) => _host.Dispatcher.HasHandler(op);
+    public string? HandlerName(ushort op) => _host.Dispatcher.GetOpcodeName(op);
 
     /// <summary>
     /// Feeds one captured C2S body to its handler and returns every S2C frame our server wrote in response, plus the server's warnings.
@@ -114,18 +96,20 @@ internal sealed class CaptureReplayRig : IAsyncDisposable
     /// </summary>
     public async Task<(List<(ushort Op, byte[] Body)> Frames, List<string> Warnings, bool Closed)> SendAsync(ushort op, byte[] body)
     {
-        _log.Drain();
-        var session = _harness.Sessions[0];
-        await _dispatcher.DispatchAsync(session, op, Rewrite(body)).WaitAsync(DispatchTimeout);
+        _host.Log.Drain();
+        var session = _session;
+        await _host.Dispatcher.DispatchAsync(session, op, Rewrite(body)).WaitAsync(DispatchTimeout);
         if (op == 1303) StopHoldLoop(session);
 
         var frames = new List<(ushort, byte[])>();
-        var reader = _harness.Readers[0];
+        var reader = _reader;
         var closed = false;
+        // A handler that is not registered writes nothing, so there is nothing to wait for.
+        if (!_host.Dispatcher.HasHandler(op)) return (frames, _host.Log.Drain(), false);
         while (true)
         {
             _pending ??= reader.NextAsync();
-            try { frames.Add(await _pending.WaitAsync(Idle)); }
+            try { frames.Add(await _pending.WaitAsync(_host.Idle)); }
             catch (TimeoutException) { if (_pending.IsFaulted) _pending = null; break; } // else the read stays pending for the next drain
             catch (Exception ex) when (ex is EndOfStreamException or System.Net.Sockets.SocketException or IOException)
             {
@@ -133,7 +117,7 @@ internal sealed class CaptureReplayRig : IAsyncDisposable
             }
             _pending = null;
         }
-        return (frames, _log.Drain(), closed);
+        return (frames, _host.Log.Drain(), closed);
     }
 
     /// <summary>
@@ -155,7 +139,7 @@ internal sealed class CaptureReplayRig : IAsyncDisposable
     /// <summary>The identity the retail session had: the character uid and the actor handle its own 2310 carried.</summary>
     public void SetRetailIdentity(ulong uid, uint handle) { _retailUid = uid; _retailHandle = handle; }
 
-    public uint OurHandle => PlayerStateManager.BuildActorHandle(_harness.Sessions[0].SessionId);
+    public uint OurHandle => PlayerStateManager.BuildActorHandle(_session.SessionId);
 
     /// <summary>The uid the stand-in answers to: retail's high word with the stand-in's character id in the low word (LoginPC keeps the low 32 bits).</summary>
     public ulong StandInUid => (_retailUid & 0xFFFFFFFF00000000UL) | StandIn.Id;
@@ -168,7 +152,7 @@ internal sealed class CaptureReplayRig : IAsyncDisposable
     {
         if (_retailUid == 0) return body;
         var copy = (byte[])body.Clone();
-        var ours = PlayerStateManager.BuildActorHandle(_harness.Sessions[0].SessionId);
+        var ours = PlayerStateManager.BuildActorHandle(_session.SessionId);
         for (var i = 0; i + 4 <= copy.Length; i++)
         {
             if (i + 8 <= copy.Length && BinaryPrimitives.ReadUInt64LittleEndian(copy.AsSpan(i)) == _retailUid)
@@ -189,38 +173,8 @@ internal sealed class CaptureReplayRig : IAsyncDisposable
     {
         // Unobserved: the pending read faults when the socket closes.
         _pending?.ContinueWith(static t => _ = t.Exception, TaskContinuationOptions.OnlyOnFaulted);
-        await _harness.DisposeAsync();
-        await _services.DisposeAsync();
-        try { await _mongo.DropDatabaseAsync(_database); } catch (Exception) { /* throwaway container */ }
-        Directory.SetCurrentDirectory(_previousCwd);
+        if (_ownsHost) { _client.Dispose(); await _host.DisposeAsync(); }
+        else await _host.EndSessionAsync(_client, _session);
     }
 
-    private sealed class StubLifetime : IHostApplicationLifetime
-    {
-        public CancellationToken ApplicationStarted => CancellationToken.None;
-        public CancellationToken ApplicationStopping => CancellationToken.None;
-        public CancellationToken ApplicationStopped => CancellationToken.None;
-        public void StopApplication() { }
-    }
-
-    /// <summary>Collects Warning and above, so a window that came out wrong can say why.</summary>
-    private sealed class WarningLog : ILoggerProvider
-    {
-        private readonly ConcurrentQueue<string> _lines = new();
-        public ILogger CreateLogger(string categoryName) => new Sink(categoryName, _lines);
-        public List<string> Drain() { var l = new List<string>(); while (_lines.TryDequeue(out var s)) l.Add(s); return l; }
-        public void Dispose() { }
-
-        private sealed class Sink(string category, ConcurrentQueue<string> lines) : ILogger
-        {
-            public IDisposable? BeginScope<TState>(TState state) where TState : notnull => null;
-            public bool IsEnabled(LogLevel logLevel) => logLevel >= LogLevel.Warning;
-            public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
-            {
-                if (!IsEnabled(logLevel)) return;
-                var text = formatter(state, exception);
-                lines.Enqueue($"[{logLevel}] {category[(category.LastIndexOf('.') + 1)..]}: {text}" + (exception is null ? "" : " :: " + exception.GetType().Name + ": " + exception.Message));
-            }
-        }
-    }
 }

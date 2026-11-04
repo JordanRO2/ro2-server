@@ -197,11 +197,11 @@ internal static class RetailSeeder
 
     /// <summary>Creates every character of the retail list on <paramref name="accountId"/>; returns them in list order plus the index of the logged-in one.</summary>
     public static async Task<(List<Character> Characters, int OwnIndex, List<string> Notes)> SeedAsync(
-        IServiceProvider p, GameDataStore store, RetailSeed seed, uint accountId)
+        IServiceProvider p, GameDataStore store, RetailSeed seed, uint accountId, bool burnIds = true)
     {
         var characters = p.GetRequiredService<ICharacterRepository>();
         var inventory = p.GetRequiredService<IInventoryRepository>();
-        await SkipUsedIdsAsync(characters);
+        if (burnIds) await SkipUsedIdsAsync(characters);
         var made = new List<Character>();
         var notes = new List<string>();
         var ownIndex = -1;
