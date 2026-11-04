@@ -45,11 +45,11 @@ public sealed class StallBuyApplicationService
     /// finally persists the buyer's and then the seller's balance. Every refusal happens before anything is changed.
     /// </summary>
     /// <remarks>
-    /// There is NO compensation: once the zeny has changed hands, a failing item write or persist propagates with the
-    /// buyer already debited, the seller already credited, and whatever was written left in place (the listings are removed
-    /// only after the item writes, so a failed write leaves them listed). The host runs the buy under the buyer's and the
-    /// seller's per-character inventory gates (and its stall purchase gate), and the item moves are owner-guarded, so a
-    /// gone or no-longer-owned row throws rather than clobbering; the balance half-move above is still uncompensated.
+    /// A failing item write is compensated like the Trade flow: the zeny goes back (buyer credited, seller debited, under
+    /// <c>walletGate</c>) and the failure propagates; the listings are removed only after the item writes, so they stay
+    /// listed. A failing persist is NOT compensated: it propagates with the balances moved and the listings already
+    /// removed. The host runs the buy under the buyer's and the seller's per-character inventory gates (and its stall
+    /// purchase gate), and the item moves are owner-guarded, so a gone or no-longer-owned row throws rather than clobbering.
     /// </remarks>
     /// <param name="cmd">The purchase.</param>
     /// <param name="buyerWallet">The buyer's wallet.</param>
@@ -91,7 +91,16 @@ public sealed class StallBuyApplicationService
             sellerAfter = sellerWallet.Gold;
         }
 
-        await inventory.ApplyAsync(cmd.BuyerCharacterId, sold, plan);
+        try
+        {
+            await inventory.ApplyAsync(cmd.BuyerCharacterId, sold, plan);
+        }
+        catch
+        {
+            // No listing was removed and nothing persisted yet: hand the zeny back, then let the failure propagate.
+            lock (walletGate) { buyerWallet.Credit(price); sellerWallet.DebitUpTo(price); }
+            throw;
+        }
         inventory.RemoveListings(sold.Select(s => s.Listing.Index).ToList());
 
         await persistBuyer(buyerAfter);

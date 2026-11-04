@@ -37,7 +37,13 @@ public sealed class StallBuyApplicationServiceTests
             return true;
         }
 
-        public long DebitUpTo(long amount) => throw new NotSupportedException();
+        public long DebitUpTo(long amount)
+        {
+            var taken = Math.Min(amount, Gold);
+            Gold -= taken;
+            events.Add($"debitUpTo:{tag}:{taken}:gate={Monitor.IsEntered(Gate)}");
+            return taken;
+        }
 
         public void Credit(long amount)
         {
@@ -242,9 +248,9 @@ public sealed class StallBuyApplicationServiceTests
     }
 
     [Fact]
-    public async Task ItemWriteFault_PropagatesWithTheZenyAlreadyMoved_NoRefundNoRemovalNoPersist()
+    public async Task ItemWriteFault_RefundsTheZenyUnderTheGateAndPropagates_NoRemovalNoPersist()
     {
-        // The current behaviour (known gap R1): nothing compensates the debit/credit when an item write throws.
+        // A throwing item write hands the zeny back (finding 01), mirroring the Trade flow.
         var rig = new Rig(buyerGold: 1000, sellerGold: 50);
         rig.Inv.Live = [Live(3, 77, Potion, 5, 2, 100, 10)];
         rig.Inv.ApplyThrows = new InvalidOperationException("write failed");
@@ -252,8 +258,11 @@ public sealed class StallBuyApplicationServiceTests
         var ex = await Assert.ThrowsAsync<InvalidOperationException>(() => rig.Buy(Cmd(rig.Inv.Live)));
 
         Assert.Equal("write failed", ex.Message);
-        Assert.Equal(["live:10", "bag:20", "debit:buyer:100:gate=True", "credit:seller:100:gate=True", "apply:20"], rig.Events);
-        Assert.Equal((900L, 150L), (rig.BuyerWallet.Gold, rig.SellerWallet.Gold));   // not refunded
+        Assert.Equal(
+            ["live:10", "bag:20", "debit:buyer:100:gate=True", "credit:seller:100:gate=True", "apply:20",
+             "credit:buyer:100:gate=True", "debitUpTo:seller:100:gate=True"],
+            rig.Events);
+        Assert.Equal((1000L, 50L), (rig.BuyerWallet.Gold, rig.SellerWallet.Gold));   // refunded
         Assert.Empty(rig.Inv.Removed);                                                 // the listing stays listed
     }
 
