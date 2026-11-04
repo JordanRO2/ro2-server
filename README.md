@@ -47,8 +47,6 @@ dotnet run --project source/Hosts/RO2.Server.Zone --no-build --packages ".packag
 dotnet run --project source/Hosts/RO2.Server.Chat --no-build --packages ".packages"
 ```
 
-Convenience launchers: `start-all.bat`, `start-debug-all.bat`.
-
 ## Configuration
 
 Edit `config.json`:

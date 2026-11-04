@@ -1,35 +1,73 @@
-# Build outputs
-bin/
-obj/
-out/
+# ─── STRICT ALLOWLIST ───────────────────────────────────────────────────────
+# Everything is ignored unless explicitly un-ignored below (last matching rule wins).
+# To publish something NEW, add a "!" line for it — nothing is shared by default.
+# Build output and local junk are re-denied at the END so they stay ignored even
+# inside the allowed source/ and tests/ trees.
 
-# IDE
-.vs/
-.vscode/
+# 1. Ignore every top-level entry by default.
+/*
+
+# 2. Root files we publish (exact names).
+!/.gitignore
+!/.gitattributes
+!/.editorconfig
+!/LICENSE
+!/README.md
+!/ARCHITECTURE.md
+!/CONTRIBUTING.md
+!/CODE_OF_CONDUCT.md
+!/SECURITY.md
+!/RO2_Server.sln
+!/Directory.Build.props
+!/Directory.Packages.props
+!/docker-compose.yml
+!/config.example.json
+
+# 3. Fully-shared directories (every file in them is public).
+!/.github/
+!/sample/
+!/custom/
+
+# 4. Code/data directories: un-ignore the dir, re-ignore its contents, then allow
+#    only the intended file types (keeps generated obj/*.cs and stray files out).
+!/source/
+/source/**
+!/source/**/
+!/source/**/*.cs
+!/source/**/*.csproj
+
+!/tests/
+/tests/**
+!/tests/**/
+!/tests/**/*.cs
+!/tests/**/*.csproj
+
+!/data/
+/data/**
+!/data/**/
+!/data/**/*.json
+!/data/**/*.csv
+!/data/**/*.nav
+
+!/data-pipeline/
+/data-pipeline/**
+!/data-pipeline/**/
+!/data-pipeline/**/*.cs
+!/data-pipeline/**/*.csproj
+
+# 5. Hard denies LAST (they win): build output, generated code, local-only junk.
+**/bin/
+**/obj/
+**/TestResults/
+**/.vs/
+**/.vscode/
+**/.packages/
+**/__pycache__/
+**/logs/
 *.user
 *.suo
-
-# Logs
-logs/
-*.log
-
-# Database
 *.db
-
-# Config (contains local settings)
-config.json
-src/*/config.json
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Local NuGet restore cache (regenerate with: dotnet restore --packages .packages)
-.packages/
-
-# Python bytecode
-__pycache__/
+*.log
 *.pyc
-
-# Windows reserved-device artifact from a stray "> NUL" redirect
-NUL
+config.json
+**/config.json
