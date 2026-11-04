@@ -41,6 +41,8 @@
 !/tests/**/
 !/tests/**/*.cs
 !/tests/**/*.csproj
+# The capture-replay conformance harness is corpus-facing — kept on disk for local runs, never published.
+/tests/RO2.Tests/Replay/
 
 !/data/
 /data/**
