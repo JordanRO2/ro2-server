@@ -163,9 +163,19 @@ public static class WarpService
                     break;
 
                 case WorldEntryStep.QuickSlots:
-                    // An empty bar: [u32 10][u64 charUid][u16 0].
+                    // Re-send the player's saved quick-slot bar: a warp must not wipe it. Load it like the glider/escape
+                    // path (WarpEntryBurst) does; fall back to an empty bar on a load failure, as the vehicle load below.
+                    IReadOnlyList<CharacterQuickSlot> quickSlots = Array.Empty<CharacterQuickSlot>();
+                    try
+                    {
+                        quickSlots = await services.GetRequiredService<IQuickSlotRepository>().GetByCharacterAsync(player.CharacterId);
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.LogError(ex, "{Name} warp: could not load quick slots", player.Name);
+                    }
                     await session.SendInternalRmiAsync(opcode,
-                        GuildSkillBarRefresh.BuildQuickSlotSaveData2472(charUid, Array.Empty<CharacterQuickSlot>()));
+                        GuildSkillBarRefresh.BuildQuickSlotSaveData2472(charUid, quickSlots));
                     break;
 
                 case WorldEntryStep.VehicleQuickSlot:
