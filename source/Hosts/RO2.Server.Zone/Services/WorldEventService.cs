@@ -292,6 +292,9 @@ internal sealed class WorldEventNotifier : IWorldNotifier
         _broadcast = broadcast;
     }
 
+    /// <summary>The recipient's map now, not at the time the recipient list was taken: a map change can land mid-push.</summary>
+    internal uint LiveMapId(WorldRecipient recipient) => _players.GetPlayer(recipient.SessionId)?.MapId ?? recipient.MapId;
+
     public IReadOnlyList<WorldRecipient> OnlinePlayers()
         => _players.GetAllPlayers().Select(p => new WorldRecipient(p.SessionId, p.MapId)).ToList();
 
@@ -304,7 +307,7 @@ internal sealed class WorldEventNotifier : IWorldNotifier
         if (session is null) return false;
         var t = WorldEventTables.From(_store);
         var rows = t.Stage(eventId, stage) is { } row ? t.EventRows(row) : Array.Empty<WorldEventEventGroup>();
-        foreach (var body in WorldEventPackets.BuildStageChangePush(eventId, stage, rows, recipient.MapId))
+        foreach (var body in WorldEventPackets.BuildStageChangePush(eventId, stage, rows, LiveMapId(recipient)))
             await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyWorldEventTrigger, body, ct);
         return true;
     }
