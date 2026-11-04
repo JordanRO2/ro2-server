@@ -376,7 +376,7 @@ public class LoginPCHandler : NetworkZoneRmiBase
                         session.SessionId, granted, character.Job, character.Name);
             }
         }
-        catch (Exception ex) { Logger.LogDebug(ex, "Skill load/seed skipped"); }
+        catch (Exception ex) { Logger.LogError(ex, "Session {Id}: could not load/seed skills; entering with an empty skill tree", session.SessionId); }
 
         // Load active quests from DB and populate runtime state
         IReadOnlyList<RO2.Quests.Domain.CharacterQuest>? activeQuests = null;
