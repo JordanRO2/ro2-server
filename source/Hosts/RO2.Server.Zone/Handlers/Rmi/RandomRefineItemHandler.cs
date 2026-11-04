@@ -128,6 +128,16 @@ public class RandomRefineItemHandler : ZoneRmiHandlerBase<RandomRefineItemHandle
         target.GrindingJson = GrindingLines.Serialize(result.Lines);
         await inventory.UpdateItemAsync(target);
 
+        // Re-push the 2498 sheet so a honed WORN item's stats apply at once (StatService folds GrindingJson);
+        // harmless for a bag item, since GetEquipmentAsync returns only worn gear. Mirrors the refine handler.
+        if (player.Character is { } ch)
+        {
+            var worn = await inventory.GetEquipmentAsync(ch.Id);
+            await session.SendInternalRmiAsync(ZoneS2COpcodes.OnPcTrait,
+                services.GetRequiredService<EffectService>().RefreshPcTraitSheet(player, ch, worn));
+            (player.WeaponMinDamage, player.WeaponMaxDamage, player.AutoAttackRange) = StatService.WeaponDamageRange(store, worn);
+        }
+
         await AnswerAsync(ResultHoned, ItemPackets.BuildItemRecord126(target));
 
         Logger.LogInformation("{Name} honed uid {Uid} ('{Item}'): grv {Grv}, {N} lines, fee {Fee} (mat {Mat})",

@@ -84,6 +84,7 @@ public static class StatService
         var runeIndex = RuneBonusIndex(store);
         var enchantIndex = EnchantBonusIndex(store);
         var refineIndex = RefineIndex(store);
+        var grindingIndex = GrindingAbiliIndex(store);
         var cardIds = CardIdSet(store);
         var wornIds = new HashSet<uint>();
         foreach (var it in equipped)
@@ -155,6 +156,21 @@ public static class StatService
                     if (refineBonus != 0) Add(1, rf.Trait_Id0, refineBonus);
                 }
             }
+            // Honed grinding lines (RMI 1676 Honing): per-instance GrindingJson carries up to 5 lines, each a
+            // Grinding_Abili row id plus a signed basis-point roll. The stat delta the client shows is
+            // ceil(Normal_Val * (10000 + roll) / 10000). Grinding_Abili names its columns oddly: Trait_Type is the
+            // KIND (1 flat / 2 percent) and Trait_ID is the stat (same enumeration as TraitInfo.Trait_Type), so each
+            // line folds in through the same flat/percent path as every other bonus. Percent lines land on stats
+            // 71/72 only; a kind-2 line on a derived stat is dropped like any other (no derived base), see the class
+            // remarks. Roll floors at -4800bp so a legitimate line never goes negative; a corrupt one that would is
+            // ignored.
+            if (!string.IsNullOrEmpty(it.GrindingJson))
+                foreach (var gl in GrindingLines.Parse(it.GrindingJson))
+                    if (grindingIndex.TryGetValue(gl.AbiliId, out var g))
+                    {
+                        int value = (int)Math.Ceiling(g.normalVal * (10000.0 + gl.Roll) / 10000.0);
+                        if (value > 0) Add(g.kind, g.type, value);
+                    }
         }
 
         // Set bonuses: for each set with a worn member, count worn members (SetItem OrItemID0..6 = the set's
@@ -266,6 +282,21 @@ public static class StatService
     /// the id the item itself carries (InventoryItem.EnchantReinforceId) rather than by a source item.</summary>
     private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<GameDataStore,
         Dictionary<ushort, List<(byte kind, byte type, float value)>>> EnchantIndexes = new();
+
+    /// <summary>(Grinding_Abili.Abili_ID → its KIND, stat and Normal_Val) for folding an item's honed grinding
+    /// lines. Grinding_Abili names its columns oddly: <c>Trait_Type</c> is the Trait_Kind (1 flat / 2 percent) and
+    /// <c>Trait_ID</c> is the stat (the same enumeration as <c>TraitInfo.Trait_Type</c>). Keyed per store like the
+    /// enchant index (avoids cross-store cache bleed in tests).</summary>
+    private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<GameDataStore,
+        Dictionary<ushort, (byte kind, byte type, int normalVal)>> GrindingIndexes = new();
+
+    private static Dictionary<ushort, (byte kind, byte type, int normalVal)> GrindingAbiliIndex(GameDataStore store)
+        => GrindingIndexes.GetValue(store, s =>
+        {
+            var byId = new Dictionary<ushort, (byte, byte, int)>(s.GrindingAbili.Count);
+            foreach (var a in s.GrindingAbili) byId[a.Abili_ID] = (a.Trait_Type, a.Trait_ID, a.Normal_Val);
+            return byId;
+        });
 
     private static Dictionary<ushort, List<(byte kind, byte type, float value)>> EnchantBonusIndex(GameDataStore store)
         => EnchantIndexes.GetValue(store, s =>
