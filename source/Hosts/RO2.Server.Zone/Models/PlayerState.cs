@@ -478,6 +478,11 @@ public class PlayerState : IWallet
         CombatCrit = s.Crit; CombatParry = s.Parry; CombatPen = s.Pen;
     }
 
+    // Area-of-interest: the NPC handles (EntityOid) currently in this viewer's view box, seeded at map load and
+    // diffed on movement so the viewer gets OnNPC_In (2506) on enter and OnNPC_Out (2507) on leave. Viewer-owned,
+    // written on this player's own session thread (and, for NPC-driven moves, under the map's tick).
+    public HashSet<uint> VisibleNpcs { get; } = new();
+
     // Active quests: quest_id set for duplicate-check
     public HashSet<uint> ActiveQuests { get; set; } = new();
 

@@ -74,8 +74,9 @@ public class NpcSpawnService
     /// Only sends for valid maps (non-zero mapId that exists in Map_List).
     /// Initializes NpcStateManager for the map if not already done.
     /// </summary>
-    public async Task SendMapNpcsAsync(ProudSession session, uint mapId)
+    public async Task SendMapNpcsAsync(ProudSession session, PlayerState player)
     {
+        var mapId = player.MapId;
         // Only send spawns for valid, non-zero maps
         if (mapId == 0)
         {
@@ -101,7 +102,13 @@ public class NpcSpawnService
             return;
         }
 
-        // ONE batched 2506 per map load, not one frame per NPC. Layout: BuildOnNpcIn2506.
+        // ONE batched 2506 per map load, not one frame per NPC. Layout: BuildOnNpcIn2506. Only NPCs inside the
+        // player's area-of-interest box are announced; the rest arrive as the player walks toward them (phase 3/5).
+        var half = AoiRules.HalfWidth(mapData.Map_Type);
+        // Fall back to the whole map when the player's position is not yet known (box would filter everything out).
+        var boxed = player.X != 0f || player.Y != 0f;
+        if (!boxed)
+            _logger.LogWarning("Session {Id}: map {MapId} load with unset position, announcing all NPCs (no AoI box)", session.SessionId, mapId);
         var alive = new List<NpcRuntimeState>();
         var monsterCount = 0;
         var noTemplate = 0;
@@ -112,9 +119,12 @@ public class NpcSpawnService
             var announcement = SpawnVisibilityUseCase.ClassifyAnnouncement(npcRuntime.IsDead, HasClientTemplate(spawn.AssetIndex));
             if (announcement == NpcAnnouncement.Skip) continue;
             if (announcement == NpcAnnouncement.NoTemplate) { noTemplate++; continue; }
+            if (boxed && !AoiRules.InView(player.X, player.Y, npcRuntime.PosX, npcRuntime.PosY, half)) continue;
             if (npcRuntime.Camp != CampFriendly) monsterCount++;   // Camp 1 = friendly NPC, 2 = monster
             alive.Add(npcRuntime);
         }
+        player.VisibleNpcs.Clear();
+        foreach (var npc in alive) player.VisibleNpcs.Add(npc.EntityOid);
 
         var npcCount = alive.Count;
         if (npcCount == 0)

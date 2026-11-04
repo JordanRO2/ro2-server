@@ -267,7 +267,7 @@ public class AnsMapLoadingHandler : Base1304
             var spawnSvc = services.GetRequiredService<PlayerSpawnService>();
             await spawnSvc.NotifyPlayerSpawnAsync(player);
 
-            await npcSpawnSvc.SendMapNpcsAsync(session, player.MapId);
+            await npcSpawnSvc.SendMapNpcsAsync(session, player);
 
             
             
