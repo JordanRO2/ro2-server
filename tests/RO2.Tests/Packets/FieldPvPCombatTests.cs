@@ -138,6 +138,14 @@ public class FieldPvPCombatTests
         Assert.Equal(2.0, CombatRateRules.ParryRatePct(100, 20, 10), 9);
     }
 
+    [Fact]
+    public void CritAndParryRate_HugeLevelAdvantage_SaturatesAtTheCap_NeverNegative()
+    {
+        // Attacker 98 levels above the defender: the raw denominator 2 + 40 - 78.4 is negative; it is floored at 1, so the cap holds.
+        Assert.Equal(90.0, CombatRateRules.CritRatePct(100, 1, 99));
+        Assert.Equal(70.0, CombatRateRules.ParryRatePct(100, 1, 99));
+    }
+
     // ---- the fought-out end on the wire ------------------------------------------------------------
 
     [Fact]

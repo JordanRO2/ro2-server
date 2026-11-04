@@ -45,7 +45,7 @@ public class MonsterSwingDamageTests
         }
         else if (parry > 0)
         {
-            double parryPct = Math.Min(70.0, parry / (0.02 * parry + 40.0 + 0.8 * (victimLevel - Math.Max(0, npcLevel))));
+            double parryPct = Math.Min(70.0, parry / Math.Max(1.0, 0.02 * parry + 40.0 + 0.8 * (victimLevel - Math.Max(0, npcLevel))));   // denominator floored like CombatRateRules
             if (parryPct > 0 && rng.NextDouble() * 100.0 < parryPct)
             {
                 damage = Math.Max(1, (int)Math.Round(damage * 0.5));
