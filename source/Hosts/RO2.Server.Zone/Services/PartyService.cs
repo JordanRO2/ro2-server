@@ -641,8 +641,9 @@ public partial class PartyService
  /// <summary>Builds the member records for the roster broadcasts.</summary>
     private List<byte[]> BuildRosterRecords(PartyState party)
     {
-        var records = new List<byte[]>(party.MemberSessionIds.Count);
-        foreach (var memberId in party.MemberSessionIds)
+        var keys = party.MemberSessionIds.ToArray(); // a join can add a member while this runs outside the Gate
+        var records = new List<byte[]>(keys.Length);
+        foreach (var memberId in keys)
         {
             var known = KnownMember(party, memberId);
             records.Add(BuildMemberRecordFor(memberId,
@@ -655,8 +656,9 @@ public partial class PartyService
  /// <summary>Returns the member GIDs in roster order, matching the order of the roster records.</summary>
     public List<ulong> BuildMemberGidList(PartyState party)
     {
-        var gids = new List<ulong>(party.MemberSessionIds.Count);
-        foreach (var memberId in party.MemberSessionIds)
+        var keys = party.MemberSessionIds.ToArray();
+        var gids = new List<ulong>(keys.Length);
+        foreach (var memberId in keys)
             gids.Add(MemberGid(KnownMember(party, memberId)));
         return gids;
     }

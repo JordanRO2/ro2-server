@@ -24,10 +24,7 @@ public class PartyConcurrentCreateTests
             var accepts = targets.Select((t, i) => Task.Run(async () =>
             {
                 start.Wait();
-                // The roster broadcast runs outside the party lock and can trip over a concurrent AddMember (a separate,
-                // pre-existing race); only the registry state after the joins is under test here.
-                try { await rig.Party.AnswerInviteAsync(t, rig.Handle(i + 1), 0, inviter.CharacterUid, "Inviter"); }
-                catch (InvalidOperationException) { }
+                await rig.Party.AnswerInviteAsync(t, rig.Handle(i + 1), 0, inviter.CharacterUid, "Inviter");
             })).ToArray();
             start.Set();
             await Task.WhenAll(accepts);
