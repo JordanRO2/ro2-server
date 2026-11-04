@@ -173,8 +173,16 @@ public sealed class PartyDiceService(PartyService parties, IPartyRoster roster, 
                 switch (effect)
                 {
                     case AllPassed:
-                        if (party != null && PartyDiceFrames.ToFrame(effect, r.Item) is { } frame)
-                            await parties.BroadcastBodyToPartyAsync(party, frame.Opcode, frame.Body);
+                        // A throwing broadcast must not skip the ReleaseDiceBound that follows.
+                        try
+                        {
+                            if (party != null && PartyDiceFrames.ToFrame(effect, r.Item) is { } frame)
+                                await parties.BroadcastBodyToPartyAsync(party, frame.Opcode, frame.Body);
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.LogWarning(ex, "Party roll all-pass notice for uid {Uid:X} failed", r.Item.Uid);
+                        }
                         break;
                     case ReleaseDiceBound:
                         GroundItemService.ReleaseDiceBound(r.Corpse.MapId, r.Corpse.CorpseHandle, r.Item.Uid);

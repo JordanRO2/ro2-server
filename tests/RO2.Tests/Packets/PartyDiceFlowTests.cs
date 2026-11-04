@@ -165,6 +165,8 @@ public sealed class PartyDiceFlowTests
     {
         await using var r = await Round.OpenAsync(TimeSpan.FromMilliseconds(150), breakMemberSend: true);
         await WaitUntilAsync(() => !r.Dice.IsRolling(r.Item.Uid)); // the timer settled it; TrySettleAsync's finally releases the hold
+        // The all-pass broadcast to the broken member throws; the dice-bind must be cleared regardless.
+        await WaitUntilAsync(() => GroundItemService.TryGetCorpseLoot(r.Map, r.Handle, r.Member.CharacterId, r.Death, out var l) && !l.Items[0].DiceBound);
     }
 
     [Fact]
