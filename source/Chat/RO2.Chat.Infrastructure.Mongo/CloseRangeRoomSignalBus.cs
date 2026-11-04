@@ -42,6 +42,9 @@ public sealed class CloseRangeRoomSignalBus : ICloseRangeRoomSignals
  /// <summary>The capped collection, in the servers' shared database.</summary>
     public const string CollectionName = "close_range_room_signals";
 
+ /// <summary>The counter that numbers the signals (<see cref="SignalDocument.Seq"/>).</summary>
+    public const string SeqCollectionName = "close_range_room_signal_seq";
+
  /// <summary>Capped size in bytes. A signal is well under 200 bytes, so <see cref="CappedDocuments"/> of
  /// them fit.</summary>
     public const long CappedBytes = 1L << 20;
@@ -81,8 +84,11 @@ public sealed class CloseRangeRoomSignalBus : ICloseRangeRoomSignals
  /// BSON element names, so documents are unchanged. Private; callers see <see cref="CloseRangeRoomSignal"/>.</summary>
     private sealed class SignalDocument
     {
- /// <summary>Insertion order within the capped collection; the tail resumes after the last one seen.</summary>
         [BsonId] public ObjectId Id { get; set; }
+ /// <summary>Cross-process insertion order, drawn from <see cref="NextSeqAsync"/>; the tail resumes after the last
+ /// one seen. Not the ObjectId: its seconds-resolution timestamp plus a per-process random leaves two processes
+ /// unordered within the same second. Documents stored before this field existed read as 0.</summary>
+        public long Seq { get; set; }
         public string Kind { get; set; } = CloseRangeRoomSignals.ExitKind;
         public byte[] RoomGuid { get; set; } = [];
         public uint CharacterId { get; set; }
@@ -96,7 +102,7 @@ public sealed class CloseRangeRoomSignalBus : ICloseRangeRoomSignals
 
     private static CloseRangeRoomSignal ToSignal(SignalDocument d) => new()
     {
-        Id = d.Id.ToString(),
+        Id = IdOf(d),
         Kind = d.Kind,
         RoomGuid = d.RoomGuid,
         CharacterId = d.CharacterId,
@@ -107,6 +113,22 @@ public sealed class CloseRangeRoomSignalBus : ICloseRangeRoomSignals
         OwnerGone = d.OwnerGone,
         CreatedUtc = d.CreatedUtc,
     };
+
+    /// <summary>Zero-padded <see cref="SignalDocument.Seq"/>, so ordinal order equals insertion order (the Redis bus
+    /// does the same with its stream ids).</summary>
+    private static string IdOf(SignalDocument d) => d.Seq.ToString("D20");
+
+    /// <summary>The next value of a shared counter: an atomic $inc, so the Zone and Chat processes draw from one
+    /// sequence. shortcut: a signal is inserted just after its number is drawn, so a slower writer can land after
+    /// a higher number (a tail that already passed it misses it); a replica-set transaction would close that.</summary>
+    private async Task<long> NextSeqAsync(CancellationToken ct)
+    {
+        var counter = await _context.GetCollection<BsonDocument>(SeqCollectionName).FindOneAndUpdateAsync(
+            Builders<BsonDocument>.Filter.Eq("_id", "seq"), Builders<BsonDocument>.Update.Inc("n", 1L),
+            new FindOneAndUpdateOptions<BsonDocument> { IsUpsert = true, ReturnDocument = ReturnDocument.After },
+            ct);
+        return counter["n"].ToInt64();
+    }
 
     private IMongoCollection<SignalDocument> Collection()
         => _context.GetCollection<SignalDocument>(CollectionName);
@@ -187,6 +209,7 @@ public sealed class CloseRangeRoomSignalBus : ICloseRangeRoomSignals
     {
         await EnsureCappedAsync(ct);
         signal.Id = ObjectId.GenerateNewId();
+        signal.Seq = await NextSeqAsync(ct);
         signal.CreatedUtc = DateTime.UtcNow;
         await Collection().InsertOneAsync(signal, cancellationToken: ct);
     }
@@ -198,25 +221,25 @@ public sealed class CloseRangeRoomSignalBus : ICloseRangeRoomSignals
         var f = Builders<SignalDocument>.Filter;
         var collection = Collection();
         var open = await collection.Find(f.And(f.Eq(s => s.Kind, CloseRangeRoomSignals.OpenKind), f.Eq(s => s.RoomGuid, guid)))
-            .SortByDescending(s => s.Id).FirstOrDefaultAsync(ct);
+            .SortByDescending(s => s.Seq).FirstOrDefaultAsync(ct);
         if (open is null) return null;
 
         
         
-        var exits = await collection.Find(f.And(f.Gt(s => s.Id, open.Id), f.Eq(s => s.Kind, CloseRangeRoomSignals.ExitKind), f.Eq(s => s.RoomGuid, guid)))
-            .SortBy(s => s.Id).ToListAsync(ct);
+        var exits = await collection.Find(f.And(f.Gt(s => s.Seq, open.Seq), f.Eq(s => s.Kind, CloseRangeRoomSignals.ExitKind), f.Eq(s => s.RoomGuid, guid)))
+            .SortBy(s => s.Seq).ToListAsync(ct);
         var owners = new HashSet<uint> { open.CharacterId };
         foreach (var e in exits)
             if (e.NewMasterCharacterId != NoNewMasterCharacterId) owners.Add(e.NewMasterCharacterId);
-        var opens = await collection.Find(f.And(f.Gt(s => s.Id, open.Id), f.Eq(s => s.Kind, CloseRangeRoomSignals.OpenKind), f.In(s => s.CharacterId, owners)))
-            .SortBy(s => s.Id).ToListAsync(ct);
+        var opens = await collection.Find(f.And(f.Gt(s => s.Seq, open.Seq), f.Eq(s => s.Kind, CloseRangeRoomSignals.OpenKind), f.In(s => s.CharacterId, owners)))
+            .SortBy(s => s.Seq).ToListAsync(ct);
 
         if (CloseRangeRoomSignals.CurrentOwner(ToSignal(open),
-                exits.Concat(opens).OrderBy(s => s.Id).Select(ToSignal)) is not uint owner)
+                exits.Concat(opens).OrderBy(s => s.Seq).Select(ToSignal)) is not uint owner)
             return null;
         return new CloseRangeRoomSignal
         {
-            Id = open.Id.ToString(),
+            Id = IdOf(open),
             Kind = open.Kind,
             RoomGuid = open.RoomGuid,
             CharacterId = owner,
@@ -233,28 +256,28 @@ public sealed class CloseRangeRoomSignalBus : ICloseRangeRoomSignals
         var f = Builders<SignalDocument>.Filter;
         var collection = Collection();
         var open = await collection.Find(f.And(f.Eq(s => s.Kind, CloseRangeRoomSignals.OpenKind), f.Eq(s => s.RoomGuid, guid)))
-            .SortByDescending(s => s.Id).FirstOrDefaultAsync(ct);
+            .SortByDescending(s => s.Seq).FirstOrDefaultAsync(ct);
         if (open is null) return null;
 
-        var ofRoom = await collection.Find(f.And(f.Gt(s => s.Id, open.Id), f.Eq(s => s.RoomGuid, guid),
+        var ofRoom = await collection.Find(f.And(f.Gt(s => s.Seq, open.Seq), f.Eq(s => s.RoomGuid, guid),
                 f.In(s => s.Kind, new[] { CloseRangeRoomSignals.JoinKind, CloseRangeRoomSignals.ExitKind })))
-            .SortBy(s => s.Id).ToListAsync(ct);
+            .SortBy(s => s.Seq).ToListAsync(ct);
         var owners = new HashSet<uint> { open.CharacterId };
         foreach (var e in ofRoom)
             if (e.Kind == CloseRangeRoomSignals.ExitKind && e.NewMasterCharacterId != NoNewMasterCharacterId) owners.Add(e.NewMasterCharacterId);
-        var opens = await collection.Find(f.And(f.Gt(s => s.Id, open.Id), f.Eq(s => s.Kind, CloseRangeRoomSignals.OpenKind),
+        var opens = await collection.Find(f.And(f.Gt(s => s.Seq, open.Seq), f.Eq(s => s.Kind, CloseRangeRoomSignals.OpenKind),
                 f.In(s => s.CharacterId, owners)))
-            .SortBy(s => s.Id).ToListAsync(ct);
+            .SortBy(s => s.Seq).ToListAsync(ct);
 
         return new CloseRangeRoomHistory(ToSignal(open),
-            ofRoom.Concat(opens).OrderBy(s => s.Id).Select(ToSignal).ToList());
+            ofRoom.Concat(opens).OrderBy(s => s.Seq).Select(ToSignal).ToList());
     }
 
     public async Task SubscribeAsync(DateTime fromUtc, Func<CloseRangeRoomSignal, Task> onSignal,
         Action<Exception> onError, CancellationToken ct)
     {
         var collection = Collection();
-        ObjectId? last = null;
+        long? last = null;
         var options = new FindOptions<SignalDocument>
         {
             CursorType = CursorType.TailableAwait,
@@ -269,17 +292,18 @@ public sealed class CloseRangeRoomSignalBus : ICloseRangeRoomSignals
                 await EnsureCappedAsync(ct);
                 await collection.InsertOneAsync(new SignalDocument
                 {
-                    Id = ObjectId.GenerateNewId(), Kind = TailMarkerKind, CreatedUtc = DateTime.UtcNow,
+                    Id = ObjectId.GenerateNewId(), Seq = await NextSeqAsync(ct), Kind = TailMarkerKind,
+                    CreatedUtc = DateTime.UtcNow,
                 }, cancellationToken: ct);
                 var filter = last is { } id
-                    ? Builders<SignalDocument>.Filter.Gt(s => s.Id, id)
+                    ? Builders<SignalDocument>.Filter.Gt(s => s.Seq, id)
                     : Builders<SignalDocument>.Filter.Gte(s => s.CreatedUtc, fromUtc);
                 using var cursor = await collection.FindAsync(filter, options, ct);
                 while (await cursor.MoveNextAsync(ct))
                 {
                     foreach (var signal in cursor.Current)
                     {
-                        last = signal.Id;
+                        last = signal.Seq;
                         if (signal.Kind != TailMarkerKind)
                             await onSignal(ToSignal(signal));
                     }
