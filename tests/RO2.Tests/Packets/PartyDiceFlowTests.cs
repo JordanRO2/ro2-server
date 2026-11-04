@@ -2,6 +2,7 @@ using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using RO2.Network.Protocol;
+using RO2.Network.ProudNet;
 using RO2.Parties.Application;
 using RO2.PartyDice.Domain;
 using RO2.Server.Zone.Models;
@@ -33,7 +34,7 @@ public sealed class PartyDiceFlowTests
         public required DateTime? Death;
         public required PartyDiceService Dice;
 
-        public static async Task<Round> OpenAsync(TimeSpan? window = null)
+        public static async Task<Round> OpenAsync(TimeSpan? window = null, bool breakMemberSend = false)
         {
             var rig = await CorpseShareRig.StartAsync(2);
             var (npcs, handle) = CorpseShareRig.OneDeadNpc(out var map);
@@ -55,6 +56,10 @@ public sealed class PartyDiceFlowTests
             var item = GroundItemService.AddCorpseItem(map, handle, RollItem, 1, diceBound: true)!;
             var round = new Round { Rig = rig, Killer = killer, Member = member, Item = item, Map = map, Handle = handle, Death = death, Dice = dice };
             Assert.True(GroundItemService.TryGetCorpseLoot(map, handle, killer.CharacterId, death, out var loot));
+            if (breakMemberSend) // a disposed send lock makes every send to the member throw
+                ((SemaphoreSlim)typeof(ProudSession).GetField("_sendLock",
+                    System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.GetValue(rig.Sessions[1])!)
+                    .Dispose();
             await dice.OpenAsync(killer, rig.Party.GetPlayerParty(killer.SessionId)!.PartyId, loot, item);
             return round;
         }
@@ -152,6 +157,14 @@ public sealed class PartyDiceFlowTests
         var deadline = DateTime.UtcNow + TimeSpan.FromSeconds(10);
         while (!condition() && DateTime.UtcNow < deadline) await Task.Delay(10);
         Assert.True(condition());
+    }
+
+    /// <summary>Audit [22]: a 2468 send that throws must not strand the roll or the corpse hold; the window still settles it.</summary>
+    [Fact]
+    public async Task AFailedOpenSend_StillArmsTheTimer_SoTheRollAndTheCorpseHoldAreReleased()
+    {
+        await using var r = await Round.OpenAsync(TimeSpan.FromMilliseconds(150), breakMemberSend: true);
+        await WaitUntilAsync(() => !r.Dice.IsRolling(r.Item.Uid)); // the timer settled it; TrySettleAsync's finally releases the hold
     }
 
     [Fact]

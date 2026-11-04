@@ -97,7 +97,9 @@ public sealed class PartyDiceService(PartyService parties, IPartyRoster roster, 
             if (PartyDiceFrames.ToFrame(effect, item) is not { } frame || effect is not Opened opened) continue;
             foreach (var sessionId in opened.ToSessionIds)
                 if (broadcast.GetSession(sessionId) is { } s)
-                    await s.SendInternalRmiAsync(frame.Opcode, frame.Body);
+                    // One failed 2468 must not abort the open: the settle timer below has to arm so the hold is released.
+                    try { await s.SendInternalRmiAsync(frame.Opcode, frame.Body); }
+                    catch (Exception ex) { logger.LogWarning(ex, "Party roll 2468 to session {Session} failed", sessionId); }
         }
 
         logger.LogInformation("{Name} opened the party roll for {Count}x item {Item} (uid {Uid:X}) on corpse {Corpse:X}: {N} participant(s)",
