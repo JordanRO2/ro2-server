@@ -289,6 +289,7 @@ public class PlayerSpawnService
 
     // Option mask (u16 after jobBits). Each set bit gates one optional field; the fields follow the mask in
     // ascending bit order.
+    private const ushort OptProfession = 0x0001;    // u16 profession: id | level << 8
     private const ushort OptParty = 0x0004;         // u32 party handle
     private const ushort OptTitleA = 0x0008;        // u32 worn title, slot A
     private const ushort OptTitleB = 0x0010;        // u32 worn title, slot B
@@ -423,7 +424,9 @@ public class PlayerSpawnService
         var partyHandle = PcRecordParty.HandleOf(player);
         var titles = KharaTitleStore.PublishedFor(player.CharacterId);
         uint titleA = titles?.TitleA ?? 0, titleB = titles?.TitleB ?? 0;
+        var proJob = CharacterSerializer.WireProJob(character);
         ushort optMask = OptRelation;                         // 0x0200
+        if (proJob.Id != 0) optMask |= OptProfession;         // 0x0001
         if (partyHandle.HasValue) optMask |= OptParty;        // 0x0204
         if (titleA != 0) optMask |= OptTitleA;
         if (titleB != 0) optMask |= OptTitleB;
@@ -432,6 +435,7 @@ public class PlayerSpawnService
         body.WriteUInt16(optMask);
 
         // Optional fields follow the mask in ascending bit order.
+        if (proJob.Id != 0) body.WriteUInt16((ushort)(proJob.Id | (proJob.Level << 8))); // OptProfession
         if (partyHandle.HasValue) body.WriteUInt32(partyHandle.Value); // OptParty
         if (titleA != 0) body.WriteUInt32(titleA);              // OptTitleA
         if (titleB != 0) body.WriteUInt32(titleB);              // OptTitleB

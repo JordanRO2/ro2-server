@@ -72,6 +72,7 @@ public static class EquipViewNotifyPackets
         foreach (var it in equipment)
         {
             if (it.StorageType != 1) continue;
+            if ((int)it.Slot is >= 20 and <= 24) continue;   // cards (worn slots 20-24) are excluded from the appearance vector, as retail does
             using var pw = new PacketWriter(RecordSize);
             WriteEquipRecord28(pw, it);
             list.Add(pw.ToArray());
