@@ -1,4 +1,4 @@
-namespace RO2.Skills.Domain;
+﻿namespace RO2.Skills.Domain;
 
 /// <summary>Persistence of a character's learned skills (one row per character + skill group).</summary>
 public interface ISkillRepository
@@ -17,7 +17,8 @@ public interface ISkillRepository
 
     /// <summary>
     /// Sets every <paramref name="skills"/> entry to its exact level (inserting the row when it is not learned yet) in
-    /// ONE batch: all of it is written or, when the call throws, the caller must treat none of it as written.
+    /// ONE batch. Postgres is atomic; Mongo is not transactional, so when the call throws part of it may be written and the
+    /// caller must re-read the store (UseTalentPointFlow does).
     /// A skill id listed twice takes its last level. An empty list writes nothing.
     /// </summary>
     Task UpsertSkillsAsync(uint characterId, IReadOnlyList<(uint SkillId, byte Level)> skills, CancellationToken ct = default);

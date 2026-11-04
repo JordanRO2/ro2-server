@@ -109,9 +109,10 @@ public sealed class UseTalentPointHandlerTests
         public List<IReadOnlyList<(uint SkillId, byte Level)>> Batches { get; } = [];
         public int OtherWrites;
         public bool Throw;
+        public List<CharacterSkill> Stored { get; } = [];
 
         public Task<IReadOnlyList<CharacterSkill>> GetSkillsAsync(uint characterId)
-            => Task.FromResult<IReadOnlyList<CharacterSkill>>([]);
+            => Task.FromResult<IReadOnlyList<CharacterSkill>>(Stored.ToArray());
         public Task LearnSkillAsync(uint characterId, uint skillId, byte level) { OtherWrites++; return Task.CompletedTask; }
         public Task UpdateSkillLevelAsync(uint characterId, uint skillId, byte newLevel) { OtherWrites++; return Task.CompletedTask; }
         public Task DeleteSkillsAsync(uint characterId, IReadOnlyCollection<uint> skillIds, CancellationToken ct = default)
@@ -267,13 +268,24 @@ public sealed class UseTalentPointHandlerTests
     {
         await using var rig = await Rig.StartAsync(p => p.LearnedSkills[1110] = 1);
         rig.Skills.Throw = true;
-        var before = rig.Player.LearnedSkills;
 
         await rig.SendAsync(Build1310([(1102u, (byte)1), (1117u, (byte)1)]));
 
         Assert.Empty(rig.Skills.Batches);
-        Assert.Same(before, rig.Player.LearnedSkills);
         Assert.Equal(new Dictionary<uint, byte> { [1110] = 1 }, rig.Player.LearnedSkills);
+        await rig.AssertNoReplyAsync();
+    }
+
+    [Fact]
+    public async Task RepositoryThrowsAfterPartialWrite_ReloadsWhatPersisted_IntoTheLiveTree()
+    {
+        await using var rig = await Rig.StartAsync();
+        rig.Skills.Throw = true;
+        rig.Skills.Stored.Add(new CharacterSkill { CharacterId = CharId, SkillId = 1102, Level = 1 });
+
+        await rig.SendAsync(Build1310([(1102u, (byte)1), (1117u, (byte)1)]));
+
+        Assert.Equal(new Dictionary<uint, byte> { [1102] = 1 }, rig.Player.LearnedSkills);
         await rig.AssertNoReplyAsync();
     }
 

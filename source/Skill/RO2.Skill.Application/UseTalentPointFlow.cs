@@ -1,4 +1,4 @@
-using RO2.GameData;
+﻿using RO2.GameData;
 using RO2.Skills.Domain;
 
 namespace RO2.Skills.Application;
@@ -16,7 +16,7 @@ public static class UseTalentPointFlow
         /// <summary>An entry was illegal for the class/level/tree: nothing persisted, no reply.</summary>
         IllegalRefused,
 
-        /// <summary>The batch write threw: nothing mirrored, no reply.</summary>
+        /// <summary>The batch write threw: no reply; the live tree is re-synced from the store.</summary>
         WriteFailed,
 
         /// <summary>Applied (or an accepted empty no-op): the host sends the 2543 with the remaining pool.</summary>
@@ -52,13 +52,21 @@ public static class UseTalentPointFlow
             if (allocations.Count > 0)
             {
                 // ONE batched upsert; the mirror is applied only after it returns, so a failed write leaves the tree
-                // as it was and no reply goes out.
+                // as the store holds it (reloaded in the catch) and no reply goes out.
                 try
                 {
                     await repo.UpsertSkillsAsync(characterId, allocations, ct);
                 }
                 catch (Exception ex) when (ex is not OperationCanceledException)
                 {
+                    // The batch is not transactional on Mongo, so part of it may have persisted: fold what the
+                    // store holds back into the live tree (upserts only raise/insert, so overlay is exact) so the
+                    // two do not diverge until relog.
+                    try
+                    {
+                        session.Overlay((await repo.GetSkillsAsync(characterId)).Select(r => (r.SkillId, r.Level)));
+                    }
+                    catch (Exception) { /* store down: keep the write error */ }
                     return new UseTalentResult(UseTalentOutcome.WriteFailed, null, ex, 0, 0, 0);
                 }
                 session.Overlay(allocations);
