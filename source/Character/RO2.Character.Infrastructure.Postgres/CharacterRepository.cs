@@ -215,7 +215,7 @@ public sealed class CharacterRepository : ICharacterRepository
         if (string.IsNullOrWhiteSpace(name) || name.Length < 2 || name.Length > 16)
             return (null, "Invalid character name length");
 
-        if (await LiveNameExistsAsync(conn, name, CancellationToken.None))
+        if (await NameExistsIgnoreCaseAsync(name))
             return (null, "Character name already exists");
 
         

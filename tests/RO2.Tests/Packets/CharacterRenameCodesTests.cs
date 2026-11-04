@@ -85,6 +85,18 @@ public class CharacterRenameCodesTests
     }
 
     [Fact]
+    public async Task TakenName_IsRefusedWhateverTheCase()
+    {
+        var body = Convert.FromHexString(
+            "5c8dd18ba73d040e02010a4b00610079006100740065004e006f007600610002010e4d006f006f006e006c006900670068007400440061006e0063006500");
+        Assert.True(CharacterRename.TryParse(body, out var request));
+        var services = await ServicesAsync(taken: "moonlightdance", Scroll(request.ScrollUid, RenameScroll));
+        var check = await CheckAsync("KayateNova", request, services);
+        Assert.Equal("2a3c0000", Hex(CharacterRename.Code(check.Refusal)));
+        Assert.Null(check.Scroll);
+    }
+
+    [Fact]
     public async Task FreeNameWithScroll_IsAccepted_AndReturnsTheScroll()
     {
         
@@ -186,8 +198,8 @@ public class CharacterRenameCodesTests
         public string? Taken { get; set; }
 
         protected override object? Invoke(MethodInfo? targetMethod, object?[]? args) =>
-            targetMethod?.Name == nameof(ICharacterRepository.CharacterNameExistsAsync)
-                ? Task.FromResult(args is [string name] && string.Equals(name, Taken, StringComparison.Ordinal))
+            targetMethod?.Name == nameof(ICharacterRepository.NameExistsIgnoreCaseAsync)
+                ? Task.FromResult(args is [string name, _] && string.Equals(name, Taken, StringComparison.OrdinalIgnoreCase))
                 : throw new NotSupportedException(targetMethod?.Name);
     }
 

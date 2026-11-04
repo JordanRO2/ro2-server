@@ -102,7 +102,7 @@ public class CharacterRepository : ICharacterRepository
         if (string.IsNullOrWhiteSpace(name) || name.Length < MinNameLength || name.Length > MaxNameLength)
             return (null, "Invalid character name length");
 
-        if (await CharacterNameExistsAsync(name))
+        if (await NameExistsIgnoreCaseAsync(name))
             return (null, "Character name already exists");
 
         var maxId = await _characters.Find(_ => true)

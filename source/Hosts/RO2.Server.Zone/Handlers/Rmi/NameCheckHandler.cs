@@ -68,7 +68,7 @@ public class NameCheckHandler : NetworkZoneRmiBase
         if (refusal == NameRefusal.None)
         {
             var characters = services.GetRequiredService<ICharacterRepository>();
-            if (await characters.CharacterNameExistsAsync(characterName))
+            if (await characters.NameExistsIgnoreCaseAsync(characterName))
                 (result, reason) = (ResultUnavailable, "already taken");
         }
 

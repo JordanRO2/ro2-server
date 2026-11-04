@@ -41,7 +41,7 @@ public static class RenameCheckFlow
         if (!data.IsNameChangeScroll(scroll.ItemId))
             return new RenameCheckResult(RenameNameRefusal.TakenOrShort, null, $"item {scroll.ItemId} is not a name change scroll");
 
-        if (await repo.CharacterNameExistsAsync(newName))
+        if (await repo.NameExistsIgnoreCaseAsync(newName))
             return new RenameCheckResult(RenameNameRefusal.TakenOrShort, null, "already taken");
 
         return new RenameCheckResult(RenameNameRefusal.None, scroll, null);

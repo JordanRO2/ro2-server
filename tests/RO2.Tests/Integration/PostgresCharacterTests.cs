@@ -147,7 +147,7 @@ public sealed class PostgresCharacterTests
     }
 
     [Fact]
-    public async Task Create_rejects_a_live_duplicate_name_case_sensitively()
+    public async Task Create_rejects_a_live_duplicate_name_whatever_the_case()
     {
         if (!_fx.Available) return;
         var repo = new CharacterRepository(_fx.Db!);
@@ -160,8 +160,8 @@ public sealed class PostgresCharacterTests
 
         
         var (other, otherError) = await repo.CreateCharacterAsync(NewAccount(), name.ToUpperInvariant(), 0, 0, "{}");
-        Assert.Null(otherError);
-        Assert.NotNull(other);
+        Assert.Null(other);
+        Assert.Equal("Character name already exists", otherError);
     }
 
     [Fact]
