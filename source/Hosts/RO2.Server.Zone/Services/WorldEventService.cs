@@ -86,6 +86,9 @@ public sealed class WorldEventService : BackgroundService
     private Dictionary<uint, WorldEventStateDocument>? _states;
     private DateTime _nextLoadAttemptUtc = DateTime.MinValue;
 
+    /// <summary>Ids whose latest state could not be stored. Only touched under <see cref="_gate"/>; retried on the next timer pass.</summary>
+    private readonly HashSet<uint> _pendingSaves = new();
+
     public WorldEventService(GameDataStore store, PlayerStateManager players, BroadcastService broadcast,
         IWorldEventStateRepository repo, ILogger<WorldEventService> logger)
     {
@@ -186,7 +189,7 @@ public sealed class WorldEventService : BackgroundService
     }
 
  /// <summary>Moves every timed-out stage to its return stage, notifies players of each change, and returns how long to sleep.</summary>
-    private async Task<TimeSpan> RunTimeoutsAsync(CancellationToken ct)
+    internal async Task<TimeSpan> RunTimeoutsAsync(CancellationToken ct)
     {
         var t = WorldEventTables.From(_store);
         TimeSpan wait;
@@ -196,6 +199,8 @@ public sealed class WorldEventService : BackgroundService
         {
             var states = await LoadLockedAsync(ct);
             if (states is null) return MaxWait;
+            foreach (var id in _pendingSaves.ToList())
+                await SaveAsync(states[id], ct);
             var decision = WorldEventUseCase.RunTimeouts(states.Values.Select(WorldEventMachine.ToState).ToList(), t,
                 DateTime.UtcNow, MaxWait);
             wait = decision.Wait;
@@ -266,10 +271,11 @@ public sealed class WorldEventService : BackgroundService
         try
         {
             await _repo.SaveAsync(doc, ct);
+            _pendingSaves.Remove(doc.Id);
         }
         catch (Exception ex) when (ex is not OperationCanceledException)
         {
-            
+            _pendingSaves.Add(doc.Id);
             _logger.LogWarning(ex, "World event {Event} stage {Stage} could not be stored", doc.Id, doc.Stage);
         }
     }
