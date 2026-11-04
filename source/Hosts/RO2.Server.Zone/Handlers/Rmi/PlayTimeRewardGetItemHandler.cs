@@ -73,13 +73,14 @@ public class PlayTimeRewardGetItemHandler : ZoneRmiHandlerBase<PlayTimeRewardGet
         Logger.LogDebug("{Name} claims play-time slot {Slot}: result {Result}, answer slot {Next} / {Seconds}s",
             player.Name, requestedSlot, claim.Result, claim.Slot, claim.Seconds);
 
+        if (outcome.FilingError is { } error)
+            Logger.LogError(error, "{Name}: play-time slot {Slot} reward could not be filed in the gift box, claim not advanced", player.Name, claim.Slot);
+        else if (player.AccountId == 0)
+            Logger.LogWarning("{Name}: play-time claim with no account id; nothing filed, claim not advanced", player.Name);
+
         if (claim.GrantedRow is { } row)
         {
-            if (player.AccountId == 0)
-                Logger.LogWarning("{Name}: play-time slot {Slot} granted with no account id; no gift filed", player.Name, row.ID);
-            else if (outcome.FilingError is { } error)
-                Logger.LogError(error, "{Name}: play-time slot {Slot} reward could not be filed in the gift box", player.Name, row.ID);
-            else if (outcome.Filed.Count > 0)
+            if (outcome.Filed.Count > 0)
                 Logger.LogInformation("{Name}: play-time slot {Slot} reward filed in the gift box ({Items}), {Total} gift(s) in it",
                     player.Name, row.ID, string.Join(", ", outcome.Filed.Select(g => $"{g.Count}x {g.ItemId}")), outcome.GiftsInBox);
             await rewards.SaveAsync(player.AccountId, progress, chain, Logger, ct);

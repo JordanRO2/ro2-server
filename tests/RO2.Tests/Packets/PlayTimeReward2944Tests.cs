@@ -1,3 +1,4 @@
+using RO2.Rewards.Application;
 using RO2.Rewards.Domain;
 using RO2.GameData;
 using RO2.GameData.Tables;
@@ -279,5 +280,62 @@ public class PlayTimeReward2944Tests
 
         Assert.False(asked);
         Assert.Equal(Convert.FromHexString("1c790700000004010000"), Body(early!.Value));
+    }
+
+    private sealed class ThrowingGifts(Exception error) : IAccountGiftRepository
+    {
+        public Task<IReadOnlyList<AccountGift>> GetLiveAsync(uint accountId, DateTime nowLocal, CancellationToken ct = default) => throw new NotSupportedException();
+        public Task<int> FileAsync(uint accountId, IReadOnlyList<AccountGift> gifts, DateTime nowLocal, CancellationToken ct = default) => throw error;
+        public Task<bool> TryTakeAsync(uint accountId, string guid, CancellationToken ct = default) => throw new NotSupportedException();
+        public Task<AccountAttendance> GetAttendanceAsync(uint accountId, CancellationToken ct = default) => throw new NotSupportedException();
+        public Task<bool> TryRecordAttendanceAsync(uint accountId, int lastAttendedDaySeen, int today, int attendedDays,
+            int streakBrokenAfter, AccountGift? reward, CancellationToken ct = default) => throw new NotSupportedException();
+    }
+
+    private static Task<ClaimPlayTimeRewardResult> ClaimThrough(Exception error, PlayTimeRewardProgress p, DateTime login, uint accountId = 5) =>
+        new ClaimPlayTimeRewardUseCase(new ThrowingGifts(error)).ExecuteAsync(p, Chain, 7, login, login.AddSeconds(700), accountId,
+            () => "00000000000000000000000000000001", DateTime.UtcNow);
+
+    [Fact]
+    public async Task ClaimWhoseFilingFails_RollsTheChainBack_AndAnswers31004ForTheSameSlot()
+    {
+        var login = ResetInstant.AddHours(1);
+        var p = PlayTimeRewardChain.NewProgress(login, login);
+        var error = new InvalidOperationException("gift box down");
+
+        var outcome = await ClaimThrough(error, p, login);
+
+        Assert.Same(error, outcome.FilingError);
+        Assert.Null(outcome.Claim!.Value.GrantedRow);
+        Assert.Equal((PlayTimeRewardChain.ResultNotYet, 7u, 0u), (outcome.Claim.Value.Result, outcome.Claim.Value.Slot, outcome.Claim.Value.Seconds));
+        Assert.Equal(0, p.Index);
+        Assert.Equal(700, p.AccumulatedSeconds);
+        Assert.Equal(PlayTimeRewardChain.ResultOk, ClaimAt(p, 7, login, login.AddSeconds(700)).Result);
+    }
+
+    [Fact]
+    public async Task ClaimCancelledWhileFiling_RollsTheChainBack_AndRethrows()
+    {
+        var login = ResetInstant.AddHours(1);
+        var p = PlayTimeRewardChain.NewProgress(login, login);
+
+        await Assert.ThrowsAsync<OperationCanceledException>(() => ClaimThrough(new OperationCanceledException(), p, login));
+
+        Assert.Equal(0, p.Index);
+        Assert.Equal(700, p.AccumulatedSeconds);
+    }
+
+    [Fact]
+    public async Task ClaimWithNoAccount_FilesNothing_AndDoesNotAdvanceTheChain()
+    {
+        var login = ResetInstant.AddHours(1);
+        var p = PlayTimeRewardChain.NewProgress(login, login);
+
+        var outcome = await ClaimThrough(new NotSupportedException(), p, login, accountId: 0);
+
+        Assert.Null(outcome.Claim!.Value.GrantedRow);
+        Assert.Equal(PlayTimeRewardChain.ResultNotYet, outcome.Claim.Value.Result);
+        Assert.Equal(0, p.Index);
+        Assert.Equal(700, p.AccumulatedSeconds);
     }
 }

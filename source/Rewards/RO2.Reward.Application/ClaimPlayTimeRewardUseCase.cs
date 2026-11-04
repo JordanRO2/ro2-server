@@ -20,7 +20,8 @@ public sealed record ClaimPlayTimeRewardResult(PlayTimeRewardChain.ClaimResult? 
 /// <remarks>
 /// The progress, the chain and the clock come in as arguments; the use case holds no cache. Saving the progress
 /// stays with its owner (the Zone host's play-time store orders its writes), so the caller saves when
-/// <see cref="PlayTimeRewardChain.ClaimResult.GrantedRow"/> is set. A failure to file the reward is returned, not thrown.
+/// <see cref="PlayTimeRewardChain.ClaimResult.GrantedRow"/> is set. A failure to file the reward (or no account to file it for) rolls the chain back and is returned as a
+/// not-yet answer, not thrown, so nothing is saved and the slot can be claimed again.
 /// </remarks>
 public sealed class ClaimPlayTimeRewardUseCase
 {
@@ -46,12 +47,36 @@ public sealed class ClaimPlayTimeRewardUseCase
         DateTime nowLocal, CancellationToken ct = default)
     {
         PlayTimeRewardChain.ClaimResult? result;
+        int indexBefore;
+        double secondsBefore;
+        DateTime periodBefore;
         lock (progress.Gate)
+        {
+            // Advance first so the snapshot already holds the elapsed time Claim would otherwise add itself.
+            PlayTimeRewardChain.Advance(progress, loginTime, nowUtc);
+            (indexBefore, secondsBefore, periodBefore) = (progress.Index, progress.AccumulatedSeconds, progress.PeriodStartUtc);
             result = PlayTimeRewardChain.Claim(progress, chain, requestedSlot, loginTime, nowUtc, _ => true);
+        }
 
         var none = Array.Empty<AccountGift>();
-        if (result is not { GrantedRow: { } row } || accountId == 0)
+        if (result is not { GrantedRow: { } row })
             return new ClaimPlayTimeRewardResult(result, 0, none, null);
+
+        // The chain is advanced already; undo it when the reward is not filed so the slot stays claimable.
+        ClaimPlayTimeRewardResult Refused(Exception? error)
+        {
+            lock (progress.Gate)
+                if (progress.PeriodStartUtc == periodBefore)
+                {
+                    progress.Index = indexBefore;
+                    progress.AccumulatedSeconds = secondsBefore + progress.AccumulatedSeconds; // + time ticked since the claim zeroed it
+                }
+            return new ClaimPlayTimeRewardResult(
+                new PlayTimeRewardChain.ClaimResult(PlayTimeRewardChain.ResultNotYet, row.ID, 0, null), 0, none, error);
+        }
+
+        if (accountId == 0)
+            return Refused(null);
 
         var filed = new List<AccountGift>(3);
         foreach (var (itemId, count) in new[] { (row.Reward_item1, row.Item_count1), (row.Reward_item2, row.Item_count2), (row.Reward_item3, row.Item_count3) })
@@ -67,9 +92,14 @@ public sealed class ClaimPlayTimeRewardUseCase
             int total = await _gifts.FileAsync(accountId, filed, nowLocal, ct);
             return new ClaimPlayTimeRewardResult(result, total, filed, null);
         }
-        catch (Exception ex) when (ex is not OperationCanceledException)
+        catch (OperationCanceledException)
         {
-            return new ClaimPlayTimeRewardResult(result, 0, none, ex);
+            Refused(null);
+            throw;
+        }
+        catch (Exception ex)
+        {
+            return Refused(ex);
         }
     }
 }
