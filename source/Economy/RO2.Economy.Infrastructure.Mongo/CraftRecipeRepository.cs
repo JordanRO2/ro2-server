@@ -40,12 +40,21 @@ public sealed class CraftRecipeRepository : ICraftRecipeRepository
     /// <inheritdoc />
     public async Task<bool> AddAsync(uint characterId, ushort recipeId, CancellationToken ct = default)
     {
-        var result = await _docs.UpdateOneAsync(
-            d => d.Id == characterId,
-            Builders<CraftRecipeDocument>.Update
-                .AddToSet(d => d.Recipes, recipeId)
-                .Set(d => d.UpdatedAt, DateTime.UtcNow),
-            new UpdateOptions { IsUpsert = true }, ct);
-        return result.UpsertedId is not null || result.ModifiedCount > 0;
+        // Filter on the recipe being absent so an already-learned recipe matches nothing: the upsert then collides on _id
+        // (DuplicateKey) and reads as "already stored", like the Postgres ON CONFLICT DO NOTHING (a concurrent 1348 loses).
+        try
+        {
+            var result = await _docs.UpdateOneAsync(
+                d => d.Id == characterId && !d.Recipes.Contains(recipeId),
+                Builders<CraftRecipeDocument>.Update
+                    .AddToSet(d => d.Recipes, recipeId)
+                    .Set(d => d.UpdatedAt, DateTime.UtcNow),
+                new UpdateOptions { IsUpsert = true }, ct);
+            return result.UpsertedId is not null || result.ModifiedCount > 0;
+        }
+        catch (MongoWriteException ex) when (ex.WriteError?.Category == ServerErrorCategory.DuplicateKey)
+        {
+            return false;
+        }
     }
 }
