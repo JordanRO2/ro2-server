@@ -108,4 +108,22 @@ public class CharacterAuditFixTests
         Assert.Equal([nameof(ICharacterRepository.UpdateJobLevelExpAsync)], rec.Calls);
         Assert.Equal((1, 30UL), (c.JobLevel, c.JobExp));
     }
+
+    private sealed class ThrowingAnnounce : IJobExpNotifier
+    {
+        public Task AnnounceAsync(JobExpRules.Result result, ulong gain) => Task.FromException(new IOException("session dropped"));
+        public void PersistFailed(Exception ex, uint characterId, JobExpRules.Result result) { }
+        public Task OnLevelUpAsync() => Task.CompletedTask;
+    }
+
+    [Fact]
+    public async Task JobExpGrant_PersistsThePairEvenWhenTheAnnounceThrows()
+    {
+        var (repo, rec) = NewRepo();
+        var c = new Character { Id = 5, JobLevel = 1, JobExp = 10 };
+
+        await Assert.ThrowsAsync<IOException>(() => JobExpGrantFlow.GrantAsync(c, 20, new Data(), repo, new ThrowingAnnounce()));
+
+        Assert.Equal([nameof(ICharacterRepository.UpdateJobLevelExpAsync)], rec.Calls);
+    }
 }

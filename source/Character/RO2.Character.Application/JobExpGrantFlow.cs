@@ -12,7 +12,7 @@ public static class JobExpGrantFlow
     /// <summary>
     /// Adds <paramref name="gain"/> to the character's job exp. Returns false with nothing changed or sent when
     /// there is no gain, no character, or it is at the cap or on a level with no table row. Otherwise it mutates
-    /// the in-memory pair, announces it, persists only the JobLevel/JobExp pair, and on a level-up runs
+    /// the in-memory pair, persists only the JobLevel/JobExp pair, announces it, and on a level-up runs
     /// the Khara follow-up last. A persist failure is swallowed and still returns true.
     /// </summary>
     /// <param name="character">The player's in-memory character, mutated in place.</param>
@@ -32,10 +32,9 @@ public static class JobExpGrantFlow
         character.JobLevel = result.Level;
         character.JobExp = result.Exp;
 
-        await notifier.AnnounceAsync(result, gain);
-
-        // Persist after the sends: a targeted write of only the pair, so fields updated elsewhere survive. A
-        // failure is swallowed, so the client stays ahead of the DB rather than losing the level-up.
+        // Persist before the sends so a dropped session throwing out of the announce cannot lose the pair. A
+        // targeted write of only the pair, so fields updated elsewhere survive. A failure is swallowed, so the
+        // client stays ahead of the DB rather than losing the level-up.
         try
         {
             await characters.UpdateJobLevelExpAsync(character.Id, result.Level, result.Exp);
@@ -44,6 +43,8 @@ public static class JobExpGrantFlow
         {
             notifier.PersistFailed(ex, character.Id, result);
         }
+
+        await notifier.AnnounceAsync(result, gain);
 
         if (result.LevelledUp)
             await notifier.OnLevelUpAsync();
