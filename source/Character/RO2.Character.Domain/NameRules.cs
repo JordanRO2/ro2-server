@@ -49,7 +49,7 @@ public static partial class NameRules
     /// <summary>Name_filter rows that also refuse a name when they appear inside it (case-sensitive on the NFKC form).</summary>
     internal static readonly string[] ContainedRows = ["GM"];
 
-    [GeneratedRegex(@"^[a-zA-Z0-9_]+$")]
+    [GeneratedRegex(@"\A[a-zA-Z0-9_]+\z")]
     private static partial Regex AllowedCharsRegex();
 
     /// <summary>
