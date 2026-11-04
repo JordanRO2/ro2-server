@@ -93,7 +93,8 @@ public class CharacterRepository : ICharacterRepository
 
     public async Task<(Character? character, string? error)> CreateCharacterAsync(
         uint accountId, string name, byte job, byte gender, string appearanceJson,
-        (int hp, int mp, int str, int agi, int intel, int wis, int vit, int luk)? stats = null)
+        (int hp, int mp, int str, int agi, int intel, int wis, int vit, int luk)? stats = null,
+        byte race = Character.DefaultRace)
     {
         var count = await _characters.CountDocumentsAsync(c => c.AccountId == accountId && !c.IsDeleted);
         if (count >= MaxCharactersPerAccount)
@@ -128,6 +129,7 @@ public class CharacterRepository : ICharacterRepository
             Name = name,
             Job = job,
             Gender = gender,
+            Race = race,
             Level = StartingLevel,
             MapId = DefaultMapId,
             X = DefaultX,

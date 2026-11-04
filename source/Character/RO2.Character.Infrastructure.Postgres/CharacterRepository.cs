@@ -204,7 +204,8 @@ public sealed class CharacterRepository : ICharacterRepository
 
     public async Task<(Character? character, string? error)> CreateCharacterAsync(
         uint accountId, string name, byte job, byte gender, string appearanceJson,
-        (int hp, int mp, int str, int agi, int intel, int wis, int vit, int luk)? stats = null)
+        (int hp, int mp, int str, int agi, int intel, int wis, int vit, int luk)? stats = null,
+        byte race = Character.DefaultRace)
     {
         await using var conn = await _db.OpenConnectionAsync();
 
@@ -233,6 +234,7 @@ public sealed class CharacterRepository : ICharacterRepository
             Name = name,
             Job = job,
             Gender = gender,
+            Race = race,
             Level = 1,
             MapId = DefaultMapId,
             X = DefaultX,
@@ -253,15 +255,16 @@ public sealed class CharacterRepository : ICharacterRepository
         };
 
         await using var cmd = new NpgsqlCommand(
-            "INSERT INTO characters (account_id, name, job, gender, level, map_id, x, y, z, hp, max_hp, mp, max_mp, " +
+            "INSERT INTO characters (account_id, name, job, gender, race, level, map_id, x, y, z, hp, max_hp, mp, max_mp, " +
             "str, agi, vit, intel, wis, luk, appearance_json, created_at) " +
-            "VALUES (@account_id, @name, @job, @gender, @level, @map_id, @x, @y, @z, @hp, @max_hp, @mp, @max_mp, " +
+            "VALUES (@account_id, @name, @job, @gender, @race, @level, @map_id, @x, @y, @z, @hp, @max_hp, @mp, @max_mp, " +
             "@str, @agi, @vit, @intel, @wis, @luk, @appearance_json, @created_at) RETURNING id", conn);
         var p = cmd.Parameters;
         Add(p, "account_id", (long)character.AccountId);
         AddText(p, "name", character.Name);
         Add(p, "job", character.Job);
         Add(p, "gender", character.Gender);
+        Add(p, "race", character.Race);
         Add(p, "level", character.Level);
         Add(p, "map_id", (long)character.MapId);
         Add(p, "x", character.X);

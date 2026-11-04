@@ -13,10 +13,16 @@ public class CharacterAuditFixTests
     {
         public readonly List<string> Calls = [];
         public bool Throw;
+        public byte CreatedRace;
 
         protected override object? Invoke(MethodInfo? m, object?[]? args)
         {
             Calls.Add(m!.Name);
+            if (m.Name == nameof(ICharacterRepository.CreateCharacterAsync))
+            {
+                CreatedRace = args!.Length > 6 ? (byte)args[6]! : (byte)0;
+                return Task.FromResult<(Character?, string?)>((new Character { Id = 7, Race = CreatedRace }, null));
+            }
             return Throw ? Task.FromException(new IOException("db down")) : Task.CompletedTask;
         }
     }
@@ -87,7 +93,7 @@ public class CharacterAuditFixTests
         public bool IsAppearanceTicket(uint itemId) => throw new NotSupportedException();
         public byte RequireSex(uint itemId) => throw new NotSupportedException();
         public bool IsNameChangeScroll(uint itemId) => throw new NotSupportedException();
-        public (int hp, int mp, int str, int agi, int intel, int wis, int vit, int luk)? SeedStats(byte job) => throw new NotSupportedException();
+        public (int hp, int mp, int str, int agi, int intel, int wis, int vit, int luk)? SeedStats(byte job) => null;
     }
 
     private sealed class Notifier : IJobExpNotifier
@@ -125,5 +131,17 @@ public class CharacterAuditFixTests
         await Assert.ThrowsAsync<IOException>(() => JobExpGrantFlow.GrantAsync(c, 20, new Data(), repo, new ThrowingAnnounce()));
 
         Assert.Equal([nameof(ICharacterRepository.UpdateJobLevelExpAsync)], rec.Calls);
+    }
+
+    [Fact]
+    public async Task CreateCharacter_StoresTheRaceInTheCreateItself_NoSecondWrite()
+    {
+        var (repo, rec) = NewRepo();
+
+        var result = await CreateCharacterFlow.CreateAsync(1, "Kayate", 0, 0, "{}", 3, new Data(), repo);
+
+        Assert.Equal(CreateCharacterFlow.CreateOutcome.Created, result.Outcome);
+        Assert.Equal([nameof(ICharacterRepository.CreateCharacterAsync)], rec.Calls);
+        Assert.Equal(3, rec.CreatedRace);
     }
 }

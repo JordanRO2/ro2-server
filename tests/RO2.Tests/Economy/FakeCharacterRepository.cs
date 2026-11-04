@@ -46,7 +46,8 @@ public sealed class FakeCharacterRepository(RepoScheduler scheduler) : ICharacte
 
     public Task<(Character? character, string? error)> CreateCharacterAsync(
         uint accountId, string name, byte job, byte gender, string appearanceJson,
-        (int hp, int mp, int str, int agi, int intel, int wis, int vit, int luk)? stats = null)
+        (int hp, int mp, int str, int agi, int intel, int wis, int vit, int luk)? stats = null,
+        byte race = Character.DefaultRace)
         => throw NotModelled(nameof(CreateCharacterAsync));
 
     public Task<bool> DeleteCharacterAsync(uint characterId, uint accountId) => throw NotModelled(nameof(DeleteCharacterAsync));

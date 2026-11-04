@@ -9,10 +9,11 @@ public interface ICharacterRepository
     Task<IReadOnlyList<Character>> GetCharactersByAccountAsync(uint accountId);
     /// <summary>Whether a character with exactly this name exists (case-sensitive).</summary>
     Task<bool> CharacterNameExistsAsync(string name);
-    /// <summary>Creates a character for the account; returns it, or an error message when it could not be created.</summary>
+    /// <summary>Creates a character for the account, race included, in one write; returns it, or an error message when it could not be created. The duplicate-name check is case-insensitive.</summary>
     Task<(Character? character, string? error)> CreateCharacterAsync(
         uint accountId, string name, byte job, byte gender, string appearanceJson,
-        (int hp, int mp, int str, int agi, int intel, int wis, int vit, int luk)? stats = null);
+        (int hp, int mp, int str, int agi, int intel, int wis, int vit, int luk)? stats = null,
+        byte race = Character.DefaultRace);
     /// <summary>Soft-deletes the character when it belongs to the account. True when a row was deleted.</summary>
     Task<bool> DeleteCharacterAsync(uint characterId, uint accountId);
 

@@ -15,7 +15,7 @@ public static class CreateCharacterFlow
         /// <summary>The repository did not create the character (duplicate name, slot limit, or an error); result 1.</summary>
         Failed,
 
-        /// <summary>The character was created and its race saved; result 0.</summary>
+        /// <summary>The character was created with its race; result 0.</summary>
         Created,
     }
 
@@ -27,7 +27,7 @@ public static class CreateCharacterFlow
         => NameRules.Check(name, filter.Rows);
 
     /// <summary>
-    /// Seeds the class stats, creates the character, and (on success) stores its race with a second save. Returns
+    /// Seeds the class stats, and creates the character with its race in one write. Returns
     /// <see cref="CreateOutcome.Failed"/> with the repository's error when the character could not be created.
     /// </summary>
     /// <param name="accountId">The owning account.</param>
@@ -35,20 +35,16 @@ public static class CreateCharacterFlow
     /// <param name="job">The class.</param>
     /// <param name="gender">The gender.</param>
     /// <param name="appearanceJson">The serialized appearance.</param>
-    /// <param name="race">The race, stored after creation.</param>
+    /// <param name="race">The race, stored with the create.</param>
     /// <param name="data">Game data, for the seed stats.</param>
     /// <param name="repo">The character repository.</param>
     public static async Task<CreateResult> CreateAsync(uint accountId, string name, byte job, byte gender,
         string appearanceJson, byte race, ICharacterGameData data, ICharacterRepository repo)
     {
         var seed = data.SeedStats(job);
-        var (character, error) = await repo.CreateCharacterAsync(accountId, name, job, gender, appearanceJson, seed);
-        if (character is null)
-            return new CreateResult(CreateOutcome.Failed, 0, error);
-
-        // A second, non-atomic write: if it throws the character already exists and no 2309 is sent (no catch here).
-        character.Race = race;
-        await repo.SaveCharacterAsync(character);
-        return new CreateResult(CreateOutcome.Created, character.Id, null);
+        var (character, error) = await repo.CreateCharacterAsync(accountId, name, job, gender, appearanceJson, seed, race);
+        return character is null
+            ? new CreateResult(CreateOutcome.Failed, 0, error)
+            : new CreateResult(CreateOutcome.Created, character.Id, null);
     }
 }
