@@ -286,6 +286,9 @@ public static class CloseRangeChatRoomMembers
             }
             // A disconnected owner's room stays: its Disconnected event (OnSessionClosed) owns the hand-off and the
             // OwnerGone signal, and removing the room here would make that event find nothing.
+            // shortcut: if the owner socket died in the sub-ms gap before OpenFromZoneAsync subscribed Disconnected,
+            // that event never fires and this lazy prune now skips the ghost owner forever (it accepts joins). Upgrade
+            // to a periodic sweep that evicts an owner disconnected longer than a grace window if that race is ever seen.
             if (!owner.IsConnected) continue;
             entry.Room.Drop(entry.Sessions.Where(kv => !kv.Value.IsConnected).Select(kv => kv.Key).ToList());
             SyncSessions(entry);
