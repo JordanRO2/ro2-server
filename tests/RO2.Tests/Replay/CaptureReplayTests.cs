@@ -51,6 +51,7 @@ public sealed class ReplayMongoFixture : IAsyncLifetime
 /// against what the retail server answered. A measurement, not a regression gate: the report is the output (use
 /// <c>--logger "console;verbosity=detailed"</c>), and the asserts only prove the harness ran.
 /// </summary>
+[Collection(GameDataStoreLoadedCollection.Name)] // boots the Zone container + GameDataStore.LoadAsync (a process-wide Loaded setter); must not run parallel with other Loaded setters
 public sealed class CaptureReplayTests(ITestOutputHelper output, ReplayMongoFixture mongo) : IClassFixture<ReplayMongoFixture>
 {
     /// <summary>Opcodes that end the replay: the client leaves (logout, channel move) and the stand-in session stops meaning anything.</summary>
