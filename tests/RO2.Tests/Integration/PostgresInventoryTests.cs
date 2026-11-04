@@ -70,6 +70,7 @@ public sealed class PostgresInventoryTests
             EnchantSeconds = 40000,
             CardsJson = "[1,2,3]",
             SocketPunchersJson = "[4,5]",
+            GrindingJson = "[6,7]",
             Bound = true,
             AbilityValue = uint.MaxValue,
             CreatedAt = created,
@@ -97,6 +98,7 @@ public sealed class PostgresInventoryTests
         Assert.Equal((ushort)40000, got.EnchantSeconds);
         Assert.Equal("[1,2,3]", got.CardsJson);
         Assert.Equal("[4,5]", got.SocketPunchersJson);
+        Assert.Equal("[6,7]", got.GrindingJson);
         Assert.True(got.Bound);
         Assert.Equal(uint.MaxValue, got.AbilityValue);
         Assert.Equal(created, got.CreatedAt.ToUniversalTime());

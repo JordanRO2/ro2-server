@@ -35,6 +35,8 @@ public sealed record ItemStackSnapshot
     public ushort EnchantSeconds { get; init; }
     /// <summary>Socketed cards, as JSON (null when none).</summary>
     public string? CardsJson { get; init; }
+    /// <summary>Honed grinding lines, as JSON (null when none).</summary>
+    public string? GrindingJson { get; init; }
     /// <summary>Rune-hole punchers, as JSON (null when none).</summary>
     public string? SocketPunchersJson { get; init; }
     /// <summary>Whether the item is account/character bound.</summary>

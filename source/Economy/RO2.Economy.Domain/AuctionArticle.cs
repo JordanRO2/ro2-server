@@ -44,6 +44,7 @@ public sealed class AuctionArticle
         EnchantReinforceId = EnchantReinforceId,
         EnchantSeconds = EnchantSeconds,
         CardsJson = CardsJson,
+        GrindingJson = GrindingJson,
         SocketPunchersJson = SocketPunchersJson,
         Bound = Bound,
         AbilityValue = AbilityValue,
@@ -76,6 +77,8 @@ public sealed class AuctionArticle
     public short Durability { get; set; } = -1;
     /// <summary>The socketed cards, as JSON.</summary>
     public string? CardsJson { get; set; }
+    /// <summary>The honed grinding lines, as JSON.</summary>
+    public string? GrindingJson { get; set; }
 
     /// <summary>
     /// The listed item's bestowed element (<c>InventoryItem.Element</c>, item record+68). The

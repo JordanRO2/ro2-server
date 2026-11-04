@@ -638,6 +638,7 @@ public static partial class AuctionPackets
             Refine = a.Refine,
             Durability = a.Durability,
             CardsJson = a.CardsJson,
+            GrindingJson = a.GrindingJson,
             Element = a.Element,
             DyeColor = a.DyeColor,
             SocketPunchersJson = a.SocketPunchersJson,

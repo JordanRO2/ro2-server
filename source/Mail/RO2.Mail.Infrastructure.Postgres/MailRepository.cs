@@ -70,6 +70,7 @@ public sealed class MailRepository : IMailRepository
         ("kind", NpgsqlDbType.Smallint),
         ("kind_item_id", NpgsqlDbType.Bigint),
         ("auction_price", NpgsqlDbType.Bigint),
+        ("attached_item_grinding_json", NpgsqlDbType.Text),
     };
 
     private static readonly string ColumnList = string.Join(", ", Columns.Select(c => c.Name));
@@ -257,6 +258,7 @@ public sealed class MailRepository : IMailRepository
         (short)m.Kind,
         (long)m.KindItemId,
         m.AuctionPrice,
+        m.AttachedItemGrindingJson,
     };
 
     private static MailMessage Read(NpgsqlDataReader r) => new()
@@ -293,5 +295,6 @@ public sealed class MailRepository : IMailRepository
         Kind = (byte)r.GetInt16(29),
         KindItemId = (uint)r.GetInt64(30),
         AuctionPrice = r.GetInt64(31),
+        AttachedItemGrindingJson = r.IsDBNull(32) ? null : r.GetString(32),
     };
 }

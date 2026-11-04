@@ -575,7 +575,7 @@ public static class GuildPackets
         var transient = new InventoryItem
         {
             Id = it.Uid, ItemId = it.ItemId, Count = it.Count <= 0 ? 1 : it.Count,
-            Refine = it.Refine, Durability = it.Durability, CardsJson = it.CardsJson,
+            Refine = it.Refine, Durability = it.Durability, CardsJson = it.CardsJson, GrindingJson = it.GrindingJson,
             Element = it.Element, DyeColor = it.DyeColor, SocketPunchersJson = it.SocketPunchersJson,
             DyeColor2 = it.DyeColor2, DyeColor3 = it.DyeColor3, FxEnchantIndex = it.FxEnchantIndex,
             EnchantReinforceId = it.EnchantReinforceId, EnchantSeconds = it.EnchantSeconds, Bound = it.Bound,

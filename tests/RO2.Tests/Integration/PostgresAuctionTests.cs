@@ -40,6 +40,7 @@ public sealed class PostgresAuctionTests
             Refine = 5,
             Durability = 40,
             CardsJson = "[9]",
+            GrindingJson = "[3]",
             Element = 2,
             DyeColor = 123456,
             SocketPunchersJson = null,
@@ -91,6 +92,7 @@ public sealed class PostgresAuctionTests
         Assert.Equal(a.Refine, got.Refine);
         Assert.Equal(a.Durability, got.Durability);
         Assert.Equal(a.CardsJson, got.CardsJson);
+        Assert.Equal(a.GrindingJson, got.GrindingJson);
         Assert.Equal(a.Element, got.Element);
         Assert.Equal(a.DyeColor, got.DyeColor);
         Assert.Null(got.SocketPunchersJson);

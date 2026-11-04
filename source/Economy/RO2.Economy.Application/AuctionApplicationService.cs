@@ -120,6 +120,7 @@ public sealed class AuctionApplicationService(
                 Refine = taken.Refine,
                 Durability = taken.Durability,
                 CardsJson = taken.CardsJson,
+                GrindingJson = taken.GrindingJson,
                 Element = taken.Element,
                 DyeColor = taken.DyeColor,
                 SocketPunchersJson = taken.SocketPunchersJson,

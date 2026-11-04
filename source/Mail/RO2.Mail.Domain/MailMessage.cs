@@ -29,6 +29,8 @@ public sealed class MailMessage
     public byte AttachedItemRefine { get; set; }
     public short AttachedItemDurability { get; set; } = -1;
     public string? AttachedItemCardsJson { get; set; }
+    /// <summary>The attached item's honed grinding lines (<see cref="RO2.Inventory.Domain.InventoryItem.GrindingJson"/>), kept so a honed item keeps them through the mail.</summary>
+    public string? AttachedItemGrindingJson { get; set; }
 
  /// <summary>
  /// The attached item's bestowed element (<see cref="RO2.Inventory.Domain.InventoryItem.Element"/>, record+68).

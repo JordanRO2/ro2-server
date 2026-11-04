@@ -30,11 +30,12 @@ namespace RO2.Economy.Domain;
 /// <param name="EnchantSeconds">Remaining timed-enchant seconds.</param>
 /// <param name="CardsJson">Rune holes, as JSON.</param>
 /// <param name="SocketPunchersJson">Rune-hole punchers, as JSON.</param>
+/// <param name="GrindingJson">Honed grinding lines, as JSON.</param>
 public readonly record struct TradeOfferSnapshot(
     ulong Uid, uint ItemId, int Qty, byte Refine, byte Element, bool Bound,
     uint DyeColor, uint DyeColor2, uint DyeColor3,
     uint FxEnchantIndex, ushort EnchantReinforceId, ushort EnchantSeconds,
-    string? CardsJson, string? SocketPunchersJson)
+    string? CardsJson, string? SocketPunchersJson, string? GrindingJson = null)
 {
     /// <summary>The snapshot of <paramref name="item"/> as offered with <paramref name="qty"/> units.</summary>
     /// <param name="item">The item as stored.</param>
@@ -43,5 +44,5 @@ public readonly record struct TradeOfferSnapshot(
         item.Id, item.ItemId, qty, item.Refine, item.Element, item.Bound,
         item.DyeColor, item.DyeColor2, item.DyeColor3,
         item.FxEnchantIndex, item.EnchantReinforceId, item.EnchantSeconds,
-        item.CardsJson, item.SocketPunchersJson);
+        item.CardsJson, item.SocketPunchersJson, item.GrindingJson);
 }

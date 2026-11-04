@@ -48,7 +48,7 @@ public sealed class GuildVaultUseCase(IGuildVaultLedger vault)
         var rec = new GuildStorageItem
         {
             Uid = live.Id, ItemId = live.ItemId, Count = live.Count, Refine = live.Refine,
-            Durability = live.Durability, CardsJson = live.CardsJson, DepositedByCharId = live.CharacterId,
+            Durability = live.Durability, CardsJson = live.CardsJson, GrindingJson = live.GrindingJson, DepositedByCharId = live.CharacterId,
             Element = live.Element, DyeColor = live.DyeColor, SocketPunchersJson = live.SocketPunchersJson,
             DyeColor2 = live.DyeColor2, DyeColor3 = live.DyeColor3, FxEnchantIndex = live.FxEnchantIndex,
             EnchantReinforceId = live.EnchantReinforceId, EnchantSeconds = live.EnchantSeconds, Bound = live.Bound,
@@ -100,7 +100,7 @@ public sealed class GuildVaultUseCase(IGuildVaultLedger vault)
             var item = new InventoryItem
             {
                 Id = rec.Uid, CharacterId = toCharId, ItemId = rec.ItemId, Count = rec.Count <= 0 ? 1 : rec.Count,
-                Slot = UnplacedSlot, StorageType = StorageBag, Refine = rec.Refine, Durability = rec.Durability, CardsJson = rec.CardsJson,
+                Slot = UnplacedSlot, StorageType = StorageBag, Refine = rec.Refine, Durability = rec.Durability, CardsJson = rec.CardsJson, GrindingJson = rec.GrindingJson,
                 Element = rec.Element, DyeColor = rec.DyeColor, SocketPunchersJson = rec.SocketPunchersJson,
                 DyeColor2 = rec.DyeColor2, DyeColor3 = rec.DyeColor3, FxEnchantIndex = rec.FxEnchantIndex,
                 EnchantReinforceId = rec.EnchantReinforceId, EnchantSeconds = rec.EnchantSeconds, Bound = rec.Bound,

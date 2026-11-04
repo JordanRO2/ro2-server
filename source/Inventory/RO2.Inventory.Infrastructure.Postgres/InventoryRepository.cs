@@ -19,7 +19,7 @@ namespace RO2.Inventory.Infrastructure.Postgres;
 /// <c>slot</c>, <c>storage_type</c>, <c>refine</c>, <c>element</c>, <c>durability</c>, <c>dye_color</c>,
 /// <c>dye_color2</c>, <c>dye_color3</c>, <c>fx_enchant_index</c>, <c>enchant_reinforce_id</c>,
 /// <c>enchant_seconds</c>, <c>cards_json</c>, <c>socket_punchers_json</c>, <c>bound</c>, <c>ability_value</c>,
-/// <c>created_at</c>. Postgres has no unsigned integers: <c>uint</c>/<c>ushort</c>/<c>ulong</c> map to
+/// <c>created_at</c>, <c>grinding_json</c>. Postgres has no unsigned integers: <c>uint</c>/<c>ushort</c>/<c>ulong</c> map to
 /// <c>bigint</c> (the id through an unchecked cast), <c>byte</c>/<c>short</c> to <c>smallint</c>, <c>int</c> to
 /// <c>integer</c>, <c>bool</c> to <c>boolean</c>; <c>created_at</c> is a UTC <c>timestamptz</c> written once and
 /// never updated. The id is not an IDENTITY column: <see cref="GetNextIdAsync"/> must reserve an id without
@@ -48,7 +48,7 @@ public sealed class InventoryRepository : IInventoryRepository
 
     private const int MaxSlotAssignAttempts = 5;
 
-    // The 18 mutable columns, in the order BindMutable yields their values.
+    // The 19 mutable columns, in the order BindMutable yields their values.
     private static readonly (string Name, NpgsqlDbType Type)[] MutableColumns =
     [
         ("character_id", NpgsqlDbType.Bigint),
@@ -69,10 +69,13 @@ public sealed class InventoryRepository : IInventoryRepository
         ("socket_punchers_json", NpgsqlDbType.Text),
         ("bound", NpgsqlDbType.Boolean),
         ("ability_value", NpgsqlDbType.Bigint),
+        ("grinding_json", NpgsqlDbType.Text),
     ];
 
+    // grinding_json is read after created_at (trailing ordinal 20) so no existing reader index shifts.
     private static readonly string SelectColumns =
-        "id, " + string.Join(", ", MutableColumns.Select(c => c.Name)) + ", created_at";
+        "id, " + string.Join(", ", MutableColumns.Where(c => c.Name != "grinding_json").Select(c => c.Name))
+        + ", created_at, grinding_json";
 
     private static readonly string InsertSql =
         $"INSERT INTO {ItemsTable} (id, {string.Join(", ", MutableColumns.Select(c => c.Name))}, created_at) " +
@@ -363,6 +366,7 @@ public sealed class InventoryRepository : IInventoryRepository
                 Bound = reader.GetBoolean(17),
                 AbilityValue = reader.IsDBNull(18) ? null : (uint)reader.GetInt64(18),
                 CreatedAt = reader.GetDateTime(19),
+                GrindingJson = reader.IsDBNull(20) ? null : reader.GetString(20),
             });
         }
         return items;
@@ -376,6 +380,7 @@ public sealed class InventoryRepository : IInventoryRepository
             (short)i.Element, i.Durability, (long)i.DyeColor, (long)i.DyeColor2, (long)i.DyeColor3,
             (long)i.FxEnchantIndex, (long)i.EnchantReinforceId, (long)i.EnchantSeconds, i.CardsJson,
             i.SocketPunchersJson, i.Bound, i.AbilityValue is { } a ? (long)a : null,
+            i.GrindingJson,
         ];
         for (var n = 0; n < MutableColumns.Length; n++)
             cmd.Parameters.Add(new NpgsqlParameter("p" + n, MutableColumns[n].Type) { Value = values[n] ?? DBNull.Value });
