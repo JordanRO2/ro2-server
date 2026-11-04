@@ -47,9 +47,16 @@ public class QuickSlotRepository : IQuickSlotRepository
         var a = all.FirstOrDefault(s => s.Page == pageA && s.Slot == slotA);
         var b = all.FirstOrDefault(s => s.Page == pageB && s.Slot == slotB);
 
-        await ClearAsync(characterId, pageA, slotA);
-        await ClearAsync(characterId, pageB, slotB);
-        if (b is not null) { b.Page = pageA; b.Slot = slotA; await SetAsync(b); }
-        if (a is not null) { a.Page = pageB; a.Slot = slotB; await SetAsync(a); }
+        // Move each document to the other position by _id, in one round trip. Nothing is deleted, so a failure
+        // part-way can leave two entries on one position but never loses an entry (the old clear,clear,set,set
+        // did). A real all-or-nothing swap needs a transaction, i.e. a replica set; the deployment is standalone.
+        var ops = new List<WriteModel<CharacterQuickSlot>>(2);
+        if (a is not null)
+            ops.Add(new UpdateOneModel<CharacterQuickSlot>(Builders<CharacterQuickSlot>.Filter.Eq(s => s.Id, a.Id),
+                Builders<CharacterQuickSlot>.Update.Set(s => s.Page, pageB).Set(s => s.Slot, slotB)));
+        if (b is not null)
+            ops.Add(new UpdateOneModel<CharacterQuickSlot>(Builders<CharacterQuickSlot>.Filter.Eq(s => s.Id, b.Id),
+                Builders<CharacterQuickSlot>.Update.Set(s => s.Page, pageA).Set(s => s.Slot, slotA)));
+        if (ops.Count > 0) await _slots.BulkWriteAsync(ops);
     }
 }
