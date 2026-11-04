@@ -585,6 +585,11 @@ public static class PostgresSchema
         )
         """,
         """
+        ALTER TABLE characters
+            ADD COLUMN IF NOT EXISTS pro_job_level      smallint NOT NULL DEFAULT 0,
+            ADD COLUMN IF NOT EXISTS job_mastery_points bigint   NOT NULL DEFAULT 0
+        """,
+        """
         CREATE INDEX IF NOT EXISTS ix_characters_account_live ON characters (account_id) WHERE NOT is_deleted
         """,
         """
