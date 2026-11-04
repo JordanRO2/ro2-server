@@ -28,18 +28,30 @@ public static class CharacterStats
     }
 
     /// <summary>
+    /// The retail player HP curve at <paramref name="level"/>: the NpcLevelScaling <c>Base_HP</c> column (levels 1..N,
+    /// contiguous, ordered). Past the last level it extrapolates linearly from the last two rows; 0 for an empty table.
+    /// </summary>
+    public static long LevelBaseHp(IReadOnlyList<NpcLevelScaling> table, int level)
+    {
+        int n = table.Count;
+        if (n == 0) return 0;
+        if (level <= n || n == 1) return table[Math.Clamp(level, 1, n) - 1].Base_HP;
+        int slope = table[n - 1].Base_HP - table[n - 2].Base_HP;
+        return table[n - 1].Base_HP + (long)slope * (level - n);
+    }
+
+    /// <summary>
     /// A character's BASE (naked, no-gear) stats from its class <paramref name="pc"/> row, level and primaries,
     /// via the RO2 formula reconstructed from PCBaseStatus. <see cref="BaseStats.MaxHp"/> is 0 and the derived map
     /// empty when <paramref name="pc"/> is null (the class has no row); the caller then keeps its own fallback.
     /// </summary>
-    public static BaseStats ComputeBaseStats(PCBaseStatus? pc, int level, int str, int agi, int intel, int wis, int vit, int luk)
+    public static BaseStats ComputeBaseStats(PCBaseStatus? pc, IReadOnlyList<NpcLevelScaling> levelScaling, int level, int str, int agi, int intel, int wis, int vit, int luk)
     {
         if (pc is null)
             return new BaseStats(0, 0, new Dictionary<byte, int>());
 
         int lvl = Math.Max(1, level);
-        long basePool = (long)Math.Floor((double)pc.BaseHP * pc.BaseHPRate * pc.BaseHPRateValue);
-        long maxHp = basePool + (long)pc.BaseHPValue * (lvl - 1) + (long)pc.VitHPValue * vit;
+        long maxHp = LevelBaseHp(levelScaling, lvl) + (long)pc.VitHPValue * vit;
         long maxSp = (long)pc.WisSPValue * wis;
 
         var d = new Dictionary<byte, int>
@@ -98,12 +110,12 @@ public static class CharacterStats
     /// Max HP/SP add the flat trait-21/22 rows; Defense/Crit/Parry are naked-derived + the gear's flat (26/60/61);
     /// Vigor (62) and Pen (94) are gear-only. The host resolves the gear, the titles and the row and calls this.
     /// </summary>
-    public static EffectiveStats EffectivePlayerStats(Character c, EquipStats eq, PCBaseStatus? pcRow)
+    public static EffectiveStats EffectivePlayerStats(Character c, EquipStats eq, PCBaseStatus? pcRow, IReadOnlyList<NpcLevelScaling> levelScaling)
     {
         int P(int baseStat, byte traitType) => Math.Clamp(eq.Apply(traitType, baseStat), 0, ushort.MaxValue);
         int str = P(c.Str, 0), agi = P(c.Agi, 1), intel = P(c.Int, 2),
             wis = P(c.Wis, 3), vit = P(c.Vit, 4), luk = P(c.Luk, 5);
-        var bs = ComputeBaseStats(pcRow, c.Level, str, agi, intel, wis, vit, luk);
+        var bs = ComputeBaseStats(pcRow, levelScaling, c.Level, str, agi, intel, wis, vit, luk);
         // Trait 21 / 22 Kind-1 rows add flat to the class max, as on the sheet. A class with no row keeps its 0 max.
         uint maxHp = bs.MaxHp > 0 ? (uint)Math.Clamp((long)bs.MaxHp + eq.FlatOf(21), 0, uint.MaxValue) : bs.MaxHp;
         ushort maxSp = bs.MaxHp > 0 ? (ushort)Math.Clamp(bs.MaxSp + eq.FlatOf(22), 0, ushort.MaxValue) : bs.MaxSp;

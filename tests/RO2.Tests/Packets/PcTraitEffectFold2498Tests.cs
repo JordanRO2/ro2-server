@@ -144,7 +144,7 @@ public class PcTraitEffectFold2498Tests
     [Fact]
     public async Task WithNoRowItIsThePlainSheet()
     {
-        var store = await LoadStoreAsync("PCBaseStatus.json");
+        var store = await LoadStoreAsync("PCBaseStatus.json", "NpcLevelScaling.json");
         var character = Character();
 
         var body = EffectService.BuildPcTraitSheet(character, store, EquipStats.Empty, 700, 40,
@@ -156,12 +156,12 @@ public class PcTraitEffectFold2498Tests
  /// <summary>
  /// A primary-stat row goes through the class formula like a gear primary: +10% on STR/AGI/INT/WIS/VIT raises the
  /// primaries and, through them, max HP/SP and the derived stats. Effect 50603 takes STR from 201 to 221 and max HP
- /// from 6,213 to 6,346.
+ /// up by VitHPValue per extra VIT.
  /// </summary>
     [Fact]
     public async Task APrimaryRowCascadesThroughTheClassFormula()
     {
-        var store = await LoadStoreAsync("PCBaseStatus.json");
+        var store = await LoadStoreAsync("PCBaseStatus.json", "NpcLevelScaling.json");
         var character = Character();
         var modifiers = Percent((0, 1000.0), (1, 1000.0), (2, 1000.0), (3, 1000.0), (4, 1000.0));
 

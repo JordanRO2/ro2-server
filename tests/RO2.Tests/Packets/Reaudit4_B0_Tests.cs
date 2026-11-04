@@ -30,7 +30,7 @@ public sealed class Reaudit4_B0_Tests
     private static uint U32(byte[] body, int blobOffset) => BinaryPrimitives.ReadUInt32LittleEndian(body.AsSpan(3 + blobOffset));
 
     private static readonly Lazy<Task<GameDataStore>> SheetStore = new(() => LoadStoreAsync(
-        "Khara_Info.json", "KHARA_Title_Info.json", "TraitInfo.json", "PCBaseStatus.json"));
+        "Khara_Info.json", "KHARA_Title_Info.json", "TraitInfo.json", "PCBaseStatus.json", "NpcLevelScaling.json"));
 
     private static readonly Lazy<Task<GameDataStore>> QuestStore = new(() => LoadStoreAsync(
         "Quest_Info.json", "ItemInfo.json", "NPCInfo.json", "ZoneSpawn.json"));

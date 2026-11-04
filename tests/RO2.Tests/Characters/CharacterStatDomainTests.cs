@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using RO2.Characters.Domain;
 using RO2.GameData.Tables;
 using Xunit;
@@ -63,11 +65,28 @@ public class CharacterStatDomainTests
     [Fact]
     public void ComputeBaseStats_NullRow_IsAllZero()
     {
-        var bs = CharacterStats.ComputeBaseStats(null, 10, 1, 1, 1, 1, 1, 1);
+        var bs = CharacterStats.ComputeBaseStats(null, Curve, 10, 1, 1, 1, 1, 1, 1);
         Assert.Equal(0u, bs.MaxHp);
         Assert.Equal((ushort)0, bs.MaxSp);
         Assert.Empty(bs.Derived);
     }
+
+    private static readonly NpcLevelScaling[] Curve = Enumerable.Range(1, 50)
+        .Select(l => new NpcLevelScaling { Level = (byte)l, Base_HP = (ushort)Math.Floor(212.5 + 153.0 * (l - 1) / 3.92) }).ToArray();
+
+    // Retail oracle: naked class-4 Lv50, VIT 17 => HP 2329 / SP 90 (Base_HP(50)=2125 + VitHPValue 12 * 17).
+    [Fact]
+    public void ComputeBaseStats_Lv50NakedClass4_MatchesRetail()
+    {
+        var pc = new PCBaseStatus { VitHPValue = 12, WisSPValue = 15 };
+        var bs = CharacterStats.ComputeBaseStats(pc, Curve, 50, 1, 1, 1, 6, 17, 1);
+        Assert.Equal(2329u, bs.MaxHp);
+        Assert.Equal((ushort)90, bs.MaxSp);
+    }
+
+    [Fact]
+    public void LevelBaseHp_ExtrapolatesLinearlyPastTheTable()
+        => Assert.Equal(2125 + 2 * (2125 - Curve[48].Base_HP), CharacterStats.LevelBaseHp(Curve, 52));
 
     [Fact]
     public void ComputeBaseStats_AppliesHpFloorAndPrimaryCoefficients()
@@ -79,8 +98,8 @@ public class CharacterStatDomainTests
             APValue = 2, MAValue = 3, VitDefenseValue = 4, AgiCrticalValue = 5,
             StrParryValue = 6, IntParryValue = 7, AgiDodgeValue = 8, StrHitValue = 9, IntHitValue = 10,
         };
-        var bs = CharacterStats.ComputeBaseStats(pc, level: 10, str: 100, agi: 50, intel: 30, wis: 20, vit: 40, luk: 5);
-        Assert.Equal(1142u, bs.MaxHp);        // floor(1000*0.85*0.25)=212 + 50*(10-1) + 12*40
+        var bs = CharacterStats.ComputeBaseStats(pc, Curve, level: 10, str: 100, agi: 50, intel: 30, wis: 20, vit: 40, luk: 5);
+        Assert.Equal(1043u, bs.MaxHp);        // Base_HP(10)=563 + 12*40
         Assert.Equal((ushort)300, bs.MaxSp);  // 15*20
         Assert.Equal(200, bs.Derived[23]);    // AP   = 2*100
         Assert.Equal(90, bs.Derived[25]);     // MA   = 3*30

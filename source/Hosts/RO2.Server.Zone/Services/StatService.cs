@@ -207,7 +207,7 @@ public static class StatService
         // derivation in Character.Domain over the class row.
         var gear = ComputeEquipmentStats(store, equipped);
         var eq = KharaTitleTraits.Fold(gear, store, c.Id) ?? gear;
-        return CharacterStats.EffectivePlayerStats(c, eq, store.PcBaseStatus.GetValueOrDefault(c.Job));
+        return CharacterStats.EffectivePlayerStats(c, eq, store.PcBaseStatus.GetValueOrDefault(c.Job), store.NpcLevelScaling);
     }
 
     // PenetratedDef and EffectiveCooldown moved to RO2.Combats.Domain (DefenseRules, CooldownRules; Combat context, B4 S1-S2).
@@ -356,7 +356,7 @@ public static class StatService
 
     public static BaseStats ComputeBaseStats(
         GameDataStore store, byte job, int level, int str, int agi, int intel, int wis, int vit, int luk)
-        => CharacterStats.ComputeBaseStats(store.PcBaseStatus.GetValueOrDefault(job), level, str, agi, intel, wis, vit, luk);
+        => CharacterStats.ComputeBaseStats(store.PcBaseStatus.GetValueOrDefault(job), store.NpcLevelScaling, level, str, agi, intel, wis, vit, luk);
 
     /// <summary>
     /// Refunds all allocated bonus stat points: zeroes the per-stat allocation deltas and resets the
