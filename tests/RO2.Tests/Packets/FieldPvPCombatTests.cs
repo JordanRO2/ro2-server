@@ -146,6 +146,33 @@ public class FieldPvPCombatTests
         Assert.Equal(70.0, CombatRateRules.ParryRatePct(100, 1, 99));
     }
 
+    // PvP Damage Increase/Reduction (trait 71/72): percentage points applied as a final multiplier
+    // (a 300 line = +3%, 350 = +3.5% at the low end of the diminishing curve).
+    [Theory]
+    [InlineData(100, 0.0, 0.0, 100)]      // no modifier: unchanged
+    [InlineData(100, 3.0, 0.0, 103)]      // +3% increase
+    [InlineData(100, 0.0, 3.5, 97)]       // -3.5% reduction -> 96.5 -> 97 (away-from-zero)
+    [InlineData(100, 3.0, 3.5, 99)]       // 100 * 1.03 * 0.965 = 99.395 -> 99
+    [InlineData(100, 0.0, 100.0, 1)]      // full reduction floors at 1, never 0
+    [InlineData(100, 0.0, 150.0, 1)]      // over-100% reduction guarded (retail would wrap the u16 to 65535)
+    public void ApplyPvpDamageRate_FinalMultiplier(int damage, double increase, double reduction, int expected) =>
+        Assert.Equal(expected, CombatRateRules.ApplyPvpDamageRate(damage, increase, reduction));
+
+    // End-to-end through ResolvePvpHit: the cached per-player modifiers scale the resolved hit.
+    [DataFact]
+    public void ResolvePvpHit_AppliesAttackerIncreaseAndVictimReduction()
+    {
+        var players = new PlayerStateManager(new NoDirtySink());
+        var data = new GameDataStore();
+        var combat = new CombatService(players, new NpcStateManager(data, NullLogger<NpcStateManager>.Instance),
+            new BroadcastService(players, NullLogger<BroadcastService>.Instance), data, NullLogger<CombatService>.Instance);
+        // base damage STR x 2 = 100, no mitigation/crit/parry: pins the modifier scaling alone.
+        var attacker = new PlayerState { Str = 50, Level = 10, CombatPvpDamageIncrease = 3.0f };
+        var victim = new PlayerState { Level = 10, CombatDefense = 0, CombatPvpDamageReduction = 3.5f };
+        // 100 * 1.03 * 0.965 = 99.395 -> 99.
+        Assert.Equal((99, CombatService.DamageKindNormal), combat.ResolvePvpHit(attacker, victim, 0));
+    }
+
     // ---- the fought-out end on the wire ------------------------------------------------------------
 
     [DataFact]

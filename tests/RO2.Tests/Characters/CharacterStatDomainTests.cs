@@ -25,6 +25,26 @@ public class CharacterStatDomainTests
         Assert.Equal(expected, eq.Apply(statId, baseValue));
     }
 
+    // PvP Damage Increase/Reduction (trait 71/72) diminishing curve 100*raw/(raw+5500): pinned to the operator's
+    // "CLS Formula" table rows, including the exact 45% crossover at raw 4500 and the 100%-from-below asymptote.
+    [Theory]
+    [InlineData(0f, 0.0)]
+    [InlineData(300f, 5.1724)]
+    [InlineData(900f, 14.0625)]
+    [InlineData(1500f, 21.4286)]
+    [InlineData(4500f, 45.0)]       // crossover: equals the old linear raw/100
+    [InlineData(9600f, 63.5762)]
+    [InlineData(11400f, 67.4556)]
+    public void PvpDamageRatePct_MatchesTheClsCurve(float rawSum, double expectedPct) =>
+        Assert.Equal(expectedPct, CharacterStats.PvpDamageRatePct(rawSum), 3);
+
+    [Fact]
+    public void PvpDamageRatePct_AsymptotesBelow100_NeverReachesIt()
+    {
+        Assert.True(CharacterStats.PvpDamageRatePct(1_000_000f) < 100f);
+        Assert.True(CharacterStats.PvpDamageRatePct(1_000_000f) > 99f);
+    }
+
     [Fact]
     public void EquipStats_Empty_IsZeroes()
     {

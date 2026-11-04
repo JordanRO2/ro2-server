@@ -46,8 +46,9 @@ namespace RO2.Server.Zone.Services;
 /// hit that would take a player to 0 before it runs a death.
 /// </para>
 /// <para>
-/// OPEN: no data table carries a PvP damage modifier, so whether PvP damage is scaled is not established and the
-/// PvE formulas are used (CombatService.ResolvePvpHit). DoT-lethal ends (2495) cannot happen here, because this
+/// PvP damage: the AoV formulas plus the attacker/victim PvP Damage Increase/Reduction (trait 71/72) final-multiplier
+/// scaling, both in CombatService.ResolvePvpHit. DoT-lethal
+/// ends (2495) cannot happen here, because this
 /// server applies no skill effects to PCs; and no path of this server puts an Influence_Type 2 effect on a PC
 /// today (no ItemInfo row's Effect_ID_1 is one), so step 2 finds nothing to remove until one does. It is kept
 /// because it is part of the end sequence, not tied to any particular effect.

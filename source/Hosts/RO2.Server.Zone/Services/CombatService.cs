@@ -130,8 +130,11 @@ public class CombatService
     /// also parried; that precedence is this server's choice.
     /// </para>
     /// <para>
-    /// OPEN: no data table carries a PvP damage modifier (only Map_PK, PvP_Point and Skill_Table_Base's Battle_*
-    /// columns exist), so whether PvP damage is scaled is not established; these are the PvE formulas.
+    /// PvP damage modifier: the attacker's PvP Damage Increase (trait 71) and the victim's PvP Damage Reduction
+    /// (trait 72) scale the resolved hit as a FINAL multiplier (<see cref="CombatRateRules.ApplyPvpDamageRate"/>).
+    /// Everything else (base damage, defence mitigation, crit, parry) is the shared AoV formula. Retail runs the
+    /// summed rate through a diminishing-returns curve (not yet pinned) and stores the result in a u16; the
+    /// increase/reduction here are the near-linear low-end of that curve. See CharacterStats.EffectivePlayerStats.
     /// </para>
     /// </remarks>
     public (int Damage, byte Kind) ResolvePvpHit(PlayerState attacker, PlayerState victim, uint skillId)
@@ -139,6 +142,7 @@ public class CombatService
         var (damage, hitKind) = HitResolution.ResolvePvpHit(
             CalculateBaseDamage(attacker, skillId), victim.CombatDefense, attacker.CombatPen, attacker.Level,
             victim.Level, attacker.CombatCrit, victim.CombatParry, SharedRoller.Instance);
+        damage = CombatRateRules.ApplyPvpDamageRate(damage, attacker.CombatPvpDamageIncrease, victim.CombatPvpDamageReduction);
         return (damage, MapKind(hitKind));
     }
 

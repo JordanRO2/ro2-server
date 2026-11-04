@@ -124,6 +124,20 @@ public static class CharacterStats
         int crit = bs.Derived.GetValueOrDefault((byte)60) + eq.FlatOf(60);
         int parry = bs.Derived.GetValueOrDefault((byte)61) + eq.FlatOf(61);
         int pen = eq.FlatOf(94);
-        return new EffectiveStats(str, agi, intel, wis, vit, luk, maxHp, maxSp, defense, vigor, crit, parry, pen);
+        // PvP Damage Increase (71) / PvP Damage Reduction (72): sum the RAW trait values across gear (PercentOf
+        // divided each line by 100, so x100 recovers the raw sum), then run each through the diminishing curve.
+        float pvpInc = PvpDamageRatePct(eq.PercentOf(71) * 100f);
+        float pvpRed = PvpDamageRatePct(eq.PercentOf(72) * 100f);
+        return new EffectiveStats(str, agi, intel, wis, vit, luk, maxHp, maxSp, defense, vigor, crit, parry, pen, pvpInc, pvpRed);
     }
+
+    /// <summary>
+    /// PvP Damage Increase / Reduction (trait 71 / 72) diminishing-returns curve: converts the summed RAW gear stat
+    /// to a percent, <c>100·raw/(raw + 5500)</c> (= <c>raw/(0.01·raw + 55)</c>). It is above the old linear
+    /// <c>raw/100</c> below raw 4500 (crossover at exactly 45%) and below it after, and asymptotes at 100% FROM
+    /// BELOW, so PvP damage is never actually capped yet practically never reaches 100% (raw 11400 = 67.46%). The
+    /// shape matches the AoV Defense rate's 0.01 coefficient (both top out at 100%). Operator "CLS Formula",
+    /// verified exact against its full 0..11400 table.
+    /// </summary>
+    public static float PvpDamageRatePct(float rawSum) => rawSum <= 0f ? 0f : 100f * rawSum / (rawSum + 5500f);
 }
