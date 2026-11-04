@@ -64,6 +64,7 @@ public class InventoryRepository : IInventoryRepository
     public async Task<IReadOnlyList<InventoryItem>> GetEquipmentAsync(uint characterId)
     {
         return await _items.Find(i => i.CharacterId == characterId && i.StorageType == StorageWorn)
+            .SortBy(i => i.Slot)
             .ToListAsync();
     }
 
