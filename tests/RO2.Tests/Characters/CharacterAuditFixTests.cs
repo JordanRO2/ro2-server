@@ -9,6 +9,26 @@ namespace RO2.Tests.Characters;
 /// <summary>Regression pins for the 2026-11-03 Character audit fixes ([10] job exp, [11] name regex, [32] allow-review).</summary>
 public class CharacterAuditFixTests
 {
+    private class Recorder : DispatchProxy
+    {
+        public readonly List<string> Calls = [];
+        public bool Throw;
+
+        protected override object? Invoke(MethodInfo? m, object?[]? args)
+        {
+            Calls.Add(m!.Name);
+            return Throw ? Task.FromException(new IOException("db down")) : Task.CompletedTask;
+        }
+    }
+
+    private static (ICharacterRepository repo, Recorder rec) NewRepo(bool fail = false)
+    {
+        var repo = DispatchProxy.Create<ICharacterRepository, Recorder>();
+        var rec = (Recorder)(object)repo;
+        rec.Throw = fail;
+        return (repo, rec);
+    }
+
     // ---- [11] ----
 
     [Theory]
@@ -20,5 +40,36 @@ public class CharacterAuditFixTests
 
     [Fact]
     public void Name_Plain_IsAccepted() => Assert.Equal(NameRefusal.None, NameRules.Check("Abc_def1", []).refusal);
+
+    // ---- [32] ----
+
+    private sealed class Gateway : IPlayerSessionGateway
+    {
+        public Character? Snapshot { get; init; }
+        public ushort BindIndex { get; set; }
+        public string Name { get; set; } = "";
+        public byte Gender { set { } }
+    }
+
+    [Fact]
+    public async Task AllowAnyoneReview_AnnounceThrows_StillPersists_AndTheAnnounceErrorPropagates()
+    {
+        var (repo, rec) = NewRepo();
+        var gw = new Gateway { Snapshot = new Character() };
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            SetAllowAnyoneReviewFlow.ExecuteAsync(repo, gw, 7, true, () => throw new InvalidOperationException("session closed")));
+
+        Assert.Equal([nameof(ICharacterRepository.UpdateAllowAnyoneReviewAsync)], rec.Calls);
+        Assert.True(gw.Snapshot!.AllowAnyoneReview);
+    }
+
+    [Fact]
+    public async Task AllowAnyoneReview_WriteFails_ReturnsTheError()
+    {
+        var (repo, _) = NewRepo(fail: true);
+        var ex = await SetAllowAnyoneReviewFlow.ExecuteAsync(repo, new Gateway(), 7, true, () => Task.CompletedTask);
+        Assert.IsType<IOException>(ex);
+    }
 
 }

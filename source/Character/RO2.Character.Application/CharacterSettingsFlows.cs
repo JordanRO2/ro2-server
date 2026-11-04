@@ -11,7 +11,7 @@ public static class SetAllowAnyoneReviewFlow
 {
     /// <summary>
     /// Mirrors <paramref name="allow"/> onto the session snapshot, runs <paramref name="announce"/> (the reply
-    /// and the nearby broadcast), then persists the flag. Returns the exception the write swallowed, or null.
+    /// and the nearby broadcast), then persists the flag even when the announce throws (which then propagates). Returns the exception the write swallowed, or null.
     /// </summary>
     /// <param name="repo">The character repository the setting is persisted to.</param>
     /// <param name="gateway">The live session whose snapshot is mirrored.</param>
@@ -25,10 +25,15 @@ public static class SetAllowAnyoneReviewFlow
         if (gateway.Snapshot is { } snapshot)
             snapshot.AllowAnyoneReview = allow;
 
-        await announce();
-
-        try { await repo.UpdateAllowAnyoneReviewAsync(characterId, allow, ct); return null; }
-        catch (Exception ex) { return ex; }
+        // finally: a failed reply/broadcast must not skip the write; its exception still propagates afterwards.
+        Exception? writeError = null;
+        try { await announce(); }
+        finally
+        {
+            try { await repo.UpdateAllowAnyoneReviewAsync(characterId, allow, ct); }
+            catch (Exception ex) { writeError = ex; }
+        }
+        return writeError;
     }
 }
 
