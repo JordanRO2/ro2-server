@@ -14,7 +14,7 @@ public enum PayOutcome
     /// <summary>No Find_Dungeon_Reward row for the level: nothing paid, no 2816.</summary>
     NoRow,
 
-    /// <summary>The bag was full and no reward mail could be stored: nothing paid, no 2816.</summary>
+    /// <summary>Nothing paid, no 2816: the bag was full and no reward mail could be stored, or every bag write failed.</summary>
     NotPaid,
 
     /// <summary>The bag was full; the items were mailed, the money credited, the 2816 sent in state Mailed.</summary>
@@ -66,6 +66,7 @@ public sealed class PayFinderRun(IInventoryRepository inventory, ISendMail mails
             return new PayFinderRunResult(PayOutcome.Mailed, level, row, items.Count, mailed, skipped);
         }
 
+        int landedTotal = 0;
         foreach (var landing in plan)
         {
             var landed = new List<InventoryItem>(1);
@@ -89,8 +90,12 @@ public sealed class PayFinderRun(IInventoryRepository inventory, ISendMail mails
                 if (landed.Count == 0) continue;
             }
 
+            landedTotal += landed.Count;
             await publisher.ItemLanded(characterId, landing.ItemId, landing.Count, landed);
         }
+
+        // Every landing write failed: nothing is in the bag, so neither the money nor an InBag 2816 may go out.
+        if (plan.Count > 0 && landedTotal == 0) return new PayFinderRunResult(PayOutcome.NotPaid, level, row, items.Count, 0, skipped);
 
         CreditMoney(wallet, row.Money);
         await publisher.Completed(characterId, list.List_ID, CompleteGiftState.InBag);

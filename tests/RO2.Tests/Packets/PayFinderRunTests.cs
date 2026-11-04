@@ -29,12 +29,12 @@ public sealed class PayFinderRunTests
         public readonly List<string> Events = [];
     }
 
-    private sealed class Inv(Log log, IReadOnlyList<InventoryItem> owned) : IInventoryRepository
+    private sealed class Inv(Log log, IReadOnlyList<InventoryItem> owned, bool failWrites = false) : IInventoryRepository
     {
         public Task<IReadOnlyList<InventoryItem>> GetByCharacterAsync(uint characterId) => Task.FromResult(owned);
         public Task<IReadOnlyList<InventoryItem>> GetEquipmentAsync(uint characterId) => Task.FromResult<IReadOnlyList<InventoryItem>>([]);
         public Task<InventoryItem?> GetByIdAsync(ulong id) => Task.FromResult<InventoryItem?>(null);
-        public Task AddItemAsync(InventoryItem item) { log.Events.Add($"add {item.ItemId}x{item.Count}"); return Task.CompletedTask; }
+        public Task AddItemAsync(InventoryItem item) { if (failWrites) throw new InvalidOperationException("db down"); log.Events.Add($"add {item.ItemId}x{item.Count}"); return Task.CompletedTask; }
         public Task RemoveItemAsync(ulong itemId) => Task.CompletedTask;
         public Task UpdateItemAsync(InventoryItem item) { log.Events.Add($"update {item.ItemId}x{item.Count}"); return Task.CompletedTask; }
         public Task<ulong> GetNextIdAsync() => Task.FromResult(7UL);
@@ -68,8 +68,8 @@ public sealed class PayFinderRunTests
         { log.Events.Add($"2816 {listId} {state}"); return Task.CompletedTask; }
     }
 
-    private static Task<PayFinderRunResult> Pay(Log log, IReadOnlyList<InventoryItem> owned, bool mailFails = false)
-        => new PayFinderRun(new Inv(log, owned), new Mail(log, mailFails), new Publisher(log), NullLogger<PayFinderRun>.Instance)
+    private static Task<PayFinderRunResult> Pay(Log log, IReadOnlyList<InventoryItem> owned, bool mailFails = false, bool failWrites = false)
+        => new PayFinderRun(new Inv(log, owned, failWrites), new Mail(log, mailFails), new Publisher(log), NullLogger<PayFinderRun>.Instance)
             .PayAsync(7, "pc", 50, 0, List, new Wallet(log), Categories, Rewards, Templates);
 
     [Fact]
@@ -102,6 +102,15 @@ public sealed class PayFinderRunTests
         var full = Enumerable.Range(0, 20)
             .Select(i => new InventoryItem { Id = (ulong)i + 1, CharacterId = 7, ItemId = 60000000u + (uint)i, Count = 1, Slot = (short)i }).ToList();
         var result = await Pay(log, full, mailFails: true);
+        Assert.Equal(PayOutcome.NotPaid, result.Outcome);
+        Assert.Empty(log.Events);
+    }
+
+    [Fact]
+    public async Task BagPath_WhenEveryLandingWriteFails_PaysNothing_AndSendsNo2816()
+    {
+        var log = new Log();
+        var result = await Pay(log, [], failWrites: true);
         Assert.Equal(PayOutcome.NotPaid, result.Outcome);
         Assert.Empty(log.Events);
     }
