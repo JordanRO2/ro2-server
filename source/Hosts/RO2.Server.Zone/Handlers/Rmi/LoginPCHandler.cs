@@ -212,21 +212,13 @@ public class LoginPCHandler : NetworkZoneRmiBase
         // the only per-character state is the allocation, which is persisted separately. This keeps every
         // character correct with no migration (characters made under the old hardcoded stats — already
         // self-healed to base with Bonus*=0 — stay correct). Bonus points are spent via RMI 1493
-        // (UseBonusStatPointHandler); unspent = BonusStatPointsEarned(level) − sum(Bonus*). If the stored
-        // allocation somehow exceeds what the level earned (corruption / a level rollback), clamp it away so
-        // the character can never carry more than it earned.
+        // (UseBonusStatPointHandler); unspent = BonusStatPointsEarned(level) − sum(Bonus*), clamped at 0 by the
+        // head/sheet. The stored allocation is NEVER trimmed here: BonusStatPointsEarned is level-only, while the
+        // real pool also grows with mastery and purchases (retail Lv50 characters hold up to 375), so an
+        // allocation above it is valid data. The pool is enforced at allocation time (BonusStatAllocationFlow).
         bool statsChanged = false;
         if (StatService.ClassBasePrimaries(store, character.Job) is { } cbp)
         {
-            int earned = CharacterStats.BonusStatPointsEarned(character.Level);
-            int spent = character.BonusStr + character.BonusAgi + character.BonusInt
-                      + character.BonusWis + character.BonusVit + character.BonusLuk;
-            if (spent > earned)
-            {
-                // Over-allocated (should not happen): drop all bonuses back into the pool.
-                character.BonusStr = character.BonusAgi = character.BonusInt =
-                    character.BonusWis = character.BonusVit = character.BonusLuk = 0;
-            }
             int nStr = cbp.str + character.BonusStr, nAgi = cbp.agi + character.BonusAgi,
                 nInt = cbp.intel + character.BonusInt, nWis = cbp.wis + character.BonusWis,
                 nVit = cbp.vit + character.BonusVit, nLuk = cbp.luk + character.BonusLuk;
