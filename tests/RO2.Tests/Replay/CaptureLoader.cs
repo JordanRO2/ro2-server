@@ -101,6 +101,7 @@ internal static class CaptureLoader
             : [];
     }
 
-    public const string DefaultDir =
-        @"C:\Users\Darkr\Proyectos\ReverseEngineering\ragnarok-online-2\clients\ClientArchive\b303-2026-07-11-Optimizations\SHIPPING";
+    /// <summary>No built-in default: set <c>RO2_CAPTURE_DIR</c> to the folder holding the RO2Mods_Capture_*.jsonl files.
+    /// Empty here on purpose so the capture tests skip cleanly when no corpus is present (e.g. CI).</summary>
+    public const string DefaultDir = "";
 }

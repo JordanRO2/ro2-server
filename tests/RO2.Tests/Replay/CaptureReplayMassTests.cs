@@ -26,8 +26,9 @@ public sealed class MassReplayFactAttribute : FactAttribute
 
 internal static class MassSessions
 {
-    public const string DefaultDir =
-        @"C:\Users\Darkr\Proyectos\ReverseEngineering\ragnarok-online-2\server-ragnarok-online-2\captures\sessions";
+    // No built-in default: set RO2_CAPTURE_SESSIONS_DIR to the per-session split folder. Empty so the mass test skips
+    // cleanly when no corpus is present (e.g. CI).
+    public const string DefaultDir = "";
 
     public static string Dir => Environment.GetEnvironmentVariable("RO2_CAPTURE_SESSIONS_DIR") is { Length: > 0 } d ? d : DefaultDir;
     public static string ManifestPath => Path.Combine(Dir, "sessions_manifest.json");
