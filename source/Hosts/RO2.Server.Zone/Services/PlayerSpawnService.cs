@@ -8,6 +8,7 @@ using RO2.GameData;
 using RO2.Persistence.Mongo.Persistence;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
+using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
@@ -58,9 +59,6 @@ public class PlayerSpawnService
     public async Task NotifyPlayerSpawnAsync(PlayerState newPlayer)
     {
         var audience = SpawnVisibilityUseCase.AudienceOf(newPlayer.MapId, newPlayer.SessionId);
-        var existingPlayers = SpawnVisibilityUseCase
-            .Observers(audience, _playerManager.GetPlayersOnMap(newPlayer.MapId), p => p.MapId, p => p.SessionId)
-            .ToList();
 
         using var scope = _scopeFactory.CreateScope();
         var invRepo = scope.ServiceProvider.GetRequiredService<IInventoryRepository>();
@@ -69,6 +67,15 @@ public class PlayerSpawnService
 
         var store = scope.ServiceProvider.GetRequiredService<GameDataStore>();
         var newSession = _broadcast.GetSession(newPlayer.SessionId);
+
+        // Only the players inside the newcomer's area-of-interest box are exchanged; the rest come into view as it walks.
+        // Fall back to every observer when the newcomer's position is not yet known (the box would exclude everyone).
+        var half = AoiRules.HalfWidth(store.GetMap(newPlayer.MapId)?.Map_Type ?? 0);
+        var boxed = newPlayer.X != 0f || newPlayer.Y != 0f;
+        var existingPlayers = SpawnVisibilityUseCase
+            .Observers(audience, _playerManager.GetPlayersOnMap(newPlayer.MapId), p => p.MapId, p => p.SessionId)
+            .Where(p => !boxed || AoiRules.InView(newPlayer.X, newPlayer.Y, p.X, p.Y, half))
+            .ToList();
 
         var newcomerSpawn = await BuildSpawnBlobAsync(newPlayer, invRepo);
         if (newcomerSpawn is { } newcomer)
@@ -124,8 +131,114 @@ public class PlayerSpawnService
             }
         }
 
+        // Seed the per-viewer sets for every pair the loops above exchanged. TryEnterPair is atomic, so a peer that
+        // walked into the newcomer during this call is already paired and is not seeded (or sent) twice here.
+        foreach (var existing in existingPlayers) TryEnterPair(newPlayer, existing);
+
         _logger.LogInformation("Player '{Name}' (eid 0x{Eid:X8}) spawned on map {MapId}; exchanged OnPC_In with {Count} existing players.",
             newPlayer.Name, newPlayer.EntityId, newPlayer.MapId, existingPlayers.Count);
+    }
+
+    /// <summary>
+    /// Re-evaluates which players are inside the mover's area-of-interest box and exchanges the difference since the last
+    /// evaluation: a two-way spawn (OnPC_In 2504 + view data + speed + guild view) for each pair that entered view, and a
+    /// two-way OnPC_Out (2505) for each pair that left. Membership is symmetric, so each pair is flipped once, atomically
+    /// under both players' AoiGate (ordered by EntityId); the thread that wins the flip sends, the other skips.
+    /// </summary>
+    public async Task RecomputeVisiblePcsAsync(ProudSession moverSession, PlayerState mover)
+    {
+        using var scope = _scopeFactory.CreateScope();
+        var store = scope.ServiceProvider.GetRequiredService<GameDataStore>();
+        var mapData = store.GetMap(mover.MapId);
+        if (mapData == null) return;
+        var half = AoiRules.HalfWidth(mapData.Map_Type);
+
+        var onMap = SpawnVisibilityUseCase
+            .Observers(SpawnVisibilityUseCase.AudienceOf(mover.MapId, mover.SessionId),
+                _playerManager.GetPlayersOnMap(mover.MapId), p => p.MapId, p => p.SessionId)
+            .ToList();
+        var onMapIds = onMap.Select(p => p.EntityId).ToHashSet();
+        var inBoxIds = onMap.Where(p => AoiRules.InView(mover.X, mover.Y, p.X, p.Y, half)).Select(p => p.EntityId).ToHashSet();
+
+        HashSet<uint> visible;
+        lock (mover.AoiGate)
+        {
+            // Drop peers that left the map entirely (their own 2505 came from the despawn path).
+            mover.VisiblePcs.RemoveWhere(h => !onMapIds.Contains(h));
+            visible = mover.VisiblePcs.ToHashSet();
+        }
+        var enters = onMap.Where(p => inBoxIds.Contains(p.EntityId) && !visible.Contains(p.EntityId)).ToList();
+        var leaves = onMap.Where(p => visible.Contains(p.EntityId) && !inBoxIds.Contains(p.EntityId)).ToList();
+        if (enters.Count == 0 && leaves.Count == 0) return;
+
+        var invRepo = scope.ServiceProvider.GetRequiredService<IInventoryRepository>();
+        var guildsReady = await EnsureGuildsLoadedAsync(scope.ServiceProvider);
+
+        foreach (var peer in enters)
+        {
+            if (!TryEnterPair(mover, peer)) continue;   // the peer's own move already paired us; it sends
+            await ShowPcAsync(moverSession, peer, invRepo, store, guildsReady);
+            if (_broadcast.GetSession(peer.SessionId) is { } peerSession)
+                await ShowPcAsync(peerSession, mover, invRepo, store, guildsReady);
+        }
+        foreach (var peer in leaves)
+        {
+            if (!TryLeavePair(mover, peer)) continue;
+            await moverSession.SendInternalRmiAsync(ZoneS2COpcodes.OnPC_Out, BuildActorOutList(peer.EntityId, new[] { peer.EntityId }));
+            if (_broadcast.GetSession(peer.SessionId) is { } peerSession)
+                await peerSession.SendInternalRmiAsync(ZoneS2COpcodes.OnPC_Out, BuildActorOutList(mover.EntityId, new[] { mover.EntityId }));
+        }
+    }
+
+    /// <summary>Shows one <paramref name="subject"/> to one viewer: the ordered spawn exchange (2504/2315/2497/2591).</summary>
+    private async Task ShowPcAsync(ProudSession viewerSession, PlayerState subject, IInventoryRepository invRepo, GameDataStore store, bool guildsReady)
+    {
+        if (await BuildSpawnBlobAsync(subject, invRepo) is not { } spawn) return;
+        foreach (var step in SpawnVisibilityUseCase.ExchangeSteps(guildsReady))
+        {
+            var body = step switch
+            {
+                SpawnViewStep.PcIn => spawn.Blob,
+                SpawnViewStep.PcViewData => ActorStatePackets.BuildOnPCViewData2315(subject, spawn.Character, spawn.Equipment, _emblems),
+                SpawnViewStep.MoveSpeed => _broadcast.GetSession(subject.SessionId) is { } ss
+                    ? ActorMoveSpeed.BuildFor(ss, subject, store)
+                    : TraitPackets.BuildActorMoveSpeed2497(subject.EntityId, TraitPackets.PcModalWorldEntrySpeed),
+                _ => PcViewInfoPackets.BuildFor(subject, _emblems),
+            };
+            await viewerSession.SendInternalRmiAsync(OpcodeOf(step), body);
+        }
+    }
+
+    /// <summary>
+    /// Atomically marks <paramref name="a"/> and <paramref name="b"/> as seeing each other, under both AoiGates taken in
+    /// EntityId order (deadlock-free, no await held). Returns false when they were already paired, so the caller does not
+    /// send the exchange twice when both players cross at once.
+    /// </summary>
+    private static bool TryEnterPair(PlayerState a, PlayerState b)
+    {
+        var (first, second) = a.EntityId < b.EntityId ? (a, b) : (b, a);
+        lock (first.AoiGate)
+        lock (second.AoiGate)
+        {
+            if (a.VisiblePcs.Contains(b.EntityId)) return false;
+            a.VisiblePcs.Add(b.EntityId);
+            b.VisiblePcs.Add(a.EntityId);
+            return true;
+        }
+    }
+
+    /// <summary>The inverse of <see cref="TryEnterPair"/>: drops the pair; false when they were not paired.</summary>
+    private static bool TryLeavePair(PlayerState a, PlayerState b)
+    {
+        var (first, second) = a.EntityId < b.EntityId ? (a, b) : (b, a);
+        lock (first.AoiGate)
+        lock (second.AoiGate)
+        {
+            if (!a.VisiblePcs.Contains(b.EntityId)) return false;
+            a.VisiblePcs.Remove(b.EntityId);
+            b.VisiblePcs.Remove(a.EntityId);
+            return true;
+        }
     }
 
  /// <summary>The opcode of one message of the spawn exchange; the step order comes from the World spawn-visibility rule.</summary>

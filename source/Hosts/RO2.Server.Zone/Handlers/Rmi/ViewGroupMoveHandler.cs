@@ -151,29 +151,28 @@ public class ViewGroupMoveHandler : ZoneRmiHandlerBase<ViewGroupMoveHandler>
         // CULLS the remote actor (avatar vanishes as soon as it moves).
         var body = BuildMoveBody(player.EntityId, payload.Span);
 
-        // NO self-echo. The client's 2750 handler wraps its entire body in
-        // `if (bodyHandle != localPlayerHandle)`, so a 2750 carrying the
-        // receiver's OWN handle is a no-op on the local avatar. Echoing to the mover would only waste a packet per move.
-        // The mover's own movement and
-        // its run/idle animation are entirely client-side prediction; the server cannot drive them.
-        //
-        // Relay the body to OTHER players on the map (multiplayer sync). The handle MUST be
-        // the mover's EntityId (the id other clients know this actor by from OnPC_In 2504) - NOT
-        // SessionId - or the move can't bind to the spawned avatar.
-        await Broadcast.BroadcastToNearbyAsync(player, ZoneS2COpcodes.ViewGroupPCMoveTo,
-            writer => writer.WriteBytes(body));
-
-        // Area-of-interest: once the player has moved far enough since the last evaluation, re-check which NPCs are in
-        // range and send the enters/leaves. The step is well under the view half-width, so no crossing is missed.
-        // NpcSpawnService is always registered in the real Zone (map-load NPC spawn uses it before any move); it is
-        // optional here only so a minimal relay-focused test rig need not wire its whole dependency graph.
-        if (services.GetService<NpcSpawnService>() is { } npcSpawn
-            && MathF.Max(MathF.Abs(player.X - player.AoiAnchorX), MathF.Abs(player.Y - player.AoiAnchorY)) >= AoiRules.RecomputeStep)
+        // Area-of-interest: once the player has moved far enough since the last evaluation, re-check which NPCs and
+        // players are in range and send the enters/leaves. Done before the relay so a peer that just left is dropped
+        // from the visible set below. The step is well under the view half-width, so no crossing is missed.
+        // The services are always registered in the real Zone (map load uses them before any move); they are optional
+        // here only so a minimal relay-focused test rig need not wire their whole dependency graphs.
+        if (MathF.Max(MathF.Abs(player.X - player.AoiAnchorX), MathF.Abs(player.Y - player.AoiAnchorY)) >= AoiRules.RecomputeStep)
         {
             player.AoiAnchorX = player.X;
             player.AoiAnchorY = player.Y;
-            await npcSpawn.RecomputeVisibleNpcsAsync(session, player);
+            if (services.GetService<NpcSpawnService>() is { } npcSpawn)
+                await npcSpawn.RecomputeVisibleNpcsAsync(session, player);
+            if (services.GetService<PlayerSpawnService>() is { } pcSpawn)
+                await pcSpawn.RecomputeVisiblePcsAsync(session, player);
         }
+
+        // NO self-echo. The client's 2750 handler wraps its entire body in `if (bodyHandle != localPlayerHandle)`, so a
+        // 2750 carrying the receiver's OWN handle is a no-op on the local avatar; the mover's own movement and animation
+        // are client-side prediction. Relay the body to the players whose area-of-interest box holds the mover (its own
+        // VisiblePcs, which is symmetric). The handle MUST be the mover's EntityId (the id other clients know it by from
+        // OnPC_In 2504) - NOT SessionId - or the move can't bind to the spawned avatar.
+        await Broadcast.BroadcastToVisiblePcsAsync(player, ZoneS2COpcodes.ViewGroupPCMoveTo,
+            writer => writer.WriteBytes(body));
 
         if (channelToCancel != 0)
         {

@@ -63,6 +63,30 @@ public class BroadcastService
         }
     }
 
+    /// <summary>
+    /// Sends to the players inside <paramref name="viewer"/>'s area-of-interest box (its <see cref="PlayerState.VisiblePcs"/>).
+    /// Area-of-interest membership is symmetric, so these are exactly the players who can see the viewer; used to scope a
+    /// mover's 2750 relay to the peers that actually have its avatar.
+    /// </summary>
+    public async Task BroadcastToVisiblePcsAsync(PlayerState viewer, ushort opcode, Action<PacketWriter> writeAction)
+    {
+        if (_server == null) return;
+
+        uint[] handles;
+        lock (viewer.AoiGate) handles = viewer.VisiblePcs.ToArray();
+        if (handles.Length == 0) return;
+
+        var payload = BuildPayload(writeAction);
+        var visible = handles.ToHashSet();
+        foreach (var player in _playerManager.GetPlayersOnMap(viewer.MapId))
+        {
+            if (!visible.Contains(player.EntityId)) continue;
+            var session = _server.GetSession(player.SessionId);
+            if (session != null)
+                await session.SendInternalRmiAsync(opcode, payload);
+        }
+    }
+
     public async Task BroadcastToMapAsync(uint mapId, ushort opcode, Action<PacketWriter> writeAction, uint? excludeSessionId = null)
     {
         if (_server == null) return;

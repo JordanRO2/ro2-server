@@ -483,8 +483,17 @@ public class PlayerState : IWallet
     // written on this player's own session thread (and, for NPC-driven moves, under the map's tick).
     public HashSet<uint> VisibleNpcs { get; } = new();
 
-    // The position at which VisibleNpcs was last recomputed; the move handler re-evaluates once the player has moved
-    // AoiRules.RecomputeStep from here.
+    // Area-of-interest: the PC handles (EntityId) currently in this viewer's view box. A pair's membership is flipped
+    // atomically under both players' AoiGate (ordered by EntityId to avoid deadlock), so a double-send is impossible
+    // when two players cross at once.
+    public HashSet<uint> VisiblePcs { get; } = new();
+
+    // Guards this player's VisibleNpcs/VisiblePcs when another thread (a crossing player's move, an NPC tick) mutates
+    // them. Taken low-EntityId-first when two are needed; never held across an await.
+    public object AoiGate { get; } = new();
+
+    // The position at which the visible sets were last recomputed; the move handler re-evaluates once the player has
+    // moved AoiRules.RecomputeStep from here.
     public float AoiAnchorX { get; set; }
     public float AoiAnchorY { get; set; }
 

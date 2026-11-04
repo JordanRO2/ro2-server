@@ -74,6 +74,10 @@ public sealed class MovementAndItemOpsHardeningTests
         var observer = new PlayerState { CharacterId = 2, SessionId = net.Sessions[1].SessionId, EntityId = 0x21u, MapId = 1100 };
         players.AddPlayer(mover.SessionId, mover);
         players.AddPlayer(observer.SessionId, observer);
+        // The move relay now scopes to the mover's area-of-interest; mark the observer as in view so the 97-byte frame
+        // reaches it (this test asserts the length gate, not the audience).
+        mover.VisiblePcs.Add(observer.EntityId);
+        observer.VisiblePcs.Add(mover.EntityId);
         var broadcast = new BroadcastService(players, NullLogger<BroadcastService>.Instance);
         broadcast.SetServer(net.Server);
         var scopes = new ServiceCollection()
