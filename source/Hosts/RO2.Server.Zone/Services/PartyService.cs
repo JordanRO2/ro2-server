@@ -96,6 +96,8 @@ public partial class PartyService
     private readonly ConcurrentDictionary<uint, PartyState> _parties = new();
     private readonly ConcurrentDictionary<uint, uint> _playerToParty = new();
     private uint _nextPartyId = 1;
+    /// <summary>Serializes party creation: the inviter has no party Gate yet when the first accept creates it.</summary>
+    private readonly object _partyCreationGate = new();
 
  /// <summary>Highest detached member key. Detached keys count down from here, so they do not clash with session IDs.</summary>
     private const uint DetachedKeyCeiling = 0x00FF_FFFF;

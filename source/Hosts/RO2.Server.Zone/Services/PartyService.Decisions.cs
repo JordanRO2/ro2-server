@@ -328,46 +328,66 @@ public partial class PartyService
         var joinerGid = MemberGid(joiner);
         var inviterParty = GetPlayerParty(inviter.SessionId);
 
-        PartyOutcome outcome;
-        IReadOnlyList<PartyEffect> effects;
+        PartyOutcome outcome = default!;
+        IReadOnlyList<PartyEffect> effects = default!;
         PartyState? party = inviterParty;
-        Dictionary<ulong, uint> keys;
-        lock (inviterParty?.Gate ?? new object())
+        Dictionary<ulong, uint> keys = default!;
+        var retryJoinExisting = false;
+        // A partyless inviter has no Gate yet, so creations serialize on _partyCreationGate (not a throwaway lock).
+        lock (inviterParty?.Gate ?? _partyCreationGate)
         {
-            var snap = inviterParty != null ? Snapshot(inviterParty) : null;
-            // An offline member of the party with this GID is taken back in place by re-keying it.
-            var staleKey = snap != null && snap.KeyOf.TryGetValue(joinerGid, out var key) && !snap.Online.Contains(joinerGid) ? key : 0u;
-            var now = _clock.UtcNow;
-            (outcome, effects) = PartyAggregate.DecideJoin(snap?.Aggregate,
-                inviterParty == null ? Interlocked.Increment(ref _nextPartyId) : 0, inviterGid, inviter.Name, joinerGid, joiner.Name,
-                _playerToParty.ContainsKey(joiner.SessionId), invitationPartyId, snap?.Online ?? new HashSet<ulong>(), now);
-
-            keys = new Dictionary<ulong, uint> { [inviterGid] = inviter.SessionId, [joinerGid] = joiner.SessionId };
-            if (outcome.Result is PartyResult.Created or PartyResult.Done)
+            // Another accept created the inviter's party while we waited: leave this lock and join it under its Gate.
+            if (inviterParty == null && GetPlayerParty(inviter.SessionId) != null)
+                retryJoinExisting = true;
+            else
             {
-                if (outcome.Result == PartyResult.Created)
-                {
-                    party = new PartyState
-                    {
-                        PartyId = outcome.Party!.Id, LeaderSessionId = inviter.SessionId, FounderGid = inviterGid, CreatedAt = now,
-                    };
-                    AddMember(party, inviter);
-                    _parties[party.PartyId] = party;
-                    AddMember(party, joiner);
-                }
-                else if (staleKey != 0)
-                    ReplaceMemberSession(party!, staleKey, joiner);
-                else
-                    AddMember(party!, joiner);
+                var snap = inviterParty != null ? Snapshot(inviterParty) : null;
+                // An offline member of the party with this GID is taken back in place by re-keying it.
+                var staleKey = snap != null && snap.KeyOf.TryGetValue(joinerGid, out var key) && !snap.Online.Contains(joinerGid) ? key : 0u;
+                var now = _clock.UtcNow;
+                (outcome, effects) = PartyAggregate.DecideJoin(snap?.Aggregate,
+                    inviterParty == null ? Interlocked.Increment(ref _nextPartyId) : 0, inviterGid, inviter.Name, joinerGid, joiner.Name,
+                    _playerToParty.ContainsKey(joiner.SessionId), invitationPartyId, snap?.Online ?? new HashSet<ulong>(), now);
 
-                var directory = new PartyMemberDirectory(this, party!);
-                keys = directory.KeyOf;
-                Commit(party!, new PartySnapshot
+                keys = new Dictionary<ulong, uint> { [inviterGid] = inviter.SessionId, [joinerGid] = joiner.SessionId };
+                if (outcome.Result is PartyResult.Created or PartyResult.Done)
                 {
-                    Aggregate = outcome.Party!, Directory = directory, Online = snap?.Online ?? new HashSet<ulong>(),
-                    LeaderGidAtStart = outcome.Result == PartyResult.Created ? inviterGid : snap!.LeaderGidAtStart,
-                });
+                    if (outcome.Result == PartyResult.Created)
+                        party = new PartyState
+                        {
+                            PartyId = outcome.Party!.Id, LeaderSessionId = inviter.SessionId, FounderGid = inviterGid, CreatedAt = now,
+                        };
+
+                    // The party Gate (re-entrant when it is already held) keeps a racing join from reading a half-built new party.
+                    lock (party!.Gate)
+                    {
+                        if (outcome.Result == PartyResult.Created)
+                        {
+                            AddMember(party, inviter);
+                            _parties[party.PartyId] = party;
+                            AddMember(party, joiner);
+                        }
+                        else if (staleKey != 0)
+                            ReplaceMemberSession(party, staleKey, joiner);
+                        else
+                            AddMember(party, joiner);
+
+                        var directory = new PartyMemberDirectory(this, party);
+                        keys = directory.KeyOf;
+                        Commit(party, new PartySnapshot
+                        {
+                            Aggregate = outcome.Party!, Directory = directory, Online = snap?.Online ?? new HashSet<ulong>(),
+                            LeaderGidAtStart = outcome.Result == PartyResult.Created ? inviterGid : snap!.LeaderGidAtStart,
+                        });
+                    }
+                }
             }
+        }
+
+        if (retryJoinExisting)
+        {
+            await JoinPartyAsync(inviter, joiner, invitationPartyId, responderHandle);
+            return;
         }
 
         await ApplyAsync(party, effects, keys, responderHandle, joiner);
