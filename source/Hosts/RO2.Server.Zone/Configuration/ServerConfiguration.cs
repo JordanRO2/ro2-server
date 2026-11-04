@@ -1,4 +1,5 @@
 using RO2.Application.Configuration;
+using RO2.Worlds.Domain;
 
 namespace RO2.Server.Zone.Configuration;
 
@@ -56,4 +57,9 @@ public class GameConfig
     /// <summary>Fraction of an auction-house sale the seller keeps; the house cut is (1 − this). The retail
     /// default is 0.95 (a 5% cut). The proceeds are computed in single precision, so the default is byte-exact.</summary>
     public double AuctionSellerProceedsRate { get; set; } = 0.95;
+
+    /// <summary>Cap in seconds on the elapsed time one client move may claim, so idle time cannot be banked for a
+    /// speed-hack jump. A move may cover at most speed * (cap + 0.5 s). Raise it if legitimate clients that lag longer
+    /// than that get their moves refused. Must be positive.</summary>
+    public float MoveMaxElapsedSeconds { get; set; } = MovementValidator.DefaultMaxElapsedSeconds;
 }

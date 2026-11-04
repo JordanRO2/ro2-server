@@ -23,7 +23,7 @@ public readonly record struct MoveGuardResult(MoveRefusal Refusal, MoveSubject S
 /// <remarks>
 /// Elapsed time is measured from the last accepted move. A refused move does not advance the baseline, so the only travel
 /// a refused player earns is the distance it could have walked in that same time. The first move seen for a player has
-/// no baseline and is measured with an elapsed time of 0. A clock that went backwards gives an elapsed time of 0. Elapsed time is capped at <see cref="MovementValidator.MaxElapsedSeconds"/>.
+/// no baseline and is measured with an elapsed time of 0. A clock that went backwards gives an elapsed time of 0. Elapsed time is capped at the given maximum (default <see cref="MovementValidator.DefaultMaxElapsedSeconds"/>).
 /// </remarks>
 public static class MoveGuardRule
 {
@@ -39,14 +39,16 @@ public static class MoveGuardRule
     /// <param name="bounds">Map extent, or null when unknown.</param>
     /// <param name="surface">Walkable navmesh, or null when unknown.</param>
     /// <param name="nowUtc">The current UTC instant.</param>
+    /// <param name="maxElapsedSeconds">Upper bound on the elapsed time a move may claim; must be positive and finite.</param>
     public static MoveGuardResult Apply(MoveSubject subject, MovePos dest, float speed, bool serverGrantedExemption,
-        MoveBounds? bounds, IWalkableSurface? surface, DateTime nowUtc)
+        MoveBounds? bounds, IWalkableSurface? surface, DateTime nowUtc,
+        float maxElapsedSeconds = MovementValidator.DefaultMaxElapsedSeconds)
     {
         var now = nowUtc;
         var since = subject.LastValidatedMoveAtUtc ?? now;
         var dt = (float)(now - since).TotalSeconds;
         if (dt < 0f) dt = 0f;
-        if (dt > MovementValidator.MaxElapsedSeconds) dt = MovementValidator.MaxElapsedSeconds;
+        if (dt > maxElapsedSeconds) dt = maxElapsedSeconds;
 
         var current = new MovePos(subject.X, subject.Y, subject.Z);
         var refusal = MovementValidator.Validate(subject.MapId, current, dest, dt, speed, bounds, surface, serverGrantedExemption);

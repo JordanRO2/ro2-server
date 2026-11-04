@@ -72,11 +72,31 @@ public class MovementGuardTests
         var guard = new MovementGuard(clock);
         var p = PlayerAt(100f, 100f);
         p.LastValidatedMoveAtUtc = clock.UtcNow;
-        clock.Advance(MovementValidator.MaxElapsedSeconds);
+        clock.Advance(MovementValidator.DefaultMaxElapsedSeconds);
 
         // speed * MaxElapsedSeconds of real travel stays inside the capped allowance (plus the tolerance).
-        Assert.Equal(MoveRefusal.None, guard.ValidateClientMove(p, new MovePos(100f + Speed * MovementValidator.MaxElapsedSeconds, 100f, 5f), Speed));
+        Assert.Equal(MoveRefusal.None, guard.ValidateClientMove(p, new MovePos(100f + Speed * MovementValidator.DefaultMaxElapsedSeconds, 100f, 5f), Speed));
     }
+
+    [Fact]
+    public void ConfiguredCapReplacesTheDefault()
+    {
+        var clock = new TestClock();
+        var guard = new MovementGuard(clock, maxElapsedSeconds: 10f);
+        var p = PlayerAt(100f, 100f);
+        p.LastValidatedMoveAtUtc = clock.UtcNow;
+        clock.Advance(8.0); // 8s of travel at speed 6 = 48 units: over the default cap's allowance, inside the configured one
+
+        Assert.Equal(MoveRefusal.None, guard.ValidateClientMove(p, new MovePos(148f, 100f, 5f), Speed));
+    }
+
+    [Theory]
+    [InlineData(0f)]
+    [InlineData(-1f)]
+    [InlineData(float.NaN)]
+    [InlineData(float.PositiveInfinity)]
+    public void NonPositiveOrNonFiniteCapIsRejectedAtConstruction(float cap)
+        => Assert.Throws<ArgumentOutOfRangeException>(() => new MovementGuard(new TestClock(), cap));
 
     [Fact]
     public void InSpeedMoveIsAppliedAndAdvancesTheBaseline()

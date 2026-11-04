@@ -240,7 +240,7 @@ public static class Program
 
         // Zone-specific services (singletons for cross-handler state)
         services.AddSingleton<IClock, SystemClock>();
-        services.AddSingleton<MovementGuard>();
+        services.AddSingleton(sp => new MovementGuard(sp.GetRequiredService<IClock>(), config.Game.MoveMaxElapsedSeconds));
         services.AddSingleton<PlayerStateManager>();
         services.AddSingleton<RO2.DungeonFinder.Application.ISeatLiveness, SeatLivenessAdapter>();
         services.AddSingleton<RO2.DungeonFinder.Application.IFinderPartyView, FinderPartyViewAdapter>();

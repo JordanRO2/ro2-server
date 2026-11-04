@@ -20,7 +20,8 @@
     "GmDefaultZenyAmount": 10000000,
     "GmMaxGiveQuantity": 9999,
     "GmMaxGiveRecords": 200,
-    "AuctionSellerProceedsRate": 0.95
+    "AuctionSellerProceedsRate": 0.95,
+    "MoveMaxElapsedSeconds": 2.0
   },
   "Tick": {
     "MinHz": 20,

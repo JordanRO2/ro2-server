@@ -30,7 +30,17 @@ public sealed class MovementGuard
 {
     private readonly IClock _clock;
 
-    public MovementGuard(IClock clock) => _clock = clock;
+    private readonly float _maxElapsedSeconds;
+
+ /// <param name="clock">Time source.</param>
+ /// <param name="maxElapsedSeconds">Cap on the elapsed time one move may claim (<c>Game.MoveMaxElapsedSeconds</c>); must be positive and finite.</param>
+    public MovementGuard(IClock clock, float maxElapsedSeconds = MovementValidator.DefaultMaxElapsedSeconds)
+    {
+        if (!float.IsFinite(maxElapsedSeconds) || maxElapsedSeconds <= 0f)
+            throw new ArgumentOutOfRangeException(nameof(maxElapsedSeconds), maxElapsedSeconds, "must be positive and finite");
+        _clock = clock;
+        _maxElapsedSeconds = maxElapsedSeconds;
+    }
 
  /// <summary>
  /// Validates a client-driven move against the player's last accepted position and the elapsed time. On success the player
@@ -52,7 +62,7 @@ public sealed class MovementGuard
         MoveBounds? bounds, IWalkableSurface? surface)
     {
         var subject = new MoveSubject(player.MapId, player.X, player.Y, player.Z, player.LastValidatedMoveAtUtc);
-        var result = MoveGuardRule.Apply(subject, dest, speed, serverGrantedExemption, bounds, surface, _clock.UtcNow);
+        var result = MoveGuardRule.Apply(subject, dest, speed, serverGrantedExemption, bounds, surface, _clock.UtcNow, _maxElapsedSeconds);
         if (result.Refusal != MoveRefusal.None)
             return result.Refusal;
 
