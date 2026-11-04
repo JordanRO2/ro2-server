@@ -151,6 +151,20 @@ public sealed class PostgresAccountGiftTests
     }
 
     [DockerFact]
+    public async Task Concurrent_TryTakes_of_one_gift_succeed_exactly_once()
+    {
+        Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
+        var repo = new AccountGiftRepository(_fx.Db!);
+        var account = NewAccount();
+        var gift = Gift(0);
+        await repo.FileAsync(account, new[] { gift }, NowLocal);
+
+        var results = await Task.WhenAll(Enumerable.Range(0, 8).Select(_ => Task.Run(() => repo.TryTakeAsync(account, gift.Guid))));
+
+        Assert.Equal(1, results.Count(r => r));
+    }
+
+    [DockerFact]
     public async Task TryTake_unknown_account_is_false()
     {
         Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
@@ -159,7 +173,7 @@ public sealed class PostgresAccountGiftTests
     }
 
     [DockerFact]
-    public async Task TryTake_missing_guid_on_existing_box_is_true_and_removes_nothing()
+    public async Task TryTake_missing_guid_on_existing_box_is_false_and_removes_nothing()
     {
         Assert.True(_fx.Available, "Docker is up but the postgres:16 fixture did not start");
         var repo = new AccountGiftRepository(_fx.Db!);
@@ -168,7 +182,7 @@ public sealed class PostgresAccountGiftTests
         await repo.FileAsync(account, new[] { gift }, NowLocal);
 
         
-        Assert.True(await repo.TryTakeAsync(account, System.Guid.NewGuid().ToString("N")));
+        Assert.False(await repo.TryTakeAsync(account, System.Guid.NewGuid().ToString("N")));
         Assert.Single(await repo.GetLiveAsync(account, NowLocal));
     }
 

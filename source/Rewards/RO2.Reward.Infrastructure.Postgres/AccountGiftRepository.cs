@@ -103,16 +103,19 @@ public sealed class AccountGiftRepository : IAccountGiftRepository
         }
 
         
+        int removed;
         await using (var cmd = new NpgsqlCommand(
             $"DELETE FROM {EntriesTable} WHERE account_id = @a AND guid = @g", conn, tx))
         {
             cmd.Parameters.AddWithValue("a", (long)accountId);
             cmd.Parameters.AddWithValue("g", guid ?? "");
-            await cmd.ExecuteNonQueryAsync(ct);
+            removed = await cmd.ExecuteNonQueryAsync(ct);
         }
 
+        // The UPDATE above holds the box row lock until commit, so concurrent claims serialize and only the one that
+        // actually deleted the gift reports success.
         await tx.CommitAsync(ct);
-        return true;
+        return removed > 0;
     }
 
     public async Task<AccountAttendance> GetAttendanceAsync(uint accountId, CancellationToken ct = default)

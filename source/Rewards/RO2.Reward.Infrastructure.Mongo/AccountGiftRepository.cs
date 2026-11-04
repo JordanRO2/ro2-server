@@ -73,7 +73,8 @@ public sealed class AccountGiftRepository : IAccountGiftRepository
 
     public async Task<bool> TryTakeAsync(uint accountId, string guid, CancellationToken ct = default)
     {
-        var result = await _docs.UpdateOneAsync(d => d.Id == accountId,
+        // The guid must still be in the box: a second concurrent claim matches nothing, so only one wins the gift.
+        var result = await _docs.UpdateOneAsync(d => d.Id == accountId && d.Gifts.Any(g => g.Guid == guid),
             Builders<AccountGiftDocument>.Update.PullFilter(d => d.Gifts, g => g.Guid == guid)
                 .Set(d => d.UpdatedAt, DateTime.UtcNow), cancellationToken: ct);
         return result.ModifiedCount > 0;

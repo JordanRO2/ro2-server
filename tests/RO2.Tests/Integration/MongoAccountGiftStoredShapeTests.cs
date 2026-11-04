@@ -297,7 +297,7 @@ public sealed class MongoAccountGiftStoredShapeTests
         var repo = Repo();
         var account = NewAccount();
 
-        var results = await Task.WhenAll(Enumerable.Range(0, 8).Select(_ =>
+        var results = await Task.WhenAll(Enumerable.Range(0, 32).Select(_ =>
             Task.Run(() => repo.TryRecordAttendanceAsync(account, 0, 740_000, 1, 0, Gift(0, source: 4)))));
 
         Assert.Equal(1, results.Count(r => r));                                     // the losers hit DuplicateKey (or the filter) and report false
@@ -313,7 +313,7 @@ public sealed class MongoAccountGiftStoredShapeTests
         var account = NewAccount();
         await repo.TryRecordAttendanceAsync(account, 0, 740_000, 1, 0, null);
 
-        var results = await Task.WhenAll(Enumerable.Range(0, 8).Select(_ =>
+        var results = await Task.WhenAll(Enumerable.Range(0, 32).Select(_ =>
             Task.Run(() => repo.TryRecordAttendanceAsync(account, 740_000, 740_001, 2, 0, Gift(0, source: 4)))));
 
         Assert.Equal(1, results.Count(r => r));
@@ -382,7 +382,7 @@ public sealed class MongoAccountGiftStoredShapeTests
     }
 
     [DockerFact]
-    public async Task TryTake_pulls_by_exact_guid_stamps_UpdatedAt_and_is_true_for_any_existing_box()
+    public async Task TryTake_pulls_by_exact_guid_stamps_UpdatedAt_and_is_true_only_for_the_call_that_removed_it()
     {
         var repo = Repo();
         var account = NewAccount();
@@ -397,10 +397,10 @@ public sealed class MongoAccountGiftStoredShapeTests
         var taken = raw["UpdatedAt"].ToUniversalTime();
         Assert.True(taken > stamp);                                                 // unlike the expiry pull, a claim is a stamped write
 
-        // The guid is matched exactly: the lowercase form of a stored uppercase guid pulls nothing, yet still reports true (UpdatedAt is set).
-        Assert.True(await repo.TryTakeAsync(account, keep.Guid.ToLowerInvariant()));
+        // The guid is matched exactly: the lowercase form of a stored uppercase guid pulls nothing and reports false.
+        Assert.False(await repo.TryTakeAsync(account, keep.Guid.ToLowerInvariant()));
         Assert.Single(One(account)["Gifts"].AsBsonArray);
-        Assert.True(await repo.TryTakeAsync(account, take.Guid));                   // already taken: still true on an existing box
+        Assert.False(await repo.TryTakeAsync(account, take.Guid));                  // already taken: false, the gift is gone
         Assert.Single(One(account)["Gifts"].AsBsonArray);
 
         // No box at all: false, and no upsert.
@@ -416,6 +416,19 @@ public sealed class MongoAccountGiftStoredShapeTests
         await repo.FileAsync(b, new[] { Gift(0) }, NowLocal);
         await repo.TryTakeAsync(b, gift.Guid);
         Assert.Single(One(a)["Gifts"].AsBsonArray);
+    }
+
+    [DockerFact]
+    public async Task Concurrent_TryTakes_of_one_gift_succeed_exactly_once()
+    {
+        var repo = Repo();
+        var account = NewAccount();
+        var gift = Gift(0);
+        await repo.FileAsync(account, new[] { gift }, NowLocal);
+
+        var results = await Task.WhenAll(Enumerable.Range(0, 32).Select(_ => Task.Run(() => repo.TryTakeAsync(account, gift.Guid))));
+
+        Assert.Equal(1, results.Count(r => r));
     }
 
     // ------------------------------------------------------------------------------------------------ the uint -> Int32 bound

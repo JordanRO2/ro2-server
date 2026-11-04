@@ -24,10 +24,6 @@ public interface IAccountGiftRepository
  /// <summary>
  /// Removes the gift <paramref name="guid"/> from the account's box. Returns true only for the call that removed it.
  /// </summary>
- /// <remarks>
- /// Known limitation: the update also sets the box's UpdatedAt, so it reports a modification whenever the account
- /// has a box, even when the gift was not present.
- /// </remarks>
     Task<bool> TryTakeAsync(uint accountId, string guid, CancellationToken ct = default);
 
  /// <summary>
