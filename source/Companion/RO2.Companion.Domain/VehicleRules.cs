@@ -28,6 +28,10 @@ public static class VehicleRules
  /// <summary>Announcement window for state 8: 60 minutes.</summary>
     public static readonly double ExpiringSoonWindowDays = TimeSpan.FromMinutes(60).TotalDays;
 
+ /// <summary>True when <paramref name="ridingId"/> is in the owned list and has not expired (permanent or expiry after <paramref name="nowOle"/>).</summary>
+    public static bool CanRide(IReadOnlyList<OwnedVehicle> owned, uint ridingId, double nowOle)
+        => owned.Any(v => v.RidingId == ridingId && StateOf(v.ExpiryOle, nowOle) != StateExpired);
+
  /// <summary>Record state for a vehicle with the given expiry at the given time.</summary>
     public static byte StateOf(double expiryOle, double nowOle)
         => expiryOle == 0 ? StatePermanent : expiryOle > nowOle ? StateTimed : StateExpired;

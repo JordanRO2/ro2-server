@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using RO2.Companions.Application;
 using RO2.Companions.Domain;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
@@ -50,7 +51,14 @@ public class RideRidingPetHandler : ZoneRmiHandlerBase<RideRidingPetHandler>
         var action = RidingRules.Decide(current?.PetActorHandle, vehicleId);
         if (action == RideAction.Mount)
         {
-            
+            var owned = await services.GetRequiredService<IVehicleRepository>().GetAsync(player.CharacterId, ct);
+            if (!VehicleRules.CanRide(owned, vehicleId, VehiclePackets.NowOle()))
+            {
+                Logger.LogWarning("{Name} requested to mount vehicle {Vehicle} it does not own or that expired", player.Name, vehicleId);
+                await session.SendRmiAsync(ZoneS2COpcodes.AnsRideRidingPet,
+                    writer => writer.WriteBytes(BuildAnsRideRidingPet2719(ResultSwitchDropped, vehicleId, skillId)));
+                return;
+            }
             await RidingService.MountAsync(session, player, vehicleId, skillId, services);
             Logger.LogInformation("{Name} mounts riding vehicle {Vehicle} (skill {Skill})", player.Name, vehicleId, skillId);
             await session.SendRmiAsync(ZoneS2COpcodes.AnsRideRidingPet,

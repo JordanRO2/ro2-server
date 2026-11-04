@@ -16,4 +16,15 @@ public class RidingRulesTests
         Assert.Equal(action, decided);
         Assert.Equal(result, RidingRules.ResultCode(decided));
     }
+
+    [Theory]
+    [InlineData(5u, 0.0, true)]      // permanent
+    [InlineData(5u, 200.0, true)]    // timed, still valid
+    [InlineData(5u, 50.0, false)]    // expired
+    [InlineData(9u, 0.0, false)]     // not owned
+    public void CanRideNeedsAnOwnedUnexpiredVehicle(uint id, double expiry, bool expected)
+    {
+        var owned = new[] { new OwnedVehicle { RidingId = 5, ExpiryOle = expiry } };
+        Assert.Equal(expected, VehicleRules.CanRide(owned, id, 100.0));
+    }
 }

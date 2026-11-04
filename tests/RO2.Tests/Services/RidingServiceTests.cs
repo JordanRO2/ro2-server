@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using RO2.Application.Interfaces;
+using RO2.Companions.Domain;
 using RO2.Domain.Entities;
 using RO2.GameData;
 using RO2.Network.Protocol;
@@ -244,6 +245,32 @@ public class RidingServiceTests
         Assert.Empty(await rig.FramesUntilMarkerAsync());
     }
 
+    /// <summary>1510 for a vehicle the character does not own: 2719 code 17, nothing mounted.</summary>
+    [Fact]
+    public async Task AnUnownedVehicleIsRefusedAndNotMounted()
+    {
+        var data = await Data.Value;
+        await using var rig = await Rig.StartAsync(data, spareSessions: 5);
+        rig.AddPlayer(0x0B9F5B11u);
+
+        // vehicle 90140000, not in the owned list
+        await rig.Handler.HandleAsync(rig.Session, Convert.FromHexString("606d5f05ad8e5b00000000000000000068de45b9167df302"));
+
+        var frames = await rig.FramesUntilMarkerAsync();
+        Assert.Equal(new[] { ZoneS2COpcodes.AnsRideRidingPet }, frames.Select(f => f.Op).ToArray());
+        Assert.StartsWith("1100606d5f05", frames[0].Body);
+        Assert.False(MountService.IsMounted(rig.Session.SessionId));
+    }
+
+    private sealed class OwnsVehicles(params uint[] ids) : IVehicleRepository
+    {
+        public Task<IReadOnlyList<OwnedVehicle>> GetAsync(uint c, CancellationToken ct = default)
+            => Task.FromResult<IReadOnlyList<OwnedVehicle>>(ids.Select(i => new OwnedVehicle { RidingId = i }).ToArray());
+        public Task<IReadOnlyList<OwnedVehicle>> GrantAsync(uint c, uint r, uint? d, double n, CancellationToken ct = default) => throw new NotSupportedException();
+        public Task<IReadOnlyList<OwnedVehicle>?> TryExtendTimedAsync(uint c, uint r, uint d, double n, CancellationToken ct = default) => throw new NotSupportedException();
+        public Task<IReadOnlyList<OwnedVehicle>> LoadAndCutToWholeSecondsAsync(uint c, CancellationToken ct = default) => throw new NotSupportedException();
+    }
+
     private static async Task<GameDataStore> LoadDataAsync()
     {
         var store = new GameDataStore();
@@ -316,6 +343,7 @@ public class RidingServiceTests
             collection.AddSingleton(data);
             collection.AddSingleton(broadcast);
             collection.AddSingleton<IInventoryRepository>(new NoGearInventory());
+            collection.AddSingleton<IVehicleRepository>(new OwnsVehicles(90020000, 90190000, 90150000));
             var players = Players;
             collection.AddSingleton(sp => new EffectService(players, broadcast, data, npcState: null!, loot: null!,
                 sp.GetRequiredService<IServiceScopeFactory>(), NullLogger<EffectService>.Instance, emblems: TestEmblems.Create()));
