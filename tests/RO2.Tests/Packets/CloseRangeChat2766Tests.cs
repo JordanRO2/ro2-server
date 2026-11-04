@@ -235,6 +235,29 @@ public class CloseRangeChat2766Tests
 
     
     [Fact]
+    public async Task Chat_OwnerSocketDown_ThenAnotherPlayerProbes_StillHandsOffOnTheDisconnectEvent()
+    {
+        await using var net = new Loopback();
+        var u = NewUids(2);
+        var owner = await net.ConnectAsync(u[0], "Owner");
+        var member = await net.ConnectAsync(u[1], "Member");
+        var guid = Guid.NewGuid().ToByteArray();
+        CloseRangeChatRoomMembers.Open(new CloseRangeChatRoomMembers.OpenedRoom(guid, 10, []), MemberOf(owner, u[0]));
+        CloseRangeChatRoomMembers.Join(guid, MemberOf(member, u[1]), [], []);
+
+        // The owner's socket fails; before its Disconnected event runs, another player's probe prunes.
+        await owner.DisposeAsync();
+        Assert.True(CloseRangeChatRoomMembers.IsOpen(guid));
+
+        var sends = new List<CloseRangeChatRoomMembers.Send>();
+        var handOff = Assert.Single(CloseRangeChatRoomMembers.OnSessionClosed(owner, sends));
+        Assert.Equal((uint)u[1], handOff.NewMasterCharacterId);
+        Assert.Single(sends);
+        Assert.Equal(CloseRangeLeaveOutcome.OwnerLeft, CloseRangeChatRoomMembers.Leave(guid, (uint)u[1], []).Outcome);
+        Assert.False(CloseRangeChatRoomMembers.IsOpen(guid));   // settled: no leaked room
+    }
+
+    [Fact]
     public void Signals_CurrentOwner_FollowsHandOffs_AndClosesOnlyOnTheOwnersExit()
     {
         var guid = Guid.NewGuid().ToByteArray();

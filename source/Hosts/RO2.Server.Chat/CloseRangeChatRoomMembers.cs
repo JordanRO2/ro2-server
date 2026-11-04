@@ -279,11 +279,14 @@ public static class CloseRangeChatRoomMembers
     {
         foreach (var (id, entry) in Rooms.ToList())
         {
-            if (!entry.Sessions.TryGetValue(entry.Room.OwnerUid, out var owner) || !owner.IsConnected)
+            if (!entry.Sessions.TryGetValue(entry.Room.OwnerUid, out var owner))
             {
                 Rooms.Remove(id);
                 continue;
             }
+            // A disconnected owner's room stays: its Disconnected event (OnSessionClosed) owns the hand-off and the
+            // OwnerGone signal, and removing the room here would make that event find nothing.
+            if (!owner.IsConnected) continue;
             entry.Room.Drop(entry.Sessions.Where(kv => !kv.Value.IsConnected).Select(kv => kv.Key).ToList());
             SyncSessions(entry);
         }
