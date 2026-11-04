@@ -105,7 +105,7 @@ public sealed class DungeonFinderQueue
         lock (_gate)
         {
             var gone = _entries.FindAll(e => isGone(e));
-            if (gone.Count > 0) _entries.RemoveAll(e => isGone(e));
+            _entries.RemoveAll(gone.Contains);
             return gone;
         }
     }
