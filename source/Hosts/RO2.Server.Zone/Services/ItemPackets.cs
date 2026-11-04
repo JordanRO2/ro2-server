@@ -282,7 +282,7 @@ public static class ItemPackets
         
         writer.WriteUInt32(RecordAbilityValue(item));  // +0x45 ability value
         writer.WriteUInt16(0);  // +0x49 card set id
-        writer.WriteZeros(GrindingStatsLength);  // +0x4B grinding stats
+        WriteGrindingStats(writer, item);  // +0x4B grinding stats (5 honed lines, or zeros when un-honed)
         writer.WriteByte(0);  // +0x5F accessory trait
         writer.WriteByte(0);  // +0x60 accessory trait sub
         writer.WriteSingle(0f);  // +0x61 accessory value
@@ -344,6 +344,29 @@ public static class ItemPackets
  /// <param name="instanceValue">The item's own value, or null to use the template's value.</param>
     internal static uint RecordAbilityValue(uint templateId, uint? instanceValue)
         => instanceValue ?? (GameDataStore.Loaded?.GetItem(templateId) is { } template ? (uint)Math.Max(0, template.Abili_val) : 0u);
+
+ /// <summary>
+ /// Writes the grinding block at record +0x4B: 5 line slots of {u16 Abili_ID, i16 roll}. A honed item
+ /// (1676) fills its lines from <see cref="RO2.Inventory.Domain.InventoryItem.GrindingJson"/>; unused slots
+ /// and an un-honed item write zeros, exactly as before.
+ /// </summary>
+    private static void WriteGrindingStats(PacketWriter writer, RO2.Inventory.Domain.InventoryItem item)
+    {
+        var lines = RO2.Inventory.Domain.GrindingLines.Parse(item.GrindingJson);
+        int slots = GrindingStatsLength / 4;   // 5 slots of 4 bytes
+        for (int i = 0; i < slots; i++)
+        {
+            if (i < lines.Count)
+            {
+                writer.WriteUInt16(lines[i].AbiliId);
+                writer.WriteUInt16(unchecked((ushort)lines[i].Roll));   // i16 roll as two's-complement u16
+            }
+            else
+            {
+                writer.WriteUInt32(0);
+            }
+        }
+    }
 
  /// <summary>
  /// Durability of an item record whose durability is unset: the template's durability, or the default maximum when the template is unknown.

@@ -235,7 +235,8 @@ public class InventoryRepository : IInventoryRepository
             u.Set(i => i.CardsJson, item.CardsJson),
             u.Set(i => i.SocketPunchersJson, item.SocketPunchersJson),
             u.Set(i => i.Bound, item.Bound),
-            u.Set(i => i.AbilityValue, item.AbilityValue));
+            u.Set(i => i.AbilityValue, item.AbilityValue),
+            u.Set(i => i.GrindingJson, item.GrindingJson));
     }
 
     /// <summary>

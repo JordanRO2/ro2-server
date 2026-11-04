@@ -119,6 +119,15 @@ public class InventoryItem
  /// </remarks>
     public uint? AbilityValue { get; set; }
 
+ /// <summary>
+ /// This instance's honed grinding lines (RMI 1676 Honing / Random Refine), as the flat JSON array of
+ /// <see cref="GrindingLines"/>; null = never honed. Retail writes the 5 line slots at record +0x4B
+ /// ({u16 Abili_ID, i16 roll} each); <see cref="AbilityValue"/> at record+69 carries the honed
+ /// grind_range_val. Rows stored before this existed read as null (un-honed), which is also what every
+ /// path that does not hone keeps writing.
+ /// </summary>
+    public string? GrindingJson { get; set; }
+
     /// <summary>UTC time the row was created.</summary>
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
@@ -156,6 +165,7 @@ public class InventoryItem
         SocketPunchersJson = source.SocketPunchersJson;
         Bound = source.Bound;
         AbilityValue = source.AbilityValue;
+        GrindingJson = source.GrindingJson;
         return this;
     }
 }

@@ -130,12 +130,18 @@ public class InitGrindingOptHandler : ZoneRmiHandlerBase<InitGrindingOptHandler>
             w => w.WriteBytes(CombatPackets.BuildUseItem2329(player.EntityId, matSlot, matBag, voucher.Id,
                 (byte)Math.Clamp(remaining, 0, 255), useSource: UseSourceGrindingReset)), ct);
 
-        
-        
+        // Reset removes the honing (1676): clear the grinding lines and the honed range-rate at record+69
+        // so the item returns to its template ability value. Priced above off the PRE-reset ability value.
+        // Persist and rebuild the answer record from the now-un-honed item, so the reset actually sticks.
+        target.GrindingJson = null;
+        target.AbilityValue = null;
+        await inventory.UpdateItemAsync(target);
+        record = ItemPackets.BuildItemRecord126(target);
+
         await session.SendRmiAsync(ZoneS2COpcodes.AnsInitGrindingOpt, writer =>
         {
-            writer.WriteUInt16(0);        
-            writer.WriteBytes(record);    
+            writer.WriteUInt16(0);
+            writer.WriteBytes(record);
         }, ct);
 
         Logger.LogInformation("{Name} reset the grinding options of uid {Uid} ('{Item}') with voucher {Mat}: {Cost} zeny (client quoted {Quote}), {Left} vouchers left",
@@ -190,6 +196,33 @@ public class InitGrindingOptHandler : ZoneRmiHandlerBase<InitGrindingOptHandler>
         float grossF = gross;
         if (grossF <= 0f) return 0;
         return (long)(int)(grossF - (double)discRate * grossF / 10000.0);
+    }
+
+ /// <summary>
+ /// Zeny cost of ONE honing attempt (RMI 1676), the same shape as <see cref="ResetPrice"/> but reading
+ /// <c>Need_Gold</c> (the Honing Fee) of the Grinding_Info row for the item's current range-rate, times
+ /// ItemValueLv, with no voucher discount. Returns null when the item has no pricing/tables, 0 when the
+ /// gross is not positive.
+ /// </summary>
+ /// <remarks>
+ /// shortcut: fee mirrors the scrub-price formula with Need_Gold; verify against a retail Honing Fee display
+ /// if one is ever captured.
+ /// </remarks>
+    internal static long? HoningFee(uint itemId, uint abilityValue, IReadOnlyList<GrindingInfo> grindingInfo)
+    {
+        if (!ItemPricing.TryGetValue(itemId, out var p) || p.AbiliVal == 0 || grindingInfo.Count == 0) return null;
+        int rate = (int)((double)(int)abilityValue / (float)p.AbiliVal * 10000.0 - 10000.0);
+        var rows = grindingInfo.OrderBy(r => r.INDEX).ToArray();
+        int gold = 0;
+        for (int index = 1; index <= rows.Length; index++)
+        {
+            var row = rows.FirstOrDefault(r => r.INDEX >= index);
+            if (row is null) return null;
+            if (row.Range_Rate >= rate) { gold = row.Need_Gold; break; }
+            if (index == rows.Length) gold = row.Need_Gold;
+        }
+        long gross = (long)gold * p.ItemValueLv;   // long: Need_Gold*ItemValueLv overflows int for high-value gear
+        return gross <= 0 ? 0 : gross;
     }
 
  /// <summary>
