@@ -246,6 +246,17 @@ public class CharacterRepository : ICharacterRepository
         => _characters.UpdateOneAsync(c => c.Id == characterId,
             Builders<Character>.Update.Set(c => c.JobLevel, jobLevel).Set(c => c.JobExp, jobExp));
 
+    public Task UpdateBonusStatsAsync(uint characterId,
+        (int str, int agi, int intel, int wis, int vit, int luk) bonus,
+        (int str, int agi, int intel, int wis, int vit, int luk) primaries)
+        => _characters.UpdateOneAsync(c => c.Id == characterId,
+            Builders<Character>.Update
+                .Set(c => c.BonusStr, bonus.str).Set(c => c.BonusAgi, bonus.agi).Set(c => c.BonusInt, bonus.intel)
+                .Set(c => c.BonusWis, bonus.wis).Set(c => c.BonusVit, bonus.vit).Set(c => c.BonusLuk, bonus.luk)
+                .Set(c => c.Str, primaries.str).Set(c => c.Agi, primaries.agi).Set(c => c.Int, primaries.intel)
+                .Set(c => c.Wis, primaries.wis).Set(c => c.Vit, primaries.vit).Set(c => c.Luk, primaries.luk)
+                .Set(c => c.LastPlayed, DateTime.UtcNow));
+
     public async Task BulkSavePlayerStateAsync(IReadOnlyList<PlayerStateSave> saves)
     {
         if (saves.Count == 0) return;

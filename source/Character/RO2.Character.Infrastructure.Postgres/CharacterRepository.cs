@@ -453,6 +453,24 @@ public sealed class CharacterRepository : ICharacterRepository
                 Add(c.Parameters, "id", (long)characterId);
             }, CancellationToken.None);
 
+    public Task UpdateBonusStatsAsync(uint characterId,
+        (int str, int agi, int intel, int wis, int vit, int luk) bonus,
+        (int str, int agi, int intel, int wis, int vit, int luk) primaries)
+        => ExecAsync(
+            "UPDATE characters SET bonus_str = @bonus_str, bonus_agi = @bonus_agi, bonus_int = @bonus_int, " +
+            "bonus_wis = @bonus_wis, bonus_vit = @bonus_vit, bonus_luk = @bonus_luk, str = @str, agi = @agi, " +
+            "intel = @intel, wis = @wis, vit = @vit, luk = @luk, last_played = @now WHERE id = @id",
+            c =>
+            {
+                var p = c.Parameters;
+                Add(p, "bonus_str", bonus.str); Add(p, "bonus_agi", bonus.agi); Add(p, "bonus_int", bonus.intel);
+                Add(p, "bonus_wis", bonus.wis); Add(p, "bonus_vit", bonus.vit); Add(p, "bonus_luk", bonus.luk);
+                Add(p, "str", primaries.str); Add(p, "agi", primaries.agi); Add(p, "intel", primaries.intel);
+                Add(p, "wis", primaries.wis); Add(p, "vit", primaries.vit); Add(p, "luk", primaries.luk);
+                Add(p, "now", DateTime.UtcNow);
+                Add(p, "id", (long)characterId);
+            }, CancellationToken.None);
+
     public async Task BulkSavePlayerStateAsync(IReadOnlyList<PlayerStateSave> saves)
     {
         if (saves.Count == 0) return;

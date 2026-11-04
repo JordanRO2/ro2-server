@@ -45,6 +45,13 @@ public interface ICharacterRepository
  /// what the autosave bulk write is writing to the same document.</summary>
     Task UpdateJobLevelExpAsync(uint characterId, byte jobLevel, ulong jobExp);
 
+ /// <summary>Persist only the six bonus stat columns and the six effective primaries (RMI 1493), each as
+ /// (STR, AGI, INT, WIS, VIT, LUK): a targeted $set rather than a whole-row replace from the login snapshot,
+ /// which would put its stale exp, position, HP/MP, bank gold and job back.</summary>
+    Task UpdateBonusStatsAsync(uint characterId,
+        (int str, int agi, int intel, int wis, int vit, int luk) bonus,
+        (int str, int agi, int intel, int wis, int vit, int luk) primaries);
+
  /// <summary>Persist many players' position + vitals + wallet in ONE unordered bulk write (a single
  /// DB round-trip, executed in parallel server-side). The scalable autosave path — replaces N players ×
  /// 3 sequential updates. No-op on an empty list.</summary>

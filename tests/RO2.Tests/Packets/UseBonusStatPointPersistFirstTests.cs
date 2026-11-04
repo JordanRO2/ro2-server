@@ -124,7 +124,7 @@ public class UseBonusStatPointPersistFirstTests
         Assert.Equal((10, 5, 0, 7, 3, 0), (c.Str, c.Agi, c.Int, c.Wis, c.Vit, c.Luk));
     }
 
-    /// <summary>Counts SaveCharacterAsync and throws from it on demand; every other repository call is unexpected.</summary>
+    /// <summary>Counts UpdateBonusStatsAsync (the targeted write; a whole-row SaveCharacterAsync would fail the test) and throws from it on demand; every other repository call is unexpected.</summary>
     private class SaveProbe : DispatchProxy
     {
         public int Saves;
@@ -132,7 +132,7 @@ public class UseBonusStatPointPersistFirstTests
 
         protected override object? Invoke(MethodInfo? targetMethod, object?[]? args)
         {
-            Assert.Equal(nameof(ICharacterRepository.SaveCharacterAsync), targetMethod!.Name);
+            Assert.Equal(nameof(ICharacterRepository.UpdateBonusStatsAsync), targetMethod!.Name);
             Saves++;
             return Fail ? Task.FromException(new IOException("injected save failure")) : Task.CompletedTask;
         }

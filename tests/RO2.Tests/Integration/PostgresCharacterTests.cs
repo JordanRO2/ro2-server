@@ -580,6 +580,25 @@ public sealed class PostgresCharacterTests
     }
 
     [Fact]
+    public async Task UpdateJobLevelExp_and_UpdateBonusStats_write_only_their_columns()
+    {
+        if (!_fx.Available) return;
+        var repo = new CharacterRepository(_fx.Db!);
+        var c = await CreateAsync(repo, NewAccount());
+        c.Gold = 777; c.Exp = 555; c.Hp = 321;
+        await repo.SaveCharacterAsync(c);
+
+        await repo.UpdateJobLevelExpAsync(c.Id, 9, 1234);
+        await repo.UpdateBonusStatsAsync(c.Id, (1, 2, 3, 4, 5, 6), (11, 12, 13, 14, 15, 16));
+
+        var got = (await repo.GetByIdAsync(c.Id))!;
+        Assert.Equal((9, 1234UL), (got.JobLevel, got.JobExp));
+        Assert.Equal((1, 2, 3, 4, 5, 6), (got.BonusStr, got.BonusAgi, got.BonusInt, got.BonusWis, got.BonusVit, got.BonusLuk));
+        Assert.Equal((11, 12, 13, 14, 15, 16), (got.Str, got.Agi, got.Int, got.Wis, got.Vit, got.Luk));
+        Assert.Equal((777L, 555UL, 321), (got.Gold, got.Exp, got.Hp));   // untouched
+    }
+
+    [Fact]
     public async Task UpdateEquipHideFlag_AllowAnyoneReview_and_BankSlots_round_trip()
     {
         if (!_fx.Available) return;

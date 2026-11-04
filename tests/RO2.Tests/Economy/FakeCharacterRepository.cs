@@ -78,6 +78,11 @@ public sealed class FakeCharacterRepository(RepoScheduler scheduler) : ICharacte
     public Task UpdateJobLevelExpAsync(uint characterId, byte jobLevel, ulong jobExp)
         => throw NotModelled(nameof(UpdateJobLevelExpAsync));
 
+    public Task UpdateBonusStatsAsync(uint characterId,
+        (int str, int agi, int intel, int wis, int vit, int luk) bonus,
+        (int str, int agi, int intel, int wis, int vit, int luk) primaries)
+        => throw NotModelled(nameof(UpdateBonusStatsAsync));
+
     public async Task BulkSavePlayerStateAsync(IReadOnlyList<PlayerStateSave> saves)
     {
         await scheduler.PointAsync("Character.BulkSave");

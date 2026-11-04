@@ -4,7 +4,7 @@ namespace RO2.Characters.Application;
 
 /// <summary>
 /// Allocates bonus stat points (RMI 1493 ReqUseBonusStatPoint): server-authoritative and all-or-nothing. The
-/// request is priced against the character's unspent pool and, only if it all fits, written and SAVED first; the
+/// request is priced against the character's unspent pool and, only if it all fits, written and persisted first (only the stat columns, never a whole-row replace); the
 /// host then mirrors it to the runtime and re-pushes the sheet. A failed save refuses the request with nothing
 /// changed. The pure pricing lives in <see cref="BonusStatRules"/>; the wire and the sends stay in the host.
 /// </summary>
@@ -48,7 +48,9 @@ public static class BonusStatAllocationFlow
             // Persist first, then mirror (the ChangeProJobID order): the allocation is written and saved before
             // the runtime copy or any packet moves. A failed save puts the character back and refuses the request,
             // so the client can never be ahead of the database.
-            var saveError = await PersistAsync(character, cb, plan.Bonus, repo.SaveCharacterAsync);
+            var saveError = await PersistAsync(character, cb, plan.Bonus, c => repo.UpdateBonusStatsAsync(c.Id,
+                (c.BonusStr, c.BonusAgi, c.BonusInt, c.BonusWis, c.BonusVit, c.BonusLuk),
+                (c.Str, c.Agi, c.Int, c.Wis, c.Vit, c.Luk)));
             return saveError is not null
                 ? new BonusAllocationResult(BonusStatOutcome.BadState, true, false, plan.TotalCost, unspent, saveError)
                 : new BonusAllocationResult(BonusStatOutcome.Ok, true, true, plan.TotalCost, unspent, null);
@@ -65,7 +67,7 @@ public static class BonusStatAllocationFlow
     /// <param name="c">The character to write and save.</param>
     /// <param name="cb">The class base primaries to add the bonuses to.</param>
     /// <param name="bonus">The six new bonus values (STR, AGI, INT, WIS, VIT, LUK).</param>
-    /// <param name="save">The save step (the character repository's save).</param>
+    /// <param name="save">The persist step (a targeted stat write).</param>
     public static async Task<Exception?> PersistAsync(Character c,
         (int str, int agi, int intel, int wis, int vit, int luk) cb, int[] bonus, Func<Character, Task> save)
     {
