@@ -134,6 +134,9 @@ public class DungeonLevelSelectHandler : ZoneRmiHandlerBase<DungeonLevelSelectHa
         DungeonInstanceEntry? entry = trainingGround
             ? null
             : registry.Enter(owner, row.DungeonID, pos.Area_ID, player.CharacterId);
+        // Record the count before the hand-off: Enter already marked it counted, so a throwing hand-off must not skip it.
+        if (entry is { CountsForCharacter: true } && counts is not null)
+            await services.GetRequiredService<RecordDungeonEntryUseCase>().RecordAsync(player.CharacterId, row.DungeonID, player.Name, row.Enter_Count, ct);
         var announce = entry is { } entered
             ? entered.IsNewInstance
             : DungeonEntryGate.OpensTrainingRoom(PlayerManager.GetPlayersOnMap(pos.Area_ID), player.SessionId);
@@ -153,8 +156,5 @@ public class DungeonLevelSelectHandler : ZoneRmiHandlerBase<DungeonLevelSelectHa
             Logger.LogInformation("{Name} enters the Training Ground, DungeonID {Dun} (group {Group} level {Level}) -> Position_Info {Pos} map {Map}: {Kind} its room",
                 player.Name, row.DungeonID, groupId, level, row.Position_ID, pos.Area_ID, announce ? "opens" : "joins");
         await DungeonChannelHandOff.EnterAsync(session, player, pos, services, Logger, ct);
-
-        if (entry is { CountsForCharacter: true } && counts is not null)
-            await services.GetRequiredService<RecordDungeonEntryUseCase>().RecordAsync(player.CharacterId, row.DungeonID, player.Name, row.Enter_Count, ct);
     }
 }

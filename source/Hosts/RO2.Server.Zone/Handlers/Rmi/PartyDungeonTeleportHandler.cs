@@ -123,6 +123,10 @@ public class PartyDungeonTeleportHandler : ZoneRmiHandlerBase<PartyDungeonTelepo
             entry = registry.Enter(owner, dungeon.DungeonID, arrival.Area_ID, player.CharacterId);
         }
 
+        // Record the count before the hand-off: Enter already marked it counted, so a throwing hand-off must not skip it.
+        if (entry is { CountsForCharacter: true } && counts is not null)
+            await services.GetRequiredService<RecordDungeonEntryUseCase>().RecordAsync(player.CharacterId, dungeon.DungeonID, player.Name, dungeon.Enter_Count, ct);
+
         Logger.LogInformation("{Name} enters dungeon group {Group} (DungeonID {Dun}, level {Level}) -> Position_Info {Pos} map {Map}{Instance}",
             player.Name, groupId, dungeon.DungeonID, dungeon.Map_Level, dungeon.Position_ID, arrival.Area_ID,
             entry is { } e ? $" ({(e.IsNewInstance ? "opened" : "re-entered")} instance {e.InstanceId})" : "");
@@ -134,9 +138,6 @@ public class PartyDungeonTeleportHandler : ZoneRmiHandlerBase<PartyDungeonTelepo
 
         // leaveP2PGroup: the 1531 answer carries 2598 [u32 0] before its 2938.
         await DungeonChannelHandOff.EnterAsync(session, player, arrival, services, Logger, ct, leaveP2PGroup: true);
-
-        if (entry is { CountsForCharacter: true } && counts is not null)
-            await services.GetRequiredService<RecordDungeonEntryUseCase>().RecordAsync(player.CharacterId, dungeon.DungeonID, player.Name, dungeon.Enter_Count, ct);
     }
 
  /// <summary>
