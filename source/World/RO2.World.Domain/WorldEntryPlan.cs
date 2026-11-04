@@ -108,8 +108,6 @@ public sealed class WorldEntryPlan
         WorldEntryStep.PetCollection,
         WorldEntryStep.ActivePet,
         WorldEntryStep.RegisterCardBook,
-        WorldEntryStep.MoveSpeed,
-        WorldEntryStep.ZenyBalance,
     ]);
 
     private static readonly WorldEntryPlan WarpPlan = new(WorldEntryMode.Warp,

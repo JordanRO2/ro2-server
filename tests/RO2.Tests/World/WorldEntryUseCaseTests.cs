@@ -87,7 +87,6 @@ public class WorldEntryUseCaseTests
             2310, 2498, 2488, 2982,             // character detail, trait, skills (host-gated), ranking
             2311, 2472, 2523, 2522,             // map load, quick slots, vehicles
             2913, 2919, 2918,                   // monster book, pet book, active pet
-            2497, 2435,                         // move speed, zeny
         }, Opcodes(d));
     }
 

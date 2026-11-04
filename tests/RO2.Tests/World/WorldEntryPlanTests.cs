@@ -21,7 +21,6 @@ public class WorldEntryPlanTests
             2535, 2310, 2498, 2488, 2793, 2982, // craft index, character detail, trait, skills, card book charge, ranking
             2311, 2472, 2523, 2522,             // map load, quick slots, vehicle quick slot, vehicles
             2913, 2919, 2918, 2588,             // monster book, pet book, active pet, MVP cards
-            2497, 2435,                         // move speed, zeny
         }, Opcodes(WorldEntryPlan.For(WorldEntryMode.Login).Steps));
     }
 
@@ -43,7 +42,6 @@ public class WorldEntryPlanTests
         {
             WorldEntryStep.CraftIndex, WorldEntryStep.CharacterDetail, WorldEntryStep.LoginPcTrait,
             WorldEntryStep.UseSkillList, WorldEntryStep.CardBookCharge, WorldEntryStep.RankingTopList,
-            WorldEntryStep.MoveSpeed, WorldEntryStep.ZenyBalance,
         };
         Assert.Equal(
             WorldEntryPlan.For(WorldEntryMode.Login).Steps.Where(s => !loginOnly.Contains(s)),

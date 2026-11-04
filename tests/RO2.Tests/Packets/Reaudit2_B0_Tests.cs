@@ -221,10 +221,11 @@ public class Reaudit2_B0_Tests
         Assert.Equal(3.0f, BinaryPrimitives.ReadSingleLittleEndian(body.AsSpan(71)));
     }
 
-    // ---- 1677 / glider: the warp burst carries no 2497 and no 2435 ----------------------------------------------------
+    // ---- 1677 / glider: neither the warp burst nor the login burst carries 2497 or 2435 (retail sends neither at
+    //      entry; 2497 arrives in the 1304 map-load reply and the wallet rides in the 2310 head) ---------------------
 
     [Fact]
-    public async Task WarpBurst_SendsNo2497AndNo2435_ALoginStillDoes()
+    public async Task NeitherWarpNorLoginBurst_Sends2497Or2435()
     {
         var data = await Data.Value;
         await using var rig = await Rig.StartAsync(data);
@@ -241,8 +242,9 @@ public class Reaudit2_B0_Tests
         await WorldEntryService.SendWorldEntryAsync(rig.Session, c, 0x0DE0B6B3A7640101UL, 0x0011A6E2u,
             NullLogger.Instance, gameData: data);
         var login = await rig.FramesUntilMarkerAsync();
-        Assert.Contains(login, f => f.Op == ZoneS2COpcodes.OnChangeActorMoveSpeed);
-        Assert.Contains(login, f => f.Op == ZoneS2COpcodes.OnZenyChange);
+        Assert.Contains(login, f => f.Op == ZoneS2COpcodes.OnReceiveMapLoad);         // the login burst did go out
+        Assert.DoesNotContain(login, f => f.Op == ZoneS2COpcodes.OnChangeActorMoveSpeed);
+        Assert.DoesNotContain(login, f => f.Op == ZoneS2COpcodes.OnZenyChange);
     }
 
     // ---- a lethal DoT tick on a player ---------------------------------------------------------------------------
