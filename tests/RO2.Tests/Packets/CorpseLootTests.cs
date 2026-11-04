@@ -855,4 +855,45 @@ public class DungeonFinderTests
             pickupKind: RewardPolicy.PickupKindFinderReward);
         Assert.Equal("00000300", ToHex(body[..4]));
     }
+
+    /// <summary>Fails the N-th AddItemAsync (1-based) once; everything else goes to the in-memory bag.</summary>
+    private sealed class FailingAddInventory(RO2.Tests.Economy.FakeInventoryRepository inner, int failAdd) : IInventoryRepository
+    {
+        private int _adds;
+        public Task<IReadOnlyList<InventoryItem>> GetByCharacterAsync(uint characterId) => inner.GetByCharacterAsync(characterId);
+        public Task<IReadOnlyList<InventoryItem>> GetEquipmentAsync(uint characterId) => inner.GetEquipmentAsync(characterId);
+        public Task<InventoryItem?> GetByIdAsync(ulong id) => inner.GetByIdAsync(id);
+        public Task AddItemAsync(InventoryItem item) => ++_adds == failAdd ? throw new InvalidOperationException("injected") : inner.AddItemAsync(item);
+        public Task RemoveItemAsync(ulong itemId) => inner.RemoveItemAsync(itemId);
+        public Task UpdateItemAsync(InventoryItem item) => inner.UpdateItemAsync(item);
+        public Task<ulong> GetNextIdAsync() => inner.GetNextIdAsync();
+        public Task<int> RepairSlotsAsync(uint characterId) => inner.RepairSlotsAsync(characterId);
+    }
+
+    [Fact]
+    public async Task WriteLanding_ThatThrowsOnALaterStack_UndoesTheEarlierOnes_SoTheCallerRefilesTheWholeItem()
+    {
+        var bag = new RO2.Tests.Economy.FakeInventoryRepository(new RO2.Tests.Economy.RepoScheduler());
+        var stacks = Enumerable.Range(0, 3).Select(s => new InventoryItem { CharacterId = 1, ItemId = 30000205, Count = 99, Slot = (short)s, StorageType = 0 }).ToArray();
+        var landing = new ItemPickUpHandler.Landing(null, 0, stacks, false);
+
+        var landed = await ItemPickUpHandler.WriteLandingAsync(new FailingAddInventory(bag, failAdd: 3), landing,
+            new PlayerState { Name = "P" }, 30000205, Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance);
+
+        Assert.Empty(landed);
+        Assert.Empty(bag.Rows);
+    }
+
+    [Fact]
+    public async Task WriteLanding_WithAllStacksWritten_ReturnsThemAll()
+    {
+        var bag = new RO2.Tests.Economy.FakeInventoryRepository(new RO2.Tests.Economy.RepoScheduler());
+        var stacks = Enumerable.Range(0, 2).Select(s => new InventoryItem { CharacterId = 1, ItemId = 30000205, Count = 99, Slot = (short)s, StorageType = 0 }).ToArray();
+
+        var landed = await ItemPickUpHandler.WriteLandingAsync(bag, new ItemPickUpHandler.Landing(null, 0, stacks, false),
+            new PlayerState { Name = "P" }, 30000205, Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance);
+
+        Assert.Equal(2, landed.Count);
+        Assert.Equal(2, bag.Rows.Count);
+    }
 }

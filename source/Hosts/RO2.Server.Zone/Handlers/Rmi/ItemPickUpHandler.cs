@@ -369,7 +369,7 @@ public class ItemPickUpHandler : ZoneRmiHandlerBase<ItemPickUpHandler>
     /// <summary>
     /// Writes a planned landing to the bag and returns the stacks that reached it, as they now stand. Empty
     /// when nothing did; the caller then puts the item back where it came from rather than let it vanish.
-    /// A write that fails part-way returns the stacks written before it. Shared with the dice award
+    /// A write that fails part-way undoes the new stacks it already wrote and returns empty. Shared with the dice award
     /// (PartyDiceService), which lands a rolled item in its winner's bag.
     /// </summary>
     internal static async Task<List<InventoryItem>> WriteLandingAsync(IInventoryRepository inventory, Landing landing,
@@ -394,6 +394,14 @@ public class ItemPickUpHandler : ZoneRmiHandlerBase<ItemPickUpHandler>
         {
             logger.LogWarning(ex, "{Name}: saving picked item {Id} failed ({Landed} stack(s) written)",
                 player.Name, itemTemplateId, landed.Count);
+            // All or nothing: undo the new stacks already written so the caller's landed.Count == 0 refile puts the
+            // whole item back. A stack that cannot be removed stays in the result (a partial landing, not a dupe).
+            foreach (var stack in landed.ToArray())
+            {
+                if (ReferenceEquals(stack, landing.MergeInto)) continue;
+                try { await inventory.RemoveItemAsync(stack.Id); landed.Remove(stack); }
+                catch (Exception undoEx) { logger.LogWarning(undoEx, "{Name}: could not undo stack {Uid} of item {Id}", player.Name, stack.Id, itemTemplateId); }
+            }
         }
         return landed;
     }
