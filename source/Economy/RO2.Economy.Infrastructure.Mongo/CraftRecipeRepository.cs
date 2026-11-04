@@ -41,7 +41,10 @@ public sealed class CraftRecipeRepository : ICraftRecipeRepository
     public async Task<bool> AddAsync(uint characterId, ushort recipeId, CancellationToken ct = default)
     {
         // Filter on the recipe being absent so an already-learned recipe matches nothing: the upsert then collides on _id
-        // (DuplicateKey) and reads as "already stored", like the Postgres ON CONFLICT DO NOTHING (a concurrent 1348 loses).
+        // (DuplicateKey) and reads as "already stored", like the Postgres ON CONFLICT DO NOTHING (a concurrent same-recipe
+        // 1348 loses). Caveat vs Postgres' per-(char,recipe) rows: two concurrent FIRST-ever learns of DIFFERENT recipes on
+        // a doc-less character both try to insert _id=characterId; one wins, the other hits DuplicateKey and is dropped
+        // (benign: reported not-stored, no charge, retryable; near-unreachable since one connection serializes a char's 1348s).
         try
         {
             var result = await _docs.UpdateOneAsync(
