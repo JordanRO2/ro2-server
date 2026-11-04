@@ -106,8 +106,31 @@ public class RandomItemBattingHandler : ZoneRmiHandlerBase<RandomItemBattingHand
         var landed = await ItemPickUpHandler.WriteLandingAsync(inventory, landing, player, prizeId, Logger);
         if (landed.Count == 0)
         {
-            Logger.LogWarning("{Name}: 1514 box {Box} was consumed but its prize {Count}x {Prize} could not be saved",
+            Logger.LogWarning("{Name}: 1514 box {Box} was consumed but its prize {Count}x {Prize} could not be saved; restoring the box",
                 player.Name, box.ItemId, prizeCount, prizeId);
+            // The box was already spent (line above) but the prize did not reach the bag: put the box back so it is not
+            // lost, and re-sync the client. Best-effort: this compensating write can itself fail on the same fault.
+            try
+            {
+                if (remaining <= 0)
+                {
+                    box.Count = 1;
+                    await inventory.AddItemAsync(box);   // re-add (assigns a fresh uid); tell the client to re-create it
+                    await session.SendRmiAsync(ZoneS2COpcodes.OnCreateItem,
+                        ItemTransformHandler.BuildCreateItem2335(player.EntityId, ItemPackets.BuildItemRecord126(box)), ct);
+                }
+                else
+                {
+                    box.Count = remaining + 1;
+                    await inventory.UpdateItemAsync(box);
+                    await session.SendRmiAsync(ZoneS2COpcodes.OnUseItem,
+                        CombatPackets.BuildUseItem2329(player.EntityId, slot, bag, box.Id, (byte)Math.Clamp(remaining + 1, 0, 255)), ct);
+                }
+            }
+            catch (Exception restoreEx)
+            {
+                Logger.LogError(restoreEx, "{Name}: could not restore 1514 box {Box} after a failed prize save", player.Name, box.ItemId);
+            }
             await AnswerAsync(session, 0, RandomBoxPackets.ResultCannotOpen, ct);
             return;
         }
