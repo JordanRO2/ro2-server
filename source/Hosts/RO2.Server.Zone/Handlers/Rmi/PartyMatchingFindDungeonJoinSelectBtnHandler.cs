@@ -40,7 +40,7 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 /// 19015, string_ui 15801 "The max. entered number exceeded.") and no 2824, no 2938. Joins with fewer than 3 entries
 /// used all get the 2824. So the gate is 1531's Enter_Count
 /// check, applied to every join: a finder join always opens a new instance and always counts
-/// (<see cref="DungeonInstanceRegistry.EnterFinder"/>; the registry's remarks hold the details). An accepted join is counted after
+/// (<see cref="DungeonInstanceRegistry.EnterFinder"/>; the registry's remarks hold the details). An accepted join is counted BEFORE
 /// the hand-off, through <see cref="RecordDungeonEntryUseCase"/>, exactly as 1521 / 1531 count theirs,
 /// and a later 1534 resets its instance with 2771 [DungeonID] unless
 /// its boss died more than <see cref="DungeonInstanceRegistry.ClearedInstanceLifetime"/> before (DungeonFinderReward
@@ -162,10 +162,13 @@ public class PartyMatchingFindDungeonJoinSelectBtnHandler : ZoneRmiHandlerBase<P
         Logger.LogInformation("{Name} joins dungeon finder list {List} (DungeonID {Dun}) -> Position_Info {Pos} map {Map}{Instance}",
             player.Name, match.ListId, dungeon.DungeonID, dungeon.Position_ID, pos.Area_ID,
             entry is { } e ? $": {owner} instance {e.InstanceId} opened" : "");
-        await DungeonChannelHandOff.EnterAsync(session, player, pos, services, Logger, ct);
 
+        // Count the entry BEFORE the hand-off: EnterAsync hands the connection off (the client reconnects on another
+        // channel), so anything awaited after it can be lost. Matches DungeonLevelSelect/PartyDungeonTeleport.
         if (entry is { CountsForCharacter: true } && counts is not null)
             await services.GetRequiredService<RecordDungeonEntryUseCase>().RecordAsync(player.CharacterId, dungeon.DungeonID, player.Name, dungeon.Enter_Count, ct);
+
+        await DungeonChannelHandOff.EnterAsync(session, player, pos, services, Logger, ct);
     }
 
  /// <summary>
