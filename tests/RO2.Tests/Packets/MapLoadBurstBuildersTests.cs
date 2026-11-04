@@ -19,7 +19,7 @@ public class MapLoadBurstBuildersTests
     private static readonly Lazy<IReadOnlyList<CraftItemList>> Recipes = new(() =>
         JsonSerializer.Deserialize<List<CraftItemList>>(File.ReadAllText(DataFile("Craft_ItemList.json")))!);
 
-    [Theory]
+    [DataTheory]
     [InlineData(1, "060000000200b401b501")]
     [InlineData(2, "0c00000005005a015b015c015d015e01")]
     [InlineData(3, "080000000300010002000300")]
@@ -31,7 +31,7 @@ public class MapLoadBurstBuildersTests
         Assert.Equal(retailHex.ToUpperInvariant(), Convert.ToHexString(body!));
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData(0)]
     [InlineData(5)]
     public void CraftIndex2535_NoRecipes_SendsNothing(byte proType)
@@ -40,7 +40,7 @@ public class MapLoadBurstBuildersTests
         Assert.Null(CraftRecipeStore.BuildNotifyCraftIndex2535(Recipes.Value, proType));
     }
 
-    [Fact]
+    [DataFact]
     public void UseSkillList2488_ListsTheIdsAscending_WhateverTheInputOrder()
     {
         
@@ -50,7 +50,7 @@ public class MapLoadBurstBuildersTests
             Convert.ToHexString(body));
     }
 
-    [Fact]
+    [DataFact]
     public void ServerTime2669_EncodesTheRetailInstant()
     {
         
@@ -62,7 +62,7 @@ public class MapLoadBurstBuildersTests
         Assert.Equal("76F5DD7BF302", Convert.ToHexString(body.AsSpan(2).ToArray()));
     }
 
-    [Fact]
+    [DataFact]
     public void DependentDungeonInfo2743_IsRetailsEmptyForm()
     {
         
@@ -72,7 +72,7 @@ public class MapLoadBurstBuildersTests
  /// <summary>
  /// The bind byte of four reference records, checked against the Bind_Type of the template read from data/ItemInfo.json.
  /// </summary>
-    [Theory]
+    [DataTheory]
     
     [InlineData("8f1264c6a73d040e73d9fe0087200100013675000000000000000002001400000006224e25a9530106224e25a9530107e00625a9530100000000000000000000000000000007a100008800ac0ff0f874420df97242a500322321fca90fca0200000000000000000000000000000000000000000000000000000000000000", 1)]
     
@@ -91,7 +91,7 @@ public class MapLoadBurstBuildersTests
         Assert.Equal(record[0x1B], ItemPackets.RecordBindFlags(bindType, storageType));
     }
 
-    [Fact]
+    [DataFact]
     public void BindFlags_BindOnEquipInABag_StaysUnbound()
     {
         

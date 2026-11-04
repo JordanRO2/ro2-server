@@ -17,7 +17,7 @@ public class KharaCompletionTests
     private static readonly Lazy<KharaCatalog> Catalog = new(() => new KharaCatalog(LoadRows()));
 
     
-    [Fact]
+    [DataFact]
     public void Builders_ReproduceRetailFrames()
     {
         
@@ -34,7 +34,7 @@ public class KharaCompletionTests
     }
 
     
-    [Fact]
+    [DataFact]
     public void Accept_HeldItemKhara_SendsProgressThenSpendThenCompletion()
     {
         
@@ -56,7 +56,7 @@ public class KharaCompletionTests
         Assert.Null(engine.State.FindActive(589));
     }
 
-    [Fact]
+    [DataFact]
     public void Accept_LastKharaOfABoard_CompletesTheBoardToo_AndTheBalanceStopsAtZero()
     {
         
@@ -90,7 +90,7 @@ public class KharaCompletionTests
         Assert.Equal(new uint[] { 371, 372, 373, 374, 375, 386 }, engine.State.Completed);
     }
 
-    [Fact]
+    [DataFact]
     public void Accept_QuestKharaWhoseQuestIsDone_CompletesInTheAcceptBurst()
     {
         
@@ -104,7 +104,7 @@ public class KharaCompletionTests
         Assert.Equal(95u, engine.State.Points);
     }
 
-    [Fact]
+    [DataFact]
     public void Accept_NothingHeldYet_OnlySpendsThePoints()
     {
         
@@ -121,7 +121,7 @@ public class KharaCompletionTests
         Assert.Equal(new uint[] { 0, 0, 0 }, entry.Counts);
     }
 
-    [Fact]
+    [DataFact]
     public void Accept_BoardKhara_SendsNothingAfterThe2574()
     {
         
@@ -135,7 +135,7 @@ public class KharaCompletionTests
         Assert.Equal(9, engine.State.FindActive(284)!.Counts.Count);
     }
 
-    [Fact]
+    [DataFact]
     public void Accept_OutsideTheKharasLevelWindowOrClassMask_ChangesNothing()
     {
         // 118 needs base level 6; 424 is limited to classes 16 to 18 (mask 229376). The 1433 manual accept must obey both.
@@ -153,7 +153,7 @@ public class KharaCompletionTests
         Assert.NotNull(allowed.State.FindActive(424));
     }
 
-    [Fact]
+    [DataFact]
     public void Accept_AlreadyAcceptedCompletedOrUnknown_ChangesNothing()
     {
         var state = new KharaStateDocument
@@ -174,7 +174,7 @@ public class KharaCompletionTests
     }
 
     
-    [Fact]
+    [DataFact]
     public void QuestCompleted_AutoAcceptsAndCompletesAOneRowKhara()
     {
         
@@ -188,7 +188,7 @@ public class KharaCompletionTests
         Assert.Equal(new uint[] { 496 }, engine.State.Completed);
     }
 
-    [Fact]
+    [DataFact]
     public void QuestCompleted_AutoAcceptsAMultiRowKhara_WithoutCompletingIt()
     {
         
@@ -201,7 +201,7 @@ public class KharaCompletionTests
         Assert.Equal(7, engine.State.FindActive(560)!.Counts.Count);
     }
 
-    [Fact]
+    [DataFact]
     public void QuestCompleted_NoAutoAcceptBelowTheLevelWindow_OrForAManualKhara()
     {
         
@@ -217,7 +217,7 @@ public class KharaCompletionTests
     }
 
     
-    [Fact]
+    [DataFact]
     public void Kill_StepsTheMatchingRowByOne_AndStopsAtTheTarget()
     {
         
@@ -233,7 +233,7 @@ public class KharaCompletionTests
         Assert.Equal(new uint[] { 4, 0, 0, 0 }, engine.State.FindActive(343)!.Counts);
     }
 
-    [Fact]
+    [DataFact]
     public void Kill_ThatMeetsTheLastRow_Completes()
     {
         
@@ -247,7 +247,7 @@ public class KharaCompletionTests
     }
 
     
-    [Fact]
+    [DataFact]
     public void HeldCount_FollowsTheBag_UpAndDown()
     {
         
@@ -266,7 +266,7 @@ public class KharaCompletionTests
         Assert.NotNull(engine.State.FindActive(397));
     }
 
-    [Fact]
+    [DataFact]
     public void HeldCount_UnreadableInventory_LeavesHeldRowsAlone_AndSendsNothing()
     {
         // A failed inventory read is "unknown", not "holds nothing": it must not reset the held row.
@@ -280,7 +280,7 @@ public class KharaCompletionTests
         Assert.Equal(new uint[] { 22 }, engine.State.FindActive(397)!.Counts);
     }
 
-    [Fact]
+    [DataFact]
     public void HeldCount_ItemsThatLeftUnreported_DoNotCompleteTheKhara()
     {
         
@@ -309,7 +309,7 @@ public class KharaCompletionTests
         Assert.Equal(0u, engine.State.Points);
     }
 
-    [Fact]
+    [DataFact]
     public void Progress_WithoutCompletion_IsAStateChange()
     {
         
@@ -331,7 +331,7 @@ public class KharaCompletionTests
         Assert.Empty(none.Frames);
     }
 
-    [Fact]
+    [DataFact]
     public void TryComplete_OnlyWhenEveryConditionHolds()
     {
         var state = new KharaStateDocument { Id = 1, Active = new List<KharaActiveDocument> { Active(343, 4, 4, 4, 3) } };
@@ -346,7 +346,7 @@ public class KharaCompletionTests
     }
 
     
-    [Fact]
+    [DataFact]
     public void LoginVectors_ReproduceARetail2310()
     {
         
@@ -373,7 +373,7 @@ public class KharaCompletionTests
         Assert.Equal(retail, Hex(w.ToArray()));
     }
 
-    [Fact]
+    [DataFact]
     public void LoginVectors_WithoutState_AreTwoEmptyVectors()
     {
         
@@ -383,7 +383,7 @@ public class KharaCompletionTests
         Assert.Equal("00000000", Hex(w.ToArray()));
     }
 
-    [Fact]
+    [DataFact]
     public void ConditionRows_MatchTheRetailProgressVectorLength()
     {
         

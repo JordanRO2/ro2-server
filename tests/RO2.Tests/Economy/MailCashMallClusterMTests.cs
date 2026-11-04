@@ -40,7 +40,7 @@ public class MailCashMallClusterMTests
 
     // ---------------------------------------------------------------- E-H7: item claim
 
-    [Fact]
+    [DataFact]
     public async Task TwoConcurrentItemClaims_ExactlyOneWins_UnderEveryInterleaving()
     {
         EconomySnapshot before = null!;
@@ -78,7 +78,7 @@ public class MailCashMallClusterMTests
         Assert.True(summary.Runs >= 1);
     }
 
-    [Fact]
+    [DataFact]
     public async Task ClaimItem_SecondClaimGetsNothing()
     {
         var fx = new EconomyFixture();
@@ -94,7 +94,7 @@ public class MailCashMallClusterMTests
         Assert.Single(fx.Inventory.Rows);
     }
 
-    [Fact]
+    [DataFact]
     public async Task ClaimItem_FaultAfterNewRowPlacement_LeavesMailClaimable_NoItemMinted()
     {
         var fx = new EconomyFixture();
@@ -118,7 +118,7 @@ public class MailCashMallClusterMTests
         EconomyFixture.CheckAll(before, fx.Snapshot());
     }
 
-    [Fact]
+    [DataFact]
     public async Task ClaimItem_FaultAfterStackJoin_RestoresTheStackAndTheMail()
     {
         var fx = new EconomyFixture();
@@ -136,7 +136,7 @@ public class MailCashMallClusterMTests
         EconomyFixture.CheckAll(before, fx.Snapshot());
     }
 
-    [Fact]
+    [DataFact]
     public async Task ClaimItem_NoRoom_NeverTouchesTheFlag()
     {
         var fx = new EconomyFixture();
@@ -151,7 +151,7 @@ public class MailCashMallClusterMTests
 
     // ---------------------------------------------------------------- E-H7: zeny claim
 
-    [Fact]
+    [DataFact]
     public async Task TwoConcurrentZenyClaims_ExactlyOneWins_UnderEveryInterleaving()
     {
         var summary = await RepoScheduler.ExploreAllAsync(
@@ -188,7 +188,7 @@ public class MailCashMallClusterMTests
         }
     }
 
-    [Fact]
+    [DataFact]
     public async Task ZenyClaim_ConservesZenyAcrossMailAndWallet()
     {
         var fx = new EconomyFixture();
@@ -209,7 +209,7 @@ public class MailCashMallClusterMTests
 
     // ---------------------------------------------------------------- E-H5-mail
 
-    [Fact]
+    [DataFact]
     public void MailAttachment_UntradeableOrBound_IsRefused()
     {
         var items = new Dictionary<uint, ItemData>
@@ -232,7 +232,7 @@ public class MailCashMallClusterMTests
     // blob [u16 12][tag 0xE352][owner PC handle 0x06485A11][mailbox NPC handle 0x0001C013].
     private const string Retail1394Hex = "010c0c0052e3115a480613c00100";
 
-    [Fact]
+    [DataFact]
     public void MailboxOpen_ReadsTheNpcHandleAtBlobPlus8()
     {
         Assert.True(MailListHandler.TryReadNpcHandle(Convert.FromHexString(Retail1394Hex), out var handle));
@@ -243,7 +243,7 @@ public class MailCashMallClusterMTests
         Assert.False(MailListHandler.TryReadNpcHandle(ReadOnlySpan<byte>.Empty, out _));
     }
 
-    [Fact]
+    [DataFact]
     public void MailboxOpen_NeedsALivingPlayerOnTheNpcsMapInReach()
     {
         var npc = new NpcRuntimeState { MapId = 1100, PosX = 10, PosY = 10 };
@@ -278,7 +278,7 @@ public class MailCashMallClusterMTests
         return framed;
     }
 
-    [Fact]
+    [DataFact]
     public void Purchase_OversizedLineCountIsRefused_ButTheRetailShapeParses()
     {
         Assert.True(GameMallPurchaseHandler.TryParse(BuyWithLines(1), out _));          // a normal buy has n = 1
@@ -286,7 +286,7 @@ public class MailCashMallClusterMTests
         Assert.False(GameMallPurchaseHandler.TryParse(BuyWithLines(ushort.MaxValue), out _));  // n = 65535, a full body
     }
 
-    [Fact]
+    [DataFact]
     public void Purchase_QuantityAboveTheCap_IsRefused()
     {
         var catalog = CashMallCatalog.Load(Packets.GameMall2866And2868Tests.CatalogPath());
@@ -321,7 +321,7 @@ public class MailCashMallClusterMTests
             => Task.FromResult(true);
     }
 
-    [Fact]
+    [DataFact]
     public async Task ThousandWrongGiftPasswords_LockTheAccountOutAfterK()
     {
         var gate = new GiftPasswordGate();
@@ -337,7 +337,7 @@ public class MailCashMallClusterMTests
         Assert.True(await gate.CheckAsync(store, 8, "1234", CancellationToken.None));  // another account is untouched
     }
 
-    [Fact]
+    [DataFact]
     public async Task CorrectGiftPassword_ClearsTheBudget_AndNoPasswordIsNeverThrottled()
     {
         var gate = new GiftPasswordGate();
@@ -356,7 +356,7 @@ public class MailCashMallClusterMTests
 
     // ---------------------------------------------------------------- E-H12: find-char throttle
 
-    [Fact]
+    [DataFact]
     public void FindChar_IsThrottledPerSession()
     {
         const uint session = 0xFA110001, other = 0xFA110002;

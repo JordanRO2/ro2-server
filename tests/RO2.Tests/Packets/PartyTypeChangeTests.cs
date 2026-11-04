@@ -16,7 +16,7 @@ namespace RO2.Tests.Packets;
 /// </summary>
 public class PartyTypeChangeTests
 {
-    [Fact]
+    [DataFact]
     public void AnsPartyTypeChange_2691_MatchesRetailFrames()
     {
         
@@ -28,7 +28,7 @@ public class PartyTypeChangeTests
 
  /// The accepted change through the handler: the leader gets 2691 and then the roster; the other online member gets
  /// 2692 and then the same roster, whose header carries type 2 at payload+8. A map the store does not hold is not a dungeon map.
-    [Fact]
+    [DataFact]
     public async Task AcceptedChange_AnswersNotifiesAndRefillsTheRoster()
     {
         await using var rig = await PartyWireRig.StartAsync(3);
@@ -58,7 +58,7 @@ public class PartyTypeChangeTests
 
  /// A full party change: each of the four other members receives one 2692 followed by the roster carrying type 2,
  /// as the leader does. The roster is sent immediately rather than on a periodic cadence.
-    [Fact]
+    [DataFact]
     public async Task AcceptedChange_InAFivePersonParty_NotifiesEachOtherMemberOnce()
     {
         await using var rig = await PartyWireRig.StartAsync(5);
@@ -85,7 +85,7 @@ public class PartyTypeChangeTests
 
  /// A member whose character has left the world gets neither the 2692 nor the roster, and the roster the others
  /// receive lists it offline (rec+53 = 0). Every party send follows the same online-member rule (GetOnlineMember).
-    [Fact]
+    [DataFact]
     public async Task AcceptedChange_SkipsAMemberWhoseCharacterIsOutOfTheWorld()
     {
         await using var rig = await PartyWireRig.StartAsync(3);
@@ -113,7 +113,7 @@ public class PartyTypeChangeTests
 
  /// The refusal: the leader alone receives 2691 code 15719, the type stays 0, and no 2692 or roster is sent.
  /// A request from a member who is not the leader is not answered.
-    [Fact]
+    [DataFact]
     public async Task LeaderOnADungeonMap_IsRefusedWith15719_AndNothingChanges()
     {
         await using var rig = await PartyWireRig.StartAsync(2);
@@ -133,7 +133,7 @@ public class PartyTypeChangeTests
 
  /// The dungeon-map rule over data/Map_List.json: the maps of the refused changes are dungeon maps, and none of
  /// the maps of the accepted changes is.
-    [Theory]
+    [DataTheory]
     [InlineData(421203u, true)]
     [InlineData(410203u, true)]
     [InlineData(1100u, false)]
@@ -145,7 +145,7 @@ public class PartyTypeChangeTests
         Assert.Equal(dungeon, PartyTypeChangeHandler.IsDungeonMap(row));
     }
 
-    [Fact]
+    [DataFact]
     public void MapMissingFromMapList_IsNotADungeonMap()
         => Assert.False(PartyTypeChangeHandler.IsDungeonMap(null));
 

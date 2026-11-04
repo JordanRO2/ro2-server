@@ -42,7 +42,7 @@ public class Reaudit2_B1_Tests
     private const uint InstanceMap = 426101; 
 
     
-    [Fact]
+    [DataFact]
     public void EmptyInstance_IsAnsweredAt185s_AndSilentPastTenMinutes()
     {
         
@@ -77,7 +77,7 @@ public class Reaudit2_B1_Tests
         Assert.True(registry.Enter(owner, 64, InstanceMap, character) is { IsNewInstance: true, CountsForCharacter: true });
     }
 
-    [Fact]
+    [DataFact]
     public void UnvisitedOrOccupiedInstance_HasNoEmptyClock()
     {
         
@@ -102,7 +102,7 @@ public class Reaudit2_B1_Tests
         Assert.Null(registry.ForgetLoadedMap(b));                   
     }
 
-    [Fact]
+    [DataFact]
     public void ReturnOrReEntry_StopsTheEmptyClock()
     {
         var clock = new ManualClock(new DateTimeOffset(2026, 7, 18, 4, 0, 0, TimeSpan.Zero));
@@ -124,7 +124,7 @@ public class Reaudit2_B1_Tests
         Assert.Equal(new byte[] { 64 }, registry.Reset(owner, Prontera, character));
     }
 
-    [Fact]
+    [DataFact]
     public void LeavingTheWorld_StartsTheClock_UnlessAnotherSessionHoldsTheCharacter()
     {
         
@@ -160,7 +160,7 @@ public class Reaudit2_B1_Tests
     
     private static DateTime At(int day, int h, int m, int s, int ms) => new(2026, 7, day, h, m, s, ms, DateTimeKind.Utc);
 
-    [Fact]
+    [DataFact]
     public void Logout_StopsTheClock_TheNextLoginReadsWhatItLeft_Archive007b335e()
     {
         
@@ -214,7 +214,7 @@ public class Reaudit2_B1_Tests
         }
     }
 
-    [Fact]
+    [DataFact]
     public void Colosseum_StopsTheClock_Archive15100617Fb30()
     {
         
@@ -261,7 +261,7 @@ public class Reaudit2_B1_Tests
         }
     }
 
-    [Fact]
+    [DataFact]
     public void PlayClock_OnlyMap4109StopsIt_AndAnUnknownCharacterReadsTheWallClock()
     {
         
@@ -288,7 +288,7 @@ public class Reaudit2_B1_Tests
         }
     }
 
-    [Fact]
+    [DataFact]
     public void TitleOf_TakesTheRetailBlock()
     {
         var rows = KharaRows.Value;

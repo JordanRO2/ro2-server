@@ -19,7 +19,7 @@ namespace RO2.Tests.Packets;
 public class NameFilterRuleReauditTests
 {
     
-    [Theory]
+    [DataTheory]
     
     [InlineData("iRO2GM", 15403u)]
     [InlineData("iRO2GM1", 15403u)]
@@ -31,7 +31,7 @@ public class NameFilterRuleReauditTests
         Assert.Equal(retail, CharacterRename.Code(refusal));
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData("Sigma", NameRefusal.None)]          
     [InlineData("iRO2Warrior", NameRefusal.None)]    
     [InlineData("PSFARMSTONE", NameRefusal.None)]    
@@ -40,7 +40,7 @@ public class NameFilterRuleReauditTests
     public void NameRule_WithTheRealNameFilter(string name, NameRefusal expected)
         => Assert.Equal(expected, NameRules.Check(name, LoadNameFilter()).refusal);
 
-    [Fact]
+    [DataFact]
     public void ContainedGmRule_NeedsTheNameFilterRow()
     {
         

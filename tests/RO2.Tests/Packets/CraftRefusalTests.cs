@@ -27,7 +27,7 @@ public class CraftRefusalTests
     private static CraftItemList? Recipe(ushort id) => Recipes.Value.FirstOrDefault(r => r.ID == id);
     private static CraftMaterial? MaterialRow(ushort id) => Materials.Value.FirstOrDefault(m => m.ID == id);
 
-    [Theory]
+    [DataTheory]
     
     
     [InlineData(0x01C65311u, CraftItemHandler.ResultBatchRunning, "010a0a0016e41153c6016358")]
@@ -38,14 +38,14 @@ public class CraftRefusalTests
     public void AckMakeCraftItem2539_ReproducesEachRetailRefusal(uint crafter, short result, string retailHex) =>
         Assert.Equal(Convert.FromHexString(retailHex), ShopItemPackets.BuildAckMakeCraftItem2539(crafter, result));
 
-    [Fact]
+    [DataFact]
     public void AckMakeCraftItem2539_DefaultIsTheStartAck() =>
         
         
         Assert.Equal(Convert.FromHexString("010a0a0016e411bb5f0e0000"),
             ShopItemPackets.BuildAckMakeCraftItem2539(0x0E5FBB11u));
 
-    [Fact]
+    [DataFact]
     public void Request1349_OfTheNotLearnedRefusal_NamesRecipe1700()
     {
         
@@ -58,12 +58,12 @@ public class CraftRefusalTests
         Assert.Null(Recipe(1700));
     }
 
-    [Fact]
+    [DataFact]
     public void RecipeWithNoRow_IsNotLearned() =>
         Assert.Equal(CraftItemHandler.ResultNotLearned,
             CraftItemHandler.RefusalCode(Recipe(1700), MaterialRow(1700), new ushort[] { 1700 }, Array.Empty<InventoryItem>()));
 
-    [Fact]
+    [DataFact]
     public void RecipeOutsideTheKnownSet_IsNotLearned()
     {
         
@@ -75,7 +75,7 @@ public class CraftRefusalTests
             CraftItemHandler.RefusalCode(Recipe(1620), MaterialRow(1620), known, BagFor(1620, 1)));
     }
 
-    [Fact]
+    [DataFact]
     public void KnownRecipeShortOfMaterials_IsNoMaterial()
     {
         
@@ -86,11 +86,11 @@ public class CraftRefusalTests
             CraftItemHandler.RefusalCode(Recipe(1598), MaterialRow(1598), new ushort[] { 1598 }, bag));
     }
 
-    [Fact]
+    [DataFact]
     public void KnownRecipeWithItsMaterials_IsNotRefused() =>
         Assert.Null(CraftItemHandler.RefusalCode(Recipe(1598), MaterialRow(1598), new ushort[] { 1598 }, BagFor(1598, 1)));
 
-    [Fact]
+    [DataFact]
     public void MaterialsOnlyInTheBank_DoNotCount()
     {
         var bag = BagFor(1598, 1);
@@ -99,7 +99,7 @@ public class CraftRefusalTests
             CraftItemHandler.RefusalCode(Recipe(1598), MaterialRow(1598), new ushort[] { 1598 }, bag));
     }
 
-    [Fact]
+    [DataFact]
     public async Task SecondClaimWhileABatchHoldsTheSlot_IsRefused()
     {
         const uint session = 0xA3C0_0001u;
@@ -121,7 +121,7 @@ public class CraftRefusalTests
         Assert.False(await CraftItemHandler.StopBatchAsync(session));
     }
 
-    [Fact]
+    [DataFact]
     public async Task CancelDuringTheStartChecks_WaitsForTheStartToBeSent()
     {
         

@@ -39,7 +39,7 @@ public class Reaudit_B0_Tests
         new(() => GuildSkillLearnPackets.Index(Table<GuildSkillLevel>("Guild_Skill_Level.json")));
 
     
-    [Fact]
+    [DataFact]
     public void Card2588_MatchesTheRetailWarpBurstFrame()
     {
         
@@ -49,7 +49,7 @@ public class Reaudit_B0_Tests
     }
 
     
-    [Theory]
+    [DataTheory]
     
     [InlineData(1, 1, 2, 1)]          
     [InlineData(23, 8, 3, 1)]         
@@ -70,7 +70,7 @@ public class Reaudit_B0_Tests
         }
     }
 
-    [Fact]
+    [DataFact]
     public void Regen_DecimalCoefficient_DoesNotFloorOneLowOnAWholeProduct()
     {
         
@@ -78,7 +78,7 @@ public class Reaudit_B0_Tests
         Assert.Equal((ushort)5, h);
     }
 
-    [Fact]
+    [DataFact]
     public void Regen_AddsTheWornHpAndSpRestoreTraits()
     {
         var gear = new EquipStats(new Dictionary<byte, int> { [28] = 40, [29] = 7 }, new Dictionary<byte, float>());
@@ -88,7 +88,7 @@ public class Reaudit_B0_Tests
         Assert.Equal(((ushort?)null, (ushort?)null), TraitPackets.RegenAmounts((PCBaseStatus?)null, 251, 251, gear));
     }
 
-    [Fact]
+    [DataFact]
     public void PcTrait2498_RegenSlots_RebuildTheRetailFrame()
     {
         
@@ -132,7 +132,7 @@ public class Reaudit_B0_Tests
         return w.ToArray();
     }
 
-    [Fact]
+    [DataFact]
     public void Detail2310_VitalsHideFlagAndSkillList_MatchRetail()
     {
         var vec1 = Convert.FromHexString(RetailVec1);
@@ -150,7 +150,7 @@ public class Reaudit_B0_Tests
         Assert.Equal(RetailVec1, Convert.ToHexString(body.AsSpan(4 + 205, vec1.Length)).ToLowerInvariant());
     }
 
-    [Fact]
+    [DataFact]
     public void PcRecordPlus67_IsTheHideFlagThe2310Carries_NotMasterLevel()
     {
         
@@ -181,7 +181,7 @@ public class Reaudit_B0_Tests
         Assert.Equal(Character.DefaultEquipHideFlag, BinaryPrimitives.ReadUInt16LittleEndian(rec2.GetWrittenSpan().Slice(67, 2)));
     }
 
-    [Fact]
+    [DataFact]
     public void Detail2310_StatBlock_RepeatsTheVitals()
     {
         
@@ -195,7 +195,7 @@ public class Reaudit_B0_Tests
         Assert.Equal(120u, BinaryPrimitives.ReadUInt32LittleEndian(body.AsSpan(4 + 85)));
     }
 
-    [Fact]
+    [DataFact]
     public void VitalsOf_ReadsTheBurst2498()
     {
         var sheet = TraitPackets.BuildPcTrait2498(6698, 4718, 6000, 4000);
@@ -204,7 +204,7 @@ public class Reaudit_B0_Tests
     }
 
     
-    [Fact]
+    [DataFact]
     public void TitleOf_IsTheFirstNonZeroRewardTitle()
     {
         Assert.Equal(206u, KharaTitleStore.TitleOf(572, Khara.Value));   
@@ -214,7 +214,7 @@ public class Reaudit_B0_Tests
         Assert.Equal(0u, KharaTitleStore.TitleOf(0, Khara.Value));
     }
 
-    [Fact]
+    [DataFact]
     public void Head2310_CarriesThePublishedTitles_AsRetail()
     {
         
@@ -247,7 +247,7 @@ public class Reaudit_B0_Tests
         Assert.Null(KharaTitleStore.PublishedFor(charId));
     }
 
-    [Fact]
+    [DataFact]
     public void PcRecord_TitleBits_AreWrittenInBitOrder()
     {
         
@@ -274,7 +274,7 @@ public class Reaudit_B0_Tests
     }
 
     
-    [Fact]
+    [DataFact]
     public void ItemRecord_AbilityValue_IsTheInstancesWhenSet()
     {
         
@@ -286,7 +286,7 @@ public class Reaudit_B0_Tests
         Assert.Equal(1417u, ItemPackets.RecordAbilityValue(13472531, 1417));
     }
 
-    [Fact]
+    [DataFact]
     public void AbilityValue_SurvivesTheCopyAndTheMail()
     {
         var src = new InventoryItem { ItemId = 33000712, AbilityValue = 0 };
@@ -333,7 +333,7 @@ public class Reaudit_B0_Tests
 
     private static readonly Dictionary<uint, byte> OwnThree = new() { [4101] = 1, [4103] = 1, [4108] = 1 };
 
-    [Fact]
+    [DataFact]
     public void GuildLinkBurst_MatchesTheRetailBurst_ByteForByte()
     {
         var burst = UseSkillListLedger.PlanGuildLinkBurst(OwnThree, new Dictionary<uint, byte>(OwnThree), GuildLines2723(),
@@ -344,7 +344,7 @@ public class Reaudit_B0_Tests
             Assert.Equal(RetailBurst[i], Convert.ToHexString(SkillPackets.BuildUseSkillList2488(burst[i])).ToLowerInvariant());
     }
 
-    [Fact]
+    [DataFact]
     public void GuildLinkBurst_NoneWhenTheLinksAreHeld_OrNothingWasSent()
     {
         var lines = GuildLines2723();

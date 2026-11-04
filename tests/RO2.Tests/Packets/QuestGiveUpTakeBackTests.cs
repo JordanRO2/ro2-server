@@ -27,7 +27,7 @@ public class QuestGiveUpTakeBackTests
         => Rows.Value[questId].Select(r => new QuestAcceptHandler.QuestActionRow(
             r.Quest_ID, r.Active_Type, r.Action_Type, r.Action_Value1, r.Action_Value2));
 
-    [Fact]
+    [DataFact]
     public void ATwoRowQuest_GivesBackBothItems_InRetailsOrder()
     {
         
@@ -35,7 +35,7 @@ public class QuestGiveUpTakeBackTests
             QuestAcceptHandler.SelectAcceptGrants(ActionRows(213010250)));
     }
 
-    [Fact]
+    [DataFact]
     public void AnActiveType3GiveRow_IsNotTakenBack()
     {
         
@@ -43,7 +43,7 @@ public class QuestGiveUpTakeBackTests
         Assert.Empty(QuestAcceptHandler.SelectAcceptGrants(ActionRows(111150003)));
     }
 
-    [Fact]
+    [DataFact]
     public void NoQuestNamesOneItemInTwoGiveRows_SoOneBagReadServesEveryRow()
     {
         

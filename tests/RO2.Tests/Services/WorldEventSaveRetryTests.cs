@@ -53,7 +53,7 @@ public class WorldEventSaveRetryTests
         return store;
     }
 
-    [Fact]
+    [DataFact]
     public async Task OfferingWhoseSaveFailedIsStoredByTheNextTimerPass()
     {
         var players = new PlayerStateManager(new NoDirtySink());

@@ -14,7 +14,7 @@ public class ProfessionExpPacketsTests
 {
     private static string Hex(byte[] b) => Convert.ToHexString(b).ToLowerInvariant();
 
-    [Fact]
+    [DataFact]
     public void ExpChange2526_MatchesRetailFrame()
     {
         
@@ -22,7 +22,7 @@ public class ProfessionExpPacketsTests
             Hex(ProfessionExpPackets.BuildProJobExpChange2526(14479, 42)));
     }
 
-    [Fact]
+    [DataFact]
     public void LevelCrossing_MatchesRetailPair()
     {
         
@@ -33,7 +33,7 @@ public class ProfessionExpPacketsTests
             Hex(ProfessionExpPackets.BuildProJobLevelUp2527(0x031AD211, 16)));
     }
 
-    [Fact]
+    [DataFact]
     public async Task Apply_ReproducesTheDumpsLevelCrossings()
     {
         var table = await LoadExpTableAsync();
@@ -50,7 +50,7 @@ public class ProfessionExpPacketsTests
         Assert.Equal(new JobExpRules.Result(15, 23026, false), JobExpRules.Apply(15, 22984, 42, table));
     }
 
-    [Fact]
+    [DataFact]
     public async Task ExpToReach_EndsExactlyAtTheTarget()
     {
         var table = await LoadExpTableAsync();
@@ -69,7 +69,7 @@ public class ProfessionExpPacketsTests
  /// Job thresholds are read from Base_Exp_Next, because GameDataStore does not load Pro_Exp_Next. This holds only while
  /// the two columns are equal, which this test checks together with the level cap of 50.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task ProExpNext_EqualsBaseExpNext_OnEveryRow()
     {
         await using var file = File.OpenRead(Path.Combine(DataDirectory(), "BaseExpTable.json"));

@@ -35,7 +35,7 @@ public class CastPathHardeningTests
 
     // ---- CB-H1 / CB-G2: the cast level --------------------------------------------------------------------------------
 
-    [Fact]
+    [DataFact]
     public void Gate_LearnedLevel1_SentAsLevel10_IsRefused_ForGroundAndNpcCasts()
     {
         var npc = new GateTarget(Map, 3, 0, false);
@@ -47,7 +47,7 @@ public class CastPathHardeningTests
         Assert.Equal(ActorRefusal.None, SkillDamageHandler.EvaluateDamageGate(Actor(5), L5, npc, 10f));
     }
 
-    [Fact]
+    [DataFact]
     public void Gate_LevelAboveTheTableMax_OrLevelZero_IsRefused()
     {
         // learned 10 but the group's Max_Skill_Level is 5
@@ -59,7 +59,7 @@ public class CastPathHardeningTests
         Assert.Equal(ActorRefusal.SkillNotLearned, SkillDamageHandler.EvaluateDamageGate(Actor(5), 312400, null, 10f));
     }
 
-    [Fact]
+    [DataFact]
     public void Gate_DoesNotRaiseTheLevelRule_ForItemSkills_AndKeepsTheEarlierRefusals()
     {
         var none = new GateActor(Map, 0, 0, false, new Dictionary<uint, byte>());
@@ -72,7 +72,7 @@ public class CastPathHardeningTests
             new GateTarget(Map, 1, 0, false), 10f));
     }
 
-    [Fact]
+    [DataFact]
     public async Task TryGetSkillLevelLimit_ReadsTheTalentTable_AndClampCastLevelUsesIt()
     {
         var store = await LoadStoreAsync("Talent_Table.json");
@@ -164,7 +164,7 @@ public class CastPathHardeningTests
         await rig.AssertNothingQueuedAsync();   // no 2716, no 2962
     }
 
-    [Fact]
+    [DataFact]
     public async Task SkillStart_DeadCaster_GetsTheSilent2715_NoPendingCast_NoSpSpent()
     {
         var store = await LoadStoreAsync("Talent_Table.json", "Skill_Table_SkillLevel.json");
@@ -182,7 +182,7 @@ public class CastPathHardeningTests
         Assert.Empty(rig.Caster.SkillCooldowns);
     }
 
-    [Fact]
+    [DataFact]
     public async Task SkillStart_TalentSkill_NotLearned_OrWithNoTableRow_IsRefused_NothingRecorded()
     {
         var store = await LoadStoreAsync("Talent_Table.json", "Skill_Table_SkillLevel.json");
@@ -204,7 +204,7 @@ public class CastPathHardeningTests
         Assert.Empty(rig.Caster.RecentSkillStart);
     }
 
-    [Fact]
+    [DataFact]
     public async Task SkillStart_LearnedTalentSkill_IsStillAccepted_AndRecordsRecentSkillStartOnlyWhenAccepted()
     {
         var store = await LoadStoreAsync("Talent_Table.json", "Skill_Table_SkillLevel.json");
@@ -243,7 +243,7 @@ public class CastPathHardeningTests
 
     // ---- CB-H3: the 1549 tick ledger ----------------------------------------------------------------------------------
 
-    [Fact]
+    [DataFact]
     public void TickLedger_ExactReplayOfTheLastSequence_IsRefused_DecreasingIsAllowed()
     {
         var p = new PlayerState();
@@ -258,7 +258,7 @@ public class CastPathHardeningTests
         Assert.True(SkillCastLandings.TryAcceptTick(p, L5, 9, t.AddSeconds(4)));
     }
 
-    [Fact]
+    [DataFact]
     public void TickLedger_BurstInsideTheIntervalFloor_LandsOnce()
     {
         var p = new PlayerState();
@@ -270,7 +270,7 @@ public class CastPathHardeningTests
         Assert.True(SkillCastLandings.TryAcceptTick(p, L5, 21, t.AddMilliseconds(10) + SkillCastLandings.MinTickInterval));
     }
 
-    [Fact]
+    [DataFact]
     public void TickLedger_CapsTheCount_AndRestartsWithAFreshCast()
     {
         var p = new PlayerState();
@@ -289,7 +289,7 @@ public class CastPathHardeningTests
         Assert.True(SkillCastLandings.TryAcceptTick(p, 412105, 1, t.AddSeconds(62)));
     }
 
-    [Fact]
+    [DataFact]
     public void TickLedger_EndsWithTheCastItBelongsTo()
     {
         var p = new PlayerState();
@@ -316,7 +316,7 @@ public class CastPathHardeningTests
     private static SkillCastingStartHandler CastingStartHandler(Rig rig)
         => new(rig.Scopes, NullLogger<SkillCastingStartHandler>.Instance, rig.Players, rig.Broadcast);
 
-    [Fact]
+    [DataFact]
     public async Task CastingStart_NonFinitePosition_OrUnknownSkill_BroadcastsNothing()
     {
         var store = await LoadStoreAsync("Skill_Table_SkillLevel.json");
@@ -331,7 +331,7 @@ public class CastPathHardeningTests
         Assert.False(SkillCastLandings.IsCasting(rig.Caster, L5, DateTime.UtcNow));
     }
 
-    [Fact]
+    [DataFact]
     public async Task CastingStart_DeadOrUnloadedCaster_BroadcastsNothing()
     {
         var store = await LoadStoreAsync("Skill_Table_SkillLevel.json");
@@ -347,7 +347,7 @@ public class CastPathHardeningTests
         await rig.AssertNothingQueuedAsync(1);
     }
 
-    [Fact]
+    [DataFact]
     public async Task CastingStart_ValidRequest_IsBroadcast_WithTheFarPositionClamped()
     {
         var store = await LoadStoreAsync("Skill_Table_SkillLevel.json");
@@ -373,7 +373,7 @@ public class CastPathHardeningTests
         return req;
     }
 
-    [Fact]
+    [DataFact]
     public async Task CastingCancel_WithNoOpenCast_AnswersTheCaster_ButBroadcastsNothingToOthers()
     {
         var store = await LoadStoreAsync("Skill_Table_SkillLevel.json");
@@ -385,7 +385,7 @@ public class CastPathHardeningTests
         await rig.AssertNothingQueuedAsync(1);                                                              // no map broadcast
     }
 
-    [Fact]
+    [DataFact]
     public async Task CastingCancel_OfAnOpenCast_IsBroadcast_OnceTheBarIsClosed()
     {
         var store = await LoadStoreAsync("Skill_Table_SkillLevel.json");
@@ -405,7 +405,7 @@ public class CastPathHardeningTests
         await rig.AssertNothingQueuedAsync(1);
     }
 
-    [Fact]
+    [DataFact]
     public void ActiveCast_IsAnOpenBar_OrAnUnexpiredPendingCastOfThatExactId()
     {
         var p = new PlayerState();
@@ -435,7 +435,7 @@ public class CastPathHardeningTests
         return req;
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData((byte)1, false)]   // worn
     [InlineData((byte)2, false)]   // bank
     [InlineData((byte)3, false)]   // an extra-bag item
@@ -471,7 +471,7 @@ public class CastPathHardeningTests
         Assert.Equal(0, SkillCastLandings.PendingCount(rig.Caster, DateTime.UtcNow));
     }
 
-    [Fact]
+    [DataFact]
     public async Task ItemSkill_DeadCaster_GetsTheLone2711_NothingConsumed()
     {
         const ulong uid = 0xB0A8u;

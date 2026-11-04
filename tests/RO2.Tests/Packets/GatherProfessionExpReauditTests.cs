@@ -26,7 +26,7 @@ public class GatherProfessionExpReauditTests
 {
     
  /// <summary>The 2526 builder against a reference gather frame (experience 268, gain 86).</summary>
-    [Fact]
+    [DataFact]
     public void ProJobExpChange2526_IsTheDumpGatherFrame()
         => Assert.Equal("011818001be4000000000c010000000000005600000000000000",
             Hex(ProfessionExpPackets.BuildProJobExpChange2526(268, 86)));
@@ -36,7 +36,7 @@ public class GatherProfessionExpReauditTests
  /// effect's trait-76 rate of 3,000 raises it to Action_Value1 or floor(gain x 1.3); for example 86 becomes
  /// 111 and 5 becomes 6.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task GatherProfessionExp_IsActionValue1_RaisedByTrait76()
     {
         var store = await LoadStoreAsync("FuncAction.json", "Effect_Table.json");

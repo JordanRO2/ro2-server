@@ -27,7 +27,7 @@ public class FuncObjectActionsTests
 
     private static string Hex(byte[] b) => Convert.ToHexString(b).ToLowerInvariant();
 
-    [Fact]
+    [DataFact]
     public void DungeonEntrance_ResolvesToItsGroup_AndThe2741IsRetails()
     {
         
@@ -38,7 +38,7 @@ public class FuncObjectActionsTests
         Assert.Equal("0200000002000000", Hex(FuncObjectRewardPackets.BuildDungeonLevelSelect2741(action.Value)));
     }
 
-    [Fact]
+    [DataFact]
     public void Portal_ResolvesToAPositionInfoRow_AndThe2521IsRetails()
     {
         
@@ -51,7 +51,7 @@ public class FuncObjectActionsTests
         Assert.Equal("01101000fae30000000014c9110000000000", Hex(NpcRewardHandler.BuildFuncObjectEnd2521(0x0011C914u, 0)));
     }
 
-    [Fact]
+    [DataFact]
     public void EveryPortalRow_NamesAPositionInfoRow()
     {
         var positions = PositionTable.Value.Select(p => p.Position_ID).ToHashSet();
@@ -60,7 +60,7 @@ public class FuncObjectActionsTests
         Assert.All(portals, r => Assert.Contains(r.Action_Value1, positions));
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData(80012130u)]   
     [InlineData(80372000u)]   
     [InlineData(80010960u)]   
@@ -69,7 +69,7 @@ public class FuncObjectActionsTests
         => Assert.Equal(FuncObjectActionKind.None,
             FuncObjectActions.Resolve(FuncObjectActions.IndexActions(FuncActionTable.Value), templateId).Kind);
 
-    [Fact]
+    [DataFact]
     public void GatherEnd_2519And2521_AreRetails()
     {
         
@@ -78,7 +78,7 @@ public class FuncObjectActionsTests
         Assert.Equal("01101000fae30000000014b7080000000000", Hex(NpcRewardHandler.BuildFuncObjectEnd2521(0x0008B714u, 0)));
     }
 
-    [Fact]
+    [DataFact]
     public void BagFull_2519And2521_CarryRetails22208()
     {
         
@@ -88,7 +88,7 @@ public class FuncObjectActionsTests
             Hex(NpcRewardHandler.BuildFuncObjectEnd2521(0x0003F514u, FuncObjectRewardPackets.BagFullMessageId)));
     }
 
-    [Fact]
+    [DataFact]
     public void Roll_OfTheOneRowNode_PaysItsItemOnce()
     {
         
@@ -96,7 +96,7 @@ public class FuncObjectActionsTests
         Assert.Equal(new[] { (40001252u, 1) }, FuncObjectActions.Roll(rows, new Random(1)));
     }
 
-    [Fact]
+    [DataFact]
     public void Roll_DrawsEachRowOnItsRate_AndTheCountOverMinToMax()
     {
         
@@ -128,7 +128,7 @@ public class FuncObjectActionsTests
         Assert.InRange(counts[1] / (double)paid[11], 0.47, 0.53);
     }
 
-    [Fact]
+    [DataFact]
     public void EveryRewardGroup_NamesDistinctItems()
     {
         

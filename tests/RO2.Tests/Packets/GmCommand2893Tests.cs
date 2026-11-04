@@ -15,7 +15,7 @@ public class GmCommand2893Tests
 {
     private static string Hex(byte[] b) => Convert.ToHexString(b).ToLowerInvariant();
 
-    [Fact]
+    [DataFact]
     public void PcLocation_PinsTheReaderLayout()
     {
         var body = GmCommandPackets.BuildAnsGmCommand2893(GmCommandPackets.PcLocation, "1100 1.5,2,3");
@@ -24,14 +24,14 @@ public class GmCommand2893Tests
         Assert.Equal("1c000000" + "0a00" + "0c00" + Hex(Encoding.Unicode.GetBytes("1100 1.5,2,3")), Hex(body));
     }
 
-    [Fact]
+    [DataFact]
     public void EmptyArgument_IsCountZero()
     {
         
         Assert.Equal("04000000" + "0400" + "0000", Hex(GmCommandPackets.BuildAnsGmCommand2893(GmCommandPackets.GmGrade, "")));
     }
 
-    [Fact]
+    [DataFact]
     public void ReadsBackTheWayTheClientReaderDoes()
     {
         const string name = "J0K3R zufafah";
@@ -46,7 +46,7 @@ public class GmCommand2893Tests
         Assert.Equal(name, Encoding.Unicode.GetString(inner.Slice(4, 2 * n)));
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData(0)]    
     [InlineData(31)]   
     [InlineData(32)]   
@@ -59,7 +59,7 @@ public class GmCommand2893Tests
  /// Each code the server sends names the client string it is meant to show: 2000000160 + code in
  /// data/strings/string_etc.json, with an @1 for the argument.
  /// </summary>
-    [Theory]
+    [DataTheory]
     [InlineData(GmCommandPackets.PcNotFoundByName, "Not Founded PC. Name: @1")]
     [InlineData(GmCommandPackets.GmGrade, "GM grade : @1")]
     [InlineData(GmCommandPackets.ItemNotFound, "Not Founded Item. Index: @1")]

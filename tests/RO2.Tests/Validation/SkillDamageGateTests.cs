@@ -43,7 +43,7 @@ public class SkillDamageGateTests
         => SkillDamageHandler.EvaluateDamageGate(actor, Skill, target, reach);
 
     
-    [Fact]
+    [DataFact]
     public void ForgedDamageWithNoStartIsRefused_TargetUntouched()
     {
         
@@ -51,7 +51,7 @@ public class SkillDamageGateTests
         Assert.False(SkillCastLandings.TryGovern(p, Skill, DateTime.UtcNow, consume: true, out _));
     }
 
-    [Fact]
+    [DataFact]
     public void LegitStartThenDamageIsGoverned_AndDealsTheCastSkillsRate()
     {
         
@@ -65,19 +65,19 @@ public class SkillDamageGateTests
         Assert.Equal(ActorRefusal.None, Gate(Hero(), Npc(3, 0)));
     }
 
-    [Fact]
+    [DataFact]
     public void CrossMapTargetIsRefused()
         => Assert.Equal(ActorRefusal.CrossMap, Gate(Hero(), Npc(1, 0, map: 1200)));
 
-    [Fact]
+    [DataFact]
     public void OutOfRangeTargetIsRefused()
         => Assert.Equal(ActorRefusal.OutOfRange, Gate(Hero(), Npc(Reach + 1f, 0)));
 
-    [Fact]
+    [DataFact]
     public void DeadTargetIsRefused()
         => Assert.Equal(ActorRefusal.TargetDead, Gate(Hero(), Npc(1, 0, dead: true)));
 
-    [Fact]
+    [DataFact]
     public void UnlearnedSkillIsRefused_WithOrWithoutATarget()
     {
         var noSkill = new GateActor(Map, 0, 0, false, new Dictionary<uint, byte>());
@@ -85,11 +85,11 @@ public class SkillDamageGateTests
         Assert.Equal(ActorRefusal.SkillNotLearned, Gate(noSkill, null));        
     }
 
-    [Fact]
+    [DataFact]
     public void GroundAoeWithNoNpcPrimaryPassesOnTheLearnedSkillAlone()
         => Assert.Equal(ActorRefusal.None, Gate(Hero(), null));
 
-    [Fact]
+    [DataFact]
     public void SkillRange100SkipsTheRangeCheck()
     {
         
@@ -103,7 +103,7 @@ public class SkillDamageGateTests
         Assert.Equal(ActorRefusal.OutOfRange, Gate(Hero(), Npc(100_000f, 0), reach: Reach));
     }
 
-    [Fact]
+    [DataFact]
     public void MissingTableRowRefusesRatherThanAssumesRange()
         => Assert.Equal(ActorRefusal.RangeUnknown, Gate(Hero(), Npc(1, 0), reach: null));
 }

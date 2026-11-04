@@ -24,7 +24,7 @@ public class DungeonInstanceRegistryTests
  /// A solo character's dungeon session: three entries, three resets, the 3035 answers between them, and the
  /// 19015 that ends it. Each leave of an instance is a 2556 back to map 1221.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task Replay_d414c84e_2ce1e0c0_EntriesResetsCountsAndTheRefusal()
     {
         var data = await DungeonEntryGateTests.DungeonDataAsync();
@@ -66,7 +66,7 @@ public class DungeonInstanceRegistryTests
         Assert.Equal("4100000000000200", Answer3035(0x41));                    
     }
 
-    [Fact]
+    [DataFact]
     public void Reset_FromInsideAnOpenInstance_IsSilentAndKeepsIt()
     {
         
@@ -80,7 +80,7 @@ public class DungeonInstanceRegistryTests
         Assert.Empty(registry.OpenDungeonIds(owner));
     }
 
-    [Fact]
+    [DataFact]
     public void Reset_NamesEveryOpenInstanceAscending()
     {
         
@@ -93,7 +93,7 @@ public class DungeonInstanceRegistryTests
         Assert.Equal(new[] { "08000000", "3f000000" }, reset.Select(id => Hex(DungeonResetHandler.Build2771(id))));
     }
 
-    [Fact]
+    [DataFact]
     public void PartyInstance_OpensOnce_CountsEachMemberOnce_AndClosesAtTheLastMembersReset()
     {
         var registry = new DungeonInstanceRegistry();
@@ -137,7 +137,7 @@ public class DungeonInstanceRegistryTests
         Assert.NotEqual(first.InstanceId, reopened.InstanceId);
     }
 
-    [Fact]
+    [DataFact]
     public void ChangedPartyContext_FindsNothingToReset()
     {
         
@@ -155,7 +155,7 @@ public class DungeonInstanceRegistryTests
         Assert.NotEqual(DungeonInstanceOwner.For(new PartyState { PartyId = Character }.PartyId, 1), solo);
     }
 
-    [Fact]
+    [DataFact]
     public void NotifyCopies_AreTheInWorldMembers()
     {
         

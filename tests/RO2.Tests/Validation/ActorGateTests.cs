@@ -34,16 +34,16 @@ public class ActorGateTests
         => ActorGate.CanAct(ActorGate.ActorOf(p), ActorGate.TargetOf(n),
             new GateContext(ActorGate.MeleeReach(p), TargetMustBeAlive: alive));
 
-    [Fact]
+    [DataFact]
     public void AllOkPasses()
         => Assert.Equal(ActorRefusal.None, Melee(Hero(), Mob(3, 0)));
 
-    [Fact]
+    [DataFact]
     public void UnresolvedTargetIsRefused()
         => Assert.Equal(ActorRefusal.TargetNotFound,
             ActorGate.CanAct(ActorGate.ActorOf(Hero()), null, new GateContext(10f)));
 
-    [Fact]
+    [DataFact]
     public void DeadTargetIsRefusedUnlessTheActionWantsOne()
     {
         var hero = Hero();
@@ -52,7 +52,7 @@ public class ActorGateTests
         Assert.Equal(ActorRefusal.None, Melee(hero, corpse, alive: false));    // e.g. a revive
     }
 
-    [Fact]
+    [DataFact]
     public void DeadActorIsRefused()
     {
         var hero = Hero();
@@ -60,11 +60,11 @@ public class ActorGateTests
         Assert.Equal(ActorRefusal.ActorDead, Melee(hero, Mob(1, 0)));
     }
 
-    [Fact]
+    [DataFact]
     public void CrossMapIsRefusedEvenWhenCoordinatesAreClose()
         => Assert.Equal(ActorRefusal.CrossMap, Melee(Hero(), Mob(1, 0, map: 1200)));
 
-    [Fact]
+    [DataFact]
     public void MeleeRangeComesFromTheWeaponOrTheMeasuredFallback()
     {
         // Unarmed: MaxAttackRange + tolerance (3.890625) = 7.890625. Computed, not hard-coded, so it tracks the constant.
@@ -80,7 +80,7 @@ public class ActorGateTests
         Assert.Equal(AutoAttackState.InRange(Hero(20), bowReach + 0.01f, 0), Melee(Hero(20), Mob(bowReach + 0.01f, 0)) == ActorRefusal.None);
     }
 
-    [Fact]
+    [DataFact]
     public void NonFinitePositionsAndReachAreOutOfRange()
     {
         Assert.Equal(ActorRefusal.OutOfRange, Melee(Hero(), Mob(float.NaN, 0)));
@@ -89,12 +89,12 @@ public class ActorGateTests
             ActorGate.CanAct(ActorGate.ActorOf(Hero()), ActorGate.TargetOf(Mob(1, 0)), new GateContext(float.NaN)));
     }
 
-    [Fact]
+    [DataFact]
     public void MissingReachIsRefusedNotAssumed()
         => Assert.Equal(ActorRefusal.RangeUnknown,
             ActorGate.CanAct(ActorGate.ActorOf(Hero()), ActorGate.TargetOf(Mob(1, 0)), new GateContext(null)));
 
-    [Fact]
+    [DataFact]
     public void NpcAttackerReachComesFromNpcInfo()
     {
         var info = System.Text.Json.JsonSerializer.Deserialize<List<NpcData>>(File.ReadAllBytes(DataFile("NPCInfo.json")))!
@@ -109,7 +109,7 @@ public class ActorGateTests
         Assert.Equal(ActorRefusal.OutOfRange, ActorGate.CanAct(mob, far, new GateContext(reach)));
     }
 
-    [Fact]
+    [DataFact]
     public void SkillRangeComesFromSkillTableBase()
     {
         var table = SkillMoveTracker.LoadReach(DataFile("Skill_Table_Base.json"));
@@ -130,11 +130,11 @@ public class ActorGateTests
         Assert.Equal(ActorRefusal.OutOfRange, ActorGate.CanAct(learned, far, ctx));
     }
 
-    [Fact]
+    [DataFact]
     public void UnknownSkillGroupHasNoReach()
         => Assert.Null(ActorGate.SkillReach(uint.MaxValue));
 
-    [Fact]
+    [DataFact]
     public void UnlearnedSkillIsRefused()
     {
         var hero = Hero();
@@ -146,7 +146,7 @@ public class ActorGateTests
             ActorGate.CanAct(new GateActor(Map, 0, 0, false, null), near, new GateContext(10f, SkillGroup: 4121)));
     }
 
-    [Fact]
+    [DataFact]
     public void UnownedItemIsRefused()
     {
         var a = ActorGate.ActorOf(Hero());
@@ -155,7 +155,7 @@ public class ActorGateTests
         Assert.Equal(ActorRefusal.None, ActorGate.CanAct(a, near, new GateContext(10f, ItemOwned: true)));
     }
 
-    [Fact]
+    [DataFact]
     public void ChecksRunInOrderLivenessMapRangeOwnership()
     {
         var a = ActorGate.ActorOf(Hero());

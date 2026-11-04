@@ -29,7 +29,7 @@ public class GuildBribeRetailFramesTests
     private const string Ref2763 = "028400840062e41146740b610001f80000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001146740b0ab8207c76564c9d4a8de17b8381f9d5af";
     private const string Ref2765 = "010c0c0064e41146740b1146740b";
 
-    [Fact]
+    [DataFact]
     public void Sign2763IsByteExact()
     {
         var name = new byte[102];
@@ -40,11 +40,11 @@ public class GuildBribeRetailFramesTests
         Assert.Equal(Ref2763, Convert.ToHexString(body).ToLowerInvariant());
     }
 
-    [Fact]
+    [DataFact]
     public void Exit2765IsByteExact()
         => Assert.Equal(Ref2765, Convert.ToHexString(CloseRangeChatPackets.BuildNfyExitCloseRangeChatRoom2765(0x0B744611u)).ToLowerInvariant());
 
-    [Fact]
+    [DataFact]
     public void Bribe2725IsHalfThePrize()
     {
         Assert.Equal(211_508UL, GuildBribePackets.HuntingBribeAmount(423_017, 50));
@@ -52,14 +52,14 @@ public class GuildBribeRetailFramesTests
         Assert.Equal(0UL, GuildBribePackets.HuntingBribeAmount(423_017, 0));
     }
 
-    [Fact]
+    [DataFact]
     public void Handover2730IsTheMastersTotal()
     {
         Assert.Equal("5ba8331b00000000", Convert.ToHexString(GuildHandoverPackets.BuildNfyHandoverMemberBribePointToMaster(215_240 + 456_155_027)).ToLowerInvariant());
         Assert.Equal("0000000000000000", Convert.ToHexString(GuildHandoverPackets.BuildNfyHandoverMemberBribePointToMaster(0)).ToLowerInvariant());
     }
 
-    [Fact]
+    [DataFact]
     public async Task TickPlanFromData()
     {
         var t = await EffectTableAsync();
@@ -74,7 +74,7 @@ public class GuildBribeRetailFramesTests
         Assert.Null(EffectTickPlan.For(t, 3314, 10000, 1, 50_000, 5_000));   
     }
 
-    [Fact]
+    [DataFact]
     public void ItemDurationsAreFloat32()
     {
         Assert.Equal(86_400_104UL, EffectService.ItemEffectDurationMs(86400.1f));
@@ -85,7 +85,7 @@ public class GuildBribeRetailFramesTests
         Assert.Equal(10_100UL, EffectService.ItemEffectDurationMs(10.1000003814697f));
     }
 
-    [Fact]
+    [DataFact]
     public void RegistryResolvesOwnerOnce()
     {
         var guid = Guid.NewGuid().ToByteArray();

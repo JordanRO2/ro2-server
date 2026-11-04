@@ -66,7 +66,7 @@ public sealed class RefineRollTests
 
     // ------------------------------------------------------------------ the shipped table
 
-    [Fact]
+    [DataFact]
     public void RealTable_HasTwentyRows_AndOnlyIndexOneAndElevenAreGuaranteed()
     {
         Assert.Equal(20, RealRates.Count);
@@ -77,7 +77,7 @@ public sealed class RefineRollTests
         Assert.All(RealRates.Where(r => r.Succ_Rate == 10000), r => Assert.Equal(0, r.Down_Rate));
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData(0)]    // +0 -> +1 uses INDEX 1
     [InlineData(10)]   // +10 -> +11 uses INDEX 11
     public void RealTable_PlusOneAndPlusElevenAlwaysSucceed(int cur)
@@ -95,7 +95,7 @@ public sealed class RefineRollTests
 
     // ------------------------------------------------------------------ success
 
-    [Fact]
+    [DataFact]
     public void Success_UsesSuccRateAndCatalystsAdditively_ClampedAt10000()
     {
         var row = Row(5, succ: 4800, brk: 0, down: 0);
@@ -112,7 +112,7 @@ public sealed class RefineRollTests
         Assert.Equal(5, r.NewLevel);
     }
 
-    [Fact]
+    [DataFact]
     public void Success_LuckyJump_RollsPlusThreeFirstThenPlusTwoElseOne()
     {
         var row = Row(3, succ: 10000, brk: 0, down: 0);
@@ -127,7 +127,7 @@ public sealed class RefineRollTests
         Assert.Equal(1, Jump(6000));   // else +1
     }
 
-    [Fact]
+    [DataFact]
     public void Success_LuckyJumpNeverPassesTheMaxLevel()
     {
         var row = Row(20, succ: 10000, brk: 0, down: 0);
@@ -137,7 +137,7 @@ public sealed class RefineRollTests
 
     // ------------------------------------------------------------------ failure
 
-    [Fact]
+    [DataFact]
     public void Failure_Plus19DropsToPlus10_NotPlus18()
     {
         // INDEX 20 (+19 -> +20): Down_Type 1 is "drop to the band floor". Survival fails (roll >= Break_Rate).
@@ -153,7 +153,7 @@ public sealed class RefineRollTests
         Assert.Equal(10, d.NewLevel);
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData(1, 0)]
     [InlineData(5, 0)]
     [InlineData(10, 0)]
@@ -168,7 +168,7 @@ public sealed class RefineRollTests
         Assert.Equal(floor, r.NewLevel);
     }
 
-    [Fact]
+    [DataFact]
     public void Failure_SurvivalIsBreakRatePlusCatalysts_AndInfiniumAlwaysSurvives()
     {
         var infinium = new REFINEITEM { ITEM_ID = 4, ITEM_TYPE = 1, Break_Rate = 10000 };
@@ -185,7 +185,7 @@ public sealed class RefineRollTests
         Assert.Equal((1u, 14), (safe.Code, safe.NewLevel));
     }
 
-    [Fact]
+    [DataFact]
     public void Failure_InfiniumStillDropsByDownRate()
     {
         // Survival blocks the reset, not the Down_Rate drop (the +11 -> +10 case of the data notes).
@@ -197,7 +197,7 @@ public sealed class RefineRollTests
         Assert.Equal((1u, 11), (miss.Code, miss.NewLevel));
     }
 
-    [Fact]
+    [DataFact]
     public void Failure_DownTypeOtherThanOneNeverDrops()
     {
         var row = Row(8, succ: 0, brk: 10000, down: 10000, downType: 0);
@@ -284,7 +284,7 @@ public sealed class RefineRollTests
         }
     }
 
-    [Fact]
+    [DataFact]
     public async Task Handler_PlusTenToPlusEleven_UsesTheRealGuaranteedRow()
     {
         await using var rig = await StartAsync(RealRates);
@@ -303,7 +303,7 @@ public sealed class RefineRollTests
         Assert.Equal(StartZeny - RealRow(10).Need_Gold, rig.Player.Gold);   // Need_Gold of INDEX 11, charged
     }
 
-    [Fact]
+    [DataFact]
     public async Task Handler_FailedPlus19_DropsToPlus10_AndChargesNeedGold()
     {
         // INDEX 20 forced to a certain failure that does not survive: the item must land on +10, not +18.
@@ -324,7 +324,7 @@ public sealed class RefineRollTests
         Assert.Equal(StartZeny - 100, rig.Player.Gold);
     }
 
-    [Fact]
+    [DataFact]
     public async Task Handler_MaxRefineComesFromTheTable_NotAHardcoded20()
     {
         // The table stops at INDEX 2, so +2 cannot be refined further (it would have been allowed under a const 20).

@@ -28,13 +28,13 @@ public class GameMall2866And2868Tests
     private const int Retail2866BodyLength = 6157;
     private const int CatalogRecordSize = 43;
 
-    [Fact]
+    [DataFact]
     public void ZeroBalanceAnswerIsRetailsZeroFrameByteForByte()
     {
         Assert.Equal(Convert.FromHexString(Retail2868ZeroHex), CashMallPackets.Build2868(0));
     }
 
-    [Fact]
+    [DataFact]
     public void BalanceAnswerIsRetailsFrameByteForByte()
     {
         
@@ -42,7 +42,7 @@ public class GameMall2866And2868Tests
         Assert.Equal(15.0f, BinaryPrimitives.ReadSingleLittleEndian(Convert.FromHexString(Retail2868BalanceHex).AsSpan(2)));
     }
 
-    [Fact]
+    [DataFact]
     public void RetailCatalogHeaderFollowsTheVarBlobRule()
     {
         
@@ -58,7 +58,7 @@ public class GameMall2866And2868Tests
         Assert.Equal(blobLength, (uint)(2 + count * CatalogRecordSize));
     }
 
-    [Fact]
+    [DataFact]
     public void ShippedCatalogRebuildsRetailsBodyByteForByte()
     {
         var catalog = CashMallCatalog.Load(CatalogPath());
@@ -70,7 +70,7 @@ public class GameMall2866And2868Tests
         Assert.Equal(143, catalog.Products.Count);
     }
 
-    [Fact]
+    [DataFact]
     public void CatalogPricesTheProductsRetailSold()
     {
         
@@ -85,7 +85,7 @@ public class GameMall2866And2868Tests
         Assert.Null(catalog.FindByItem(70001063)); 
     }
 
-    [Fact]
+    [DataFact]
     public void EmptyCatalogIsAWellFormedVarBlobWithNoRecords()
     {
         var body = ReqGameMallItemListAllHandler.BuildEmptyCatalog2866();

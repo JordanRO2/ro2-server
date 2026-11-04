@@ -28,7 +28,7 @@ public class BoundItemTradeReauditTests
             TradePackets.BuildRefusedDragRecord(uid, template, count), TradePackets.DragItemNotTradeable);
     }
 
-    [Theory]
+    [DataTheory]
     
     
     [InlineData("01161600b6e21185cd09a7079509a83d040e96dbfe000100",
@@ -70,7 +70,7 @@ public class BoundItemTradeReauditTests
         throw new InvalidOperationException("ItemInfo has no row " + id);
     }
 
-    [Fact]
+    [DataFact]
     public void SameBindType1TemplateIsRefusedOnlyOnceWorn()
     {
         
@@ -86,7 +86,7 @@ public class BoundItemTradeReauditTests
         Assert.False(TradeMoveHandler.RefusedAsNotTradeable(template, unworn));
     }
 
-    [Fact]
+    [DataFact]
     public void BindType2TemplateIsAlwaysRefused()
     {
         
@@ -98,7 +98,7 @@ public class BoundItemTradeReauditTests
             new InventoryItem { ItemId = 16702358u, StorageType = 0, Bound = false }));
     }
 
-    [Fact]
+    [DataFact]
     public void UntradeableTemplateIsRefusedAndAnUnboundTradeableOneIsNot()
     {
         

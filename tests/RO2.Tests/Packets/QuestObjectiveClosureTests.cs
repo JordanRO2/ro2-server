@@ -28,7 +28,7 @@ public class QuestObjectiveClosureTests
         => QuestAcceptHandler.SelectAcceptGrants(ActionRows.Value[questId]);
 
     
-    [Fact]
+    [DataFact]
     public void AcceptGrants_EveryOnAcceptGiveRow_InRowOrder()
     {
         
@@ -39,7 +39,7 @@ public class QuestObjectiveClosureTests
         Assert.Equal(new[] { (70006005u, 1) }, Grants(123000049));
     }
 
-    [Fact]
+    [DataFact]
     public void AcceptGrants_SkipRowsThatDoNotRunAtAccept()
     {
         
@@ -52,14 +52,14 @@ public class QuestObjectiveClosureTests
         Assert.Equal(2, Grants(213010100).Count);
     }
 
-    [Fact]
+    [DataFact]
     public void AcceptGrants_ReadRowsAfterTheFirst()
     {
         
         Assert.Equal(new[] { (40001124u, 1) }, Grants(411210050));
     }
 
-    [Fact]
+    [DataFact]
     public void AcceptDeliverTicks_ReproduceRetailFrames()
     {
         
@@ -78,7 +78,7 @@ public class QuestObjectiveClosureTests
     private static QuestData Row(uint questId, byte completeType, uint value1, uint value2)
         => new() { Quest_ID = questId, Complete_Type = completeType, Complete_Type_Value1 = value1, Complete_Type_Value2 = value2 };
 
-    [Fact]
+    [DataFact]
     public void KillQuest_ClosesWhenItsOnlyRowReachesValue2()
     {
         
@@ -89,7 +89,7 @@ public class QuestObjectiveClosureTests
         Assert.True(LootService.AllKillObjectivesMet(player, 311000032, rows));
     }
 
-    [Fact]
+    [DataFact]
     public void KillQuest_WithANonKillObjective_IsNotClosedByKills()
     {
         
@@ -102,7 +102,7 @@ public class QuestObjectiveClosureTests
         Assert.False(LootService.AllKillObjectivesMet(player, 1, new[] { Row(1, 2, 0, 1) }));
     }
 
-    [Fact]
+    [DataFact]
     public void KillQuest_ClosureIsForgottenWithTheQuestProgress()
     {
         var player = new PlayerState();
@@ -111,7 +111,7 @@ public class QuestObjectiveClosureTests
         Assert.False(LootService.KillObjectiveClosed(player, 311000032));
     }
 
-    [Fact]
+    [DataFact]
     public void KillClosureAndAutoPayout_ReproduceRetailFrames()
     {
         

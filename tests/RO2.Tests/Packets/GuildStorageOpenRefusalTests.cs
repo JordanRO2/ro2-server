@@ -66,7 +66,7 @@ public class GuildStorageOpenRefusalTests
     private const string Answered1489 = "d335123ca7bea34a934c40820aeaf9eb132c2000";
     private const string EmptyVault2674 = "00000a00000000000000000000000000";
 
-    [Fact]
+    [DataFact]
     public void Refusal2674_IsRetailsFrame()
     {
         Assert.Equal(Refused2674, Convert.ToHexString(GuildStorageOpenHandler.BuildOutOfRangeRefusal2674()).ToLowerInvariant());
@@ -74,14 +74,14 @@ public class GuildStorageOpenRefusalTests
             BinaryPrimitives.ReadUInt16LittleEndian(Convert.FromHexString(Refused2674)));
     }
 
-    [Fact]
+    [DataFact]
     public void EmptyVault2674_IsRetailsFrame()
     {
         
         Assert.Equal(EmptyVault2674, Convert.ToHexString(GuildPackets.BuildGuildStorageList(new Guild())).ToLowerInvariant());
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData(Refused1489, 0x500000ECu, false)]
     [InlineData(Answered1489, 0x00202C13u, true)]
     public void Request1489_CarriesTheNpcHandleAfterTheGuid(string hex, uint handle, bool npcTagged)
@@ -112,7 +112,7 @@ public class GuildVaultWindowsTests
 
     private static PlayerState Player(uint sessionId, uint charId) => new() { SessionId = sessionId, CharacterId = charId };
 
-    [Fact]
+    [DataFact]
     public void OtherMembersWithTheWindowOpen_AreTheViewers()
     {
         
@@ -140,7 +140,7 @@ public class GuildVaultWindowsTests
         Assert.Empty(GuildVaultWindows.OtherViewers(guild, withdrawer, lookup));
     }
 
-    [Fact]
+    [DataFact]
     public void EndedSession_IsDropped()
     {
         const uint mover = 0xA1000201, gone = 0xA1000202;
@@ -158,7 +158,7 @@ public class GuildVaultWindowsTests
         Assert.Empty(GuildVaultWindows.OtherViewers(guild, mover, lookup));
     }
 
-    [Fact]
+    [DataFact]
     public void SessionHoldingAnotherCharacter_IsNotAViewer()
     {
         const uint mover = 0xA1000301, reused = 0xA1000302;
@@ -173,7 +173,7 @@ public class GuildVaultWindowsTests
         Assert.Empty(GuildVaultWindows.OtherViewers(guild, mover, lookup));
     }
 
-    [Fact]
+    [DataFact]
     public void MemberWhoLeftTheGuild_IsNotAViewer()
     {
         const uint mover = 0xA1000401, leaver = 0xA1000402;
@@ -192,7 +192,7 @@ public class GuildVaultWindowsTests
 /// <summary>1327 ReqRepairItem: the repair price formula and the 2336 refusal.</summary>
 public class RepairPricingTests
 {
-    [Fact]
+    [DataFact]
     public void Constants_AreTheDoublesInRdata()
     {
         
@@ -221,7 +221,7 @@ public class RepairPricingTests
             new[] { 8651, 8651, 8651, 8651, 8651, 8495, 8495, 9050, 9050, 9050, 9050, 9050 }, 2787330494L, 2787251538L },
     };
 
-    [Theory]
+    [DataTheory]
     [MemberData(nameof(RetailRepairs))]
     public async Task RetailDebit_IsTheClientFormulaAtFivePercent(string frame, uint[] templates, int[] durability, long walletBefore, long walletAfter)
     {
@@ -232,7 +232,7 @@ public class RepairPricingTests
         Assert.Equal((frame, walletBefore - walletAfter), (frame, RepairPricing.ApplyDiscount(total, 5)));
     }
 
-    [Fact]
+    [DataFact]
     public async Task ItemCost_SingleItem_MatchesTheClientTerm()
     {
         
@@ -244,7 +244,7 @@ public class RepairPricingTests
         Assert.Equal(0L, RepairPricing.ItemCost(items[16702290], -1));      
     }
 
-    [Fact]
+    [DataFact]
     public async Task ItemCost_IsAtLeastOne()
     {
         
@@ -253,7 +253,7 @@ public class RepairPricingTests
         Assert.Equal(1L, RepairPricing.ItemCost(sword, (int)sword.Durability - 1));
     }
 
-    [Fact]
+    [DataFact]
     public async Task Quivers_AreNeverPriced()
     {
         
@@ -265,7 +265,7 @@ public class RepairPricingTests
             Assert.Equal(0L, RepairPricing.ItemCost(q, (int)q.Durability / 2));
     }
 
-    [Fact]
+    [DataFact]
     public async Task DiscountPercent_ReadsGuildSkillCategoryFive()
     {
         await using var fs = File.OpenRead(UnitA10Data.DataFile("Guild_Skill_Level.json"));
@@ -281,7 +281,7 @@ public class RepairPricingTests
         Assert.Equal(0L, RepairPricing.DiscountPercent(new[] { storage.Guild_Skill_ID }, table));
     }
 
-    [Theory]
+    [DataTheory]
     
     [InlineData(RepairPricing.ResultNoItem, "d5000000624e")]
     
@@ -315,7 +315,7 @@ public class ItemTransformRoomTests
         return bag;
     }
 
-    [Fact]
+    [DataFact]
     public async Task FullBag_NewStack_HasNoRoom()
     {
         var items = await UnitA10Data.ItemsAsync(Target);
@@ -323,7 +323,7 @@ public class ItemTransformRoomTests
         Assert.Null(ItemTransformHandler.TargetCells(bag, items, source, Target, 1, items[Target].Stack_Max));
     }
 
-    [Fact]
+    [DataFact]
     public async Task FullBag_LastSourceUnit_FreesItsCell()
     {
         var items = await UnitA10Data.ItemsAsync(Target);
@@ -333,7 +333,7 @@ public class ItemTransformRoomTests
         Assert.Equal(new short[] { source.Slot }, cells);
     }
 
-    [Fact]
+    [DataFact]
     public async Task FullBag_TopUp_NeedsNoCell()
     {
         var items = await UnitA10Data.ItemsAsync(Target);
@@ -346,7 +346,7 @@ public class ItemTransformRoomTests
         Assert.Null(ItemTransformHandler.TargetCells(bag, items, source, Target, 1, items[Target].Stack_Max));
     }
 
-    [Fact]
+    [DataFact]
     public async Task FreeCells_AreLowestFirst()
     {
         var items = await UnitA10Data.ItemsAsync(Target);

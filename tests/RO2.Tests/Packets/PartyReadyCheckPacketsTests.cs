@@ -12,7 +12,7 @@ namespace RO2.Tests.Packets;
 /// </summary>
 public class PartyReadyCheckPacketsTests
 {
-    [Fact]
+    [DataFact]
     public void Answer2698_IsRetailsZeroWord()
     {
         
@@ -20,7 +20,7 @@ public class PartyReadyCheckPacketsTests
         Assert.Equal("0000", Hex(PartyReadyCheckPackets.BuildAnsPartyFightingTrim2698(PartyReadyCheckPackets.ResultOk)));
     }
 
-    [Fact]
+    [DataFact]
     public void RefusalCodes_AreABareU16()
     {
         
@@ -30,7 +30,7 @@ public class PartyReadyCheckPacketsTests
         Assert.Equal("6d3d", Hex(PartyReadyCheckPackets.BuildAnsPartyFightingTrimVote2700(PartyReadyCheckPackets.ResultAlreadyVoted)));
     }
 
-    [Fact]
+    [DataFact]
     public void Start2699_IsRetailsFrame()
     {
         
@@ -41,7 +41,7 @@ public class PartyReadyCheckPacketsTests
             Hex(PartyReadyCheckPackets.BuildNfyPartyFightingTrimStart2699(0x37C9E8B37D1C695FUL)));
     }
 
-    [Fact]
+    [DataFact]
     public void Result2697_OneReadyNoneMissing_IsRetailsFrame()
     {
         
@@ -49,7 +49,7 @@ public class PartyReadyCheckPacketsTests
         Assert.Equal("0400000001000000", Hex(PartyReadyCheckPackets.BuildNfyPartyFightingTrimResult2697(1, 0, [])));
     }
 
-    [Fact]
+    [DataFact]
     public void Result2697_IsU32PrefixedCountsAndFixedNames()
     {
         
@@ -60,7 +60,7 @@ public class PartyReadyCheckPacketsTests
         Assert.Equal(expected, Hex(body));
     }
 
-    [Fact]
+    [DataFact]
     public void Result2697_KeepsANulInEachName()
     {
         
@@ -71,7 +71,7 @@ public class PartyReadyCheckPacketsTests
         Assert.All(body.AsSpan(8 + 42, 42).ToArray(), b => Assert.Equal(0, b));
     }
 
-    [Fact]
+    [DataFact]
     public void Start2699_SkipsTheInitiatorAndOfflineMembers()
     {
         
@@ -81,7 +81,7 @@ public class PartyReadyCheckPacketsTests
         Assert.Empty(ReadyCheck.MembersToNotify([7], online.Contains, initiatorSessionId: 7));
     }
 
-    [Fact]
+    [DataFact]
     public void Tally_CountsEveryoneButTheInitiator()
     {
         RosterEntry[] roster =
@@ -96,7 +96,7 @@ public class PartyReadyCheckPacketsTests
         Assert.Equal(new[] { "No", "Silent", "Offline" }, names);
     }
 
-    [Fact]
+    [DataFact]
     public void Tally_IgnoresTheInitiatorsOwnVoteAndAVoterOutsideTheRoster()
     {
         RosterEntry[] roster = [new(1, "Lead", true), new(2, "Yes", true)];
@@ -107,7 +107,7 @@ public class PartyReadyCheckPacketsTests
         Assert.Empty(names);
     }
 
-    [Fact]
+    [DataFact]
     public void Tally_NoVotesAndEmptyRoster()
     {
         RosterEntry[] roster = [new(1, "Lead", true), new(2, "A", true), new(3, "B", false)];
@@ -117,7 +117,7 @@ public class PartyReadyCheckPacketsTests
         Assert.Equal((0, 0), (ReadyCheck.Tally([], 1, new Dictionary<ulong, byte>()).Ready, ReadyCheck.Tally([], 1, new Dictionary<ulong, byte>()).NotReady));
     }
 
-    [Fact]
+    [DataFact]
     public void Tally_ClampsEachCountToAByte()
     {
         var roster = new List<RosterEntry> { new(1, "Lead", true) };
@@ -128,7 +128,7 @@ public class PartyReadyCheckPacketsTests
         Assert.Equal(300, names.Count);
     }
 
-    [Fact]
+    [DataFact]
     public void MembersToNotify_KeepsRosterOrder()
     {
         uint[] roster = [9, 2, 5, 1];
@@ -150,7 +150,7 @@ public class GuildSkillBookRetailFrameTests
         220105, 220205, 220304, 220409, 220510, 220610, 220710,
     ];
 
-    [Fact]
+    [DataFact]
     public void AnswerBurst_IsByteExact()
     {
         Assert.Equal("0000", Hex(GuildSkillBookLearn.BuildAnsGuildSkillLearnBook2959(GuildSkillBookLearn.ResultLearned)));
@@ -161,7 +161,7 @@ public class GuildSkillBookRetailFrameTests
             Hex(LootNotifyPackets.BuildUseItemNotify2330(0x05287911, 21130025)));
     }
 
-    [Fact]
+    [DataFact]
     public void Request1652_IsTheBookUid()
     {
         Assert.True(GuildSkillBookLearn.TryParseRequest(Convert.FromHexString("2a375c05a83d040e"), out var uid));
@@ -169,7 +169,7 @@ public class GuildSkillBookRetailFrameTests
         Assert.False(GuildSkillBookLearn.TryParseRequest(new byte[7], out _));
     }
 
-    [Fact]
+    [DataFact]
     public void FailureCodes_AreTheConsumersSwitch()
     {
         
@@ -177,7 +177,7 @@ public class GuildSkillBookRetailFrameTests
         Assert.Equal("4600", Hex(GuildSkillBookLearn.BuildAnsGuildSkillLearnBook2959(GuildSkillBookLearn.ResultAlreadyLearned)));
     }
 
-    [Fact]
+    [DataFact]
     public async Task Plan_FollowsTheLearnType1Rows()
     {
         var table = GuildSkillLearnPackets.Index(await GuildSkillLevelsAsync());
@@ -195,7 +195,7 @@ public class GuildSkillBookRetailFrameTests
             GuildSkillLearnPackets.UnspentPoints(20, [.. GuildBefore, 220305], table));
     }
 
-    [Fact]
+    [DataFact]
     public async Task SkillList2488_AfterTheBook_IsRetailsBody()
     {
         var table = GuildSkillLearnPackets.Index(await GuildSkillLevelsAsync());
@@ -236,7 +236,7 @@ public class GuildSkillBookRetailFrameTests
 /// </summary>
 public class CloseRangeJoinRetailFrameTests
 {
-    [Fact]
+    [DataFact]
     public void Join2764And2770_AreByteExact()
     {
         
@@ -247,7 +247,7 @@ public class CloseRangeJoinRetailFrameTests
         Assert.Equal("010e0e0067e41148a4051148a4050a02", Hex(CloseRangeChatPackets.BuildNfyUpdateJoinMemberCount2770(0x05A44811, 10, 2)));
     }
 
-    [Fact]
+    [DataFact]
     public void JoinerExit2765And2770_AreByteExact()
     {
         
@@ -255,7 +255,7 @@ public class CloseRangeJoinRetailFrameTests
         Assert.Equal("010e0e0067e41140c7041140c7040a01", Hex(CloseRangeChatPackets.BuildNfyUpdateJoinMemberCount2770(0x04C74011, 10, 1)));
     }
 
-    [Fact]
+    [DataFact]
     public void Sign2763_PasswordFlagIsBlob110()
     {
         
@@ -271,7 +271,7 @@ public class CloseRangeJoinRetailFrameTests
         Assert.Equal(open, locked);
     }
 
-    [Fact]
+    [DataFact]
     public void Registry_FindsAnOpenRoom()
     {
         var guid = Guid.NewGuid().ToByteArray();

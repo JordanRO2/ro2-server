@@ -121,7 +121,7 @@ public class AuctionTenderListTests
         new(16702096, "Cazar Sword", 100, 1000, 1040000000024644665),
     };
 
-    [Fact]
+    [DataFact]
     public void SellList_IsSortedWholeBeforeThePageIsCut()
     {
         
@@ -137,7 +137,7 @@ public class AuctionTenderListTests
         AssertSellPage(ordered, CazarHandle, 3, "024208420863e311656a0503001e000a00", CazarPage3, CazarSeller, now);
     }
 
-    [Fact]
+    [DataFact]
     public void SellList_CurrentPriceComesBeforeTheNewestArticle()
     {
         
@@ -161,7 +161,7 @@ public class AuctionTenderListTests
         AssertSellPage(ordered, 0x0EBB4411, 1, "02cc05cc0563e31144bb0e010007000700", retail, seller, now);
     }
 
-    [Fact]
+    [DataFact]
     public void SellList_InstantPriceIsTheThirdKey()
     {
         
@@ -185,7 +185,7 @@ public class AuctionTenderListTests
         AssertSellPage(ordered, 0x0E43A211, 1, "029e069e0663e311a2430e010008000800", retail, seller, now);
     }
 
-    [Fact]
+    [DataFact]
     public void SellList_RowNamesAreTheDataTablesDisplayNames()
     {
         
@@ -219,7 +219,7 @@ public class AuctionTenderListTests
         }
     }
 
-    [Theory]
+    [DataTheory]
     
     [InlineData("010b0b0064e311f0410f010002", "010e0e0065e311f0410f010000000000")]
     
@@ -246,7 +246,7 @@ public class AuctionTenderListTests
         Assert.Equal(retailAnswerHex, Convert.ToHexString(body).ToLowerInvariant());
     }
 
-    [Fact]
+    [DataFact]
     public void SellListRequest_CarriesThePage()
     {
         

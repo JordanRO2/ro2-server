@@ -37,7 +37,7 @@ public class CashMallPacketsTests
         "360000000100a7212c04000000000000000001000000000000000000040031003200330034000000000000000000000000000000000000000000";
     private const string Retail2870NotOfferedHex = "0e0000000000c20b0000000000000000000000";
 
-    [Fact]
+    [DataFact]
     public void ParsesRetailPurchaseAndGift()
     {
         Assert.True(GameMallPurchaseHandler.TryParse(Convert.FromHexString(Retail1598BuyHex), out var buy));
@@ -54,7 +54,7 @@ public class CashMallPacketsTests
         Assert.Equal(("", "DoomProtocoI", "hello6"), (gift.Message, gift.SenderName, gift.RecipientName));
     }
 
-    [Fact]
+    [DataFact]
     public void ValidatesLikeRetail()
     {
         var catalog = CashMallCatalog.Load(GameMall2866And2868Tests.CatalogPath());
@@ -75,7 +75,7 @@ public class CashMallPacketsTests
         Assert.Equal(GameMallPurchaseHandler.CodeSalePeriodOver, GameMallPurchaseHandler.Validate(buy, catalog, 7_000_000_000L, out _));
     }
 
-    [Fact]
+    [DataFact]
     public void PurchaseAnswersAreRetailsBytes()
     {
         Assert.Equal(Convert.FromHexString(Retail2870BuyHex), CashMallPackets.Build2870Success(
@@ -88,7 +88,7 @@ public class CashMallPacketsTests
             CashMallPackets.Build2870Refusal(GameMallPurchaseHandler.CodeNotOffered, gift: false));
     }
 
-    [Fact]
+    [DataFact]
     public void BoxNotifyCountsEntries()
     {
         
@@ -106,7 +106,7 @@ public class CashMallPacketsTests
         Assert.Equal((0, 0), CashMallRules.BoxCounts(null));
     }
 
-    [Fact]
+    [DataFact]
     public void BoxListsAreRetailsBytes()
     {
         
@@ -166,7 +166,7 @@ public class CashMallPacketsTests
         "1a0001c98793035a9836d298f7e4400000000098f7e4407d0e1a000115889303775d0dcd98f7e4400000000098f7e4404ddc190001768893" +
         "032bea1cca98f7e4400000000098f7e440";
 
-    [Theory]
+    [DataTheory]
     [InlineData(Retail8BoxPage1, 1u, Retail8BoxPage1)]
     [InlineData(Retail8BoxPage1, 2u, Retail8BoxPage2)]
     [InlineData(Retail6BoxPage1, 1u, Retail6BoxPage1)]
@@ -181,7 +181,7 @@ public class CashMallPacketsTests
             CashMallPackets.BuildBoxListAnswer(CashMallStore.BoxPurchased, page, wholeBox));
     }
 
-    [Fact]
+    [DataFact]
     public void ListPagesOfFiveRunToTheEndOfTheBox()
     {
         
@@ -218,7 +218,7 @@ public class CashMallPacketsTests
         return entries;
     }
 
-    [Fact]
+    [DataFact]
     public void ClaimAnswersAreRetailsBytes()
     {
         
@@ -240,7 +240,7 @@ public class CashMallPacketsTests
         Assert.Equal(box2, CashMallPackets.Build2641(0x1c8dc1, CashMallStore.BoxGift, Ole("2a3b4c9d5b98e640"), "teastera", box2.AsSpan(68)));
     }
 
-    [Fact]
+    [DataFact]
     public void HistoryIsRetailsBytes()
     {
         
@@ -257,7 +257,7 @@ public class CashMallPacketsTests
         Assert.Equal(Convert.FromHexString("000001020000000000"), CashMallPackets.Build2874(1, Array.Empty<CashMallPackets.HistoryLine>()));
     }
 
-    [Fact]
+    [DataFact]
     public void HistoryListsTheNewestTwoHundredWithTheirSequence()
     {
         var purchases = Enumerable.Range(1, 341)
@@ -272,7 +272,7 @@ public class CashMallPacketsTests
         Assert.Equal(200, BinaryPrimitives.ReadUInt16LittleEndian(body.AsSpan(7)));
     }
 
-    [Fact]
+    [DataFact]
     public void LargeQuantitiesSplitIntoByteSizedEntries()
     {
         var catalog = CashMallCatalog.Load(GameMall2866And2868Tests.CatalogPath());
@@ -285,7 +285,7 @@ public class CashMallPacketsTests
         Assert.All(entries, e => Assert.Equal(("Buyer", CashMallStore.BoxGift), (e.SenderName, e.Box)));
     }
 
-    [Fact]
+    [DataFact]
     public void SecondListDateKeepsOnlyTheHighDword()
     {
         

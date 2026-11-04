@@ -29,7 +29,7 @@ public class QuestObjectiveCloseGrantTests
         => Rows.Value[questId].Select(r => new QuestAcceptHandler.QuestActionRow(
             r.Quest_ID, r.Active_Type, r.Action_Type, r.Action_Value1, r.Action_Value2));
 
-    [Fact]
+    [DataFact]
     public void ObjectiveCloseGrants_AreTheActiveType3GiveRows()
     {
         
@@ -39,7 +39,7 @@ public class QuestObjectiveCloseGrantTests
         Assert.Equal(new[] { (40001263u, 1) }, QuestAcceptHandler.SelectObjectiveCloseGrants(ActionRows(911110820)));
     }
 
-    [Fact]
+    [DataFact]
     public void ObjectiveCloseGrants_AreNotAcceptGrants_AndTheReverse()
     {
         
@@ -49,7 +49,7 @@ public class QuestObjectiveCloseGrantTests
         Assert.Equal(2, QuestAcceptHandler.SelectAcceptGrants(ActionRows(213010100)).Count);
     }
 
-    [Fact]
+    [DataFact]
     public void ObjectiveCloseGrants_OnlyOnTalkAndCollectQuests()
     {
         

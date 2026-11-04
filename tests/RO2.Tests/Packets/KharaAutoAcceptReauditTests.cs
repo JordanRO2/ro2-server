@@ -27,7 +27,7 @@ public class KharaAutoAcceptReauditTests
     
  /// <summary>First use of a "Used @1" item completes Khara 180: a 2577 reports count 1, followed by 2329.
  /// No 2502 is sent, since this Khara spends no points.</summary>
-    [Fact]
+    [DataFact]
     public async Task Khara_FirstItemUse_AutoAcceptsAndCountsOne()
     {
         var engine = await KharaEngineAsync(new KharaStateDocument(), level: 50);
@@ -36,7 +36,7 @@ public class KharaAutoAcceptReauditTests
     }
 
  /// <summary>A death (a fall) advances Khara 62 by one: a 2577 with subject 0 and count 1.</summary>
-    [Fact]
+    [DataFact]
     public async Task Khara_FirstDeath_AutoAccepts62AndCountsOne()
     {
         var engine = await KharaEngineAsync(new KharaStateDocument(), level: 20);
@@ -45,7 +45,7 @@ public class KharaAutoAcceptReauditTests
     }
 
  /// <summary>The revival that reaches the target of Khara 63 (Value1 3) sends a 2577, then 2575 and 2576.</summary>
-    [Fact]
+    [DataFact]
     public async Task Khara_ThirdRevival_Completes63()
     {
         var state = new KharaStateDocument();
@@ -60,7 +60,7 @@ public class KharaAutoAcceptReauditTests
  /// A titled completion of Khara 178 (target 50) advances the titled-completion count, sent as a 2577 after the 2575 and 2576.
  /// The completion that reaches the target completes Khara 178, with no 2577 for that step.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task Khara_TitledCompletion_Steps178_AndTheFiftiethCompletesIt()
     {
         var store = await LoadStoreAsync("Khara_Info.json");
@@ -87,7 +87,7 @@ public class KharaAutoAcceptReauditTests
 
  /// <summary>An "Achieved to join Guild" Khara completes on accept when the character is in a guild.
  /// Outside a guild it stays accepted until a join completes it.</summary>
-    [Fact]
+    [DataFact]
     public async Task Khara_GuildMember_Completes197()
     {
         var inGuild = await KharaEngineAsync(new KharaStateDocument(), level: 30, inGuild: true);
@@ -107,7 +107,7 @@ public class KharaAutoAcceptReauditTests
  /// Khara 402 has Auto_Challenge 0 in its table rows, so a cast of skill group 6106 does not auto-accept it.
  /// Group 6106 belongs to Khara 413, which is limited to job 16.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task Khara_NonRetailRows_DoNotAutoAccept402()
     {
         var store = await LoadStoreAsync("Khara_Info.json");
@@ -121,7 +121,7 @@ public class KharaAutoAcceptReauditTests
     }
 
  /// <summary>A profession-bound Auto_Challenge Khara (187, PC_ProJob 1) starts only for characters of that profession.</summary>
-    [Fact]
+    [DataFact]
     public async Task Khara_ProfessionBoundAutoKhara_StartsOnlyForItsProfession()
     {
         var store = await LoadStoreAsync("Khara_Info.json");

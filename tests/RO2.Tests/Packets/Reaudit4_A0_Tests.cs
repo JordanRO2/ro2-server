@@ -18,7 +18,7 @@ public class Reaudit4_A0_Tests
  /// <summary>
  /// The step rule: (damage + AddAggro) multiplied by (1 + stance / 10000), truncated. A 2696 steps by the damage; a 2797 tick and a 2718 step by damage + 1, each multiplied by the stance rate where one applies. These tests pin the formula only. The stance rate is not modelled in this server, since no path applies a trait-49 effect to a player, so the live call always passes 0.
  /// </summary>
-    [Theory]
+    [DataTheory]
     [InlineData(185900L, 0, 0d, 185900L)]           
     [InlineData(185900L, 0, 30000d, 743600L)]       
     [InlineData(18439L, 1, 0d, 18440L)]             
@@ -31,7 +31,7 @@ public class Reaudit4_A0_Tests
         => Assert.Equal(expected, ThreatAmount.Compute(damage, addAggro, stance));
 
  /// <summary>AddAggro from the shipped Skill_Table_SkillLevel: 1 on most rows, 10 on four monster skills, 0 on 17. A level the table does not know reads 1.</summary>
-    [Fact]
+    [DataFact]
     public void AddAggro_IsReadByLevelId_FromTheShippedTable()
     {
         var rows = ThreatAmount.Parse(File.ReadAllBytes(Path.Combine(DataDir(), "Skill_Table_SkillLevel.json")));
@@ -44,7 +44,7 @@ public class Reaudit4_A0_Tests
     }
 
  /// <summary>The x4 of the knights' steps comes from Aura Armor's trait-49 line at level 5 (Level_Multiply 6000 x 5 = +30,000), and the pet effect 210032 adds Basic 5000.</summary>
-    [Fact]
+    [DataFact]
     public void StanceRows_AreTheEffectTableTrait49Lines()
     {
         using var doc = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(DataDir(), "Effect_Table.json")));
@@ -62,7 +62,7 @@ public class Reaudit4_A0_Tests
  /// <summary>
  /// Pins the unmodelled stance rate: the only data-driven ways a player gets an effect here (item Effect_ID_1 and the ranker statue buff) name no trait-49 effect, so ThreatAmount.StanceRateOf is always 0. If this fails, a stance effect has become reachable, and the notes on the stance rate in ThreatAmount and the three damage handlers must be revised.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void NoItemOrStatueBuff_AppliesAStanceEffect()
     {
         using var effects = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(DataDir(), "Effect_Table.json")));
@@ -86,7 +86,7 @@ public class Reaudit4_A0_Tests
     }
 
  /// <summary>ApplyDamage banks the amount the hit path names instead of the damage, and a skill's AddAggro even when the hit took no HP. With no amount named it banks one point per point of damage, as the effect DoT path does.</summary>
-    [Fact]
+    [DataFact]
     public void ApplyDamage_BanksTheNamedThreat()
     {
         var npcs = new NpcStateManager(new GameDataStore(), NullLogger<NpcStateManager>.Instance);
@@ -111,7 +111,7 @@ public class Reaudit4_A0_Tests
     }
 
     
-    [Theory]
+    [DataTheory]
     [InlineData(9100101u, (int)ItemWarpSkills.MoveKind.OnAnswer)]
     [InlineData(9110001u, (int)ItemWarpSkills.MoveKind.OnAnswer)]
     [InlineData(9100201u, (int)ItemWarpSkills.MoveKind.OnLanding)]
@@ -121,7 +121,7 @@ public class Reaudit4_A0_Tests
  /// <summary>
  /// The town warps' fixed destinations: the positions of the 2311 and 2556 frames, as float bytes, for 9100201 (map 1100), 9100301 (map 1200) and 9100701 (map 1300), and Position_Info 294 and 410 for 9100801 and 9101001.
  /// </summary>
-    [Theory]
+    [DataTheory]
     [InlineData(9100201u, 1100u, 0x444787AE, 0x443FC666, 0x4264B852)]
     [InlineData(9100301u, 1200u, 0x4434B0A4, 0x4408C1EC, 0x425D47AE)]
     [InlineData(9100701u, 1300u, 0x43D90000, 0x43790000, 0x41400000)]
@@ -133,7 +133,7 @@ public class Reaudit4_A0_Tests
             (BitConverter.SingleToInt32Bits(dest.X), BitConverter.SingleToInt32Bits(dest.Y), BitConverter.SingleToInt32Bits(dest.Z)));
     }
 
-    [Fact]
+    [DataFact]
     public void TownWarp_TrainingGroundAndJawaii_AreTheirPositionInfoRows()
     {
         var maps = Maps();
@@ -148,7 +148,7 @@ public class Reaudit4_A0_Tests
     }
 
  /// <summary>The Dungeon Wing goes to the current map's Map_List return point. It is refused on a Map_Type 0 map, including map 1221, whose Map_ID is its own id.</summary>
-    [Fact]
+    [DataFact]
     public void DungeonWing_GoesToTheReturnPoint_AndIsRefusedOnAFieldMap()
     {
         var maps = Maps();
@@ -165,7 +165,7 @@ public class Reaudit4_A0_Tests
     }
 
  /// <summary>The Butterfly Wing goes to the bind point, never to the Map_List return point. With no bind it goes to the new-character spawn.</summary>
-    [Fact]
+    [DataFact]
     public void ButterflyWing_GoesToTheBind_ThenToTheSpawn()
     {
         var maps = Maps();
@@ -179,7 +179,7 @@ public class Reaudit4_A0_Tests
     }
 
  /// <summary>A town warp's 1509 moves the player only on the grant that the 1561 answer left, for the same skill and map, within the landing window, and only once.</summary>
-    [Fact]
+    [DataFact]
     public void Landing_NeedsTheGrant_OfTheSameSkillAndMap_OnceAndInTime()
     {
         var player = new RO2.Server.Zone.Models.PlayerState();

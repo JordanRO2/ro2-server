@@ -37,11 +37,11 @@ public class GliderRoutesTests
         return GliderRoutes.Load(Path.Combine(dir!.FullName, "data", "spline.json"));
     }
 
-    [Fact]
+    [DataFact]
     public void OldTable_Has39Entries()
         => Assert.Equal(39, OldTable.Length);
 
-    [Fact]
+    [DataFact]
     public void Derived_ResolvesEveryOldEntryIdentically()
     {
         var t = Table();
@@ -52,7 +52,7 @@ public class GliderRoutesTests
         }
     }
 
-    [Fact]
+    [DataFact]
     public void Rides_AreNotStationsButAreRides()
     {
         var t = Table();
@@ -64,7 +64,7 @@ public class GliderRoutesTests
         Assert.False(t.IsRide(60000));
     }
 
-    [Fact]
+    [DataFact]
     public void IsNearStart_RequiresTheStartMapAndTheRadius()
     {
         var t = Table();

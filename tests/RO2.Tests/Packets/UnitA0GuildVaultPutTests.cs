@@ -27,7 +27,7 @@ public class UnitA0GuildVaultPutTests
     private static string Hex(ReadOnlySpan<byte> b) => Convert.ToHexString(b).ToLowerInvariant();
 
     
-    [Fact]
+    [DataFact]
     public void Put2379_MatchesRetailByteForByte()
     {
         
@@ -41,7 +41,7 @@ public class UnitA0GuildVaultPutTests
         Assert.Equal(retail, Hex(ours));
     }
 
-    [Fact]
+    [DataFact]
     public void Put2379_LeavesOutTheDurabilityTheItemCarries()
     {
         
@@ -80,7 +80,7 @@ public class UnitA0GuildVaultPutTests
         },
     };
 
-    [Theory]
+    [DataTheory]
     [MemberData(nameof(FullVaultFrames))]
     public void VaultFull_2379And2333_MatchRetailsFirst64Bytes(string retail2379, string retail2333, uint handle, ulong uid, uint template, int count, short durability, short flatSlot)
     {
@@ -102,7 +102,7 @@ public class UnitA0GuildVaultPutTests
         Assert.Equal(retail2333, Hex(ours2333.AsSpan(0, 64)));
     }
 
-    [Fact]
+    [DataFact]
     public void ResultFor_MapsTheRefusals()
     {
         Assert.Equal((ushort)0, GuildStorageItemPutHandler.ResultFor(GuildService.DepositRefusal.None));
@@ -111,7 +111,7 @@ public class UnitA0GuildVaultPutTests
     }
 
     
-    [Fact]
+    [DataFact]
     public async Task SlotCapacity_IsTheGuildsProsperityLevel()
     {
         var table = GuildSkillLearnPackets.Index(await LoadAsync<GuildSkillLevel>("Guild_Skill_Level.json"));
@@ -134,7 +134,7 @@ public class UnitA0GuildVaultPutTests
         Assert.Equal(GuildVaultCapacity.AddressableCells, GuildVaultCapacity.MaxCells(Array.Empty<ConfigDef>()));
     }
 
-    [Fact]
+    [DataFact]
     public void LowestFreeCell_FollowsRetailsCells()
     {
         
@@ -149,7 +149,7 @@ public class UnitA0GuildVaultPutTests
     }
 
     
-    [Fact]
+    [DataFact]
     public async Task Deposit_TakesTheLowestFreeCell()
     {
         var charId = NewCharId();
@@ -170,7 +170,7 @@ public class UnitA0GuildVaultPutTests
         finally { await GuildService.Instance.DisbandAsync(g); }
     }
 
-    [Fact]
+    [DataFact]
     public async Task Deposit_IntoAFullVault_IsRefusedBeforeTheItemLeaves()
     {
         var charId = NewCharId();
@@ -192,7 +192,7 @@ public class UnitA0GuildVaultPutTests
         finally { await GuildService.Instance.DisbandAsync(g); }
     }
 
-    [Fact]
+    [DataFact]
     public async Task Deposit_LosingTheLastCellToAnotherPut_PutsTheItemBack()
     {
         var charId = NewCharId();

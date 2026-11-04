@@ -27,7 +27,7 @@ public class SkillStartAndRepeatReauditTests
 {
     
  /// <summary>The refusal is 2711 (skill 9000211). A repeat within 1,000 ms of the last answered request is refused, and a refused request does not move the window.</summary>
-    [Fact]
+    [DataFact]
     public void ItemSkillRepeat_RefusesWithinTheWindowOfTheLastAnswer()
     {
         Assert.Equal("0110100049e40000000011e2ae0a13558900", Hex(ActorStatePackets.BuildNfySkillCastingCancel(0x0AAEE211, 9000211)));
@@ -48,7 +48,7 @@ public class SkillStartAndRepeatReauditTests
  /// The reset ends the Init_Handling 0 skills, in ascending order, and keeps the Init_Handling 1 skills. A skill id
  /// missing from the table is kept.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task SkillReset_EndsTheInitHandling0Effects_Ascending()
     {
         var store = await LoadStoreAsync("Effect_Table.json");
@@ -65,7 +65,7 @@ public class SkillStartAndRepeatReauditTests
  /// The caster casts skill 220703 on itself. The 2716 blob echoes the request's f32 and position triple at blob
  /// offsets 32 and 36-47.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void UseSkillStart2716_EchoesTheRequestsAngleAndTriple_IsTheArchiveFrame()
     {
         var request = Convert.FromHexString(
@@ -82,7 +82,7 @@ public class SkillStartAndRepeatReauditTests
  /// A burst-duplicate 1508 while the first cast's cooldown runs. Before the cast's 1509 it gets no answer; after it, it
  /// gets the 20152 refusal (2715 with cooldown 0, target and variant echoed) and a 2962.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task SkillStartBurstDuplicate_IsSilentBeforeTheLanding_AndRefusedAfterIt()
     {
         await using var net = await Harness.StartAsync(1);
@@ -132,7 +132,7 @@ public class SkillStartAndRepeatReauditTests
 
  /// <summary>The landing tracker: a group never accepted counts as landed, an accepted 1508 puts it in flight, and the
  /// 1509 of any skill of the group lands it.</summary>
-    [Fact]
+    [DataFact]
     public void SkillCastLandings_TrackTheGroupInFlight()
     {
         var player = new PlayerState();

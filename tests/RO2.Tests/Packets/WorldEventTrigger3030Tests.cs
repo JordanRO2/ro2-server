@@ -25,7 +25,7 @@ public class WorldEventTrigger3030Tests
 
     private static readonly JsonSerializerOptions TableOptions = new() { PropertyNameCaseInsensitive = true };
 
-    [Fact]
+    [DataFact]
     public void Build3030_ReproducesBothReferenceFrames_ByteForByte()
     {
         Assert.Equal(Convert.FromHexString(Retail110001Stage1),
@@ -34,7 +34,7 @@ public class WorldEventTrigger3030Tests
             WorldEventPackets.BuildWorldEventTrigger3030(122101, 1));
     }
 
-    [Fact]
+    [DataFact]
     public void Build3030_UsesTheU32Envelope_WithInnerLenCoveringTheRestOfTheBody()
     {
         var body = WorldEventPackets.BuildWorldEventTrigger3030(122101, 1);
@@ -43,7 +43,7 @@ public class WorldEventTrigger3030Tests
         Assert.Equal(WorldEventPackets.NoRecordsBlobLen, BinaryPrimitives.ReadUInt32LittleEndian(body));
     }
 
-    [Fact]
+    [DataFact]
     public void Build3030_PutsTheStageAtBlobPlus5_AsInTheArchiveStage4Frames()
     {
         
@@ -51,7 +51,7 @@ public class WorldEventTrigger3030Tests
             WorldEventPackets.BuildWorldEventTrigger3030(122101, 4));
     }
 
-    [Fact]
+    [DataFact]
     public void InitialStages_TakesTheReturnStageZeroRow_AndSortsById()
     {
         
@@ -69,7 +69,7 @@ public class WorldEventTrigger3030Tests
         Assert.Equal(new[] { (110001u, (byte)1), (122101u, (byte)1) }, stages.ToArray());
     }
 
-    [Fact]
+    [DataFact]
     public void ShippedTable_OffTheEventMaps_ProducesRetailsStage1Burst()
     {
         
@@ -80,7 +80,7 @@ public class WorldEventTrigger3030Tests
             burst);
     }
 
-    [Fact]
+    [DataFact]
     public void WorldEntry_OnMap1115AtStage4_CarriesTheBgmRecordInBothPasses()
     {
         
@@ -94,7 +94,7 @@ public class WorldEventTrigger3030Tests
         }, burst);
     }
 
-    [Fact]
+    [DataFact]
     public void WorldEntry_OnMap1221AtStage5_PutsTheNoticeBeforeTheBgm_AndSendsNoTrailer()
     {
         
@@ -108,7 +108,7 @@ public class WorldEventTrigger3030Tests
         }, burst);
     }
 
-    [Fact]
+    [DataFact]
     public void WorldEntry_OffTheEventMapsAtStage5_EndsWithTheAnnouncement()
     {
         
@@ -122,7 +122,7 @@ public class WorldEventTrigger3030Tests
         }, burst);
     }
 
-    [Fact]
+    [DataFact]
     public void WorldEntry_OnMap1115AtStage5_HasItsBgm_ThenTheAnnouncementOfMap1221()
     {
         
@@ -137,7 +137,7 @@ public class WorldEventTrigger3030Tests
         }, burst);
     }
 
-    [Fact]
+    [DataFact]
     public void StageChange_OnTheEventMap_SendsTheStageThenItsRecords()
     {
         
@@ -161,7 +161,7 @@ public class WorldEventTrigger3030Tests
         }, toStage3.Select(b => Convert.ToHexStringLower(b)).ToArray());
     }
 
-    [Fact]
+    [DataFact]
     public void StageChange_OffTheEventMaps_SendsStageZeroOnly()
     {
         
@@ -229,7 +229,7 @@ public class FuncObjectIn2512Tests
 
     private static readonly JsonSerializerOptions TableOptions = new() { PropertyNameCaseInsensitive = true };
 
-    [Fact]
+    [DataFact]
     public void ZoneSpawnRows_ReproduceRetailsFrame()
     {
         var spawns = ZoneSpawn().Where(s => s.MapId == 1100).ToList();
@@ -241,7 +241,7 @@ public class FuncObjectIn2512Tests
         Assert.Equal(RetailThreeObjects, Convert.ToHexStringLower(FuncObjectPackets.BuildFuncObjectIn2512(objects)));
     }
 
-    [Fact]
+    [DataFact]
     public void NoObjects_IsTheCountZeroForm_ThisServerSentBefore()
     {
         var empty = FuncObjectPackets.BuildMapLoadFrames2512(Array.Empty<FuncObject>());
@@ -250,7 +250,7 @@ public class FuncObjectIn2512Tests
         Assert.Equal(ActorStatePackets.BuildFuncObjectInEmpty2512(), empty[0]);
     }
 
-    [Fact]
+    [DataFact]
     public void Map1101_ListsItsFunctionObjectRows_WithUniqueFunctionObjectHandles()
     {
         uint serial = 0;
@@ -276,7 +276,7 @@ public class FuncObjectIn2512Tests
         Assert.Equal(442, total);
     }
 
-    [Fact]
+    [DataFact]
     public void Map1100_LeavesOutTheTemplatesRetailNeverLists_AndKeepsTheQuestConditionedOnes()
     {
         uint serial = 0;
@@ -292,7 +292,7 @@ public class FuncObjectIn2512Tests
         Assert.Equal(8, objects.Count(o => o.TemplateId == 80010720));
     }
 
-    [Fact]
+    [DataFact]
     public void RetailUnlistedTemplates_AreFunctionObjectTemplatesWithSpawnRows()
     {
         var ids = FuncObjectIds();
@@ -309,7 +309,7 @@ public class FuncObjectIn2512Tests
         Assert.Equal(ids.Count - 69, ListedIds().Count);
     }
 
-    [Fact]
+    [DataFact]
     public void Build_SkipsRowsThatAreNpcTemplates()
     {
         var rows = ZoneSpawn().Where(s => s.MapId == 1100 && s.Index is 1061 or 1062).ToList();

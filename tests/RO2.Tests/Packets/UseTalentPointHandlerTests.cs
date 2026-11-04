@@ -48,7 +48,7 @@ public sealed class UseTalentPointHandlerTests
 
     // ---- pure helpers ---------------------------------------------------------------------------------------
 
-    [Fact]
+    [DataFact]
     public void TryParse_ReadsAWellFormedRequest()
     {
         var body = Build1310([(1102u, (byte)2), (1117u, (byte)1)]);
@@ -60,7 +60,7 @@ public sealed class UseTalentPointHandlerTests
         Assert.Equal(new[] { (1102u, (byte)2), (1117u, (byte)1) }, all);
     }
 
-    [Fact]
+    [DataFact]
     public void TryParse_RefusesAWrongMsgTag_AWrongHandle_AndAShortBody()
     {
         Assert.Equal(UseTalentPointHandler.RequestError.BadMsgTag,
@@ -71,7 +71,7 @@ public sealed class UseTalentPointHandlerTests
             UseTalentPointHandler.TryParse(new byte[19], Self, out _, out _, out _));
     }
 
-    [Fact]
+    [DataFact]
     public void TryParse_RefusesACountAbove230_BeforeReadingAnyElement()
     {
         // count = 0xFFFFFFFF with 4000 elements behind it
@@ -86,14 +86,14 @@ public sealed class UseTalentPointHandlerTests
             UseTalentPointHandler.TryParse(Build1310(big.Take(230).ToList()), Self, out _, out _, out _));
     }
 
-    [Fact]
+    [DataFact]
     public void TryParse_RefusesACountLargerThanTheElementsPresent()
     {
         Assert.Equal(UseTalentPointHandler.RequestError.Truncated,
             UseTalentPointHandler.TryParse(Build1310([(1102u, (byte)1)], declaredCount: 3), Self, out _, out _, out _));
     }
 
-    [Fact]
+    [DataFact]
     public void DedupKeepLast_KeepsTheLastLevelOfAGroup_AndDropsZeroEntries()
     {
         var result = UseTalentPointHandler.DedupKeepLast(
@@ -166,7 +166,7 @@ public sealed class UseTalentPointHandlerTests
         public ValueTask DisposeAsync() => Net.DisposeAsync();
     }
 
-    [Fact]
+    [DataFact]
     public async Task Accepted_WritesOneBatch_MirrorsIt_AndAcks()
     {
         await using var rig = await Rig.StartAsync();
@@ -186,7 +186,7 @@ public sealed class UseTalentPointHandlerTests
         Assert.Equal(QuestProgressPackets.BuildUseTalentPoint2543(sent.Select(s => (s.Item1, s.Item2)).ToList(), remaining), body);
     }
 
-    [Fact]
+    [DataFact]
     public async Task DuplicateGroups_BecomeOneUpsertAtTheLastLevel()
     {
         await using var rig = await Rig.StartAsync();
@@ -199,7 +199,7 @@ public sealed class UseTalentPointHandlerTests
         Assert.Equal((byte)5, rig.Player.LearnedSkills[1102]);
     }
 
-    [Fact]
+    [DataFact]
     public async Task OversizedCount_PersistsNothingAndSendsNoAck()
     {
         await using var rig = await Rig.StartAsync();
@@ -213,7 +213,7 @@ public sealed class UseTalentPointHandlerTests
         await rig.AssertNoReplyAsync();
     }
 
-    [Fact]
+    [DataFact]
     public async Task WrongMsgTag_OrForeignHandle_PersistsNothingAndSendsNoAck()
     {
         await using var rig = await Rig.StartAsync();
@@ -226,7 +226,7 @@ public sealed class UseTalentPointHandlerTests
         await rig.AssertNoReplyAsync();
     }
 
-    [Fact]
+    [DataFact]
     public async Task ChildWithoutParent_IsRefused_NothingPersisted()
     {
         await using var rig = await Rig.StartAsync();
@@ -238,7 +238,7 @@ public sealed class UseTalentPointHandlerTests
         await rig.AssertNoReplyAsync();
     }
 
-    [Fact]
+    [DataFact]
     public async Task OneIllegalEntry_RefusesTheWholeBatch()
     {
         await using var rig = await Rig.StartAsync();
@@ -251,7 +251,7 @@ public sealed class UseTalentPointHandlerTests
         await rig.AssertNoReplyAsync();
     }
 
-    [Fact]
+    [DataFact]
     public async Task LoweringAHeldLevel_IsRefused_AndTheLevelStays()
     {
         await using var rig = await Rig.StartAsync(p => p.LearnedSkills[1110] = 3);
@@ -263,7 +263,7 @@ public sealed class UseTalentPointHandlerTests
         await rig.AssertNoReplyAsync();
     }
 
-    [Fact]
+    [DataFact]
     public async Task RepositoryThrows_LeavesLearnedSkillsUnchanged_AndSendsNoAck()
     {
         await using var rig = await Rig.StartAsync(p => p.LearnedSkills[1110] = 1);
@@ -276,7 +276,7 @@ public sealed class UseTalentPointHandlerTests
         await rig.AssertNoReplyAsync();
     }
 
-    [Fact]
+    [DataFact]
     public async Task RepositoryThrowsAfterPartialWrite_ReloadsWhatPersisted_IntoTheLiveTree()
     {
         await using var rig = await Rig.StartAsync();
@@ -289,7 +289,7 @@ public sealed class UseTalentPointHandlerTests
         await rig.AssertNoReplyAsync();
     }
 
-    [Fact]
+    [DataFact]
     public void OverlayLearnedSkills_SwapsTheDictionary_SoAReaderNeverSeesItGrow()
     {
         var player = new PlayerState();

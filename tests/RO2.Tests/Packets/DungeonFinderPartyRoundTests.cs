@@ -59,7 +59,7 @@ public class DungeonFinderPartyRoundTests
  /// <summary>List 4 (Wolf Den Hard, Party_Num 5).</summary>
     private static FindDungeonList Five => Rows().Single(r => r.List_ID == 4);
 
-    [Fact]
+    [DataFact]
     public void EveryPartyNumFiveRow_HasTheOneOneThreeQuotasTheRoundUses()
     {
         var five = Rows().Where(r => r.Party_Num == 5).ToList();
@@ -72,7 +72,7 @@ public class DungeonFinderPartyRoundTests
  /// 2806 counting itself; the member and the other player get an empty 2822 and a 2806 with own role 0. The
  /// member's 2806 is the round opener <c>00000000000000010000</c>.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void Open_AsksTheOthersAndShowsEveryoneTheRound()
     {
         var round = new DungeonFinderPartyRound();
@@ -101,7 +101,7 @@ public class DungeonFinderPartyRoundTests
  /// <c>00000000000001020004</c>. A refused answer from a third member ends the round with 2831
  /// <c>0200000000</c>.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void RetailRound_Accepted_ThenAnotherPick_ThenAnotherMembersRefusal()
     {
         var round = new DungeonFinderPartyRound();
@@ -138,7 +138,7 @@ public class DungeonFinderPartyRoundTests
  /// A healer searches, another member takes the tank slot and a further member a dealer slot. The member
  /// answers <c>01</c> and gets 2834 <c>0800</c> and 2831 <c>0200000000</c>.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void RetailRound_TankSlotAlreadyTaken_IsRefused()
     {
         var round = new DungeonFinderPartyRound();
@@ -161,7 +161,7 @@ public class DungeonFinderPartyRoundTests
  /// A healer searches and two members take dealer slots. The member answers <c>04</c> and gets 2834
  /// <c>0800</c> and 2831 <c>0200000000</c>.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void RetailRound_HealerSlotHeldBySearcher_IsRefused()
     {
         var round = new DungeonFinderPartyRound();
@@ -178,7 +178,7 @@ public class DungeonFinderPartyRoundTests
         Assert.Equal([Frame(MSession, A2834, "0800"), Frame(MSession, N2831, "0200000000")], To(MSession, mPick.Sends));
     }
 
-    [Fact]
+    [DataFact]
     public void EveryMemberHoldingARole_ClosesTheRound()
     {
         var round = new DungeonFinderPartyRound();
@@ -203,7 +203,7 @@ public class DungeonFinderPartyRoundTests
             round.Open(Party, Five, SeatKeys.Of(Player(SearcherSession)), RoleKind.RoleDealer, [SeatKeys.Of(m), SeatKeys.Of(x)], Everyone).Status);
     }
 
-    [Fact]
+    [DataFact]
     public void MultiRoleFlags_TakeTheFirstFreeRole_InTankHealerDealerOrder()
     {
         var round = new DungeonFinderPartyRound();
@@ -217,7 +217,7 @@ public class DungeonFinderPartyRoundTests
     }
 
  /// <summary>A 1568 from a window whose round no longer exists is refused to the sender alone.</summary>
-    [Fact]
+    [DataFact]
     public void SelectRole_WithNoOpenRound_ClosesTheSendersWindowOnly()
     {
         var round = new DungeonFinderPartyRound();
@@ -228,7 +228,7 @@ public class DungeonFinderPartyRoundTests
         Assert.Equal([Frame(MSession, A2834, "0800"), Frame(MSession, N2831, "0200000000")], Render(pick.Sends));
     }
 
-    [Fact]
+    [DataFact]
     public void Cancel_EndsTheRoundForEveryMember_TheCancellerIncluded()
     {
         var round = new DungeonFinderPartyRound();
@@ -249,7 +249,7 @@ public class DungeonFinderPartyRoundTests
         Assert.Equal(SelectStatus.NoRound, round.SelectRole(SeatKeys.Of(m), 0x04, Everyone).Status);
     }
 
-    [Fact]
+    [DataFact]
     public void Cancel_WithNoOpenRound_SendsNothing()
     {
         var cancel = new DungeonFinderPartyRound().Cancel(SeatKeys.Of(Player(MSession)), Everyone);
@@ -262,7 +262,7 @@ public class DungeonFinderPartyRoundTests
  /// The 1558 route: while searching, the round's 2806 places every member in the round, and the finder tab's
  /// Find button sends 1558 instead. The searcher can also send it, and its cancel ends the round for everyone.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void Cancel_BySearcherThroughItsFinderTab_EndsTheRoundForEveryMember()
     {
         var round = new DungeonFinderPartyRound();
@@ -289,7 +289,7 @@ public class DungeonFinderPartyRoundTests
  /// The finder window hides itself once its frame timer passes 40.0 seconds and sends nothing, so the round
  /// can only give up after that point.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void Timeout_IsNoEarlierThanTheClientsFortySecondWindow()
     {
         Assert.Equal(TimeSpan.FromSeconds(40), DungeonFinderPartyRound.ClientRoleCheckWindow);
@@ -302,7 +302,7 @@ public class DungeonFinderPartyRoundTests
  /// everyone, including the answered member and the searcher, whose finder UI only that 2831 resets. The
  /// party can search again.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void Expire_EndsARoundWithARoleUnpicked_ForEveryMember()
     {
         var round = new DungeonFinderPartyRound();
@@ -328,7 +328,7 @@ public class DungeonFinderPartyRoundTests
     }
 
  /// <summary>A round that completed before its timeout: the timeout finds nothing to end.</summary>
-    [Fact]
+    [DataFact]
     public void Expire_AfterTheRoundCompleted_SendsNothing()
     {
         var round = new DungeonFinderPartyRound();
@@ -346,7 +346,7 @@ public class DungeonFinderPartyRoundTests
  /// A first round is cancelled and the party searches again within 41 seconds. The first round's timeout
  /// must not end the second round, which keeps its own timeout.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void Expire_OfAnEarlierRound_LeavesThePartysNextRoundOpen()
     {
         var round = new DungeonFinderPartyRound();
@@ -370,7 +370,7 @@ public class DungeonFinderPartyRoundTests
  /// A member goes offline before the timeout: the round is dropped as any stale round is, and only the
  /// members still present receive the 2831, once.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void Expire_OfARoundThatLostAMember_TellsTheMembersStillThereOnce()
     {
         var round = new DungeonFinderPartyRound();
@@ -393,7 +393,7 @@ public class DungeonFinderPartyRoundTests
  /// A member leaves the world before answering: the round can never complete, so the next access drops it
  /// and notifies the members still present. The member's own 1568 then finds no round and gets only the 2834.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void RoundWithAMemberGone_IsDroppedOnTheNextTouch()
     {
         var round = new DungeonFinderPartyRound();
@@ -414,7 +414,7 @@ public class DungeonFinderPartyRoundTests
             Render(pick.Sends));
     }
 
-    [Fact]
+    [DataFact]
     public void Open_WhileThePartysRoundIsLive_OpensNothing()
     {
         var round = new DungeonFinderPartyRound();
@@ -427,7 +427,7 @@ public class DungeonFinderPartyRoundTests
         Assert.Empty(again.Sends);
     }
 
-    [Fact]
+    [DataFact]
     public void Open_WithNoSlotForTheSearchersRole_OpensNothing()
     {
         var round = new DungeonFinderPartyRound();

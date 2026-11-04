@@ -16,7 +16,7 @@ public class CraftLearnLevelGateTests
 
     private static CraftItemList Row(ushort id) => Recipes.Value.First(r => r.ID == id);
 
-    [Fact]
+    [DataFact]
     public void Recipe666_IsRefusedBelowItsCraftLevel_AndLearnedAtIt()
     {
         var row = Row(666);
@@ -35,7 +35,7 @@ public class CraftLearnLevelGateTests
             CraftRecipeStore.BuildAckCraftLearnRefusal2538(CraftRecipeStore.ResultProfessionLevelTooLow)));
     }
 
-    [Fact]
+    [DataFact]
     public void LevelGate_SitsAfterTheKnownCheck_AndBeforeTheFeeCheck()
     {
         var known = CraftRecipeStore.KnownRecipeIds(Recipes.Value, 1, Array.Empty<ushort>());

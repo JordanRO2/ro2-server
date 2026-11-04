@@ -38,7 +38,7 @@ public class GuildFundsInHand2677Tests
     }
 
     
-    [Fact]
+    [DataFact]
     public void Request1488_ReadsTheDumpFrame()
     {
         var guild = new Guild { Guid16 = (byte[])DumpGuid.Clone() };
@@ -56,7 +56,7 @@ public class GuildFundsInHand2677Tests
     }
 
     
-    [Theory]
+    [DataTheory]
     
     [InlineData(467_254_901L, "000075bed91b00000000")]
     [InlineData(667_254_901L, "00007580c52700000000")]
@@ -68,7 +68,7 @@ public class GuildFundsInHand2677Tests
         Assert.Equal(dumpHex, Convert.ToHexString(body).ToLowerInvariant());
     }
 
-    [Fact]
+    [DataFact]
     public void Withdraw2673_Refusal_CarriesNoWallet()
     {
         
@@ -77,14 +77,14 @@ public class GuildFundsInHand2677Tests
         Assert.Equal("27000000000000000000", Convert.ToHexString(body).ToLowerInvariant());
     }
 
-    [Fact]
+    [DataFact]
     public void Funds2677_ReproducesDumpFrames()
     {
         
         Assert.Equal("0000000000000000", Convert.ToHexString(GuildFundsInHandPackets.BuildNfyFundsInHand2677(0)).ToLowerInvariant());
     }
 
-    [Fact]
+    [DataFact]
     public void Funds2677_IsOneU64_PerTheClientReader()
     {
         
@@ -93,7 +93,7 @@ public class GuildFundsInHand2677Tests
         Assert.Equal("0000000000000000", Convert.ToHexString(GuildFundsInHandPackets.BuildNfyFundsInHand2677(-5)).ToLowerInvariant());
     }
 
-    [Fact]
+    [DataFact]
     public void Deposit2672_IsResultThenWallet_PerTheClientReader()
     {
         
@@ -107,7 +107,7 @@ public class GuildFundsInHand2677Tests
     }
 
     
-    [Theory]
+    [DataTheory]
     
     [InlineData(9_867_250_497L, 200_000_000UL, GuildFundsInHandPackets.ResultWalletLimit)]
     
@@ -120,7 +120,7 @@ public class GuildFundsInHand2677Tests
     public void WithdrawWalletRule_MatchesTheDump(long wallet, ulong amount, ushort expected)
         => Assert.Equal(expected, GuildFundsInHandPackets.WithdrawWalletRefusal(wallet, amount, TenBillion));
 
-    [Fact]
+    [DataFact]
     public async Task WalletCap_IsConfigDef91()
     {
         var config = await LoadAsync<ConfigDef>("Config_Def.json");
@@ -128,7 +128,7 @@ public class GuildFundsInHand2677Tests
         Assert.Equal(long.MaxValue, GuildFundsInHandPackets.WalletCap([]));
     }
 
-    [Fact]
+    [DataFact]
     public void DepositWalletRule_RefusesMoreThanTheWallet()
     {
         Assert.Equal(GuildFundsInHandPackets.ResultOk, GuildFundsInHandPackets.DepositWalletRefusal(1_000, 1_000));
@@ -136,7 +136,7 @@ public class GuildFundsInHand2677Tests
         Assert.Equal(GuildFundsInHandPackets.ResultWalletShort, GuildFundsInHandPackets.DepositWalletRefusal(1_000, ulong.MaxValue));
     }
 
-    [Fact]
+    [DataFact]
     public async Task StorageLimit_IsTheLearnedProsperityLevel()
     {
         
@@ -149,7 +149,7 @@ public class GuildFundsInHand2677Tests
         Assert.Equal(0, GuildFundsInHandPackets.StorageLimit([120501, 120601], table));
     }
 
-    [Fact]
+    [DataFact]
     public void Funds_AddStopsAtTheLimit_TakeStopsAtZero()
     {
         var g = new Guild { Gold = 150_000_000 };
@@ -176,7 +176,7 @@ public class GuildFundsInHand2677Tests
         return g;
     }
 
-    [Fact]
+    [DataFact]
     public void DeleteTitle_RemovesAnUnusedTitle()
     {
         var g = GuildWithTitles(0, 1, 9);
@@ -186,7 +186,7 @@ public class GuildFundsInHand2677Tests
         Assert.Equal([0, 9], g.Ranks.Select(r => (int)r.Index));
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData(2u, (byte)1, GuildService.DeleteRankRefusal.NotMaster)]
     [InlineData(1u, (byte)0, GuildService.DeleteRankRefusal.MasterTitle)]
     [InlineData(1u, (byte)10, GuildService.DeleteRankRefusal.OutOfRange)]
@@ -201,7 +201,7 @@ public class GuildFundsInHand2677Tests
         Assert.Equal(3, g.Ranks.Count);
     }
 
-    [Fact]
+    [DataFact]
     public void DeleteTitle_KeepsTwoTitles()
     {
         var g = GuildWithTitles(0, 1);
@@ -209,7 +209,7 @@ public class GuildFundsInHand2677Tests
         Assert.Equal(2, g.Ranks.Count);
     }
 
-    [Fact]
+    [DataFact]
     public void DeleteTitle_CodesAreTheClientsMessages()
     {
         
@@ -224,14 +224,14 @@ public class GuildFundsInHand2677Tests
         Assert.Equal(37, GuildDelAuthorityHandler.ResultOf(GuildService.DeleteRankRefusal.NoSuchTitle));
     }
 
-    [Fact]
+    [DataFact]
     public void DelTitle2636_ReproducesTheDumpFrame()
     {
         
         Assert.Equal("01", Convert.ToHexString(GuildDelAuthorityHandler.BuildNfyGuildDelAuthority2636(1)).ToLowerInvariant());
     }
 
-    [Fact]
+    [DataFact]
     public void DelTitle2632_IsOneU16_PerTheClientReader()
     {
         

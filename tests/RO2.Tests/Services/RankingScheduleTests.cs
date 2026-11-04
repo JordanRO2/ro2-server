@@ -18,7 +18,7 @@ public class RankingScheduleTests
 
     private static DateTime Utc(int y, int mo, int d, int h, int mi) => new(y, mo, d, h, mi, 0, DateTimeKind.Utc);
 
-    [Fact]
+    [DataFact]
     public void ResetType_FollowsRankingJson_AndTypeOneIsDaily()
     {
         var table = LoadData<Ranking>("Ranking.json");
@@ -30,7 +30,7 @@ public class RankingScheduleTests
         Assert.Equal((byte)0, RankingSchedule.ResetTypeOf(table, 200));
     }
 
-    [Fact]
+    [DataFact]
     public void Daily_FlipsAtNoonUtc()
     {
         var daily = ResetRow(RankingSchedule.ResetDaily);
@@ -43,7 +43,7 @@ public class RankingScheduleTests
         Assert.Equal(Utc(2026, 8, 7, 12, 0), RankingSchedule.PreviousPeriodStart(daily, Utc(2026, 8, 8, 12, 0)));
     }
 
-    [Fact]
+    [DataFact]
     public void Weekly_FlipsOnSundayNoonUtc()
     {
         var weekly = ResetRow(RankingSchedule.ResetWeekly);
@@ -56,7 +56,7 @@ public class RankingScheduleTests
         Assert.Equal(Utc(2026, 7, 26, 12, 0), RankingSchedule.PreviousPeriodStart(weekly, Utc(2026, 8, 2, 12, 0)));
     }
 
-    [Fact]
+    [DataFact]
     public void Filter_SplitsSelectionAndFilterType()
     {
         Assert.Equal(((byte)13, RankingSchedule.FilterByClass), RankingSchedule.DecodeFilter(0x35));
@@ -91,7 +91,7 @@ public class RankingScheduleTests
         };
     }
 
-    [Fact]
+    [DataFact]
     public void Board_Unfiltered_IsTheTopTen()
     {
         
@@ -113,14 +113,14 @@ public class RankingScheduleTests
         Assert.Equal(retail2964, Hex(RankingPackets.Build2964(board)));
     }
 
-    [Fact]
+    [DataFact]
     public void Board_ClassFilter_KeepsGlobalRanks()
     {
         var board = RankingService.Board(Type3Snapshot(), 0x35);
         Assert.Equal(RankingPacketsTests.Retail2964Type3Class13, Hex(RankingPackets.Build2964(board)));
     }
 
-    [Fact]
+    [DataFact]
     public void Board_NoMatchingRow_IsRetailsEmptyBoard()
     {
         
@@ -131,7 +131,7 @@ public class RankingScheduleTests
         Assert.Equal("01000100", Hex(RankingPackets.Build2964(RankingService.Board(null, 0x01))));
     }
 
-    [Fact]
+    [DataFact]
     public void SelfRanked_Unfiltered_IsTheGlobalRow()
     {
         
@@ -143,7 +143,7 @@ public class RankingScheduleTests
         Assert.Equal(retail2965, Hex(RankingPackets.Build2965(self.Value)));
     }
 
-    [Fact]
+    [DataFact]
     public void SelfRanked_ClassFilter_IsThePositionAmongFilteredRows()
     {
         
@@ -155,7 +155,7 @@ public class RankingScheduleTests
         Assert.Equal(retail2965, Hex(RankingPackets.Build2965(self.Value)));
     }
 
-    [Fact]
+    [DataFact]
     public void SelfRanked_NotOnTheBoard_IsNull()
     {
         Assert.Null(RankingService.SelfRanked(Type3Snapshot(), 999, 0x01));
@@ -163,7 +163,7 @@ public class RankingScheduleTests
         Assert.Null(RankingService.SelfRanked(null, 114, 0x01));
     }
 
-    [Fact]
+    [DataFact]
     public void RankRows_SortsByScore_TiesByEarliestReached_PrevFromReplacedBoard()
     {
         var t0 = Utc(2026, 8, 8, 13, 0);
@@ -188,7 +188,7 @@ public class RankingScheduleTests
         Assert.Equal((byte)2, rows[0].Profession);
     }
 
-    [Fact]
+    [DataFact]
     public void Feeds_OnlyTypesOneThreeAndFour()
     {
         Assert.Equal(RankingFeed.Counter, RankingFeeds.FeedOf(1));
@@ -198,7 +198,7 @@ public class RankingScheduleTests
             Assert.Equal(RankingFeed.None, RankingFeeds.FeedOf(t));
     }
 
-    [Fact]
+    [DataFact]
     public void CardCollector_CountsNewCardRowsOnly()
     {
         
@@ -210,7 +210,7 @@ public class RankingScheduleTests
         Assert.Equal(0, CardCounting.CardRowsToCount(11111111, 1, cards));   
     }
 
-    [Fact]
+    [DataFact]
     public void CardCollector_NewRowsOfALanding_AreTheStacksHoldingNoMoreThanTheLandedCount()
     {
         

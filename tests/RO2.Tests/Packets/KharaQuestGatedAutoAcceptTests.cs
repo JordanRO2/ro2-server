@@ -27,7 +27,7 @@ public class KharaQuestGatedAutoAcceptTests
     
     private const uint GatedKhara = 44, GateQuest = 112013020, GatedNpc = 42140000;
 
-    [Fact]
+    [DataFact]
     public void TheCatalog_IndexesTheNinetySixGatedKharas_ByTheirQuest()
     {
         var gated = LoadRows().Where(r => r.Condition_Type == KharaService.ConditionQuestDone).Select(r => (uint)r.Quest_ID)
@@ -40,7 +40,7 @@ public class KharaQuestGatedAutoAcceptTests
         Assert.Null(Catalog.Value.Get(24)!.GateQuest);
     }
 
-    [Fact]
+    [DataFact]
     public void AKill_BeforeTheQuest_DoesNotAcceptAGatedKhara()
     {
         
@@ -52,7 +52,7 @@ public class KharaQuestGatedAutoAcceptTests
         Assert.Null(engine.State.FindActive(GatedKhara));
     }
 
-    [Fact]
+    [DataFact]
     public void TheQuestsCompletion_AcceptsIt_WithABare2574_AndTheNextKillCountsOne()
     {
         
@@ -72,7 +72,7 @@ public class KharaQuestGatedAutoAcceptTests
         Assert.Equal(new uint[] { 1 }, next.State.FindActive(GatedKhara)!.Counts);
     }
 
-    [Fact]
+    [DataFact]
     public void TwoKharasGatedOnOneQuest_AreAcceptedInIdOrder()
     {
         var engine = Engine(new KharaStateDocument { Id = 1 }, new HashSet<uint> { 111111380 });
@@ -86,7 +86,7 @@ public class KharaQuestGatedAutoAcceptTests
         }, Frames(engine));
     }
 
-    [Fact]
+    [DataFact]
     public void AGatedKhara_AlreadyHeldOrDone_IsNotAcceptedAgain()
     {
         var quests = new HashSet<uint> { GateQuest };
@@ -106,7 +106,7 @@ public class KharaQuestGatedAutoAcceptTests
         Assert.Empty(done.Frames);
     }
 
-    [Fact]
+    [DataFact]
     public void AnUngatedKillKhara_IsStillAcceptedByItsFirstKill_AndCreditedOne()
     {
         

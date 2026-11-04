@@ -29,7 +29,7 @@ public class ItemSkillForgeryTests
     private const uint GuildEmergencyCall = 4000101;
 
     
-    [Fact]
+    [DataFact]
     public async Task ItemSkillSet_IsItemInfoSkillId1AtOrAbove2M_NotGuildOrClass()
     {
         var store = await LoadStoreAsync("ItemInfo.json");
@@ -40,7 +40,7 @@ public class ItemSkillForgeryTests
     }
 
     
-    [Fact]
+    [DataFact]
     public async Task ForgedItemSkill1508_IsRefusedSilently_RecordsNoPendingCast_And1509LandsNothing()
     {
         await using var net = await Harness.StartAsync(1);
@@ -82,7 +82,7 @@ public class ItemSkillForgeryTests
     }
 
     
-    [Fact]
+    [DataFact]
     public async Task LegitItemUse_RecordsThePendingCast_SoThe1509IsGoverned_AndConsumesTheItem()
     {
         await using var net = await Harness.StartAsync(1);
@@ -132,7 +132,7 @@ public class ItemSkillForgeryTests
     }
 
     
-    [Fact]
+    [DataFact]
     public void DamagingItemSkill_AtAnNpc_PassesTheGateByPossession_NotByLearnedSkills()
     {
         
@@ -148,7 +148,7 @@ public class ItemSkillForgeryTests
             SkillDamageHandler.EvaluateDamageGate(noSkills, ClassSkill, npc, reach: 10f));
     }
 
-    [Fact]
+    [DataFact]
     public void DamagingItemSkill_WithTheItemHeld_IsGoverned_WithoutIt_IsRefused()
     {
         var p = new PlayerState { MapId = 1100 };

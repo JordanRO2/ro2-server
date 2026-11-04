@@ -17,7 +17,7 @@ public class AppearanceChange1705Tests
  /// <summary>The 1705 request body: the create[0..14] block.</summary>
     private static readonly byte[] Request = Convert.FromHexString("0202020bff0007000000010fff0001");
 
-    [Fact]
+    [DataFact]
     public void Answer3046_ReproducesTheDumpFrame()
     {
         var expected = Convert.FromHexString("011d1d009ee400000000112db0040202020bff0007000000010fff00010000");
@@ -26,7 +26,7 @@ public class AppearanceChange1705Tests
         Assert.Equal(AppearanceChangePackets.AnswerBodyLength, body.Length);
     }
 
-    [Fact]
+    [DataFact]
     public void TicketUse2329_ReproducesTheDumpFrame()
     {
         
@@ -36,7 +36,7 @@ public class AppearanceChange1705Tests
         Assert.Equal(expected, body);
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData(AppearanceChangePackets.ResultNoTicket)]
     [InlineData(AppearanceChangePackets.ResultGenderSpecificItemWorn)]
     public void Refusal3046_CarriesTheResultWhereTheReaderTakesIt(ushort result)
@@ -50,7 +50,7 @@ public class AppearanceChange1705Tests
         Assert.Equal(result, (ushort)(body[29] | body[30] << 8));
     }
 
-    [Fact]
+    [DataFact]
     public void Refusal3046_ReproducesTheLiveNoTicketFrame()
     {
         
@@ -62,14 +62,14 @@ public class AppearanceChange1705Tests
         Assert.Equal(Convert.FromHexString("011d1d009ee400000000117d450c0201010aff0001000000010aff0001145a"), body);
     }
 
-    [Fact]
+    [DataFact]
     public void RefusalBlock_WithoutAStoredBlock_IsTheRequest()
     {
         Assert.Equal(Request, AppearanceChangePackets.RefusalBlock(null, Request));
         Assert.Equal(Request, AppearanceChangePackets.RefusalBlock(new byte[14], Request));
     }
 
-    [Fact]
+    [DataFact]
     public void ApplyToCreateBlock_KeepsCreate0AndTheTailOfTheStoredBlock()
     {
         
@@ -85,7 +85,7 @@ public class AppearanceChange1705Tests
         Assert.Equal(stored[15..], raw[15..]);
     }
 
-    [Fact]
+    [DataFact]
     public void ApplyToCreateBlock_WithoutAStoredBlock_TakesTheRequest()
     {
         Assert.Equal(Request, AppearanceChangePackets.ApplyToCreateBlock(null, storedCreate0: 0, Request));
@@ -94,7 +94,7 @@ public class AppearanceChange1705Tests
         Assert.Equal(Request[1..], withGender[1..]);
     }
 
-    [Fact]
+    [DataFact]
     public void ReDerivedAppearance_TakesTheRequestedFields()
     {
         var stored = new byte[23];
@@ -108,7 +108,7 @@ public class AppearanceChange1705Tests
         Assert.Equal(raw, appearance.RawBytes);
     }
 
-    [Fact]
+    [DataFact]
     public void TicketItemType_IsExactlyTheSixAppearanceChangeTickets()
     {
         
@@ -127,7 +127,7 @@ public class AppearanceChange1705Tests
         Assert.Equal(new uint[] { 60002002, 60002003, 60002004, 60002005, 60002006, 60002007 }, tickets);
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData(1, 1, new byte[] { 1 }, false)]    
     [InlineData(1, 2, new byte[] { 1 }, true)]     
     [InlineData(2, 1, new byte[] { 2, 3 }, true)]  

@@ -17,7 +17,7 @@ public class TransModeAndReviewTests
     private static string Hex(byte[] b) => Convert.ToHexString(b).ToLowerInvariant();
 
     
-    [Theory]
+    [DataTheory]
     
     [InlineData(0x06ff4911u, 5040003u, (byte)3, "0111110026e4000000001149ff0683e74c0003")]
     
@@ -27,14 +27,14 @@ public class TransModeAndReviewTests
     public void NotifyTransModeStart2531_ReproducesRetailFrames(uint handle, uint skill, byte grade, string retail)
         => Assert.Equal(retail, Hex(TransModeNotifyPackets.BuildNotifyTransModeStart2531(handle, skill, grade)));
 
-    [Fact]
+    [DataFact]
     public void NotifyTransModeEnd2532_ReproducesRetailFrame()
     {
         
         Assert.Equal("010c0c0027e4000000001149ff06", Hex(TransModeNotifyPackets.BuildNotifyTransModeEnd2532(0x06ff4911u)));
     }
 
-    [Fact]
+    [DataFact]
     public void AckTransModeStartRefused2530_ReproducesRetailRepeatAnswer()
     {
         
@@ -45,7 +45,7 @@ public class TransModeAndReviewTests
         Assert.Equal("010a0a0025e4000000000000", Hex(ActorStatePackets.BuildOnAckTransModeStart()));
     }
 
-    [Theory]
+    [DataTheory]
     
     [InlineData((byte)4, new uint[] { 511000040, 511000041, 511000042 }, 5040003u, (byte)3)]
     [InlineData((byte)1, new uint[] { 511000010 }, 5010001u, (byte)1)]
@@ -59,7 +59,7 @@ public class TransModeAndReviewTests
         Assert.Equal((skill, grade), TransModeNotifyPackets.ResolveTransBuff(rows, profession, completed));
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData((byte)1, new uint[0])]                  
     [InlineData((byte)1, new uint[] { 511000020 })]     
     [InlineData((byte)0, new uint[] { 511000010 })]     
@@ -70,7 +70,7 @@ public class TransModeAndReviewTests
         Assert.Null(TransModeNotifyPackets.ResolveTransBuff(rows, profession, completed));
     }
 
-    [Fact]
+    [DataFact]
     public void TryRecordTransModeStart_RefusesARepeatWhileTheTransformRuns()
     {
         const uint characterId = 0xA10A1413u; 
@@ -129,7 +129,7 @@ public class TransModeAndReviewTests
         + "0000000000000000d4100000d4100000e501e5012401c80000000000870020000000340021002e000000000000002e00200016001d002d00"
         + "00000000000000000000000000000000";
 
-    [Fact]
+    [DataFact]
     public void AnsReviewPC3033_FullForm_PutsTheActiveEffectsWhereRetailDoes()
     {
         var frame = Convert.FromHexString(Retail3033);
@@ -171,7 +171,7 @@ public class TransModeAndReviewTests
         Assert.Equal(Retail3033, Hex(ReviewPCHandler.BuildAnsReviewPC3033(data)));
     }
 
-    [Fact]
+    [DataFact]
     public void AnsReviewPC3033_NotAllowedForm_IsRetailsSevenBytes()
     {
         
@@ -179,7 +179,7 @@ public class TransModeAndReviewTests
     }
 
     
-    [Fact]
+    [DataFact]
     public void SetPresentPassword_Refusal()
     {
         

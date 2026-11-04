@@ -47,14 +47,14 @@ public class AttendancePopup3027Tests
     private const string RetailStreptopeliaDay2AfterAMissedDay =
         "ad000000011c021c002001a58793032001da8893030001e688930300014c8793030001158893030001b0f4fa020001dcd355010001568793030002da8893030002e688930300014c8793030001158893030001b0f4fa020001ddd3550100013a8793030003da8893030003e688930300014c8793030001158893030001b0f4fa020001ded355010001418793030004da8893030004e688930300014c8793030001158893030001b0f4fa020001dfd35501";
 
-    [Theory]
+    [DataTheory]
     [InlineData(1, RetailDay1)]
     [InlineData(2, RetailDay2)]
     [InlineData(17, RetailDay17)]
     public void ThePopupOfAnUnbrokenStreakIsRetails(int days, string hex)
         => Assert.Equal(Convert.FromHexString(hex), EconomyMiscPackets.BuildShowAttendanceState(days, 0));
 
-    [Theory]
+    [DataTheory]
     [InlineData(20, 1, RetailBrokenBeforeDay7Day20)]
     [InlineData(10, 7, RetailBrokenAfter7Day10)]
     [InlineData(25, 14, RetailMenuBrokenAfter14Day25)]
@@ -62,14 +62,14 @@ public class AttendancePopup3027Tests
     public void AMilestoneAfterTheBreakIsASeal(int days, int brokenAfter, string hex)
         => Assert.Equal(Convert.FromHexString(hex), EconomyMiscPackets.BuildShowAttendanceState(days, brokenAfter));
 
-    [Theory]
+    [DataTheory]
     [InlineData(0, 1)]
     [InlineData(27, 28)]
     [InlineData(28, 1)]
     public void TheCountStepsOncePerDayAndWraps(int before, int after)
         => Assert.Equal(after, AttendanceRules.NextAttendedDays(before, AttendanceCalendar.Days));
 
-    [Fact]
+    [DataFact]
     public void AMissedDayBreaksTheStreakUntilTheWrap()
     {
         var jul10 = new DateOnly(2026, 7, 10).DayNumber;
@@ -87,7 +87,7 @@ public class AttendancePopup3027Tests
         Assert.Equal(0, AttendanceRules.NextStreakBrokenAfter(0, 0, jul10, 0, next: 1));
     }
 
-    [Fact]
+    [DataFact]
     public void TheRewardIsTheDaysEntry()
     {
         Assert.Equal((60000486u, (ushort)3), AttendanceCalendar.RewardOf(17, 0));
@@ -101,7 +101,7 @@ public class AttendancePopup3027Tests
         Assert.Null(AttendanceCalendar.RewardOf(0, 0));
     }
 
-    [Fact]
+    [DataFact]
     public void TheMenuViewFloorsAtDayOne()
         => Assert.Equal(Convert.FromHexString(RetailDay1), EconomyMiscPackets.BuildShowAttendanceState(0, 0));
 }
@@ -110,13 +110,13 @@ public class AttendancePopup3027Tests
 public class MakeOfferingsAck3029Tests
 {
  /// <summary>A 1693 targeting a non-NPC handle gets only this 3029 as its answer.</summary>
-    [Fact]
+    [DataFact]
     public void ANonNpcTargetGets20055()
         => Assert.Equal(Convert.FromHexString("040000000000574e"),
             EconomyMiscPackets.BuildMakeOfferingsAck(0, EconomyMiscPackets.MakeOfferingsNotUsableNpc));
 
  /// <summary>Success answer carrying string 15777.</summary>
-    [Fact]
+    [DataFact]
     public void ASuccessCarriesTheMessageAndNoError()
         => Assert.Equal(Convert.FromHexString("04000000a13d0000"), EconomyMiscPackets.BuildMakeOfferingsAck(15777, 0));
 }
@@ -157,7 +157,7 @@ public class QuestCollectDropTicksTests
  /// A 1693 offer of 18 x 60000775, collected by three quests (50 each), leaves none. The three 2428 notifies
  /// are sent in ascending order before the 2329.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void AnOfferingTicksEveryHeldCollectorInQuestOrder()
     {
         var held = new HashSet<uint> { 911000460, 123000024, 911000440, 911000450 };
@@ -173,7 +173,7 @@ public class QuestCollectDropTicksTests
  /// Selling one of two copies of an equipment item leaves the capped count unchanged but still sends a 2428 with tick 1.
  /// Selling the second copy sends tick 0.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void ASaleTicksEvenWhenTheCappedCountStays()
     {
         var held = new HashSet<uint> { 511000032 };
@@ -184,7 +184,7 @@ public class QuestCollectDropTicksTests
  /// <summary>
  /// A 1337 destroy of the second collect row of 613000010 ticks that row to 0.
  /// </summary>
-    [Fact]
+    [DataFact]
     public void ALaterRowIsTickedToo()
     {
         var rows = QuestCollectDropTicks.RowsCollecting(QuestRows.Value, 40001013);
@@ -193,14 +193,14 @@ public class QuestCollectDropTicksTests
             Bodies(40001013, new HashSet<uint> { 613000010 }, 0));
     }
 
-    [Fact]
+    [DataFact]
     public void NothingIsOwedWhenNoHeldQuestCollectsTheItem()
     {
         Assert.Empty(Bodies(60000775, new HashSet<uint> { 123000024 }, 0));
         Assert.Empty(QuestCollectDropTicks.RowsCollecting(QuestRows.Value, 1));
     }
 
-    [Fact]
+    [DataFact]
     public void TheCountIsCappedAtTheNeed()
     {
         var ticks = QuestCollectDropTicks.PlanTicks(QuestCollectDropTicks.RowsCollecting(QuestRows.Value, 60000775),
@@ -208,7 +208,7 @@ public class QuestCollectDropTicksTests
         Assert.Equal(50, Assert.Single(ticks).Count);
     }
 
-    [Fact]
+    [DataFact]
     public void TheFirstRowCounterIsLoweredButNeverRaisedOrCreated()
     {
         var player = new PlayerState();

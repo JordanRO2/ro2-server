@@ -18,7 +18,7 @@ public class UnitA5P3Tests
     private static readonly Lazy<KharaCatalog> Catalog = new(() => new KharaCatalog(LoadRows()));
 
     
-    [Fact]
+    [DataFact]
     public void AnsGameMallItemPrice2873_IsResultZeroAndEmptyCompactVector()
     {
         
@@ -26,7 +26,7 @@ public class UnitA5P3Tests
         Assert.Equal("00000100", Hex(GameMallItemPriceHandler.BuildAnsGameMallItemPrice2873Empty()));
     }
 
-    [Fact]
+    [DataFact]
     public void ReqGameMallItemPrice1601_ParsesCompactCountThenU32Ids()
     {
         
@@ -38,7 +38,7 @@ public class UnitA5P3Tests
     }
 
     
-    [Fact]
+    [DataFact]
     public void ReqPCItemDrop1321_ParsesTheBuilderLayout()
     {
         
@@ -60,7 +60,7 @@ public class UnitA5P3Tests
     }
 
     
-    [Fact]
+    [DataFact]
     public void ReqPCItemRune1331_OnlyTheEnvelopeIsRead()
     {
         
@@ -74,7 +74,7 @@ public class UnitA5P3Tests
     }
 
     
-    [Fact]
+    [DataFact]
     public void ReqPCStealItemPickUp1332_ParsesTheBuilderLayout()
     {
         
@@ -91,7 +91,7 @@ public class UnitA5P3Tests
     }
 
     
-    [Fact]
+    [DataFact]
     public void AnsKharaTimerStart2580_ReproducesRetailFrames()
     {
         
@@ -99,7 +99,7 @@ public class UnitA5P3Tests
         Assert.Equal("7f010000", Hex(KharaService.BuildAnsKharaTimerStart2580(383)));
     }
 
-    [Fact]
+    [DataFact]
     public void TimedKharas_AreExactlyTheFailType38Ones()
     {
         var timed = Enumerable.Range(1, 2000).Select(i => (uint)i)
@@ -107,7 +107,7 @@ public class UnitA5P3Tests
         Assert.Equal(new uint[] { 353, 380, 383, 387, 388, 389, 390 }, timed);
     }
 
-    [Fact]
+    [DataFact]
     public void Accept_TimedKhara_Sends2580AfterThe2574_UntimedDoesNot()
     {
         
@@ -122,7 +122,7 @@ public class UnitA5P3Tests
         Assert.DoesNotContain(other.Frames, f => f.Opcode == 2580);
     }
 
-    [Fact]
+    [DataFact]
     public void ReqKharaTimerStart1436_AnswersOnlyAnAcceptedTimedKhara()
     {
         

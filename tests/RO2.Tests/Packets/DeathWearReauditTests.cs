@@ -27,7 +27,7 @@ public class DeathWearReauditTests
     
  /// <summary>Durability lost per hit by an armour piece: 1 for the Crescentia and Soul Maker job bits,
  /// 2 for every other armour.</summary>
-    [Fact]
+    [DataFact]
     public void ArmourWearStep_FollowsTheJobMask()
     {
         foreach (var mask in new long[] { 65536, 131072, 196608, 229376 })
@@ -40,7 +40,7 @@ public class DeathWearReauditTests
  /// The death burst: worn slots 1 to 12 in ascending order, each reduced by 950 and floored at 0, sent
  /// unicast to the victim. On a PK map the values are unchanged.
  /// </summary>
-    [Fact]
+    [DataFact]
     public async Task DeathWear_IsTheWornSlots1To12_950Off_AndNothingOffOnAPkMap()
     {
         var store = await LoadStoreAsync("Map_List.json");

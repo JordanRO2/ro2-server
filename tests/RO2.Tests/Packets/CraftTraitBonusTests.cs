@@ -30,7 +30,7 @@ public class CraftTraitBonusTests
     private static InventoryItem Item(uint itemId, byte storageType, short slot = 0) =>
         new() { Id = 7000u + (ulong)slot, ItemId = itemId, Count = 1, Slot = slot, StorageType = storageType };
 
-    [Fact]
+    [DataFact]
     public void OnlyTheTwoLabels_CarryTrait106()
     {
         var carriers = Traits.Value.Where(t => t.Trait_Type == CraftTraitBonus.QuantityTrait)
@@ -38,22 +38,22 @@ public class CraftTraitBonusTests
         Assert.Equal(new[] { (GoldLabel, (byte)1, 10000f), (SilverLabel, (byte)1, 10000f) }, carriers);
     }
 
-    [Theory]
+    [DataTheory]
     [InlineData(GoldLabel)]
     [InlineData(SilverLabel)]
     public void WornLabel_Gives10000(uint label) =>
         Assert.Equal(10000, CraftTraitBonus.WornQuantityBonus(Traits.Value,
             new[] { Item(33000521, 0), Item(label, 1, 18) }));
 
-    [Fact]
+    [DataFact]
     public void LabelInTheBag_GivesNothing() =>
         Assert.Equal(0, CraftTraitBonus.WornQuantityBonus(Traits.Value, new[] { Item(GoldLabel, 0, 3) }));
 
-    [Fact]
+    [DataFact]
     public void LabelInTheBank_GivesNothing() =>
         Assert.Equal(0, CraftTraitBonus.WornQuantityBonus(Traits.Value, new[] { Item(GoldLabel, 2, 3) }));
 
-    [Theory]
+    [DataTheory]
     
     [InlineData((ushort)346, 10000, 2)]
     [InlineData((ushort)346, 0, 1)]
@@ -66,7 +66,7 @@ public class CraftTraitBonusTests
     public void ProductPerTick_MultipliesCookingAndAlchemyOnly(ushort recipeId, int bonus, int expected) =>
         Assert.Equal(expected, CraftTraitBonus.ProductPerTick(Recipe(recipeId), bonus));
 
-    [Theory]
+    [DataTheory]
     
     
     
@@ -102,7 +102,7 @@ public class CraftTraitBonusTests
         Assert.Equal(next, ShopItemPackets.BuildAckMakeCraftItemInfo2541(crafter, (ushort)sp, next.AsSpan(15).ToArray()));
     }
 
-    [Fact]
+    [DataFact]
     public void ProductPerTick_WithNoBonus_IsTheOneArgumentCount()
     {
         

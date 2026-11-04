@@ -45,7 +45,7 @@ public sealed class ShopTokenBuyReauditTests
     private const string Retail2375Token =
         "02a700a700c1e211eb870700000000b712915002000000000000000000000001016504006f784501000000001153a40da83d040e6f784501000001040d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 
-    [Fact]
+    [DataFact]
     public void TokenBuy2375_Mode1_IsRetailsFrame()
     {
         var retail = Convert.FromHexString(Retail2375Token);
@@ -58,7 +58,7 @@ public sealed class ShopTokenBuyReauditTests
         Assert.Equal(Retail2375Token, Hex(ours));
     }
 
-    [Fact]
+    [DataFact]
     public void TokenBuy2379_Reason2_MatchesRetailsHeader()
     {
         
@@ -89,7 +89,7 @@ public sealed class ShopTokenBuyReauditTests
         return rows.Single(r => r.ID == id);
     }
 
-    [Fact]
+    [DataFact]
     public async Task TokenRow1125_TakesTwoTokens_FromTheStack_AsRetailDid()
     {
         var row = await TokenRowAsync(1125);
@@ -106,7 +106,7 @@ public sealed class ShopTokenBuyReauditTests
         Assert.Equal(231, left);
     }
 
-    [Fact]
+    [DataFact]
     public void TokenTake_SpillsOverStacksLowestCellFirst_AndRefusesWhenShort()
     {
         var row = new BuyTokenInfo { ID = 9, TokenItemID1 = 12005817, NeedValue1 = 100, TokenItemID2 = 40001183, NeedValue2 = 31 };
@@ -128,7 +128,7 @@ public sealed class ShopTokenBuyReauditTests
         Assert.Null(PlanTokenTake(new[] { bank, c, d }, row, quantity: 1));
     }
 
-    [Fact]
+    [DataFact]
     public void TokenRowWithPointCosts_IsNotTokenOnly()
     {
         Assert.False(BuyItemHandler.IsTokenOnly(new BuyTokenInfo { ID = 1, TokenItemID1 = 1, NeedValue1 = 1, PvP_Point = 10 }));

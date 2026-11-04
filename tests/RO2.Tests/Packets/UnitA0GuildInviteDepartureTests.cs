@@ -36,7 +36,7 @@ public class UnitA0GuildInviteDepartureTests
     };
 
     
-    [Fact]
+    [DataFact]
     public void Ans2565_NoSuchName_MatchesRetailByteForByte()
     {
         
@@ -46,7 +46,7 @@ public class UnitA0GuildInviteDepartureTests
         Assert.Equal(retail, Hex(ours));
     }
 
-    [Fact]
+    [DataFact]
     public void Ans2565_Sent_MatchesRetailByteForByte()
     {
         
@@ -54,7 +54,7 @@ public class UnitA0GuildInviteDepartureTests
         Assert.Equal(retail, Hex(GuildPackets.BuildAnsGuildInviteMember(GuildInviteRules.Sent, "Namakuro", null)));
     }
 
-    [Theory]
+    [DataTheory]
     
     
     [InlineData("49005300650063007200650074004800650076006e0053007000790000000000a7c49fccf77f0000b0f3dc1b0000a032fe95ac99e64000000000ac99e640", "SecretHevnSpy")]
@@ -78,7 +78,7 @@ public class UnitA0GuildInviteDepartureTests
         Assert.All(ours.AsSpan(named, 46 - named).ToArray(), b => Assert.Equal(0, b));
     }
 
-    [Theory]
+    [DataTheory]
     
     [InlineData("0b0041004b00420073006d006900740068000000000000000000000000000000824e84e0f67f000098f0131c0000000000000000000000000000ffffffff", "AKBsmith", GuildInviteRules.AlreadyInvited)]
     
@@ -94,7 +94,7 @@ public class UnitA0GuildInviteDepartureTests
     }
 
     
-    [Fact]
+    [DataFact]
     public void Nfy2566_MatchesRetailOnEveryFieldTheClientReads()
     {
         
@@ -122,7 +122,7 @@ public class UnitA0GuildInviteDepartureTests
             if (!mask[i]) Assert.Equal(0, ours[i]);
     }
 
-    [Fact]
+    [DataFact]
     public void Nfy2566_InviteeField_IsTheTypedName()
     {
         
@@ -132,7 +132,7 @@ public class UnitA0GuildInviteDepartureTests
     }
 
     
-    [Fact]
+    [DataFact]
     public void Ans2569_Success_MatchesRetailByteForByte()
     {
         
@@ -143,7 +143,7 @@ public class UnitA0GuildInviteDepartureTests
         Assert.Equal(retail, Hex(GuildKickHandler.BuildAnsGuildKickMember(0, guild, request, "DeaconBlack")));
     }
 
-    [Fact]
+    [DataFact]
     public void Ans2569_Refusal_ZeroesTheGuidAndEchoesTheName()
     {
         
@@ -158,7 +158,7 @@ public class UnitA0GuildInviteDepartureTests
         Assert.Equal("0a00" + new string('0', 32), Hex(ours.AsSpan(4, 18)));
     }
 
-    [Fact]
+    [DataFact]
     public void Ans2569_RefusalCodes_AreTheClientsOwn()
     {
         
@@ -170,7 +170,7 @@ public class UnitA0GuildInviteDepartureTests
         Assert.Equal(24, GuildKickHandler.ResultSelf);
     }
 
-    [Fact]
+    [DataFact]
     public void Nfy2570_OnlineForm_MatchesRetail()
     {
         
@@ -179,7 +179,7 @@ public class UnitA0GuildInviteDepartureTests
             Hex(GuildKickHandler.BuildNfyGuildKickMember("Heaven's Gate")));
     }
 
-    [Fact]
+    [DataFact]
     public void Nfy2570_OfflineForm_IsRetailsConstant()
     {
         
@@ -188,7 +188,7 @@ public class UnitA0GuildInviteDepartureTests
         Assert.Equal("050000000112000000", Hex(GuildPackets.KickNoticeBody()));
     }
 
-    [Fact]
+    [DataFact]
     public async Task DepartureStore_KickNotice_IsTakenOnce()
     {
         const uint charId = 0xA0A0_0001;
@@ -199,7 +199,7 @@ public class UnitA0GuildInviteDepartureTests
         Assert.False(await departures.TakeKickNoticeAsync(charId));
     }
 
-    [Fact]
+    [DataFact]
     public async Task DepartureStore_RecordsTheLeave()
     {
         const uint charId = 0xA0A0_0002;
@@ -218,7 +218,7 @@ public class UnitA0GuildInviteDepartureTests
         InviterInGuild: true, InviterMayInvite: true, NameExists: true, InviteeOnline: true,
         InviteeInGuild: false, RejoinAtUtc: null, InviteePending: false);
 
-    [Fact]
+    [DataFact]
     public void Decide_FollowsTheInviterToInviteeOrder()
     {
         var end = new DateTime(2026, 9, 20, 16, 26, 23, DateTimeKind.Utc);
@@ -233,7 +233,7 @@ public class UnitA0GuildInviteDepartureTests
         Assert.Equal(GuildInviteRules.AlreadyInvited, GuildInviteRules.Decide(AllClear with { InviteePending = true }).Code);
     }
 
-    [Fact]
+    [DataFact]
     public void RejoinCooldown_RunsOneHourFromTheLeave()
     {
         
@@ -246,7 +246,7 @@ public class UnitA0GuildInviteDepartureTests
         Assert.Null(GuildInviteRules.RejoinAtUtc(left, TimeSpan.Zero, at));
     }
 
-    [Fact]
+    [DataFact]
     public void PendingInvite_BlocksForTheLifetime()
     {
         
@@ -259,7 +259,7 @@ public class UnitA0GuildInviteDepartureTests
         Assert.False(GuildInviteRules.IsPending(null, life, t0));
     }
 
-    [Fact]
+    [DataFact]
     public void TryAddInvite_RefusesWhileTheInviteeHoldsOne()
     {
         const uint invitee = 0xA0A0_0010;
@@ -274,7 +274,7 @@ public class UnitA0GuildInviteDepartureTests
         Assert.Null(svc.PeekInvite(invitee));
     }
 
-    [Fact]
+    [DataFact]
     public void ConfigDef_GivesOneHourAndFiveMinutes()
     {
         var config = JsonSerializer.Deserialize<List<ConfigDef>>(File.ReadAllText(Path.Combine(DataDirectory(), "Config_Def.json")))!;
@@ -296,7 +296,7 @@ public class UnitA0GuildInviteDepartureTests
     }
 
     
-    [Fact]
+    [DataFact]
     public void GidFor_IsTheCharacterListUid()
     {
         
@@ -308,7 +308,7 @@ public class UnitA0GuildInviteDepartureTests
         Assert.Equal(GuildService.GidFor(4242), BinaryPrimitives.ReadUInt64LittleEndian(body.AsSpan(10)));
     }
 
-    [Fact]
+    [DataFact]
     public void NormalizeGids_RepairsTheOldBand()
     {
         var g = new Guild { Id = 9 };
@@ -319,7 +319,7 @@ public class UnitA0GuildInviteDepartureTests
         Assert.False(GuildService.NormalizeGids(g));
     }
 
-    [Fact]
+    [DataFact]
     public void Nfy2645_MatchesRetail()
     {
         
