@@ -240,7 +240,9 @@ public static class Program
 
         // Zone-specific services (singletons for cross-handler state)
         services.AddSingleton<IClock, SystemClock>();
-        services.AddSingleton(sp => new MovementGuard(sp.GetRequiredService<IClock>(), config.Game.MoveMaxElapsedSeconds));
+        // Construct eagerly (not via a factory) so a misconfigured Game.MoveMaxElapsedSeconds fails at boot through the
+        // MovementGuard ctor's validation, instead of throwing on the first player move.
+        services.AddSingleton(new MovementGuard(new SystemClock(), config.Game.MoveMaxElapsedSeconds));
         services.AddSingleton<PlayerStateManager>();
         services.AddSingleton<RO2.DungeonFinder.Application.ISeatLiveness, SeatLivenessAdapter>();
         services.AddSingleton<RO2.DungeonFinder.Application.IFinderPartyView, FinderPartyViewAdapter>();
