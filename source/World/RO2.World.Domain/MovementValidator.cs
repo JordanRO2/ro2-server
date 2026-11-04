@@ -50,6 +50,9 @@ public static class MovementValidator
  /// <summary>Additive allowance in seconds added to the allowed travel time.</summary>
     public const float ToleranceSeconds = 0.5f;
 
+ /// <summary>Upper bound in seconds on the elapsed time a move may claim, so an idle client cannot bank travel time.</summary>
+    public const float MaxElapsedSeconds = 2.0f;
+
  /// <summary>Extra allowed distance, in world units, for the given speed.</summary>
     public static double FixedTolerance(float speed) => (double)speed * ToleranceSeconds;
 

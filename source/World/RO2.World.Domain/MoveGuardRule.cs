@@ -23,7 +23,7 @@ public readonly record struct MoveGuardResult(MoveRefusal Refusal, MoveSubject S
 /// <remarks>
 /// Elapsed time is measured from the last accepted move. A refused move does not advance the baseline, so the only travel
 /// a refused player earns is the distance it could have walked in that same time. The first move seen for a player has
-/// no baseline and is measured with an elapsed time of 0. A clock that went backwards gives an elapsed time of 0.
+/// no baseline and is measured with an elapsed time of 0. A clock that went backwards gives an elapsed time of 0. Elapsed time is capped at <see cref="MovementValidator.MaxElapsedSeconds"/>.
 /// </remarks>
 public static class MoveGuardRule
 {
@@ -46,6 +46,7 @@ public static class MoveGuardRule
         var since = subject.LastValidatedMoveAtUtc ?? now;
         var dt = (float)(now - since).TotalSeconds;
         if (dt < 0f) dt = 0f;
+        if (dt > MovementValidator.MaxElapsedSeconds) dt = MovementValidator.MaxElapsedSeconds;
 
         var current = new MovePos(subject.X, subject.Y, subject.Z);
         var refusal = MovementValidator.Validate(subject.MapId, current, dest, dt, speed, bounds, surface, serverGrantedExemption);

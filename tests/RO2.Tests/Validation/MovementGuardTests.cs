@@ -53,6 +53,32 @@ public class MovementGuardTests
     }
 
     [Fact]
+    public void IdleTimeIsNotBankedForALaterJump()
+    {
+        var clock = new TestClock();
+        var guard = new MovementGuard(clock);
+        var p = PlayerAt(100f, 100f);
+        p.LastValidatedMoveAtUtc = clock.UtcNow;
+        clock.Advance(60.0); // idle a minute: uncapped, speed*60.5 = 363 units would pass
+
+        Assert.Equal(MoveRefusal.TooFast, guard.ValidateClientMove(p, new MovePos(400f, 100f, 5f), Speed));
+        Assert.Equal(100f, p.X);
+    }
+
+    [Fact]
+    public void FullSpeedMoveAfterTheMaxElapsedWindowStillPasses()
+    {
+        var clock = new TestClock();
+        var guard = new MovementGuard(clock);
+        var p = PlayerAt(100f, 100f);
+        p.LastValidatedMoveAtUtc = clock.UtcNow;
+        clock.Advance(MovementValidator.MaxElapsedSeconds);
+
+        // speed * MaxElapsedSeconds of real travel stays inside the capped allowance (plus the tolerance).
+        Assert.Equal(MoveRefusal.None, guard.ValidateClientMove(p, new MovePos(100f + Speed * MovementValidator.MaxElapsedSeconds, 100f, 5f), Speed));
+    }
+
+    [Fact]
     public void InSpeedMoveIsAppliedAndAdvancesTheBaseline()
     {
         var clock = new TestClock();
