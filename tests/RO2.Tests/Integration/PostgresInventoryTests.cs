@@ -191,6 +191,27 @@ public sealed class PostgresInventoryTests
     }
 
     [Fact]
+    public async Task AddItem_without_a_slot_waits_for_the_characters_inventory_gate()
+    {
+        if (!_fx.Available) return;
+        var repo = new InventoryRepository(_fx.Db!);
+        var ch = NewChar();
+        var item = NewItem(ch);
+
+        Task add = null!;
+        await RO2.Inventory.Application.CharacterInventoryGate.RunAsync(ch, async () =>
+        {
+            add = repo.AddItemAsync(item);
+            await Task.Delay(300);
+            Assert.False(add.IsCompleted);   // serialized behind the held gate, as on Mongo
+            return 0;
+        });
+        await add;
+
+        Assert.Equal((short)0, item.Slot);
+    }
+
+    [Fact]
     public async Task Lowest_free_slot_is_per_storage_type_and_per_character()
     {
         if (!_fx.Available) return;

@@ -131,21 +131,26 @@ public sealed class InventoryRepository : IInventoryRepository
         }
 
         // Assign the lowest free slot for this character's storage of this type: the client places an item purely
-        // by the (bag, slot) in its record. The unique index rejects a lost race, and the pick is retried.
-        for (var attempt = 1; ; attempt++)
+        // by the (bag, slot) in its record. The pick-then-insert runs under the character's gate (as on Mongo) so
+        // two adds in this process cannot pick the same slot; the unique index rejects a lost cross-process race,
+        // and the pick is retried.
+        await CharacterInventoryGate.RunAsync(item.CharacterId, async () =>
         {
-            var used = await ReadUsedSlotsAsync(item.CharacterId, item.StorageType);
-            item.Slot = LowestFreeSlot(used);
-            try
+            for (var attempt = 1; ; attempt++)
             {
-                await InsertAsync(item);
-                return;
+                var used = await ReadUsedSlotsAsync(item.CharacterId, item.StorageType);
+                item.Slot = LowestFreeSlot(used);
+                try
+                {
+                    await InsertAsync(item);
+                    return 0;
+                }
+                catch (PostgresException ex) when (IsSlotCollision(ex) && attempt < MaxSlotAssignAttempts)
+                {
+                    // lost the slot to another writer: re-read and pick again
+                }
             }
-            catch (PostgresException ex) when (IsSlotCollision(ex) && attempt < MaxSlotAssignAttempts)
-            {
-                // lost the slot to another writer: re-read and pick again
-            }
-        }
+        });
     }
 
     /// <summary>The lowest slot index (from 0) that is not in <paramref name="occupied"/>.</summary>
