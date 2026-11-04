@@ -483,6 +483,11 @@ public class PlayerState : IWallet
     // written on this player's own session thread (and, for NPC-driven moves, under the map's tick).
     public HashSet<uint> VisibleNpcs { get; } = new();
 
+    // The position at which VisibleNpcs was last recomputed; the move handler re-evaluates once the player has moved
+    // AoiRules.RecomputeStep from here.
+    public float AoiAnchorX { get; set; }
+    public float AoiAnchorY { get; set; }
+
     // Active quests: quest_id set for duplicate-check
     public HashSet<uint> ActiveQuests { get; set; } = new();
 

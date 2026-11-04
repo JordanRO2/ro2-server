@@ -125,6 +125,8 @@ public class NpcSpawnService
         }
         player.VisibleNpcs.Clear();
         foreach (var npc in alive) player.VisibleNpcs.Add(npc.EntityOid);
+        player.AoiAnchorX = player.X;
+        player.AoiAnchorY = player.Y;
 
         var npcCount = alive.Count;
         if (npcCount == 0)
@@ -139,6 +141,46 @@ public class NpcSpawnService
 
         _logger.LogDebug("Session {Id}: Sent {Total} NPC spawns for map {MapId} ({Map}) - {Monsters} monsters, {Friendly} friendly, {Skipped} skipped (no client template)",
             session.SessionId, npcCount, mapId, mapData.Map_Name, monsterCount, npcCount - monsterCount, noTemplate);
+    }
+
+    /// <summary>
+    /// Re-evaluates which NPCs are inside the player's area-of-interest box and sends the difference since the last
+    /// evaluation: OnNPC_In (2506) for those that entered, OnNPC_Out (2507) for living NPCs that left the box. NPCs that
+    /// died leave the alive set and are dropped from the view silently, because the corpse path already sends their 2507.
+    /// Called from the move handler (this player's own session thread), so no lock is needed for <see cref="PlayerState.VisibleNpcs"/>.
+    /// </summary>
+    public async Task RecomputeVisibleNpcsAsync(ProudSession session, PlayerState player)
+    {
+        var mapId = player.MapId;
+        var mapData = _data.GetMap(mapId);
+        if (mapData == null) return;
+        var half = AoiRules.HalfWidth(mapData.Map_Type);
+
+        var aliveIds = new HashSet<uint>();
+        var inBox = new List<NpcRuntimeState>();
+        var inBoxIds = new HashSet<uint>();
+        foreach (var npc in _npcState.GetAliveNpcs(mapId))
+        {
+            aliveIds.Add(npc.EntityOid);
+            if (HasClientTemplate(npc.NpcId) && AoiRules.InView(player.X, player.Y, npc.PosX, npc.PosY, half))
+            {
+                inBox.Add(npc);
+                inBoxIds.Add(npc.EntityOid);
+            }
+        }
+
+        var enters = inBox.Where(n => !player.VisibleNpcs.Contains(n.EntityOid)).ToList();
+        var leaves = player.VisibleNpcs.Where(h => aliveIds.Contains(h) && !inBoxIds.Contains(h)).ToList();
+
+        // Drop dead/despawned handles silently (their OnNPC_Out came from the corpse path), then apply the box diff.
+        player.VisibleNpcs.RemoveWhere(h => !aliveIds.Contains(h));
+        foreach (var h in leaves) player.VisibleNpcs.Remove(h);
+        foreach (var n in enters) player.VisibleNpcs.Add(n.EntityOid);
+
+        foreach (var chunk in Chunk(enters, MaxRecordsPerFrame))
+            await session.SendInternalRmiAsync(ZoneS2COpcodes.OnNPC_In, BuildOnNpcIn2506(chunk, WalkSpeedOf));
+        if (leaves.Count > 0)
+            await session.SendInternalRmiAsync(ZoneS2COpcodes.OnNPC_Out, NpcLifecyclePackets.BuildNpcOut2507(leaves));
     }
 
     /// <summary>

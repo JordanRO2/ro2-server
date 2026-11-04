@@ -163,6 +163,18 @@ public class ViewGroupMoveHandler : ZoneRmiHandlerBase<ViewGroupMoveHandler>
         await Broadcast.BroadcastToNearbyAsync(player, ZoneS2COpcodes.ViewGroupPCMoveTo,
             writer => writer.WriteBytes(body));
 
+        // Area-of-interest: once the player has moved far enough since the last evaluation, re-check which NPCs are in
+        // range and send the enters/leaves. The step is well under the view half-width, so no crossing is missed.
+        // NpcSpawnService is always registered in the real Zone (map-load NPC spawn uses it before any move); it is
+        // optional here only so a minimal relay-focused test rig need not wire its whole dependency graph.
+        if (services.GetService<NpcSpawnService>() is { } npcSpawn
+            && MathF.Max(MathF.Abs(player.X - player.AoiAnchorX), MathF.Abs(player.Y - player.AoiAnchorY)) >= AoiRules.RecomputeStep)
+        {
+            player.AoiAnchorX = player.X;
+            player.AoiAnchorY = player.Y;
+            await npcSpawn.RecomputeVisibleNpcsAsync(session, player);
+        }
+
         if (channelToCancel != 0)
         {
             // The server ends the channel (see SkillChannelingPackets.CancelsOnMove): 2585

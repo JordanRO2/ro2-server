@@ -11,6 +11,13 @@ public static class AoiRules
     private const float WideHalfWidth = 200f;
 
     /// <summary>
+    /// How far a player must move since the last area-of-interest evaluation before it is recomputed. A performance
+    /// damper so the per-move NPC scan does not run on every 1526 (~5 Hz); kept well under <see cref="StandardHalfWidth"/>
+    /// so a player cannot cross the full view box between evaluations and miss an enter/leave.
+    /// </summary>
+    public const float RecomputeStep = 10f;
+
+    /// <summary>
     /// The view half-width for a map of the given Map_Type: 200 on the wide types (4 WoE, 5 open field), 60 otherwise.
     /// </summary>
     // shortcut: a handful of specific dungeon maps (410202/410203) and ~22 individual NPC assets also use 200 in the
