@@ -50,8 +50,10 @@ public sealed class PcCombatStateService : ITickable
     /// <summary>2398 target handle for a PC stance change: none (0).</summary>
     private const uint NoTargetHandle = 0;
 
-    /// <summary>2398 trailing field (body offset +19) for a PC stance change: 0.</summary>
-    private const uint NoTrailingValue = 0;
+    /// <summary>2398 trailing field (body offset +19) for a PC stance change: 2, the value every ordinary PC state
+    /// frame carries (see BuildChangeState2398 remarks; confirmed 2 across the retail PC 2398 corpus). NPC frames use 3.
+    /// The combat enter/re-pulse/leave frames were sending 0, inconsistent with every other PC state frame.</summary>
+    private const uint PcStateTrailingValue = 2;
 
     private double _accum;
     private int _running;
@@ -148,7 +150,7 @@ public sealed class PcCombatStateService : ITickable
         {
             await _broadcast.BroadcastToMapAsync(player.MapId, ZoneS2COpcodes.OnChangeState,
                 w => w.WriteBytes(CombatPackets.BuildChangeState2398(
-                    player.EntityId, state, NoTargetHandle, NoTrailingValue, combatFlag)));
+                    player.EntityId, state, NoTargetHandle, PcStateTrailingValue, combatFlag)));
         }
         catch (Exception ex)
         {
