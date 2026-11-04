@@ -153,7 +153,7 @@ public sealed class KharaEngine
     {
         
         
-        if (_facts.HeldCount(itemId) > 0) AutoAcceptOn(KharaRules.CompleteHoldItem, itemId);
+        if (_facts.HeldCount(itemId) is > 0) AutoAcceptOn(KharaRules.CompleteHoldItem, itemId);
         foreach (var entry in State.Active.ToList())
         {
             var def = _catalog.Get(entry.KharaId);
@@ -399,7 +399,7 @@ public sealed class KharaEngine
             var c = def.Conditions[i];
             if (c.Complete_Type != KharaRules.CompleteHoldItem) continue;
             if (onlyItem is { } item && c.Complete_Type_Value1 != item) continue;
-            var held = HeldTarget(c);
+            if (HeldTarget(c) is not { } held) continue; // inventory unknown: keep the stored progress
             if (held == CountOf(entry, i)) continue;
             SetCount(entry, i, held);
             Emit2577(def.Id, i, c.Complete_Type_Value1, held);
@@ -408,9 +408,10 @@ public sealed class KharaEngine
         return moved;
     }
 
-    private uint HeldTarget(KharaInfo c)
+    private uint? HeldTarget(KharaInfo c)
     {
-        long held = Math.Max(0, _facts.HeldCount(c.Complete_Type_Value1));
+        if (_facts.HeldCount(c.Complete_Type_Value1) is not { } n) return null;
+        long held = Math.Max(0, n);
         return (uint)Math.Min(held, c.Complete_Type_Value2);
     }
 

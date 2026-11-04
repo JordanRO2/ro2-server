@@ -328,9 +328,9 @@ public static class KharaService
             .OrderBy(a => a.KharaId).ToList();
     }
 
-    private static async Task<KharaFacts> LoadFactsAsync(PlayerState player, IServiceProvider services)
+    private static async Task<KharaFacts> LoadFactsAsync(PlayerState player, IServiceProvider services, ILogger? log)
     {
-        var held = new Dictionary<uint, int>();
+        Dictionary<uint, int>? held = new();
         try
         {
             var items = await services.GetRequiredService<IInventoryRepository>().GetByCharacterAsync(player.CharacterId);
@@ -343,7 +343,12 @@ public static class KharaService
                 held[it.ItemId] = held.GetValueOrDefault(it.ItemId) + Math.Max(0, it.Count);
             }
         }
-        catch {   }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            // A failed read is "unknown", not "holds nothing": zero would reset and persist the held-item rows.
+            log?.LogWarning(ex, "Khara: inventory of character {Char} unreadable; held-item rows left as they are", player.CharacterId);
+            held = null;
+        }
 
         HashSet<uint> quests;
         try
@@ -364,7 +369,7 @@ public static class KharaService
         return new KharaFacts
         {
             Level = player.Level,
-            HeldCount = id => held.GetValueOrDefault(id),
+            HeldCount = id => held?.GetValueOrDefault(id),
             IsQuestCompleted = quests.Contains,
             InGuild = inGuild,
             Profession = ProfessionOf(player),
@@ -389,7 +394,7 @@ public static class KharaService
                 var current = await GetPublishedAsync(player.CharacterId, repo, ct);
                 if (!relevant(current, catalog)) return;
 
-                var engine = new KharaEngine(catalog, current.Clone(), await LoadFactsAsync(player, services));
+                var engine = new KharaEngine(catalog, current.Clone(), await LoadFactsAsync(player, services, log));
                 apply(engine);
                 if (engine.Changed)
                 {

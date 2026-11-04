@@ -249,6 +249,20 @@ public class KharaCompletionTests
     }
 
     [Fact]
+    public void HeldCount_UnreadableInventory_LeavesHeldRowsAlone_AndSendsNothing()
+    {
+        // A failed inventory read is "unknown", not "holds nothing": it must not reset the held row.
+        var state = new KharaStateDocument { Id = 1, Active = new List<KharaActiveDocument> { Active(397, 22) } };
+        var engine = new KharaEngine(Catalog.Value, state, new KharaFacts { Level = 50, HeldCount = _ => null });
+
+        engine.OnHeldCountChanged(12005815);
+
+        Assert.Empty(engine.Frames);
+        Assert.False(engine.Changed);
+        Assert.Equal(new uint[] { 22 }, engine.State.FindActive(397)!.Counts);
+    }
+
+    [Fact]
     public void HeldCount_ItemsThatLeftUnreported_DoNotCompleteTheKhara()
     {
         

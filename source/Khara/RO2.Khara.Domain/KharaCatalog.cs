@@ -169,8 +169,8 @@ public sealed class KharaFacts
 {
     public byte Level { get; init; }
 
- /// <summary>Number of items of a template the character holds, in the bag and worn gear.</summary>
-    public Func<uint, int> HeldCount { get; init; } = _ => 0;
+ /// <summary>Number of items of a template the character holds, in the bag and worn gear; null when the inventory could not be read, which leaves held-item rows untouched.</summary>
+    public Func<uint, int?> HeldCount { get; init; } = _ => 0;
 
     public Func<uint, bool> IsQuestCompleted { get; init; } = _ => false;
 
