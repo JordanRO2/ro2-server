@@ -1,4 +1,6 @@
 using System.Buffers.Binary;
+using System.Collections.Concurrent;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using RO2.Application.Interfaces;
@@ -233,6 +235,50 @@ public sealed class KharaTitleSelectHandlerHardeningTests
             await rig.AssertNothingQueuedAsync();
         }
         finally { ResetPublished(); }
+    }
+
+    // The ownership check reads the published Khara state (what the 2310 lists), not the stored document: after a failed
+    // save the two diverge, and the published one is the authority. With nothing published it falls back to the store.
+    private static ConcurrentDictionary<uint, KharaStateDocument> PublishedKharas() =>
+        (ConcurrentDictionary<uint, KharaStateDocument>)typeof(KharaService)
+            .GetField("Published", BindingFlags.NonPublic | BindingFlags.Static)!.GetValue(null)!;
+
+    [Theory]
+    [InlineData(true, true)]     // published has it (the store too) -> accepted
+    [InlineData(false, false)]   // published lacks it although the store has it -> refused
+    public async Task Select_ChecksOwnershipAgainstThePublishedState(bool publishedCompleted, bool accepted)
+    {
+        ResetPublished();
+        var published = PublishedKharas();
+        try
+        {
+            published[CharId] = new KharaStateDocument { Id = CharId, Completed = publishedCompleted ? [Khara572] : [] };
+            var repo = new FakeTitleRepo();
+            await using var rig = await Rig.StartAsync(repo);
+
+            await rig.Handler.HandleAsync(rig.Net.Sessions[0], Body1438(Khara572, 0));
+
+            Assert.Equal(accepted ? 1 : 0, repo.Saves);
+        }
+        finally { published.TryRemove(CharId, out _); ResetPublished(); }
+    }
+
+    [Fact]
+    public async Task Select_WithNothingPublished_FallsBackToTheStoredState()
+    {
+        ResetPublished();
+        var published = PublishedKharas();
+        published.TryRemove(CharId, out _);
+        try
+        {
+            var repo = new FakeTitleRepo();
+            await using var rig = await Rig.StartAsync(repo);
+
+            await rig.Handler.HandleAsync(rig.Net.Sessions[0], Body1438(Khara572, 0));
+
+            Assert.Equal(1, repo.Saves);   // FakeKharaState says Khara 572 is completed
+        }
+        finally { published.TryRemove(CharId, out _); ResetPublished(); }
     }
 
     // ------------------------------------------------------------------ CP-G10 1439

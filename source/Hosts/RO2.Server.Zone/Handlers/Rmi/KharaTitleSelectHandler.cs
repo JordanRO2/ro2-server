@@ -60,16 +60,17 @@ public class KharaTitleSelectHandler : ZoneRmiHandlerBase<KharaTitleSelectHandle
         try
         {
             state = KharaTitleState.From(await titles.GetAsync(player.CharacterId, ct));
-            // The titles the character may wear: the Kharas it completed on this server (read by the use case from
-            // IKharaStateRepository, so the check sees what the 2310 would list) whose Khara_Info block grants a title
+            // The titles the character may wear: the Kharas it completed on this server (read from the published Khara
+            // state, so the check sees what the 2310 lists) whose Khara_Info block grants a title
             // (KharaTitleRules.TitleGrantingKharas: Khara 410's title is on its second, NationEnable-4, block). This
             // ownership refusal is this server's own guard (KharaTitleStore).
             // Both clocks are play time (KharaTitleClock: stopped while offline and on Map_Type 3, resumed at the login
             // and at each 1304 elsewhere), so the decision is taken at the character's play instant, the axis the
             // stored instants are on.
             playNow = KharaTitleClock.PlayNow(player.CharacterId, DateTime.UtcNow);
-            decision = await services.GetRequiredService<RO2.Kharas.Application.SelectKharaTitleUseCase>().ExecuteAsync(
-                player.CharacterId, state, titleIdA, titleIdB, playNow, services.GetRequiredService<GameDataStore>().KharaInfo, ct);
+            decision = services.GetRequiredService<RO2.Kharas.Application.SelectKharaTitleUseCase>().Execute(
+                state, titleIdA, titleIdB, playNow, await KharaService.PublishedCompletedAsync(player.CharacterId, services, ct),
+                services.GetRequiredService<GameDataStore>().KharaInfo);
         }
         catch (Exception ex) when (ex is not OperationCanceledException)
         {

@@ -85,6 +85,13 @@ public static class KharaService
             : Array.Empty<uint>();
 
  /// <summary>
+ /// The ids of the Kharas the character has completed, from the same published state the 2310 lists (not the stored document,
+ /// which lags it after a failed save). Loads from the store when nothing is published for the character yet.
+ /// </summary>
+    public static async Task<IReadOnlyList<uint>> PublishedCompletedAsync(uint characterId, IServiceProvider services, CancellationToken ct = default)
+        => (await GetPublishedAsync(characterId, Repository(services), ct)).Completed;
+
+ /// <summary>
  /// Writes the accepted-Khara and completed-Khara lists of the 2310 login message from the cached state. Both are empty for a
  /// character without state.
  /// </summary>
