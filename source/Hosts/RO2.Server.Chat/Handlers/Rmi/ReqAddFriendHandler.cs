@@ -132,6 +132,10 @@ public class ReqAddFriendHandler : ChatRmiHandlerBase<ReqAddFriendHandler>
 
         var addFriend = services.GetRequiredService<AddFriendUseCase>();
         var added = await addFriend.ExecuteAsync(ownerId, target.Id);
+        // The pre-check counted live friends but the atomic guard counts raw stored ids: reclaim the slots of deleted
+        // characters and retry once, so the guard and the visible list agree.
+        if (added.ResultCode == FriendStore.AddResultListFull && await friends.PruneDeadAsync(ownerId, ct) > 0)
+            added = await addFriend.ExecuteAsync(ownerId, target.Id);
         if (!added.Added)
         {
             if (added.ResultCode == FriendStore.AddResultAlreadyFriend)

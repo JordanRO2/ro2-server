@@ -98,6 +98,23 @@ public sealed class FriendStore
     }
 
     /// <summary>
+    /// Drops the stored ids of deleted characters from the owner's list and returns how many it dropped. The
+    /// atomic size guard counts the raw stored array, so those hidden ids can make it answer ListFull while
+    /// <see cref="CountAsync"/> (and the 23505 list) are under <see cref="MaxFriends"/>; the add path calls this
+    /// on ListFull and retries once.
+    /// </summary>
+    public async Task<int> PruneDeadAsync(uint ownerId, CancellationToken ct)
+    {
+        var ids = await _lists.LoadAsync(ownerId, ct);
+        if (ids.Count == 0) return 0;
+        var live = (await _characters.GetLiveByIdsAsync(ids, ct)).Select(c => c.Id).ToHashSet();
+        var dead = ids.Where(id => !live.Contains(id)).Distinct().ToList();
+        foreach (var id in dead)
+            await _lists.RemoveAsync(ownerId, id);
+        return dead.Count;
+    }
+
+    /// <summary>
     /// Remove <paramref name="friendId"/> from the owner's list. A delete for an id the owner never listed (a
     /// forged or repeated 23005) writes nothing; the handler answers 0 either way.
     /// </summary>
