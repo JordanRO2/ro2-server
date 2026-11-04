@@ -261,6 +261,9 @@ public class NpcStateManager
     /// <summary>1 once the missing-table warning of <see cref="TrackSpawns"/> has been logged.</summary>
     private int _warnedNoRetailVitals;
 
+    /// <summary>1 once the unreadable-aggression-table warning of <see cref="TrackSpawns"/> has been logged.</summary>
+    private int _warnedNoAggression;
+
     /// <summary>
     /// The (max HP, max SP) an NPC of <paramref name="asset"/> at <paramref name="level"/> spawns with.
     /// </summary>
@@ -299,6 +302,9 @@ public class NpcStateManager
         if (RetailVitals is null && Interlocked.Exchange(ref _warnedNoRetailVitals, 1) == 0)
             _logger.LogWarning("{Path} is missing or unreadable: NPCs spawn with the NpcServerInfo HP fallback, not retail's vitals",
                 NpcRetailVitals.ShippedPath);
+        // A file that is there but did not load (the absent table is the intended passive default, so it stays silent).
+        if (AggressionTable is null && File.Exists(NpcAggression.ShippedPath) && Interlocked.Exchange(ref _warnedNoAggression, 1) == 0)
+            _logger.LogWarning("{Path} is present but unreadable: every monster is passive (no proximity aggro)", NpcAggression.ShippedPath);
 
         int added;
         lock (_lifecycleGate)
