@@ -345,26 +345,32 @@ public static class IllusionPyramidService
             var run = slot.Run!;
 
             ushort refused = ResultOk;
+            bool settleFailed = false;
             try
             {
                 var repo = Repository(services);
                 var state = await repo.GetAsync(player.CharacterId, ct);
-                if (reward.End && reward.IsMileage && !await SettleAsync(session, player, run, state, services, logger, ct))
+                bool dirty = RaiseTopRecord(state, reward.Floor);
+                if (reward.End && reward.IsMileage)
                 {
-                    
-                    
-                    refused = EntryRefusal(run.Entry);
+                    // SettleAsync saves the state before it takes the entry or pays, so a failure leaves the held reward.
+                    if (!await SettleAsync(session, player, run, state, repo, services, logger, ct))
+                        refused = EntryRefusal(run.Entry);
                 }
-                else
-                {
-                    bool dirty = RaiseTopRecord(state, reward.Floor);
-                    if (dirty || (reward.End && reward.IsMileage)) await repo.SaveAsync(state, ct);
-                }
+                else if (dirty) await repo.SaveAsync(state, ct);
             }
             catch (Exception ex) when (ex is not OperationCanceledException)
             {
-                
+
                 logger.LogWarning(ex, "{Name}: illusion pyramid state could not be updated at 1618", player.Name);
+                settleFailed = reward.End && reward.IsMileage;
+            }
+
+            if (settleFailed)
+            {
+                // Nothing was taken or paid and the reward is still held, so the finish (1619) can settle it.
+                await session.SendRmiAsync(ZoneS2COpcodes.AnsIllusionPyramidGetResult, Build2908Code(ResultSystemError), ct);
+                return;
             }
 
             if (refused != ResultOk)
@@ -447,17 +453,20 @@ public static class IllusionPyramidService
             
             
             ushort code = ResultSystemError;
+            bool saved = false;
             try
             {
                 var repo = Repository(services);
                 var state = await repo.GetAsync(player.CharacterId, ct);
                 RaiseTopRecord(state, held.Floor);
-                run.Held = null;
-                bool charged = await ChargeEntryAsync(session, player, run.Entry, state, services, ct);
+                var (charged, stone) = await ReserveEntryAsync(player, run.Entry, state, services);
                 await repo.SaveAsync(state, ct);
+                saved = true;
+                run.Held = null;
                 code = ResultOk;
                 if (charged)
                 {
+                    if (stone is not null) await TakeStoneAsync(session, player, stone, services, ct);
                     await MailRewardAsync(session, player, held, services, ct);
                     code = ResultRewardMailed;
                 }
@@ -467,15 +476,16 @@ public static class IllusionPyramidService
                 logger.LogWarning(ex, "{Name}: illusion pyramid reward {Count}x {Item} could not be mailed",
                     player.Name, held.Count, held.ItemId);
             }
-            return (code, true);
+            // A failed save took nothing and kept the held reward, so the run stays open for a retry.
+            return (code, saved);
         }
         try
         {
             var repo = Repository(services);
             var state = await repo.GetAsync(player.CharacterId, ct);
             RaiseTopRecord(state, held.Floor);
-            await SettleAsync(session, player, run, state, services, logger, ct);
-            await repo.SaveAsync(state, ct);
+            if (!await SettleAsync(session, player, run, state, repo, services, logger, ct))
+                await repo.SaveAsync(state, ct);
             return (ResultOk, true);
         }
         catch (Exception ex) when (ex is not OperationCanceledException)
@@ -657,25 +667,30 @@ public static class IllusionPyramidService
 
     
  /// <summary>
- /// Settles the held reward into <paramref name="state"/>, which the caller saves: charges the entry, then pays the
- /// mileage or lands the item. Returns false, with nothing paid, when the entry cannot be charged.
+ /// Settles the held reward: reserves the entry, saves <paramref name="state"/>, and only then takes the Phantom Stone
+ /// and lands the item. A save that throws leaves the held reward and the stone untouched. Returns false, with
+ /// nothing paid and nothing saved, when the entry cannot be charged.
  /// </summary>
     private static async Task<bool> SettleAsync(ProudSession session, PlayerState player, IllusionPyramidRunStore.Run run,
-        IllusionPyramidStateDocument state, IServiceProvider services, ILogger logger, CancellationToken ct)
+        IllusionPyramidStateDocument state, IIllusionPyramidStateRepository repo, IServiceProvider services, ILogger logger,
+        CancellationToken ct)
     {
         var reward = run.Held!;
-        bool charged = await ChargeEntryAsync(session, player, run.Entry, state, services, ct);
-        
-        run.Held = null;
+        var (charged, stone) = await ReserveEntryAsync(player, run.Entry, state, services);
+
         if (!charged)
         {
+            run.Held = null;
             logger.LogInformation("{Name}: illusion pyramid {Entry} entry could not be charged; result {Count}x {Item} is void",
                 player.Name, run.Entry, reward.Count, reward.ItemId);
             return false;
         }
+        if (reward.IsMileage) ApplyMileage(state, reward.MileageId, reward.Count);
+        await repo.SaveAsync(state, ct);
+        run.Held = null;
+        if (stone is not null) await TakeStoneAsync(session, player, stone, services, ct);
         if (reward.IsMileage)
         {
-            ApplyMileage(state, reward.MileageId, reward.Count);
             logger.LogInformation("{Name}: illusion pyramid pays {Count} mileage {Mileage} (Mystical {Mystical}, Bright {Bright})",
                 player.Name, reward.Count, reward.MileageId, state.Mystical, state.Bright);
             return true;
@@ -692,39 +707,45 @@ public static class IllusionPyramidService
         => entry == IllusionPyramidCatalog.EntryKind.PhantomStone ? ResultNeedPhantomStone : ResultAbnormalInformation;
 
  /// <summary>
- /// Takes the entry of a run: one Phantom Stone from the bag, or the Mystical or Bright cost from the balance.
- /// Returns false when it cannot be paid.
+ /// Checks that the entry of a run can be paid. A Mystical or Bright entry is deducted from <paramref name="state"/>
+ /// (the caller saves it); a Phantom Stone entry returns its stack, which <see cref="TakeStoneAsync"/> removes once
+ /// the state is saved. Returns false when it cannot be paid.
  /// </summary>
-    private static async Task<bool> ChargeEntryAsync(ProudSession session, PlayerState player, IllusionPyramidCatalog.EntryKind entry,
-        IllusionPyramidStateDocument state, IServiceProvider services, CancellationToken ct)
+    private static async Task<(bool Charged, InventoryItem? Stone)> ReserveEntryAsync(PlayerState player,
+        IllusionPyramidCatalog.EntryKind entry, IllusionPyramidStateDocument state, IServiceProvider services)
     {
         switch (entry)
         {
             case IllusionPyramidCatalog.EntryKind.PhantomStone:
-                var inventory = services.GetRequiredService<IInventoryRepository>();
-                var stack = (await inventory.GetByCharacterAsync(player.CharacterId))
+                var stack = (await services.GetRequiredService<IInventoryRepository>().GetByCharacterAsync(player.CharacterId))
                     .Where(i => i.StorageType == StorageBag && i.Slot >= 0 && i.ItemId == IllusionPyramidCatalog.PhantomStoneItemId && i.Count > 0)
                     .OrderBy(i => i.Slot)
                     .FirstOrDefault();
-                if (stack is null) return false;
-                var (bag, slot) = ItemWorkbench.ClientBagSlot(stack);
-                int left = stack.Count - 1;
-                if (left <= 0) await inventory.RemoveItemAsync(stack.Id);
-                else { stack.Count = left; await inventory.UpdateItemAsync(stack); }
-                await session.SendRmiAsync(ZoneS2COpcodes.OnUseItem,
-                    CombatPackets.BuildUseItem2329(player.EntityId, slot, bag, stack.Id, (byte)Math.Clamp(left, 0, UseItemCountMax)), ct);
-                return true;
+                return (stack is not null, stack);
             case IllusionPyramidCatalog.EntryKind.Mystical:
-                if (state.Mystical < IllusionPyramidCatalog.MileageEntryCost) return false;
+                if (state.Mystical < IllusionPyramidCatalog.MileageEntryCost) return (false, null);
                 state.Mystical -= IllusionPyramidCatalog.MileageEntryCost;
-                return true;
+                return (true, null);
             case IllusionPyramidCatalog.EntryKind.Bright:
-                if (state.Bright < IllusionPyramidCatalog.MileageEntryCost) return false;
+                if (state.Bright < IllusionPyramidCatalog.MileageEntryCost) return (false, null);
                 state.Bright -= IllusionPyramidCatalog.MileageEntryCost;
-                return true;
+                return (true, null);
             default:
-                return false;
+                return (false, null);
         }
+    }
+
+ /// <summary>Takes one Phantom Stone from <paramref name="stack"/> and sends the bag update.</summary>
+    private static async Task TakeStoneAsync(ProudSession session, PlayerState player, InventoryItem stack,
+        IServiceProvider services, CancellationToken ct)
+    {
+        var inventory = services.GetRequiredService<IInventoryRepository>();
+        var (bag, slot) = ItemWorkbench.ClientBagSlot(stack);
+        int left = stack.Count - 1;
+        if (left <= 0) await inventory.RemoveItemAsync(stack.Id);
+        else { stack.Count = left; await inventory.UpdateItemAsync(stack); }
+        await session.SendRmiAsync(ZoneS2COpcodes.OnUseItem,
+            CombatPackets.BuildUseItem2329(player.EntityId, slot, bag, stack.Id, (byte)Math.Clamp(left, 0, UseItemCountMax)), ct);
     }
 
  /// <summary>Lands an item reward in the bag and sends the bag update for each stack it reached.</summary>
