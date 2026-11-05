@@ -26,7 +26,10 @@ public static class JobExpGrantFlow
     {
         if (gain == 0 || character is null) return false;
         var table = data.ExpTable;
-        if (character.JobLevel >= JobExpRules.MaxLevel(table) || !table.ContainsKey(character.JobLevel)) return false;
+        // At the job-level cap the exp would be dropped; a started Master level takes it as mastery points instead.
+        if (character.JobLevel >= JobExpRules.MaxLevel(table))
+            return await TryEarnMasteryAsync(character, gain, data, characters, notifier);
+        if (!table.ContainsKey(character.JobLevel)) return false;
 
         var result = JobExpRules.Apply(character.JobLevel, character.JobExp, gain, table);
         character.JobLevel = result.Level;
@@ -48,6 +51,32 @@ public static class JobExpGrantFlow
 
         if (result.LevelledUp)
             await notifier.OnLevelUpAsync();
+        return true;
+    }
+
+    /// <summary>
+    /// Converts a capped job-exp gain to mastery points: once the character has started the Master level, combat
+    /// profession exp feeds the point balance one for one, up to the current rank's point cap, and a 2986 change is
+    /// sent. Returns false with nothing changed when it has not started or is already at the cap.
+    /// </summary>
+    private static async Task<bool> TryEarnMasteryAsync(Character character, ulong gain, ICharacterGameData data,
+        ICharacterRepository characters, IJobExpNotifier notifier)
+    {
+        if (character.MasteryLevel < 1) return false;
+        ulong cap = data.MasteryMaxPointBalance(character.MasteryLevel);
+        if (cap == 0 || character.JobMasteryPoints >= cap) return false;
+
+        ulong added = Math.Min(gain, cap - character.JobMasteryPoints);
+        character.JobMasteryPoints += added;
+        try
+        {
+            await characters.UpdateJobMasteryAsync(character.Id, character.MasteryLevel, character.MasteryRank, character.JobMasteryPoints);
+        }
+        catch
+        {
+            // Swallowed as the job-exp persist is: the client is left ahead of the DB rather than losing the gain.
+        }
+        await notifier.MasteryPointsGainedAsync((long)added, character.JobMasteryPoints);
         return true;
     }
 }

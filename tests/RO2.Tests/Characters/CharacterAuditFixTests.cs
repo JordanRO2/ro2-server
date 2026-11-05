@@ -94,6 +94,7 @@ public class CharacterAuditFixTests
         public byte RequireSex(uint itemId) => throw new NotSupportedException();
         public bool IsNameChangeScroll(uint itemId) => throw new NotSupportedException();
         public (int hp, int mp, int str, int agi, int intel, int wis, int vit, int luk)? SeedStats(byte job) => null;
+        public ulong MasteryMaxPointBalance(byte masteryLevel) => masteryLevel == 0 ? 0UL : 10_000_000UL;
     }
 
     private sealed class Notifier : IJobExpNotifier
@@ -101,6 +102,7 @@ public class CharacterAuditFixTests
         public Task AnnounceAsync(JobExpRules.Result result, ulong gain) => Task.CompletedTask;
         public void PersistFailed(Exception ex, uint characterId, JobExpRules.Result result) { }
         public Task OnLevelUpAsync() => Task.CompletedTask;
+        public Task MasteryPointsGainedAsync(long delta, ulong total) => Task.CompletedTask;
     }
 
     [Fact]
@@ -120,6 +122,42 @@ public class CharacterAuditFixTests
         public Task AnnounceAsync(JobExpRules.Result result, ulong gain) => Task.FromException(new IOException("session dropped"));
         public void PersistFailed(Exception ex, uint characterId, JobExpRules.Result result) { }
         public Task OnLevelUpAsync() => Task.CompletedTask;
+        public Task MasteryPointsGainedAsync(long delta, ulong total) => Task.CompletedTask;
+    }
+
+    [Fact]
+    public async Task JobExpAtCap_ConvertsToMasteryPoints_WhenStarted()
+    {
+        var (repo, rec) = NewRepo();
+        var c = new Character { Id = 7, JobLevel = 2, JobExp = 0, MasteryLevel = 1, JobMasteryPoints = 100 };
+
+        Assert.True(await JobExpGrantFlow.GrantAsync(c, 5000, new Data(), repo, new Notifier()));
+
+        Assert.Equal(5100UL, c.JobMasteryPoints);                 // profession exp added to the balance one for one
+        Assert.Equal([nameof(ICharacterRepository.UpdateJobMasteryAsync)], rec.Calls);
+    }
+
+    [Fact]
+    public async Task JobExpAtCap_IsDropped_WhenMasteryNotStarted()
+    {
+        var (repo, rec) = NewRepo();
+        var c = new Character { Id = 8, JobLevel = 2, JobExp = 0, MasteryLevel = 0, JobMasteryPoints = 100 };
+
+        Assert.False(await JobExpGrantFlow.GrantAsync(c, 5000, new Data(), repo, new Notifier()));
+
+        Assert.Equal(100UL, c.JobMasteryPoints);                 // unchanged, and nothing persisted
+        Assert.Empty(rec.Calls);
+    }
+
+    [Fact]
+    public async Task JobExpAtCap_StopsAtThePointCap()
+    {
+        var (repo, _) = NewRepo();
+        var c = new Character { Id = 9, JobLevel = 2, JobExp = 0, MasteryLevel = 1, JobMasteryPoints = 9_999_000 };
+
+        Assert.True(await JobExpGrantFlow.GrantAsync(c, 5000, new Data(), repo, new Notifier()));
+
+        Assert.Equal(10_000_000UL, c.JobMasteryPoints);          // clamped to the cap, not 10,004,000
     }
 
     [Fact]

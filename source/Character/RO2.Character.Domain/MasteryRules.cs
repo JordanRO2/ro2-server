@@ -12,6 +12,13 @@ public static class MasteryRules
     /// <summary>The base level a character must reach before it can convert to Master level 1.</summary>
     public const byte BaseLevelToStart = 50;
 
+    /// <summary>
+    /// Raw point units per displayed mastery point. The stored balance (<c>JobMasteryPoints</c>, the 2986 total)
+    /// counts combat profession exp one for one; the client shows it, and the MasteryTable costs/caps, divided by
+    /// this. So a table cost of N points is <c>N * PointScale</c> against the stored balance.
+    /// </summary>
+    public const uint PointScale = 1000;
+
     /// <summary>Highest Master level, reached only at the top rank; the practical cap is the rank-gated one below.</summary>
     public const byte MaxMasterLevel = 50;
 

@@ -34,15 +34,17 @@ public class JobMasteryTrainingHandler : ZoneRmiHandlerBase<JobMasteryTrainingHa
         var store = services.GetRequiredService<GameDataStore>();
         var cost = character is null ? null : MasteryRules.LevelUpCost(store, character.MasteryLevel, character.MasteryRank);
 
+        // The table cost is in displayed mastery points; the stored balance is raw (x PointScale), see MasteryRules.
         if (character is null || cost is not { } c
-            || character.JobMasteryPoints < c.Points || character.Gold < c.Coin)
+            || character.JobMasteryPoints < (ulong)c.Points * MasteryRules.PointScale || character.Gold < c.Coin)
         {
             await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsJobMasteryTraining,
                 JobMasteryPackets.BuildAnswer(JobMasteryPackets.TrainingConditionNotMet, npcHandle), ct);
             return;
         }
 
-        character.JobMasteryPoints -= c.Points;
+        ulong costRaw = (ulong)c.Points * MasteryRules.PointScale;
+        character.JobMasteryPoints -= costRaw;
         character.Gold -= c.Coin;
         character.MasteryLevel += 1;
 
@@ -52,7 +54,7 @@ public class JobMasteryTrainingHandler : ZoneRmiHandlerBase<JobMasteryTrainingHa
 
         await MasteryProgression.ResendViewDataAsync(player, character, services, Broadcast);
         await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyJobMasteryPointChange,
-            TraitPackets.BuildJobMasteryPointChange2986(-(long)c.Points, (uint)Math.Min(character.JobMasteryPoints, uint.MaxValue)), ct);
+            TraitPackets.BuildJobMasteryPointChange2986(-(long)costRaw, (uint)Math.Min(character.JobMasteryPoints, uint.MaxValue)), ct);
         await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsJobMasteryTraining,
             JobMasteryPackets.BuildAnswer(JobMasteryPackets.Accepted, npcHandle), ct);
 

@@ -14,6 +14,10 @@ public interface ICharacterGameData
     /// <summary>The job (profession) experience table, keyed by level; its Base_Exp_Next column holds the thresholds.</summary>
     IReadOnlyDictionary<byte, ExpTableEntry> ExpTable { get; }
 
+    /// <summary>The raw point-balance cap for a character at <paramref name="masteryLevel"/>: the level's MasteryTable
+    /// Max_Point scaled to the stored (raw) point units, or 0 when there is no row.</summary>
+    ulong MasteryMaxPointBalance(byte masteryLevel);
+
     /// <summary>The class's starting primary stats (STR, AGI, INT, WIS, VIT, LUK) from Standard_Stat, or null when it has no row.</summary>
     (int str, int agi, int intel, int wis, int vit, int luk)? ClassBasePrimaries(byte job);
 

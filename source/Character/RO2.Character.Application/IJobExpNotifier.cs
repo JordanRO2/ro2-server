@@ -19,4 +19,8 @@ public interface IJobExpNotifier
 
     /// <summary>Re-checks the job-level Khara quests. Runs last, after the persist, only on a level-up.</summary>
     Task OnLevelUpAsync();
+
+    /// <summary>Sends the 2986 mastery point change when capped combat profession exp converts to mastery points
+    /// (<paramref name="delta"/> gained, <paramref name="total"/> the new balance).</summary>
+    Task MasteryPointsGainedAsync(long delta, ulong total);
 }

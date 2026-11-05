@@ -34,4 +34,9 @@ internal sealed class JobExpNotifier(ProudSession session, PlayerState player, B
             characterId, result.Level, result.Exp);
 
     public Task OnLevelUpAsync() => KharaService.OnLevelChangedAsync(session, player, services, logger);
+
+    public Task MasteryPointsGainedAsync(long delta, ulong total)
+        => session.SendInternalRmiAsync(ZoneS2COpcodes.NfyJobMasteryPointChange,
+            TraitPackets.BuildJobMasteryPointChange2986(delta, (uint)Math.Min(total, uint.MaxValue)),
+            CancellationToken.None);
 }

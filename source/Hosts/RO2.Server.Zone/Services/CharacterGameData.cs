@@ -12,6 +12,14 @@ internal sealed class CharacterGameData(GameDataStore store) : ICharacterGameDat
 
     public IReadOnlyDictionary<byte, ExpTableEntry> ExpTable => store.ExpTable;
 
+    public ulong MasteryMaxPointBalance(byte masteryLevel)
+    {
+        foreach (var row in store.MasteryTable)
+            if (row.Mastery_Level == masteryLevel)
+                return (ulong)row.Max_Point * RO2.Characters.Domain.MasteryRules.PointScale;
+        return 0;
+    }
+
     public (int str, int agi, int intel, int wis, int vit, int luk)? ClassBasePrimaries(byte job)
         => StatService.ClassBasePrimaries(store, job);
 
