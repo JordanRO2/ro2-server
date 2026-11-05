@@ -1,3 +1,5 @@
+using RO2.GameData;
+
 namespace RO2.Characters.Domain;
 
 /// <summary>
@@ -24,4 +26,20 @@ public static class MasteryRules
     /// The Master-level cap of a rank: 10 at rank 0 (D), 20 at 1 (C), 30 at 2 (B), 40 at 3 (A), 50 at 4 (S).
     /// </summary>
     public static byte LevelCapForRank(byte rank) => (byte)((rank + 1) * 10);
+
+    /// <summary>
+    /// The point and coin cost to raise the Master level by one from <paramref name="currentLevel"/>: the next
+    /// level's MasteryTable row (e.g. level 30 to 31 spends the level-31 row's Mastery_Point_Next). Null when the
+    /// character cannot level up: it has not started, is already at the rank's cap, or no table row exists for the
+    /// next level. Affordability (the point balance and coin) is the caller's to check.
+    /// </summary>
+    public static (uint Points, uint Coin)? LevelUpCost(GameDataStore store, byte currentLevel, byte rank)
+    {
+        if (currentLevel < 1 || currentLevel >= LevelCapForRank(rank)) return null;
+        byte target = (byte)(currentLevel + 1);
+        foreach (var row in store.MasteryTable)
+            if (row.Mastery_Level == target)
+                return (row.Mastery_Point_Next, row.NeedCoin);
+        return null;
+    }
 }

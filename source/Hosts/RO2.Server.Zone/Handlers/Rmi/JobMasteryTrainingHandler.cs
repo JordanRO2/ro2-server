@@ -1,5 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using RO2.Characters.Domain;
+using RO2.GameData;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
@@ -8,17 +10,14 @@ using RO2.Server.Zone.Services;
 namespace RO2.Server.Zone.Handlers.Rmi;
 
 /// <summary>
-/// C2S RMI 1666 ReqJobMasteryTraining <c>[u32 npcHandle]</c>: the master-level training button of a mastery NPC's
-/// dialog. Answered once with 2988 AnsJobMasteryTraining.
+/// C2S RMI 1666 ReqJobMasteryTraining <c>[u32 npcHandle]</c>: the master-level-up button of a mastery NPC's dialog.
+/// Spends the next level's mastery points and coin to raise the Master level by one, within the current rank's cap.
+/// Answered with 2988 AnsJobMasteryTraining.
 /// </summary>
 /// <remarks>
-/// <para>
-/// The reply is a refusal. The client derives the Master level and grade itself from the mastery point total
-/// (sent in the character blob and the 2986 counter) against the mastery tables, so no separate level packet
-/// exists. Training allocates the per-level bonus stat points, and whether the client applies those itself or
-/// expects them folded into the 2498 stat sheet is not yet confirmed; answering result 0 without that is a
-/// desync risk, so an honest refusal is kept until the stat-point path is pinned down.
-/// </para>
+/// The new level is not carried by the answer; the client reads it from the PC view record, so the record is re-sent
+/// to the map after the spend. The point balance change rides a 2986 notify. A grade-up (unlocking the next rank's
+/// cap) is the separate 1667 request.
 /// </remarks>
 public class JobMasteryTrainingHandler : ZoneRmiHandlerBase<JobMasteryTrainingHandler>
 {
@@ -31,10 +30,33 @@ public class JobMasteryTrainingHandler : ZoneRmiHandlerBase<JobMasteryTrainingHa
     {
         if (!JobMasteryPackets.TryReadNpcHandle(payload.Span, out var npcHandle)) return;
 
-        Logger.LogDebug("{Name} asks NPC 0x{Npc:X8} for Master-level training; refused, no job-mastery points are kept",
-            player.Name, npcHandle);
+        var character = player.Character;
+        var store = services.GetRequiredService<GameDataStore>();
+        var cost = character is null ? null : MasteryRules.LevelUpCost(store, character.MasteryLevel, character.MasteryRank);
 
+        if (character is null || cost is not { } c
+            || character.JobMasteryPoints < c.Points || character.Gold < c.Coin)
+        {
+            await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsJobMasteryTraining,
+                JobMasteryPackets.BuildAnswer(JobMasteryPackets.TrainingConditionNotMet, npcHandle), ct);
+            return;
+        }
+
+        character.JobMasteryPoints -= c.Points;
+        character.Gold -= c.Coin;
+        character.MasteryLevel += 1;
+
+        var repo = services.GetRequiredService<ICharacterRepository>();
+        await repo.UpdateJobMasteryAsync(player.CharacterId, character.MasteryLevel, character.MasteryRank, character.JobMasteryPoints);
+        await repo.UpdateGoldAsync(player.CharacterId, character.Gold);
+
+        await MasteryProgression.ResendViewDataAsync(player, character, services, Broadcast);
+        await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyJobMasteryPointChange,
+            TraitPackets.BuildJobMasteryPointChange2986(-(long)c.Points, (uint)Math.Min(character.JobMasteryPoints, uint.MaxValue)), ct);
         await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsJobMasteryTraining,
-            JobMasteryPackets.BuildAnswer(JobMasteryPackets.TrainingConditionNotMet, npcHandle), ct);
+            JobMasteryPackets.BuildAnswer(JobMasteryPackets.Accepted, npcHandle), ct);
+
+        Logger.LogInformation("{Name} raised Master level to {Level} (spent {Points} points, {Coin} coin)",
+            player.Name, character.MasteryLevel, c.Points, c.Coin);
     }
 }

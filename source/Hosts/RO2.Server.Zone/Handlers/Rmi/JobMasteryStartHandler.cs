@@ -1,8 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Characters.Domain;
-using RO2.Guilds.Domain;
-using RO2.Inventory.Domain;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
@@ -46,16 +44,7 @@ public class JobMasteryStartHandler : ZoneRmiHandlerBase<JobMasteryStartHandler>
         await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsJobMasteryStarter,
             JobMasteryPackets.BuildAnswer(JobMasteryPackets.Accepted, npcHandle), ct);
 
-        await ResendViewDataAsync(player, character, services);
+        await MasteryProgression.ResendViewDataAsync(player, character, services, Broadcast);
         Logger.LogInformation("{Name} started the Master level at NPC 0x{Npc:X8}", player.Name, npcHandle);
-    }
-
- /// <summary>Re-sends the player's PC view record to its map so the new master level shows at once.</summary>
-    private async Task ResendViewDataAsync(PlayerState player, Character character, IServiceProvider services)
-    {
-        var equipped = await services.GetRequiredService<IInventoryRepository>().GetEquipmentAsync(player.CharacterId);
-        var view = ActorStatePackets.BuildOnPCViewData2315(player, character, equipped,
-            services.GetRequiredService<IGuildEmblemRepository>());
-        await Broadcast.BroadcastToMapAsync(player.MapId, ZoneS2COpcodes.OnPCViewData, w => w.WriteBytes(view));
     }
 }
