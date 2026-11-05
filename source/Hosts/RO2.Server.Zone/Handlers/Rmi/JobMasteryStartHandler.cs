@@ -44,7 +44,7 @@ public class JobMasteryStartHandler : ZoneRmiHandlerBase<JobMasteryStartHandler>
         await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsJobMasteryStarter,
             JobMasteryPackets.BuildAnswer(JobMasteryPackets.Accepted, npcHandle), ct);
 
-        await MasteryProgression.ResendViewDataAsync(player, character, services, Broadcast);
+        await MasteryProgression.ApplyAsync(session, player, character, services, Broadcast, pushStatSheet: true);
         Logger.LogInformation("{Name} started the Master level at NPC 0x{Npc:X8}", player.Name, npcHandle);
     }
 }

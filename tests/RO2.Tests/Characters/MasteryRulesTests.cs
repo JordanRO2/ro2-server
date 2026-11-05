@@ -26,6 +26,13 @@ public class MasteryRulesTests
     public void LevelCapForRank_IsTenPerRank(int rank, int cap)
         => Assert.Equal(cap, MasteryRules.LevelCapForRank((byte)rank));
 
+    [Theory]
+    [InlineData(50, 0, 75)]    // base pool at level 50, no mastery
+    [InlineData(50, 7, 110)]   // + 7 master levels x 5
+    [InlineData(1, 2, 10)]     // base 0 + 2 master levels x 5
+    public void TotalBonusStatPoints_AddsFivePerMasterLevel(int level, int masteryLevel, int expected)
+        => Assert.Equal(expected, CharacterStats.TotalBonusStatPointsEarned(level, masteryLevel));
+
     [Fact]
     public async Task RankUpRequirement_IsTheTargetGradeRow_NullAtTopRankOrUnknownClass()
     {

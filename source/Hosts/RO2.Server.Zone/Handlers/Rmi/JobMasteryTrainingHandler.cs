@@ -52,7 +52,7 @@ public class JobMasteryTrainingHandler : ZoneRmiHandlerBase<JobMasteryTrainingHa
         await repo.UpdateJobMasteryAsync(player.CharacterId, character.MasteryLevel, character.MasteryRank, character.JobMasteryPoints);
         await repo.UpdateGoldAsync(player.CharacterId, character.Gold);
 
-        await MasteryProgression.ResendViewDataAsync(player, character, services, Broadcast);
+        await MasteryProgression.ApplyAsync(session, player, character, services, Broadcast, pushStatSheet: true);
         await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyJobMasteryPointChange,
             TraitPackets.BuildJobMasteryPointChange2986(-(long)costRaw, (uint)Math.Min(character.JobMasteryPoints, uint.MaxValue)), ct);
         await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsJobMasteryTraining,

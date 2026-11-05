@@ -27,6 +27,17 @@ public static class CharacterStats
         return total;
     }
 
+    /// <summary>Bonus stat points the Master level grants per level (MasteryTable Bonus_Stat_Point, a uniform 5).</summary>
+    public const int BonusStatPointsPerMasteryLevel = 5;
+
+    /// <summary>
+    /// Total bonus stat points a character has earned: the base-level pool (<see cref="BonusStatPointsEarned"/>)
+    /// plus the Master-level grant (<see cref="BonusStatPointsPerMasteryLevel"/> per master level). Unspent points =
+    /// this minus the sum of the character's allocations.
+    /// </summary>
+    public static int TotalBonusStatPointsEarned(int level, int masteryLevel)
+        => BonusStatPointsEarned(level) + Math.Max(0, masteryLevel) * BonusStatPointsPerMasteryLevel;
+
     /// <summary>
     /// The retail player HP curve at <paramref name="level"/>: the NpcLevelScaling <c>Base_HP</c> column (levels 1..N,
     /// contiguous, ordered). Past the last level it extrapolates linearly from the last two rows; 0 for an empty table.
