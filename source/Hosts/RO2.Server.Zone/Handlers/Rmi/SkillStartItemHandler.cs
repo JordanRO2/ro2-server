@@ -239,6 +239,22 @@ public class SkillStartItemHandler : ZoneRmiHandlerBase<SkillStartItemHandler>
         if (used is null || itemData is null)
             return;
 
+        // The item's Require_Level / Require_Job and a finite echoed position, same lone 2711, nothing consumed.
+        if (!MeetsRequirements(itemData, player.Level, player.Job) || !float.IsFinite(posX) || !float.IsFinite(posY) || !float.IsFinite(posZ))
+        {
+            Logger.LogDebug("{Name}: item skill {SkillId} refused (requirements or non-finite position, uid {Uid})", player.Name, skillId, itemUid);
+            await SendRefusalAsync(session, casterHandle, skillId);
+            return;
+        }
+
+        // Atomic consume of one: a stale read cannot dupe the item. Null means it could not be taken, so no cast.
+        var left = await inventory.AdjustCountAsync(used.Id, player.CharacterId, -1);
+        if (left is null)
+        {
+            await SendRefusalAsync(session, casterHandle, skillId);
+            return;
+        }
+
         // Answered: this request starts the repeat window for every item skill (only here, after the ownership and
         // skill checks passed).
         ItemSkillRepeatGuard.MarkAnswered(player, now);
@@ -251,9 +267,7 @@ public class SkillStartItemHandler : ZoneRmiHandlerBase<SkillStartItemHandler>
 
         // ---- 2329 OnUseItem (unicast): consume one and refresh that bag cell ------------------------
         var (bagIx, slotIx) = ClientBagSlot(used);
-        var remaining = used.Count - 1;
-        if (remaining <= 0) { await inventory.RemoveItemAsync(itemUid); remaining = 0; }
-        else { used.Count = remaining; await inventory.UpdateItemAsync(used); }
+        var remaining = Math.Max(0, left.Value);
 
         // ---- The item's effect (ItemInfo.Effect_ID_1): 2499 x N -> 2498 -> 2492, ahead of the 2329 --------
         // The used item's Effect_ID_1 is applied in the answer itself, FIRST: a 2492 of that effect goes out
@@ -327,6 +341,11 @@ public class SkillStartItemHandler : ZoneRmiHandlerBase<SkillStartItemHandler>
         if (answerMove is { } dest)
             await ItemWarpSkills.MoveAsync(session, player, dest, services, Logger, ct);
     }
+
+    /// <summary>ItemInfo Require_Level and Require_Job (bit job-1; 0 = any job), as ItemUseRules.CanUse reads them.</summary>
+    internal static bool MeetsRequirements(ItemData t, int level, int job) =>
+        level >= t.Require_Level
+        && (t.Require_Job == 0 || (job is >= 1 and <= 63 && (t.Require_Job & (1L << (job - 1))) != 0));
 
     /// <summary>
     /// Refusal of a 1561: 2711 NfySkillCastingCancel for (caster, skill), unicast to the
