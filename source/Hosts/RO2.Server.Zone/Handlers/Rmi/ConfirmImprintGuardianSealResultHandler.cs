@@ -11,9 +11,11 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 /// <summary>RMI 1695 ReqConfirmImprintGuardianSealResult: the player's keep/take choice for a guardian-seal re-roll.</summary>
 /// <remarks>
 /// Body is 1 byte (live frame is 1 + a 4-byte transport trailer): 0 = keep the old line (Previous), 1 = take the new
-/// roll (Change). Retail sends no 3032 answer (0 samples); the client applies the choice to its own view. The server
-/// persists it: a take-new writes the <see cref="PlayerState.PendingSeal"/> roll onto the accessory and re-pushes 2498;
-/// a keep-old drops the pending roll, leaving the old line. An empty accessory never gets here (it auto-applies at 1694).
+/// roll (Change). The server persists the choice (a take-new writes the <see cref="PlayerState.PendingSeal"/> roll onto
+/// the accessory and re-pushes 2498; a keep-old drops the pending roll) AND replies with an empty 3032, which the client
+/// needs to finalize: its 3032 handler calls GetItemActor @0x4522b0, applying the staged line it picked and closing the
+/// menu. (3032 is absent from the corpus only because take-new is rare, not because retail omits it.) An empty accessory
+/// never gets here (it auto-applies at 1694).
 /// </remarks>
 public class ConfirmImprintGuardianSealResultHandler : ZoneRmiHandlerBase<ConfirmImprintGuardianSealResultHandler>
 {
