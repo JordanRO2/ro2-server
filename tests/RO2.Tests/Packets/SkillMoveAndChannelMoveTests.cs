@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using RO2.GameData;
 using RO2.Server.Zone.Handlers.Rmi;
@@ -183,6 +184,43 @@ public class SkillMoveAndChannelMoveTests
     public void ImmovableGroups_MissingTable_IsNull()
     {
         Assert.Null(SkillChannelingPackets.LoadImmovableSkillGroups(Path.Combine(Path.GetTempPath(), "no-such-dir", "Skill_Table_Base.json")));
+    }
+
+    [Fact]
+    public async Task SkillMoveEnd1525_RefusedMovedActor_BroadcastsNo2749()
+    {
+        await using var net = await ReauditShared.Harness.StartAsync(2);
+        var players = new PlayerStateManager(new ReauditShared.NoDirtySink());
+        var broadcast = new BroadcastService(players, NullLogger<BroadcastService>.Instance);
+        broadcast.SetServer(net.Server);
+        var caster = new PlayerState { SessionId = net.Sessions[0].SessionId, EntityId = 0x00100111u, MapId = 1100, MapLoaded = true };
+        var viewer = new PlayerState { SessionId = net.Sessions[1].SessionId, EntityId = 0x00100211u, MapId = 1100, MapLoaded = true };
+        players.AddPlayer(caster.SessionId, caster);
+        players.AddPlayer(viewer.SessionId, viewer);
+        // The 1523 named an NPC handle this server holds no cast of, so the end point is refused.
+        SkillMoveTracker.Record(caster, 630401, new SkillMoveLedger.SkillMove(0x00205D13u, 9, 1f, 2f, 3f));
+        var services = new ServiceCollection()
+            .AddSingleton(new NpcStateManager(new GameDataStore(), NullLogger<NpcStateManager>.Instance))
+            .AddSingleton(new MovementGuard(new SystemClock()))
+            .BuildServiceProvider();
+
+        var body = new byte[21];
+        BitConverter.GetBytes(630401u).CopyTo(body, 0);
+        body[4] = 9;
+        BitConverter.GetBytes(1f).CopyTo(body, 5);
+        BitConverter.GetBytes(2f).CopyTo(body, 9);
+        BitConverter.GetBytes(3f).CopyTo(body, 13);
+        await new ProbeSkillMoveEnd(players, broadcast).RunAsync(net.Sessions[0], body, caster, services);
+
+        Assert.Equal(0, net.Clients[0].Available); // no 2748 ack
+        Assert.Equal(0, net.Clients[1].Available); // no 2749 to onlookers
+    }
+
+    private sealed class ProbeSkillMoveEnd(PlayerStateManager pm, BroadcastService bc)
+        : SkillMoveEndHandler(null!, NullLogger<SkillMoveEndHandler>.Instance, pm, bc)
+    {
+        public Task RunAsync(RO2.Network.ProudNet.ProudSession s, byte[] body, PlayerState p, IServiceProvider services)
+            => HandleAsync(s, body, p, services, CancellationToken.None);
     }
 
     private static string RequireDataDirectory()

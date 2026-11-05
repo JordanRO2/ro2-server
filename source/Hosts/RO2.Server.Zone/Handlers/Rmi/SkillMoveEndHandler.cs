@@ -65,8 +65,9 @@ public class SkillMoveEndHandler : ZoneRmiHandlerBase<SkillMoveEndHandler>
             // caster is NOT moved in its place. NPCs hold no Z here.
             prevX = tracked.X;
             prevY = tracked.Y;
-            _ = SkillMoveNotifyHandler.ApplyToMovedActor(player, npcs, skillId, tracked.MoveKind, tracked.MovedHandle,
-                finalX, finalY, finalZ, Logger, "move end", guard);
+            if (!SkillMoveNotifyHandler.ApplyToMovedActor(player, npcs, skillId, tracked.MoveKind, tracked.MovedHandle,
+                    finalX, finalY, finalZ, Logger, "move end", guard))
+                return;
         }
         else
         {
