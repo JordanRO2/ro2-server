@@ -13,9 +13,11 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 /// </summary>
 /// <remarks>
 /// <para>
-/// The reply is a refusal. The Master level and grade are not carried by any known packet, so the train effect
-/// (spend mastery points to raise the level) cannot be reproduced; answering result 0 without that level change
-/// would leave the client out of sync, so an honest refusal is kept until the mastery-level packet is known.
+/// The reply is a refusal. The client derives the Master level and grade itself from the mastery point total
+/// (sent in the character blob and the 2986 counter) against the mastery tables, so no separate level packet
+/// exists. Training allocates the per-level bonus stat points, and whether the client applies those itself or
+/// expects them folded into the 2498 stat sheet is not yet confirmed; answering result 0 without that is a
+/// desync risk, so an honest refusal is kept until the stat-point path is pinned down.
 /// </para>
 /// </remarks>
 public class JobMasteryTrainingHandler : ZoneRmiHandlerBase<JobMasteryTrainingHandler>
