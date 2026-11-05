@@ -27,11 +27,13 @@ public sealed class JobMasteryAnswerTests
             ToHex(JobMasteryPackets.BuildAnswer(JobMasteryPackets.StartFailed, 0x0021A913)));
         Assert.Equal("06000000" + "fa5c" + "13a92100",   
             ToHex(JobMasteryPackets.BuildAnswer(JobMasteryPackets.TrainingConditionNotMet, 0x0021A913)));
-        Assert.Equal("06000000" + "955c" + "13a92100",   
+        // 995c = 23705: the 2989 body retail sends on an upgrade refusal (06000000 995c 13a92100); pins the real
+        // frame, not the earlier 23701 guess.
+        Assert.Equal("06000000" + "995c" + "13a92100",
             ToHex(JobMasteryPackets.BuildAnswer(JobMasteryPackets.UpgradeConditionNotMet, 0x0021A913)));
         Assert.Equal((ushort)23601, JobMasteryPackets.StartFailed);
         Assert.Equal((ushort)23802, JobMasteryPackets.TrainingConditionNotMet);
-        Assert.Equal((ushort)23701, JobMasteryPackets.UpgradeConditionNotMet);
+        Assert.Equal((ushort)23705, JobMasteryPackets.UpgradeConditionNotMet);
     }
 
     [Fact]

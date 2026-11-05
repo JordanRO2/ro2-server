@@ -25,8 +25,9 @@ public static class JobMasteryPackets
  /// <summary>Result code for a training refusal ("The condition to be a Master level up is not enough.").</summary>
     public const ushort TrainingConditionNotMet = 23802;
 
- /// <summary>Result code for an upgrade refusal ("The condition to be a Master level up is not enough.").</summary>
-    public const ushort UpgradeConditionNotMet = 23701;
+ /// <summary>Result code retail sends on a 2989 upgrade refusal (replaces an earlier guess of 23701; the exact
+ /// client string is not modelled).</summary>
+    public const ushort UpgradeConditionNotMet = 23705;
 
  /// <summary>
  /// Builds the 10-byte body of 2987, 2988 or 2989: a u32 length of 6, the u16 result code and the NPC handle.

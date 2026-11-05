@@ -13,7 +13,9 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 /// </summary>
 /// <remarks>
 /// <para>
-/// The reply is neutral. This server keeps no mastery points, level or grade, so no training is applied.
+/// The reply is a refusal. The Master level and grade are not carried by any known packet, so the train effect
+/// (spend mastery points to raise the level) cannot be reproduced; answering result 0 without that level change
+/// would leave the client out of sync, so an honest refusal is kept until the mastery-level packet is known.
 /// </para>
 /// </remarks>
 public class JobMasteryTrainingHandler : ZoneRmiHandlerBase<JobMasteryTrainingHandler>
