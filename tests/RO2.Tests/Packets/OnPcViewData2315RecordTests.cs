@@ -156,6 +156,25 @@ public class OnPcViewData2315RecordTests
         Assert.Equal(0x06514c80u, BinaryPrimitives.ReadUInt32LittleEndian(body.AsSpan(jobBits, 4)));
     }
 
+ /// <summary>
+ /// A character that has started Master level carries it in optional bit 0 (0x0001) as [u8 rank][u8 level], which
+ /// the client reads straight into the actor's master-level fields. The field precedes the always-present relation
+ /// u32, and the mask gains bit 0 on top of bit 9.
+ /// </summary>
+    [Fact]
+    public void MasterLevel_RidesOptionalBit0_AsRankThenLevel()
+    {
+        var (p, c, worn) = PsStorage();
+        c.MasteryLevel = 7;
+        c.MasteryRank = 1;
+
+        var body = ActorStatePackets.BuildOnPCViewData2315(p, c, worn, TestEmblems.Create());
+
+        int mask = 3 + 12 + 70 + 1 + 2 * "PSStorage".Length + 4;   // after the 4-byte jobBits
+        // mask 0x0201 (bit 0 | bit 9), then the bit-0 field [rank=1][level=7], then the relation u32 (2).
+        Assert.Equal("0102" + "0107" + "02000000", Hex(body.AsSpan(mask, 8)));
+    }
+
     [Fact]
     public void LooseValueOverload_NoLongerWritesWornItemsAsEffects()
     {

@@ -22,8 +22,12 @@ public class Character
     public byte LifeJob { get; set; }
     /// <summary>Profession level -&gt; 2310 head+189 / charlist[100]. Only meaningful while <see cref="LifeJob"/> is non-zero.</summary>
     public byte ProJobLevel { get; set; }
-    /// <summary>Job-mastery point total -&gt; 2310 head+191 and the map-load 2986.</summary>
+    /// <summary>Job-mastery point balance -&gt; 2310 head+191 and the map-load 2986. Spent on master-level ups.</summary>
     public ulong JobMasteryPoints { get; set; }
+    /// <summary>Master level (0 = not started); the client derives rank costs/bonuses from it against the mastery tables. Rides the PC view record (2315/2504) optional bit 0 and the level-up notify (2394/2395).</summary>
+    public byte MasteryLevel { get; set; }
+    /// <summary>Master rank (0 = D, 1 = C, 2 = B, 3 = A, 4 = S), advanced by the grade quest; caps the master level at 10/20/30/40/50. Rides the same slots as <see cref="MasteryLevel"/>.</summary>
+    public byte MasteryRank { get; set; }
     /// <summary>Character gender.</summary>
     public byte Gender { get; set; }
     /// <summary>Base level.</summary>

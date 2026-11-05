@@ -402,7 +402,7 @@ public class PlayerSpawnService
 
     // Option mask (u16 after jobBits). Each set bit gates one optional field; the fields follow the mask in
     // ascending bit order.
-    private const ushort OptProfession = 0x0001;    // u16 profession: id | level << 8
+    private const ushort OptProfession = 0x0001;    // u16 [u8 masterRank][u8 masterLevel] (client reads it as the master level); legacy profession write when no mastery
     private const ushort OptParty = 0x0004;         // u32 party handle
     private const ushort OptTitleA = 0x0008;        // u32 worn title, slot A
     private const ushort OptTitleB = 0x0010;        // u32 worn title, slot B
@@ -538,8 +538,12 @@ public class PlayerSpawnService
         var titles = KharaTitleStore.PublishedFor(player.CharacterId);
         uint titleA = titles?.TitleA ?? 0, titleB = titles?.TitleB ?? 0;
         var proJob = CharacterSerializer.WireProJob(character);
+        // Optional bit 0 (0x0001): the client reads its two bytes as [u8 masterRank][u8 masterLevel] straight into
+        // the actor's master-level fields (so the Master level shows in-game). A character that has started Master
+        // level carries them here; one that has not keeps the legacy profession write in this slot.
+        bool hasMastery = character.MasteryLevel != 0 || character.MasteryRank != 0;
         ushort optMask = OptRelation;                         // 0x0200
-        if (proJob.Id != 0) optMask |= OptProfession;         // 0x0001
+        if (hasMastery || proJob.Id != 0) optMask |= OptProfession;   // 0x0001
         if (partyHandle.HasValue) optMask |= OptParty;        // 0x0204
         if (titleA != 0) optMask |= OptTitleA;
         if (titleB != 0) optMask |= OptTitleB;
@@ -548,7 +552,10 @@ public class PlayerSpawnService
         body.WriteUInt16(optMask);
 
         // Optional fields follow the mask in ascending bit order.
-        if (proJob.Id != 0) body.WriteUInt16((ushort)(proJob.Id | (proJob.Level << 8))); // OptProfession
+        if (hasMastery)
+            body.WriteUInt16((ushort)(character.MasteryRank | (character.MasteryLevel << 8))); // bit 0: [rank][level]
+        else if (proJob.Id != 0)
+            body.WriteUInt16((ushort)(proJob.Id | (proJob.Level << 8))); // bit 0: legacy profession write
         if (partyHandle.HasValue) body.WriteUInt32(partyHandle.Value); // OptParty
         if (titleA != 0) body.WriteUInt32(titleA);              // OptTitleA
         if (titleB != 0) body.WriteUInt32(titleB);              // OptTitleB
