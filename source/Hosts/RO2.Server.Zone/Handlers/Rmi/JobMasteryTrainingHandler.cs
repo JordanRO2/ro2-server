@@ -44,14 +44,21 @@ public class JobMasteryTrainingHandler : ZoneRmiHandlerBase<JobMasteryTrainingHa
             return;
         }
 
+        // Gold goes through the atomic wallet before any point is touched, so a refusal leaves nothing to revert.
+        if (!player.TryDebit(c.Coin))
+        {
+            await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsJobMasteryTraining,
+                JobMasteryPackets.BuildAnswer(JobMasteryPackets.TrainingConditionNotMet, npcHandle), ct);
+            return;
+        }
+
         ulong costRaw = (ulong)c.Points * scale;
         character.JobMasteryPoints -= costRaw;
-        character.Gold -= c.Coin;
         character.MasteryLevel += 1;
 
         var repo = services.GetRequiredService<ICharacterRepository>();
         await repo.UpdateJobMasteryAsync(player.CharacterId, character.MasteryLevel, character.MasteryRank, character.JobMasteryPoints);
-        await repo.UpdateGoldAsync(player.CharacterId, character.Gold);
+        await repo.UpdateGoldAsync(player.CharacterId, player.Gold);
 
         await MasteryProgression.ApplyAsync(session, player, character, services, Broadcast, pushStatSheet: true);
         await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyJobMasteryPointChange,

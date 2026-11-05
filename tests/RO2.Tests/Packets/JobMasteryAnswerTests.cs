@@ -1,3 +1,6 @@
+using RO2.Characters.Domain;
+using RO2.Domain.Entities;
+using RO2.Server.Zone.Models;
 using RO2.Server.Zone.Services;
 using Xunit;
 
@@ -43,5 +46,22 @@ public sealed class JobMasteryAnswerTests
         Assert.True(JobMasteryPackets.TryReadNpcHandle(Convert.FromHexString("13a92100"), out var handle));
         Assert.Equal(0x0021A913u, handle);
         Assert.False(JobMasteryPackets.TryReadNpcHandle(Convert.FromHexString("13a921"), out _));
+    }
+
+    // The mastery handlers take their coin with PlayerState.TryDebit before touching any point, so a short wallet
+    // refuses with nothing spent and a funded one is debited once, in lock-step with the persisted Character.
+    [Fact]
+    public void MasteryCoin_IsTakenAtomically_RefusedWhenShort()
+    {
+        var p = new PlayerState { Character = new Character { Id = 1, Name = "M", Level = 50 } };
+        p.Gold = 100;
+
+        Assert.False(p.TryDebit(101));
+        Assert.Equal(100, p.Gold);
+        Assert.Equal(100, p.Character!.Gold);
+
+        Assert.True(p.TryDebit(60));
+        Assert.Equal(40, p.Gold);
+        Assert.Equal(40, p.Character.Gold);
     }
 }
