@@ -190,6 +190,12 @@ public class SkillDamageHandler : ZoneRmiHandlerBase<SkillDamageHandler>
         var (castType, unknown34, skillEffectIndex) = (request.CastType, request.Unknown34, request.SkillEffectIndex);
         var targetHandles = request.Targets;
 
+        // A forged 1509 with a non-finite echoed position would be broadcast in 2718 and crash other clients
+        // (Learnings). Legitimate frames are always finite (single-target sends 0,0,0), so drop this one before
+        // it lands the cast or broadcasts anything.
+        if (!SkillStartHandler.EchoedPositionIsFinite(posX, posY, posZ, 0f))
+            return;
+
         // Every 1509 lands its group's cast, before any branch below: a burst duplicate 1508 that comes after it is
         // refused with 20152, one that comes before it gets no answer (see SkillCastLandings).
         SkillCastLandings.MarkLanded(player, skillId);

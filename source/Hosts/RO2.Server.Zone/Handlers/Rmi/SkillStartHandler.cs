@@ -87,6 +87,12 @@ public class SkillStartHandler : ZoneRmiHandlerBase<SkillStartHandler>
     /// </summary>
     internal static float ReadCastAngle(ReadOnlySpan<byte> req) => BinaryPrimitives.ReadSingleLittleEndian(req[29..]);
 
+    /// <summary>True when every client-echoed coordinate/angle is finite. A non-finite value is only ever a forged
+    /// packet; relaying it in 2716/2718/2715 crashes other clients, so such a frame is dropped. Shared by the
+    /// 1508 (this) and 1509 (<see cref="SkillDamageHandler"/>) paths; the 1509 path passes 0 for the unused angle.</summary>
+    internal static bool EchoedPositionIsFinite(float x, float y, float z, float angle)
+        => float.IsFinite(x) && float.IsFinite(y) && float.IsFinite(z) && float.IsFinite(angle);
+
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
         if (payload.Length < RequestLen) return;
@@ -97,6 +103,12 @@ public class SkillStartHandler : ZoneRmiHandlerBase<SkillStartHandler>
         // the cooldown refusal included (ReadAnswerEcho).
         var (targetHandle, posX, posY, posZ, variant) = ReadAnswerEcho(req);
         var castAngle = ReadCastAngle(req);
+
+        // A forged 1508 can carry NaN/Inf in the echoed position or cast angle, which this server would
+        // relay map-wide in 2716 (and in the 2715 the caster gets); a client crashes on a non-finite
+        // coordinate (Learnings). A legitimate frame is always finite (single-target sends 0,0,0), so drop it.
+        if (!EchoedPositionIsFinite(posX, posY, posZ, castAngle))
+            return;
 
         // Cooldown seconds: the real, Vigor-reduced value, not the raw table ceiling. The cooldown
         // is a character-global multiplicative reduction of the table value, floored at exactly 0.25x
