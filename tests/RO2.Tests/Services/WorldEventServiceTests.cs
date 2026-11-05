@@ -18,7 +18,7 @@ public class WorldEventServiceTests
 {
     private const uint Jawaii = 122101;
 
-    [Fact]
+    [DataFact]
     public void Offerings_MoveTheEvent_OnlyWhenEveryRowOfTheGroupIsMet()
     {
         var t = WorldEventTrigger3030Tests.Tables();
@@ -44,7 +44,7 @@ public class WorldEventServiceTests
         Assert.Equal(new WorldEventMachine.OfferingResult(true, 5), WorldEventMachine.AddOffering(doc, t, 32490000, 35000005, 4));
     }
 
-    [Fact]
+    [DataFact]
     public void Offerings_OutsideTheCurrentStagesGroup_AreNotCounted()
     {
         var t = WorldEventTrigger3030Tests.Tables();
@@ -62,7 +62,7 @@ public class WorldEventServiceTests
         Assert.False(WorldEventMachine.AddOffering(stage5, t, 32490000, 35000005, 4).Counted);
     }
 
-    [Fact]
+    [DataFact]
     public void Stage5_TimesOutAfter1380Minutes_BackToStage1()
     {
         var t = WorldEventTrigger3030Tests.Tables();
@@ -75,7 +75,7 @@ public class WorldEventServiceTests
         Assert.Equal((byte)1, WorldEventMachine.TimedOut(doc, t, new DateTime(2026, 7, 12, 1, 8, 39, DateTimeKind.Utc)));
     }
 
-    [Fact]
+    [DataFact]
     public void Stage1_WaitsOnItsCheckGroup_AndNeverTimesOut()
     {
         var t = WorldEventTrigger3030Tests.Tables();
@@ -86,7 +86,7 @@ public class WorldEventServiceTests
         Assert.Null(WorldEventMachine.TimedOut(doc, t, DateTime.MaxValue));
     }
 
-    [Fact]
+    [DataFact]
     public void Normalize_FitsStoredCountsToTheStage_AndDropsAStageTheTableNoLongerHas()
     {
         var t = WorldEventTrigger3030Tests.Tables();
