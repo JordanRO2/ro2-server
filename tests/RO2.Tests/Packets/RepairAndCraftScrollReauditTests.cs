@@ -24,7 +24,7 @@ public class RepairAndCraftScrollReauditTests
 {
     
  /// <summary>The 2336 head holds the remaining talent points at head+142 (body+152), not 0. A level-50 character with no talent skill learned has 49. Its level is at head+69 and its wallet at head+112, and the body length is 217 + 126 n.</summary>
-    [DataFact]
+    [Fact]
     public void RepairItem2336_HeadCarriesLiveTalentPointsLevelAndWallet()
     {
         var player = new PlayerState { EntityId = 0x0B2C1A11, CharacterUid = 0x1234, Level = 50, Gold = 0x01020304,
@@ -56,7 +56,7 @@ public class RepairAndCraftScrollReauditTests
     }
 
  /// <summary>Blueprint answers: a 2538 lists the taught craft ids ([644], then [644, 645]). Each is followed in the same millisecond by a 2435 with the balance unchanged, and then by the 2329.</summary>
-    [DataFact]
+    [Fact]
     public void CraftScroll_AnswerFrames_AreTheDumps()
     {
         Assert.Equal("06000000000001008402", Hex(CraftRecipeStore.BuildAckCraftLearn2538([644])));

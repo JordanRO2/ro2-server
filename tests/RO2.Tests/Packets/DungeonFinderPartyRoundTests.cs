@@ -217,7 +217,7 @@ public class DungeonFinderPartyRoundTests
     }
 
  /// <summary>A 1568 from a window whose round no longer exists is refused to the sender alone.</summary>
-    [DataFact]
+    [Fact]
     public void SelectRole_WithNoOpenRound_ClosesTheSendersWindowOnly()
     {
         var round = new DungeonFinderPartyRound();
@@ -249,7 +249,7 @@ public class DungeonFinderPartyRoundTests
         Assert.Equal(SelectStatus.NoRound, round.SelectRole(SeatKeys.Of(m), 0x04, Everyone).Status);
     }
 
-    [DataFact]
+    [Fact]
     public void Cancel_WithNoOpenRound_SendsNothing()
     {
         var cancel = new DungeonFinderPartyRound().Cancel(SeatKeys.Of(Player(MSession)), Everyone);
@@ -289,7 +289,7 @@ public class DungeonFinderPartyRoundTests
  /// The finder window hides itself once its frame timer passes 40.0 seconds and sends nothing, so the round
  /// can only give up after that point.
  /// </summary>
-    [DataFact]
+    [Fact]
     public void Timeout_IsNoEarlierThanTheClientsFortySecondWindow()
     {
         Assert.Equal(TimeSpan.FromSeconds(40), DungeonFinderPartyRound.ClientRoleCheckWindow);

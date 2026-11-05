@@ -28,7 +28,7 @@ public class BoundItemTradeReauditTests
             TradePackets.BuildRefusedDragRecord(uid, template, count), TradePackets.DragItemNotTradeable);
     }
 
-    [DataTheory]
+    [Theory]
     
     
     [InlineData("01161600b6e21185cd09a7079509a83d040e96dbfe000100",

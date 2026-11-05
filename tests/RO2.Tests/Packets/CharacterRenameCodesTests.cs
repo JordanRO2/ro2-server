@@ -28,7 +28,7 @@ public class CharacterRenameCodesTests
     private const uint RenameScroll = 70000006;   
     private const uint NotAScroll = 30000272;     
 
-    [DataTheory]
+    [Theory]
     
     [InlineData("34ebace2a73d040e0201076c004f004d004500470041006c000201042d0061002d006100", "lOMEGAl", "2b3c0000")]
     
@@ -57,7 +57,7 @@ public class CharacterRenameCodesTests
         Assert.Equal(retail2814Hex, Hex(CharacterRename.Code(refusal)));
     }
 
-    [DataFact]
+    [Fact]
     public async Task ScrollUidZero_IsRefusedWith15402()
     {
         
@@ -69,7 +69,7 @@ public class CharacterRenameCodesTests
         Assert.Null(check.Scroll);
     }
 
-    [DataFact]
+    [Fact]
     public async Task TakenName_IsRefusedWith15402()
     {
         
@@ -84,7 +84,7 @@ public class CharacterRenameCodesTests
         Assert.Null(check.Scroll);
     }
 
-    [DataFact]
+    [Fact]
     public async Task TakenName_IsRefusedWhateverTheCase()
     {
         var body = Convert.FromHexString(
@@ -96,7 +96,7 @@ public class CharacterRenameCodesTests
         Assert.Null(check.Scroll);
     }
 
-    [DataFact]
+    [Fact]
     public async Task FreeNameWithScroll_IsAccepted_AndReturnsTheScroll()
     {
         
@@ -109,7 +109,7 @@ public class CharacterRenameCodesTests
         Assert.Equal(request.ScrollUid, check.Scroll?.Id);
     }
 
-    [DataFact]
+    [Fact]
     public async Task ItemThatIsNotANameChangeScroll_IsRefusedWith15402()
     {
         var body = Convert.FromHexString(
@@ -121,7 +121,7 @@ public class CharacterRenameCodesTests
         Assert.Null(check.Scroll);
     }
 
-    [DataFact]
+    [Fact]
     public void Codes_AreTheClientSwitchCases()
     {
         

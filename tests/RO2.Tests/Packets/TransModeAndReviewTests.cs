@@ -17,7 +17,7 @@ public class TransModeAndReviewTests
     private static string Hex(byte[] b) => Convert.ToHexString(b).ToLowerInvariant();
 
     
-    [DataTheory]
+    [Theory]
     
     [InlineData(0x06ff4911u, 5040003u, (byte)3, "0111110026e4000000001149ff0683e74c0003")]
     
@@ -27,14 +27,14 @@ public class TransModeAndReviewTests
     public void NotifyTransModeStart2531_ReproducesRetailFrames(uint handle, uint skill, byte grade, string retail)
         => Assert.Equal(retail, Hex(TransModeNotifyPackets.BuildNotifyTransModeStart2531(handle, skill, grade)));
 
-    [DataFact]
+    [Fact]
     public void NotifyTransModeEnd2532_ReproducesRetailFrame()
     {
         
         Assert.Equal("010c0c0027e4000000001149ff06", Hex(TransModeNotifyPackets.BuildNotifyTransModeEnd2532(0x06ff4911u)));
     }
 
-    [DataFact]
+    [Fact]
     public void AckTransModeStartRefused2530_ReproducesRetailRepeatAnswer()
     {
         
@@ -70,7 +70,7 @@ public class TransModeAndReviewTests
         Assert.Null(TransModeNotifyPackets.ResolveTransBuff(rows, profession, completed));
     }
 
-    [DataFact]
+    [Fact]
     public void TryRecordTransModeStart_RefusesARepeatWhileTheTransformRuns()
     {
         const uint characterId = 0xA10A1413u; 
@@ -129,7 +129,7 @@ public class TransModeAndReviewTests
         + "0000000000000000d4100000d4100000e501e5012401c80000000000870020000000340021002e000000000000002e00200016001d002d00"
         + "00000000000000000000000000000000";
 
-    [DataFact]
+    [Fact]
     public void AnsReviewPC3033_FullForm_PutsTheActiveEffectsWhereRetailDoes()
     {
         var frame = Convert.FromHexString(Retail3033);
@@ -171,7 +171,7 @@ public class TransModeAndReviewTests
         Assert.Equal(Retail3033, Hex(ReviewPCHandler.BuildAnsReviewPC3033(data)));
     }
 
-    [DataFact]
+    [Fact]
     public void AnsReviewPC3033_NotAllowedForm_IsRetailsSevenBytes()
     {
         
@@ -179,7 +179,7 @@ public class TransModeAndReviewTests
     }
 
     
-    [DataFact]
+    [Fact]
     public void SetPresentPassword_Refusal()
     {
         

@@ -19,7 +19,7 @@ public class GuildEmergencyCallTests
 {
     private const uint EmergencyCallLevel3 = 4000103;
 
-    [DataFact]
+    [Fact]
     public void Prompt2960_IsRetailsOnlyBody()
     {
         
@@ -27,7 +27,7 @@ public class GuildEmergencyCallTests
         Assert.Equal(10u, EconomyMiscPackets.GuildEmergencyCallAnswerSeconds);
     }
 
-    [DataTheory]
+    [Theory]
     
     [InlineData(0x0B7FC811u, "012e2e004be40000000067093d0011c87f0b0111c87f0b00000000000000000000000000000000000000000001000000")]
     
@@ -45,7 +45,7 @@ public class GuildEmergencyCallTests
         Assert.Equal(48, built.Length);
     }
 
-    [DataTheory]
+    [Theory]
     
     [InlineData("1171850b140500008d2fb143420d11438b89474101000000", 0x0B857111u, 1300u)]
     
@@ -72,7 +72,7 @@ public class GuildEmergencyCallTests
         Assert.Equal(new uint[] { 3101, 3201 }, only.Value.Order().ToArray());
     }
 
-    [DataTheory]
+    [Theory]
     [InlineData("3101,3201,", new uint[] { 3101, 3201 })]
     [InlineData(" 3101 , 3201 ", new uint[] { 3101, 3201 })]
     [InlineData("", new uint[0])]
@@ -114,7 +114,7 @@ public class GuildEmergencyCallTests
         Assert.False(EmergencyCallRules.IsEmergencyCallSkill(System.Collections.Frozen.FrozenDictionary<uint, System.Collections.Frozen.FrozenSet<uint>>.Empty, EmergencyCallLevel3));
     }
 
-    [DataFact]
+    [Fact]
     public void PendingCall_IsAnsweredOncePerPromptedMemberInsideTheWindow()
     {
         const uint guildId = 0xEC0001;
@@ -139,7 +139,7 @@ public class GuildEmergencyCallTests
         Assert.False(GuildEmergencyCallService.TryConsume(guildId, 201, issued.AddSeconds(1), out _));
     }
 
-    [DataFact]
+    [Fact]
     public void NewCall_ReplacesTheGuildsOldOne()
     {
         const uint guildId = 0xEC0002;
@@ -187,7 +187,7 @@ public class GuildEmergencyCallTests
 /// </summary>
 public class CoolTimeClear2817Tests
 {
-    [DataTheory]
+    [Theory]
     [InlineData(4301u, "cd100000")]   
     [InlineData(4121u, "19100000")]   
     [InlineData(4101u, "05100000")]   
@@ -238,7 +238,7 @@ public class CoolTimeClear2817Tests
         Assert.True(cooldowns.ContainsKey(4312));           
     }
 
-    [DataFact]
+    [Fact]
     public void Refund_EndsOnlyACooldownThatIsStillRunning()
     {
         var now = new DateTime(2026, 9, 23, 6, 43, 50, 647, DateTimeKind.Utc);
@@ -266,23 +266,23 @@ public class ThreatTargetHysteresisTests
     private static Dictionary<uint, ThreatRow> Table(params (uint Handle, long Threat)[] rows)
         => rows.ToDictionary(r => r.Handle, r => new ThreatRow { AttackerHandle = r.Handle, Threat = r.Threat });
 
-    [DataFact]
+    [Fact]
     public void Target_IsKeptUpTo110Percent()
         => Assert.Equal(0x0111u, NpcStateManager.SelectAggroTarget(Table((0x0111, 100), (0x0211, 110)), 0x0111));
 
-    [DataFact]
+    [Fact]
     public void Target_MovesAbove110Percent()
         => Assert.Equal(0x0211u, NpcStateManager.SelectAggroTarget(Table((0x0111, 100), (0x0211, 111)), 0x0111));
 
-    [DataFact]
+    [Fact]
     public void NoTarget_TakesTheTopRow()
         => Assert.Equal(0x0211u, NpcStateManager.SelectAggroTarget(Table((0x0111, 100), (0x0211, 101)), 0));
 
-    [DataFact]
+    [Fact]
     public void TargetOffTheTable_TakesTheTopRow()
         => Assert.Equal(0x0211u, NpcStateManager.SelectAggroTarget(Table((0x0111, 100), (0x0211, 101)), 0x0311));
 
-    [DataFact]
+    [Fact]
     public void EmptyTable_HasNoTarget()
         => Assert.Equal(0u, NpcStateManager.SelectAggroTarget(Table(), 0x0111));
 }

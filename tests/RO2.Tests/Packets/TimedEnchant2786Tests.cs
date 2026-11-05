@@ -78,7 +78,7 @@ public class TimedEnchant2786Tests
         Assert.False(TimedEnchant.Fits(vulcan, new ItemData { ID = 1, Equip_Slot = 38, Require_Level = 50 })); // 38 & 31 = 6
     }
 
-    [DataTheory]
+    [Theory]
     [InlineData((ushort)300, (ushort)290)]
     [InlineData((ushort)10, (ushort)0)]
     [InlineData((ushort)5, (ushort)0)]
@@ -107,7 +107,7 @@ public class TimedEnchant2786Tests
         Assert.Equal(0, Str(Item(0, 2400)) - Str(none)); // in a bag
     }
 
-    [DataFact]
+    [Fact]
     public void ApplyingAgain_RestartsAtTheFullDuration_AndReplacesAnother()
     {
         var item = new InventoryItem { EnchantReinforceId = 30003, EnchantSeconds = 40 };

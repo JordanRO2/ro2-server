@@ -96,7 +96,7 @@ public class ExtendCacheChangeItem1584Tests
 
     
  /// <summary>Encrypted (AES) 1584 request body of 20 bytes.</summary>
-    [DataFact]
+    [Fact]
     public void Request_ParsesTheArchiveFrame()
     {
         Assert.True(ItemChangeExchange.TryParseRequest(Hex("03052f49030ea83d040e03063da60b0ea83d040e"), out var r));
@@ -175,7 +175,7 @@ public class ExtendCacheChangeItem1584Tests
  /// main bag where neither stack empties and the drawn item has no stack to join. The u16 after the code is
  /// not read by the client and is 0 here.
  /// </summary>
-    [DataFact]
+    [Fact]
     public async Task FullBag_RefusesWith8_AndConsumesNothing()
     {
         var store = await Store.Value;
@@ -197,7 +197,7 @@ public class ExtendCacheChangeItem1584Tests
 
  /// <summary>A key or box that empties frees its cell for the gain, since the client removes both before
  /// it adds the record. A full main bag still takes the gained item when the box is the last one.</summary>
-    [DataFact]
+    [Fact]
     public async Task FullBag_TakesTheGain_WhenTheBoxEmpties()
     {
         var store = await Store.Value;
@@ -219,7 +219,7 @@ public class ExtendCacheChangeItem1584Tests
  /// <summary>Refusals keep the 147-byte shape, echo uidA and change nothing: a Change_Type 2 pair, a
  /// hammer or key used on something that is not its box (client codes 10 and 11), and a uid that is not the
  /// caller's bag row (code 2).</summary>
-    [DataFact]
+    [Fact]
     public async Task Refusals_UseTheClientCodes()
     {
         var store = await Store.Value;
@@ -330,7 +330,7 @@ public class ExtendCacheChangeItem1584Tests
         }
     }
 
-    [DataFact]
+    [Fact]
     public void Pick_WalksRatioBands()
     {
         var rows = new List<RandomSet>
@@ -374,7 +374,7 @@ public class ExtendCacheChangeItem1584Tests
 public class GuildFundsHistory2679Tests
 {
  /// <summary>Answer for a guild with no history: the same 12 bytes for the 7-day and 30-day windows.</summary>
-    [DataFact]
+    [Fact]
     public void NoLines_IsRetailsHeaderOnlyAnswer()
     {
         Assert.Equal(Convert.FromHexString("000006000000000000000000"),
@@ -386,7 +386,7 @@ public class GuildFundsHistory2679Tests
  /// at offset 67. The date is written as an f64, a u32 of 0 and a u32 high dword, and offsets 52 to 66 are
  /// pinned byte for byte. Kinds 0 and 1 leave the NPC id at 0.
  /// </summary>
-    [DataFact]
+    [Fact]
     public void Line_MatchesRetailsFixedFields()
     {
         var retailLine = Convert.FromHexString(
@@ -416,7 +416,7 @@ public class GuildFundsHistory2679Tests
 
  /// <summary>Kinds 0 and 1 as the client's history formatter reads them: the kind at offset 58 and the
  /// amount as a u64 at offset 59.</summary>
-    [DataFact]
+    [Fact]
     public void DepositAndWithdrawLines_CarryKindAndAmount()
     {
         var when = new DateTime(2026, 9, 27, 3, 0, 0, DateTimeKind.Utc);
@@ -437,7 +437,7 @@ public class GuildFundsHistory2679Tests
         Assert.Equal("Arckhon\0", Encoding.Unicode.GetString(first.Slice(16, 16)));
     }
 
-    [DataFact]
+    [Fact]
     public void PageSizeAndRetention_ComeFromConfigDef()
     {
         var config = new List<ConfigDef>
@@ -457,7 +457,7 @@ public class GuildFundsHistory2679Tests
 /// client's result messages for these causes.</summary>
 public class GuildMasterHandover2635Tests
 {
-    [DataFact]
+    [Fact]
     public void Precheck_UsesTheClientsGuildCodes()
     {
         const uint master = 41;

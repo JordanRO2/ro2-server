@@ -27,7 +27,7 @@ public class KharaTitleSelectReauditTests
     }
 
     
-    [DataFact]
+    [Fact]
     public void NewTitleA_StartsTimer_ArchiveD3e8Success()
     {
         
@@ -39,7 +39,7 @@ public class KharaTitleSelectReauditTests
         Assert.Equal(new KharaTitleState(0x244, 0x26B, T0, T0), d.NewState);
     }
 
-    [DataFact]
+    [Fact]
     public void BChangeWithinTenSeconds_Refused_ArchiveD3e8()
     {
         
@@ -51,7 +51,7 @@ public class KharaTitleSelectReauditTests
         Assert.Equal(after, d.NewState);
     }
 
-    [DataFact]
+    [Fact]
     public void RefusalsCountDown_FromTheLastSuccess_Live2b70()
     {
         
@@ -72,7 +72,7 @@ public class KharaTitleSelectReauditTests
         }
     }
 
-    [DataFact]
+    [Fact]
     public void SettingBFromZero_IsFree_AndReSelectKeepsTheTimer_Live936b()
     {
         
@@ -85,7 +85,7 @@ public class KharaTitleSelectReauditTests
         Assert.Equal(T0, d2.NewState.ATimerStartUtc);
     }
 
-    [DataFact]
+    [Fact]
     public void RefusalThenSuccessAfterTenSeconds_Live3364()
     {
         
@@ -97,7 +97,7 @@ public class KharaTitleSelectReauditTests
         Assert.Equal(Hex("3c02000041a801006b02000000000000"), Answer(start.NewState, 0x23C, 0x26B, T0.AddMilliseconds(11391), out _));
     }
 
-    [DataFact]
+    [Fact]
     public void ClearingA_ReportsTheRunningTimer_Live0452()
     {
         
@@ -108,14 +108,14 @@ public class KharaTitleSelectReauditTests
         Assert.Equal(Hex("00000000eb2101002a02000000000000"), Answer(sel, 0, 0x22A, T0.AddMilliseconds(45781), out _));
     }
 
-    [DataFact]
+    [Fact]
     public void ClearWithNoTimer_IsAllZero_Live6622c()
     {
         
         Assert.Equal(Hex("00000000000000000000000000000000"), Answer(default, 0, 0, T0, out _));
     }
 
-    [DataFact]
+    [Fact]
     public void SameAAfterTheTimerRanOut_RestartsAt120000_Archive007b335e()
     {
         
@@ -126,7 +126,7 @@ public class KharaTitleSelectReauditTests
         Assert.Equal(later, d.NewState.ATimerStartUtc);
     }
 
-    [DataFact]
+    [Fact]
     public void ArchiveFb30ReSelect_IsReproduced_OnThePlayClock()
     {
         
@@ -159,7 +159,7 @@ public class KharaTitleSelectReauditTests
         }
     }
 
-    [DataFact]
+    [Fact]
     public void IdenticalReSelectOnANonZeroB_InsideTenSeconds_Refused_Live0452()
     {
         
@@ -173,7 +173,7 @@ public class KharaTitleSelectReauditTests
         Assert.Equal(d1.NewState, d2.NewState);
     }
 
-    [DataFact]
+    [Fact]
     public void IdenticalReSelect_IsFree_WithBZero_OrAfterTenSeconds()
     {
         
@@ -190,7 +190,7 @@ public class KharaTitleSelectReauditTests
         Assert.Equal(Hex("00000000eb2101002a02000000000000"), Answer(clear.NewState, 0, 0x22A, T0.AddMilliseconds(45781), out _));
     }
 
-    [DataFact]
+    [Fact]
     public void TitleNotWearable_TenThousandRefusal()
     {
         

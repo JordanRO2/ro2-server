@@ -16,7 +16,7 @@ public class SiegeArmsCooldownTests
 {
     private static readonly DateTime T0 = new(2026, 8, 9, 7, 8, 42, 887, DateTimeKind.Utc);
 
-    [DataFact]
+    [Fact]
     public void Seat2937_WithTheArmsCooldown_ReproducesRetail_Mortar()
     {
         
@@ -25,7 +25,7 @@ public class SiegeArmsCooldownTests
             SiegePackets.BuildSiegeArmsUseStart2937(0x0242E213u, entries));
     }
 
-    [DataFact]
+    [Fact]
     public void Seat2937_WithTheArmsCooldown_ReproducesRetail_Charge()
     {
         
@@ -34,7 +34,7 @@ public class SiegeArmsCooldownTests
             SiegePackets.BuildSiegeArmsUseStart2937(0x005FED13u, entries));
     }
 
-    [DataFact]
+    [Fact]
     public void Seat2937_WithNoCooldown_IsTheTwelveByteSuccess()
     {
         
@@ -43,7 +43,7 @@ public class SiegeArmsCooldownTests
         Assert.Equal(EconomyMiscPackets.BuildSiegeArmsUseStartAck(0x0279C313u), bytes);
     }
 
-    [DataFact]
+    [Fact]
     public void Refusal2943_ReproducesRetail()
     {
         
@@ -51,7 +51,7 @@ public class SiegeArmsCooldownTests
             SiegePackets.BuildSiegeArmsUseSkillRefusal2943(SiegePackets.ResultArmSkillCoolingDown));
     }
 
-    [DataFact]
+    [Fact]
     public void Success2943_StillReproducesRetail()
     {
         
@@ -72,7 +72,7 @@ public class SiegeArmsCooldownTests
         Assert.Equal(99999u, SiegeService.CooldownGroupOf(9999901, skills));
     }
 
-    [DataFact]
+    [Fact]
     public void ArmCooldown_RefusesEveryMortarSkillInsideTheWindow_AndARefusalDoesNotRestartIt()
     {
         
@@ -95,7 +95,7 @@ public class SiegeArmsCooldownTests
         Assert.Equal(5050401u, reopened.SkillId);
     }
 
-    [DataFact]
+    [Fact]
     public void SeatAnswer_ListsTheArmsRunningWindow_WithTheTimeLeftRoundedUp()
     {
         
@@ -114,7 +114,7 @@ public class SiegeArmsCooldownTests
         Assert.Empty(SiegeService.ActiveCooldowns(arm, T0.AddMilliseconds(5000)));
     }
 
-    [DataFact]
+    [Fact]
     public void Cooldown_BelongsToTheArm_NotToWhoeverFiredIt()
     {
         
@@ -135,7 +135,7 @@ public class SiegeArmsCooldownTests
         SiegeService.EndOperate(seaterSession);
     }
 
-    [DataFact]
+    [Fact]
     public void AnArmNeverSeen_HasNoCooldown()
     {
         Assert.Empty(SiegeService.ActiveCooldowns(0x7EEEEE13, T0));
@@ -179,7 +179,7 @@ public class AuctionSellStart2458Tests
     private const uint Seller = 0x01AF6B11;
     private const long WalletAfterTheFirst = 7_400_713_249;
 
-    [DataFact]
+    [Fact]
     public void Refusal_ReproducesRetail()
     {
         
@@ -187,7 +187,7 @@ public class AuctionSellStart2458Tests
         Assert.Equal(expected, AuctionPackets.BuildSellStartRefusal2458(Seller, AuctionPackets.ResultSellItemMismatch, WalletAfterTheFirst));
     }
 
-    [DataFact]
+    [Fact]
     public void TheDoubleSentCopy_IsRefusedAsAnItemNoLongerInTheBag()
     {
         Assert.True(AuctionPackets.TryParseSellStart(Convert.FromHexString(DoubleSent1403), out var req));
@@ -205,7 +205,7 @@ public class AuctionSellStart2458Tests
             AuctionService.CheckSellStart(req, null, 7, 10_000_000_000, 0, WalletAfterTheFirst, 1));
     }
 
-    [DataTheory]
+    [Theory]
     
     [InlineData(96_000u, 1, 24, 2_880L)]      
     [InlineData(809u, 255, 168, 30_944L)]     
@@ -222,7 +222,7 @@ public class AuctionSellStart2458Tests
         Assert.Equal(fee, AuctionService.RegistrationFee(new ItemData { Price_Buy = priceBuy }, count, hours));
     }
 
-    [DataFact]
+    [Fact]
     public void RegistrationFeeRate_FollowsTheDurationChoice()
     {
         Assert.Equal(0.03f, AuctionService.RegistrationFeeRate(24));
@@ -231,7 +231,7 @@ public class AuctionSellStart2458Tests
         Assert.Equal(0.03f, AuctionService.RegistrationFeeRate(48)); 
     }
 
-    [DataFact]
+    [Fact]
     public void CheckSellStart_MapsEachClientCheckToItsCode()
     {
         Assert.True(AuctionPackets.TryParseSellStart(Convert.FromHexString(DoubleSent1403), out var ok));

@@ -34,7 +34,7 @@ public class FieldPvPCombatTests
 
     // ---- packets -------------------------------------------------------------------------------
 
-    [DataFact]
+    [Fact]
     public void Result2736Code3_AndTheLosersHp1Vitals_MatchTheDumpFrames()
     {
         // The winner's copy of the end frame: [self][winner][loser][3].
@@ -47,7 +47,7 @@ public class FieldPvPCombatTests
 
     // ---- HP ------------------------------------------------------------------------------------
 
-    [DataFact]
+    [Fact]
     public void TakeHit_LeavesTheLoserAtOne()
     {
         var victim = new PlayerState { Hp = 500, MaxHp = 500 };
@@ -64,7 +64,7 @@ public class FieldPvPCombatTests
 
     // ---- who ------------------------------------------------------------------------------------
 
-    [DataFact]
+    [Fact]
     public void OnlyTheStartedOpponentIsAPvpTarget()
     {
         var players = new PlayerStateManager(new NoDirtySink());
@@ -107,7 +107,7 @@ public class FieldPvPCombatTests
     // ---- damage ----------------------------------------------------------------------------------
 
     // CHARACTERIZATION - current AoV formula. The exact damage numbers below pin what CombatService computes today.
-    [DataFact]
+    [Fact]
     public void Characterization_ResolvePvpHit_MitigatesWithTheVictimsDefence_UnverifiedAoV()
     {
         var players = new PlayerStateManager(new NoDirtySink());
@@ -125,7 +125,7 @@ public class FieldPvPCombatTests
     }
 
     // CHARACTERIZATION - current AoV formula. The mitigation / crit / parry numbers pin the formulas as implemented.
-    [DataFact]
+    [Fact]
     public void Characterization_MitigateByDefense_AoVRateCappedAt75_UnverifiedAoV()
     {
         Assert.Equal(500, DefenseRules.Mitigate(1000, 870, 0, 0));         // 870/(870+870) = 50%
@@ -138,7 +138,7 @@ public class FieldPvPCombatTests
         Assert.Equal(2.0, CombatRateRules.ParryRatePct(100, 20, 10), 9);
     }
 
-    [DataFact]
+    [Fact]
     public void CritAndParryRate_HugeLevelAdvantage_SaturatesAtTheCap_NeverNegative()
     {
         // Attacker 98 levels above the defender: the raw denominator 2 + 40 - 78.4 is negative; it is floored at 1, so the cap holds.
@@ -159,7 +159,7 @@ public class FieldPvPCombatTests
         Assert.Equal(expected, CombatRateRules.ApplyPvpDamageRate(damage, increase, reduction));
 
     // End-to-end through ResolvePvpHit: the cached per-player modifiers scale the resolved hit.
-    [DataFact]
+    [Fact]
     public void ResolvePvpHit_AppliesAttackerIncreaseAndVictimReduction()
     {
         var players = new PlayerStateManager(new NoDirtySink());
@@ -186,7 +186,7 @@ public class FieldPvPCombatTests
         Assert.Equal(expected, CombatRateRules.ApplyDamageRate(damage, increase, damageDown));
 
     // End-to-end: the general pair composes with the PvP pair in ResolvePvpHit (both apply in PvP).
-    [DataFact]
+    [Fact]
     public void ResolvePvpHit_ComposesGeneralAndPvpRates()
     {
         var players = new PlayerStateManager(new NoDirtySink());
@@ -201,7 +201,7 @@ public class FieldPvPCombatTests
 
     // ---- the fought-out end on the wire ------------------------------------------------------------
 
-    [DataFact]
+    [Fact]
     public async Task EndFoughtOut_SendsRetailsSequenceToBothDuelists()
     {
         // Effect_Table rows the removal reads: 119 knockdown and 101 stun are Influence_Type 2 (harmful), 60205
@@ -303,7 +303,7 @@ public class FieldPvPCombatTests
 
     // ---- a monster's hit fights the duel out --------------------------------------------------------
 
-    [DataFact]
+    [Fact]
     public async Task MonsterHitThatWouldKillADuelist_FightsTheDuelOut_WithTheOtherDuelistAsWinner()
     {
         // A monster hit ends the duel: NPC 0x00653413 hits 0x01B27511 for 7,987 and 0x01B23611 wins. The loser's vitals are
@@ -394,7 +394,7 @@ public class FieldPvPCombatTests
         }
     }
 
-    [DataFact]
+    [Fact]
     public async Task MonsterHit_OutsideAStartedDuelOrShortOfZero_IsLeftToTheCaller()
     {
         var players = new PlayerStateManager(new NoDirtySink());

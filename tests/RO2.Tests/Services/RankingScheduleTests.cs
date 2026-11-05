@@ -56,7 +56,7 @@ public class RankingScheduleTests
         Assert.Equal(Utc(2026, 7, 26, 12, 0), RankingSchedule.PreviousPeriodStart(weekly, Utc(2026, 8, 2, 12, 0)));
     }
 
-    [DataFact]
+    [Fact]
     public void Filter_SplitsSelectionAndFilterType()
     {
         Assert.Equal(((byte)13, RankingSchedule.FilterByClass), RankingSchedule.DecodeFilter(0x35));
@@ -91,7 +91,7 @@ public class RankingScheduleTests
         };
     }
 
-    [DataFact]
+    [Fact]
     public void Board_Unfiltered_IsTheTopTen()
     {
         
@@ -113,14 +113,14 @@ public class RankingScheduleTests
         Assert.Equal(retail2964, Hex(RankingPackets.Build2964(board)));
     }
 
-    [DataFact]
+    [Fact]
     public void Board_ClassFilter_KeepsGlobalRanks()
     {
         var board = RankingService.Board(Type3Snapshot(), 0x35);
         Assert.Equal(RankingPacketsTests.Retail2964Type3Class13, Hex(RankingPackets.Build2964(board)));
     }
 
-    [DataFact]
+    [Fact]
     public void Board_NoMatchingRow_IsRetailsEmptyBoard()
     {
         
@@ -131,7 +131,7 @@ public class RankingScheduleTests
         Assert.Equal("01000100", Hex(RankingPackets.Build2964(RankingService.Board(null, 0x01))));
     }
 
-    [DataFact]
+    [Fact]
     public void SelfRanked_Unfiltered_IsTheGlobalRow()
     {
         
@@ -143,7 +143,7 @@ public class RankingScheduleTests
         Assert.Equal(retail2965, Hex(RankingPackets.Build2965(self.Value)));
     }
 
-    [DataFact]
+    [Fact]
     public void SelfRanked_ClassFilter_IsThePositionAmongFilteredRows()
     {
         
@@ -155,7 +155,7 @@ public class RankingScheduleTests
         Assert.Equal(retail2965, Hex(RankingPackets.Build2965(self.Value)));
     }
 
-    [DataFact]
+    [Fact]
     public void SelfRanked_NotOnTheBoard_IsNull()
     {
         Assert.Null(RankingService.SelfRanked(Type3Snapshot(), 999, 0x01));
@@ -163,7 +163,7 @@ public class RankingScheduleTests
         Assert.Null(RankingService.SelfRanked(null, 114, 0x01));
     }
 
-    [DataFact]
+    [Fact]
     public void RankRows_SortsByScore_TiesByEarliestReached_PrevFromReplacedBoard()
     {
         var t0 = Utc(2026, 8, 8, 13, 0);
@@ -188,7 +188,7 @@ public class RankingScheduleTests
         Assert.Equal((byte)2, rows[0].Profession);
     }
 
-    [DataFact]
+    [Fact]
     public void Feeds_OnlyTypesOneThreeAndFour()
     {
         Assert.Equal(RankingFeed.Counter, RankingFeeds.FeedOf(1));
@@ -210,7 +210,7 @@ public class RankingScheduleTests
         Assert.Equal(0, CardCounting.CardRowsToCount(11111111, 1, cards));   
     }
 
-    [DataFact]
+    [Fact]
     public void CardCollector_NewRowsOfALanding_AreTheStacksHoldingNoMoreThanTheLandedCount()
     {
         

@@ -48,7 +48,7 @@ public sealed class UseTalentPointHandlerTests
 
     // ---- pure helpers ---------------------------------------------------------------------------------------
 
-    [DataFact]
+    [Fact]
     public void TryParse_ReadsAWellFormedRequest()
     {
         var body = Build1310([(1102u, (byte)2), (1117u, (byte)1)]);
@@ -60,7 +60,7 @@ public sealed class UseTalentPointHandlerTests
         Assert.Equal(new[] { (1102u, (byte)2), (1117u, (byte)1) }, all);
     }
 
-    [DataFact]
+    [Fact]
     public void TryParse_RefusesAWrongMsgTag_AWrongHandle_AndAShortBody()
     {
         Assert.Equal(UseTalentPointHandler.RequestError.BadMsgTag,
@@ -71,7 +71,7 @@ public sealed class UseTalentPointHandlerTests
             UseTalentPointHandler.TryParse(new byte[19], Self, out _, out _, out _));
     }
 
-    [DataFact]
+    [Fact]
     public void TryParse_RefusesACountAbove230_BeforeReadingAnyElement()
     {
         // count = 0xFFFFFFFF with 4000 elements behind it
@@ -86,14 +86,14 @@ public sealed class UseTalentPointHandlerTests
             UseTalentPointHandler.TryParse(Build1310(big.Take(230).ToList()), Self, out _, out _, out _));
     }
 
-    [DataFact]
+    [Fact]
     public void TryParse_RefusesACountLargerThanTheElementsPresent()
     {
         Assert.Equal(UseTalentPointHandler.RequestError.Truncated,
             UseTalentPointHandler.TryParse(Build1310([(1102u, (byte)1)], declaredCount: 3), Self, out _, out _, out _));
     }
 
-    [DataFact]
+    [Fact]
     public void DedupKeepLast_KeepsTheLastLevelOfAGroup_AndDropsZeroEntries()
     {
         var result = UseTalentPointHandler.DedupKeepLast(
@@ -289,7 +289,7 @@ public sealed class UseTalentPointHandlerTests
         await rig.AssertNoReplyAsync();
     }
 
-    [DataFact]
+    [Fact]
     public void OverlayLearnedSkills_SwapsTheDictionary_SoAReaderNeverSeesItGrow()
     {
         var player = new PlayerState();

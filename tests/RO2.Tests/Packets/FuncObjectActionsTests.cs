@@ -69,7 +69,7 @@ public class FuncObjectActionsTests
         => Assert.Equal(FuncObjectActionKind.None,
             FuncObjectActions.Resolve(FuncObjectActions.IndexActions(FuncActionTable.Value), templateId).Kind);
 
-    [DataFact]
+    [Fact]
     public void GatherEnd_2519And2521_AreRetails()
     {
         
@@ -78,7 +78,7 @@ public class FuncObjectActionsTests
         Assert.Equal("01101000fae30000000014b7080000000000", Hex(NpcRewardHandler.BuildFuncObjectEnd2521(0x0008B714u, 0)));
     }
 
-    [DataFact]
+    [Fact]
     public void BagFull_2519And2521_CarryRetails22208()
     {
         
@@ -96,7 +96,7 @@ public class FuncObjectActionsTests
         Assert.Equal(new[] { (40001252u, 1) }, FuncObjectActions.Roll(rows, new Random(1)));
     }
 
-    [DataFact]
+    [Fact]
     public void Roll_DrawsEachRowOnItsRate_AndTheCountOverMinToMax()
     {
         

@@ -36,7 +36,7 @@ public class PrivateShopCraftPersistenceTests
             .ToList();
     }
 
-    [DataTheory]
+    [Theory]
     
     [InlineData("0160000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005002904010000000000000025040100000000000000260401000000000000002704010000000000000028040100000000000000")]
     
@@ -49,7 +49,7 @@ public class PrivateShopCraftPersistenceTests
         Assert.Equal(retail, PrivateShopSellerOpenHandler.BuildAnswer2646(OffersOf(retail)));
     }
 
-    [DataFact]
+    [Fact]
     public void StoredEntries_KeepOrderAndTheWholeU64Price()
     {
         var offers = new List<PrivateShopCraftOffer>
@@ -62,7 +62,7 @@ public class PrivateShopCraftPersistenceTests
         Assert.Empty(PrivateShopCraftRepository.FromEntries(null));
     }
 
-    [DataFact]
+    [Fact]
     public void LoadCrafts_PutsTheStoredListFirst_AndSetCraftKeepsTheRules()
     {
         var seller = new PlayerState { SessionId = 11, CharacterId = 110, EntityId = 0x0A000011u };
@@ -81,7 +81,7 @@ public class PrivateShopCraftPersistenceTests
         Assert.Equal(2, PrivateShopRegistry.GetCrafts(seller).Count);
     }
 
-    [DataFact]
+    [Fact]
     public async Task EnsureLoaded_ReadsTheStoreOncePerZoneSession()
     {
         var store = new FakeStore();
@@ -99,7 +99,7 @@ public class PrivateShopCraftPersistenceTests
         Assert.Equal(store.Saved[120], PrivateShopRegistry.GetCrafts(session2));
     }
 
-    [DataFact]
+    [Fact]
     public async Task Changes_LoadFirst_AndSaveTheWholeOrderedList()
     {
         
@@ -119,7 +119,7 @@ public class PrivateShopCraftPersistenceTests
         Assert.Equal(1, store.Loads);
     }
 
-    [DataFact]
+    [Fact]
     public async Task ConcurrentAdds_SaveTheirSnapshotsInOrder()
     {
         var store = new FakeStore { SaveDelay = TimeSpan.FromMilliseconds(20) };
@@ -162,7 +162,7 @@ public class PrivateShopCraftPersistenceTests
 /// </summary>
 public class RefineCommissionToBuyer3000Tests
 {
-    [DataTheory]
+    [Theory]
     
     [InlineData(0x07788E11u, 1UL, (ushort)2000, (ushort)500, (ushort)3000, "011616008fe4118e78070100000000000000d007f401b80b")]
     
@@ -177,7 +177,7 @@ public class RefineCommissionToBuyer3000Tests
         Assert.Equal(Convert.FromHexString(retailHex),
             RefineCommissionPackets.BuildRefineCommissionToBuyer3000(buyer, price, new RefineCommissionPackets.RefineRates(r100, r101, r102)));
 
-    [DataFact]
+    [Fact]
     public void RatesOf_TakesTheFlatTraits100To102_ClampedToU16()
     {
         var worn = new EquipStats(
@@ -229,14 +229,14 @@ public class ThemeCostumeComposeRefusalTests
 {
     private const uint Owner = 9;
 
-    [DataTheory]
+    [Theory]
     [InlineData((ushort)23052, "0c5a")]   
     [InlineData((ushort)1, "0100")]       
     [InlineData((ushort)23053, "0d5a")]   
     public void Refusal2896_IsTheCodeAnd126ZeroBytes(ushort code, string retailHead) =>
         Assert.Equal(Convert.FromHexString(retailHead + new string('0', 252)), ThemeCostumeComposeHandler.BuildRefusal2896(code));
 
-    [DataTheory]
+    [Theory]
     
     
     [InlineData("40000000320101e154df0ea83d040e00000000030301e754df0ea83d040e00000000120201e654df0ea83d040e000000000000000000000000000001000000002a2d2c04")]
@@ -252,7 +252,7 @@ public class ThemeCostumeComposeRefusalTests
         Assert.Equal(ThemeCostumeComposeHandler.ResultDeckMismatch, await RefusalOf(requestHex, inventory));
     }
 
-    [DataFact]
+    [Fact]
     public async Task KeptCostumeWithoutComposeRow_IsRefusedWith1()
     {
         
@@ -265,7 +265,7 @@ public class ThemeCostumeComposeRefusalTests
             inventory));
     }
 
-    [DataFact]
+    [Fact]
     public async Task TheSameCostumesWithoutACharm_Compose()
     {
         
@@ -281,7 +281,7 @@ public class ThemeCostumeComposeRefusalTests
             inventory));
     }
 
-    [DataFact]
+    [Fact]
     public async Task ItemsNotInTheBag_AreRefusedWith23053()
     {
         

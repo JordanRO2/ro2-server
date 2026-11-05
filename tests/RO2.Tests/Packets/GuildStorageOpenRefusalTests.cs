@@ -66,7 +66,7 @@ public class GuildStorageOpenRefusalTests
     private const string Answered1489 = "d335123ca7bea34a934c40820aeaf9eb132c2000";
     private const string EmptyVault2674 = "00000a00000000000000000000000000";
 
-    [DataFact]
+    [Fact]
     public void Refusal2674_IsRetailsFrame()
     {
         Assert.Equal(Refused2674, Convert.ToHexString(GuildStorageOpenHandler.BuildOutOfRangeRefusal2674()).ToLowerInvariant());
@@ -74,14 +74,14 @@ public class GuildStorageOpenRefusalTests
             BinaryPrimitives.ReadUInt16LittleEndian(Convert.FromHexString(Refused2674)));
     }
 
-    [DataFact]
+    [Fact]
     public void EmptyVault2674_IsRetailsFrame()
     {
         
         Assert.Equal(EmptyVault2674, Convert.ToHexString(GuildPackets.BuildGuildStorageList(new Guild())).ToLowerInvariant());
     }
 
-    [DataTheory]
+    [Theory]
     [InlineData(Refused1489, 0x500000ECu, false)]
     [InlineData(Answered1489, 0x00202C13u, true)]
     public void Request1489_CarriesTheNpcHandleAfterTheGuid(string hex, uint handle, bool npcTagged)
@@ -112,7 +112,7 @@ public class GuildVaultWindowsTests
 
     private static PlayerState Player(uint sessionId, uint charId) => new() { SessionId = sessionId, CharacterId = charId };
 
-    [DataFact]
+    [Fact]
     public void OtherMembersWithTheWindowOpen_AreTheViewers()
     {
         
@@ -140,7 +140,7 @@ public class GuildVaultWindowsTests
         Assert.Empty(GuildVaultWindows.OtherViewers(guild, withdrawer, lookup));
     }
 
-    [DataFact]
+    [Fact]
     public void EndedSession_IsDropped()
     {
         const uint mover = 0xA1000201, gone = 0xA1000202;
@@ -158,7 +158,7 @@ public class GuildVaultWindowsTests
         Assert.Empty(GuildVaultWindows.OtherViewers(guild, mover, lookup));
     }
 
-    [DataFact]
+    [Fact]
     public void SessionHoldingAnotherCharacter_IsNotAViewer()
     {
         const uint mover = 0xA1000301, reused = 0xA1000302;
@@ -173,7 +173,7 @@ public class GuildVaultWindowsTests
         Assert.Empty(GuildVaultWindows.OtherViewers(guild, mover, lookup));
     }
 
-    [DataFact]
+    [Fact]
     public void MemberWhoLeftTheGuild_IsNotAViewer()
     {
         const uint mover = 0xA1000401, leaver = 0xA1000402;
@@ -192,7 +192,7 @@ public class GuildVaultWindowsTests
 /// <summary>1327 ReqRepairItem: the repair price formula and the 2336 refusal.</summary>
 public class RepairPricingTests
 {
-    [DataFact]
+    [Fact]
     public void Constants_AreTheDoublesInRdata()
     {
         
@@ -281,7 +281,7 @@ public class RepairPricingTests
         Assert.Equal(0L, RepairPricing.DiscountPercent(new[] { storage.Guild_Skill_ID }, table));
     }
 
-    [DataTheory]
+    [Theory]
     
     [InlineData(RepairPricing.ResultNoItem, "d5000000624e")]
     

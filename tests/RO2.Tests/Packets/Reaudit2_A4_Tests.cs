@@ -53,7 +53,7 @@ public class Reaudit2_A4_Tests
  /// <summary>
  /// The repeat window is per player: after an answered 9000211, a 1561 of another item skill within 1,000 ms is a repeat too. A refusal does not move the window.
  /// </summary>
-    [DataFact]
+    [Fact]
     public void ItemSkillRepeat_IsOneWindowPerPlayer_AcrossItemSkills()
     {
         var player = new PlayerState();
@@ -69,7 +69,7 @@ public class Reaudit2_A4_Tests
  /// <summary>
  /// Through the handler: an answered 1561 opens the window, and a 1561 of a different item skill inside it gets the lone 2711 before the item is looked up. The 2711 has the shape 01 10 1000 49e4 00000000 [caster] [skill] (see the SkillStartItemHandler remarks).
  /// </summary>
-    [DataFact]
+    [Fact]
     public async Task ItemSkillRepeat_OfAnotherSkill_GetsTheLone2711()
     {
         await using var net = await Harness.StartAsync(1);
@@ -155,7 +155,7 @@ public class Reaudit2_A4_Tests
         return skills;
     }
 
-    [DataTheory]
+    [Theory]
     [InlineData(LeaveBar7448b82e, LeaveSkills7448b82e)]
     [InlineData(LeaveBarD414c84e, LeaveSkillsD414c84e)]
     public void GuildLeave_Burst_IsTheArchives_2472_2488_2472_2488(string barHex, string skillsHex)
@@ -300,7 +300,7 @@ public class Reaudit2_A4_Tests
     }
 
  /// <summary>The window: idle with no record, busy until the duration has passed, idle strictly after it.</summary>
-    [DataFact]
+    [Fact]
     public void CasterBusyWindow_IsIdleOnlyPastTheLastCastsDuration()
     {
         var player = new PlayerState();

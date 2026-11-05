@@ -94,7 +94,7 @@ public class UnitA9CardCompositionTests
         Row(0x0E043DA80D8CB9C0UL, Result, 10, 65, 10000),   
     };
 
-    [DataFact]
+    [Fact]
     public void Request_ParsesTheArchiveFrame()
     {
         var req = CardCompositionHandler.ParseRequest(Hex(ArchiveRequest));
@@ -106,7 +106,7 @@ public class UnitA9CardCompositionTests
         Assert.Equal(new CardCompositionHandler.Descriptor(2, 21, 0x0E043DA80D8CB96AUL, 1), req.Cards[0]);
     }
 
-    [DataFact]
+    [Fact]
     public async Task ArchiveRequest_IsRolled_OnTheStoneRatio_InRetailOrder()
     {
         var store = await Store.Value;
@@ -126,7 +126,7 @@ public class UnitA9CardCompositionTests
         Assert.Equal("0000af6f5401d76f5401", Hex(CardPackets.BuildCardComposition2616(0, plan.Source.ItemId, plan.ResultCardId)));
     }
 
-    [DataFact]
+    [Fact]
     public async Task EmptiedStacks_CarryOnlyUidTemplateAndCell_AsRetail()
     {
         
@@ -183,7 +183,7 @@ public class UnitA9CardCompositionTests
             Hex(LootNotifyPackets.BuildPickupItem2333(ItemPackets.BuildItemRecord126(join))));
     }
 
-    [DataFact]
+    [Fact]
     public async Task Result_StartsANewStack_WhenOnlyEnforcedOrBoundOnesExist()
     {
         var store = await Store.Value;
@@ -200,7 +200,7 @@ public class UnitA9CardCompositionTests
  /// A refusal whose descriptors include quantity 0 (cells (3,5) and (3,6)) is answered with
  /// 2616 <c>2d5e0000000000000000</c> (24109).
  /// </summary>
-    [DataFact]
+    [Fact]
     public async Task QtyZeroDescriptor_Is24109()
     {
         var store = await Store.Value;
@@ -230,7 +230,7 @@ public class UnitA9CardCompositionTests
  /// A refusal whose request names the same cell twice ((1,53) in both vector lists, same uid) is answered with
  /// 2616 <c>2e5e0000000000000000</c> (24110).
  /// </summary>
-    [DataFact]
+    [Fact]
     public async Task DuplicateUid_Is24110()
     {
         var store = await Store.Value;
@@ -251,7 +251,7 @@ public class UnitA9CardCompositionTests
         Assert.Equal("2e5e0000000000000000", Hex(CardPackets.BuildCardComposition2616(refusal, 0, 0)));
     }
 
-    [DataFact]
+    [Fact]
     public async Task OtherRefusals_FollowTheClientStrings()
     {
         var store = await Store.Value;
@@ -280,7 +280,7 @@ public class UnitA9CardCompositionTests
         Assert.Equal((ushort)24110, CardCompositionHandler.PlanFor(req, noResult, store).Refusal);
     }
 
-    [DataFact]
+    [Fact]
     public async Task StoneOnly_Request_IsRolled()
     {
         

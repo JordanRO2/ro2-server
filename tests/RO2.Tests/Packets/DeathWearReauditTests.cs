@@ -27,7 +27,7 @@ public class DeathWearReauditTests
     
  /// <summary>Durability lost per hit by an armour piece: 1 for the Crescentia and Soul Maker job bits,
  /// 2 for every other armour.</summary>
-    [DataFact]
+    [Fact]
     public void ArmourWearStep_FollowsTheJobMask()
     {
         foreach (var mask in new long[] { 65536, 131072, 196608, 229376 })

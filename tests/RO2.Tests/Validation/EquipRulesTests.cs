@@ -26,29 +26,29 @@ public class EquipRulesTests
     private static EquipRefusal Place(ItemData t, byte storage, int slot, EquipActor? who = null, params InventoryItem[] rows)
         => EquipRules.CanPlace(new InventoryItem { Id = 100, ItemId = t.ID }, t, storage, slot, who ?? Hero, rows);
 
-    [DataFact]
+    [Fact]
     public void LegalEquipPasses()
     {
         Assert.Equal(EquipRefusal.None, Place(Sword(), 1, 6));
         Assert.Equal(EquipRefusal.None, Place(Armour(2), 1, 2));
     }
 
-    [DataTheory]
+    [Theory]
     [InlineData(7)]    
     [InlineData(0)]    
     [InlineData(30)]   
     public void WrongSlotIsRejected(int slot)
         => Assert.Equal(EquipRefusal.WrongSlot, Place(Sword(), 1, slot));
 
-    [DataFact]
+    [Fact]
     public void ArmourOnAWeaponSlotIsRejected()
         => Assert.Equal(EquipRefusal.WrongSlot, Place(Armour(2), 1, 6));
 
-    [DataFact]
+    [Fact]
     public void UnderLevelIsRejected()
         => Assert.Equal(EquipRefusal.LevelTooLow, Place(Sword(), 1, 6, new EquipActor(49, 7, 1)));
 
-    [DataFact]
+    [Fact]
     public void WrongJobIsRejectedAndNoRequirementMeansAnyJob()
     {
         Assert.Equal(EquipRefusal.JobNotAllowed, Place(Sword(), 1, 6, new EquipActor(60, 6, 1)));   
@@ -56,7 +56,7 @@ public class EquipRulesTests
         Assert.Equal(EquipRefusal.None, Place(Armour(), 1, 2, new EquipActor(60, 0, 1)));           
     }
 
-    [DataFact]
+    [Fact]
     public void WrongSexIsRejected()
     {
         var female = Armour() with { Require_Sex = 2 };
@@ -65,7 +65,7 @@ public class EquipRulesTests
         Assert.Equal(EquipRefusal.None, Place(Armour() with { Require_Sex = 3 }, 1, 2, new EquipActor(60, 7, 1)));
     }
 
-    [DataFact]
+    [Fact]
     public void OccupiedCellIsRejectedUnlessItIsTheSwapPartnerOrTheItemsOwnRow()
     {
         var other = Row(200, 1, 6);
@@ -76,7 +76,7 @@ public class EquipRulesTests
         Assert.Equal(EquipRefusal.None, Place(Sword(), 1, 6, null, Row(201, 0, 6)));
     }
 
-    [DataFact]
+    [Fact]
     public void ItemWithNoWornSlotIsNotEquippable()
     {
         var potion = new ItemData { ID = 9, Item_Type = 4, Equip_Slot = 0 };
@@ -84,7 +84,7 @@ public class EquipRulesTests
         Assert.Equal(EquipRefusal.NotEquippable, Place(new ItemData { ID = 10, Item_Type = 3, Equip_Slot = 101, Equip_Type = 33 }, 1, 6));
     }
 
-    [DataFact]
+    [Fact]
     public void ItemTypeAndEquipTypeMustMatchTheSlotClass()
     {
         Assert.Equal(EquipRefusal.WrongItemType, Place(Armour() with { Item_Type = 4 }, 1, 2));
@@ -92,7 +92,7 @@ public class EquipRulesTests
         Assert.Equal(EquipRefusal.WrongEquipType, Place(Sword() with { Equip_Type = 11 }, 1, 6));   
     }
 
-    [DataFact]
+    [Fact]
     public void AccessoryWornSlotIsNotAlwaysEquipSlot()
     {
         
@@ -107,7 +107,7 @@ public class EquipRulesTests
         Assert.Equal(EquipRefusal.WrongSlot, Place(Earring(), 1, 11));
     }
 
-    [DataFact]
+    [Fact]
     public void CardsWearInTheCardCellsOnly()
     {
         for (int s = 20; s <= 24; s++) Assert.Equal(EquipRefusal.None, Place(Card(), 1, s));
@@ -116,7 +116,7 @@ public class EquipRulesTests
         Assert.Equal(EquipRefusal.WrongSlot, Place(Card(), 1, 1));
     }
 
-    [DataFact]
+    [Fact]
     public void StorageTypeLegalityAndCellRanges()
     {
         Assert.Equal(EquipRefusal.IllegalStorageType, Place(Sword(), 4, 0));
@@ -132,7 +132,7 @@ public class EquipRulesTests
         Assert.Equal(EquipRefusal.DestinationOccupied, Place(Sword(), 0, 3, null, Row(300, 0, 3)));
     }
 
-    [DataFact]
+    [Fact]
     public void BagWindowTakesOnlyBagsInCellsZeroToTwo()
     {
         Assert.Equal(EquipRefusal.None, Place(Bag(), 3, 0));
@@ -143,7 +143,7 @@ public class EquipRulesTests
         Assert.Equal(EquipRefusal.DestinationOccupied, Place(Bag(), 3, 1, null, Row(400, 3, 1)));
     }
 
-    [DataFact]
+    [Fact]
     public void UnknownTemplateIsRejected()
         => Assert.Equal(EquipRefusal.UnknownTemplate, EquipRules.CanPlace(new InventoryItem(), null, 1, 6, Hero, Empty));
 
@@ -152,7 +152,7 @@ public class EquipRulesTests
     private static EquipRefusal Overlap(ItemData t, int slot, params InventoryItem[] rows)
         => EquipRules.CanPlace(new InventoryItem { Id = 100, ItemId = t.ID }, t, 1, slot, Hero, rows, vacatingUid: 0, enforceOverlap: true);
 
-    [DataFact]
+    [Fact]
     public void CostumeOverlapRefusesWhileACoveredSlotIsWorn_OnlyWhenEnforcementIsOptedIn()
     {
         

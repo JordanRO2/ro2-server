@@ -24,7 +24,7 @@ public class CloseRangeChat2766Tests
     private const string RefGuid = "5808aa1f2dc6b64aacc4c25e3da300ec";
 
     
-    [DataTheory]
+    [Theory]
     
     [InlineData(0x0D851411u, "028300830065e41114850d6e0001f80000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001114850d5808aa1f2dc6b64aacc4c25e3da300ec")]
     
@@ -44,7 +44,7 @@ public class CloseRangeChat2766Tests
         Assert.Equal(134, body.Length);
     }
 
-    [DataFact]
+    [Fact]
     public void Builder_ReproducesTheLiveHandOff_FromTheRoomsOwn2763()
     {
         
@@ -63,7 +63,7 @@ public class CloseRangeChat2766Tests
             Hex(body));
     }
 
-    [DataFact]
+    [Fact]
     public void Builder_PasswordFlag_IsTheSignsAsFor2763()
     {
         
@@ -78,7 +78,7 @@ public class CloseRangeChat2766Tests
         Assert.Throws<ArgumentException>(() => CloseRangeChatPackets.BuildNfyNewMasterCloseRangeChatRoom2766(1, name, false, guid.AsSpan(0, 15)));
     }
 
-    [DataFact]
+    [Fact]
     public void HandOffBurst_IsRetailsOneMillisecond()
     {
         
@@ -92,7 +92,7 @@ public class CloseRangeChat2766Tests
     }
 
     
-    [DataFact]
+    [Fact]
     public void Registry_FollowsTheReferenceRoomThroughItsThreeHandOffs()
     {
         
@@ -136,7 +136,7 @@ public class CloseRangeChat2766Tests
     }
 
     
-    [DataFact]
+    [Fact]
     public async Task Chat_OwnerExit_WithMembersLeft_HandsTheRoomToTheLowestUid()
     {
         await using var net = new Loopback();
@@ -176,7 +176,7 @@ public class CloseRangeChat2766Tests
             CloseRangeChatRoomMembers.Leave(guid, (uint)ownerUid, []).Outcome);
     }
 
-    [DataFact]
+    [Fact]
     public async Task Chat_OwnerAloneLeaves_ClosesTheRoom()
     {
         await using var net = new Loopback();
@@ -198,7 +198,7 @@ public class CloseRangeChat2766Tests
         Assert.False(CloseRangeChatRoomMembers.IsOpen(guid));
     }
 
-    [DataFact]
+    [Fact]
     public async Task Chat_OwnerDisconnect_HandsOffAtOnce_AndReportsItForTheZone()
     {
         await using var net = new Loopback();
@@ -234,7 +234,7 @@ public class CloseRangeChat2766Tests
     }
 
     
-    [DataFact]
+    [Fact]
     public async Task Chat_OwnerSocketDown_ThenAnotherPlayerProbes_StillHandsOffOnTheDisconnectEvent()
     {
         await using var net = new Loopback();
@@ -257,7 +257,7 @@ public class CloseRangeChat2766Tests
         Assert.False(CloseRangeChatRoomMembers.IsOpen(guid));   // settled: no leaked room
     }
 
-    [DataFact]
+    [Fact]
     public void Signals_CurrentOwner_FollowsHandOffs_AndClosesOnlyOnTheOwnersExit()
     {
         var guid = Guid.NewGuid().ToByteArray();
@@ -354,14 +354,14 @@ public class NfyDeleteAcceptedKhara2858Tests
 {
     private static readonly Lazy<KharaCatalog> Catalog = new(() => new KharaCatalog(LoadRows()));
 
-    [DataFact]
+    [Fact]
     public void EmptyList_IsRetailsBody()
     {
         
         Assert.Equal("020000000000", Convert.ToHexString(KharaService.BuildNfyDeleteAcceptedKhara2858([])).ToLowerInvariant());
     }
 
-    [DataFact]
+    [Fact]
     public void NonEmptyList_FollowsTheClientsReader()
     {
         

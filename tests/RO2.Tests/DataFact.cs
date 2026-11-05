@@ -19,6 +19,12 @@ internal static class DataDir
 
     private static string? Resolve()
     {
+        // Lets a run reproduce CI's no-data state on a machine that has data/ present, so tests that were
+        // un-gated from [DataFact] to [Fact] can be verified to still pass (or correctly skip) without the
+        // real tables. Set RO2_FORCE_NO_DATA=1 to force Present=false.
+        var force = Environment.GetEnvironmentVariable("RO2_FORCE_NO_DATA");
+        if (!string.IsNullOrEmpty(force) && force != "0") return null;
+
         var env = Environment.GetEnvironmentVariable("RO2_DATA_DIR");
         if (!string.IsNullOrWhiteSpace(env) && IsDataDir(env)) return env;
         for (var dir = new DirectoryInfo(AppContext.BaseDirectory); dir is not null; dir = dir.Parent)

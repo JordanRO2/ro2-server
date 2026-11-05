@@ -19,7 +19,7 @@ namespace RO2.Tests.Packets;
 public class UnitA2P3Batch1Tests
 {
     
-    [DataFact]
+    [Fact]
     public void CardBookTakeOff1547_ReadsTheBuilderBlob9()
     {
         
@@ -50,7 +50,7 @@ public class UnitA2P3Batch1Tests
         Refine = refine, Bound = bound,
     };
 
-    [DataFact]
+    [Fact]
     public void CardBookTakeOff1547_PlacesOnTheDroppedCell()
     {
         var owned = new List<InventoryItem> { Row(0, count: 5), Row(1, itemId: 11100001) };
@@ -80,7 +80,7 @@ public class UnitA2P3Batch1Tests
         Assert.Null(CardBookTakeOffHandler.ChoosePlacement(owned, NoBags, CardTemplate, Card, 0, false, 21, 5));
     }
 
-    [DataFact]
+    [Fact]
     public void CardBookTakeOff1547_BagFullIsNoPlacement()
     {
         var owned = Enumerable.Range(0, 20).Select(s => Row((short)s, itemId: 11100001)).ToList();
@@ -90,7 +90,7 @@ public class UnitA2P3Batch1Tests
             CardBookTakeOffHandler.BagSlotToFlat(2, 0)));
     }
 
-    [DataFact]
+    [Fact]
     public void CardBookTakeOff2792_CodesAreThe2801Ones()
     {
         
@@ -99,7 +99,7 @@ public class UnitA2P3Batch1Tests
     }
 
     
-    [DataFact]
+    [Fact]
     public void GuildSkillLearn1512_LiveRetailFramesParse()
     {
         
@@ -112,7 +112,7 @@ public class UnitA2P3Batch1Tests
         Assert.Equal(7, second.Length);
     }
 
-    [DataFact]
+    [Fact]
     public void GuildSkillLearn2722_NotMasterIsRetails19()
     {
         
@@ -158,7 +158,7 @@ public class UnitA2P3Batch1Tests
     }
 
     
-    [DataFact]
+    [Fact]
     public void OutfitDivideRelease1701_ReadsTwoUids()
     {
         
@@ -170,7 +170,7 @@ public class UnitA2P3Batch1Tests
         Assert.False(OutfitDivideReleaseItemHandler.TryParseRequest(body.AsSpan(0, 15), out _, out _));
     }
 
-    [DataFact]
+    [Fact]
     public void OutfitDivideRelease3038_IsTheReadersBlob136()
     {
         

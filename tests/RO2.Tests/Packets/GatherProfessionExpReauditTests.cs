@@ -26,7 +26,7 @@ public class GatherProfessionExpReauditTests
 {
     
  /// <summary>The 2526 builder against a reference gather frame (experience 268, gain 86).</summary>
-    [DataFact]
+    [Fact]
     public void ProJobExpChange2526_IsTheDumpGatherFrame()
         => Assert.Equal("011818001be4000000000c010000000000005600000000000000",
             Hex(ProfessionExpPackets.BuildProJobExpChange2526(268, 86)));

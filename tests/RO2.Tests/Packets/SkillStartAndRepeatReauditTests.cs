@@ -27,7 +27,7 @@ public class SkillStartAndRepeatReauditTests
 {
     
  /// <summary>The refusal is 2711 (skill 9000211). A repeat within 1,000 ms of the last answered request is refused, and a refused request does not move the window.</summary>
-    [DataFact]
+    [Fact]
     public void ItemSkillRepeat_RefusesWithinTheWindowOfTheLastAnswer()
     {
         Assert.Equal("0110100049e40000000011e2ae0a13558900", Hex(ActorStatePackets.BuildNfySkillCastingCancel(0x0AAEE211, 9000211)));
@@ -65,7 +65,7 @@ public class SkillStartAndRepeatReauditTests
  /// The caster casts skill 220703 on itself. The 2716 blob echoes the request's f32 and position triple at blob
  /// offsets 32 and 36-47.
  /// </summary>
-    [DataFact]
+    [Fact]
     public void UseSkillStart2716_EchoesTheRequestsAngleAndTriple_IsTheArchiveFrame()
     {
         var request = Convert.FromHexString(
@@ -132,7 +132,7 @@ public class SkillStartAndRepeatReauditTests
 
  /// <summary>The landing tracker: a group never accepted counts as landed, an accepted 1508 puts it in flight, and the
  /// 1509 of any skill of the group lands it.</summary>
-    [DataFact]
+    [Fact]
     public void SkillCastLandings_TrackTheGroupInFlight()
     {
         var player = new PlayerState();

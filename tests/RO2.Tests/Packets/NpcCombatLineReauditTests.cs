@@ -15,7 +15,7 @@ namespace RO2.Tests.Packets;
 public class NpcCombatLineReauditTests
 {
     
-    [DataTheory]
+    [Theory]
     
     [InlineData("011b1b00eae20000000013c5640903000100000000030000001108050f", 0x0964C513u, 0x0F050811u)]
     
@@ -83,7 +83,7 @@ public class NpcCombatLineReauditTests
         Assert.False(NpcChatService.TryPickCombatLine(50003746, false, index, table, 0, 0, out _));
     }
 
-    [DataFact]
+    [Fact]
     public void CombatLine_BaseTemplateIsACoinFlip()
     {
         
@@ -95,7 +95,7 @@ public class NpcCombatLineReauditTests
         Assert.False(NpcChatService.TryPickCombatLine(40020000, true, index, null, 0, 0, out _));   
     }
 
-    [DataFact]
+    [Fact]
     public void Index_KeepsMultiRowGroupsAndDropsTheScriptedTemplates()
     {
         var index = NpcChatService.BuildIndex([51100202u, 51100201u, 51100101u, 51100102u, 13900103u, 13900101u,

@@ -27,7 +27,7 @@ public class CraftRefusalTests
     private static CraftItemList? Recipe(ushort id) => Recipes.Value.FirstOrDefault(r => r.ID == id);
     private static CraftMaterial? MaterialRow(ushort id) => Materials.Value.FirstOrDefault(m => m.ID == id);
 
-    [DataTheory]
+    [Theory]
     
     
     [InlineData(0x01C65311u, CraftItemHandler.ResultBatchRunning, "010a0a0016e41153c6016358")]
@@ -38,7 +38,7 @@ public class CraftRefusalTests
     public void AckMakeCraftItem2539_ReproducesEachRetailRefusal(uint crafter, short result, string retailHex) =>
         Assert.Equal(Convert.FromHexString(retailHex), ShopItemPackets.BuildAckMakeCraftItem2539(crafter, result));
 
-    [DataFact]
+    [Fact]
     public void AckMakeCraftItem2539_DefaultIsTheStartAck() =>
         
         
@@ -99,7 +99,7 @@ public class CraftRefusalTests
             CraftItemHandler.RefusalCode(Recipe(1598), MaterialRow(1598), new ushort[] { 1598 }, bag));
     }
 
-    [DataFact]
+    [Fact]
     public async Task SecondClaimWhileABatchHoldsTheSlot_IsRefused()
     {
         const uint session = 0xA3C0_0001u;
@@ -121,7 +121,7 @@ public class CraftRefusalTests
         Assert.False(await CraftItemHandler.StopBatchAsync(session));
     }
 
-    [DataFact]
+    [Fact]
     public async Task CancelDuringTheStartChecks_WaitsForTheStartToBeSent()
     {
         

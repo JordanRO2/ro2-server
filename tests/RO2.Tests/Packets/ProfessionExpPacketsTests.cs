@@ -14,7 +14,7 @@ public class ProfessionExpPacketsTests
 {
     private static string Hex(byte[] b) => Convert.ToHexString(b).ToLowerInvariant();
 
-    [DataFact]
+    [Fact]
     public void ExpChange2526_MatchesRetailFrame()
     {
         
@@ -22,7 +22,7 @@ public class ProfessionExpPacketsTests
             Hex(ProfessionExpPackets.BuildProJobExpChange2526(14479, 42)));
     }
 
-    [DataFact]
+    [Fact]
     public void LevelCrossing_MatchesRetailPair()
     {
         

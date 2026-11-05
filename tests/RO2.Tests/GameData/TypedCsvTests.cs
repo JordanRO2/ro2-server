@@ -27,7 +27,7 @@ public class TypedCsvTests
 
     private const string Header = "##META\tmagic=RO2!\ttimestamp=\n#DWORD,STRING\n";
 
-    [DataFact]
+    [Fact]
     public void QuotedFields_KeepCommasQuotesAndLineBreaks()
     {
         var rows = TypedCsv.Parse<Row>(Header + "Id,Name\n1,\"a, \"\"b\"\"\"\n2,\"line1\r\nline2\"\n3,plain\n");
@@ -39,7 +39,7 @@ public class TypedCsvTests
         Assert.Equal(new uint[] { 1, 2, 3 }, rows.Select(r => r.Id));
     }
 
-    [DataFact]
+    [Fact]
     public void EmptyCells_AreZeroAndEmptyString_AndShortRowsKeepDefaults()
     {
         var rows = TypedCsv.Parse<Row>(Header + "Id,Small,Ratio,Name,Flag\n7,,,,\n8\n");
@@ -53,7 +53,7 @@ public class TypedCsvTests
         Assert.Equal(8u, rows[1].Id);
     }
 
-    [DataFact]
+    [Fact]
     public void Values_AreConvertedToThePropertyType_NotTheTypeRow()
     {
         // The type row says STRING for every column; the property types decide.
@@ -71,7 +71,7 @@ public class TypedCsvTests
         Assert.True(r.Flag);
     }
 
-    [DataFact]
+    [Fact]
     public void OutOfRangeOrNonNumeric_FailsLoudlyWithRowAndColumn()
     {
         var overflow = Assert.Throws<FormatException>(() => TypedCsv.Parse<Row>(Header + "Id,Small\n1,256\n", "t.csv"));
@@ -80,7 +80,7 @@ public class TypedCsvTests
         Assert.Throws<FormatException>(() => TypedCsv.Parse<Row>(Header + "Id\nabc\n"));
     }
 
-    [DataFact]
+    [Fact]
     public void BomCaseUnknownAndMissingColumns_AreTolerated()
     {
         var rows = TypedCsv.Parse<Row>("﻿" + Header + "NAME,Nope,id\nx,ignored,5\n");
@@ -91,7 +91,7 @@ public class TypedCsvTests
         Assert.Equal((byte)0, r.Small);
     }
 
-    [DataFact]
+    [Fact]
     public void ColumnMapsToTheJsonPropertyName_NotTheCSharpName()
     {
         var rows = TypedCsv.Parse<Row>(Header + "Id,3_GRADE\n1,42\n");
@@ -99,14 +99,14 @@ public class TypedCsvTests
         Assert.Equal((ushort)42, Assert.Single(rows).Grade3);
     }
 
-    [DataFact]
+    [Fact]
     public void HeaderOnlyOrEmptyText_GivesNoRows()
     {
         Assert.Empty(TypedCsv.Parse<Row>(Header + "Id,Name\n"));
         Assert.Empty(TypedCsv.Parse<Row>(""));
     }
 
-    [DataFact]
+    [Fact]
     public async Task GameDataStore_PrefersTheCsvOverTheJson_AndFallsBackToJson()
     {
         var dir = Path.Combine(Path.GetTempPath(), "ro2-typedcsv-" + Guid.NewGuid().ToString("N"));
@@ -148,7 +148,7 @@ public class TypedCsvTests
         Assert.Contains(store.REFINEITEM, r => r._3_GRADE_RATE != 0 || r._2_GRADE_RATE != 0);
     }
 
-    [DataFact]
+    [Fact]
     public async Task GameDataStore_CustomDirOverlaysTheDataDir_CsvThenJson()
     {
         var root = Path.Combine(Path.GetTempPath(), "ro2-custom-" + Guid.NewGuid().ToString("N"));
@@ -212,7 +212,7 @@ public class TypedCsvTests
         Assert.Empty(store.RollDrops(12230000)); // an id no pool covers: no rows, no drop
     }
 
-    [DataFact]
+    [Fact]
     public void RefineItem_ThreeGradeColumns_ReachTheUnderscorePrefixedProperties()
     {
         // The generated REFINEITEM names them _3_GRADE_RATE / _2_GRADE_RATE (a C# name cannot start with a digit)

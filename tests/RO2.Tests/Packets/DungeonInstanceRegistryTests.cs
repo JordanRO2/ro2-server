@@ -66,7 +66,7 @@ public class DungeonInstanceRegistryTests
         Assert.Equal("4100000000000200", Answer3035(0x41));                    
     }
 
-    [DataFact]
+    [Fact]
     public void Reset_FromInsideAnOpenInstance_IsSilentAndKeepsIt()
     {
         
@@ -80,7 +80,7 @@ public class DungeonInstanceRegistryTests
         Assert.Empty(registry.OpenDungeonIds(owner));
     }
 
-    [DataFact]
+    [Fact]
     public void Reset_NamesEveryOpenInstanceAscending()
     {
         
@@ -93,7 +93,7 @@ public class DungeonInstanceRegistryTests
         Assert.Equal(new[] { "08000000", "3f000000" }, reset.Select(id => Hex(DungeonResetHandler.Build2771(id))));
     }
 
-    [DataFact]
+    [Fact]
     public void PartyInstance_OpensOnce_CountsEachMemberOnce_AndClosesAtTheLastMembersReset()
     {
         var registry = new DungeonInstanceRegistry();
@@ -137,7 +137,7 @@ public class DungeonInstanceRegistryTests
         Assert.NotEqual(first.InstanceId, reopened.InstanceId);
     }
 
-    [DataFact]
+    [Fact]
     public void ChangedPartyContext_FindsNothingToReset()
     {
         
@@ -155,7 +155,7 @@ public class DungeonInstanceRegistryTests
         Assert.NotEqual(DungeonInstanceOwner.For(new PartyState { PartyId = Character }.PartyId, 1), solo);
     }
 
-    [DataFact]
+    [Fact]
     public void NotifyCopies_AreTheInWorldMembers()
     {
         

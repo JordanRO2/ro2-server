@@ -19,7 +19,7 @@ public class QuestGatesAndTriggersCharacterizationTests
     private const uint JobRefusal = 21718;
     private const uint ProJobRefusal = 21719;
 
-    [DataFact]
+    [Fact]
     public void RefusalCodes_AreTheShippedValues()
     {
         Assert.Equal(LevelRefusal, QuestProgressPackets.QuestErrorJobMasterLevel);
@@ -36,7 +36,7 @@ public class QuestGatesAndTriggersCharacterizationTests
     }
 
     // (PC_Job mask, PC_ProJob, Job_Master min, max, Job_Master_Quest, class, profession, base level, master level) -> code (0 = accepted)
-    [DataTheory]
+    [Theory]
     [InlineData(0u, 0, 0, 0, 0, 100, 0, 1, 0, 0u)]                       // no constraint at all
     [InlineData(0u, 0, 10, 0, 0, 1, 0, 9, 0, LevelRefusal)]              // below the minimum
     [InlineData(0u, 0, 10, 0, 0, 1, 0, 10, 0, 0u)]                       // the minimum is inclusive
@@ -70,7 +70,7 @@ public class QuestGatesAndTriggersCharacterizationTests
             QuestAcceptGates.Refusal(row, (byte)combatClass, (byte)profession, (byte)baseLevel, (byte)masterLevel));
     }
 
-    [DataTheory]
+    [Theory]
     [InlineData(0u, 0, true)]
     [InlineData(0u, 100, true)]
     [InlineData(1u, 1, true)]
@@ -83,7 +83,7 @@ public class QuestGatesAndTriggersCharacterizationTests
     public void JobAllows_ZeroMaskLetsEveryClass_OtherwiseBitClassMinusOne(uint mask, int combatClass, bool expected)
         => Assert.Equal(expected, QuestAcceptGates.JobAllows(mask, (byte)combatClass));
 
-    [DataFact]
+    [Fact]
     public void StartItemOf_OnlyStartType2_AndIndexKeepsTheFirstRowPerQuest()
     {
         Assert.Equal(5555u, QuestAcceptGates.StartItemOf(Q.Row(0) with { Start_Type = 2, Start_Type_ID = 5555 }));
@@ -98,7 +98,7 @@ public class QuestGatesAndTriggersCharacterizationTests
         Assert.Equal(4u, index[8].PC_Job);
     }
 
-    [DataFact]
+    [Fact]
     public void RepeatGate_IndexKeepsTheFirstRowPerQuest()
     {
         var index = QuestRepeatGate.Index([
@@ -113,7 +113,7 @@ public class QuestGatesAndTriggersCharacterizationTests
     private static readonly QuestData Grant = Q.Row(0) with { Start_Type = 4, Start_Type_ID = 10, MIN_Base_Level = 0, MAX_Base_Level = 20 };
     private static readonly QuestLevelGrants.ProJobRow ProJob = new(1, 3, 8);
 
-    [DataTheory]
+    [Theory]
     [InlineData(10, 3, true)]
     [InlineData(9, 3, false)]            // below the start level
     [InlineData(20, 3, true)]            // QUIRK: the base-level maximum is INCLUSIVE here
@@ -124,7 +124,7 @@ public class QuestGatesAndTriggersCharacterizationTests
     public void LevelGrantMeets_BoundariesOfTheThreeRanges(int level, int jobLevel, bool expected)
         => Assert.Equal(expected, QuestLevelGrants.Meets(Grant, ProJob, (byte)level, (byte)jobLevel));
 
-    [DataFact]
+    [Fact]
     public void LevelGrantMeets_ZeroMaximumsAreUnboundedAndOtherStartTypesNeverGrant()
     {
         Assert.True(QuestLevelGrants.Meets(Grant with { MAX_Base_Level = 0 }, ProJob, 255, 3));
@@ -137,7 +137,7 @@ public class QuestGatesAndTriggersCharacterizationTests
 
     private static QuestFailTriggers.FailRow Fail(uint quest, byte type, uint v1 = 0, uint v2 = 0) => new(quest, type, v1, v2);
 
-    [DataFact]
+    [Fact]
     public void ParseFailRows_KeepsEveryRowOfQuestsWithAKillOrDeathFail_InFileOrder()
     {
         var json = Encoding.UTF8.GetBytes("""
@@ -153,7 +153,7 @@ public class QuestGatesAndTriggersCharacterizationTests
         Assert.Empty(QuestFailTriggers.ParseFailRows(Encoding.UTF8.GetBytes("[]")));
     }
 
-    [DataFact]
+    [Fact]
     public void PlanDeathFailures_HeldQuestsWithADeathRow_AscendingDistinct_SkippingFailed()
     {
         var rows = new Dictionary<uint, QuestFailTriggers.FailRow[]>
@@ -165,7 +165,7 @@ public class QuestGatesAndTriggersCharacterizationTests
         Assert.Empty(QuestFailTriggers.PlanDeathFailures(rows, [], _ => false));
     }
 
-    [DataFact]
+    [Fact]
     public void CountKill_FailsAtValue2Kills_ZeroReadAsOne_FirstFailingRowWins_NpcZeroIgnored()
     {
         var rows = new Dictionary<uint, QuestFailTriggers.FailRow[]>
@@ -198,7 +198,7 @@ public class QuestGatesAndTriggersCharacterizationTests
 
     private static QuestAcceptHandler.QuestActionRow Act(byte active, byte action, uint v1, uint v2 = 0) => new(1, active, action, v1, v2);
 
-    [DataFact]
+    [Fact]
     public void ActionRowSelectors_GiveRows_CountZeroReadAsOne_ItemZeroSkipped_RowOrderKept()
     {
         QuestAcceptHandler.QuestActionRow[] rows = [Act(1, 3, 100), Act(1, 3, 0, 5), Act(1, 4, 101, 2), Act(3, 3, 102, 4), Act(1, 3, 103, 7), Act(2, 3, 104, 9)];

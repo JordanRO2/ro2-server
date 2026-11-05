@@ -38,7 +38,7 @@ public class GuildFundsInHand2677Tests
     }
 
     
-    [DataFact]
+    [Fact]
     public void Request1488_ReadsTheDumpFrame()
     {
         var guild = new Guild { Guid16 = (byte[])DumpGuid.Clone() };
@@ -56,7 +56,7 @@ public class GuildFundsInHand2677Tests
     }
 
     
-    [DataTheory]
+    [Theory]
     
     [InlineData(467_254_901L, "000075bed91b00000000")]
     [InlineData(667_254_901L, "00007580c52700000000")]
@@ -68,7 +68,7 @@ public class GuildFundsInHand2677Tests
         Assert.Equal(dumpHex, Convert.ToHexString(body).ToLowerInvariant());
     }
 
-    [DataFact]
+    [Fact]
     public void Withdraw2673_Refusal_CarriesNoWallet()
     {
         
@@ -77,14 +77,14 @@ public class GuildFundsInHand2677Tests
         Assert.Equal("27000000000000000000", Convert.ToHexString(body).ToLowerInvariant());
     }
 
-    [DataFact]
+    [Fact]
     public void Funds2677_ReproducesDumpFrames()
     {
         
         Assert.Equal("0000000000000000", Convert.ToHexString(GuildFundsInHandPackets.BuildNfyFundsInHand2677(0)).ToLowerInvariant());
     }
 
-    [DataFact]
+    [Fact]
     public void Funds2677_IsOneU64_PerTheClientReader()
     {
         
@@ -93,7 +93,7 @@ public class GuildFundsInHand2677Tests
         Assert.Equal("0000000000000000", Convert.ToHexString(GuildFundsInHandPackets.BuildNfyFundsInHand2677(-5)).ToLowerInvariant());
     }
 
-    [DataFact]
+    [Fact]
     public void Deposit2672_IsResultThenWallet_PerTheClientReader()
     {
         
@@ -107,7 +107,7 @@ public class GuildFundsInHand2677Tests
     }
 
     
-    [DataTheory]
+    [Theory]
     
     [InlineData(9_867_250_497L, 200_000_000UL, GuildFundsInHandPackets.ResultWalletLimit)]
     
@@ -128,7 +128,7 @@ public class GuildFundsInHand2677Tests
         Assert.Equal(long.MaxValue, GuildFundsInHandPackets.WalletCap([]));
     }
 
-    [DataFact]
+    [Fact]
     public void DepositWalletRule_RefusesMoreThanTheWallet()
     {
         Assert.Equal(GuildFundsInHandPackets.ResultOk, GuildFundsInHandPackets.DepositWalletRefusal(1_000, 1_000));
@@ -149,7 +149,7 @@ public class GuildFundsInHand2677Tests
         Assert.Equal(0, GuildFundsInHandPackets.StorageLimit([120501, 120601], table));
     }
 
-    [DataFact]
+    [Fact]
     public void Funds_AddStopsAtTheLimit_TakeStopsAtZero()
     {
         var g = new Guild { Gold = 150_000_000 };
@@ -176,7 +176,7 @@ public class GuildFundsInHand2677Tests
         return g;
     }
 
-    [DataFact]
+    [Fact]
     public void DeleteTitle_RemovesAnUnusedTitle()
     {
         var g = GuildWithTitles(0, 1, 9);
@@ -186,7 +186,7 @@ public class GuildFundsInHand2677Tests
         Assert.Equal([0, 9], g.Ranks.Select(r => (int)r.Index));
     }
 
-    [DataTheory]
+    [Theory]
     [InlineData(2u, (byte)1, GuildService.DeleteRankRefusal.NotMaster)]
     [InlineData(1u, (byte)0, GuildService.DeleteRankRefusal.MasterTitle)]
     [InlineData(1u, (byte)10, GuildService.DeleteRankRefusal.OutOfRange)]
@@ -201,7 +201,7 @@ public class GuildFundsInHand2677Tests
         Assert.Equal(3, g.Ranks.Count);
     }
 
-    [DataFact]
+    [Fact]
     public void DeleteTitle_KeepsTwoTitles()
     {
         var g = GuildWithTitles(0, 1);
@@ -209,7 +209,7 @@ public class GuildFundsInHand2677Tests
         Assert.Equal(2, g.Ranks.Count);
     }
 
-    [DataFact]
+    [Fact]
     public void DeleteTitle_CodesAreTheClientsMessages()
     {
         
@@ -224,14 +224,14 @@ public class GuildFundsInHand2677Tests
         Assert.Equal(37, GuildDelAuthorityHandler.ResultOf(GuildService.DeleteRankRefusal.NoSuchTitle));
     }
 
-    [DataFact]
+    [Fact]
     public void DelTitle2636_ReproducesTheDumpFrame()
     {
         
         Assert.Equal("01", Convert.ToHexString(GuildDelAuthorityHandler.BuildNfyGuildDelAuthority2636(1)).ToLowerInvariant());
     }
 
-    [DataFact]
+    [Fact]
     public void DelTitle2632_IsOneU16_PerTheClientReader()
     {
         

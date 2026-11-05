@@ -47,14 +47,14 @@ public class AttendancePopup3027Tests
     private const string RetailStreptopeliaDay2AfterAMissedDay =
         "ad000000011c021c002001a58793032001da8893030001e688930300014c8793030001158893030001b0f4fa020001dcd355010001568793030002da8893030002e688930300014c8793030001158893030001b0f4fa020001ddd3550100013a8793030003da8893030003e688930300014c8793030001158893030001b0f4fa020001ded355010001418793030004da8893030004e688930300014c8793030001158893030001b0f4fa020001dfd35501";
 
-    [DataTheory]
+    [Theory]
     [InlineData(1, RetailDay1)]
     [InlineData(2, RetailDay2)]
     [InlineData(17, RetailDay17)]
     public void ThePopupOfAnUnbrokenStreakIsRetails(int days, string hex)
         => Assert.Equal(Convert.FromHexString(hex), EconomyMiscPackets.BuildShowAttendanceState(days, 0));
 
-    [DataTheory]
+    [Theory]
     [InlineData(20, 1, RetailBrokenBeforeDay7Day20)]
     [InlineData(10, 7, RetailBrokenAfter7Day10)]
     [InlineData(25, 14, RetailMenuBrokenAfter14Day25)]
@@ -62,14 +62,14 @@ public class AttendancePopup3027Tests
     public void AMilestoneAfterTheBreakIsASeal(int days, int brokenAfter, string hex)
         => Assert.Equal(Convert.FromHexString(hex), EconomyMiscPackets.BuildShowAttendanceState(days, brokenAfter));
 
-    [DataTheory]
+    [Theory]
     [InlineData(0, 1)]
     [InlineData(27, 28)]
     [InlineData(28, 1)]
     public void TheCountStepsOncePerDayAndWraps(int before, int after)
         => Assert.Equal(after, AttendanceRules.NextAttendedDays(before, AttendanceCalendar.Days));
 
-    [DataFact]
+    [Fact]
     public void AMissedDayBreaksTheStreakUntilTheWrap()
     {
         var jul10 = new DateOnly(2026, 7, 10).DayNumber;
@@ -87,7 +87,7 @@ public class AttendancePopup3027Tests
         Assert.Equal(0, AttendanceRules.NextStreakBrokenAfter(0, 0, jul10, 0, next: 1));
     }
 
-    [DataFact]
+    [Fact]
     public void TheRewardIsTheDaysEntry()
     {
         Assert.Equal((60000486u, (ushort)3), AttendanceCalendar.RewardOf(17, 0));
@@ -101,7 +101,7 @@ public class AttendancePopup3027Tests
         Assert.Null(AttendanceCalendar.RewardOf(0, 0));
     }
 
-    [DataFact]
+    [Fact]
     public void TheMenuViewFloorsAtDayOne()
         => Assert.Equal(Convert.FromHexString(RetailDay1), EconomyMiscPackets.BuildShowAttendanceState(0, 0));
 }
@@ -110,13 +110,13 @@ public class AttendancePopup3027Tests
 public class MakeOfferingsAck3029Tests
 {
  /// <summary>A 1693 targeting a non-NPC handle gets only this 3029 as its answer.</summary>
-    [DataFact]
+    [Fact]
     public void ANonNpcTargetGets20055()
         => Assert.Equal(Convert.FromHexString("040000000000574e"),
             EconomyMiscPackets.BuildMakeOfferingsAck(0, EconomyMiscPackets.MakeOfferingsNotUsableNpc));
 
  /// <summary>Success answer carrying string 15777.</summary>
-    [DataFact]
+    [Fact]
     public void ASuccessCarriesTheMessageAndNoError()
         => Assert.Equal(Convert.FromHexString("04000000a13d0000"), EconomyMiscPackets.BuildMakeOfferingsAck(15777, 0));
 }
@@ -208,7 +208,7 @@ public class QuestCollectDropTicksTests
         Assert.Equal(50, Assert.Single(ticks).Count);
     }
 
-    [DataFact]
+    [Fact]
     public void TheFirstRowCounterIsLoweredButNeverRaisedOrCreated()
     {
         var player = new PlayerState();

@@ -79,7 +79,7 @@ public class UnitA6RetailFramesTests
     }
 
     
-    [DataTheory]
+    [Theory]
     
     
     [InlineData("02d500d50095e31127560dde859ba7b3b6e00d1127560d4a006100790061004e006f0076006100000065000000000000000000000000000000000000000000000001010f0cff00070000000301ff00033200000000000000000c0000f2380000890d0000e3743844da4a3944545b5d424c0400009a015500000000e52d0400000000004914000000013c0000000232000000000000000021001a00000000d50000009600000000000000000000000000ffffffffffffffff00000000ffffffffffffffff000000000f02ddf4640000000000000000000000")]
@@ -94,7 +94,7 @@ public class UnitA6RetailFramesTests
         Assert.Equal(retailHex, Hex(PcSaveDataPackets.BuildOnUpdatePCSaveData2487(handle, head)));
     }
 
-    [DataFact]
+    [Fact]
     public void PcSaveData2487_HeadCarriesTheLiveState()
     {
         var ch = new Character { Id = 7, Name = "JayaNova", Level = 1, Gold = 5 };
@@ -125,7 +125,7 @@ public class UnitA6RetailFramesTests
     }
 
     
-    [DataFact]
+    [Fact]
     public void KharaFailed2581_ReproducesRetailFrames()
     {
         
@@ -199,7 +199,7 @@ public class UnitA6RetailFramesTests
             GuildSkillLearnPackets.PlanLearn(new uint[] { 120503 }, new uint[] { 120501, 120502 }, 20, table));
     }
 
-    [DataFact]
+    [Fact]
     public void GuildSkillLearn1512_ParsesTheClientShape()
     {
         
@@ -211,7 +211,7 @@ public class UnitA6RetailFramesTests
     }
 
     
-    [DataFact]
+    [Fact]
     public void FieldPvPReject2742_ReproducesRetailFrames()
     {
         
@@ -219,7 +219,7 @@ public class UnitA6RetailFramesTests
         Assert.Equal("010a0a005de4119b1a080d00", Hex(FieldPvPRejectPackets.BuildReject2742(0x081A9B11, FieldPvPRejectPackets.TargetOnBattleCue)));
     }
 
-    [DataFact]
+    [Fact]
     public void FieldPvPRefusal_CodeFollowsTheTargetsDuel()
     {
         var players = new PlayerStateManager(new NoDirtySink());

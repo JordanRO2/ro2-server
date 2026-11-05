@@ -17,7 +17,7 @@ namespace RO2.Tests.Packets;
 /// </summary>
 public class BankBagSizeChange2345Tests
 {
-    [DataTheory]
+    [Theory]
     
     
     [InlineData(0x02E2A611u, (byte)40, "010b0b0094e311a6e202000128")]
@@ -28,7 +28,7 @@ public class BankBagSizeChange2345Tests
         Assert.Equal(retailHex.ToUpperInvariant(), Convert.ToHexString(BankExpansion.BuildBankBagSizeChange2345(handle, slots)));
     }
 
-    [DataTheory]
+    [Theory]
     [InlineData((byte)20, 20, (byte)40)]
     [InlineData((byte)110, 20, (byte)120)]   
     [InlineData((byte)120, 20, (byte)120)]
@@ -37,7 +37,7 @@ public class BankBagSizeChange2345Tests
         Assert.Equal(after, BankExpansion.Expanded(before, bagSize));
     }
 
-    [DataFact]
+    [Fact]
     public void SlotCount_DefaultsTo20_AndIsClampedTo120()
     {
         Assert.Equal(20, BankExpansion.SlotsOf(new Character()));
@@ -47,7 +47,7 @@ public class BankBagSizeChange2345Tests
         Assert.Equal(20, BankExpansion.SlotsOf(null));
     }
 
-    [DataTheory]
+    [Theory]
     [InlineData((byte)20, -1, (byte)20)]    
     [InlineData((byte)20, 19, (byte)20)]
     [InlineData((byte)20, 20, (byte)40)]    
@@ -69,7 +69,7 @@ public class BankBagSizeChange2345Tests
         Assert.Equal(expected, BankExpansion.RequiredFor(stored, items));
     }
 
-    [DataTheory]
+    [Theory]
     [InlineData((byte)20)]
     [InlineData((byte)60)]
     [InlineData((byte)120)]
@@ -80,7 +80,7 @@ public class BankBagSizeChange2345Tests
         Assert.Equal(slots, head[121]);
     }
 
-    [DataFact]
+    [Fact]
     public void Head2310_Record121_OfANeverExpandedBank_IsTheOldDonorByte()
     {
         
@@ -88,7 +88,7 @@ public class BankBagSizeChange2345Tests
         Assert.Equal(0x14, Head(new Character { Id = 0x7E570122, Name = "B" })[121]);
     }
 
-    [DataFact]
+    [Fact]
     public void BankRecord_KeepsCellsBeyond59()
     {
         
@@ -128,7 +128,7 @@ public class CraftLearn1348Tests
     private static readonly Lazy<IReadOnlyList<CraftItemList>> Recipes =
         new(() => BankBagSizeChange2345Tests.Table<CraftItemList>("Craft_ItemList.json"));
 
-    [DataFact]
+    [Fact]
     public void Request1348_RecipeIdIsTheLastU16_AfterTheNpcHandle()
     {
         
@@ -193,7 +193,7 @@ public class ChangeProJob1494Tests
     private static readonly Lazy<IReadOnlyList<ProJobChange>> ChangeItems =
         new(() => BankBagSizeChange2345Tests.Table<ProJobChange>("ProJob_Change.json"));
 
-    [DataTheory]
+    [Theory]
     [InlineData((byte)4, (byte)1, "0113130039e4000000000401000000000000000000")]
     [InlineData((byte)2, (byte)50, "0113130039e4000000000232000000000000000000")]
     public void AnsChangeProJobInfo2683_IsRetailsFrame_ByteForByte(byte profession, byte level, string retailHex)
@@ -202,7 +202,7 @@ public class ChangeProJob1494Tests
             Convert.ToHexString(QuestProgressPackets.BuildChangeProJobInfo2683(profession, level, 0)));
     }
 
-    [DataTheory]
+    [Theory]
     [InlineData(0x03FA1111u, (byte)4, (byte)1, "010e0e003ae4000000001111fa030401")]
     [InlineData(0x052A7811u, (byte)2, (byte)50, "010e0e003ae40000000011782a050232")]
     [InlineData(0x056EEC11u, (byte)4, (byte)1, "010e0e003ae40000000011ec6e050401")]
@@ -212,7 +212,7 @@ public class ChangeProJob1494Tests
             Convert.ToHexString(QuestProgressPackets.BuildChangeProJob2682(handle, profession, level)));
     }
 
-    [DataFact]
+    [Fact]
     public void NfyChageProJobGuardianSkill2686_IsRetailsFrame_ByteForByte()
     {
         
@@ -228,7 +228,7 @@ public class ChangeProJob1494Tests
             pairs.Select(p => Convert.ToHexString(QuestProgressPackets.BuildChangeProJobQuest2687(p.Old, p.New))).ToArray());
     }
 
-    [DataFact]
+    [Fact]
     public void Refusal2683_CarriesTheCodeAtBlob18()
     {
         
@@ -264,7 +264,7 @@ public class ChangeProJob1494Tests
         return new Character { Id = 3, Name = "T", Job = job, MapId = 1100, AppearanceJson = CharacterSerializer.ToJson(appearance) };
     }
 
-    [DataFact]
+    [Fact]
     public void StoredProfession_Changes_AndTheClassDoesNot()
     {
         
@@ -276,7 +276,7 @@ public class ChangeProJob1494Tests
         Assert.Equal("0202060DFF0006000000060EFF00010000000010000400", Convert.ToHexString(raw));
     }
 
-    [DataFact]
+    [Fact]
     public void StoredProfession_OnAnUnhealedRow_KeepsTheClass_AfterTheHeal()
     {
         
@@ -287,7 +287,7 @@ public class ChangeProJob1494Tests
         Assert.Equal(2, CharacterHeadRules.CreationProfessionByte(c));
     }
 
-    [DataFact]
+    [Fact]
     public void StoredProfession_WithoutACreateBlock_IsPaddedAndStored()
     {
         var c = new Character { Id = 3, Name = "T", Job = 6 };
@@ -303,7 +303,7 @@ public class ChangeProJob1494Tests
 /// </summary>
 public class UnionHead2310Tests
 {
-    [DataFact]
+    [Fact]
     public void Head2310_CarriesThePublishedUnion()
     {
         const uint id = 0x7E570173;
@@ -319,7 +319,7 @@ public class UnionHead2310Tests
         }
     }
 
-    [DataFact]
+    [Fact]
     public void Head2310_WithoutAUnion_IsRetailsNoUnionForm()
     {
         

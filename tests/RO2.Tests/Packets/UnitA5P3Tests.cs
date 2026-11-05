@@ -18,7 +18,7 @@ public class UnitA5P3Tests
     private static readonly Lazy<KharaCatalog> Catalog = new(() => new KharaCatalog(LoadRows()));
 
     
-    [DataFact]
+    [Fact]
     public void AnsGameMallItemPrice2873_IsResultZeroAndEmptyCompactVector()
     {
         
@@ -26,7 +26,7 @@ public class UnitA5P3Tests
         Assert.Equal("00000100", Hex(GameMallItemPriceHandler.BuildAnsGameMallItemPrice2873Empty()));
     }
 
-    [DataFact]
+    [Fact]
     public void ReqGameMallItemPrice1601_ParsesCompactCountThenU32Ids()
     {
         
@@ -38,7 +38,7 @@ public class UnitA5P3Tests
     }
 
     
-    [DataFact]
+    [Fact]
     public void ReqPCItemDrop1321_ParsesTheBuilderLayout()
     {
         
@@ -60,7 +60,7 @@ public class UnitA5P3Tests
     }
 
     
-    [DataFact]
+    [Fact]
     public void ReqPCItemRune1331_OnlyTheEnvelopeIsRead()
     {
         
@@ -74,7 +74,7 @@ public class UnitA5P3Tests
     }
 
     
-    [DataFact]
+    [Fact]
     public void ReqPCStealItemPickUp1332_ParsesTheBuilderLayout()
     {
         
@@ -91,7 +91,7 @@ public class UnitA5P3Tests
     }
 
     
-    [DataFact]
+    [Fact]
     public void AnsKharaTimerStart2580_ReproducesRetailFrames()
     {
         

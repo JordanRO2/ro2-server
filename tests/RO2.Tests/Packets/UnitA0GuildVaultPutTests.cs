@@ -27,7 +27,7 @@ public class UnitA0GuildVaultPutTests
     private static string Hex(ReadOnlySpan<byte> b) => Convert.ToHexString(b).ToLowerInvariant();
 
     
-    [DataFact]
+    [Fact]
     public void Put2379_MatchesRetailByteForByte()
     {
         
@@ -41,7 +41,7 @@ public class UnitA0GuildVaultPutTests
         Assert.Equal(retail, Hex(ours));
     }
 
-    [DataFact]
+    [Fact]
     public void Put2379_LeavesOutTheDurabilityTheItemCarries()
     {
         
@@ -102,7 +102,7 @@ public class UnitA0GuildVaultPutTests
         Assert.Equal(retail2333, Hex(ours2333.AsSpan(0, 64)));
     }
 
-    [DataFact]
+    [Fact]
     public void ResultFor_MapsTheRefusals()
     {
         Assert.Equal((ushort)0, GuildStorageItemPutHandler.ResultFor(GuildService.DepositRefusal.None));
@@ -134,7 +134,7 @@ public class UnitA0GuildVaultPutTests
         Assert.Equal(GuildVaultCapacity.AddressableCells, GuildVaultCapacity.MaxCells(Array.Empty<ConfigDef>()));
     }
 
-    [DataFact]
+    [Fact]
     public void LowestFreeCell_FollowsRetailsCells()
     {
         
@@ -149,7 +149,7 @@ public class UnitA0GuildVaultPutTests
     }
 
     
-    [DataFact]
+    [Fact]
     public async Task Deposit_TakesTheLowestFreeCell()
     {
         var charId = NewCharId();
@@ -170,7 +170,7 @@ public class UnitA0GuildVaultPutTests
         finally { await GuildService.Instance.DisbandAsync(g); }
     }
 
-    [DataFact]
+    [Fact]
     public async Task Deposit_IntoAFullVault_IsRefusedBeforeTheItemLeaves()
     {
         var charId = NewCharId();
@@ -192,7 +192,7 @@ public class UnitA0GuildVaultPutTests
         finally { await GuildService.Instance.DisbandAsync(g); }
     }
 
-    [DataFact]
+    [Fact]
     public async Task Deposit_LosingTheLastCellToAnotherPut_PutsTheItemBack()
     {
         var charId = NewCharId();

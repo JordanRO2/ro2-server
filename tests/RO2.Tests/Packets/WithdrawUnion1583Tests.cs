@@ -17,7 +17,7 @@ public class WithdrawUnion1583Tests
  /// <summary>Join timestamp used by the 2849 fixture.</summary>
     private const long RetailJoinedAt = 0x6a6ef67b;
 
-    [DataFact]
+    [Fact]
     public void RetailJoin_Is2849ByteForByte()
     {
         uint unionId = BinaryPrimitives.ReadUInt32LittleEndian(Convert.FromHexString("65000000"));
@@ -30,7 +30,7 @@ public class WithdrawUnion1583Tests
         Assert.Equal(Convert.FromHexString("650000007bf66e6a000000000000"), writer.ToArray());
     }
 
-    [DataFact]
+    [Fact]
     public void JoinRefusals_FollowTheStoredMembershipAndTheLevelRule()
     {
         
@@ -47,7 +47,7 @@ public class WithdrawUnion1583Tests
             UnionRules.JoinResult(null, 101, unionExists: true, level: UnionRules.JoinMinLevel - 1));
     }
 
-    [DataFact]
+    [Fact]
     public void RefusedJoin_CarriesTheRequestAndNoJoinTime()
     {
         using var writer = new PacketWriter();
@@ -56,7 +56,7 @@ public class WithdrawUnion1583Tests
         Assert.Equal(Convert.FromHexString("65000000ffffffffffffffff" + "285e"), writer.ToArray());
     }
 
-    [DataFact]
+    [Fact]
     public void RetailWithdraw34sAfterJoining_IsRefusedWith24101()
     {
         
@@ -73,7 +73,7 @@ public class WithdrawUnion1583Tests
         Assert.Equal(Convert.FromHexString("255e"), writer.ToArray());
     }
 
-    [DataFact]
+    [Fact]
     public void AfterTwoWeeks_Succeeds()
     {
         long twoWeeks = 14L * 86400;
@@ -83,7 +83,7 @@ public class WithdrawUnion1583Tests
             UnionRules.WithdrawResult(new UnionMembership(101, RetailJoinedAt), 101, RetailJoinedAt + twoWeeks));
     }
 
-    [DataFact]
+    [Fact]
     public void NoUnionShown_OrAnotherUnionStored_Is24105()
     {
         Assert.Equal(UnionRules.ResultNotInUnion,
@@ -94,7 +94,7 @@ public class WithdrawUnion1583Tests
             UnionRules.WithdrawResult(new UnionMembership(104, RetailJoinedAt - 30L * 86400), 101, RetailJoinedAt));
     }
 
-    [DataFact]
+    [Fact]
     public void UnionTheServerNeverStored_IsDropped()
     {
         

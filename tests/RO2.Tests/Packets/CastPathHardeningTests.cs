@@ -35,7 +35,7 @@ public class CastPathHardeningTests
 
     // ---- CB-H1 / CB-G2: the cast level --------------------------------------------------------------------------------
 
-    [DataFact]
+    [Fact]
     public void Gate_LearnedLevel1_SentAsLevel10_IsRefused_ForGroundAndNpcCasts()
     {
         var npc = new GateTarget(Map, 3, 0, false);
@@ -47,7 +47,7 @@ public class CastPathHardeningTests
         Assert.Equal(ActorRefusal.None, SkillDamageHandler.EvaluateDamageGate(Actor(5), L5, npc, 10f));
     }
 
-    [DataFact]
+    [Fact]
     public void Gate_LevelAboveTheTableMax_OrLevelZero_IsRefused()
     {
         // learned 10 but the group's Max_Skill_Level is 5
@@ -59,7 +59,7 @@ public class CastPathHardeningTests
         Assert.Equal(ActorRefusal.SkillNotLearned, SkillDamageHandler.EvaluateDamageGate(Actor(5), 312400, null, 10f));
     }
 
-    [DataFact]
+    [Fact]
     public void Gate_DoesNotRaiseTheLevelRule_ForItemSkills_AndKeepsTheEarlierRefusals()
     {
         var none = new GateActor(Map, 0, 0, false, new Dictionary<uint, byte>());
@@ -243,7 +243,7 @@ public class CastPathHardeningTests
 
     // ---- CB-H3: the 1549 tick ledger ----------------------------------------------------------------------------------
 
-    [DataFact]
+    [Fact]
     public void TickLedger_ExactReplayOfTheLastSequence_IsRefused_DecreasingIsAllowed()
     {
         var p = new PlayerState();
@@ -258,7 +258,7 @@ public class CastPathHardeningTests
         Assert.True(SkillCastLandings.TryAcceptTick(p, L5, 9, t.AddSeconds(4)));
     }
 
-    [DataFact]
+    [Fact]
     public void TickLedger_BurstInsideTheIntervalFloor_LandsOnce()
     {
         var p = new PlayerState();
@@ -270,7 +270,7 @@ public class CastPathHardeningTests
         Assert.True(SkillCastLandings.TryAcceptTick(p, L5, 21, t.AddMilliseconds(10) + SkillCastLandings.MinTickInterval));
     }
 
-    [DataFact]
+    [Fact]
     public void TickLedger_CapsTheCount_AndRestartsWithAFreshCast()
     {
         var p = new PlayerState();
@@ -289,7 +289,7 @@ public class CastPathHardeningTests
         Assert.True(SkillCastLandings.TryAcceptTick(p, 412105, 1, t.AddSeconds(62)));
     }
 
-    [DataFact]
+    [Fact]
     public void TickLedger_EndsWithTheCastItBelongsTo()
     {
         var p = new PlayerState();
@@ -405,7 +405,7 @@ public class CastPathHardeningTests
         await rig.AssertNothingQueuedAsync(1);
     }
 
-    [DataFact]
+    [Fact]
     public void ActiveCast_IsAnOpenBar_OrAnUnexpiredPendingCastOfThatExactId()
     {
         var p = new PlayerState();

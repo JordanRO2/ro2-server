@@ -25,7 +25,7 @@ public class PartyTacticsMarksTests
     private static void Set(PartyState party, ushort mark, uint handle, int second)
         => PartyTacticsMarks.Set(party, handle, mark, TacticsMarkList.IsNumbered(ShippedRows, mark), T0.AddSeconds(second));
 
-    [DataFact]
+    [Fact]
     public void NumberedMarks_AreTheNumberIcons()
     {
         for (ushort m = 1; m <= 10; m++) Assert.True(TacticsMarkList.IsNumbered(ShippedRows, m));
@@ -50,7 +50,7 @@ public class PartyTacticsMarksTests
             rows.Select(r => (ushort)r.Tactics_List).Where(m => TacticsMarkList.IsNumbered(rows, m)).OrderBy(m => m));
     }
 
-    [DataFact]
+    [Fact]
     public void ANumberedMark_KeepsItsSlot_AndTheMapLoadListIsRetails()
     {
         
@@ -75,7 +75,7 @@ public class PartyTacticsMarksTests
             Convert.ToHexString(PartyTacticsMarks.BuildMapEntry2751(party, 3101, 0x1111)!).ToLowerInvariant());
     }
 
-    [DataFact]
+    [Fact]
     public void APictureMark_IsNotUnique_AndARemarkedTargetGoesLast()
     {
         
@@ -96,7 +96,7 @@ public class PartyTacticsMarksTests
             Convert.ToHexString(PartyTacticsMarks.BuildMapEntry2751(party, 3101, 0x2222)!).ToLowerInvariant());
     }
 
-    [DataFact]
+    [Fact]
     public void AClearedMark_StaysOnTheList()
     {
         
@@ -108,7 +108,7 @@ public class PartyTacticsMarksTests
             Convert.ToHexString(PartyTacticsMarks.BuildMapEntry2751(party, 1221, 0x3333)!).ToLowerInvariant());
     }
 
-    [DataFact]
+    [Fact]
     public void AfterAChannelMove_TheMoverGetsOnlyTheMarksSetSince()
     {
         
@@ -132,13 +132,13 @@ public class PartyTacticsMarksTests
             Convert.ToHexString(PartyTacticsMarks.BuildMapEntry2751(party2, 1221, dontFocusMe)!).ToLowerInvariant());
     }
 
-    [DataFact]
+    [Fact]
     public void APartyWithNoMarks_GetsNo2751()
     {
         Assert.Null(PartyTacticsMarks.BuildMapEntry2751(new PartyState { PartyId = 6 }, 1100, 0x4444));
     }
 
-    [DataFact]
+    [Fact]
     public void ANumberedReplace_DropsTheTargetsOtherEntries_AndTheListCapsAt255()
     {
         var party = new PartyState { PartyId = 7 };

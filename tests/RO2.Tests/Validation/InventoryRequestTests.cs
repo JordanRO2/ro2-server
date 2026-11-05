@@ -19,18 +19,18 @@ public class InventoryRequestTests
     private static InvReject V(ushort tag = Tag, uint handle = Me, byte container = 1, int slot = 0, int qty = 1, int count = 1, byte max = 4)
         => InventoryRequest.Validate(tag, Tag, handle, Me, container, slot, qty, count, max);
 
-    [DataFact]
+    [Fact]
     public void ALegalRequestPasses() => Assert.Equal(InvReject.None, V(container: 1, slot: 55, qty: 3, count: 5));
 
-    [DataFact]
+    [Fact]
     public void WrongMsgTagIsRejected_BeforeAnythingElse()
         => Assert.Equal(InvReject.BadMsgTag, V(tag: 1, handle: 9, container: 99, slot: -4, qty: 0));
 
-    [DataFact]
+    [Fact]
     public void HandleMismatchIsRejected_BeforeContainerSlotAndQty()
         => Assert.Equal(InvReject.HandleMismatch, V(handle: Me + 1, container: 99, slot: -4, qty: 0));
 
-    [DataFact]
+    [Fact]
     public void Container5_IsRejectedOnMax4_AndAcceptedOnMax5()
     {
         Assert.Equal(InvReject.BadContainer, V(container: 5, slot: 3, max: 4));
@@ -38,7 +38,7 @@ public class InventoryRequestTests
         Assert.Equal(InvReject.BadContainer, V(container: 6, slot: 3, max: 5));
     }
 
-    [DataTheory]
+    [Theory]
     [InlineData(0, 0, true)]
     [InlineData(1, 49, true)]    // worn window
     [InlineData(1, 69, true)]    // main bag
@@ -54,7 +54,7 @@ public class InventoryRequestTests
     public void SlotIsBoundedPerContainer(int container, int slot, bool ok)
         => Assert.Equal(ok ? InvReject.None : InvReject.SlotOutOfRange, V(container: (byte)container, slot: slot));
 
-    [DataFact]
+    [Fact]
     public void BankSlotIsBoundedBy119()
     {
         Assert.Equal(InvReject.None, V(container: 5, slot: 119, max: 5));
@@ -62,7 +62,7 @@ public class InventoryRequestTests
         Assert.Equal(InvReject.SlotOutOfRange, V(container: 5, slot: 0xFF, max: 5));
     }
 
-    [DataTheory]
+    [Theory]
     [InlineData(0, 5)]
     [InlineData(-1, 5)]
     [InlineData(6, 5)]
@@ -70,7 +70,7 @@ public class InventoryRequestTests
     public void QuantityMustBeInOneToStackCount(int qty, int count)
         => Assert.Equal(InvReject.BadQuantity, V(qty: qty, count: count));
 
-    [DataFact]
+    [Fact]
     public void QuantityEqualToTheWholeStackPasses() => Assert.Equal(InvReject.None, V(qty: 5, count: 5));
 
     // --- INV-H2: a worn row only counts for stats when its template may stand in that cell ---
@@ -124,7 +124,7 @@ public class InventoryRequestTests
 
     // --- bank-open mark ---
 
-    [DataFact]
+    [Fact]
     public void BankOpenMark_HoldsWhileFreshAndNear_AndLapsOtherwise()
     {
         var p = new PlayerState { X = 10f, Y = 20f };

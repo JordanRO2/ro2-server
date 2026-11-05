@@ -132,7 +132,7 @@ public class ItemSkillForgeryTests
     }
 
     
-    [DataFact]
+    [Fact]
     public void DamagingItemSkill_AtAnNpc_PassesTheGateByPossession_NotByLearnedSkills()
     {
         
@@ -148,7 +148,7 @@ public class ItemSkillForgeryTests
             SkillDamageHandler.EvaluateDamageGate(noSkills, ClassSkill, npc, reach: 10f));
     }
 
-    [DataFact]
+    [Fact]
     public void DamagingItemSkill_WithTheItemHeld_IsGoverned_WithoutIt_IsRefused()
     {
         var p = new PlayerState { MapId = 1100 };

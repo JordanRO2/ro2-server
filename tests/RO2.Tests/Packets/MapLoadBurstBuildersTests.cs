@@ -40,7 +40,7 @@ public class MapLoadBurstBuildersTests
         Assert.Null(CraftRecipeStore.BuildNotifyCraftIndex2535(Recipes.Value, proType));
     }
 
-    [DataFact]
+    [Fact]
     public void UseSkillList2488_ListsTheIdsAscending_WhateverTheInputOrder()
     {
         
@@ -50,7 +50,7 @@ public class MapLoadBurstBuildersTests
             Convert.ToHexString(body));
     }
 
-    [DataFact]
+    [Fact]
     public void ServerTime2669_EncodesTheRetailInstant()
     {
         
@@ -62,7 +62,7 @@ public class MapLoadBurstBuildersTests
         Assert.Equal("76F5DD7BF302", Convert.ToHexString(body.AsSpan(2).ToArray()));
     }
 
-    [DataFact]
+    [Fact]
     public void DependentDungeonInfo2743_IsRetailsEmptyForm()
     {
         

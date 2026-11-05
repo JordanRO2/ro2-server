@@ -25,7 +25,7 @@ public class WorldEventTrigger3030Tests
 
     private static readonly JsonSerializerOptions TableOptions = new() { PropertyNameCaseInsensitive = true };
 
-    [DataFact]
+    [Fact]
     public void Build3030_ReproducesBothReferenceFrames_ByteForByte()
     {
         Assert.Equal(Convert.FromHexString(Retail110001Stage1),
@@ -34,7 +34,7 @@ public class WorldEventTrigger3030Tests
             WorldEventPackets.BuildWorldEventTrigger3030(122101, 1));
     }
 
-    [DataFact]
+    [Fact]
     public void Build3030_UsesTheU32Envelope_WithInnerLenCoveringTheRestOfTheBody()
     {
         var body = WorldEventPackets.BuildWorldEventTrigger3030(122101, 1);
@@ -43,7 +43,7 @@ public class WorldEventTrigger3030Tests
         Assert.Equal(WorldEventPackets.NoRecordsBlobLen, BinaryPrimitives.ReadUInt32LittleEndian(body));
     }
 
-    [DataFact]
+    [Fact]
     public void Build3030_PutsTheStageAtBlobPlus5_AsInTheArchiveStage4Frames()
     {
         
@@ -51,7 +51,7 @@ public class WorldEventTrigger3030Tests
             WorldEventPackets.BuildWorldEventTrigger3030(122101, 4));
     }
 
-    [DataFact]
+    [Fact]
     public void InitialStages_TakesTheReturnStageZeroRow_AndSortsById()
     {
         
@@ -241,7 +241,7 @@ public class FuncObjectIn2512Tests
         Assert.Equal(RetailThreeObjects, Convert.ToHexStringLower(FuncObjectPackets.BuildFuncObjectIn2512(objects)));
     }
 
-    [DataFact]
+    [Fact]
     public void NoObjects_IsTheCountZeroForm_ThisServerSentBefore()
     {
         var empty = FuncObjectPackets.BuildMapLoadFrames2512(Array.Empty<FuncObject>());

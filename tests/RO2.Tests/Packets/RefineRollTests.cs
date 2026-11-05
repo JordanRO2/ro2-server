@@ -95,7 +95,7 @@ public sealed class RefineRollTests
 
     // ------------------------------------------------------------------ success
 
-    [DataFact]
+    [Fact]
     public void Success_UsesSuccRateAndCatalystsAdditively_ClampedAt10000()
     {
         var row = Row(5, succ: 4800, brk: 0, down: 0);
@@ -112,7 +112,7 @@ public sealed class RefineRollTests
         Assert.Equal(5, r.NewLevel);
     }
 
-    [DataFact]
+    [Fact]
     public void Success_LuckyJump_RollsPlusThreeFirstThenPlusTwoElseOne()
     {
         var row = Row(3, succ: 10000, brk: 0, down: 0);
@@ -127,7 +127,7 @@ public sealed class RefineRollTests
         Assert.Equal(1, Jump(6000));   // else +1
     }
 
-    [DataFact]
+    [Fact]
     public void Success_LuckyJumpNeverPassesTheMaxLevel()
     {
         var row = Row(20, succ: 10000, brk: 0, down: 0);

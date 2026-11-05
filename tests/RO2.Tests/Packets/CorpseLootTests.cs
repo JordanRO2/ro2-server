@@ -24,7 +24,7 @@ public class CorpseLootTests
     private static string ToHex(byte[] b) => Convert.ToHexString(b).ToLowerInvariant();
 
     
-    [DataFact]
+    [Fact]
     public void List2374_TwoItems_IsTheReferenceFrame()
     {
         
@@ -39,7 +39,7 @@ public class CorpseLootTests
         Assert.Equal(retail, ToHex(body));
     }
 
-    [DataFact]
+    [Fact]
     public void List2374_FiveItems_TakesTheTwoByteLengthPrefix()
     {
         
@@ -59,7 +59,7 @@ public class CorpseLootTests
         Assert.Equal(retail, ToHex(body));
     }
 
-    [DataFact]
+    [Fact]
     public void List2374_RefusesAnEmptyList()
     {
         
@@ -73,7 +73,7 @@ public class CorpseLootTests
     
     private const string Retail1322 = "01151500a3e211520f074d668c0da83d040e0013e79d01";
 
-    [DataFact]
+    [Fact]
     public void Parse1322_ReadsTheLootUidAndTheCorpse()
     {
         Assert.True(ItemPickUpHandler.TryParse(Hex(Retail1322), out var uid, out var type, out var corpse));
@@ -82,7 +82,7 @@ public class CorpseLootTests
         Assert.Equal(0x019DE713u, corpse);
     }
 
-    [DataFact]
+    [Fact]
     public void RetailExchange_ListAndRevoke_AreByteExact()
     {
         var list = PickupNotifyPackets.BuildHeartBeatItem2374(0x019DE713,
@@ -93,7 +93,7 @@ public class CorpseLootTests
         Assert.Equal("010f0f00dee300000000010013e79d0100", ToHex(CombatPackets.BuildLootingAuthority2471(0x019DE713, granted: false)));
     }
 
-    [DataFact]
+    [Fact]
     public void Notify2334_MatchesTheRetailAnswerThroughTheTemplate()
     {
         
@@ -106,7 +106,7 @@ public class CorpseLootTests
         Assert.All(body.Skip(retailHead.Length / 2), b => Assert.Equal(0, b));
     }
 
-    [DataFact]
+    [Fact]
     public void FullBagRefusal_IsTheLoneRetail2333()
     {
         
@@ -119,7 +119,7 @@ public class CorpseLootTests
     
     private static readonly DateTime Died = new(2026, 9, 23, 10, 0, 0, DateTimeKind.Utc);
 
-    [DataFact]
+    [Fact]
     public void Registry_ListsTakesAndEmpties_ForTheLooterOnly()
     {
         const uint map = 900001, corpse = 0x00AA0113, owner = 77;
@@ -144,7 +144,7 @@ public class CorpseLootTests
         Assert.False(GroundItemService.TryBuildCorpseList2374(map, corpse, owner, Died, out _)); 
     }
 
-    [DataFact]
+    [Fact]
     public void Registry_ForgetsACorpseWhoseHandleRespawned()
     {
         const uint map = 900002, corpse = 0x00AA0213, owner = 78;
@@ -159,7 +159,7 @@ public class CorpseLootTests
         Assert.False(GroundItemService.HasCorpseLoot(map, corpse, Died, now));                              
     }
 
-    [DataFact]
+    [Fact]
     public void Registry_LapsesAfterTheUnlootedLifetime()
     {
         const uint map = 900003, corpse = 0x00AA0313, owner = 79;
@@ -169,7 +169,7 @@ public class CorpseLootTests
         Assert.False(GroundItemService.HasCorpseLoot(map, corpse, Died, Died + GroundItemService.UnlootedCorpseLifetime));
     }
 
-    [DataFact]
+    [Fact]
     public void Registry_AddsNothingToACorpseThatWasNeverBegun()
     {
         Assert.Null(GroundItemService.AddCorpseItem(900004, 0x00AA0413, 30000205, 1));
@@ -183,7 +183,7 @@ public class CorpseLootTests
     
     private static readonly TimeSpan Generous = TimeSpan.FromSeconds(5);
 
-    [DataFact]
+    [Fact]
     public async Task Despawn_WithNoLootRegistered_IsThePlainCorpseDisappearDelay()
     {
         var wait = GroundItemService.WaitUntilCorpseMayLeaveAsync(900010, 0x00AA1013, DateTime.UtcNow,
@@ -191,7 +191,7 @@ public class CorpseLootTests
         await wait.WaitAsync(Generous);
     }
 
-    [DataFact]
+    [Fact]
     public async Task Despawn_WaitsForTheLastPickup_ThenForgetsTheCorpse()
     {
         const uint map = 900011, corpse = 0x00AA1113, owner = 81;
@@ -214,7 +214,7 @@ public class CorpseLootTests
         Assert.False(GroundItemService.HasCorpseLoot(map, corpse, died));
     }
 
-    [DataFact]
+    [Fact]
     public async Task Despawn_KeepsWaiting_WhenTheLastItemIsPutBack()
     {
         const uint map = 900012, corpse = 0x00AA1213, owner = 82;
@@ -341,7 +341,7 @@ public class CorpseLootTests
         Assert.Equal(fresh, npcs.AllocateHandle(RespawnSpawn.MapId, RespawnSpawn.Index));
     }
 
-    [DataFact]
+    [Fact]
     public void CorpseOnClients_IsOnlyItsOwnDeath_UntilItsRelease()
     {
         const uint handle = 0x00AA4113;
@@ -362,7 +362,7 @@ public class CorpseLootTests
     
     private static IReadOnlyDictionary<uint, ItemData> Items(params ItemData[] rows) => rows.ToDictionary(r => r.ID);
 
-    [DataFact]
+    [Fact]
     public void Plan_MergesWholeIntoAHeldStack()
     {
         var items = Items(new ItemData { ID = 30000205, Stack_Max = 99 });
@@ -374,7 +374,7 @@ public class CorpseLootTests
         Assert.Empty(plan.NewStacks);
     }
 
-    [DataFact]
+    [Fact]
     public void Plan_OpensTheLowestFreeCell_WhenNoStackTakesItWhole()
     {
         var items = Items(new ItemData { ID = 30000205, Stack_Max = 99, Durability = 0 });
@@ -390,7 +390,7 @@ public class CorpseLootTests
         Assert.Equal(2, stack.Count);
     }
 
-    [DataFact]
+    [Fact]
     public void Plan_RefusesWhenTheBagIsFull()
     {
         var items = Items(new ItemData { ID = 11100001, Stack_Max = 1 });
@@ -401,7 +401,7 @@ public class CorpseLootTests
     }
 
     
-    [DataFact]
+    [Fact]
     public void Registry_KeepsTheDiceMark_AndAnAllPassReleasesIt()
     {
         const uint map = 900030, corpse = 0x00AA3013, owner = 93;
@@ -417,7 +417,7 @@ public class CorpseLootTests
         Assert.False(GroundItemService.ReleaseDiceBound(map, corpse, 0x0E043DA8FFFFFFFF)); 
     }
 
-    [DataFact]
+    [Fact]
     public void Registry_TakesTheLifetimeTheKillGives()
     {
         const uint map = 900031, corpse = 0x00AA3113, owner = 94;
@@ -427,7 +427,7 @@ public class CorpseLootTests
         Assert.False(GroundItemService.HasCorpseLoot(map, corpse, Died, Died.AddSeconds(180)));
     }
 
-    [DataFact]
+    [Fact]
     public void Registry_DoesNotLapseWhileARollHoldsIt()
     {
         const uint map = 900033, corpse = 0x00AA3313, owner = 96;
@@ -444,7 +444,7 @@ public class CorpseLootTests
  /// A corpse whose items are never taken lets its looters stay after its unlooted lifetime ends, not at the
  /// lapse. Scaled down for tests: a 100 ms lifetime and a 200 ms stay end no earlier than 300 ms after death.
  /// </summary>
-    [DataFact]
+    [Fact]
     public async Task Despawn_OfAnUnlootedCorpse_WaitsItsStayAfterTheLifetime()
     {
         const uint map = 900071, corpse = 0x00AA7113, owner = 101;
@@ -479,7 +479,7 @@ public class CorpseLootTests
             LootService.UnlootedCorpseLifetime(config, npc, Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance));
     }
 
-    [DataFact]
+    [Fact]
     public void UnlootedLifetime_FallsBackToType22_ThenTo120s()
     {
         var logger = Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
@@ -503,7 +503,7 @@ public class CorpseLootTests
         return (await System.Text.Json.JsonSerializer.DeserializeAsync<List<ConfigDef>>(fs))!;
     }
 
-    [DataFact]
+    [Fact]
     public async Task Despawn_WaitsForAnOpenRoll_PastTheUnlootedLifetime()
     {
         const uint map = 900013, corpse = 0x00AA1313, owner = 83;
@@ -520,7 +520,7 @@ public class CorpseLootTests
         await wait.WaitAsync(Generous);
     }
 
-    [DataFact]
+    [Fact]
     public void LooterCanStillTake_CountsWhatIsLeftForTheLooter()
     {
         const uint map = 900032, corpse = 0x00AA3213, owner = 95;
@@ -532,7 +532,7 @@ public class CorpseLootTests
     }
 
     
-    [DataTheory]
+    [Theory]
     
     
     
@@ -548,7 +548,7 @@ public class CorpseLootTests
     public void LootRule_RollsWhatReachesTheQuality_InModeTwoOnly(int mode, int quality, int grade, bool rolls)
         => Assert.Equal(rolls, PartyDiceRolls.SendsToDice((byte)mode, (byte)quality, (byte)grade));
 
-    [DataFact]
+    [Fact]
     public void LootRule_NeedsAPartyAndAnItemRow()
     {
         var party = new PartyState { ItemRule = 2, ItemQuality = 2 };
@@ -557,7 +557,7 @@ public class CorpseLootTests
         Assert.False(LootService.RollsForParty(party, null));
     }
 
-    [DataFact]
+    [Fact]
     public void Rolls_StayInTheBandTheChoiceSelects()
     {
         var rng = new Random(1);
@@ -572,7 +572,7 @@ public class CorpseLootTests
         Assert.False(PartyDiceRolls.TryRoll(7, rng, out _));
     }
 
-    [DataFact]
+    [Fact]
     public void Winner_IsTheHighestRoll_FirstAnswerOnATie()
     {
         
@@ -583,7 +583,7 @@ public class CorpseLootTests
     }
 
     
-    [DataFact]
+    [Fact]
     public void Parse1379_ReadsTheItemAndTheCorpse()
     {
         
@@ -594,7 +594,7 @@ public class CorpseLootTests
         Assert.False(PartyDicePackets.TryParseDiceStart1379(Hex(Retail1322), out _, out _)); 
     }
 
-    [DataTheory]
+    [Theory]
     [InlineData("0113130091e311e81b070000002f558f0da83d040e", 0, 0x0E043DA80D8F552FUL)] 
     [InlineData("0113130091e3117259080100027652b00da83d040e", 2, 0x0E043DA80DB05276UL)] 
     public void Parse1380_ReadsTheChoiceAndTheItem(string body, int choice, ulong uid)
@@ -603,13 +603,13 @@ public class CorpseLootTests
         Assert.Equal(((byte)choice, uid), (c, u));
     }
 
-    [DataTheory]
+    [Theory]
     [InlineData(0x0E043DA80D8F552FUL, 22300102u, 1, "0115150090e3000000002f558f0da83d040ec645540101")] 
     [InlineData(0x0E043DA80D8F5530UL, 22300201u, 9, "0115150090e30000000030558f0da83d040e2946540109")] 
     public void Open2468_IsTheRetailFrame(ulong uid, uint template, int count, string retail)
         => Assert.Equal(retail, ToHex(PartyDicePackets.BuildRouletteOpen2468(uid, template, count)));
 
-    [DataFact]
+    [Fact]
     public void Result2469_IsTheRetailFrame_ForARollAndForTheAllPass()
     {
         
@@ -620,7 +620,7 @@ public class CorpseLootTests
             ToHex(PartyDicePackets.BuildRouletteResult2469(PartyDicePackets.ResultAllPassed, 0, 0, 16702253, 0x0E043DA80E4FF2D9)));
     }
 
-    [DataFact]
+    [Fact]
     public void Refuse2470_IsTheRetailFrame()
     {
         
@@ -664,7 +664,7 @@ public class DungeonFinderTests
     private static Func<uint, FindDungeonList?> Rows(params FindDungeonList[] rows)
         => id => rows.FirstOrDefault(r => r.List_ID == id);
 
-    [DataTheory]
+    [Theory]
     [InlineData("0700000002010015000000", 2, 21u)]   
     [InlineData("0700000002010004000000", 2, 4u)]    
     [InlineData("0700000001010001000000", 1, 1u)]    
@@ -675,14 +675,14 @@ public class DungeonFinderTests
         Assert.Equal(new[] { list }, lists);
     }
 
-    [DataTheory]
+    [Theory]
     [InlineData("07000000020100150000")]              
     [InlineData("0b000000020200150000000400000000")]  
     [InlineData("03000000020000")]                    
     public void Parse1555_RefusesOtherShapes(string body)
         => Assert.False(DungeonFinderPackets.TryParseFindDungeon1555(Hex(body), out _, out _));
 
-    [DataFact]
+    [Fact]
     public void Answer2804_IsTheRetailFrame_ForAcceptAndForLevel()
     {
         Assert.Equal("0000", ToHex(DungeonFinderPackets.BuildFindDungeonAnswer2804(DungeonFinderPackets.ResultAccepted)));
@@ -690,7 +690,7 @@ public class DungeonFinderTests
         Assert.Equal("1100", ToHex(DungeonFinderPackets.BuildFindDungeonAnswer2804(DungeonFinderPackets.ResultLevel)));
     }
 
-    [DataFact]
+    [Fact]
     public void SoloList21_MatchesAtOnce_WithTheRetailBurst()
     {
         var queue = new DungeonFinderQueue();
@@ -709,7 +709,7 @@ public class DungeonFinderTests
         Assert.NotNull(queue.Join(pc, RoleKind.RoleDealer, [List21]).Match);
     }
 
-    [DataFact]
+    [Fact]
     public void SoloList21_WithNoDealerFlag_HasNoSlot_AndStaysQueued()
     {
         var queue = new DungeonFinderQueue();
@@ -719,7 +719,7 @@ public class DungeonFinderTests
         Assert.Equal("00001500000000000000", ToHex(DungeonFinderPackets.BuildInProgressInfo2806(outcome.ShownListId, outcome.Shown, outcome.OwnRole)));
     }
 
-    [DataFact]
+    [Fact]
     public void PartyList4_Queues_WithoutAMatch_AndRefusesASecondSearch()
     {
         var queue = new DungeonFinderQueue();
@@ -734,7 +734,7 @@ public class DungeonFinderTests
         Assert.Null(queue.Leave(pc));
     }
 
-    [DataFact]
+    [Fact]
     public async Task List2_SecondDealer_PushesTheRetailUpdates_OnJoinAndLeave()
     {
         var queue = new DungeonFinderQueue();
@@ -759,7 +759,7 @@ public class DungeonFinderTests
         Assert.Equal([(1u, "00000200000000010002")], sent);
     }
 
-    [DataFact]
+    [Fact]
     public void List8_HealerNextToADealer_IsTheCensusFrame()
     {
         
@@ -769,7 +769,7 @@ public class DungeonFinderTests
         Assert.Equal("00000800000001010004", ToHex(DungeonFinderPackets.BuildInProgressInfo2806(healer.ShownListId, healer.Shown, healer.OwnRole)));
     }
 
-    [DataFact]
+    [Fact]
     public async Task Prune_DropsGoneSessions_AndTellsTheRest()
     {
         var queue = new DungeonFinderQueue();
@@ -785,25 +785,25 @@ public class DungeonFinderTests
         Assert.Equal(["00000200000000010002"], sent);
     }
 
-    [DataFact]
+    [Fact]
     public void Gift2816_IsTheRetailFrame()
         => Assert.Equal("1500000002", ToHex(DungeonFinderPackets.BuildCompleteGift2816(21)));   
 
-    [DataTheory]
+    [Theory]
     [InlineData(90, 5)]   
     [InlineData(50, 4)]
     [InlineData(10, 3)]
     public void RewardRow_IsChosenByTheRewardLevel(int level, int rowId)
         => Assert.Equal((byte)rowId, RewardPolicy.RewardRow(Categories, Rewards, List21, level)?.ID);
 
-    [DataFact]
+    [Fact]
     public void RewardRow_FallsBackToTheCategoryGroup_AndIsNullBelowTheFirstRow()
     {
         Assert.Equal((byte)2, RewardPolicy.RewardRow(Categories, Rewards, List4, 50)?.ID);
         Assert.Null(RewardPolicy.RewardRow(Categories, Rewards, List21, 9));
     }
 
-    [DataFact]
+    [Fact]
     public void RewardLevel_IsTheLevel_WhenNoProfessionIsModelled()
         => Assert.Equal(50, DungeonFinderReward.RewardLevel(Pc(1)));
 
@@ -814,7 +814,7 @@ public class DungeonFinderTests
         [22402097] = new ItemData { ID = 22402097, Stack_Max = 99 },
     };
 
-    [DataFact]
+    [Fact]
     public void PlanBag_AddsToTheHeldStacks_LikeTheRetailRewards()
     {
         
@@ -832,7 +832,7 @@ public class DungeonFinderTests
         Assert.All(plan, l => Assert.Empty(l.NewStacks));
     }
 
-    [DataFact]
+    [Fact]
     public void PlanBag_RefusesARewardThatDoesNotFitWhole()
     {
         
@@ -847,7 +847,7 @@ public class DungeonFinderTests
         Assert.Null(PayFinderRun.PlanBag(items, owned, 7, Templates));
     }
 
-    [DataFact]
+    [Fact]
     public void RewardPickup2333_CarriesTheFinderPickupKind()
     {
         
@@ -870,7 +870,7 @@ public class DungeonFinderTests
         public Task<int> RepairSlotsAsync(uint characterId) => inner.RepairSlotsAsync(characterId);
     }
 
-    [DataFact]
+    [Fact]
     public async Task WriteLanding_ThatThrowsOnALaterStack_UndoesTheEarlierOnes_SoTheCallerRefilesTheWholeItem()
     {
         var bag = new RO2.Tests.Economy.FakeInventoryRepository(new RO2.Tests.Economy.RepoScheduler());
@@ -884,7 +884,7 @@ public class DungeonFinderTests
         Assert.Empty(bag.Rows);
     }
 
-    [DataFact]
+    [Fact]
     public async Task WriteLanding_WithAllStacksWritten_ReturnsThemAll()
     {
         var bag = new RO2.Tests.Economy.FakeInventoryRepository(new RO2.Tests.Economy.RepoScheduler());

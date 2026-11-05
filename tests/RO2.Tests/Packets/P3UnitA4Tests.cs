@@ -15,7 +15,7 @@ public class CraftLearnRefusal2538Tests
     private static readonly Lazy<IReadOnlyList<CraftItemList>> Recipes =
         new(() => BankBagSizeChange2345Tests.Table<CraftItemList>("Craft_ItemList.json"));
 
-    [DataTheory]
+    [Theory]
     
     [InlineData(CraftRecipeStore.ResultNoSuchRecipe, "040000005d580000")]
     [InlineData(CraftRecipeStore.ResultAlreadyLearned, "0400000062580000")]
@@ -25,13 +25,13 @@ public class CraftLearnRefusal2538Tests
         Assert.Equal(retailHex.ToUpperInvariant(), Convert.ToHexString(CraftRecipeStore.BuildAckCraftLearnRefusal2538(code)));
     }
 
-    [DataFact]
+    [Fact]
     public void Refusal2538_RejectsResultZero()
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => CraftRecipeStore.BuildAckCraftLearnRefusal2538(0));
     }
 
-    [DataFact]
+    [Fact]
     public void Codes_MapToTheClientsStrings()
     {
         
@@ -88,7 +88,7 @@ public class ItemWeaveUse1333Tests
         return [0x01, 34, .. blob];                                         
     }
 
-    [DataFact]
+    [Fact]
     public void Request1333_IsReadAtTheBuildersOffsets()
     {
         var body = Body();
@@ -98,7 +98,7 @@ public class ItemWeaveUse1333Tests
             0x44444444u, 3, 4, 5, 6, 0x0707, 0x0808), r);
     }
 
-    [DataFact]
+    [Fact]
     public void Request1333_WithAnotherSizeOrTag_IsRejected()
     {
         var body = Body();
@@ -116,7 +116,7 @@ public class ItemWeaveUse1333Tests
 /// </summary>
 public class ReqEnforceItem1330Tests
 {
-    [DataFact]
+    [Fact]
     public void ConventionalHeader_IsReadFromBlobOffsets()
     {
         byte[] blob = [0x0C, 0x00, 0x34, 0x12, 0x11, 0xA6, 0xE2, 0x00, 0xFF, 0xFF, 0xFF, 0xFF];
@@ -131,7 +131,7 @@ public class ReqEnforceItem1330Tests
 /// </summary>
 public class GameMallItemSalesCount2867Tests
 {
-    [DataFact]
+    [Fact]
     public void Answer2867_IsTheReadersFixed10Bytes()
     {
         Assert.Equal("00000000000000000000", Convert.ToHexString(GameMallItemSalesCountHandler.BuildAnsGameMallItemSalesCount2867(0, 0, 0)));

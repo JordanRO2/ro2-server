@@ -101,7 +101,7 @@ public class ItemBindHistoryTests
         Assert.Equal(ItemPackets.RecordBoundFlag, ItemPackets.RecordBindFlags(bindType, card.StorageType, card.Bound));
     }
 
-    [DataTheory]
+    [Theory]
     [InlineData(1, 1, true)]  
     [InlineData(3, 1, true)]  
     [InlineData(0, 1, false)] 
@@ -115,7 +115,7 @@ public class ItemBindHistoryTests
         Assert.Equal(binds, item.Bound);
     }
 
-    [DataFact]
+    [Fact]
     public void CopyInstanceState_KeepsTheBindHistory_OnASplitOffStack()
     {
         var worn = new InventoryItem { Bound = true, Refine = 3 };
@@ -193,7 +193,7 @@ public class VehicleOwnership2522Tests
         Assert.Equal(AfterFirst, Convert.ToHexStringLower(VehiclePackets.BuildAllVehicleList2522(owned, now)));
     }
 
-    [DataFact]
+    [Fact]
     public void Reins_OnAVehicleStillRunning_AddsTheDaysToItsExpiry()
     {
         var now = new DateTime(2026, 7, 20, 13, 44, 50, 490).ToOADate();
@@ -241,14 +241,14 @@ public class VehicleOwnership2522Tests
         Assert.False(Resolve(60000365, out _, out _));
     }
 
-    [DataTheory]
+    [Theory]
     [InlineData(0.0, 1)]
     [InlineData(46300.0, 2)]
     [InlineData(43121.933587962965, 4)]
     public void State_FollowsTheExpiry(double expiry, byte state)
         => Assert.Equal(state, VehicleRules.StateOf(expiry, 46223.5));
 
-    [DataFact]
+    [Fact]
     public void NoVehicle_IsRetailsEmptyForm()
     {
         Assert.Equal("020000000000", Convert.ToHexStringLower(

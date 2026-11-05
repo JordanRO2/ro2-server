@@ -15,7 +15,7 @@ public class GmCommand2893Tests
 {
     private static string Hex(byte[] b) => Convert.ToHexString(b).ToLowerInvariant();
 
-    [DataFact]
+    [Fact]
     public void PcLocation_PinsTheReaderLayout()
     {
         var body = GmCommandPackets.BuildAnsGmCommand2893(GmCommandPackets.PcLocation, "1100 1.5,2,3");
@@ -24,14 +24,14 @@ public class GmCommand2893Tests
         Assert.Equal("1c000000" + "0a00" + "0c00" + Hex(Encoding.Unicode.GetBytes("1100 1.5,2,3")), Hex(body));
     }
 
-    [DataFact]
+    [Fact]
     public void EmptyArgument_IsCountZero()
     {
         
         Assert.Equal("04000000" + "0400" + "0000", Hex(GmCommandPackets.BuildAnsGmCommand2893(GmCommandPackets.GmGrade, "")));
     }
 
-    [DataFact]
+    [Fact]
     public void ReadsBackTheWayTheClientReaderDoes()
     {
         const string name = "J0K3R zufafah";
@@ -46,7 +46,7 @@ public class GmCommand2893Tests
         Assert.Equal(name, Encoding.Unicode.GetString(inner.Slice(4, 2 * n)));
     }
 
-    [DataTheory]
+    [Theory]
     [InlineData(0)]    
     [InlineData(31)]   
     [InlineData(32)]   
