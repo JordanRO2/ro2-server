@@ -49,4 +49,24 @@ public static class MasteryRules
                 return (row.Mastery_Point_Next, row.NeedCoin);
         return null;
     }
+
+    /// <summary>The highest rank (S); rank-up past it is not possible.</summary>
+    public const byte TopRank = 4;
+
+    /// <summary>
+    /// The requirement to advance from <paramref name="rank"/> to the next: the target grade's MasteryGradeTable row
+    /// for the character's <paramref name="combatClass"/>. <c>NeedPoint</c> is in displayed points (scale it by
+    /// <see cref="PointScale"/> against the stored balance). Null when already at the top rank or no row matches the
+    /// class. Affordability, the required level and the quest are the caller's to check.
+    /// </summary>
+    public static (byte NeedLevel, uint NeedPoint, uint NeedCoin, uint NeedQuestId)? RankUpRequirement(
+        GameDataStore store, byte rank, byte combatClass)
+    {
+        if (rank >= TopRank) return null;
+        byte targetGrade = (byte)(rank + 2);   // rank 0 (D = grade 1) advances to grade 2 (C)
+        foreach (var row in store.MasteryGradeTable)
+            if (row.MasteryGrade == targetGrade && row.JobID == combatClass)
+                return (row.NeedMasteryLevel, row.NeedMasteryPoint, row.NeedCoin, row.NeedQuestID);
+        return null;
+    }
 }

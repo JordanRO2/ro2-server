@@ -27,9 +27,24 @@ public class MasteryRulesTests
         => Assert.Equal(cap, MasteryRules.LevelCapForRank((byte)rank));
 
     [Fact]
+    public async Task RankUpRequirement_IsTheTargetGradeRow_NullAtTopRankOrUnknownClass()
+    {
+        var store = await LoadMasteryTablesAsync();
+
+        // Rank 0 (D) advances to grade 2 (C): level 10, 10,000 points, 3,000 coin, and a per-class quest.
+        var req = MasteryRules.RankUpRequirement(store, 0, 6);
+        Assert.NotNull(req);
+        Assert.Equal(((byte)10, 10000u, 3000u), (req!.Value.NeedLevel, req.Value.NeedPoint, req.Value.NeedCoin));
+        Assert.NotEqual(0u, req.Value.NeedQuestId);
+        // Top rank (S = 4) cannot advance; an unknown class has no row.
+        Assert.Null(MasteryRules.RankUpRequirement(store, 4, 6));
+        Assert.Null(MasteryRules.RankUpRequirement(store, 0, 99));
+    }
+
+    [Fact]
     public async Task LevelUpCost_IsTheNextLevelsRow_AndNullAtTheRankCap()
     {
-        var store = await LoadMasteryTableAsync();
+        var store = await LoadMasteryTablesAsync();
 
         // Level 1 -> 2 (D rank): the level-2 row, 1000 points / 500 coin.
         Assert.Equal((1000u, 500u), MasteryRules.LevelUpCost(store, 1, 0));
@@ -42,7 +57,7 @@ public class MasteryRulesTests
         Assert.Null(MasteryRules.LevelUpCost(store, 0, 0));
     }
 
-    private static async Task<GameDataStore> LoadMasteryTableAsync()
+    private static async Task<GameDataStore> LoadMasteryTablesAsync()
     {
         var dataDir = RequireDataDirectory();
         var dir = Path.Combine(Path.GetTempPath(), "ro2-mastery-" + Guid.NewGuid().ToString("N"));
@@ -50,6 +65,7 @@ public class MasteryRulesTests
         try
         {
             File.Copy(Path.Combine(dataDir, "MasteryTable.json"), Path.Combine(dir, "MasteryTable.json"));
+            File.Copy(Path.Combine(dataDir, "MasteryGradeTable.json"), Path.Combine(dir, "MasteryGradeTable.json"));
             var store = new GameDataStore();
             await store.LoadAsync(dir);
             return store;
