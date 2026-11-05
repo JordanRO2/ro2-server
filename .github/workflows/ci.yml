@@ -6,7 +6,18 @@ name: CI
 on:
   push:
     branches: [main]
+    # Doc-only pushes don't change build or test outcome, so skip the run.
+    paths-ignore:
+      - '**/*.md'
+      - 'LICENSE'
+      - '.gitignore'
+      - '.gitattributes'
   pull_request:
+    paths-ignore:
+      - '**/*.md'
+      - 'LICENSE'
+      - '.gitignore'
+      - '.gitattributes'
 
 permissions:
   contents: read
@@ -75,6 +86,7 @@ jobs:
           -c Release
           --logger "trx;LogFileName=RO2.Tests.trx"
           --logger "console;verbosity=normal"
+          --collect:"XPlat Code Coverage"
           --results-directory "${{ github.workspace }}/TestResults"
 
       # Parses the .trx into the GitHub run summary (a pass/fail/skip table and the

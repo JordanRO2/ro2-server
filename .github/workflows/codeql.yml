@@ -8,8 +8,19 @@ name: CodeQL
 on:
   push:
     branches: [main]
+    # Doc-only pushes change no code, so skip the scan (the weekly schedule still catches drift).
+    paths-ignore:
+      - '**/*.md'
+      - 'LICENSE'
+      - '.gitignore'
+      - '.gitattributes'
   pull_request:
     branches: [main]
+    paths-ignore:
+      - '**/*.md'
+      - 'LICENSE'
+      - '.gitignore'
+      - '.gitattributes'
   schedule:
     # Weekly, so advisories published after the last push still get caught.
     - cron: '27 4 * * 1'

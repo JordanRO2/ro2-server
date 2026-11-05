@@ -57,6 +57,7 @@
   <ItemGroup Label="Test">
     <!-- Were "17.*" / "2.*" / "2.*". Note xunit.runner.visualstudio's stable line is now 3.x. -->
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.8.1" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.2" />
     <!-- Docker-gated integration tests for the Postgres provider (Phase 3): an ephemeral postgres:16
          container per test run. Pinned, non-floating. -->
     <PackageVersion Include="Testcontainers.PostgreSql" Version="4.16.0" />

@@ -18,9 +18,20 @@ import xml.etree.ElementTree as ET
 NS = "{http://microsoft.com/schemas/VisualStudio/TeamTest/2010}"
 
 
+def area_of(test_name):
+    # "RO2.Tests.Packets.Foo.Bar" -> "Packets"; group by the segment after RO2.Tests.
+    parts = test_name.split(".")
+    try:
+        i = parts.index("Tests")
+        return parts[i + 1] if i + 1 < len(parts) else "(root)"
+    except ValueError:
+        return parts[0] if parts else "(root)"
+
+
 def load(results_dir):
     total = passed = failed = skipped = 0
     failures = []  # (name, message, stacktrace)
+    areas = {}  # area -> [passed, failed, skipped]
     files = sorted(glob.glob(os.path.join(results_dir, "**", "*.trx"), recursive=True))
     for path in files:
         root = ET.parse(path).getroot()
@@ -32,14 +43,33 @@ def load(results_dir):
             # xUnit reports "not executed" for [Fact(Skip=...)] / DataFact skips.
             skipped += int(counters.get("notExecuted", 0)) + int(counters.get("disconnected", 0))
         for r in root.iter(f"{NS}UnitTestResult"):
-            if r.get("outcome") != "Failed":
-                continue
+            outcome = r.get("outcome")
             name = r.get("testName", "(unknown test)")
-            err = r.find(f"{NS}Output/{NS}ErrorInfo")
-            msg = (err.findtext(f"{NS}Message", "") if err is not None else "").strip()
-            trace = (err.findtext(f"{NS}StackTrace", "") if err is not None else "").strip()
-            failures.append((name, msg, trace))
-    return files, total, passed, failed, skipped, failures
+            a = areas.setdefault(area_of(name), [0, 0, 0])
+            if outcome == "Passed":
+                a[0] += 1
+            elif outcome == "Failed":
+                a[1] += 1
+                err = r.find(f"{NS}Output/{NS}ErrorInfo")
+                msg = (err.findtext(f"{NS}Message", "") if err is not None else "").strip()
+                trace = (err.findtext(f"{NS}StackTrace", "") if err is not None else "").strip()
+                failures.append((name, msg, trace))
+            else:
+                a[2] += 1
+    return files, total, passed, failed, skipped, failures, areas
+
+
+def coverage_rate(results_dir):
+    # coverlet writes one coverage.cobertura.xml per run under a GUID dir; take the first.
+    for path in sorted(glob.glob(os.path.join(results_dir, "**", "coverage.cobertura.xml"), recursive=True)):
+        try:
+            root = ET.parse(path).getroot()
+            lr = root.get("line-rate")
+            if lr is not None:
+                return round(float(lr) * 100, 1)
+        except Exception:
+            pass
+    return None
 
 
 def main():
@@ -50,7 +80,8 @@ def main():
     except Exception:
         pass
     results_dir = sys.argv[1] if len(sys.argv) > 1 else "TestResults"
-    files, total, passed, failed, skipped, failures = load(results_dir)
+    files, total, passed, failed, skipped, failures, areas = load(results_dir)
+    cov = coverage_rate(results_dir)
 
     out = []
     if not files:
@@ -58,9 +89,17 @@ def main():
     else:
         verdict = "✅ all passing" if failed == 0 else f"❌ {failed} failing"
         out.append("### Test results\n")
-        out.append(f"**{verdict}** — {passed} passed, {failed} failed, {skipped} skipped, {total} total.\n")
+        cov_txt = f", {cov}% line coverage" if cov is not None else ""
+        out.append(f"**{verdict}** — {passed} passed, {failed} failed, {skipped} skipped, {total} total{cov_txt}.\n")
         out.append("| Outcome | Count |\n|---|---:|\n")
         out.append(f"| Passed | {passed} |\n| Failed | {failed} |\n| Skipped | {skipped} |\n| Total | {total} |\n")
+        # Per-area breakdown, so a reader sees WHICH subsystems ran and which were skipped.
+        if areas:
+            out.append("\n<details><summary>By area</summary>\n\n| Area | Passed | Failed | Skipped |\n|---|---:|---:|---:|\n")
+            for area in sorted(areas):
+                p, f_, s = areas[area]
+                out.append(f"| {area} | {p} | {f_} | {s} |\n")
+            out.append("\n</details>\n")
         if skipped:
             out.append(
                 f"\n> {skipped} tests skipped: the client-derived `data/` tables are gitignored (copyrighted) "
