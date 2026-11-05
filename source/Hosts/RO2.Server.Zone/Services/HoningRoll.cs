@@ -6,9 +6,7 @@ namespace RO2.Server.Zone.Services;
 /// <summary>
 /// Rolls an item's honed grinding lines for RMI 1676 (Honing / Random Refine). Server-authoritative: the
 /// client has no roll logic, it only displays the result. The retail roll is server-side RNG and can never be
-/// recovered exactly, so this reproduces the distribution MEASURED from the 133.9M-frame capture corpus
-/// (public/retail, 1,006 honed items). See wiki server/capture-corpus.md (Honing = Random Refine) and the
-/// memory note honing-roll-model.
+/// recovered exactly, so this reproduces the distribution measured from retail honed items.
 /// </summary>
 /// <remarks>
 /// Two orthogonal axes, both from the measured public distribution:
@@ -23,8 +21,8 @@ namespace RO2.Server.Zone.Services;
 /// Abili_Val &lt;= ~0.38*abili_val, top-weighted (mode cap-1). Prefix pairs come from the 21
 /// Grinding_Prefix_Abili families.
 /// <para>
-/// APPROXIMATION (flagged): the per-item rollable STAT POOL is not in any table and the corpus could not pin
-/// it per item type, so bonus stats are drawn from the prefix family's stats plus a small common pool. The
+/// APPROXIMATION (flagged): the per-item rollable STAT POOL is not in any table and could not be pinned
+/// per item type, so bonus stats are drawn from the prefix family's stats plus a small common pool. The
 /// star/tier/roll-value math is data-backed; only which stat lands on a bonus line is approximate.
 /// shortcut: bonus stat pool is approximate, upgrade when per-item grinding stat pools are recovered.
 /// </para>
@@ -39,7 +37,7 @@ public static class HoningRoll
     /// <summary>Chance the 5th (last bonus) line is omitted, as ~12% of retail honed items carry only 4 lines.</summary>
     private const double Pos4OmitChance = 0.12;
 
-    // Measured per-line roll percentiles (basis points) from the full-dump public set, as (u, roll) anchors.
+    // Measured per-line roll percentiles (basis points) from retail honed items, as (u, roll) anchors.
     // Index: [prefix?][bucket] where bucket 0 = NV<30, 1 = NV 30-99, 2 = NV>=100.
     private static readonly double[] P = { 0.05, 0.25, 0.50, 0.75, 0.95 };
     private static readonly int[][] PrefixRoll =
@@ -56,7 +54,7 @@ public static class HoningRoll
     };
     private const int PrefixRollFloor = -4800, BonusRollFloor = -2800;
 
-    // Bonus tier draw: weight of (cap - step), steps 0..9, from the measured public bonus distribution.
+    // Bonus tier draw: weight of (cap - step), steps 0..9, from the measured retail bonus distribution.
     private static readonly double[] BonusStepWeight = { 23.3, 35.6, 14.8, 8.9, 4.8, 2.9, 2.3, 2.0, 2.2, 1.2 };
     // Prefix tier draw (even tiers): weight of (cap - 2*step), steps 0..5.
     private static readonly double[] PrefixStepWeight = { 17.5, 28.0, 30.9, 14.4, 7.4, 1.0 };
