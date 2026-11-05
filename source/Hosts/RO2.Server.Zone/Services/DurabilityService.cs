@@ -7,6 +7,7 @@ using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
 using RO2.Server.Zone.Models;
 using RO2.Inventory.Domain;
+using RO2.Inventory.Application;
 
 namespace RO2.Server.Zone.Services;
 
@@ -191,29 +192,40 @@ public sealed class DurabilityService
         {
             using var scope = _scopeFactory.CreateScope();
             var inventory = scope.ServiceProvider.GetRequiredService<IInventoryRepository>();
-            var equipment = await inventory.GetEquipmentAsync(victim.CharacterId);
-
-            var armour = SelectWornArmour(equipment, _data.GetItem);
-
-            foreach (var (_, piece, step) in armour)
+            // Read and write under the character's inventory gate so a concurrent 1324 swap cannot be reverted by
+            // this tick's stale row; the 2503s go out after the gate is released.
+            var sends = await CharacterInventoryGate.RunAsync(victim.CharacterId, async () =>
             {
-                int current = piece.Durability >= 0 ? piece.Durability : UnsetDurability(piece.ItemId);
-                int updated = Math.Max(0, current - step);
-                if (updated != current)
-                {
-                    piece.Durability = (short)updated;
-                    try
-                    {
-                        await inventory.UpdateItemAsync(piece);
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogDebug(ex, "Session {Id}: armour durability persist failed for item {Uid}",
-                            session.SessionId, piece.Id);
-                    }
-                }
+                var equipment = await inventory.GetEquipmentAsync(victim.CharacterId);
 
-                var body = ItemPackets.BuildItemDurability2503(piece.Id, (ushort)updated);
+                var armour = SelectWornArmour(equipment, _data.GetItem);
+                var burst = new List<(ulong Uid, ushort Value)>();
+
+                foreach (var (_, piece, step) in armour)
+                {
+                    int current = piece.Durability >= 0 ? piece.Durability : UnsetDurability(piece.ItemId);
+                    int updated = Math.Max(0, current - step);
+                    if (updated != current)
+                    {
+                        piece.Durability = (short)updated;
+                        try
+                        {
+                            await inventory.UpdateItemAsync(piece);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogDebug(ex, "Session {Id}: armour durability persist failed for item {Uid}",
+                                session.SessionId, piece.Id);
+                        }
+                    }
+                    burst.Add((piece.Id, (ushort)updated));
+                }
+                return burst;
+            });
+
+            foreach (var (uid, value) in sends)
+            {
+                var body = ItemPackets.BuildItemDurability2503(uid, value);
                 await session.SendRmiAsync(ZoneS2COpcodes.OnUpdateItemDurability,
                     w => w.WriteBytes(body), ct);
             }
@@ -264,25 +276,34 @@ public sealed class DurabilityService
         {
             using var scope = _scopeFactory.CreateScope();
             var inventory = scope.ServiceProvider.GetRequiredService<IInventoryRepository>();
-            var equipment = await inventory.GetEquipmentAsync(victim.CharacterId);
-            foreach (var item in SelectDeathWearItems(equipment))
+            var sends = await CharacterInventoryGate.RunAsync(victim.CharacterId, async () =>
             {
-                int current = item.Durability >= 0 ? item.Durability : UnsetDurability(item.ItemId);
-                int updated = DeathWearValue(current, loss);
-                if (updated != item.Durability)
+                var equipment = await inventory.GetEquipmentAsync(victim.CharacterId);
+                var burst = new List<(ulong Uid, ushort Value)>();
+                foreach (var item in SelectDeathWearItems(equipment))
                 {
-                    item.Durability = (short)updated;
-                    try
+                    int current = item.Durability >= 0 ? item.Durability : UnsetDurability(item.ItemId);
+                    int updated = DeathWearValue(current, loss);
+                    if (updated != item.Durability)
                     {
-                        await inventory.UpdateItemAsync(item);
+                        item.Durability = (short)updated;
+                        try
+                        {
+                            await inventory.UpdateItemAsync(item);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogDebug(ex, "Session {Id}: death-wear persist failed for item {Uid}",
+                                session.SessionId, item.Id);
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        _logger.LogDebug(ex, "Session {Id}: death-wear persist failed for item {Uid}",
-                            session.SessionId, item.Id);
-                    }
+                    burst.Add((item.Id, (ushort)updated));
                 }
-                var body = ItemPackets.BuildItemDurability2503(item.Id, (ushort)updated);
+                return burst;
+            });
+            foreach (var (uid, value) in sends)
+            {
+                var body = ItemPackets.BuildItemDurability2503(uid, value);
                 await session.SendRmiAsync(ZoneS2COpcodes.OnUpdateItemDurability, w => w.WriteBytes(body), ct);
             }
         }
@@ -384,11 +405,50 @@ public sealed class DurabilityService
             return;
         }
 
-        List<InventoryItem> weapons;
+        List<(ulong Uid, ushort Value)> burst;
         try
         {
-            var equipment = await inventory.GetEquipmentAsync(player.CharacterId);
-            weapons = SelectWornWeapons(equipment, _data.GetItem);
+            // Read and write under the character's inventory gate (see ApplyArmourWearOnTakenHitAsync).
+            burst = await CharacterInventoryGate.RunAsync(player.CharacterId, async () =>
+            {
+                var equipment = await inventory.GetEquipmentAsync(player.CharacterId);
+                var weapons = SelectWornWeapons(equipment, _data.GetItem);
+                var worn = new List<(ulong Uid, ushort Value)>();
+
+                // Unarmed, or no weapon template we recognise: nothing wears, so nothing is sent: the
+                // message is per worn item.
+                foreach (var weapon in weapons)
+                {
+                    var max = ResolveMaxDurability(weapon.ItemId);
+
+                    // Durability -1 in the row means "unset / full", matching BuildItemRecord126's own
+                    // `Durability >= 0 ? Durability : 10000` convention.
+                    int current = weapon.Durability >= 0 ? weapon.Durability : max;
+                    if (current <= 0)
+                        continue; // already broken; repairs (increases) are not modelled here
+
+                    int updated = Math.Max(0, current - WeaponWearPerHit);
+                    weapon.Durability = (short)updated;
+
+                    try
+                    {
+                        await inventory.UpdateItemAsync(weapon);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Notify the client anyway: a lost write is a resync-on-relog problem, a silent desync
+                        // is a worse one.
+                        _logger.LogDebug(ex, "Session {Id}: durability persist failed for item {Uid}",
+                            session.SessionId, weapon.Id);
+                    }
+
+                    worn.Add((weapon.Id, (ushort)updated));
+
+                    _logger.LogDebug("Session {Id}: weapon {Uid} durability {Old} -> {New} (max {Max})",
+                        session.SessionId, weapon.Id, current, updated, max);
+                }
+                return worn;
+            });
         }
         catch (Exception ex)
         {
@@ -397,39 +457,11 @@ public sealed class DurabilityService
             return;
         }
 
-        // Unarmed, or no weapon template we recognise: nothing wears, so nothing is sent: the
-        // message is per worn item.
-        foreach (var weapon in weapons)
+        foreach (var (uid, value) in burst)
         {
-            var max = ResolveMaxDurability(weapon.ItemId);
-
-            // Durability -1 in the row means "unset / full", matching BuildItemRecord126's own
-            // `Durability >= 0 ? Durability : 10000` convention.
-            int current = weapon.Durability >= 0 ? weapon.Durability : max;
-            if (current <= 0)
-                continue; // already broken; repairs (increases) are not modelled here
-
-            int updated = Math.Max(0, current - WeaponWearPerHit);
-            weapon.Durability = (short)updated;
-
-            try
-            {
-                await inventory.UpdateItemAsync(weapon);
-            }
-            catch (Exception ex)
-            {
-                // Notify the client anyway: a lost write is a resync-on-relog problem, a silent desync
-                // is a worse one.
-                _logger.LogDebug(ex, "Session {Id}: durability persist failed for item {Uid}",
-                    session.SessionId, weapon.Id);
-            }
-
-            var body = ItemPackets.BuildItemDurability2503(weapon.Id, (ushort)updated);
+            var body = ItemPackets.BuildItemDurability2503(uid, value);
             await session.SendRmiAsync(ZoneS2COpcodes.OnUpdateItemDurability,
                 w => w.WriteBytes(body), ct);
-
-            _logger.LogDebug("Session {Id}: weapon {Uid} durability {Old} -> {New} (max {Max})",
-                session.SessionId, weapon.Id, current, updated, max);
         }
     }
 
