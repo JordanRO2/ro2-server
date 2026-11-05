@@ -275,7 +275,7 @@ public sealed class TradeEconomyHardeningTests
     }
 
     [Fact]
-    public async Task Swap_FaultOnTheSecondFlip_EachItemIsWhollyWithOneSide_WalletsAreRefunded_LoggedAtError()
+    public async Task Swap_FaultOnTheSecondFlip_FirstFlipIsRolledBack_OriginalOwners_WalletsRefunded_LoggedAtError()
     {
         await using var net = await StartAsync();
         var w = World.Create(net, goldA: 1000, goldB: 500, wrapInventory: inner => new FaultingInventory(inner, failOnReassign: 2));
@@ -287,17 +287,17 @@ public sealed class TradeEconomyHardeningTests
         await w.OfferGoldAsync(w.A, 300);
         await w.OfferGoldAsync(w.B, 100);
 
-        // The first flip (A's item to B) commits, the second (B's item to A) throws: each uid is still in exactly one
-        // place, no zeny was minted or lost, and nobody was left holding an escrow.
+        // The first flip (A's item to B) commits, the second (B's item to A) throws: the journal flips the first back,
+        // so each uid is in exactly one place with its original owner, no zeny was minted or lost, no escrow is left.
         await w.Fx.AssertInvariantsAsync(() => w.LockAndConfirmAsync(trade));
 
-        Assert.Equal(CharB, w.Row(x.Id).CharacterId);
+        Assert.Equal(CharA, w.Row(x.Id).CharacterId);
         Assert.Equal(CharB, w.Row(y.Id).CharacterId);
+        Assert.Equal(2, w.Fx.Inventory.Rows.Count(r => r.Id == x.Id || r.Id == y.Id));
         Assert.Equal((1000L, 500L), (w.A.Gold, w.B.Gold));
         var error = Assert.Single(w.ConfirmLog.Entries, e => e.Level == LogLevel.Error);
         Assert.Contains(trade.Id.ToString(), error.Message);
         Assert.Contains(y.Id.ToString("X"), error.Message);     // the uid that was not yet moved
-        Assert.DoesNotContain(x.Id.ToString("X"), error.Message);
         Assert.Contains("300", error.Message);
         Assert.Contains("100", error.Message);
         await ExpectFrameAsync(w.ReaderA, ZoneS2COpcodes.OnConfirmTradePC, TradePackets.BuildOnConfirmTradePC(HandleA, 0));

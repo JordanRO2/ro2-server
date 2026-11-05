@@ -70,8 +70,8 @@ public sealed class TradeInventoryAdapter(IInventoryRepository inventory, IReadO
 
         // ---- APPLY (move, not copy) ----
         // ALL item moves, each one atomic and owner-checked. A throw, or a move the giver's row no longer allows, ends
-        // the swap here (E-H3). Items are not rolled back, so a failure after the first move leaves a bounded loss for
-        // one side, never a copy.
+        // the swap here (E-H3). Completed whole-stack flips are journaled and reversed best-effort; the split and
+        // remove-then-insert paths are not, so a failure there leaves a bounded loss for one side, never a copy.
         var progress = new SwapProgress();
         try
         {
@@ -80,6 +80,7 @@ public sealed class TradeInventoryAdapter(IInventoryRepository inventory, IReadO
         }
         catch (Exception ex)
         {
+            await UndoWholeStackFlipsAsync(progress);
             return new TradeSwapOutcome(progress.Writes == 0 ? TradeSwapStatus.FaultedBeforeAnyMove : TradeSwapStatus.FaultedMidSwap)
             {
                 Fault = ex,
@@ -223,6 +224,7 @@ public sealed class TradeInventoryAdapter(IInventoryRepository inventory, IReadO
                 if (!await _inventory.TryReassignAsync(it.Id, fromCharId, toCharId, 0, move.Cell))
                     throw GiverNoLongerHolds(it);
                 progress.Settle(it.Id);
+                progress.Flips.Add((it.Id, fromCharId, toCharId, it.Slot));
             }
             else
             {
@@ -257,6 +259,27 @@ public sealed class TradeInventoryAdapter(IInventoryRepository inventory, IReadO
         }
     }
 
+    /// <summary>Best-effort compensation after a fault: flips each completed whole-stack move back, newest first. The
+    /// split and remove-then-insert paths have no cheap inverse and stay as they were (logged by the caller).</summary>
+    private async Task UndoWholeStackFlipsAsync(SwapProgress progress)
+    {
+        for (int i = progress.Flips.Count - 1; i >= 0; i--)
+        {
+            var (uid, from, to, oldCell) = progress.Flips[i];
+            try
+            {
+                if (await _inventory.TryReassignAsync(uid, to, from, BagStorageType, oldCell))
+                    progress.Settled.Remove(uid);
+                else
+                    _log.LogError("Trade swap rollback: uid {Uid:X} could not be returned to character {From}", uid, from);
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex, "Trade swap rollback: uid {Uid:X} could not be returned to character {From}", uid, from);
+            }
+        }
+    }
+
     private static InvalidOperationException GiverNoLongerHolds(InventoryItem item) =>
         new($"Trade move of uid {item.Id:X} refused: the giver's row is gone or no longer theirs");
 
@@ -266,6 +289,7 @@ public sealed class TradeInventoryAdapter(IInventoryRepository inventory, IReadO
     {
         public int Writes { get; private set; }
         public HashSet<ulong> Settled { get; } = [];
+        public List<(ulong Uid, uint From, uint To, short OldCell)> Flips { get; } = [];
 
         public void Wrote() => Writes++;
 
