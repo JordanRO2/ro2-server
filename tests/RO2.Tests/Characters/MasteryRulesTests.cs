@@ -34,7 +34,7 @@ public class MasteryRulesTests
     public void TotalBonusStatPoints_AddsMasteryAndBought(int level, int masteryLevel, int bought, int expected)
         => Assert.Equal(expected, CharacterStats.TotalBonusStatPointsEarned(level, masteryLevel, bought));
 
-    [Fact]
+    [DataFact]
     public async Task RankUpRequirement_IsTheTargetGradeRow_NullAtTopRankOrUnknownClass()
     {
         var store = await LoadMasteryTablesAsync();
@@ -49,7 +49,7 @@ public class MasteryRulesTests
         Assert.Null(MasteryRules.RankUpRequirement(store, 0, 99));
     }
 
-    [Fact]
+    [DataFact]
     public async Task LevelUpCost_IsTheNextLevelsRow_AndNullAtTheRankCap()
     {
         var store = await LoadMasteryTablesAsync();
