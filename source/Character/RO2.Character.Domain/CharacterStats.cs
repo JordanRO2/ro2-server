@@ -32,11 +32,13 @@ public static class CharacterStats
 
     /// <summary>
     /// Total bonus stat points a character has earned: the base-level pool (<see cref="BonusStatPointsEarned"/>)
-    /// plus the Master-level grant (<see cref="BonusStatPointsPerMasteryLevel"/> per master level). Unspent points =
-    /// this minus the sum of the character's allocations.
+    /// plus the Master-level grant (<see cref="BonusStatPointsPerMasteryLevel"/> per master level) plus the points
+    /// bought with the Master Level Stat Point item (<paramref name="boughtPoints"/>, up to 100). Unspent points =
+    /// this minus the sum of the character's allocations. At level 50 with full mastery and the purchase: 75 + 200 +
+    /// 100 = 375.
     /// </summary>
-    public static int TotalBonusStatPointsEarned(int level, int masteryLevel)
-        => BonusStatPointsEarned(level) + Math.Max(0, masteryLevel) * BonusStatPointsPerMasteryLevel;
+    public static int TotalBonusStatPointsEarned(int level, int masteryLevel, int boughtPoints)
+        => BonusStatPointsEarned(level) + Math.Max(0, masteryLevel) * BonusStatPointsPerMasteryLevel + Math.Max(0, boughtPoints);
 
     /// <summary>
     /// The retail player HP curve at <paramref name="level"/>: the NpcLevelScaling <c>Base_HP</c> column (levels 1..N,

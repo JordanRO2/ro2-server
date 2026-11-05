@@ -50,6 +50,13 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
     /// <summary>ItemInfo Item_Type of the stat-reset scrolls ("능력치 초기화 주문서"): they refund every allocated bonus stat point.</summary>
     private const byte StatResetScrollItemType = 25;
 
+    /// <summary>ItemInfo ID of the Master Level Stat Point item ("마스터 레벨 스탯 포인트", Dapara's store): a one-time
+    /// +100 to the bonus stat pool. Item_Type 54 is shared with unrelated items, so it is keyed by id.</summary>
+    private const uint MasterLevelStatPointItem = 30000314;
+
+    /// <summary>Bonus stat points the Master Level Stat Point item grants (the retail +100, lifting the pool to 375).</summary>
+    private const int MasterLevelStatPointGrant = 100;
+
     /// <summary>Quest_Info Complete_Type 0: the row carries no objective.</summary>
     private const byte NoObjective = ObjectiveRules.NoObjective;
 
@@ -208,6 +215,37 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
                 writer => writer.WriteBytes(BankExpansion.BuildBankBagSizeChange2345(actorHandle, after)));
             Logger.LogInformation("{Name} expanded the bank {Before} -> {After} slots with item {Item}",
                 player.Name, before, after, used.ItemId);
+        }
+
+        // Master Level Stat Point (ItemInfo 30000314, Dapara's store): a one-time +100 to the bonus stat pool, on
+        // top of the level and mastery pool (reaching the 375 max). Stored before anything is sent; a character that
+        // already bought it keeps the item (nothing granted or consumed, like the bank at its cap). Answered
+        // 1323 -> 2595 -> 2498 -> 2329, as the stat reset, so the new pool shows at once.
+        if (used.ItemId == MasterLevelStatPointItem)
+        {
+            if (player.Character is not { } statOwner) return;
+            if (statOwner.BoughtBonusStatPoints >= MasterLevelStatPointGrant)
+            {
+                Logger.LogInformation("{Name} used the Master Level Stat Point with the +{N} already bought: not consumed",
+                    player.Name, MasterLevelStatPointGrant);
+                return;
+            }
+            statOwner.BoughtBonusStatPoints = MasterLevelStatPointGrant;
+            try
+            {
+                await services.GetRequiredService<ICharacterRepository>().SaveCharacterAsync(statOwner);
+            }
+            catch (System.Exception ex)
+            {
+                statOwner.BoughtBonusStatPoints = 0;   // revert so the session matches the DB; the item is not consumed
+                Logger.LogWarning(ex, "{Name}: could not store the bought stat points; item not consumed", player.Name);
+                return;
+            }
+            var statEquipped = await inventory.GetEquipmentAsync(statOwner.Id);
+            var statTrait = services.GetRequiredService<EffectService>().RefreshPcTraitSheet(player, statOwner, statEquipped);
+            await session.SendInternalRmiAsync(ZoneS2COpcodes.OnPcInitTrait, TraitPackets.BuildPcInitTrait2595(statOwner, statTrait));
+            await session.SendInternalRmiAsync(ZoneS2COpcodes.OnPcTrait, statTrait);
+            Logger.LogInformation("{Name} bought +{N} bonus stat points", player.Name, MasterLevelStatPointGrant);
         }
 
         // Reins (Item_Type 11): the item's vehicle joins the character's list (VehicleRules.Grant has the

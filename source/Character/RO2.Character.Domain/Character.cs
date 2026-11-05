@@ -28,6 +28,8 @@ public class Character
     public byte MasteryLevel { get; set; }
     /// <summary>Master rank (0 = D, 1 = C, 2 = B, 3 = A, 4 = S), advanced by the grade quest; caps the master level at 10/20/30/40/50. Rides the same slots as <see cref="MasteryLevel"/>.</summary>
     public byte MasteryRank { get; set; }
+    /// <summary>Bonus stat points bought with the Master Level Stat Point item (ItemInfo 30000314), a one-time +100 on top of the level and mastery pool; 0 or 100.</summary>
+    public int BoughtBonusStatPoints { get; set; }
     /// <summary>Character gender.</summary>
     public byte Gender { get; set; }
     /// <summary>Base level.</summary>

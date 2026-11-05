@@ -39,7 +39,7 @@ public static class BonusStatAllocationFlow
         if (character is null || data.ClassBasePrimaries(character.Job) is not { } cb)
             return new BonusAllocationResult(BonusStatOutcome.BadState, Evaluated: false, Applied: false, 0, 0, null);
 
-        int unspent = CharacterStats.TotalBonusStatPointsEarned(character.Level, character.MasteryLevel) - BonusStatRules.BonusOf(character).Sum();
+        int unspent = CharacterStats.TotalBonusStatPointsEarned(character.Level, character.MasteryLevel, character.BoughtBonusStatPoints) - BonusStatRules.BonusOf(character).Sum();
         var plan = BonusStatRules.Price(request, BonusStatRules.BonusOf(character), unspent,
             BonusStatRules.PerStatCap(character.MasteryLevel >= 1),
             bonusNow => data.BonusStatCost(bonusNow));

@@ -37,7 +37,8 @@ public sealed class CharacterRepository : ICharacterRepository
         "x, y, z, hp, max_hp, mp, max_mp, str, agi, vit, intel, wis, luk, " +
         "bonus_str, bonus_agi, bonus_int, bonus_wis, bonus_vit, bonus_luk, gold, bank_gold, bind_index, " +
         "facing_yaw, appearance_json, equip_hide_flag, allow_anyone_review, bank_slots, created_at, last_played, " +
-        "play_time_seconds, is_deleted, deleted_at, pro_job_level, job_mastery_points, mastery_level, mastery_rank";
+        "play_time_seconds, is_deleted, deleted_at, pro_job_level, job_mastery_points, mastery_level, mastery_rank, " +
+        "bought_bonus_stat_points";
 
  /// <summary>Every column but the identity id: the SET list of the full-row replace.</summary>
     private static readonly string[] ReplaceColumns =
@@ -47,7 +48,7 @@ public sealed class CharacterRepository : ICharacterRepository
         "wis", "luk", "bonus_str", "bonus_agi", "bonus_int", "bonus_wis", "bonus_vit", "bonus_luk", "gold",
         "bank_gold", "bind_index", "facing_yaw", "appearance_json", "equip_hide_flag", "allow_anyone_review",
         "bank_slots", "created_at", "last_played", "play_time_seconds", "is_deleted", "deleted_at",
-        "pro_job_level", "job_mastery_points", "mastery_level", "mastery_rank",
+        "pro_job_level", "job_mastery_points", "mastery_level", "mastery_rank", "bought_bonus_stat_points",
     ];
 
     private static readonly string ReplaceSql =
@@ -142,6 +143,7 @@ public sealed class CharacterRepository : ICharacterRepository
         JobMasteryPoints = unchecked((ulong)r.GetInt64(46)),
         MasteryLevel = (byte)r.GetInt16(47),
         MasteryRank = (byte)r.GetInt16(48),
+        BoughtBonusStatPoints = r.GetInt32(49),
     };
 
     private async Task<List<Character>> QueryAsync(string where, Action<NpgsqlCommand> bind, string suffix, CancellationToken ct)
@@ -407,6 +409,7 @@ public sealed class CharacterRepository : ICharacterRepository
             Add(p, "job_mastery_points", character.JobMasteryPoints);
             Add(p, "mastery_level", character.MasteryLevel);
             Add(p, "mastery_rank", character.MasteryRank);
+            Add(p, "bought_bonus_stat_points", character.BoughtBonusStatPoints);
         }, CancellationToken.None);
     }
 

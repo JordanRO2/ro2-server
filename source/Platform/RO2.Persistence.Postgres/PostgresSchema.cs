@@ -587,7 +587,8 @@ public static class PostgresSchema
             pro_job_level        smallint    NOT NULL DEFAULT 0,
             job_mastery_points   bigint      NOT NULL DEFAULT 0,
             mastery_level        smallint    NOT NULL DEFAULT 0,
-            mastery_rank         smallint    NOT NULL DEFAULT 0
+            mastery_rank         smallint    NOT NULL DEFAULT 0,
+            bought_bonus_stat_points integer NOT NULL DEFAULT 0
         )
         """,
         """
@@ -595,7 +596,8 @@ public static class PostgresSchema
             ADD COLUMN IF NOT EXISTS pro_job_level      smallint NOT NULL DEFAULT 0,
             ADD COLUMN IF NOT EXISTS job_mastery_points bigint   NOT NULL DEFAULT 0,
             ADD COLUMN IF NOT EXISTS mastery_level      smallint NOT NULL DEFAULT 0,
-            ADD COLUMN IF NOT EXISTS mastery_rank       smallint NOT NULL DEFAULT 0
+            ADD COLUMN IF NOT EXISTS mastery_rank       smallint NOT NULL DEFAULT 0,
+            ADD COLUMN IF NOT EXISTS bought_bonus_stat_points integer NOT NULL DEFAULT 0
         """,
         """
         CREATE INDEX IF NOT EXISTS ix_characters_account_live ON characters (account_id) WHERE NOT is_deleted
