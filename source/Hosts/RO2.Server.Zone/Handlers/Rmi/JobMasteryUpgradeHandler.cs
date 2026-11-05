@@ -33,13 +33,14 @@ public class JobMasteryUpgradeHandler : ZoneRmiHandlerBase<JobMasteryUpgradeHand
 
         var character = player.Character;
         var store = services.GetRequiredService<GameDataStore>();
+        const ulong scale = MasteryRules.PointScale;   // wire fact: raw balance = displayed points * 1000
         var req = character is null ? null
             : MasteryRules.RankUpRequirement(store, character.MasteryRank, CharacterHeadRules.CombatJobByte(character));
 
         bool ok = false;
         if (character is not null && req is { } r
             && character.MasteryLevel >= r.NeedLevel
-            && character.JobMasteryPoints >= (ulong)r.NeedPoint * MasteryRules.PointScale
+            && character.JobMasteryPoints >= (ulong)r.NeedPoint * scale
             && character.Gold >= r.NeedCoin)
         {
             ok = r.NeedQuestId == 0
@@ -53,7 +54,7 @@ public class JobMasteryUpgradeHandler : ZoneRmiHandlerBase<JobMasteryUpgradeHand
             return;
         }
 
-        ulong costRaw = (ulong)rr.NeedPoint * MasteryRules.PointScale;
+        ulong costRaw = (ulong)rr.NeedPoint * scale;
         character.JobMasteryPoints -= costRaw;
         character.Gold -= rr.NeedCoin;
         character.MasteryRank += 1;

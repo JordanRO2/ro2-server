@@ -23,11 +23,11 @@ public static class MasteryRules
     public const byte MaxMasterLevel = 50;
 
     /// <summary>
-    /// True when the character may convert to Master level 1: it has reached <see cref="BaseLevelToStart"/> and has
-    /// not started the Master level yet.
+    /// True when the character may convert to Master level 1: it has reached <paramref name="baseLevelToStart"/>
+    /// (default <see cref="BaseLevelToStart"/>) and has not started the Master level yet.
     /// </summary>
-    public static bool CanStart(byte baseLevel, byte currentMasteryLevel)
-        => baseLevel >= BaseLevelToStart && currentMasteryLevel == 0;
+    public static bool CanStart(byte baseLevel, byte currentMasteryLevel, byte baseLevelToStart = BaseLevelToStart)
+        => baseLevel >= baseLevelToStart && currentMasteryLevel == 0;
 
     /// <summary>
     /// The Master-level cap of a rank: 10 at rank 0 (D), 20 at 1 (C), 30 at 2 (B), 40 at 3 (A), 50 at 4 (S).

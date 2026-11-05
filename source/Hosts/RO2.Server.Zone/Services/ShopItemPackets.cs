@@ -593,6 +593,43 @@ public static class ShopItemPackets
     /// (see BuyItemHandler).
     /// </para>
     /// </remarks>
+    /// <summary>2375 blob+32 of a Master Level Stat Point buy: the client adds blob+29 to its ability-point pool
+    /// (player+380+464) and shows the "ability points gained" message (string 11474); no item record follows.</summary>
+    internal const byte BuyGrantStatPoint = 1;
+
+    /// <summary>2375 blob+32 of a Master Level Skill Point buy: the client shows the "skill points gained" message
+    /// (string 11473); the new talent pool arrives separately (2544). No item record follows.</summary>
+    internal const byte BuyGrantSkillPoint = 2;
+
+    /// <summary>
+    /// RMI 2375 OnBuyItem for a Dapara mastery-point purchase that grants ability/skill points instead of an item:
+    /// the same 41-byte header with result 0, no item record, <paramref name="grantType"/> at blob+32
+    /// (<see cref="BuyGrantStatPoint"/> / <see cref="BuyGrantSkillPoint"/>), the <paramref name="amount"/> at blob+29
+    /// and the item id at blob+33. The client branches on blob+32 before the record loop, so no record is sent and
+    /// nothing is bagged (the items are Possession_Max 0). The zeny wallet at blob+12 is unchanged (mastery points
+    /// are the cost, carried by a 2986).
+    /// </summary>
+    public static byte[] BuildMasteryPointGrant2375(uint buyerHandle, long zenyWallet, uint itemId, byte grantType, byte amount)
+    {
+        using var pw = new PacketWriter(64);
+        pw.WriteCompactBABody(p =>
+        {
+            p.WriteUInt16(MsgTagBuyItem);                         // blob+2
+            p.WriteUInt32(buyerHandle);                           // blob+4
+            p.WriteUInt16(ResultSuccess);                         // blob+8  result = 0
+            p.WriteUInt16(ReservedZero);                          // blob+10 no dialog
+            p.WriteUInt64((ulong)System.Math.Max(0, zenyWallet)); // blob+12 zeny wallet, unchanged
+            p.WriteUInt64(ReservedZero);                          // blob+20
+            p.WriteByte(BuyModeZeny);                             // blob+28 mode (the grant path returns before this is read)
+            p.WriteByte(amount);                                  // blob+29 grant amount (stat: added to the pool)
+            p.WriteUInt16(ReservedZero);                          // blob+30
+            p.WriteByte(grantType);                               // blob+32 1 = stat, 2 = skill
+            p.WriteUInt32(itemId);                                // blob+33 item id (for the message name)
+            p.WriteUInt32(ReservedZero);                          // blob+37
+        });
+        return pw.ToArray();
+    }
+
     public static byte[] BuildBuyRefusal2375(uint buyerHandle, ushort resultCode, ushort tokenRow, uint itemId)
     {
         using var pw = new PacketWriter(64);

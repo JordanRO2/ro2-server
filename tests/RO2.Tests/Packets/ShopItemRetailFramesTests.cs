@@ -37,9 +37,28 @@ public class ShopItemRetailFramesTests
     [Fact]
     public void BuyRefusal2375_ReproducesRetailBagFullRefusal()
     {
-        
+
         var expected = Hex("0129" + "2900c1e211444800344e0000000000000000000000000000000000000000410800ef87930300000000");
         Assert.Equal(expected, ShopItemPackets.BuildBuyRefusal2375(0x00484411u, 20020, 2113, 60000239u));
+    }
+
+    /// <summary>
+    /// The Dapara mastery-point grant answer: the 41-byte header with no item record (blob 41, body 43 with the
+    /// compact prefix), result 0, the grant amount at blob+29, the grant type at blob+32 (1 stat / 2 skill) and the
+    /// item id at blob+33. The client branches on blob+32 before its record walk, so it bags nothing.
+    /// </summary>
+    [Theory]
+    [InlineData(1, 100u, 30000314u)]   // Master Level Stat Point
+    [InlineData(2, 10u, 30000313u)]    // Master Level Skill Point
+    public void MasteryPointGrant2375_HasNoRecord_AndCarriesTheGrantFields(byte grantType, uint amount, uint itemId)
+    {
+        var body = ShopItemPackets.BuildMasteryPointGrant2375(0x0A10FD11u, 1234, itemId, grantType, (byte)amount);
+
+        Assert.Equal(2 + 41, body.Length);   // 2-byte compact prefix + 41-byte header, no 126-byte records
+        Assert.Equal(0, System.Buffers.Binary.BinaryPrimitives.ReadUInt16LittleEndian(body.AsSpan(2 + 8)));  // blob+8 result = 0
+        Assert.Equal((byte)amount, body[2 + 29]);                                                            // blob+29 amount
+        Assert.Equal(grantType, body[2 + 32]);                                                               // blob+32 grant type
+        Assert.Equal(itemId, System.Buffers.Binary.BinaryPrimitives.ReadUInt32LittleEndian(body.AsSpan(2 + 33))); // blob+33 item id
     }
 
     

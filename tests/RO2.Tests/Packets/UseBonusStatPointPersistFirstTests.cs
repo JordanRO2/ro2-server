@@ -184,6 +184,7 @@ public class UseBonusStatPointPersistFirstTests
             var services = new ServiceCollection()
                 .AddSingleton(store)
                 .AddSingleton(proxy)
+                .AddSingleton(new RO2.Server.Zone.Configuration.ServerConfiguration())
                 .AddSingleton<IInventoryRepository>(new NoGearInventory())
                 .AddSingleton(new EffectService(players, broadcast, store, npcState: null!, loot: null!,
                     scopeFactory: null!, logger: NullLogger<EffectService>.Instance, emblems: TestEmblems.Create()))

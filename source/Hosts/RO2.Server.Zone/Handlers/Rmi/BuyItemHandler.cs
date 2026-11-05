@@ -17,6 +17,8 @@ using RO2.Inventory.Application;
 using RO2.Economy.Domain;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
+using RO2.Skills.Domain;
+using RO2.Server.Zone.Configuration;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
 
@@ -341,6 +343,76 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
             return;
         }
         var buyType = merchantRow?.Buy_Type ?? (tokenRow != 0 ? BuyTypeNoMerchantRow : BuyTypeZeny);
+
+        // Master-level point purchases (Buy_Type 4). The Dapara "Master Level Stat/Skill Point" items cost
+        // Mastery_Point (now a real balance) and GRANT the points directly: the items are Possession_Max 0 and never
+        // enter the bag, so this bypasses the item flow and answers with the grant 2375 + a 2986 (mastery charged) +
+        // the re-pushed pool. Other Buy_Type 4 rows (none exist in the shipped data) stay refused.
+        if (buyType == BuyTypeMastery)
+        {
+            var mastery = services.GetRequiredService<ServerConfiguration>().Game.Mastery;
+            var costRow = merchantRow is not null ? TokenRowOf(store, merchantRow.BuyTokenID) : null;
+            bool isStat = itemId == mastery.StatPointItemId;
+            bool isSkill = itemId == mastery.SkillPointItemId;
+            if ((!isStat && !isSkill) || costRow is null || player.Character is not { } ch)
+            {
+                Logger.LogInformation("{Name} tried a Buy_Type 4 purchase of item {Item} that is not a known master-level "
+                    + "point item; refused", player.Name, itemId);
+                await RefuseAsync(ShopCodes.BuyFailMastery);
+                return;
+            }
+            ulong cost = (ulong)costRow.Mastery_Point * MasteryRules.PointScale;   // wire fact scale (MasteryRules.PointScale)
+            bool alreadyBought = isStat ? ch.BoughtBonusStatPoints >= mastery.StatPointGrant
+                                        : ch.BoughtSkillPoints >= mastery.SkillPointGrant;
+            if (alreadyBought || ch.JobMasteryPoints < cost)
+            {
+                Logger.LogInformation("{Name} cannot buy {Item}: {Why}", player.Name, itemId,
+                    alreadyBought ? "already bought" : "not enough mastery points");
+                await RefuseAsync(ShopCodes.BuyFailMastery);
+                return;
+            }
+
+            ch.JobMasteryPoints -= cost;
+            if (isStat) ch.BoughtBonusStatPoints = mastery.StatPointGrant;
+            else ch.BoughtSkillPoints = mastery.SkillPointGrant;
+            try
+            {
+                await services.GetRequiredService<ICharacterRepository>().SaveCharacterAsync(ch);
+            }
+            catch (System.Exception ex)
+            {
+                ch.JobMasteryPoints += cost;   // revert so the session matches the DB
+                if (isStat) ch.BoughtBonusStatPoints = 0; else ch.BoughtSkillPoints = 0;
+                Logger.LogWarning(ex, "{Name}: could not store the mastery-point purchase; refused", player.Name);
+                await RefuseAsync(ShopCodes.BuyFailGeneric);
+                return;
+            }
+
+            int grant = isStat ? mastery.StatPointGrant : mastery.SkillPointGrant;
+            await session.SendRmiAsync(ZoneS2COpcodes.OnBuyItem, w => w.WriteBytes(
+                ShopItemPackets.BuildMasteryPointGrant2375(player.EntityId, player.Gold, itemId,
+                    isStat ? ShopItemPackets.BuyGrantStatPoint : ShopItemPackets.BuyGrantSkillPoint, (byte)grant)));
+            await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyJobMasteryPointChange,
+                TraitPackets.BuildJobMasteryPointChange2986(-(long)cost, (uint)System.Math.Min(ch.JobMasteryPoints, uint.MaxValue)));
+
+            var equipped = await services.GetRequiredService<IInventoryRepository>().GetEquipmentAsync(ch.Id);
+            if (isStat)
+            {
+                var trait = services.GetRequiredService<EffectService>().RefreshPcTraitSheet(player, ch, equipped);
+                await session.SendInternalRmiAsync(ZoneS2COpcodes.OnPcInitTrait, TraitPackets.BuildPcInitTrait2595(ch, trait));
+                await session.SendInternalRmiAsync(ZoneS2COpcodes.OnPcTrait, trait);
+            }
+            else
+            {
+                var skills = player.LearnedSkills.Select(kv => (kv.Key, kv.Value));
+                var pool = TalentRules.TalentPointsRemaining(store, player.Job, player.Level, skills, ch.BoughtSkillPoints);
+                await session.SendRmiAsync(ZoneS2COpcodes.OnInitTalentPoint,
+                    w => w.WriteBytes(QuestProgressPackets.BuildInitTalentPoint2544(player.EntityId, pool)));
+            }
+            Logger.LogInformation("{Name} bought {Item} for {Cost} mastery points: +{Grant} {Kind} points",
+                player.Name, itemId, cost, grant, isStat ? "stat" : "skill");
+            return;
+        }
 
         // TOKEN ITEMS (Buy_Type 1). Retail takes NeedValue_i x count of each TokenItemID_i of the row's
         // BuyTokenInfo row and charges no zeny: one 2379 per token stack touched (reason 2 at blob+10, an

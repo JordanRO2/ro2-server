@@ -29,7 +29,8 @@ public class JobMasteryStartHandler : ZoneRmiHandlerBase<JobMasteryStartHandler>
         if (!JobMasteryPackets.TryReadNpcHandle(payload.Span, out var npcHandle)) return;
 
         var character = player.Character;
-        if (character is null || !MasteryRules.CanStart(character.Level, character.MasteryLevel))
+        var masteryCfg = services.GetRequiredService<Configuration.ServerConfiguration>().Game.Mastery;
+        if (character is null || !MasteryRules.CanStart(character.Level, character.MasteryLevel, masteryCfg.BaseLevelToStart))
         {
             await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsJobMasteryStarter,
                 JobMasteryPackets.BuildAnswer(JobMasteryPackets.StartFailed, npcHandle), ct);

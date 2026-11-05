@@ -28,8 +28,11 @@ public static class BonusStatAllocationFlow
     /// <param name="request">The parsed allocation vector.</param>
     /// <param name="data">Game data, for the class base primaries and the per-point cost.</param>
     /// <param name="repo">The character repository, for the persist.</param>
+    /// <param name="baseStatCap">Per-stat bonus cap without a Master level.</param>
+    /// <param name="masterStatCap">Per-stat bonus cap once the character has a Master level.</param>
     public static async Task<BonusAllocationResult> ApplyAsync(Character? character, byte liveLevel,
-        BonusRequest request, ICharacterGameData data, ICharacterRepository repo)
+        BonusRequest request, ICharacterGameData data, ICharacterRepository repo,
+        int baseStatCap = BonusStatRules.BaseStatAllocationCap, int masterStatCap = BonusStatRules.MasterStatAllocationCap)
     {
         // The snapshot's Level is the login one: a level-up moves only the runtime level, so the points earned
         // this session (BonusStatPointsEarned below) and the 2498 sheet would otherwise read the old level.
@@ -41,7 +44,7 @@ public static class BonusStatAllocationFlow
 
         int unspent = CharacterStats.TotalBonusStatPointsEarned(character.Level, character.MasteryLevel, character.BoughtBonusStatPoints) - BonusStatRules.BonusOf(character).Sum();
         var plan = BonusStatRules.Price(request, BonusStatRules.BonusOf(character), unspent,
-            BonusStatRules.PerStatCap(character.MasteryLevel >= 1),
+            character.MasteryLevel >= 1 ? masterStatCap : baseStatCap,
             bonusNow => data.BonusStatCost(bonusNow));
 
         if (plan.Outcome == BonusStatOutcome.Ok && plan.TotalCost > 0)

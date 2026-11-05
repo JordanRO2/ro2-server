@@ -62,4 +62,39 @@ public class GameConfig
     /// speed-hack jump. A move may cover at most speed * (cap + 0.5 s). Raise it if legitimate clients that lag longer
     /// than that get their moves refused. Must be positive.</summary>
     public float MoveMaxElapsedSeconds { get; set; } = MovementValidator.DefaultMaxElapsedSeconds;
+
+    /// <summary>Master-level (job-mastery) tunables; the defaults are the retail values.</summary>
+    public MasteryConfig Mastery { get; set; } = new();
+}
+
+/// <summary>
+/// Job-mastery / Master-level settings. The defaults match retail (the data tables and the two Dapara point items);
+/// an operator can retune the balance here without touching code.
+/// </summary>
+public class MasteryConfig
+{
+    /// <summary>ItemInfo id of the Master Level Stat Point item (Dapara store): a one-time bonus-stat-point grant.</summary>
+    public uint StatPointItemId { get; set; } = 30000314;
+
+    /// <summary>Bonus stat points the stat item grants.</summary>
+    public int StatPointGrant { get; set; } = 100;
+
+    /// <summary>ItemInfo id of the Master Level Skill Point item (Dapara store): a one-time talent-point grant.</summary>
+    public uint SkillPointItemId { get; set; } = 30000313;
+
+    /// <summary>Talent points the skill item grants.</summary>
+    public int SkillPointGrant { get; set; } = 10;
+
+    // Note: the raw/displayed point scale (1000) is NOT here - it is a WIRE fact (the 2986 total is raw = displayed *
+    // 1000, and the client shows total / 1000), not a balance tunable, so it stays the single MasteryRules.PointScale
+    // constant used by every cost and cap path.
+
+    /// <summary>Per-stat bonus allocation cap for a character without a Master level.</summary>
+    public int BaseStatAllocationCap { get; set; } = 50;
+
+    /// <summary>Per-stat bonus allocation cap once a character has a Master level (the whole pool may go into one stat).</summary>
+    public int MasterStatAllocationCap { get; set; } = 999;
+
+    /// <summary>Base level a character must reach before it can convert to Master level 1.</summary>
+    public byte BaseLevelToStart { get; set; } = 50;
 }

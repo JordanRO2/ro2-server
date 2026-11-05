@@ -32,18 +32,19 @@ public class JobMasteryTrainingHandler : ZoneRmiHandlerBase<JobMasteryTrainingHa
 
         var character = player.Character;
         var store = services.GetRequiredService<GameDataStore>();
+        const ulong scale = MasteryRules.PointScale;   // wire fact: raw balance = displayed points * 1000
         var cost = character is null ? null : MasteryRules.LevelUpCost(store, character.MasteryLevel, character.MasteryRank);
 
         // The table cost is in displayed mastery points; the stored balance is raw (x PointScale), see MasteryRules.
         if (character is null || cost is not { } c
-            || character.JobMasteryPoints < (ulong)c.Points * MasteryRules.PointScale || character.Gold < c.Coin)
+            || character.JobMasteryPoints < (ulong)c.Points * scale || character.Gold < c.Coin)
         {
             await session.SendInternalRmiAsync(ZoneS2COpcodes.AnsJobMasteryTraining,
                 JobMasteryPackets.BuildAnswer(JobMasteryPackets.TrainingConditionNotMet, npcHandle), ct);
             return;
         }
 
-        ulong costRaw = (ulong)c.Points * MasteryRules.PointScale;
+        ulong costRaw = (ulong)c.Points * scale;
         character.JobMasteryPoints -= costRaw;
         character.Gold -= c.Coin;
         character.MasteryLevel += 1;

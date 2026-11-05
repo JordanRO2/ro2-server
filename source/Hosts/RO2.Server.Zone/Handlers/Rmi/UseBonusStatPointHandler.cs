@@ -51,8 +51,10 @@ public class UseBonusStatPointHandler : ZoneRmiHandlerBase<UseBonusStatPointHand
         // runtime mirror and the 2595/2498 sends, which stay byte-identical.
         var request = ParseRequest(span, count);
         var data = new CharacterGameData(services.GetRequiredService<GameDataStore>());
+        var masteryCfg = services.GetRequiredService<Configuration.ServerConfiguration>().Game.Mastery;
         var res = await BonusStatAllocationFlow.ApplyAsync(player.Character, player.Level, request,
-            data, services.GetRequiredService<ICharacterRepository>());
+            data, services.GetRequiredService<ICharacterRepository>(),
+            masteryCfg.BaseStatAllocationCap, masteryCfg.MasterStatAllocationCap);
         ushort result = MapResult(res.Result);
 
         if (res.Applied)
