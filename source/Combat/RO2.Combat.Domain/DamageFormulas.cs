@@ -5,8 +5,8 @@ public static class DamageFormulas
 {
     /// <summary>
     /// The base damage before mitigation: <c>Attack = max(1, max(APValue·STR + atkBonusPhys, MAValue·INT +
-    /// atkBonusMag))</c>, then <c>PSE = Attack·0.095 + (WeaponMin+WeaponMax)/2</c> when a weapon is worn, else the raw
-    /// Attack; the result is <c>max(1, round(PSE · skillMod))</c>. When the class has no PCBaseStatus row, the
+    /// atkBonusMag))</c>, then <c>PSE = Attack·0.095 + (WeaponMin+WeaponMax)/2</c> when a weapon is worn; unarmed the
+    /// PSE coefficient is 1 (the raw Attack, operator-stated, not corpus-verified); the result is <c>max(1, round(PSE · skillMod))</c>. When the class has no PCBaseStatus row, the
     /// physical term falls back to <c>STR·2</c> (UNVERIFIED placeholder, preserved as-is) and the magic term is 0.
     /// <paramref name="atkBonusPhys"/>/<paramref name="atkBonusMag"/> are the gear's flat Attack Power / Magic Power
     /// (TraitInfo trait 23 / 25), the <c>ATKBonus</c> term of the AoV formula; without them gear +Attack showed on
