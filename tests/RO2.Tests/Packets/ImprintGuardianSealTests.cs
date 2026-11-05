@@ -86,7 +86,7 @@ public class ImprintGuardianSealTests
         }
     }
 
-    [Fact]
+    [DataFact]
     public async Task Configured_Imprints_ChargesAndConsumes()
     {
         var (result, value, target, source, player) = await RunAsync(150_000, configured: true);
@@ -97,7 +97,7 @@ public class ImprintGuardianSealTests
         Assert.Equal(1, source.Count);
     }
 
-    [Fact]
+    [DataFact]
     public async Task UnconfiguredGroup_RefusesAndTakesNothing()
     {
         var (result, _, target, source, player) = await RunAsync(150_000, configured: false);
@@ -107,7 +107,7 @@ public class ImprintGuardianSealTests
         Assert.Equal(2, source.Count);
     }
 
-    [Fact]
+    [DataFact]
     public async Task ShortWallet_RefusesAndTakesNothing()
     {
         var (result, _, target, source, player) = await RunAsync(99_999, configured: true);
