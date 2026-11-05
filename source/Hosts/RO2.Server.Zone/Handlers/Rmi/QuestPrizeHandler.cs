@@ -746,7 +746,8 @@ public class QuestPrizeHandler : ZoneRmiHandlerBase<QuestPrizeHandler>
             
             
             
-            statReset = change.Stat_Reset != 0 && StatService.ResetBonusStats(store, c);
+            statReset = change.Stat_Reset != 0 && StatService.ResetBonusStats(store, c,
+                services.GetRequiredService<RO2.Server.Zone.Configuration.ServerConfiguration>().Game.ClassBaseStats);
             if (statReset)
             {
                 player.Str = c.Str; player.Agi = c.Agi; player.Int = c.Int;

@@ -71,6 +71,12 @@ public class GameConfig
     /// any data table or the capture dump (the roll is server-authoritative and no sealed-item record was captured),
     /// so they must be measured from a fresh seal capture or supplied here.</summary>
     public SealConfig Seal { get; set; } = new();
+
+    /// <summary>Custom per-class base primary stats, keyed by job id, each <c>[STR, AGI, INT, WIS, VIT, LUK]</c> (LUK
+    /// optional, defaults 1). EMPTY by default, which means every class uses the measured retail base of flat 1 for all
+    /// primaries (the Standard_Stat columns are legacy and ignored). An operator adds a row here to make a class start
+    /// with a custom base — this is the hook for custom-content class bases; leaving it empty keeps retail behaviour.</summary>
+    public Dictionary<uint, int[]> ClassBaseStats { get; set; } = new();
 }
 
 /// <summary>

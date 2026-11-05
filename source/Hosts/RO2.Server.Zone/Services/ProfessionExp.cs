@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.GameData;
 using RO2.Network.ProudNet;
@@ -38,6 +39,7 @@ internal static class ProfessionExp
         IServiceProvider services)
     {
         var notifier = new JobExpNotifier(session, player, broadcast, logger, services);
-        return JobExpGrantFlow.GrantAsync(player.Character, gain, new CharacterGameData(store), characters, notifier);
+        return JobExpGrantFlow.GrantAsync(player.Character, gain,
+            new CharacterGameData(store, services.GetRequiredService<RO2.Server.Zone.Configuration.ServerConfiguration>()), characters, notifier);
     }
 }

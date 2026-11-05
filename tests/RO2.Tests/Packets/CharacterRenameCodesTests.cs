@@ -142,7 +142,7 @@ public class CharacterRenameCodesTests
     {
         var store = services.GetRequiredService<GameDataStore>();
         return RenameCheckFlow.CheckAsync(currentName, Me, request.ScrollUid, request.NewName,
-            new FilterFrom(store), new CharacterGameData(store),
+            new FilterFrom(store), new CharacterGameData(store, new RO2.Server.Zone.Configuration.ServerConfiguration()),
             services.GetRequiredService<IInventoryRepository>(), services.GetRequiredService<ICharacterRepository>());
     }
 

@@ -402,20 +402,24 @@ public static class StatService
     /// Returns false (and changes nothing) when the class has no Standard_Stat row, so the caller can skip.
     /// The caller must mirror the primaries to the runtime PlayerState, persist, and re-push the 2498 sheet.
     /// </summary>
-    public static bool ResetBonusStats(GameDataStore store, Character c)
-        => CharacterStats.ResetBonusStats(c, ClassBasePrimaries(store, c.Job));
+    public static bool ResetBonusStats(GameDataStore store, Character c, IReadOnlyDictionary<uint, int[]>? classBaseOverrides = null)
+        => CharacterStats.ResetBonusStats(c, ClassBasePrimaries(store, c.Job, classBaseOverrides));
 
     /// <summary>
-    /// A new character's starting primary stats for its class, read from the REAL <c>Standard_Stat</c>
-    /// table (not a hardcoded per-job table). Column → game-stat mapping:
-    /// STR=<c>Base_STR</c>, AGI=<c>Base_AGI</c>, INT=<c>Base_INT</c>, VIT=<c>Base_VIT</c>, LUK=<c>Base_LUK</c>,
-    /// and WIS=<c>Base_DEX</c> — per the repo's own migration note (<c>Character.Wis</c> "was the legacy Dex
-    /// column"). The four name-matched columns are unambiguous; the WIS←Base_DEX mapping follows that note.
-    /// Returns <c>null</c> if the class has no Standard_Stat row (caller keeps its fallback).
+    /// A character's class base primary stats. The measured retail base is a flat 1 for every primary; the
+    /// <c>Standard_Stat</c> columns are legacy and ignored. <paramref name="classBaseOverrides"/> (Game.ClassBaseStats)
+    /// lets an operator set a custom per-job base as custom content — an entry <c>[STR, AGI, INT, WIS, VIT, (LUK)]</c>
+    /// for the job wins over the flat-1 default. Returns <c>null</c> only when the class has no Standard_Stat row at all
+    /// (caller keeps its fallback); the row's VALUES are not used.
     /// </summary>
     public static (int str, int agi, int intel, int wis, int vit, int luk)? ClassBasePrimaries(
-        GameDataStore store, byte job)
-        => CharacterStats.ClassBasePrimaries(store.StandardStats.GetValueOrDefault(job));
+        GameDataStore store, byte job, IReadOnlyDictionary<uint, int[]>? classBaseOverrides = null)
+    {
+        if (store.StandardStats.GetValueOrDefault(job) is null) return null;
+        if (classBaseOverrides is not null && classBaseOverrides.TryGetValue(job, out var o) && o is { Length: >= 5 })
+            return (o[0], o[1], o[2], o[3], o[4], o.Length > 5 ? o[5] : 1);
+        return (1, 1, 1, 1, 1, 1);
+    }
 
     // ===================== Bonus (allocatable) stat points =====================
 

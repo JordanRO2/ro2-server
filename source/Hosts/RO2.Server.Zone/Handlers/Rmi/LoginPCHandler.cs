@@ -217,7 +217,8 @@ public class LoginPCHandler : NetworkZoneRmiBase
         // real pool also grows with mastery and purchases (retail Lv50 characters hold up to 375), so an
         // allocation above it is valid data. The pool is enforced at allocation time (BonusStatAllocationFlow).
         bool statsChanged = false;
-        if (StatService.ClassBasePrimaries(store, character.Job) is { } cbp)
+        if (StatService.ClassBasePrimaries(store, character.Job,
+                services.GetRequiredService<RO2.Server.Zone.Configuration.ServerConfiguration>().Game.ClassBaseStats) is { } cbp)
         {
             int nStr = cbp.str + character.BonusStr, nAgi = cbp.agi + character.BonusAgi,
                 nInt = cbp.intel + character.BonusInt, nWis = cbp.wis + character.BonusWis,

@@ -91,7 +91,11 @@ public static class CharacterStats
     public static (int str, int agi, int intel, int wis, int vit, int luk)? ClassBasePrimaries(StandardStat? s)
     {
         if (s is null) return null;
-        return (s.Base_STR, s.Base_AGI, s.Base_INT, s.Base_DEX, s.Base_VIT, s.Base_LUK);
+        // Measured in-game (naked, titles off) across classes: every class's base primary is 1. The Standard_Stat
+        // Base_* columns (e.g. 10/7/0/0/3) are legacy starting-license values, not the live base; all stat identity
+        // comes from level/job/gear/allocation on top of this flat 1. The row is still required to exist (null = the
+        // class has no row, caller keeps its fallback).
+        return (1, 1, 1, 1, 1, 1);
     }
 
     /// <summary>

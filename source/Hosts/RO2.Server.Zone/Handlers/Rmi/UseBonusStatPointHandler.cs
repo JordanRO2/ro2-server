@@ -50,7 +50,8 @@ public class UseBonusStatPointHandler : ZoneRmiHandlerBase<UseBonusStatPointHand
         // Application flow price, persist-first and mirror. The host maps the outcome to the 2680 code and owns the
         // runtime mirror and the 2595/2498 sends, which stay byte-identical.
         var request = ParseRequest(span, count);
-        var data = new CharacterGameData(services.GetRequiredService<GameDataStore>());
+        var data = new CharacterGameData(services.GetRequiredService<GameDataStore>(),
+            services.GetRequiredService<Configuration.ServerConfiguration>());
         var masteryCfg = services.GetRequiredService<Configuration.ServerConfiguration>().Game.Mastery;
         var res = await BonusStatAllocationFlow.ApplyAsync(player.Character, player.Level, request,
             data, services.GetRequiredService<ICharacterRepository>(),

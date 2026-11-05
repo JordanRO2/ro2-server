@@ -91,7 +91,8 @@ public class CharacterCreateHandler : NetworkZoneRmiBase
 
         var appearanceJson = CharacterSerializer.ToJson(appearance);
 
-        var data = new CharacterGameData(services.GetRequiredService<RO2.GameData.GameDataStore>());
+        var data = new CharacterGameData(services.GetRequiredService<RO2.GameData.GameDataStore>(),
+            services.GetRequiredService<RO2.Server.Zone.Configuration.ServerConfiguration>());
         var repo = services.GetRequiredService<ICharacterRepository>();
         var result = await CreateCharacterFlow.CreateAsync(session.AccountId.Value, characterName, job, gender,
             appearanceJson, appearance.Race, data, repo);

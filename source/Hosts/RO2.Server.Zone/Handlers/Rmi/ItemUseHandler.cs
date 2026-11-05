@@ -288,7 +288,8 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
         // sheet sent after it is exactly that: 1 + a bonus of 0 per primary, and the 2498's vitals. So the pair
         // goes out here, ahead of the 2329, as it does for an accepted 1493.
         if (itemData is { Item_Type: StatResetScrollItemType } && player.Character is { } c
-            && StatService.ResetBonusStats(store, c))
+            && StatService.ResetBonusStats(store, c,
+                services.GetRequiredService<RO2.Server.Zone.Configuration.ServerConfiguration>().Game.ClassBaseStats))
         {
             player.Str = c.Str; player.Agi = c.Agi; player.Int = c.Int;
             player.Wis = c.Wis; player.Vit = c.Vit; player.Luk = c.Luk;

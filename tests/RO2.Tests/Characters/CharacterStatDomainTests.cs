@@ -144,10 +144,11 @@ public class CharacterStatDomainTests
     }
 
     [Fact]
-    public void ClassBasePrimaries_MapsWisFromBaseDex()
+    public void ClassBasePrimaries_IsFlatOneForAnyClass()
     {
+        // Measured in-game: every class's naked base primary is 1; the Standard_Stat Base_* columns are ignored.
         var s = new StandardStat { Base_STR = 5, Base_AGI = 6, Base_INT = 7, Base_DEX = 8, Base_VIT = 9, Base_LUK = 10 };
-        Assert.Equal((5, 6, 7, 8, 9, 10), CharacterStats.ClassBasePrimaries(s)!.Value);
+        Assert.Equal((1, 1, 1, 1, 1, 1), CharacterStats.ClassBasePrimaries(s)!.Value);
         Assert.Null(CharacterStats.ClassBasePrimaries(null));
     }
 
