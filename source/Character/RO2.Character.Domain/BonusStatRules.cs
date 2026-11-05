@@ -39,14 +39,25 @@ public static class BonusStatRules
     /// <summary>The six allocated bonus values of <paramref name="c"/> in stat order (STR, AGI, INT, WIS, VIT, LUK).</summary>
     public static int[] BonusOf(Character c) => [c.BonusStr, c.BonusAgi, c.BonusInt, c.BonusWis, c.BonusVit, c.BonusLuk];
 
+    /// <summary>Per-stat bonus-allocation cap before the Master level: at most 50 points may go into one stat.</summary>
+    public const int BaseStatAllocationCap = 50;
+
+    /// <summary>Per-stat bonus-allocation cap once the character has started the Master level (MasteryTable
+    /// Max_Status): the whole pool may be concentrated into a single stat, up to 999.</summary>
+    public const int MasterStatAllocationCap = 999;
+
+    /// <summary>The per-stat bonus cap for a character, lifted from 50 to 999 once it has a Master level.</summary>
+    public static int PerStatCap(bool hasMasterLevel) => hasMasterLevel ? MasterStatAllocationCap : BaseStatAllocationCap;
+
     /// <summary>
     /// Prices the whole <paramref name="request"/> against <paramref name="unspent"/> on a clone of
     /// <paramref name="currentBonus"/>: <see cref="BonusStatOutcome.Ok"/> only when every entry fits, otherwise the
-    /// first failing code in order — BadState for a missing entry, OverCap for a stat id above 5 or a stat at the
-    /// end of its cost table, TooFewPoints once the cost passes the pool. <paramref name="costOf"/> maps a stat's
-    /// current bonus to the points one more costs (0 = cannot be raised).
+    /// first failing code in order — BadState for a missing entry, OverCap for a stat id above 5, a stat that has
+    /// reached <paramref name="perStatCap"/>, or a stat at the end of its cost table, TooFewPoints once the cost
+    /// passes the pool. <paramref name="costOf"/> maps a stat's current bonus to the points one more costs (0 =
+    /// cannot be raised).
     /// </summary>
-    public static BonusPlan Price(BonusRequest request, int[] currentBonus, int unspent, Func<int, int> costOf)
+    public static BonusPlan Price(BonusRequest request, int[] currentBonus, int unspent, int perStatCap, Func<int, int> costOf)
     {
         var bonus = (int[])currentBonus.Clone();
         int totalCost = 0;
@@ -58,6 +69,7 @@ public static class BonusStatRules
             if (entry.StatType > 5) { result = BonusStatOutcome.OverCap; break; }
             for (int k = 0; k < entry.Amount; k++)
             {
+                if (bonus[entry.StatType] >= perStatCap) { result = BonusStatOutcome.OverCap; break; }
                 int cost = costOf(bonus[entry.StatType]);
                 if (cost <= 0) { result = BonusStatOutcome.OverCap; break; }
                 totalCost += cost;

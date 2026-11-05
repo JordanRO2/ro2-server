@@ -41,6 +41,7 @@ public static class BonusStatAllocationFlow
 
         int unspent = CharacterStats.TotalBonusStatPointsEarned(character.Level, character.MasteryLevel) - BonusStatRules.BonusOf(character).Sum();
         var plan = BonusStatRules.Price(request, BonusStatRules.BonusOf(character), unspent,
+            BonusStatRules.PerStatCap(character.MasteryLevel >= 1),
             bonusNow => data.BonusStatCost(bonusNow));
 
         if (plan.Outcome == BonusStatOutcome.Ok && plan.TotalCost > 0)

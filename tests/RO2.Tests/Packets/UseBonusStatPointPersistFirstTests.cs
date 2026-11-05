@@ -59,7 +59,7 @@ public class UseBonusStatPointPersistFirstTests
     public void Price_RequestThatFits_IsOk_AndLeavesTheInputUntouched()
     {
         int[] current = [0, 0, 0, 0, 0, 0];
-        var plan = BonusStatRules.Price(Req((0, 3), (4, 2)), current, unspent: 5, One);
+        var plan = BonusStatRules.Price(Req((0, 3), (4, 2)), current, unspent: 5, perStatCap: 999, costOf: One);
 
         Assert.Equal(BonusStatOutcome.Ok, plan.Outcome);
         Assert.Equal(5, plan.TotalCost);
@@ -72,17 +72,33 @@ public class UseBonusStatPointPersistFirstTests
     {
         int[] none = [0, 0, 0, 0, 0, 0];
         Assert.Equal(BonusStatOutcome.TooFewPoints,
-            BonusStatRules.Price(Req((0, 3), (1, 3)), none, unspent: 5, One).Outcome);
+            BonusStatRules.Price(Req((0, 3), (1, 3)), none, unspent: 5, perStatCap: 999, costOf: One).Outcome);
 
         // count says 2 but only one entry is present
         var shortVector = new BonusRequest(2, [new BonusEntry(0, 1)]);
         Assert.Equal(BonusStatOutcome.BadState,
-            BonusStatRules.Price(shortVector, none, unspent: 9, One).Outcome);
+            BonusStatRules.Price(shortVector, none, unspent: 9, perStatCap: 999, costOf: One).Outcome);
 
         Assert.Equal(BonusStatOutcome.OverCap,
-            BonusStatRules.Price(Req((6, 1)), none, unspent: 9, One).Outcome);
+            BonusStatRules.Price(Req((6, 1)), none, unspent: 9, perStatCap: 999, costOf: One).Outcome);
         Assert.Equal(BonusStatOutcome.OverCap,
-            BonusStatRules.Price(Req((0, 1)), none, unspent: 9, static _ => 0).Outcome);
+            BonusStatRules.Price(Req((0, 1)), none, unspent: 9, perStatCap: 999, costOf: static _ => 0).Outcome);
+    }
+
+    [DataFact]
+    public void Price_CapsPerStat_At50WithoutMasterLevel_999With()
+    {
+        Assert.Equal((50, 999), (BonusStatRules.PerStatCap(false), BonusStatRules.PerStatCap(true)));
+
+        int[] str48 = [48, 0, 0, 0, 0, 0];
+        // Without master level (cap 50): raising STR from 48 by 3 overruns the cap; by 2 fits.
+        Assert.Equal(BonusStatOutcome.OverCap,
+            BonusStatRules.Price(Req((0, 3)), str48, unspent: 99, perStatCap: 50, costOf: One).Outcome);
+        Assert.Equal(BonusStatOutcome.Ok,
+            BonusStatRules.Price(Req((0, 2)), str48, unspent: 99, perStatCap: 50, costOf: One).Outcome);
+        // With a master level (cap 999): the same single-stat dump is allowed.
+        Assert.Equal(BonusStatOutcome.Ok,
+            BonusStatRules.Price(Req((0, 3)), str48, unspent: 99, perStatCap: 999, costOf: One).Outcome);
     }
 
     [DataFact]
