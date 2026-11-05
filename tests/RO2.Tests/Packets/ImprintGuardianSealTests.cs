@@ -37,7 +37,7 @@ public class ImprintGuardianSealTests
         protected override object? Invoke(MethodInfo? m, object?[]? args) => Task.CompletedTask;
     }
 
-    private static async Task<(ushort result, uint value, InventoryItem target, InventoryItem source, PlayerState player)> RunAsync(
+    private static async Task<(ushort result, float value, byte abilityIndex, byte category, InventoryItem target, InventoryItem source, PlayerState player)> RunAsync(
         long gold, bool configured)
     {
         var store = await LoadStoreAsync("ItemInfo.json", "SealItem_Info.json", "SealSlot_Info.json");
@@ -67,8 +67,8 @@ public class ImprintGuardianSealTests
             pm.AddPlayer(session.SessionId, player);
 
             var body = new byte[20];
-            BinaryPrimitives.WriteUInt64LittleEndian(body.AsSpan(4), target.Id);
-            BinaryPrimitives.WriteUInt64LittleEndian(body.AsSpan(12), source.Id);
+            BinaryPrimitives.WriteUInt64LittleEndian(body.AsSpan(4), source.Id);    // seal item first on the wire
+            BinaryPrimitives.WriteUInt64LittleEndian(body.AsSpan(12), target.Id);   // accessory second
             await new Probe(pm).RunAsync(session, body, player, services);
 
             for (int i = 0; i < 6; i++)
@@ -76,7 +76,7 @@ public class ImprintGuardianSealTests
                 var (op, b) = await ReadRmiFrameAsync(client);
                 if (op != ZoneS2COpcodes.AnsImprintGuardianSeal) continue;
                 Assert.Equal(9, b.Length);
-                return (BinaryPrimitives.ReadUInt16LittleEndian(b), BinaryPrimitives.ReadUInt32LittleEndian(b.AsSpan(5)), target, source, player);
+                return (BinaryPrimitives.ReadUInt16LittleEndian(b), BinaryPrimitives.ReadSingleLittleEndian(b.AsSpan(3)), b[7], b[8], target, source, player);
             }
             throw new Xunit.Sdk.XunitException("no 3031 frame");
         }
@@ -89,9 +89,11 @@ public class ImprintGuardianSealTests
     [DataFact]
     public async Task Configured_Imprints_ChargesAndConsumes()
     {
-        var (result, value, target, source, player) = await RunAsync(150_000, configured: true);
+        var (result, value, abilityIndex, category, target, source, player) = await RunAsync(150_000, configured: true);
         Assert.Equal((ushort)0, result);
-        Assert.Equal(77u, value);
+        Assert.Equal(7f, value);            // the rolled value, as the float the window displays
+        Assert.Equal((byte)25, abilityIndex); // TraitType 25 = MP
+        Assert.Equal((byte)1, category);      // flat
         Assert.Equal([new SealLine(1, 25, 7)], SealLines.Parse(target.SealJson));
         Assert.Equal(50_000, player.Gold);
         Assert.Equal(1, source.Count);
@@ -100,7 +102,7 @@ public class ImprintGuardianSealTests
     [DataFact]
     public async Task UnconfiguredGroup_RefusesAndTakesNothing()
     {
-        var (result, _, target, source, player) = await RunAsync(150_000, configured: false);
+        var (result, _, _, _, target, source, player) = await RunAsync(150_000, configured: false);
         Assert.NotEqual((ushort)0, result);
         Assert.Null(target.SealJson);
         Assert.Equal(150_000, player.Gold);
@@ -110,7 +112,7 @@ public class ImprintGuardianSealTests
     [DataFact]
     public async Task ShortWallet_RefusesAndTakesNothing()
     {
-        var (result, _, target, source, player) = await RunAsync(99_999, configured: true);
+        var (result, _, _, _, target, source, player) = await RunAsync(99_999, configured: true);
         Assert.NotEqual((ushort)0, result);
         Assert.Null(target.SealJson);
         Assert.Equal(99_999, player.Gold);

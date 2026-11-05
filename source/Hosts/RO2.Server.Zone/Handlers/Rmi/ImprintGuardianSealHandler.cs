@@ -15,7 +15,7 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 /// <summary>Handles ReqImprintGuardianSeal (1694): imprints one rolled seal line on an accessory.</summary>
 /// <remarks>
 /// <para>
-/// The request body is <c>[u32 tag][u64 TARGET equipment uid][u64 SOURCE seal-item uid]</c>, 20 bytes (capture-locked).
+/// The request body is <c>[u32 tag][u64 SOURCE seal-item uid][u64 TARGET equipment uid]</c>, 20 bytes (live-confirmed).
 /// The seal APPLIES here; the 3031 answer only tells the client to refresh the item.
 /// </para>
 /// <para>
@@ -45,16 +45,27 @@ public class ImprintGuardianSealHandler : ZoneRmiHandlerBase<ImprintGuardianSeal
         }
         var reader = new PacketReader(payload.Span);
         reader.ReadUInt32();                       // tag, ignored
-        ulong targetUid = reader.ReadUInt64();
-        ulong sourceUid = reader.ReadUInt64();
+        // Wire order (proven live, 2026-11-05): the SEAL item is first, the ACCESSORY second. The earlier capture
+        // note had these swapped, which refused every imprint (sealRow looked up the accessory, found nothing).
+        ulong sourceUid = reader.ReadUInt64();     // seal item, consumed
+        ulong targetUid = reader.ReadUInt64();     // accessory, receives the seal
 
-        Task Answer(ushort result, uint value) => session.SendRmiAsync(ZoneS2COpcodes.AnsImprintGuardianSeal, w =>
-        {
-            w.WriteUInt16(result);
-            w.WriteUInt16(1);
-            w.WriteByte(0);
-            w.WriteUInt32(value);
-        });
+        // 3031 AnsImprintGuardianSeal, 9 bytes, decoded from the client (GetItemWindowHandle @0x452250):
+        //   [u16 result][u8 flag][f32 value][u8 abilityIndex][u8 category]
+        // result 0 = shown (the window reads the rolled line); non-zero keeps the previous line. abilityIndex is the
+        // stat (our TraitType: retail rolls 0..4 STR/AGI/INT/WIS/VIT, 23 AP, 25 MP, and 21/22/58-61), value is the
+        // rolled amount as a float, category 1 = flat (every retail sample is flat). The window formats
+        // name(abilityIndex) + value; our earlier [u16][u16][u8][u32] layout misaligned the float (garbage) and the
+        // index (a stray byte that read as "STR").
+        Task Answer(ushort result, byte flag, float value, byte abilityIndex, byte category) =>
+            session.SendRmiAsync(ZoneS2COpcodes.AnsImprintGuardianSeal, w =>
+            {
+                w.WriteUInt16(result);
+                w.WriteByte(flag);
+                w.WriteSingle(value);
+                w.WriteByte(abilityIndex);
+                w.WriteByte(category);
+            });
 
         var inventory = services.GetRequiredService<IInventoryRepository>();
         var store = services.GetRequiredService<GameDataStore>();
@@ -79,7 +90,7 @@ public class ImprintGuardianSealHandler : ZoneRmiHandlerBase<ImprintGuardianSeal
         {
             Logger.LogDebug("{Name} imprint refused: target {T} source {S} (valid {Valid}, candidates {N})",
                 player.Name, targetUid, sourceUid, valid, candidates.Count);
-            await Answer(ResultRefused, 0);
+            await Answer(ResultRefused, 0, 0f, 0, 0);
             return;
         }
 
@@ -87,7 +98,7 @@ public class ImprintGuardianSealHandler : ZoneRmiHandlerBase<ImprintGuardianSeal
         if (await inventory.AdjustCountAsync(sourceUid, player.CharacterId, -1) is not { } remaining)
         {
             player.Credit(sealRow.Need_Gold);   // the seal item vanished meanwhile: nothing consumed, refund
-            await Answer(ResultRefused, 0);
+            await Answer(ResultRefused, 0, 0f, 0, 0);
             return;
         }
         if (remaining <= 0) await inventory.RemoveItemAsync(sourceUid);
@@ -99,22 +110,29 @@ public class ImprintGuardianSealHandler : ZoneRmiHandlerBase<ImprintGuardianSeal
             CombatPackets.BuildUseItem2329(player.EntityId, slot, bag, sourceUid,
                 (byte)Math.Clamp(remaining, 0, byte.MaxValue), useSource: CombatPackets.UseSourceItemUse)));
 
-        var line = SealRoll.Roll(candidates, new Random())!.Value;   // candidates is non-empty
-        target!.SealJson = SealLines.Serialize([line]);
-        await inventory.UpdateItemAsync(target);
+        var line = SealRoll.Roll(candidates, Random.Shared)!.Value;   // candidates is non-empty
 
-        // Re-push the 2498 sheet so a sealed WORN accessory's stats apply at once (same path as the refine handler).
-        if (player.Character is { } ch)
+        // 3031 flag drives the client (UpdateUI @0x452440): on an UNSEALED accessory flag 0 makes it self-apply the
+        // rolled line (ApplyEnchantData); on an already-sealed one the client shows the Previous/Change menu (it decides
+        // that from the item's own record, which now carries the seal), so send flag 1 to keep Select enabled and commit
+        // only on a take-new 1695. (With flag 0 on a sealed item the menu still shows but Select is disabled.) The
+        // post-select bag/window refresh is the one gap left; see the item-refresh opcode work.
+        bool hadSeal = !string.IsNullOrEmpty(target!.SealJson);
+        if (hadSeal)
         {
-            var worn = await inventory.GetEquipmentAsync(ch.Id);
-            await session.SendInternalRmiAsync(ZoneS2COpcodes.OnPcTrait,
-                services.GetRequiredService<EffectService>().RefreshPcTraitSheet(player, ch, worn));
+            player.PendingSeal = (targetUid, line.Kind, line.Type, line.Value);
+        }
+        else
+        {
+            target.SealJson = SealLines.Serialize([line]);
+            await inventory.UpdateItemAsync(target);
+            player.PendingSeal = null;
+            await SealApply.PushTraitSheetAsync(session, player, inventory, services);
         }
 
-        // The u32 is INFERRED (not decoded): the target's uid low word, which is what the client item-window refresh needs.
-        await Answer(ResultOk, (uint)(targetUid & 0xFFFFFFFF));
+        await Answer(ResultOk, hadSeal ? (byte)1 : (byte)0, line.Value, line.Type, line.Kind);
 
-        Logger.LogInformation("{Name} imprinted seal on uid {Uid}: kind {K} type {Ty} value {V}, fee {Fee}",
-            player.Name, targetUid, line.Kind, line.Type, line.Value, sealRow.Need_Gold);
+        Logger.LogInformation("{Name} {Mode} seal on uid {Uid}: type {Ty} value {V}, fee {Fee}",
+            player.Name, hadSeal ? "staged re-roll" : "imprinted", targetUid, line.Type, line.Value, sealRow.Need_Gold);
     }
 }

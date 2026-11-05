@@ -83,14 +83,21 @@ public class SealConfig
     /// <summary>Per Seal_Reinforce_ID (e.g. 100001/100002/200001/200002) → its candidate roll lines. Defaults are the
     /// operator-provided retail caps (2026-11-05): named guardians roll any of STR 66 / AGI 51 / INT 66 / WIS 51 /
     /// VIT 60 / AP 233 / MP 980; the "Guardian" seal rolls AP/MP only. The 100000 group can roll negative (range
-    /// [-cap, cap]); the 200000 "Cheny" group is non-negative ([0, cap]). All flat (Kind 1). Magnitudes are the
-    /// known maxima; the LUK/secondary candidates and the exact negative floor are not confirmed, so an operator
-    /// tunes here. Trait types: STR 0, AGI 1, INT 2, WIS 3, VIT 4, AP (Physical Attack) 23, MP (Magic Attack) 25.</summary>
+    /// [-cap, cap]); the 200000 "Cheny" group is non-negative ([0, cap]). All flat (Kind 1). The range is symmetric:
+    /// whatever a stat can reach positive it can reach negative. Trait types: STR 0, AGI(DEX) 1, INT 2, WIS(WIL) 3,
+    /// VIT 4, AP (Physical Attack) 23, MP (Magic Attack) 25.
+    /// Retail's full seal pool is 13 stats (confirmed from capture samples, 2026-11-05): the 7 above plus Max HP 21,
+    /// Max SP 22, Precision/hit 58, Evade/dodge 59, Critical 60, Guard/block 61. Those 6 are not in the default table;
+    /// an operator adds them here with caps (none shipped, so no invented balance).</summary>
     public Dictionary<uint, List<SealRollLine>> ReinforceRolls { get; set; } = BuildDefaults();
 
+    // Normal ("named") seals roll the PRIMARY stats only (STR..VIT). The Seal of Guardian rolls the 8 advanced stats:
+    // AP 23, MP 25, Max HP 21, Max SP 22, hit 58, dodge 59, crit 60, parry 61. Caps for AP/MP are operator-given; the
+    // other six are retail-sample maxima (small n) as a placeholder until the operator sets real caps.
     private static readonly (byte Type, int Cap)[] NamedCaps =
-        { (0, 66), (1, 51), (2, 66), (3, 51), (4, 60), (23, 233), (25, 980) };
-    private static readonly (byte Type, int Cap)[] GuardianCaps = { (23, 233), (25, 980) };
+        { (0, 66), (1, 51), (2, 66), (3, 51), (4, 60) };
+    private static readonly (byte Type, int Cap)[] GuardianCaps =
+        { (21, 221), (22, 385), (23, 233), (25, 980), (58, 73), (59, 122), (60, 93), (61, 82) };
 
     private static Dictionary<uint, List<SealRollLine>> BuildDefaults()
     {

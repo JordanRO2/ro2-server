@@ -14,12 +14,22 @@ public static class SealRoll
 
     /// <summary>Rolls one <see cref="SealLine"/>, or null when there are no candidates (an unconfigured group rolls
     /// nothing — the imprint is then refused by the caller rather than granting a blank seal).</summary>
+    /// <remarks>
+    /// The value is drawn with a TRIANGULAR weighting toward the low end, not a flat uniform draw: a near-cap value is
+    /// rare and most rolls are small, so the result does not read as "always maxing". A signed range peaks at 0; a
+    /// non-negative range peaks at its floor. The full range stays reachable, just with a falling probability toward
+    /// the cap. (A flat draw sits above half the cap half the time; retail's own samples are flat, so flip the two
+    /// NextDouble terms back to a single <c>rng.Next(lo, hi + 1)</c> to restore uniform.)
+    /// </remarks>
     public static SealLine? Roll(IReadOnlyList<Candidate> candidates, Random rng)
     {
         if (candidates is null || candidates.Count == 0) return null;
         var c = candidates[rng.Next(candidates.Count)];
         int lo = Math.Min(c.Min, c.Max), hi = Math.Max(c.Min, c.Max);
-        int value = rng.Next(lo, hi + 1);   // inclusive of hi; Next(lo, hi+1) handles negative lo
+        int value = lo < 0
+            ? (int)Math.Round((rng.NextDouble() - rng.NextDouble()) * hi)                            // symmetric, peak at 0
+            : lo + (int)Math.Round(Math.Min(rng.NextDouble(), rng.NextDouble()) * (hi - lo));        // peak at the floor
+        value = Math.Clamp(value, lo, hi);
         return new SealLine(c.Kind, c.Type, value);
     }
 }

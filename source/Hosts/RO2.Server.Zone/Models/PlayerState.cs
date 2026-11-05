@@ -336,6 +336,14 @@ public class PlayerState : IWallet
     /// step as TooFast. Runtime-only, session-scoped.
     /// </summary>
     public float? SpeedOverride { get; set; }
+
+    /// <summary>
+    /// A guardian-seal re-roll (1694) awaiting the player's keep/take choice (1695): the accessory uid and the rolled
+    /// line (kind, stat, value). Set only when the accessory already had a seal, so the client shows the Previous/Change
+    /// menu; the roll is persisted on a take-new 1695 and dropped on keep-old. Null on an empty accessory, which
+    /// auto-applies at 1694. Runtime-only.
+    /// </summary>
+    public (ulong Uid, byte Kind, byte Type, int Value)? PendingSeal { get; set; }
     /// <summary>
     /// Set with HP 0 by NpcCombatService on a lethal hit; cleared by a revival (RevivalHandler for 1372,
     /// RevivalSkillHandler for 1684). RevivalHandler revives only while this (or <c>Hp &lt;= 0</c>) holds:

@@ -283,9 +283,17 @@ public static class ItemPackets
         writer.WriteUInt32(RecordAbilityValue(item));  // +0x45 ability value
         writer.WriteUInt16(0);  // +0x49 card set id
         WriteGrindingStats(writer, item);  // +0x4B grinding stats (5 honed lines, or zeros when un-honed)
-        writer.WriteByte(0);  // +0x5F accessory trait
-        writer.WriteByte(0);  // +0x60 accessory trait sub
-        writer.WriteSingle(0f);  // +0x61 accessory value
+        // +0x5F accessory trait block = the guardian-seal line (what UICharEnhanceExchangeWnd shows as Previous and the
+        // tooltip reads): +0x5F stat index PLUS ONE, +0x60 category (1 flat), +0x61 value as a float. Zeros when unsealed.
+        // The client's seal display reads the name from sub_9CD400(byte - 1), so the stored byte must be the stat index
+        // + 1 (measured: a seal for index N showed String_TraitName[N-1]). The 3031 live path already carries the raw
+        // index because its own decode adds the 1; only this record path needs it baked in.
+        var seal = RO2.Inventory.Domain.SealLines.Parse(item.SealJson);
+        bool hasSeal = seal.Count > 0;
+        var sl = hasSeal ? seal[0] : default;
+        writer.WriteByte(hasSeal ? (byte)(sl.Type + 1) : (byte)0);   // +0x5F accessory trait: stat index + 1
+        writer.WriteByte(sl.Kind);        // +0x60 accessory trait sub: category
+        writer.WriteSingle(sl.Value);     // +0x61 accessory value: rolled amount (float)
         
         
         
