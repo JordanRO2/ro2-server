@@ -67,6 +67,16 @@ public class TalentPointsTests
     }
 
  /// <summary>Converts 2488 skill ids, each a group times 100 plus a level, to group and level pairs.</summary>
+    [DataFact]
+    public async Task TalentPointsRemaining_AddsTheBoughtSkillPoints()
+    {
+        var store = await LoadShippedTalentTableAsync();
+        (uint Group, byte Level)[] none = [];
+        // Level 50 with nothing learned: the base pool is 49 (level - 1); the +10 purchase lifts it to 59.
+        Assert.Equal(49, TalentRules.TalentPointsRemaining(store, 6, 50, none));
+        Assert.Equal(59, TalentRules.TalentPointsRemaining(store, 6, 50, none, 10));
+    }
+
     private static (uint Group, byte Level)[] FromWire(uint[] wireSkillIds)
         => wireSkillIds.Select(id => (id / 100, (byte)(id % 100))).ToArray();
 

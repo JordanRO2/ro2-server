@@ -57,7 +57,7 @@ internal static class RepairItemPackets
         {
             AnsMapLoadingHandler.SyncLiveLevel(player, ch);
             var talentPoints = TalentRules.TalentPointsRemaining(store, player.Job, player.Level,
-                player.LearnedSkills.Select(kv => (kv.Key, kv.Value)));
+                player.LearnedSkills.Select(kv => (kv.Key, kv.Value)), player.Character?.BoughtSkillPoints ?? 0);
             return PcSaveDataPackets.BuildLiveHead205(player, ch, talentPoints);
         }
         var head = new byte[CharacterHeadLength];

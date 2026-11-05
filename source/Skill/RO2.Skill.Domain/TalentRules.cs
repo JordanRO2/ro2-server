@@ -163,8 +163,8 @@ public static class TalentRules
     /// changes). A job-master Warrior at level 50 got 69: 20 more, from a source this server does not model.
     /// </remarks>
     public static byte TalentPointsRemaining(GameDataStore store, byte job, int level,
-        IEnumerable<(uint Group, byte Level)> learned)
-        => (byte)Math.Clamp(Math.Max(0, level - 1) - TalentPointsSpent(store, job, learned), 0, 255);
+        IEnumerable<(uint Group, byte Level)> learned, int extraPoints = 0)
+        => (byte)Math.Clamp(Math.Max(0, level - 1) + Math.Max(0, extraPoints) - TalentPointsSpent(store, job, learned), 0, 255);
     /// <summary>
     /// Most (group, level) pairs one 1310 may carry: <c>Talent_Table.json</c> has 230 rows, one per skill group, and a
     /// request lists each group at most once, so a longer vector can only repeat groups or name junk.

@@ -124,7 +124,7 @@ public class AppearanceChangeHandler : ZoneRmiHandlerBase<AppearanceChangeHandle
 
         AnsMapLoadingHandler.SyncLiveLevel(player, ch);
         var talentPoints = TalentRules.TalentPointsRemaining(services.GetRequiredService<GameDataStore>(), player.Job, player.Level,
-            player.LearnedSkills.Select(kv => (kv.Key, kv.Value)));
+            player.LearnedSkills.Select(kv => (kv.Key, kv.Value)), player.Character?.BoughtSkillPoints ?? 0);
         await session.SendRmiAsync(ZoneS2COpcodes.OnUpdatePCSaveData,
             PcSaveDataPackets.BuildOnUpdatePCSaveData2487(player.EntityId, PcSaveDataPackets.BuildLiveHead205(player, ch, talentPoints)), ct);
 

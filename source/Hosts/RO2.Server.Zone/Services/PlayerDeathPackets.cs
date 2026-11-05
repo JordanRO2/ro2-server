@@ -230,7 +230,7 @@ public static class PlayerDeathPackets
 
         // head+142 carries the live remaining talent points, computed as in the 2487 heads.
         var talentPoints = TalentRules.TalentPointsRemaining(gameData, victim.Job, victim.Level,
-            victim.LearnedSkills.Select(kv => (kv.Key, kv.Value)));
+            victim.LearnedSkills.Select(kv => (kv.Key, kv.Value)), victim.Character?.BoughtSkillPoints ?? 0);
         await session.SendInternalRmiAsync(ZoneS2COpcodes.OnDeadMe, BuildOnDeadMe2391(victim, records, talentPoints), ct);
         await session.SendInternalRmiAsync(ZoneS2COpcodes.NfySpinelRevivalInfo, SpinelRevivalNone2836, ct);
         await session.SendInternalRmiAsync(ZoneS2COpcodes.NfyPCCafeRevivalInfo, PcCafeRevivalNone2837, ct);

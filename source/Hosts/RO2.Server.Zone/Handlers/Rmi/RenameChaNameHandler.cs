@@ -85,7 +85,7 @@ public class RenameChaNameHandler : ZoneRmiHandlerBase<RenameChaNameHandler>
             
             
             var talentPoints = TalentRules.TalentPointsRemaining(services.GetRequiredService<GameDataStore>(),
-                player.Job, player.Level, player.LearnedSkills.Select(kv => (kv.Key, kv.Value)));
+                player.Job, player.Level, player.LearnedSkills.Select(kv => (kv.Key, kv.Value)), player.Character?.BoughtSkillPoints ?? 0);
             var saveData = PcSaveDataPackets.BuildOnUpdatePCSaveData2487(player.EntityId,
                 PcSaveDataPackets.BuildLiveHead205(player, ch, talentPoints));
             await session.SendRmiAsync(ZoneS2COpcodes.OnUpdatePCSaveData, saveData, ct);

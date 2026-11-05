@@ -39,10 +39,11 @@ public static class UseTalentPointFlow
     /// <param name="level">The character's level.</param>
     /// <param name="characterId">The character the allocation persists for.</param>
     /// <param name="allocations">The deduplicated allocation vector (group → new level).</param>
+    /// <param name="extraPoints">Talent points bought on top of the level-1 pool (the Master Level Skill Point item).</param>
     /// <param name="ct">A cancellation token.</param>
     public static Task<UseTalentResult> ApplyAsync(ILearnedSkillsSession session, ISkillRepository repo,
         GameDataStore store, byte job, int level, uint characterId,
-        IReadOnlyList<(uint Group, byte Level)> allocations, CancellationToken ct = default)
+        IReadOnlyList<(uint Group, byte Level)> allocations, int extraPoints = 0, CancellationToken ct = default)
         => session.WithWriteGateAsync(async () =>
         {
             if (allocations.Count > 0
@@ -75,9 +76,9 @@ public static class UseTalentPointFlow
             // The 2543 pool is the whole stored tree's remainder (level - 1 less the Talent_Table levels held,
             // starters' first level free), computed AFTER the overlay, as the relog 2310 and the reset 2544 do.
             var tree = session.Snapshot().Select(kv => (kv.Key, kv.Value)).ToArray();
-            byte remaining = TalentRules.TalentPointsRemaining(store, job, level, tree);
+            byte remaining = TalentRules.TalentPointsRemaining(store, job, level, tree, extraPoints);
             int spent = TalentRules.TalentPointsSpent(store, job, tree);
-            int earned = Math.Max(0, level - 1);
+            int earned = Math.Max(0, level - 1) + Math.Max(0, extraPoints);
             return new UseTalentResult(UseTalentOutcome.Applied, null, null, remaining, spent, earned);
         }, ct);
 }

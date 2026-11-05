@@ -137,7 +137,7 @@ public class UseTalentPointHandler : ZoneRmiHandlerBase<UseTalentPointHandler>
         // validate against the same stale tree. The host keeps the wire parse above and the 2543 reply below.
         var result = await UseTalentPointFlow.ApplyAsync(
             new LearnedSkillsSession(player), services.GetRequiredService<ISkillRepository>(),
-            store, player.Job, player.Level, player.CharacterId, allocations, ct);
+            store, player.Job, player.Level, player.CharacterId, allocations, player.Character?.BoughtSkillPoints ?? 0, ct);
 
         switch (result.Outcome)
         {

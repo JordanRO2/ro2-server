@@ -41,7 +41,7 @@ public class InitialTalentPointHandler : ZoneRmiHandlerBase<InitialTalentPointHa
 
         var store = services.GetRequiredService<GameDataStore>();
         byte pool = TalentRules.TalentPointsRemaining(store, player.Job, player.Level,
-            player.LearnedSkills.Select(kv => (kv.Key, kv.Value)));
+            player.LearnedSkills.Select(kv => (kv.Key, kv.Value)), player.Character?.BoughtSkillPoints ?? 0);
 
         Logger.LogWarning(
             "{Name} sent 1311 ReqPCInitialTalentPoint (a1={A1}), which the shipped client has no path to send; nothing is reset, answering the current pool {Pool}",

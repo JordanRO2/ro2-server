@@ -141,7 +141,7 @@ public static class WorldEntryService
                 .Select(s => (s.SkillId, s.Level));
             byte talentRemaining = gameData is null
                 ? WorldEntryUseCase.TalentPointsWithoutCatalog(character.Level, learnedPairs.Sum(p => (int)p.Level))
-                : TalentRules.TalentPointsRemaining(gameData, character.Job, character.Level, learnedPairs);
+                : TalentRules.TalentPointsRemaining(gameData, character.Job, character.Level, learnedPairs, character.BoughtSkillPoints);
             IReadOnlyList<(uint Group, byte Level)> loginSkills = useSkillList ?? learnedPairs.ToArray();
             loginData = (talentRemaining, loginSkills);
             return loginData.Value;

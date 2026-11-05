@@ -30,6 +30,8 @@ public class Character
     public byte MasteryRank { get; set; }
     /// <summary>Bonus stat points bought with the Master Level Stat Point item (ItemInfo 30000314), a one-time +100 on top of the level and mastery pool; 0 or 100.</summary>
     public int BoughtBonusStatPoints { get; set; }
+    /// <summary>Talent (skill) points bought with the Master Level Skill Point item (ItemInfo 30000313), a one-time +10 on top of the level-1 pool; 0 or 10.</summary>
+    public int BoughtSkillPoints { get; set; }
     /// <summary>Character gender.</summary>
     public byte Gender { get; set; }
     /// <summary>Base level.</summary>

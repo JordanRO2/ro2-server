@@ -57,6 +57,13 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
     /// <summary>Bonus stat points the Master Level Stat Point item grants (the retail +100, lifting the pool to 375).</summary>
     private const int MasterLevelStatPointGrant = 100;
 
+    /// <summary>ItemInfo ID of the Master Level Skill Point item ("마스터 레벨 스킬 포인트", Dapara's store): a one-time
+    /// +10 to the talent (skill) point pool. Keyed by id (its Item_Type 54 is shared).</summary>
+    private const uint MasterLevelSkillPointItem = 30000313;
+
+    /// <summary>Talent points the Master Level Skill Point item grants (the retail +10 on top of the level-1 pool).</summary>
+    private const int MasterLevelSkillPointGrant = 10;
+
     /// <summary>Quest_Info Complete_Type 0: the row carries no objective.</summary>
     private const byte NoObjective = ObjectiveRules.NoObjective;
 
@@ -246,6 +253,36 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
             await session.SendInternalRmiAsync(ZoneS2COpcodes.OnPcInitTrait, TraitPackets.BuildPcInitTrait2595(statOwner, statTrait));
             await session.SendInternalRmiAsync(ZoneS2COpcodes.OnPcTrait, statTrait);
             Logger.LogInformation("{Name} bought +{N} bonus stat points", player.Name, MasterLevelStatPointGrant);
+        }
+
+        // Master Level Skill Point (ItemInfo 30000313, Dapara's store): a one-time +10 to the talent-point pool, on
+        // top of the level-1 pool. Stored before anything is sent; an already-bought character keeps the item. The
+        // new pool is re-pushed with 2544 OnInitTalentPoint ahead of the 2329.
+        if (used.ItemId == MasterLevelSkillPointItem)
+        {
+            if (player.Character is not { } skillOwner) return;
+            if (skillOwner.BoughtSkillPoints >= MasterLevelSkillPointGrant)
+            {
+                Logger.LogInformation("{Name} used the Master Level Skill Point with the +{N} already bought: not consumed",
+                    player.Name, MasterLevelSkillPointGrant);
+                return;
+            }
+            skillOwner.BoughtSkillPoints = MasterLevelSkillPointGrant;
+            try
+            {
+                await services.GetRequiredService<ICharacterRepository>().SaveCharacterAsync(skillOwner);
+            }
+            catch (System.Exception ex)
+            {
+                skillOwner.BoughtSkillPoints = 0;   // revert so the session matches the DB; the item is not consumed
+                Logger.LogWarning(ex, "{Name}: could not store the bought skill points; item not consumed", player.Name);
+                return;
+            }
+            var skillPairs = player.LearnedSkills.Select(kv => (kv.Key, kv.Value));
+            var skillPool = TalentRules.TalentPointsRemaining(store, player.Job, player.Level, skillPairs, skillOwner.BoughtSkillPoints);
+            await session.SendRmiAsync(ZoneS2COpcodes.OnInitTalentPoint,
+                writer => writer.WriteBytes(QuestProgressPackets.BuildInitTalentPoint2544(player.EntityId, skillPool)));
+            Logger.LogInformation("{Name} bought +{N} skill points", player.Name, MasterLevelSkillPointGrant);
         }
 
         // Reins (Item_Type 11): the item's vehicle joins the character's list (VehicleRules.Grant has the
@@ -478,7 +515,7 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
         await session.SendInternalRmiAsync(ZoneS2COpcodes.OnUseSkillList,
             SkillPackets.BuildUseSkillList2488(GuildSkillBookLearn.SkillListFor(player, store)));
 
-        var pool = TalentRules.TalentPointsRemaining(store, job, player.Level, skills);
+        var pool = TalentRules.TalentPointsRemaining(store, job, player.Level, skills, player.Character?.BoughtSkillPoints ?? 0);
         await session.SendRmiAsync(ZoneS2COpcodes.OnInitTalentPoint,
             writer => writer.WriteBytes(QuestProgressPackets.BuildInitTalentPoint2544(player.EntityId, pool)));
 
