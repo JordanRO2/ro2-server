@@ -39,6 +39,8 @@ public static class ActorMoveSpeed
 
     private static float SpeedOn(MountService.MountState? ride, PlayerState player, GameDataStore store)
     {
+        if (player.SpeedOverride is float forced)   // /speed GM command; keeps the anti-cheat in step with the client
+            return forced;
         float? mountedSpeed = null;
         if (ride is not null)
         {

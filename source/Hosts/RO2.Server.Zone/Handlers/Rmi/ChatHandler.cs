@@ -390,6 +390,8 @@ public class ChatHandler : ZoneRmiHandlerBase<ChatHandler>
         if (!float.IsFinite(speed) || speed <= 0f)
         { await SendGmAnswerAsync(session, GmCommandPackets.IncorrectSpeed, parts[1]); return; }
 
+        // Mirror the override server-side so the movement anti-cheat measures against this speed, not the base.
+        player.SpeedOverride = speed;
         await session.SendInternalRmiAsync(
             ZoneS2COpcodes.OnChangeActorMoveSpeed, TraitPackets.BuildActorMoveSpeed2497(player.EntityId, speed));
 

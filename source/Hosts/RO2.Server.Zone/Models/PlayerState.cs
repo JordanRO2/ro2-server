@@ -328,6 +328,14 @@ public class PlayerState : IWallet
 
     // Runtime state
     public bool IsMoving { get; set; }
+
+    /// <summary>
+    /// Move speed forced by the <c>/speed</c> GM command, or null for the normal mount/world-entry speed. The
+    /// command sends the client a 2497 at this speed; without mirroring it here the movement anti-cheat
+    /// (<see cref="Services.ActorMoveSpeed"/>) would still measure against the base speed and refuse every fast
+    /// step as TooFast. Runtime-only, session-scoped.
+    /// </summary>
+    public float? SpeedOverride { get; set; }
     /// <summary>
     /// Set with HP 0 by NpcCombatService on a lethal hit; cleared by a revival (RevivalHandler for 1372,
     /// RevivalSkillHandler for 1684). RevivalHandler revives only while this (or <c>Hp &lt;= 0</c>) holds:
