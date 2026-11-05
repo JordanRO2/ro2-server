@@ -37,6 +37,8 @@ public sealed record ItemStackSnapshot
     public string? CardsJson { get; init; }
     /// <summary>Honed grinding lines, as JSON (null when none).</summary>
     public string? GrindingJson { get; init; }
+    /// <summary>Imprinted seal lines, as JSON (null when none).</summary>
+    public string? SealJson { get; init; }
     /// <summary>Rune-hole punchers, as JSON (null when none).</summary>
     public string? SocketPunchersJson { get; init; }
     /// <summary>Whether the item is account/character bound.</summary>

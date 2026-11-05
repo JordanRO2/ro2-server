@@ -70,12 +70,13 @@ public sealed class InventoryRepository : IInventoryRepository
         ("bound", NpgsqlDbType.Boolean),
         ("ability_value", NpgsqlDbType.Bigint),
         ("grinding_json", NpgsqlDbType.Text),
+        ("seal_json", NpgsqlDbType.Text),
     ];
 
-    // grinding_json is read after created_at (trailing ordinal 20) so no existing reader index shifts.
+    // grinding_json / seal_json are read after created_at (trailing ordinals 20, 21) so no existing reader index shifts.
     private static readonly string SelectColumns =
-        "id, " + string.Join(", ", MutableColumns.Where(c => c.Name != "grinding_json").Select(c => c.Name))
-        + ", created_at, grinding_json";
+        "id, " + string.Join(", ", MutableColumns.Where(c => c.Name != "grinding_json" && c.Name != "seal_json").Select(c => c.Name))
+        + ", created_at, grinding_json, seal_json";
 
     private static readonly string InsertSql =
         $"INSERT INTO {ItemsTable} (id, {string.Join(", ", MutableColumns.Select(c => c.Name))}, created_at) " +
@@ -367,6 +368,7 @@ public sealed class InventoryRepository : IInventoryRepository
                 AbilityValue = reader.IsDBNull(18) ? null : (uint)reader.GetInt64(18),
                 CreatedAt = reader.GetDateTime(19),
                 GrindingJson = reader.IsDBNull(20) ? null : reader.GetString(20),
+                SealJson = reader.IsDBNull(21) ? null : reader.GetString(21),
             });
         }
         return items;
@@ -380,7 +382,7 @@ public sealed class InventoryRepository : IInventoryRepository
             (short)i.Element, i.Durability, (long)i.DyeColor, (long)i.DyeColor2, (long)i.DyeColor3,
             (long)i.FxEnchantIndex, (long)i.EnchantReinforceId, (long)i.EnchantSeconds, i.CardsJson,
             i.SocketPunchersJson, i.Bound, i.AbilityValue is { } a ? (long)a : null,
-            i.GrindingJson,
+            i.GrindingJson, i.SealJson,
         ];
         for (var n = 0; n < MutableColumns.Length; n++)
             cmd.Parameters.Add(new NpgsqlParameter("p" + n, MutableColumns[n].Type) { Value = values[n] ?? DBNull.Value });

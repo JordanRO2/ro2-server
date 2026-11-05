@@ -73,6 +73,7 @@ public static class ClaimMailItemUseCase
         Durability = mail.AttachedItemDurability,
         CardsJson = mail.AttachedItemCardsJson,
         GrindingJson = mail.AttachedItemGrindingJson,
+        SealJson = mail.AttachedItemSealJson,
         Element = mail.AttachedItemElement,
         DyeColor = mail.AttachedItemDyeColor,
         SocketPunchersJson = mail.AttachedItemSocketPunchersJson,

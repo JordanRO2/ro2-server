@@ -110,11 +110,15 @@ public static class PostgresSchema
             kind                                smallint    NOT NULL,
             kind_item_id                        bigint      NOT NULL,
             auction_price                       bigint      NOT NULL,
-            attached_item_grinding_json         text        NULL
+            attached_item_grinding_json         text        NULL,
+            attached_item_seal_json             text        NULL
         )
         """,
         """
         ALTER TABLE mail_messages ADD COLUMN IF NOT EXISTS attached_item_grinding_json text NULL
+        """,
+        """
+        ALTER TABLE mail_messages ADD COLUMN IF NOT EXISTS attached_item_seal_json text NULL
         """,
         """
         CREATE UNIQUE INDEX IF NOT EXISTS ux_mail_messages_uid ON mail_messages (uid)
@@ -633,11 +637,15 @@ public static class PostgresSchema
             bound                 boolean     NOT NULL DEFAULT false,
             ability_value         bigint      NULL,
             created_at            timestamptz NOT NULL DEFAULT now(),
-            grinding_json         text        NULL
+            grinding_json         text        NULL,
+            seal_json             text        NULL
         )
         """,
         """
         ALTER TABLE inventory_items ADD COLUMN IF NOT EXISTS grinding_json text NULL
+        """,
+        """
+        ALTER TABLE inventory_items ADD COLUMN IF NOT EXISTS seal_json text NULL
         """,
         """
         CREATE INDEX IF NOT EXISTS ix_inventory_items_character_storage ON inventory_items (character_id, storage_type)

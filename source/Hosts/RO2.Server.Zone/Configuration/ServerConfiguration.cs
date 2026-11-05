@@ -65,6 +65,55 @@ public class GameConfig
 
     /// <summary>Master-level (job-mastery) tunables; the defaults are the retail values.</summary>
     public MasteryConfig Mastery { get; set; } = new();
+
+    /// <summary>Guardian-seal (RMI 1694 imprint) roll tables. EMPTY by default so no invented balance ships: a seal
+    /// rolls nothing until an operator fills the per-Seal_Reinforce_ID candidate lines. The retail numbers are not in
+    /// any data table or the capture dump (the roll is server-authoritative and no sealed-item record was captured),
+    /// so they must be measured from a fresh seal capture or supplied here.</summary>
+    public SealConfig Seal { get; set; } = new();
+}
+
+/// <summary>
+/// Guardian-seal roll config. Keyed by SealItem_Info.Seal_Reinforce_ID; each entry lists the candidate stat lines a
+/// seal of that group may roll. A roll picks one candidate uniformly, then a value uniformly in [MinValue, MaxValue]
+/// (MinValue may be negative). Independent of the accessory (same table for a level-1 or an ML40 item). EMPTY default.
+/// </summary>
+public class SealConfig
+{
+    /// <summary>Per Seal_Reinforce_ID (e.g. 100001/100002/200001/200002) → its candidate roll lines. Defaults are the
+    /// operator-provided retail caps (2026-11-05): named guardians roll any of STR 66 / AGI 51 / INT 66 / WIS 51 /
+    /// VIT 60 / AP 233 / MP 980; the "Guardian" seal rolls AP/MP only. The 100000 group can roll negative (range
+    /// [-cap, cap]); the 200000 "Cheny" group is non-negative ([0, cap]). All flat (Kind 1). Magnitudes are the
+    /// known maxima; the LUK/secondary candidates and the exact negative floor are not confirmed, so an operator
+    /// tunes here. Trait types: STR 0, AGI 1, INT 2, WIS 3, VIT 4, AP (Physical Attack) 23, MP (Magic Attack) 25.</summary>
+    public Dictionary<uint, List<SealRollLine>> ReinforceRolls { get; set; } = BuildDefaults();
+
+    private static readonly (byte Type, int Cap)[] NamedCaps =
+        { (0, 66), (1, 51), (2, 66), (3, 51), (4, 60), (23, 233), (25, 980) };
+    private static readonly (byte Type, int Cap)[] GuardianCaps = { (23, 233), (25, 980) };
+
+    private static Dictionary<uint, List<SealRollLine>> BuildDefaults()
+    {
+        static List<SealRollLine> Lines((byte Type, int Cap)[] caps, bool negative) =>
+            caps.Select(c => new SealRollLine { Kind = 1, TraitType = c.Type, MinValue = negative ? -c.Cap : 0, MaxValue = c.Cap }).ToList();
+        return new Dictionary<uint, List<SealRollLine>>
+        {
+            [100001] = Lines(NamedCaps, negative: true),
+            [200001] = Lines(NamedCaps, negative: false),
+            [100002] = Lines(GuardianCaps, negative: true),
+            [200002] = Lines(GuardianCaps, negative: false),
+        };
+    }
+}
+
+/// <summary>One candidate a seal may roll: a trait <see cref="Kind"/> (1 flat / 2 percent), the <see cref="TraitType"/>
+/// (TraitInfo.Trait_Type), and the inclusive signed value range [<see cref="MinValue"/>, <see cref="MaxValue"/>].</summary>
+public class SealRollLine
+{
+    public byte Kind { get; set; } = 1;
+    public byte TraitType { get; set; }
+    public int MinValue { get; set; }
+    public int MaxValue { get; set; }
 }
 
 /// <summary>

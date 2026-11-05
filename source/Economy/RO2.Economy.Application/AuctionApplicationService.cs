@@ -121,6 +121,7 @@ public sealed class AuctionApplicationService(
                 Durability = taken.Durability,
                 CardsJson = taken.CardsJson,
                 GrindingJson = taken.GrindingJson,
+                SealJson = taken.SealJson,
                 Element = taken.Element,
                 DyeColor = taken.DyeColor,
                 SocketPunchersJson = taken.SocketPunchersJson,

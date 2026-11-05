@@ -11,8 +11,8 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 
 /// <summary>RMI 1695 ReqConfirmImprintGuardianSealResult: the player's keep or discard choice for a guardian-seal roll.</summary>
 /// <remarks>
-/// The body is one byte. The choice is logged and otherwise ignored, and no reply is sent: the imprint roll keeps
-/// no pending result on the server, so there is no state for the choice to commit.
+/// The body is one byte (the corpus shows 00 dominant) and no 3032 is sent. The choice is logged and acknowledged
+/// with no state change: the commit already happened at 1694, so there is no pending roll to keep or discard.
 /// </remarks>
 public class ConfirmImprintGuardianSealResultHandler : ZoneRmiHandlerBase<ConfirmImprintGuardianSealResultHandler>
 {

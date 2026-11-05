@@ -129,7 +129,7 @@ public sealed class MongoMailStoredShapeTests
             Title = "Title é中", Body = "Line1\nLine2",
             AttachedItemUid = 0x0123_4567_89AB_CDEFUL, AttachedItemId = 2_000_000_123u, AttachedItemCount = 42,
             AttachedItemRefine = 9, AttachedItemDurability = 250, AttachedItemCardsJson = "[1,2,3]",
-            AttachedItemGrindingJson = "[4,5]", AttachedItemElement = 3, AttachedItemDyeColor = 0x7FAABBCCu, AttachedItemSocketPunchersJson = "{\"a\":1}",
+            AttachedItemGrindingJson = "[4,5]", AttachedItemSealJson = "[1,2,-3]", AttachedItemElement = 3, AttachedItemDyeColor = 0x7FAABBCCu, AttachedItemSocketPunchersJson = "{\"a\":1}",
             AttachedItemDyeColor2 = 0x7F000001u, AttachedItemDyeColor3 = 0x7F000002u, AttachedItemFxEnchantIndex = 2_000_000_000u,
             AttachedItemEnchantReinforceId = 65_535, AttachedItemEnchantSeconds = 60_000, AttachedItemBound = true,
             AttachedItemAbilityValue = 0, ItemClaimed = true, Gold = 9_000_000_000L, GoldClaimed = true, IsRead = true,
@@ -143,7 +143,7 @@ public sealed class MongoMailStoredShapeTests
         {
             "_id", "Uid", "ReceiverCharId", "ReceiverName", "SenderCharId", "SenderName", "Title", "Body",
             "AttachedItemUid", "AttachedItemId", "AttachedItemCount", "AttachedItemRefine", "AttachedItemDurability",
-            "AttachedItemCardsJson", "AttachedItemGrindingJson", "AttachedItemElement", "AttachedItemDyeColor", "AttachedItemSocketPunchersJson",
+            "AttachedItemCardsJson", "AttachedItemGrindingJson", "AttachedItemSealJson", "AttachedItemElement", "AttachedItemDyeColor", "AttachedItemSocketPunchersJson",
             "AttachedItemDyeColor2", "AttachedItemDyeColor3", "AttachedItemFxEnchantIndex", "AttachedItemEnchantReinforceId",
             "AttachedItemEnchantSeconds", "AttachedItemBound", "AttachedItemAbilityValue", "ItemClaimed", "Gold", "GoldClaimed",
             "IsRead", "SentAt", "Kind", "KindItemId", "AuctionPrice",
@@ -184,6 +184,7 @@ public sealed class MongoMailStoredShapeTests
         Assert.Equal((short)250, got.AttachedItemDurability);
         Assert.Equal("[1,2,3]", got.AttachedItemCardsJson);
         Assert.Equal("[4,5]", got.AttachedItemGrindingJson);
+        Assert.Equal("[1,2,-3]", got.AttachedItemSealJson);
         Assert.Equal((byte)3, got.AttachedItemElement);
         Assert.Equal(0x7FAABBCCu, got.AttachedItemDyeColor);
         Assert.Equal("{\"a\":1}", got.AttachedItemSocketPunchersJson);

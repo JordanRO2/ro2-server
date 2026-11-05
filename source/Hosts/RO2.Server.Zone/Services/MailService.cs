@@ -389,6 +389,7 @@ public sealed class MailService
                            == ItemPackets.RecordAbilityValue(mail.AttachedItemId, mail.AttachedItemAbilityValue)
                         && SameJson(i.CardsJson, mail.AttachedItemCardsJson)
                         && SameJson(i.GrindingJson, mail.AttachedItemGrindingJson)
+                        && SameJson(i.SealJson, mail.AttachedItemSealJson)
                         && SameJson(i.SocketPunchersJson, mail.AttachedItemSocketPunchersJson))
             .OrderBy(i => i.Slot)
             .FirstOrDefault();

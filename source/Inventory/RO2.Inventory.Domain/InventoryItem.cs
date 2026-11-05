@@ -128,6 +128,13 @@ public class InventoryItem
  /// </summary>
     public string? GrindingJson { get; set; }
 
+ /// <summary>
+ /// This accessory's imprinted guardian seal line(s) (RMI 1694 Imprint Guardian Seal), as the flat JSON array of
+ /// <see cref="SealLines"/>; null = unsealed. One signed stat line per seal slot: a seal rolls an INDEPENDENT
+ /// stat (primary / secondary / AP / MP) whose value does NOT depend on the accessory and CAN be negative.
+ /// </summary>
+    public string? SealJson { get; set; }
+
     /// <summary>UTC time the row was created.</summary>
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
@@ -166,6 +173,7 @@ public class InventoryItem
         Bound = source.Bound;
         AbilityValue = source.AbilityValue;
         GrindingJson = source.GrindingJson;
+        SealJson = source.SealJson;
         return this;
     }
 }

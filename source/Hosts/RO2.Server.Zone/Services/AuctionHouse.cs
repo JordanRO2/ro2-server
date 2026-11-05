@@ -639,6 +639,7 @@ public static partial class AuctionPackets
             Durability = a.Durability,
             CardsJson = a.CardsJson,
             GrindingJson = a.GrindingJson,
+            SealJson = a.SealJson,
             Element = a.Element,
             DyeColor = a.DyeColor,
             SocketPunchersJson = a.SocketPunchersJson,

@@ -35,6 +35,7 @@ public sealed class SendMailAdapter(IMailRepository mails, Func<uint, Task>? not
             mail.AttachedItemDurability = i.Durability;
             mail.AttachedItemCardsJson = i.CardsJson;
             mail.AttachedItemGrindingJson = i.GrindingJson;
+            mail.AttachedItemSealJson = i.SealJson;
             mail.AttachedItemElement = i.Element;
             mail.AttachedItemDyeColor = i.DyeColor;
             mail.AttachedItemSocketPunchersJson = i.SocketPunchersJson;

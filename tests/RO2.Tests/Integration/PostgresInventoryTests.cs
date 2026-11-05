@@ -71,6 +71,7 @@ public sealed class PostgresInventoryTests
             CardsJson = "[1,2,3]",
             SocketPunchersJson = "[4,5]",
             GrindingJson = "[6,7]",
+            SealJson = "[1,2,-3]",
             Bound = true,
             AbilityValue = uint.MaxValue,
             CreatedAt = created,
@@ -99,6 +100,7 @@ public sealed class PostgresInventoryTests
         Assert.Equal("[1,2,3]", got.CardsJson);
         Assert.Equal("[4,5]", got.SocketPunchersJson);
         Assert.Equal("[6,7]", got.GrindingJson);
+        Assert.Equal("[1,2,-3]", got.SealJson);
         Assert.True(got.Bound);
         Assert.Equal(uint.MaxValue, got.AbilityValue);
         Assert.Equal(created, got.CreatedAt.ToUniversalTime());

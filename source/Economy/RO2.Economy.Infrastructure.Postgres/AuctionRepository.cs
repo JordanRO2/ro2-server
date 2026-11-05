@@ -42,7 +42,7 @@ public sealed class AuctionRepository : IAuctionRepository
         string SellerName, ulong SellerCharUid, ulong ItemUid, int Count, byte Refine, short Durability,
         string? CardsJson, byte Element, uint DyeColor, string? SocketPunchersJson, uint DyeColor2, uint DyeColor3,
         uint FxEnchantIndex, ushort EnchantReinforceId, ushort EnchantSeconds, bool Bound, uint? AbilityValue,
-        string? GrindingJson = null);
+        string? GrindingJson = null, string? SealJson = null);
 
     private static DateTime Utc(DateTime t) => t.Kind switch
     {
@@ -94,6 +94,7 @@ public sealed class AuctionRepository : IAuctionRepository
             Bound = s.Bound,
             AbilityValue = s.AbilityValue,
             GrindingJson = s.GrindingJson,
+            SealJson = s.SealJson,
         };
     }
 
@@ -142,7 +143,7 @@ public sealed class AuctionRepository : IAuctionRepository
             article.SellerName, article.SellerCharUid, article.ItemUid, article.Count, article.Refine,
             article.Durability, article.CardsJson, article.Element, article.DyeColor, article.SocketPunchersJson,
             article.DyeColor2, article.DyeColor3, article.FxEnchantIndex, article.EnchantReinforceId,
-            article.EnchantSeconds, article.Bound, article.AbilityValue, article.GrindingJson));
+            article.EnchantSeconds, article.Bound, article.AbilityValue, article.GrindingJson, article.SealJson));
 
         await using var conn = await _db.OpenConnectionAsync(ct);
         await using var cmd = new NpgsqlCommand(

@@ -171,6 +171,10 @@ public static class StatService
                         int value = (int)Math.Ceiling(g.normalVal * (10000.0 + gl.Roll) / 10000.0);
                         if (value > 0) Add(g.kind, g.type, value);
                     }
+            // Accessory seal lines: absolute signed values (a seal roll can be a penalty), so no value>0 gate.
+            if (!string.IsNullOrEmpty(it.SealJson))
+                foreach (var sl in RO2.Inventory.Domain.SealLines.Parse(it.SealJson))
+                    Add(sl.Kind, sl.Type, sl.Value);
         }
 
         // Set bonuses: for each set with a worn member, count worn members (SetItem OrItemID0..6 = the set's

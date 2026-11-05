@@ -142,6 +142,7 @@ public sealed class MailSendUseCase(ICharacterRepository characters, IMailReposi
             mail.AttachedItemDurability = taken.Durability;
             mail.AttachedItemCardsJson = taken.CardsJson;
             mail.AttachedItemGrindingJson = taken.GrindingJson;
+            mail.AttachedItemSealJson = taken.SealJson;
             mail.AttachedItemElement = taken.Element; // else the claim re-creates it neutral
             mail.AttachedItemDyeColor = taken.DyeColor;
             mail.AttachedItemSocketPunchersJson = taken.SocketPunchersJson;

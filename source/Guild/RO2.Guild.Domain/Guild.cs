@@ -65,6 +65,8 @@ public sealed class GuildStorageItem
     public string? CardsJson { get; set; }
     /// <summary>Honed grinding lines (RMI 1676) as JSON; null when the item was never honed.</summary>
     public string? GrindingJson { get; set; }
+    /// <summary>Imprinted seal lines as JSON; null when the item was never sealed.</summary>
+    public string? SealJson { get; set; }
  /// <summary>
  /// Remaining instance state of the item: bestowed element, dye colour and rune-hole punchers. Vault items stored
  /// before these fields existed load with neutral values.

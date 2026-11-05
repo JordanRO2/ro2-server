@@ -74,6 +74,7 @@ public sealed class PostgresMailTests
             AttachedItemDurability = 250,
             AttachedItemCardsJson = "[1,2,3]",
             AttachedItemGrindingJson = "[4,5]",
+            AttachedItemSealJson = "[1,2,-3]",
             AttachedItemElement = 3,
             AttachedItemDyeColor = 0xFFAABBCCu,
             AttachedItemSocketPunchersJson = "{\"a\":1}",
@@ -113,6 +114,7 @@ public sealed class PostgresMailTests
         Assert.Equal((short)250, got.AttachedItemDurability);
         Assert.Equal("[1,2,3]", got.AttachedItemCardsJson);
         Assert.Equal("[4,5]", got.AttachedItemGrindingJson);
+        Assert.Equal("[1,2,-3]", got.AttachedItemSealJson);
         Assert.Equal((byte)3, got.AttachedItemElement);
         Assert.Equal(0xFFAABBCCu, got.AttachedItemDyeColor);
         Assert.Equal("{\"a\":1}", got.AttachedItemSocketPunchersJson);
