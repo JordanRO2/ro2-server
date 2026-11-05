@@ -27,6 +27,13 @@ public class TakeFarGliderHandler : ZoneRmiHandlerBase<TakeFarGliderHandler>
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
+        // Same gate as /escape (TeleportSavePointHandler): a dead or trading player cannot glide away. Ignored silently.
+        if (player.IsDead || TradeSessionService.Instance.Get(player.SessionId) is not null)
+        {
+            Logger.LogDebug("{Name} glider 1515 ignored (dead={Dead} or trading)", player.Name, player.IsDead);
+            return;
+        }
+
         // Destination station: C2S ReqTakeFarGlider (1515) is compact-BA and carries the destination
         // station id as a u16 at body+10 (after compact envelope + msgTag + u32 handle).
         ushort station = payload.Length >= StationIdEnd

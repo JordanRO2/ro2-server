@@ -44,6 +44,13 @@ public class GliderTeleportHandler : ZoneRmiHandlerBase<GliderTeleportHandler>
 
     protected override async Task HandleAsync(ProudSession session, ReadOnlyMemory<byte> payload, PlayerState player, IServiceProvider services, CancellationToken ct)
     {
+        // Same gate as /escape (TeleportSavePointHandler): a dead or trading player cannot glide away. Ignored silently.
+        if (player.IsDead || TradeSessionService.Instance.Get(player.SessionId) is not null)
+        {
+            Logger.LogDebug("{Name} glider 1528 ignored (dead={Dead} or trading)", player.Name, player.IsDead);
+            return;
+        }
+
         // Destination station id (u16 at body+StationIdOffset, same layout as far-glider 1515).
         ushort station = payload.Length >= MinBodyLength
             ? System.Buffers.Binary.BinaryPrimitives.ReadUInt16LittleEndian(payload.Span.Slice(StationIdOffset))
