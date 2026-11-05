@@ -51,7 +51,7 @@ public sealed class PcCombatStateService : ITickable
     private const uint NoTargetHandle = 0;
 
     /// <summary>2398 trailing field (body offset +19) for a PC stance change: 2, the value every ordinary PC state
-    /// frame carries (see BuildChangeState2398 remarks; confirmed 2 across the retail PC 2398 corpus). NPC frames use 3.
+    /// frame carries (see BuildChangeState2398 remarks; confirmed 2 across the retail PC 2398 frames). NPC frames use 3.
     /// The combat enter/re-pulse/leave frames were sending 0, inconsistent with every other PC state frame.</summary>
     private const uint PcStateTrailingValue = 2;
 

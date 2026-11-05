@@ -14,8 +14,8 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 /// </summary>
 /// <remarks>
 /// <para>
-/// The layout comes from the client's builder alone: 1391 has 0 frames in the 38.8M archive, the 133.9M
-/// dump and the live capture. SendPartySwapMembers allocates a 26-byte ByteArray, stores the
+/// The layout comes from the client's builder alone: 1391 is not seen in any retail capture.
+/// SendPartySwapMembers allocates a 26-byte ByteArray, stores the
 /// dword at blob+0 (innerSize 26, msgTag 58157), the session handle at blob+4, then record A
 /// <c>{u64 GID @8, u8 group @16}</c> and record B <c>{u64 GID @17 (unaligned), u8 group @25}</c>, and calls
 /// Zone_C2S proxy +744 (= 1391). The body is COMPACT: <c>[u8 1][u8 26][blob]</c>, so blob+X = body+X+2.

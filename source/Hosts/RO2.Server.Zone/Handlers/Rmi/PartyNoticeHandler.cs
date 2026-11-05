@@ -14,8 +14,8 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 /// </summary>
 /// <remarks>
 /// <para>
-/// The layout comes from the client's builder alone: 1389 has 0 frames in the 38.8M archive, the 133.9M
-/// dump and the live capture, and no client code sends it. Its builder (SendPartySearch , a
+/// The layout comes from the client's builder alone: 1389 is not seen in any retail capture, and no client
+/// code sends it. Its builder (SendPartySearch , a
 /// misnomer; proxy +728 = 1389) clamps n to 160, allocates a blob of 2n+11 bytes and writes
 /// <c>[u16 2n+11][u16 58154][u32 handle][u8 n @8][n UTF-16 chars @9]</c> (ConvertBabylonStringToWide with
 /// SizeInWords n), which leaves 2 unwritten bytes at the end. Its only caller is CGameMessageHandler::

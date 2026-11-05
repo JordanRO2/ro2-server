@@ -13,7 +13,7 @@ public static class CombatRateRules
 
     /// <summary>
     /// Scales a resolved PvP hit by the attacker's PvP Damage Increase (trait 71) and the victim's PvP Damage
-    /// Reduction (trait 72), both already-converted percentage points, as a FINAL multiplier (corpus-confirmed
+    /// Reduction (trait 72), both already-converted percentage points, as a FINAL multiplier (retail-confirmed
     /// placement): <c>damage · (1 + increase/100) · (1 − reduction/100)</c>.
     /// Retail stores PvP damage in a u16 and does NOT cap reduction, so over-100% reduction flips the sign and
     /// wraps to 65,535 (a self-instakill). A diminishing-returns curve on the rate makes over-100% practically
