@@ -135,6 +135,12 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
             return;
         }
 
+        // INV-H7: reserve one unit atomically BEFORE any effect, so two concurrent uses of one stack cannot both
+        // apply their effects against a stale count. A stack that cannot give one is refused silently. An effect
+        // that refuses without having changed anything refunds it (Refund).
+        if (await inventory.AdjustCountAsync(itemUid, player.CharacterId, -1) is not { } remaining) return;
+        Task Refund() => inventory.AdjustCountAsync(itemUid, player.CharacterId, 1);
+
         // Map the item's flat inventory Slot to the client's (bag, slot) — the SAME mapping as
         // WriteItemInstance (main bag = slots 50-69, extra bags 2-4 = 0-34; worn gear 0-49). The 2329
         // handler on the client refreshes exactly that (bag, slot) cell, so it must be the real one.
@@ -184,6 +190,7 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
             if (player.Character is not { } bankOwner)
             {
                 Logger.LogWarning("{Name} used bank expansion {Item} with no character snapshot: not consumed", player.Name, used.ItemId);
+                await Refund();
                 return;
             }
             byte before = BankExpansion.SlotsOf(bankOwner);
@@ -192,6 +199,7 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
             {
                 Logger.LogInformation("{Name} used bank expansion {Item} with the bank at {Slots} slots: not consumed",
                     player.Name, used.ItemId, before);
+                await Refund();
                 return;
             }
             try
@@ -201,6 +209,7 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
             catch (System.Exception ex)
             {
                 Logger.LogWarning(ex, "{Name}: could not store the bank expansion; item not consumed", player.Name);
+                await Refund();
                 return;
             }
             bankOwner.BankSlots = after;
@@ -223,12 +232,14 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
             {
                 Logger.LogWarning("{Name} used reins item {Item}, which no RidingDurationGroup/RidingInfo/ItemCashInfo row resolves: not consumed",
                     player.Name, used.ItemId);
+                await Refund();
                 return;
             }
             if (grant.Status == RO2.Companions.Application.GrantReinsStatus.StoreFailed)
             {
                 Logger.LogWarning(grant.Error, "{Name}: could not store vehicle {Vehicle} from reins {Item}; item not consumed",
                     player.Name, grant.RidingId, used.ItemId);
+                await Refund();
                 return;
             }
             var (ridingId, days, vehicles) = (grant.RidingId, grant.Days, grant.Vehicles!);
@@ -247,18 +258,18 @@ public class ItemUseHandler : ZoneRmiHandlerBase<ItemUseHandler>
         if (CraftScrollLearning.TryResolve(store, used.ItemId) is { } blueprintRecipe
             && !await CraftScrollLearning.TryLearnAsync(session, player, store,
                 services.GetRequiredService<RO2.Economy.Domain.ICraftRecipeRepository>(), blueprintRecipe, used.ItemId, Logger, ct))
+        {
+            await Refund();
             return;
+        }
 
         var questTicked = await AdvanceUseItemQuestsAsync(session, player, used.ItemId, store, services);
 
-        // Consume one from the stack and persist. remainingCount is the stack size AFTER the use; the
-        // client writes it into the slot and clears the slot when it reaches 0. (BuildUseItem2329
-        // already emits a valid compact marker so the client does not NULL-deref.) Done after the quest
-        // payout above (the used item's decrement comes last): a reward placed first
-        // cannot be auto-assigned the cell this use empties, which the 2329 below would then clear.
-        var remaining = used.Count - 1;
+        // The unit was reserved above; remaining is the stack size AFTER the use, which the client writes into
+        // the slot and clears the slot when it reaches 0. An emptied row is dropped only now, after the quest
+        // payout above: a reward placed first cannot be auto-assigned the cell this use empties, which the
+        // 2329 below would then clear.
         if (remaining <= 0) { await inventory.RemoveItemAsync(itemUid); remaining = 0; }
-        else { used.Count = remaining; await inventory.UpdateItemAsync(used); }
 
         // A held-item Khara row naming the used item takes the new count, its 2577 ahead of the 2329. Reward items a
         // Reward_Auto quest pays above get theirs in QuestPrizeHandler.GrantRewardsAsync.
