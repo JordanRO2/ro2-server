@@ -79,6 +79,9 @@ public sealed class FakeCharacterRepository(RepoScheduler scheduler) : ICharacte
     public Task UpdateJobLevelExpAsync(uint characterId, byte jobLevel, ulong jobExp)
         => throw NotModelled(nameof(UpdateJobLevelExpAsync));
 
+    public Task UpdateJobMasteryAsync(uint characterId, byte masteryLevel, byte masteryRank, ulong points)
+        => throw NotModelled(nameof(UpdateJobMasteryAsync));
+
     public Task UpdateBonusStatsAsync(uint characterId,
         (int str, int agi, int intel, int wis, int vit, int luk) bonus,
         (int str, int agi, int intel, int wis, int vit, int luk) primaries)

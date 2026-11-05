@@ -248,6 +248,11 @@ public class CharacterRepository : ICharacterRepository
         => _characters.UpdateOneAsync(c => c.Id == characterId,
             Builders<Character>.Update.Set(c => c.JobLevel, jobLevel).Set(c => c.JobExp, jobExp));
 
+    public Task UpdateJobMasteryAsync(uint characterId, byte masteryLevel, byte masteryRank, ulong points)
+        => _characters.UpdateOneAsync(c => c.Id == characterId,
+            Builders<Character>.Update.Set(c => c.MasteryLevel, masteryLevel)
+                .Set(c => c.MasteryRank, masteryRank).Set(c => c.JobMasteryPoints, points));
+
     public Task UpdateBonusStatsAsync(uint characterId,
         (int str, int agi, int intel, int wis, int vit, int luk) bonus,
         (int str, int agi, int intel, int wis, int vit, int luk) primaries)

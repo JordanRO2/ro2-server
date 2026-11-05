@@ -37,7 +37,7 @@ public sealed class CharacterRepository : ICharacterRepository
         "x, y, z, hp, max_hp, mp, max_mp, str, agi, vit, intel, wis, luk, " +
         "bonus_str, bonus_agi, bonus_int, bonus_wis, bonus_vit, bonus_luk, gold, bank_gold, bind_index, " +
         "facing_yaw, appearance_json, equip_hide_flag, allow_anyone_review, bank_slots, created_at, last_played, " +
-        "play_time_seconds, is_deleted, deleted_at, pro_job_level, job_mastery_points";
+        "play_time_seconds, is_deleted, deleted_at, pro_job_level, job_mastery_points, mastery_level, mastery_rank";
 
  /// <summary>Every column but the identity id: the SET list of the full-row replace.</summary>
     private static readonly string[] ReplaceColumns =
@@ -47,7 +47,7 @@ public sealed class CharacterRepository : ICharacterRepository
         "wis", "luk", "bonus_str", "bonus_agi", "bonus_int", "bonus_wis", "bonus_vit", "bonus_luk", "gold",
         "bank_gold", "bind_index", "facing_yaw", "appearance_json", "equip_hide_flag", "allow_anyone_review",
         "bank_slots", "created_at", "last_played", "play_time_seconds", "is_deleted", "deleted_at",
-        "pro_job_level", "job_mastery_points",
+        "pro_job_level", "job_mastery_points", "mastery_level", "mastery_rank",
     ];
 
     private static readonly string ReplaceSql =
@@ -140,6 +140,8 @@ public sealed class CharacterRepository : ICharacterRepository
         DeletedAt = r.IsDBNull(44) ? null : r.GetDateTime(44),
         ProJobLevel = (byte)r.GetInt16(45),
         JobMasteryPoints = unchecked((ulong)r.GetInt64(46)),
+        MasteryLevel = (byte)r.GetInt16(47),
+        MasteryRank = (byte)r.GetInt16(48),
     };
 
     private async Task<List<Character>> QueryAsync(string where, Action<NpgsqlCommand> bind, string suffix, CancellationToken ct)
@@ -403,6 +405,8 @@ public sealed class CharacterRepository : ICharacterRepository
             AddTimestamp(p, "deleted_at", character.DeletedAt);
             Add(p, "pro_job_level", character.ProJobLevel);
             Add(p, "job_mastery_points", character.JobMasteryPoints);
+            Add(p, "mastery_level", character.MasteryLevel);
+            Add(p, "mastery_rank", character.MasteryRank);
         }, CancellationToken.None);
     }
 
@@ -458,6 +462,17 @@ public sealed class CharacterRepository : ICharacterRepository
             {
                 Add(c.Parameters, "job_level", jobLevel);
                 Add(c.Parameters, "job_exp", jobExp);
+                Add(c.Parameters, "id", (long)characterId);
+            }, CancellationToken.None);
+
+    public Task UpdateJobMasteryAsync(uint characterId, byte masteryLevel, byte masteryRank, ulong points)
+        => ExecAsync(
+            "UPDATE characters SET mastery_level = @level, mastery_rank = @rank, job_mastery_points = @points WHERE id = @id",
+            c =>
+            {
+                Add(c.Parameters, "level", (long)masteryLevel);
+                Add(c.Parameters, "rank", (long)masteryRank);
+                Add(c.Parameters, "points", unchecked((long)points));
                 Add(c.Parameters, "id", (long)characterId);
             }, CancellationToken.None);
 

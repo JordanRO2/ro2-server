@@ -22,6 +22,10 @@ public static class JobMasteryPackets
  /// <summary>Result code for a starter refusal ("Master level could not be started.").</summary>
     public const ushort StartFailed = 23601;
 
+ /// <summary>Result code for an accepted request: 0, which the client's handler shows no message for. The state
+ /// change (the new master level/rank) reaches the client through the re-sent PC view record.</summary>
+    public const ushort Accepted = 0;
+
  /// <summary>Result code for a training refusal ("The condition to be a Master level up is not enough.").</summary>
     public const ushort TrainingConditionNotMet = 23802;
 
