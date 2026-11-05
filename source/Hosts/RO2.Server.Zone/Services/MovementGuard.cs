@@ -1,3 +1,4 @@
+using RO2.GameData;
 using RO2.Worlds.Domain;
 using RO2.Server.Zone.Models;
 
@@ -57,6 +58,18 @@ public sealed class MovementGuard
     public MoveRefusal ApplyServerGranted(PlayerState player, MovePos dest,
         MoveBounds? bounds = null, IWalkableSurface? surface = null)
         => Apply(player, dest, speed: 0f, serverGrantedExemption: true, bounds, surface);
+
+ /// <summary>World units added on every side of a map's navmesh extent, so only a wildly out-of-map coordinate is refused.</summary>
+    public const float BoundsPadding = 1000f;
+
+ /// <summary>The map's navmesh extent padded by <see cref="BoundsPadding"/>, or null (accept) when the map has no navmesh.</summary>
+    public static MoveBounds? BoundsFor(NavMesh? mesh)
+    {
+        if (mesh is null) return null;
+        var e = mesh.WorldExtent;
+        return new MoveBounds((float)e.MinX - BoundsPadding, (float)e.MaxX + BoundsPadding,
+                              (float)e.MinY - BoundsPadding, (float)e.MaxY + BoundsPadding);
+    }
 
     private MoveRefusal Apply(PlayerState player, MovePos dest, float speed, bool serverGrantedExemption,
         MoveBounds? bounds, IWalkableSurface? surface)

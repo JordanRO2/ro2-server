@@ -110,9 +110,12 @@ public class ViewGroupMoveHandler : ZoneRmiHandlerBase<ViewGroupMoveHandler>
         // the combat reach gate that reads its position — keeps the last valid spot.
         var lastX = player.X; // the previous accepted point, half of the channel-move test below
         var lastY = player.Y;
-        var speed = ActorMoveSpeed.CurrentSpeedOf(session, player, services.GetRequiredService<GameDataStore>());
+        var data = services.GetRequiredService<GameDataStore>();
+        var speed = ActorMoveSpeed.CurrentSpeedOf(session, player, data);
         var guard = services.GetRequiredService<MovementGuard>();
-        var refusal = guard.ValidateClientMove(player, new MovePos(curX, curY, curZ), speed);
+        // Padded navmesh extent; null (accept) for a map without a navmesh.
+        var refusal = guard.ValidateClientMove(player, new MovePos(curX, curY, curZ), speed,
+            MovementGuard.BoundsFor(data.GetNavMesh(player.MapId)));
         if (refusal != MoveRefusal.None)
         {
             player.LastActivity = DateTime.UtcNow;

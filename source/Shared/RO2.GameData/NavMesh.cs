@@ -62,6 +62,10 @@ public sealed class NavMesh
     /// <summary>Number of polygons, i.e. the exclusive upper bound of every cell this mesh can return.</summary>
     public int PolyCount => _rings.Length;
 
+    /// <summary>Extent of every polygon vertex on the ground plane, in WORLD units (mesh units / <see cref="WorldToMesh"/>).</summary>
+    public (double MinX, double MaxX, double MinY, double MaxY) WorldExtent
+        => (_minX / WorldToMesh, _maxX / WorldToMesh, _minY / WorldToMesh, _maxY / WorldToMesh);
+
     private NavMesh(int mapId, int[] vx, int[] vy, int[][] rings, double[] polyZ)
     {
         MapId = mapId;
