@@ -176,11 +176,10 @@ public class SelectServerHandler : LoginRmiHandlerBase<SelectServerHandler>
             writer.WriteAt(lengthPos, (uint)(writer.Length - dataStart));
         });
 
-        Logger.LogInformation("Session {Id}: SelectServerAck sent (zone={Host}:{Port}, guid={Guid})",
+        Logger.LogInformation("Session {Id}: SelectServerAck sent (zone={Host}:{Port})",
             session.SessionId,
             ZoneAdvertisedHost(),
-            _config.Zone.Port,
-            sessionGuid);
+            _config.Zone.Port);
     }
 
     /// <summary>The Zone host the 12504 answer advertises: the configured host, or loopback for the any-address bind.</summary>

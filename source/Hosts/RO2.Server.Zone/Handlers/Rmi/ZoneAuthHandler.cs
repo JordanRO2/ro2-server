@@ -59,8 +59,11 @@ public class ZoneAuthHandler : NetworkZoneRmiBase
         IServiceProvider services,
         CancellationToken ct)
     {
-        Logger.LogInformation("Session {SessionId}: ZoneAuth (RMI 1303) received ({Size} bytes): {Hex}",
-            session.SessionId, payload.Length, Convert.ToHexString(payload.Span));
+        Logger.LogInformation("Session {SessionId}: ZoneAuth (RMI 1303) received ({Size} bytes)",
+            session.SessionId, payload.Length);
+        // The payload carries the session token, so its hex stays at Debug.
+        Logger.LogDebug("Session {SessionId}: ZoneAuth payload: {Hex}",
+            session.SessionId, Convert.ToHexString(payload.Span));
 
         // S-H7: one authentication per live connection. A 1303 on a connection that already holds an account,
         // or whose character is in the world, would swap the account under it (and start a second hold loop);
@@ -134,8 +137,8 @@ public class ZoneAuthHandler : NetworkZoneRmiBase
             .ConsumeAsync(sessionGuid);
         if (validated is null)
         {
-            Logger.LogWarning("Session {SessionId}: ZoneAuth REJECTED — no valid Login token for GUID {Guid} "
-                + "(claimed account {Claimed})", session.SessionId, sessionGuid, claimedAccountId);
+            Logger.LogWarning("Session {SessionId}: ZoneAuth REJECTED — no valid Login token "
+                + "(claimed account {Claimed})", session.SessionId, claimedAccountId);
             return;
         }
         var accountId = validated.Value;
@@ -180,8 +183,8 @@ public class ZoneAuthHandler : NetworkZoneRmiBase
         services.GetRequiredService<ChannelMoveTicketStore>().RevokeAccount(accountId);
 
         Logger.LogInformation("Session {SessionId}: ZoneAuth accepted - AccountId={AccountId} (claimed {Claimed}), "
-            + "GUID={Guid}, IP={IP}",
-            session.SessionId, accountId, claimedAccountId, sessionGuid, clientIp);
+            + "IP={IP}",
+            session.SessionId, accountId, claimedAccountId, clientIp);
 
         // Send S2C RMI 2304 (ZoneAuthAck)
         // Layout: [compactLen 01 0A][u16 selfLen = 10][u16 msgTag = 0xD2F3][u32 0 (blob+4)][u16 0 (blob+8)]
