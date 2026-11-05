@@ -106,6 +106,21 @@ public static class KharaTitleRules
     public static bool MayWear(uint kharaId, IReadOnlyCollection<uint> completed, IReadOnlySet<uint> titleKharas)
         => completed.Contains(kharaId) && titleKharas.Contains(kharaId);
 
+    /// <summary>The Khara board whose titles are the SECONDARY slot (slot B): all other boards are PRIMARY (slot A).</summary>
+    public const byte SecondaryTitleBoard = 6;
+
+    /// <summary>The Board_Number of the Khara with this id, or 0 when no row has it (then it also fails ownership).</summary>
+    public static byte BoardOf(uint kharaId, IReadOnlyList<KharaInfo> rows)
+    {
+        foreach (var r in rows)
+            if (r.Quest_ID == kharaId) return r.Board_Number;
+        return 0;
+    }
+
+    /// <summary>True when the Khara's title is a SECONDARY one (board 6), i.e. the slot-B board.</summary>
+    public static bool IsSecondaryBoardKhara(uint kharaId, IReadOnlyList<KharaInfo> rows)
+        => BoardOf(kharaId, rows) == SecondaryTitleBoard;
+
     /// <summary>
     /// The answer to a 1438 asking for <paramref name="aReq"/> / <paramref name="bReq"/> at <paramref name="nowUtc"/>
     /// on <paramref name="state"/> (the rules are in the remarks). <paramref name="nowUtc"/> is an
@@ -113,7 +128,8 @@ public static class KharaTitleRules
     /// (the host's KharaTitleClock.PlayNow). <paramref name="mayWear"/> says whether a non-zero id is a title the
     /// character may wear (<see cref="MayWear"/>).
     /// </summary>
-    public static KharaTitleDecision Decide(KharaTitleState state, uint aReq, uint bReq, DateTime nowUtc, Func<uint, bool> mayWear)
+    public static KharaTitleDecision Decide(KharaTitleState state, uint aReq, uint bReq, DateTime nowUtc,
+        Func<uint, bool> mayWear, Func<uint, bool>? isSecondary = null)
     {
         // (a) A title the character may not wear: the T = 10000 refusal shape (see the remarks). This ownership
         // refusal is this server's own guard; the shape only borrows the standard refusal frame.
@@ -122,6 +138,13 @@ public static class KharaTitleRules
 
         // The same title in both slots is refused with the same shape as (a).
         if (aReq != 0 && aReq == bReq)
+            return new KharaTitleDecision(false, CooldownMs, ResultRefused, state, SlotNotApplied, SlotNotApplied);
+
+        // Slot A holds a PRIMARY title (Khara board 1-5), slot B a SECONDARY one (board 6). The client picks each
+        // from its own board, so a crossed request (a secondary in A or a primary in B) is only ever forged; refuse
+        // it like (a). Skipped when no board predicate is supplied.
+        if (isSecondary is not null &&
+            ((aReq != 0 && isSecondary(aReq)) || (bReq != 0 && !isSecondary(bReq))))
             return new KharaTitleDecision(false, CooldownMs, ResultRefused, state, SlotNotApplied, SlotNotApplied);
 
         // The two locks (remarks). The A timer: while it runs no non-zero A is applied, the same one or another; a

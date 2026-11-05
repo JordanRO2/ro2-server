@@ -48,6 +48,33 @@ public class KharaTitleSelectReauditTests
         Assert.Equal(before, d.NewState);
     }
 
+    // CP-G9 board-per-slot: slot A holds a primary title (board 1-5), slot B a secondary one (board 6).
+    [Fact]
+    public void CrossedBoards_Refused_CorrectPlacementAccepted()
+    {
+        var before = new KharaTitleState(0, 0, null, null);
+        bool Secondary(uint id) => id == 0x600;   // 0x600 = a board-6 (secondary) Khara
+        // A secondary title in the primary slot A, or a primary in the secondary slot B, is refused.
+        Assert.False(KharaTitleRules.Decide(before, 0x600, 0, T0, _ => true, Secondary).Accepted);
+        Assert.False(KharaTitleRules.Decide(before, 0, 0x500, T0, _ => true, Secondary).Accepted);
+        // Primary in A and secondary in B is accepted.
+        Assert.True(KharaTitleRules.Decide(before, 0x500, 0x600, T0, _ => true, Secondary).Accepted);
+    }
+
+    // The board predicate reads KharaInfo.Board_Number: board 6 is secondary, every other board is primary.
+    [Fact]
+    public void IsSecondaryBoardKhara_IsBoard6()
+    {
+        var rows = new[]
+        {
+            new KharaInfo { Quest_ID = 0x500, Board_Number = 5 },
+            new KharaInfo { Quest_ID = 0x600, Board_Number = 6 },
+        };
+        Assert.True(KharaTitleRules.IsSecondaryBoardKhara(0x600, rows));
+        Assert.False(KharaTitleRules.IsSecondaryBoardKhara(0x500, rows));
+        Assert.False(KharaTitleRules.IsSecondaryBoardKhara(0x999, rows));   // unknown -> board 0 -> primary
+    }
+
     [Fact]
     public void BChangeWithinTenSeconds_Refused_ArchiveD3e8()
     {

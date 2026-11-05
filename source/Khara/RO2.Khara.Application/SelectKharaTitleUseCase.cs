@@ -18,6 +18,8 @@ public sealed class SelectKharaTitleUseCase
         DateTime playNow, IReadOnlyCollection<uint> completed, IReadOnlyList<KharaInfo> kharaInfo)
     {
         var titleKharas = KharaTitleRules.TitleGrantingKharas(kharaInfo);
-        return KharaTitleRules.Decide(state, titleIdA, titleIdB, playNow, id => KharaTitleRules.MayWear(id, completed, titleKharas));
+        return KharaTitleRules.Decide(state, titleIdA, titleIdB, playNow,
+            id => KharaTitleRules.MayWear(id, completed, titleKharas),
+            id => KharaTitleRules.IsSecondaryBoardKhara(id, kharaInfo));
     }
 }
