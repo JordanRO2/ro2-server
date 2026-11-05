@@ -74,10 +74,18 @@ jobs:
           --no-build
           -c Release
           --logger "trx;LogFileName=RO2.Tests.trx"
+          --logger "console;verbosity=normal"
           --results-directory "${{ github.workspace }}/TestResults"
 
-      # Runs whether the suite passed or failed, but not when an earlier step
-      # already failed and left the test step skipped (there would be no .trx).
+      # Parses the .trx into the GitHub run summary (a pass/fail/skip table and the
+      # message of each failure) and emits a per-failure annotation, so a red run
+      # says WHICH tests failed and WHY instead of only "exit code 1". Runs whether
+      # the suite passed or failed, but not when an earlier step left Test skipped
+      # (there would be no .trx). Never changes the job verdict; Test already set it.
+      - name: Test summary
+        if: ${{ !cancelled() && steps.test.conclusion != 'skipped' }}
+        run: python3 .github/scripts/test-summary.py "${{ github.workspace }}/TestResults"
+
       - name: Upload test results
         if: ${{ !cancelled() && steps.test.conclusion != 'skipped' }}
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
