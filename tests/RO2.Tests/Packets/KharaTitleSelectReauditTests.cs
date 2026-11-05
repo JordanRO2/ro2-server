@@ -40,6 +40,15 @@ public class KharaTitleSelectReauditTests
     }
 
     [Fact]
+    public void SameNonZeroTitleInBothSlots_Refused_StateUnchanged()
+    {
+        var before = new KharaTitleState(0, 0, null, null);
+        Answer(before, 0x244, 0x244, T0, out var d);
+        Assert.False(d.Accepted);
+        Assert.Equal(before, d.NewState);
+    }
+
+    [Fact]
     public void BChangeWithinTenSeconds_Refused_ArchiveD3e8()
     {
         

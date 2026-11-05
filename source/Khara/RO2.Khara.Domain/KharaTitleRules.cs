@@ -120,6 +120,10 @@ public static class KharaTitleRules
         if ((aReq != 0 && !mayWear(aReq)) || (bReq != 0 && !mayWear(bReq)))
             return new KharaTitleDecision(false, CooldownMs, ResultRefused, state, SlotNotApplied, SlotNotApplied);
 
+        // The same title in both slots is refused with the same shape as (a).
+        if (aReq != 0 && aReq == bReq)
+            return new KharaTitleDecision(false, CooldownMs, ResultRefused, state, SlotNotApplied, SlotNotApplied);
+
         // The two locks (remarks). The A timer: while it runs no non-zero A is applied, the same one or another; a
         // clear (A = 0) always is. The B cooldown: inside 10 s of the last success, with a non-zero B stored, B is kept.
         var timerRunning = TimerLeft(state.ATimerStartUtc, nowUtc) > 0;
