@@ -71,6 +71,12 @@ public static class WarpService
         var logger      = services.GetService<ILoggerFactory>()?.CreateLogger(nameof(WarpService)) ?? NullLogger.Instance;
         bool changesMap = decision.ChangesMap;
 
+        // A live trade cannot span a map change: leaving the partner's map ends it (anti-dupe), and the partner's
+        // window is closed. Only touched when this session actually has a trade, so the common warp (login spawn, any
+        // untraded player) never even resolves BroadcastService.
+        if (changesMap && TradeSessionService.Instance.Get(session.SessionId) is not null)
+            await ZoneService.CancelLiveTradeAsync(session.SessionId, services.GetRequiredService<BroadcastService>(), logger);
+
         
         
         

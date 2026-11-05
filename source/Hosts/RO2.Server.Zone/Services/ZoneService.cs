@@ -147,7 +147,16 @@ public class ZoneService
     /// 2388 [its OWN handle][0], the same frame a cancel sends (TradeConfirmHandler.SendCancelledAsync). A trade whose
     /// swap has latched is left alone: it is not cancellable any more and its own answers close the windows.
     /// </summary>
-    private async Task CancelLiveTradeAsync(uint sessionId)
+    private Task CancelLiveTradeAsync(uint sessionId) => CancelLiveTradeAsync(sessionId, _broadcast, _logger);
+
+    /// <summary>
+    /// Drops the live trade (and pending request) of <paramref name="sessionId"/> and closes the partner's window with
+    /// 2388 [its OWN handle][0], the frame a cancel sends. A no-op when the session has no cancellable trade (so it is
+    /// safe to call on any lifecycle event), and a trade whose swap has latched (<see cref="TradeSession.Completing"/>)
+    /// is left to its own answers. Shared by the disconnect path (<see cref="ZoneService"/>) and the map-change path
+    /// (<see cref="WarpService"/>), so a trade never survives a player leaving the other's map.
+    /// </summary>
+    internal static async Task CancelLiveTradeAsync(uint sessionId, BroadcastService broadcast, ILogger logger)
     {
         var trade = TradeSessionService.Instance.Cancel(sessionId);
         if (trade == null || trade.Completing) return;
@@ -155,14 +164,14 @@ public class ZoneService
         var partnerSession = trade.Other(sessionId);
         try
         {
-            var partner = _broadcast.GetSession(partnerSession);
+            var partner = broadcast.GetSession(partnerSession);
             if (partner != null)
                 await partner.SendRmiAsync(ZoneS2COpcodes.OnConfirmTradePC,
                     TradePackets.BuildOnConfirmTradePC(trade.HandleFor(partnerSession), 0));
         }
         catch (Exception ex)
         {
-            _logger.LogWarning(ex, "Failed to close the trade window of session {Partner} after session {Session} left",
+            logger.LogWarning(ex, "Failed to close the trade window of session {Partner} after session {Session} left",
                 partnerSession, sessionId);
         }
     }

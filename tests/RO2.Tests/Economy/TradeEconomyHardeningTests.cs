@@ -258,6 +258,22 @@ public sealed class TradeEconomyHardeningTests
         w.Close();
     }
 
+    // E-H8: a live trade must not survive a player leaving the partner's map. WarpService calls the same
+    // ZoneService.CancelLiveTradeAsync on a map change; here we drive that seam directly.
+    [Fact]
+    public async Task MapChange_CancelsALiveTrade_AndClosesThePartnersWindow()
+    {
+        await using var net = await StartAsync();
+        var w = World.Create(net);
+        w.OpenTrade();
+
+        await ZoneService.CancelLiveTradeAsync(w.A.SessionId, w.Broadcast, NullLogger.Instance);
+
+        Assert.Null(TradeSessionService.Instance.Get(w.A.SessionId));
+        Assert.Null(TradeSessionService.Instance.Get(w.B.SessionId));
+        await ExpectFrameAsync(w.ReaderB, ZoneS2COpcodes.OnConfirmTradePC, TradePackets.BuildOnConfirmTradePC(HandleB, 0));
+    }
+
     [Fact]
     public async Task Swap_FaultOnTheSecondFlip_EachItemIsWhollyWithOneSide_WalletsAreRefunded_LoggedAtError()
     {
