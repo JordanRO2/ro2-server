@@ -45,6 +45,19 @@ public class CharacterStatDomainTests
         Assert.True(CharacterStats.PvpDamageRatePct(1_000_000f) > 99f);
     }
 
+    // General damage increase (trait 75) / reduction (trait 51 DamageDown) are read straight off the gear's percent
+    // map into EffectiveStats: PercentOf already divided each line by 100, so a +500 line is +5% and a -1000 line -10%.
+    [Fact]
+    public void EffectivePlayerStats_CarriesGeneralDamageRates()
+    {
+        var eq = new EquipStats(
+            new Dictionary<byte, int>(),
+            new Dictionary<byte, float> { [75] = 5f, [51] = -10f });
+        var s = CharacterStats.EffectivePlayerStats(new Character(), eq, null, Array.Empty<NpcLevelScaling>());
+        Assert.Equal(5f, s.DamageIncrease);
+        Assert.Equal(-10f, s.DamageReduction);
+    }
+
     [Fact]
     public void EquipStats_Empty_IsZeroes()
     {

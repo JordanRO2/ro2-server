@@ -292,6 +292,9 @@ public partial class NpcCombatService : ITickable
             // MonsterSwingDamage (Combat.Domain); the live Miss_Rate lookup and the RNG source stay here.
             var (damage, hitKind) = MonsterSwingDamage.Resolve(npc.Atk, npc.Level, victim.CombatDefense,
                 victim.CombatParry, victim.Level, MissRateOf(victim) >= EffectService.FullMissRate, SharedRoller.Instance);
+            // General damage-taken reduction (trait 51 DamageDown): the victim's all-content reduction lowers the
+            // monster's hit (a miss, damage 0, is left untouched). The monster carries no gear increase.
+            damage = CombatRateRules.ApplyDamageRate(damage, 0, victim.CombatDamageReduction);
             byte damageKind = hitKind switch
             {
                 HitKind.Miss => CombatPackets.DamageKindMiss,

@@ -87,6 +87,9 @@ public class CombatService
         // HitResolution.ResolvePveHit; NPCs carry no Crit so NPC→player crits live in NpcCombatService.
         var (damage, hitKind) = HitResolution.ResolvePveHit(
             rawDamage, attacker.CombatCrit, defenderLevel, attacker.Level, SharedRoller.Instance);
+        // General damage increase (trait 75): the attacker's all-content Attak_Damage_Rate scales the dealt hit.
+        // The NPC victim carries no gear traits, so there is no victim-side reduction here.
+        damage = CombatRateRules.ApplyDamageRate(damage, attacker.CombatDamageIncrease, 0);
         byte kind = MapKind(hitKind);
 
         // NOT SENT. 2718 NfySkillDamage is for SKILL damage, and broadcasting it on every damage
@@ -143,6 +146,8 @@ public class CombatService
             CalculateBaseDamage(attacker, skillId), victim.CombatDefense, attacker.CombatPen, attacker.Level,
             victim.Level, attacker.CombatCrit, victim.CombatParry, SharedRoller.Instance);
         damage = CombatRateRules.ApplyPvpDamageRate(damage, attacker.CombatPvpDamageIncrease, victim.CombatPvpDamageReduction);
+        // General damage increase/reduction (trait 75 / 51) apply in PvP too, on top of the PvP-only 71/72 pair.
+        damage = CombatRateRules.ApplyDamageRate(damage, attacker.CombatDamageIncrease, victim.CombatDamageReduction);
         return (damage, MapKind(hitKind));
     }
 

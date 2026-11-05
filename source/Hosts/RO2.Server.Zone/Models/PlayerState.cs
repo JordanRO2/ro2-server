@@ -477,6 +477,12 @@ public class PlayerState : IWallet
     public int CombatAtkBonus { get; set; }
     /// <summary>Gear flat Magic Power (trait 25): added to MAValue·INT in base damage. 0 = none.</summary>
     public int CombatMatkBonus { get; set; }
+    /// <summary>General damage increase (trait 75 Attak_Damage_Rate) in percentage points: raises this player's
+    /// damage DEALT by this percent in PvE and PvP alike. 0 = none. See <see cref="RO2.Combats.Domain.CombatRateRules.ApplyDamageRate"/>.</summary>
+    public float CombatDamageIncrease { get; set; }
+    /// <summary>General damage-taken reduction (trait 51 DamageDown) in percentage points, stored NEGATIVE: reduces
+    /// damage this player TAKES in PvE and PvP alike. 0 = none.</summary>
+    public float CombatDamageReduction { get; set; }
 
     /// <summary>Mirror the freshly-resolved gear-adjusted combat inputs onto the runtime state. Called at
     /// every point the 2498 sheet is recomputed so the combat path stays in lock-step with the sheet.</summary>
@@ -488,6 +494,7 @@ public class PlayerState : IWallet
         CombatCrit = s.Crit; CombatParry = s.Parry; CombatPen = s.Pen;
         CombatPvpDamageIncrease = s.PvpDamageIncrease; CombatPvpDamageReduction = s.PvpDamageReduction;
         CombatAtkBonus = s.AtkBonus; CombatMatkBonus = s.MatkBonus;
+        CombatDamageIncrease = s.DamageIncrease; CombatDamageReduction = s.DamageReduction;
     }
 
     // Area-of-interest: the NPC handles (EntityOid) currently in this viewer's view box, seeded at map load and

@@ -173,6 +173,32 @@ public class FieldPvPCombatTests
         Assert.Equal((99, CombatService.DamageKindNormal), combat.ResolvePvpHit(attacker, victim, 0));
     }
 
+    // General damage increase/reduction (trait 75 Attak_Damage_Rate / 51 DamageDown): all-content (PvE and PvP)
+    // percentage points applied as a LINEAR final multiplier; DamageDown is stored negative. A miss (0) is untouched.
+    [Theory]
+    [InlineData(100, 0.0, 0.0, 100)]       // no modifier: unchanged
+    [InlineData(100, 5.0, 0.0, 105)]       // +5% (Serenia's boots, trait 75 Value 500)
+    [InlineData(100, 0.0, -10.0, 90)]      // DamageDown -10% (shield, trait 51 Value -1000)
+    [InlineData(100, 5.0, -10.0, 95)]      // 100 * 1.05 * 0.90 = 94.5 -> 95 (away-from-zero)
+    [InlineData(0, 5.0, -10.0, 0)]         // a miss stays a miss, never floored up to 1
+    [InlineData(100, 0.0, -200.0, 1)]      // absurd over-100% reduction guarded (floor 1, factor clamped at 0)
+    public void ApplyDamageRate_LinearFinalMultiplier(int damage, double increase, double damageDown, int expected) =>
+        Assert.Equal(expected, CombatRateRules.ApplyDamageRate(damage, increase, damageDown));
+
+    // End-to-end: the general pair composes with the PvP pair in ResolvePvpHit (both apply in PvP).
+    [DataFact]
+    public void ResolvePvpHit_ComposesGeneralAndPvpRates()
+    {
+        var players = new PlayerStateManager(new NoDirtySink());
+        var data = new GameDataStore();
+        var combat = new CombatService(players, new NpcStateManager(data, NullLogger<NpcStateManager>.Instance),
+            new BroadcastService(players, NullLogger<BroadcastService>.Instance), data, NullLogger<CombatService>.Instance);
+        var attacker = new PlayerState { Str = 50, Level = 10, CombatPvpDamageIncrease = 3.0f, CombatDamageIncrease = 5.0f };
+        var victim = new PlayerState { Level = 10, CombatDefense = 0, CombatPvpDamageReduction = 3.5f, CombatDamageReduction = -10.0f };
+        // base 100 -> PvP 100*1.03*0.965 = 99.395 -> 99 -> general 99*1.05*0.90 = 93.555 -> 94.
+        Assert.Equal((94, CombatService.DamageKindNormal), combat.ResolvePvpHit(attacker, victim, 0));
+    }
+
     // ---- the fought-out end on the wire ------------------------------------------------------------
 
     [DataFact]

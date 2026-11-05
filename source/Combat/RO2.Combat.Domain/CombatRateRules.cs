@@ -25,4 +25,20 @@ public static class CombatRateRules
         double scaled = damage * (1.0 + damageIncreasePct / 100.0) * Math.Max(0.0, 1.0 - damageReductionPct / 100.0);
         return Math.Max(1, (int)Math.Round(scaled, MidpointRounding.AwayFromZero));
     }
+
+    /// <summary>
+    /// Scales a resolved hit by the general (all-content) damage stats as a FINAL multiplier:
+    /// <c>damage · (1 + increase/100) · (1 + damageDown/100)</c>. <paramref name="increasePct"/> is the attacker's
+    /// Attak_Damage_Rate (trait 75, positive); <paramref name="damageDownPct"/> is the victim's DamageDown (trait 51,
+    /// stored NEGATIVE, so it lowers the result). These carry no (PVP) qualifier, so they apply in PvE and PvP alike,
+    /// on top of the PvP-only 71/72 pair (<see cref="ApplyPvpDamageRate"/>). The client never shows them on the stat
+    /// sheet (item-tooltip only), so the literal tooltip percent is applied linearly, with no diminishing curve.
+    /// A non-positive <paramref name="damage"/> (a miss) is returned unchanged, and both rates 0 leave the hit intact.
+    /// </summary>
+    public static int ApplyDamageRate(int damage, double increasePct, double damageDownPct)
+    {
+        if (damage <= 0) return damage;
+        double scaled = damage * (1.0 + increasePct / 100.0) * Math.Max(0.0, 1.0 + damageDownPct / 100.0);
+        return Math.Max(1, (int)Math.Round(scaled, MidpointRounding.AwayFromZero));
+    }
 }

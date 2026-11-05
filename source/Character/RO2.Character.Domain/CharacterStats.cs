@@ -145,7 +145,13 @@ public static class CharacterStats
         // Gear flat Attack Power / Magic Power (trait 23 / 25): the AoV ATKBonus, added to APValue·STR / MAValue·INT
         // at damage time. The 2498 sheet already merges these into the shown Attack, so combat must too.
         int atkBonus = eq.FlatOf(23), matkBonus = eq.FlatOf(25);
-        return new EffectiveStats(str, agi, intel, wis, vit, luk, maxHp, maxSp, defense, vigor, crit, parry, pen, pvpInc, pvpRed, atkBonus, matkBonus);
+        // General damage increase (trait 75 Attak_Damage_Rate) and damage-taken reduction (trait 51 DamageDown):
+        // all-content gear stats (no PVP qualifier, so they apply in PvE AND PvP, unlike 71/72). Already-summed
+        // percentage points; DamageDown is stored negative. The client never puts these on the stat sheet (item
+        // tooltip only), so the server applies the literal percent as a linear final multiplier (no curve).
+        float dmgInc = eq.PercentOf(75);
+        float dmgRed = eq.PercentOf(51);
+        return new EffectiveStats(str, agi, intel, wis, vit, luk, maxHp, maxSp, defense, vigor, crit, parry, pen, pvpInc, pvpRed, atkBonus, matkBonus, dmgInc, dmgRed);
     }
 
     /// <summary>
