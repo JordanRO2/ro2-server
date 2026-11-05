@@ -123,8 +123,9 @@ public class PcTrait2498Tests
                 || (i >= CurSpBodyOffset && i < CurSpBodyOffset + 2)
                 || (i >= 17 && i < 29)                    
                 || (i >= 29 && i < 39)                    
-                || (i >= 41 && i < 43)                    
-                || i < MaxHpBodyOffset;                   
+                || (i >= 41 && i < 43)
+                || (i >= 103 && i < 107)                  // PvP inc (blob+100) / red (blob+102), 2 bytes each
+                || i < MaxHpBodyOffset;
             if (!stamped)
                 Assert.Equal(donor[i], after[i]);
         }

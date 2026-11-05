@@ -119,6 +119,23 @@ public sealed class Reaudit4_B0_Tests
         Assert.Equal(0, U16(body, PcTraitRates.CritRateOffset));
     }
 
+ /// <summary>Gear trait 21/22 add flat THEN percent to the class max, as EquipStats.Apply does for the primaries: a +500 flat and +10% HP row over the bare max gives round((base+500)x1.1). Trait 71/72 PvP rows ride blob+100/+102 as the raw summed stat (PercentOf x 100): 2.5 -> 250, 1.0 -> 100.</summary>
+    [DataFact]
+    public async Task Sheet_GearHpPercentAndPvpTraits()
+    {
+        var store = await SheetStore.Value;
+        var c = Hero(4_400_005);
+        uint baseMax = U32(TraitPackets.BuildFullPcTrait2498(c, store, Array.Empty<InventoryItem>(), 100, 10), TraitPackets.PcTraitMaxHpOffset);
+        var donor = TraitPackets.BuildFullPcTrait2498(c, null, null, 100, 10);
+        var gear = new EquipStats(
+            new Dictionary<byte, int> { [21] = 500 },
+            new Dictionary<byte, float> { [21] = 10f, [71] = 2.5f, [72] = 1f });
+        var body = TraitPackets.BuildPcTrait2498FromDonor(donor, c, gear, store, (100, 10));
+        Assert.Equal((uint)Math.Round((baseMax + 500) * 1.1, MidpointRounding.ToEven), U32(body, TraitPackets.PcTraitMaxHpOffset));
+        Assert.Equal(250, U16(body, TraitPackets.PcTraitPvpIncOffset));
+        Assert.Equal(100, U16(body, TraitPackets.PcTraitPvpRedOffset));
+    }
+
     
     
     

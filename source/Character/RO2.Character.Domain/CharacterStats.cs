@@ -129,9 +129,10 @@ public static class CharacterStats
         int str = P(c.Str, 0), agi = P(c.Agi, 1), intel = P(c.Int, 2),
             wis = P(c.Wis, 3), vit = P(c.Vit, 4), luk = P(c.Luk, 5);
         var bs = ComputeBaseStats(pcRow, levelScaling, c.Level, str, agi, intel, wis, vit, luk);
-        // Trait 21 / 22 Kind-1 rows add flat to the class max, as on the sheet. A class with no row keeps its 0 max.
-        uint maxHp = bs.MaxHp > 0 ? (uint)Math.Clamp((long)bs.MaxHp + eq.FlatOf(21), 0, uint.MaxValue) : bs.MaxHp;
-        ushort maxSp = bs.MaxHp > 0 ? (ushort)Math.Clamp(bs.MaxSp + eq.FlatOf(22), 0, ushort.MaxValue) : bs.MaxSp;
+        // Trait 21 / 22 rows add flat AND percent to the class max, as on the sheet: (base + flat) * (1 + pct/100),
+        // the same (flat-then-percent) rule EquipStats.Apply uses for the primaries. A class with no row keeps its 0 max.
+        uint maxHp = bs.MaxHp > 0 ? (uint)Math.Clamp((long)Math.Round((bs.MaxHp + eq.FlatOf(21)) * (1f + eq.PercentOf(21) / 100f)), 0, uint.MaxValue) : bs.MaxHp;
+        ushort maxSp = bs.MaxHp > 0 ? (ushort)Math.Clamp((long)Math.Round((bs.MaxSp + eq.FlatOf(22)) * (1f + eq.PercentOf(22) / 100f)), 0, ushort.MaxValue) : bs.MaxSp;
         int defense = bs.Derived.GetValueOrDefault((byte)26) + eq.FlatOf(26);
         int vigor = eq.FlatOf(62);
         int crit = bs.Derived.GetValueOrDefault((byte)60) + eq.FlatOf(60);

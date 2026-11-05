@@ -115,6 +115,11 @@ public static class TraitPackets
     /// </summary>
     internal const int PcTraitSpRegenOffset = 80;
 
+    /// <summary>blob+100 (u16): PvP Damage Increase (trait 71) RAW summed value; the client shows it through the
+    /// diminishing curve (UICharacterWnd_UpdateCharStat case 0x47). blob+102 is PvP Damage Reduction (trait 72).</summary>
+    internal const int PcTraitPvpIncOffset = 100;
+    internal const int PcTraitPvpRedOffset = 102;
+
     /// <summary>Number of primary stats stored from <see cref="PcTraitPrimaryStatsOffset"/>.</summary>
     internal const int PcTraitPrimaryStatCount = 6;
 
@@ -184,7 +189,9 @@ public static class TraitPackets
         ushort bonusStatPoints = 0,
         IReadOnlyList<ushort>? bonusStats5 = null,
         ushort? hpRegen78 = null,
-        ushort? spRegen80 = null)
+        ushort? spRegen80 = null,
+        ushort pvpInc100 = 0,
+        ushort pvpRed102 = 0)
     {
         if (!traitTemplate.IsEmpty && traitTemplate.Length != PcTraitBlobLen)
         {
@@ -224,6 +231,9 @@ public static class TraitPackets
         BinaryPrimitives.WriteSingleLittleEndian(b[PcTraitScale68Offset..], scaleAtBlob68);
         BinaryPrimitives.WriteUInt32LittleEndian(b[PcTraitCurHpOffset..], curHp);
         BinaryPrimitives.WriteUInt16LittleEndian(b[PcTraitCurSpOffset..], curSp);
+        // PvP Damage Increase / Reduction (trait 71 / 72), the RAW summed value the client runs through its curve.
+        BinaryPrimitives.WriteUInt16LittleEndian(b[PcTraitPvpIncOffset..], pvpInc100);
+        BinaryPrimitives.WriteUInt16LittleEndian(b[PcTraitPvpRedOffset..], pvpRed102);
 
         // Unspent bonus stat point pool, written over the template value.
         BinaryPrimitives.WriteUInt16LittleEndian(b[PcTraitStatPointsOffset..], bonusStatPoints);
@@ -597,10 +607,12 @@ public static class TraitPackets
         
         
         
-        var maxHp = haveBase ? (uint)Math.Clamp((long)baseStats.MaxHp + (equip?.FlatOf(TraitMaxHp) ?? 0), 0, uint.MaxValue)
+        // Max HP/SP add the trait-21/22 flat AND percent: (base + flat) * (1 + pct/100), the same rule
+        // CharacterStats.EffectivePlayerStats applies so the sheet and combat agree.
+        var maxHp = haveBase ? (uint)Math.Clamp((long)Math.Round((baseStats.MaxHp + (equip?.FlatOf(TraitMaxHp) ?? 0)) * (1f + (equip?.PercentOf(TraitMaxHp) ?? 0f) / 100f)), 0, uint.MaxValue)
             : (uint)Math.Max(0, character.MaxHp > 0 ? character.MaxHp : FallbackMaxHpBase + character.Level * FallbackMaxHpPerLevel);
-        
-        var maxSp = haveBase ? (ushort)Math.Clamp(baseStats.MaxSp + (equip?.FlatOf(TraitMaxSp) ?? 0), 0, ushort.MaxValue)
+
+        var maxSp = haveBase ? (ushort)Math.Clamp((long)Math.Round((baseStats.MaxSp + (equip?.FlatOf(TraitMaxSp) ?? 0)) * (1f + (equip?.PercentOf(TraitMaxSp) ?? 0f) / 100f)), 0, ushort.MaxValue)
             : (ushort)Math.Clamp(character.MaxMp > 0 ? character.MaxMp : FallbackMaxSpBase + character.Level * FallbackMaxSpPerLevel, 0, ushort.MaxValue);
 
         
@@ -675,10 +687,16 @@ public static class TraitPackets
 
         var (hpRegen, spRegen) = RegenAmounts(store, character.Job, primary[4], primary[3], equip);
 
+        // PvP Damage Increase / Reduction (trait 71 / 72): the client reads the RAW summed stat at blob+100 / +102
+        // and runs it through its own diminishing curve, so send the raw sum (PercentOf divided each line by 100).
+        ushort pvpInc = (ushort)Math.Clamp((long)Math.Round((equip?.PercentOf(71) ?? 0f) * 100f), 0, ushort.MaxValue);
+        ushort pvpRed = (ushort)Math.Clamp((long)Math.Round((equip?.PercentOf(72) ?? 0f) * 100f), 0, ushort.MaxValue);
+
         var body = TraitPackets.BuildPcTrait2498(
             maxHp, maxSp, curHp, curSp, scaleAtBlob68, template,
             derivedByStatId: derived, primaryStats6: primary, bonusStatPoints: unspentStatPoints,
-            bonusStats5: bonus5, hpRegen78: hpRegen, spRegen80: spRegen);
+            bonusStats5: bonus5, hpRegen78: hpRegen, spRegen80: spRegen,
+            pvpInc100: pvpInc, pvpRed102: pvpRed);
 
         
         
