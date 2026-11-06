@@ -300,7 +300,7 @@ public static class ItemPackets
         
         writer.WriteUInt32(item.DyeColor2);  // +0x65 dye colour of slot 1
         writer.WriteUInt32(item.DyeColor3);  // +0x69 dye colour of slot 2
-        writer.WriteUInt32(0);  // +0x6D outfit look template, not modelled
+        writer.WriteUInt32(item.OutfitLookItemId);  // +0x6D outfit look (shape-change) item id
         
         
         writer.WriteUInt32(item.FxEnchantIndex);  // +0x71 FX enchant index

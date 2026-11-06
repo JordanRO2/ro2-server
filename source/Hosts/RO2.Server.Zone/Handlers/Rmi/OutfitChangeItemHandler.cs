@@ -2,6 +2,7 @@ using System.Buffers.Binary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RO2.Application.Interfaces;
+using RO2.GameData;
 using RO2.Network.Packets;
 using RO2.Network.Protocol;
 using RO2.Network.ProudNet;
@@ -17,8 +18,9 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 /// Request: <c>[u8 checkbox][u64][u64 itemUidA][u64 itemUidB]</c>. Answer (3037): <c>[u16 result 0][u64 itemUidA][u64 itemUidB]</c>.
 /// </para>
 /// <para>
-/// The answer confirms the pair without applying the change: the server keeps no look template and no diamond wallet,
-/// so nothing is debited and the look is not stored. No refusal is sent, since no refusal code is known.
+/// The change is stored as the look item id on item A (<see cref="InventoryItem.OutfitLookItemId"/>), only when both items
+/// share an Equip_Slot. The server keeps no diamond wallet, so nothing is debited. No refusal is sent, since no refusal
+/// code is known.
 /// </para>
 /// </remarks>
 public class OutfitChangeItemHandler : ZoneRmiHandlerBase<OutfitChangeItemHandler>
@@ -51,7 +53,20 @@ public class OutfitChangeItemHandler : ZoneRmiHandlerBase<OutfitChangeItemHandle
             return;
         }
 
-        Logger.LogDebug("{Name} outfit change at NPC {Npc:X}: item {A} ({ItemA}) takes the look of {B} ({ItemB}) (look not stored)",
+        // A look only transfers within the same equip slot.
+        var store = services.GetRequiredService<GameDataStore>();
+        var slotA = store.GetItem(itemA.ItemId)?.Equip_Slot;
+        var slotB = store.GetItem(itemB.ItemId)?.Equip_Slot;
+        if (slotA is null || slotA != slotB)
+        {
+            Logger.LogInformation("{Name} outfit change refused: items {ItemA} / {ItemB} are not in the same equip slot",
+                player.Name, itemA.ItemId, itemB.ItemId);
+            return;
+        }
+
+        itemA.OutfitLookItemId = itemB.ItemId;
+        await inventory.UpdateItemAsync(itemA);
+        Logger.LogDebug("{Name} outfit change at NPC {Npc:X}: item {A} ({ItemA}) takes the look of {B} ({ItemB})",
             player.Name, npcHandle, uidA, itemA.ItemId, uidB, itemB.ItemId);
 
         

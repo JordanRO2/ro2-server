@@ -230,6 +230,7 @@ public class InventoryRepository : IInventoryRepository
             u.Set(i => i.DyeColor2, item.DyeColor2),
             u.Set(i => i.DyeColor3, item.DyeColor3),
             u.Set(i => i.FxEnchantIndex, item.FxEnchantIndex),
+            u.Set(i => i.OutfitLookItemId, item.OutfitLookItemId),
             u.Set(i => i.EnchantReinforceId, item.EnchantReinforceId),
             u.Set(i => i.EnchantSeconds, item.EnchantSeconds),
             u.Set(i => i.CardsJson, item.CardsJson),

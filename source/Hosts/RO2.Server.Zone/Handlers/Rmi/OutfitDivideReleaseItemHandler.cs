@@ -17,9 +17,8 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 /// Request: <c>[u64 targetUid][u64 scrollUid]</c>. Answer (3038): <c>[u16 result][u64 scrollUid][126-byte target record]</c>.
 /// </para>
 /// <para>
-/// The release clears the look-source mark on the target. This server never sets that mark, so every target is already
-/// releasable and the answer carries the target's current record. The scroll is not consumed, and no 2848 is broadcast
-/// because the look does not change. Requests for items the player does not own are dropped silently.
+/// The release clears the outfit look item id on the target (<see cref="InventoryItem.OutfitLookItemId"/>) and the answer
+/// carries the target's record after the clear. The scroll is not consumed, and no 2848 is broadcast. Requests for items the player does not own are dropped silently.
 /// </para>
 /// </remarks>
 public class OutfitDivideReleaseItemHandler : ZoneRmiHandlerBase<OutfitDivideReleaseItemHandler>
@@ -84,6 +83,12 @@ public class OutfitDivideReleaseItemHandler : ZoneRmiHandlerBase<OutfitDivideRel
 
         Logger.LogDebug("{Name} releases item {Target} ({ItemId}) with scroll {Scroll} (scroll kept)",
             player.Name, targetUid, target.ItemId, scrollUid);
+
+        if (target.OutfitLookItemId != 0)
+        {
+            target.OutfitLookItemId = 0;
+            await inventory.UpdateItemAsync(target);
+        }
 
         var body = BuildAnswer3038(0, scrollUid, ItemPackets.BuildItemRecord126(target));
         await session.SendRmiAsync(ZoneS2COpcodes.AnsOutfitDivideReleaseItem, (ReadOnlyMemory<byte>)body, ct);

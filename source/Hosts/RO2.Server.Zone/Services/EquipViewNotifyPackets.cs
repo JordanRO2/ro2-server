@@ -45,7 +45,7 @@ public static class EquipViewNotifyPackets
  /// <remarks>
  /// <para>
  /// Layout: slot (u8, clamped to 0 to 26), item id (u32), dye colour 0 (u32), element (u8), refine level (u8), dye colour 1
- /// (u32), dye colour 2 (u32), a reserved zero (u32), FX enchant index (u32), and a trailing zero byte.
+ /// (u32), dye colour 2 (u32), outfit look item id (u32), FX enchant index (u32), and a trailing zero byte.
  /// </para>
  /// </remarks>
     public static void WriteEquipRecord28(PacketWriter p, InventoryItem it)
@@ -57,8 +57,8 @@ public static class EquipViewNotifyPackets
         p.WriteByte(it.Refine);                             
         p.WriteUInt32(it.DyeColor2);                        
         p.WriteUInt32(it.DyeColor3);                        
-        p.WriteUInt32(0);                                   
-        p.WriteUInt32(it.FxEnchantIndex);                   
+        p.WriteUInt32(it.OutfitLookItemId);
+        p.WriteUInt32(it.FxEnchantIndex);                  
         p.WriteByte(0);                                     
     }
 

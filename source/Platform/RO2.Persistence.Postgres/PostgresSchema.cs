@@ -638,7 +638,8 @@ public static class PostgresSchema
             ability_value         bigint      NULL,
             created_at            timestamptz NOT NULL DEFAULT now(),
             grinding_json         text        NULL,
-            seal_json             text        NULL
+            seal_json             text        NULL,
+            outfit_look_item_id   bigint      NOT NULL DEFAULT 0
         )
         """,
         """
@@ -646,6 +647,9 @@ public static class PostgresSchema
         """,
         """
         ALTER TABLE inventory_items ADD COLUMN IF NOT EXISTS seal_json text NULL
+        """,
+        """
+        ALTER TABLE inventory_items ADD COLUMN IF NOT EXISTS outfit_look_item_id bigint NOT NULL DEFAULT 0
         """,
         """
         CREATE INDEX IF NOT EXISTS ix_inventory_items_character_storage ON inventory_items (character_id, storage_type)

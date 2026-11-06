@@ -59,6 +59,12 @@ public class InventoryItem
     public uint FxEnchantIndex { get; set; }
 
  /// <summary>
+ /// The outfit look (1700 ReqOutfitChangeItem): the ItemInfo id of the shape-change item whose appearance this item wears,
+ /// 0 = its own look. Retail writes it as the u32 at record+0x6D, and in the 28-byte worn record of 2315.
+ /// </summary>
+    public uint OutfitLookItemId { get; set; }
+
+ /// <summary>
  /// The timed enchant of a Reinforce_Type-2 ItemReinforceInfo row (blessings, whetstones, oils and
  /// embroideries, applied with 1543 ReqAttachSocket): its <c>Reinforce_ID</c>, 0 = never enchanted. Retail
  /// writes it as the u16 at record+17 in every record, and keeps it there when the timer runs out.
@@ -166,6 +172,7 @@ public class InventoryItem
         DyeColor2 = source.DyeColor2;
         DyeColor3 = source.DyeColor3;
         FxEnchantIndex = source.FxEnchantIndex;
+        OutfitLookItemId = source.OutfitLookItemId;
         EnchantReinforceId = source.EnchantReinforceId;
         EnchantSeconds = source.EnchantSeconds;
         CardsJson = source.CardsJson;
