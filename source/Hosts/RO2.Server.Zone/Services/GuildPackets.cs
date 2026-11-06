@@ -234,25 +234,26 @@ public static class GuildPackets
         + "0000");                                  // robe count 0
 
     /// <summary>
-    /// Builds the 2929 answer for the guild master of a guild with no registered robe: code 0, the Basic Robe as
-    /// the current robe, and a one-entry list holding the same record.
+    /// Builds the 2929 answer for a guild master: code 0, the robe the guild currently wears, and the list of robes
+    /// the master may pick, each identified by its item id. The master's pick (1633) names one of these item ids.
     /// </summary>
     /// <remarks>
-    /// This server has no robe purchase, selection or recolouring, so every guild is in this default state.
-    /// The body is [u32 0x36][u16 0][25-byte Basic Robe][u16 1][25-byte Basic Robe], 58 bytes.
+    /// The body is [u32 len-4][u16 0][25-byte current robe][u16 count][count x 25-byte robe]. The current robe is the
+    /// same record the guild's 2559 and the PC-record guild block carry, so the robe window and the guild panel never
+    /// disagree about what is worn. A list entry carries the guild's colour for the robe it currently wears and a zero
+    /// colour for the rest.
     /// </remarks>
-    public static byte[] BuildAnsGuildListRegisteredRobeBasic()
+    public static byte[] BuildAnsGuildListRegisteredRobe(Guild g, IReadOnlyList<uint> selectableRobeItemIds)
     {
-        // The same record the guild's 2559 and the PC-record guild block carry as the current robe, so the robe
-        // window and the guild panel never disagree about what is worn.
-        var record = GuildRobeRecord.InfoForm();
-        using var w = new PacketWriter(8 + 2 * record.Length);
-        var lenPos = w.Reserve(LengthPrefixLen);   // body length - 4 (0x36 here)
+        var (curItem, curColor) = GuildRobeRecord.Effective(g);
+        using var w = new PacketWriter(8 + (1 + selectableRobeItemIds.Count) * GuildRobeRecord.InfoFormLength);
+        var lenPos = w.Reserve(LengthPrefixLen);   // body length - 4
         var start = w.Length;
         w.WriteUInt16(RobeCodeMaster);             // the master may list robes
-        w.WriteBytes(record);                      // current robe = list[0]
-        w.WriteUInt16(1);                          // one registered robe: the Basic Robe
-        w.WriteBytes(record);
+        w.WriteBytes(GuildRobeRecord.InfoForm(curItem, curColor));   // current robe
+        w.WriteUInt16((ushort)selectableRobeItemIds.Count);
+        foreach (var id in selectableRobeItemIds)
+            w.WriteBytes(GuildRobeRecord.InfoForm(id, id == curItem ? curColor : 0u));
         w.WriteAt(lenPos, (uint)(w.Length - start));
         return w.ToArray();
     }

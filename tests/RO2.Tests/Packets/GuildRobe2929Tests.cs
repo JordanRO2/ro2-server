@@ -1,72 +1,71 @@
 using System.Buffers.Binary;
+using RO2.Guilds.Domain;
 using RO2.Server.Zone.Services;
 using Xunit;
 
 namespace RO2.Tests.Packets;
 
 /// <summary>
-/// 2929 AnsGuildListRegisteredRobe. A guild master whose guild has never bought a robe receives the 58-byte Basic Robe answer; every other member receives the 33-byte code 0x13 body.
+/// 2929 AnsGuildListRegisteredRobe. The guild master receives the guild's current robe and the list of robes it may
+/// pick (the Basic Robe and the Guild_Robe table); every other member receives the 33-byte code 0x13 body.
 /// </summary>
 public class GuildRobe2929Tests
 {
- /// <summary>Master's 2929 answer for a guild without a purchased robe.</summary>
-    private const string RetailMasterFreshGuild =
-        "360000000000" +
-        "24f6c100abaaaaaa2af8d840000000000000000081af9fff80" +
-        "0100" +
-        "24f6c100abaaaaaa2af8d840000000000000000081af9fff80";
-
- /// <summary>Non-master 2929 answer body (code 0x13).</summary>
+    /// <summary>Non-master 2929 answer body (code 0x13).</summary>
     private const string RetailNonMaster = "1d000000130000000000000000000000000000000000000041fa00000000800000";
 
- /// <summary>Offsets of the two robe records' f64 date fields inside the 58-byte master body.</summary>
-    private static readonly int[] DateOffsets = { 6 + 4, 33 + 4 };
+    /// <summary>The robes the master may pick: the Basic Robe and the five Guild_Robe table robes.</summary>
+    private static readonly uint[] Selectable =
+        { GuildRobeRecord.BasicRobeItemId, 12711461, 12711462, 12711463, 12711464, 12711465 };
+
+    private const int CodeOffset = 4;
+    private const int CurrentRobeOffset = 6;
+    private const int RecordLen = 25;
+    private const int CountOffset = CurrentRobeOffset + RecordLen;          // 31
+    private const int ListOffset = CountOffset + 2;                         // 33
 
     private static byte[] FromHex(string h) => Convert.FromHexString(h);
+    private static uint ItemIdAt(byte[] body, int off) => BinaryPrimitives.ReadUInt32LittleEndian(body.AsSpan(off));
+    private static uint ColorAt(byte[] body, int off) => BinaryPrimitives.ReadUInt32LittleEndian(body.AsSpan(off + 20));
 
- /// <summary>Master body with its dates re-expressed in the local time zone. The server derives this field rather than copying it (see GuildRobeRecord.BasicRobeDate).</summary>
-    private static byte[] RetailWithLocalDates(string hex, IEnumerable<int> dateOffsets)
+    [Fact]
+    public void Master_answer_lists_the_current_robe_then_every_pickable_robe()
     {
-        var b = FromHex(hex);
-        foreach (var off in dateOffsets)
-            BinaryPrimitives.WriteDoubleLittleEndian(b.AsSpan(off, 8), GuildRobeRecord.BasicRobeDate);
-        return b;
+        var body = GuildPackets.BuildAnsGuildListRegisteredRobe(new Guild(), Selectable);
+
+        Assert.Equal((uint)body.Length - 4, BinaryPrimitives.ReadUInt32LittleEndian(body));         // inner length
+        Assert.Equal(0, BinaryPrimitives.ReadUInt16LittleEndian(body.AsSpan(CodeOffset)));          // master code 0
+        Assert.Equal(Selectable.Length, BinaryPrimitives.ReadUInt16LittleEndian(body.AsSpan(CountOffset)));
+        for (int i = 0; i < Selectable.Length; i++)
+            Assert.Equal(Selectable[i], ItemIdAt(body, ListOffset + i * RecordLen));
     }
 
     [Fact]
-    public void Master_answer_is_retails_fresh_guild_form()
+    public void Fresh_guild_wears_the_basic_robe()
     {
-        var body = GuildPackets.BuildAnsGuildListRegisteredRobeBasic();
+        var body = GuildPackets.BuildAnsGuildListRegisteredRobe(new Guild(), Selectable);
 
-        Assert.Equal(58, body.Length);
-        Assert.Equal(RetailWithLocalDates(RetailMasterFreshGuild, DateOffsets), body);
+        Assert.Equal(GuildRobeRecord.InfoForm(), body.AsSpan(CurrentRobeOffset, RecordLen).ToArray());
+        Assert.Equal(GuildRobeRecord.BasicRobeItemId, ItemIdAt(body, CurrentRobeOffset));
+        Assert.Equal(GuildRobeRecord.BasicRobeColor, ColorAt(body, CurrentRobeOffset));
     }
 
     [Fact]
-    public void Master_answer_lists_the_current_robe_first()
+    public void Chosen_robe_is_the_current_robe_and_carries_the_guilds_colour()
     {
-        var body = GuildPackets.BuildAnsGuildListRegisteredRobeBasic();
+        var g = new Guild { RobeItemId = 12711464, RobeColorCode = 0xFF88A868 };
 
-        Assert.Equal((uint)body.Length - 4, BinaryPrimitives.ReadUInt32LittleEndian(body));
-        Assert.Equal(0, BinaryPrimitives.ReadUInt16LittleEndian(body.AsSpan(4)));              
-        Assert.Equal(1, BinaryPrimitives.ReadUInt16LittleEndian(body.AsSpan(31)));             
-        Assert.Equal(body.AsSpan(6, 25).ToArray(), body.AsSpan(33, 25).ToArray());             
-        Assert.Equal(GuildRobeRecord.BasicRobeItemId, BinaryPrimitives.ReadUInt32LittleEndian(body.AsSpan(33)));
+        var body = GuildPackets.BuildAnsGuildListRegisteredRobe(g, Selectable);
+
+        // Current robe = the chosen robe with the guild colour.
+        Assert.Equal(12711464u, ItemIdAt(body, CurrentRobeOffset));
+        Assert.Equal(0xFF88A868u, ColorAt(body, CurrentRobeOffset));
+        // Its list entry carries the colour; the others carry none.
+        int worn = Array.IndexOf(Selectable, 12711464u);
+        Assert.Equal(0xFF88A868u, ColorAt(body, ListOffset + worn * RecordLen));
+        Assert.Equal(0u, ColorAt(body, ListOffset)); // the Basic entry (not worn)
     }
 
- /// <summary>The robe window's current robe is the record the guild panel (2559) carries, so the two
- /// can never name different robes.</summary>
-    [Fact]
-    public void Master_answer_carries_the_guild_lines_robe_record()
-    {
-        var body = GuildPackets.BuildAnsGuildListRegisteredRobeBasic();
-        var record = GuildRobeRecord.InfoForm();
-
-        Assert.Equal(record, body.AsSpan(6, 25).ToArray());
-        Assert.Equal(record, body.AsSpan(33, 25).ToArray());
-    }
-
- /// <summary>With the original date the record matches the reference bytes exactly, whatever the local time zone.</summary>
     [Fact]
     public void Basic_robe_record_with_retails_date_is_retails_bytes()
     {

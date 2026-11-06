@@ -53,8 +53,9 @@ public static class PcViewInfoPackets
             if (guild.Guid16 != null)
                 guild.Guid16.AsSpan(0, Math.Min(16, guild.Guid16.Length)).CopyTo(s.Slice(OffGuid, 16));
             BinaryPrimitives.WriteUInt16LittleEndian(s.Slice(OffEmblem, 2),
-                emblems.IndexOf(guild.Guid16));                 
-            GuildRobeRecord.WriteViewForm(s.Slice(OffRobe, OffConstByte - OffRobe)); 
+                emblems.IndexOf(guild.Guid16));
+            var (robeItem, robeColor) = GuildRobeRecord.Effective(guild);
+            GuildRobeRecord.WriteViewForm(s.Slice(OffRobe, OffConstByte - OffRobe), robeItem, robeColor, GuildRobeRecord.BasicRobeDate);
         }
 
         s[OffConstByte] = 1;

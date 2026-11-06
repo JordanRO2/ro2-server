@@ -12,7 +12,7 @@ namespace RO2.Server.Zone.Handlers.Rmi;
 
 /// <summary>RMI 1634 ReqGuildListRegisteredRobe: requests the guild's registered robes for the robe window.</summary>
 /// <remarks>
-/// The request body is empty. The 2929 answer depends on the requester: the guild master receives the robe list (code 0, at least one entry, starting with the Basic Robe), and other members receive code 0x13 with an empty record, which does not open the window. See <see cref="GuildPackets.BuildAnsGuildListRegisteredRobeBasic"/> and <see cref="GuildPackets.BuildAnsGuildListRegisteredRobeEmpty"/>.
+/// The request body is empty. The 2929 answer depends on the requester: the guild master receives the robe list (code 0, the current robe then every pickable robe), and other members receive code 0x13 with an empty record, which does not open the window. See <see cref="GuildPackets.BuildAnsGuildListRegisteredRobe"/> and <see cref="GuildPackets.BuildAnsGuildListRegisteredRobeEmpty"/>.
 /// </remarks>
 public class GuildListRegisteredRobeHandler : ZoneRmiHandlerBase<GuildListRegisteredRobeHandler>
 {
@@ -29,15 +29,19 @@ public class GuildListRegisteredRobeHandler : ZoneRmiHandlerBase<GuildListRegist
         // (rank 0) and 0x13 to every other rank, members of robe-owning guilds included.
         var isMaster = guild != null && guild.MasterCharId == player.CharacterId;
 
-        // This server has no robe purchase, selection or recolouring, so every guild is in the state of a
-        // guild that never bought a robe: the master gets the Basic Robe as both the current robe and the
-        // one registered robe.
-        var body = isMaster
-            ? GuildPackets.BuildAnsGuildListRegisteredRobeBasic()
-            : GuildPackets.BuildAnsGuildListRegisteredRobeEmpty();
+        // The master gets the guild's current robe plus every pickable robe (Basic and the Guild_Robe table), so the
+        // robe window can offer them; other members get the 0x13 body that does not open the window.
+        byte[] body;
+        if (isMaster)
+        {
+            var data = services.GetRequiredService<RO2.GameData.GameDataStore>();
+            body = GuildPackets.BuildAnsGuildListRegisteredRobe(guild!, GuildRobeRecord.SelectableRobeItemIds(data));
+        }
+        else
+            body = GuildPackets.BuildAnsGuildListRegisteredRobeEmpty();
 
         Logger.LogDebug("{Name} requests the registered guild robe list ({Form})",
-            player.Name, isMaster ? "master: Basic Robe" : "not the master: 0x13");
+            player.Name, isMaster ? "master" : "not the master: 0x13");
 
         await session.SendRmiAsync(ZoneS2COpcodes.AnsGuildListRegisteredRobe, (ReadOnlyMemory<byte>)body);
     }

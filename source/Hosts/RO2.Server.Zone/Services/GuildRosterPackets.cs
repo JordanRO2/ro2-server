@@ -257,8 +257,9 @@ public static class GuildRosterPackets
         w.WriteBytes(GuidOf(g));
         w.WriteByte((byte)name.Length);
         w.WriteBytes(Encoding.Unicode.GetBytes(name));
-        w.WriteUInt16(emblems.IndexOf(GuidOf(g)));   
-        w.WriteBytes(GuildRobeRecord.InfoForm());   // current robe: the Basic Robe
+        w.WriteUInt16(emblems.IndexOf(GuidOf(g)));
+        var (robeItem, robeColor) = GuildRobeRecord.Effective(g);
+        w.WriteBytes(GuildRobeRecord.InfoForm(robeItem, robeColor));   // current robe
 
         // Object 2: notice and guild progress.
         w.WriteUInt32((uint)(Info2Base + notice.Length * 2));

@@ -128,6 +128,15 @@ public sealed class Guild
     public ushort NoticeColorCode { get; set; }
     /// <summary>Guild funds.</summary>
     public long Gold { get; set; }
+    /// <summary>
+    /// Item id of the robe the guild wears, or 0 when it has never bought one and wears the default robe. Set when the
+    /// master picks a robe in the robe window.
+    /// </summary>
+    public uint RobeItemId { get; set; }
+    /// <summary>
+    /// The robe's colour, assigned at random each time the master picks a robe, or 0 for the default robe's colour.
+    /// </summary>
+    public uint RobeColorCode { get; set; }
  /// <summary>When the guild was created. Null for guilds created before this was recorded.</summary>
     public DateTime? CreatedUtc { get; set; }
  /// <summary>

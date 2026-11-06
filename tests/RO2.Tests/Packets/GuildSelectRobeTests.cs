@@ -48,6 +48,18 @@ public class GuildSelectRobeTests
     }
 
     [Fact]
+    public void Selection_record_for_a_bought_robe_is_the_dumps_frame()
+    {
+        // Dump frame: robe 12711464 picked, colour 0xFF88A868, the pad carrying the date's high dword.
+        const string retailRecord = "28f6c100a71835fc4193e640000000004193e64068a888ff80";
+        var date = BinaryPrimitives.ReadDoubleLittleEndian(Convert.FromHexString("a71835fc4193e640"));
+
+        var record = GuildRobeChangedPackets.SelectionRecord(0x00C1F628, 0xFF88A868, date);
+
+        Assert.Equal(Convert.FromHexString(retailRecord), record);
+    }
+
+    [Fact]
     public void Select_answer_2928_is_the_dumps_frame()
     {
         Assert.Equal(Convert.FromHexString("0000"),

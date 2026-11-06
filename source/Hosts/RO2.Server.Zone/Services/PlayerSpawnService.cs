@@ -598,7 +598,8 @@ public class PlayerSpawnService
         body.WriteBytes(guid);   // 16-byte guild GUID
 
         body.WriteUInt16(emblems.IndexOf(guild.Guid16));   // u16 emblem index
-        body.WriteBytes(GuildRobeRecord.InfoForm());       // 25-byte robe record
+        var (robeItem, robeColor) = GuildRobeRecord.Effective(guild);
+        body.WriteBytes(GuildRobeRecord.InfoForm(robeItem, robeColor));   // 25-byte robe record
         WriteWireWideString(body, GuildService.RankTitleOf(guild, charId),
             GuildRosterPackets.RankNameMaxChars);   // rank title
     }

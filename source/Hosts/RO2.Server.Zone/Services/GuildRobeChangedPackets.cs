@@ -59,22 +59,25 @@ internal static class GuildRobeChangedPackets
     internal static readonly double BasicRobeSelectedDate = new DateTime(2000, 11, 11, 11, 11, 11).ToOADate();
 
     /// <summary>
-    /// Builds the 25-byte info-form record sent when the master selects the Basic Robe.
+    /// Builds a 25-byte selection record sent when the master picks a robe:
+    /// <c>[u32 item id][f64 date][u32 0][u32 date-high][u32 colour][u8 0x80]</c>. The pad field holds the high dword of
+    /// the date's bit pattern, as the client's selection answer does. The record is transient: the next guild-line
+    /// record restores the current robe.
     /// </summary>
-    /// <remarks>
-    /// The pad field holds the high dword of the date's bit pattern, and the item id is 0. The record is
-    /// transient: the next guild-line record restores the current robe.
-    /// </remarks>
-    internal static byte[] BasicRobeSelectedRecord()
+    internal static byte[] SelectionRecord(uint itemId, uint color, double oleDate)
     {
         var b = new byte[GuildRobeRecord.InfoFormLength];
-        // ItemIdOffset (item id 0) and DateStatusOffset (status 0): left as allocated.
-        BinaryPrimitives.WriteDoubleLittleEndian(b.AsSpan(DateOffset, sizeof(double)), BasicRobeSelectedDate);
-        BinaryPrimitives.WriteUInt32LittleEndian(b.AsSpan(PadOffset, sizeof(uint)), (uint)(BitConverter.DoubleToUInt64Bits(BasicRobeSelectedDate) >> 32));
-        BinaryPrimitives.WriteUInt32LittleEndian(b.AsSpan(ColorOffset, sizeof(uint)), GuildRobeRecord.BasicRobeColor);
+        BinaryPrimitives.WriteUInt32LittleEndian(b.AsSpan(ItemIdOffset), itemId);
+        // DateStatusOffset (status 0): left as allocated.
+        BinaryPrimitives.WriteDoubleLittleEndian(b.AsSpan(DateOffset, sizeof(double)), oleDate);
+        BinaryPrimitives.WriteUInt32LittleEndian(b.AsSpan(PadOffset, sizeof(uint)), (uint)(BitConverter.DoubleToUInt64Bits(oleDate) >> 32));
+        BinaryPrimitives.WriteUInt32LittleEndian(b.AsSpan(ColorOffset, sizeof(uint)), color);
         b[FlagsOffset] = GuildRobeRecord.InfoFormTail;
         return b;
     }
+
+    /// <summary>Builds the selection record sent when the master picks the Basic Robe: item id 0 and the fixed sentinel date.</summary>
+    internal static byte[] BasicRobeSelectedRecord() => SelectionRecord(0, GuildRobeRecord.BasicRobeColor, BasicRobeSelectedDate);
 
     /// <summary>Size of the 2927 envelope's u32 inner-length prefix.</summary>
     private const int LengthPrefixLength = sizeof(uint);

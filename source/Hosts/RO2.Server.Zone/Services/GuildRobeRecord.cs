@@ -1,4 +1,6 @@
 using System.Buffers.Binary;
+using RO2.GameData;
+using RO2.Guilds.Domain;
 
 namespace RO2.Server.Zone.Services;
 
@@ -8,9 +10,10 @@ namespace RO2.Server.Zone.Services;
 /// </summary>
 /// <remarks>
 /// <para>
-/// This server has no robe purchase or registration, so every guild wears the Basic Robe: the item
-/// 12711460 ("Basic robe", Item_Type 52), colour 0xFF9FAF81, date status 0 and an "unregistered" date: the Unix
-/// epoch as an OLE date. The pad word is 0.
+/// A guild wears the robe it bought (<see cref="Guild.RobeItemId"/> and <see cref="Guild.RobeColorCode"/>), or the
+/// Basic Robe when it has bought none: the item 12711460 ("Basic robe", Item_Type 52), colour 0xFF9FAF81, date status 0
+/// and an "unregistered" date: the Unix epoch as an OLE date. The pad word is 0. <see cref="Effective"/> maps a guild
+/// to the item and colour it wears.
 /// </para>
 /// <code>
 /// info form, 25 B (2559, PC record, 2929, 2927 push): [u32 robe item id][f64 OLE date][u32 date status][u32 pad][u32 colour][u8 0x80]
@@ -70,36 +73,64 @@ public static class GuildRobeRecord
     /// <summary>The Basic Robe's date: the Unix epoch as an OLE date in server local time.</summary>
     public static double BasicRobeDate => DateTime.UnixEpoch.ToLocalTime().ToOADate();
 
+    /// <summary>
+    /// The robe item ids the master may pick: the Basic Robe followed by every robe in the Guild_Robe table. The
+    /// master's pick (1633) must name one of these.
+    /// </summary>
+    public static IReadOnlyList<uint> SelectableRobeItemIds(GameDataStore data)
+    {
+        var ids = new List<uint>(1 + data.GuildRobe.Count) { BasicRobeItemId };
+        foreach (var r in data.GuildRobe) ids.Add(r.Robe_Item_ID);
+        return ids;
+    }
+
+    /// <summary>
+    /// The robe a guild effectively wears: its stored robe and colour, or the Basic Robe and its colour when the guild
+    /// has never bought one (<see cref="Guild.RobeItemId"/> 0).
+    /// </summary>
+    public static (uint ItemId, uint Color) Effective(Guild g)
+        => (g.RobeItemId != 0 ? g.RobeItemId : BasicRobeItemId,
+            g.RobeColorCode != 0 ? g.RobeColorCode : BasicRobeColor);
+
     /// <summary>Writes the 25-byte info form of the Basic Robe.</summary>
     public static void WriteInfoForm(Span<byte> dst) => WriteInfoForm(dst, BasicRobeDate);
 
     /// <summary>Writes the 24-byte view form of the Basic Robe.</summary>
     public static void WriteViewForm(Span<byte> dst) => WriteViewForm(dst, BasicRobeDate);
 
-    /// <summary>
-    /// Writes the 25-byte info form with an explicit OLE date, so the bytes do not depend on the machine's time zone.
-    /// </summary>
+    /// <summary>Writes the 25-byte info form of the Basic Robe with an explicit OLE date.</summary>
     internal static void WriteInfoForm(Span<byte> dst, double oleDate)
+        => WriteInfoForm(dst, BasicRobeItemId, BasicRobeColor, oleDate);
+
+    /// <summary>Writes the 24-byte view form of the Basic Robe with an explicit OLE date.</summary>
+    internal static void WriteViewForm(Span<byte> dst, double oleDate)
+        => WriteViewForm(dst, BasicRobeItemId, BasicRobeColor, oleDate);
+
+    /// <summary>
+    /// Writes the 25-byte info form for a robe item and colour with an explicit OLE date, so the bytes do not depend
+    /// on the machine's time zone.
+    /// </summary>
+    internal static void WriteInfoForm(Span<byte> dst, uint itemId, uint color, double oleDate)
     {
         dst[..InfoFormLength].Clear();
-        BinaryPrimitives.WriteUInt32LittleEndian(dst[ItemIdOffset..], BasicRobeItemId);
+        BinaryPrimitives.WriteUInt32LittleEndian(dst[ItemIdOffset..], itemId);
         BinaryPrimitives.WriteDoubleLittleEndian(dst.Slice(InfoDateOffset, sizeof(double)), oleDate);
         // +12 u32 date status 0 (valid) and +16 u32 pad 0: left as cleared.
-        BinaryPrimitives.WriteUInt32LittleEndian(dst.Slice(InfoColorOffset, sizeof(uint)), BasicRobeColor);
+        BinaryPrimitives.WriteUInt32LittleEndian(dst.Slice(InfoColorOffset, sizeof(uint)), color);
         dst[InfoTailOffset] = InfoFormTail;
     }
 
-    /// <summary>Writes the 24-byte view form with an explicit OLE date.</summary>
-    internal static void WriteViewForm(Span<byte> dst, double oleDate)
+    /// <summary>Writes the 24-byte view form for a robe item and colour with an explicit OLE date.</summary>
+    internal static void WriteViewForm(Span<byte> dst, uint itemId, uint color, double oleDate)
     {
         dst[..ViewFormLength].Clear();
-        BinaryPrimitives.WriteUInt32LittleEndian(dst[ItemIdOffset..], BasicRobeItemId);
-        BinaryPrimitives.WriteUInt32LittleEndian(dst.Slice(ViewColorOffset, sizeof(uint)), BasicRobeColor);
+        BinaryPrimitives.WriteUInt32LittleEndian(dst[ItemIdOffset..], itemId);
+        BinaryPrimitives.WriteUInt32LittleEndian(dst.Slice(ViewColorOffset, sizeof(uint)), color);
         BinaryPrimitives.WriteDoubleLittleEndian(dst.Slice(ViewDateOffset, sizeof(double)), oleDate);
         // +16 u32 date status 0 and +20 u32 pad 0: left as cleared.
     }
 
-    /// <summary>Returns the info form as a new array.</summary>
+    /// <summary>Returns the Basic Robe info form as a new array.</summary>
     public static byte[] InfoForm()
     {
         var b = new byte[InfoFormLength];
@@ -107,11 +138,27 @@ public static class GuildRobeRecord
         return b;
     }
 
-    /// <summary>Returns the view form as a new array.</summary>
+    /// <summary>Returns the Basic Robe view form as a new array.</summary>
     public static byte[] ViewForm()
     {
         var b = new byte[ViewFormLength];
         WriteViewForm(b);
+        return b;
+    }
+
+    /// <summary>Returns the 25-byte info form for a robe item and colour as a new array.</summary>
+    public static byte[] InfoForm(uint itemId, uint color)
+    {
+        var b = new byte[InfoFormLength];
+        WriteInfoForm(b, itemId, color, BasicRobeDate);
+        return b;
+    }
+
+    /// <summary>Returns the 24-byte view form for a robe item and colour as a new array.</summary>
+    public static byte[] ViewForm(uint itemId, uint color)
+    {
+        var b = new byte[ViewFormLength];
+        WriteViewForm(b, itemId, color, BasicRobeDate);
         return b;
     }
 }
