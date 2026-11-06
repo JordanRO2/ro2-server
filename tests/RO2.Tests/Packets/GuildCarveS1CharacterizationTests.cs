@@ -31,10 +31,10 @@ public class GuildCarveS1CharacterizationTests
 
         Assert.Equal(2, ranks.Count);
         Assert.Equal((byte)0, ranks[0].Index);
-        Assert.Equal(" 11832", ranks[0].Name);
+        Assert.Equal("Master", ranks[0].Name);
         Assert.Equal((byte)0x0F, ranks[0].Permissions);
         Assert.Equal((byte)1, ranks[1].Index);
-        Assert.Equal(" 11833", ranks[1].Name);
+        Assert.Equal("Member", ranks[1].Name);
         Assert.Equal((byte)0x00, ranks[1].Permissions);
         Assert.Equal((byte)0x01, GuildService.PermissionInvite);
         Assert.Equal((byte)0x02, GuildService.PermissionKick);
@@ -79,11 +79,11 @@ public class GuildCarveS1CharacterizationTests
         var g = new Guild
         {
             MasterCharId = 9,
-            Ranks = { Rank(0, " 11832"), Rank(1, " 11833") },
+            Ranks = { Rank(0, "Master"), Rank(1, "Member") },
             Members = { Member(1, 1), Member(2, 6) },
         };
 
-        Assert.Equal(" 11833", GuildService.RankTitleOf(g, 1));
+        Assert.Equal("Member", GuildService.RankTitleOf(g, 1));
         Assert.Equal(string.Empty, GuildService.RankTitleOf(g, 2));
         Assert.Equal(string.Empty, GuildService.RankTitleOf(g, 99));
         Assert.Equal(string.Empty, GuildService.RankTitleOf(g, 9));
@@ -104,8 +104,8 @@ public class GuildCarveS1CharacterizationTests
         {
             Assert.True(Private<bool>("NormalizeRanks", seed));
             Assert.Equal(2, seed.Ranks.Count);
-            Assert.Equal((0, " 11832", (byte)0x0F), (seed.Ranks[0].Index, seed.Ranks[0].Name, seed.Ranks[0].Permissions));
-            Assert.Equal((1, " 11833", (byte)0x00), (seed.Ranks[1].Index, seed.Ranks[1].Name, seed.Ranks[1].Permissions));
+            Assert.Equal((0, "Master", (byte)0x0F), (seed.Ranks[0].Index, seed.Ranks[0].Name, seed.Ranks[0].Permissions));
+            Assert.Equal((1, "Member", (byte)0x00), (seed.Ranks[1].Index, seed.Ranks[1].Name, seed.Ranks[1].Permissions));
             Assert.False(Private<bool>("NormalizeRanks", seed));
         }
     }
@@ -119,7 +119,7 @@ public class GuildCarveS1CharacterizationTests
 
         var onlyMaster = new Guild { Ranks = { Rank(0, "boss", 0x01) } };
         Assert.True(Private<bool>("NormalizeRanks", onlyMaster));
-        Assert.Equal(new[] { "boss", " 11833" }, onlyMaster.Ranks.Select(r => r.Name));
+        Assert.Equal(new[] { "boss", "Member" }, onlyMaster.Ranks.Select(r => r.Name));
         Assert.Equal((byte)1, onlyMaster.Ranks[1].Index);
 
         var whole = new Guild { Ranks = { Rank(0, "a"), Rank(1, "b") } };

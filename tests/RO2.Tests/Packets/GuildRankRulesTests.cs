@@ -9,12 +9,12 @@ public class GuildRankRulesTests
     private static GuildRank Rank(byte index, string name, byte perms = 0) => new() { Index = index, Name = name, Permissions = perms };
 
     [Fact]
-    public void DefaultRanks_AreTheClientStringIds_AndConstantsAreFixed()
+    public void DefaultRanks_HaveMasterAndMemberTitles_AndConstantsAreFixed()
     {
         var r = GuildRankRules.DefaultRanks();
         Assert.Equal(2, r.Count);
-        Assert.Equal((0, " 11832", (byte)0x0F), ((int)r[0].Index, r[0].Name, r[0].Permissions));
-        Assert.Equal((1, " 11833", (byte)0x00), ((int)r[1].Index, r[1].Name, r[1].Permissions));
+        Assert.Equal((0, "Master", (byte)0x0F), ((int)r[0].Index, r[0].Name, r[0].Permissions));
+        Assert.Equal((1, "Member", (byte)0x00), ((int)r[1].Index, r[1].Name, r[1].Permissions));
         Assert.Equal(2, GuildRankRules.MinRanks);
         Assert.Equal(10, GuildRankRules.MaxRanks);
         Assert.Equal((byte)0x01, GuildRankRules.PermissionInvite);
@@ -65,6 +65,6 @@ public class GuildRankRulesTests
         var noMaster = new Guild { Ranks = { Rank(3, "x"), Rank(4, "y") } };
         Assert.True(GuildRankRules.NormalizeRanks(noMaster));
         Assert.Equal(new[] { 0, 3, 4 }, noMaster.Ranks.Select(r => (int)r.Index));
-        Assert.Equal(" 11832", noMaster.Ranks[0].Name);
+        Assert.Equal("Master", noMaster.Ranks[0].Name);
     }
 }

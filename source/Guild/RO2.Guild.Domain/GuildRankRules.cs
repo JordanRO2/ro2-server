@@ -13,13 +13,13 @@ public static class GuildRankRules
     public const byte DefaultMemberRankIndex = 1;
 
     /// <summary>
-    /// Title text of the default master rank: a client string id (string_ui 11832, "master") behind a leading space,
-    /// sent verbatim in place of a name.
+    /// Display name of the default master rank. Custom content (not a 1:1 of retail, which sent the raw client string
+    /// id "11832" = "master"); a readable name sent verbatim, kept within the 10-character rank-name cap.
     /// </summary>
-    public const string DefaultMasterTitle = " 11832";
+    public const string DefaultMasterTitle = "Master";
 
-    /// <summary>Title text of the default member rank: a client string id (string_ui 11833, "member"), as above.</summary>
-    public const string DefaultMemberTitle = " 11833";
+    /// <summary>Display name of the default member rank. Custom content (retail's raw string id was "11833" = "member").</summary>
+    public const string DefaultMemberTitle = "Member";
 
     /// <summary>Permission byte with every one of the four rights (invite, remove member, storage, notice) set.</summary>
     public const byte PermissionsAll = 0x0F;
