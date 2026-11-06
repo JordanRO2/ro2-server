@@ -129,7 +129,7 @@ public class CharacterStatDomainTests
             BaseHP = 1000f, BaseHPRate = 0.85f, BaseHPRateValue = 0.25f, BaseHPValue = 50f,
             VitHPValue = 12, WisSPValue = 15,
             APValue = 2, MAValue = 3, VitDefenseValue = 4, AgiCrticalValue = 5,
-            StrParryValue = 6, IntParryValue = 7, AgiDodgeValue = 8, StrHitValue = 9, IntHitValue = 10,
+            StrParryValue = 6, IntParryValue = 7, AgiDodgeValue = 8, StrHitValue = 9, IntHitValue = 10, HitValue = 11,
         };
         var bs = CharacterStats.ComputeBaseStats(pc, Curve, level: 10, str: 100, agi: 50, intel: 30, wis: 20, vit: 40, luk: 5);
         Assert.Equal(1043u, bs.MaxHp);        // Base_HP(10)=563 + 12*40
@@ -139,16 +139,16 @@ public class CharacterStatDomainTests
         Assert.Equal(160, bs.Derived[26]);    // Def  = 4*40
         Assert.Equal(250, bs.Derived[60]);    // Crit = 5*50
         Assert.Equal(810, bs.Derived[61]);    // Parry= 6*100 + 7*30
-        Assert.Equal(400, bs.Derived[59]);    // Dodge= 8*50
-        Assert.Equal(1200, bs.Derived[58]);   // Hit  = 9*100 + 10*30
+        Assert.Equal(401, bs.Derived[59]);    // Dodge= 8*50 + 1
+        Assert.Equal(1751, bs.Derived[58]);   // Hit  = 9*100 + 10*30 + 11*50 + 1
     }
 
     [Fact]
     public void ClassBasePrimaries_IsFlatOneForAnyClass()
     {
-        // Measured in-game: every class's naked base primary is 1; the Standard_Stat Base_* columns are ignored.
+        // Measured in-game: every class's naked base primary is 1 for STR..VIT and 0 for LUK; the Standard_Stat Base_* columns are ignored.
         var s = new StandardStat { Base_STR = 5, Base_AGI = 6, Base_INT = 7, Base_DEX = 8, Base_VIT = 9, Base_LUK = 10 };
-        Assert.Equal((1, 1, 1, 1, 1, 1), CharacterStats.ClassBasePrimaries(s)!.Value);
+        Assert.Equal((1, 1, 1, 1, 1, 0), CharacterStats.ClassBasePrimaries(s)!.Value);
         Assert.Null(CharacterStats.ClassBasePrimaries(null));
     }
 

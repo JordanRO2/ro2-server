@@ -417,8 +417,8 @@ public static class StatService
     {
         if (store.StandardStats.GetValueOrDefault(job) is null) return null;
         if (classBaseOverrides is not null && classBaseOverrides.TryGetValue(job, out var o) && o is { Length: >= 5 })
-            return (o[0], o[1], o[2], o[3], o[4], o.Length > 5 ? o[5] : 1);
-        return (1, 1, 1, 1, 1, 1);
+            return (o[0], o[1], o[2], o[3], o[4], o.Length > 5 ? o[5] : 0);
+        return (1, 1, 1, 1, 1, 0);
     }
 
     // ===================== Bonus (allocatable) stat points =====================

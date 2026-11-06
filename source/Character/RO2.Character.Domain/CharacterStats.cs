@@ -74,8 +74,8 @@ public static class CharacterStats
             [26] = pc.VitDefenseValue * vit,                           // Defense (naked)   (+armor elsewhere)
             [60] = pc.AgiCrticalValue * agi,                           // Critical
             [61] = pc.StrParryValue * str + pc.IntParryValue * intel,  // Parry / Guard
-            [59] = pc.AgiDodgeValue * agi,                             // Dodge / Evade     (base only; +1 level term omitted)
-            [58] = pc.StrHitValue * str + pc.IntHitValue * intel,      // Hit / Precision   (partial; level term unresolved)
+            [59] = pc.AgiDodgeValue * agi + 1,                         // Dodge / Evade (retail adds a flat +1)
+            [58] = pc.StrHitValue * str + pc.IntHitValue * intel + pc.HitValue * agi + 1,  // Hit / Precision (HitValue scales with AGI, plus a flat +1)
         };
         return new BaseStats(
             (uint)Math.Clamp(maxHp, 0, uint.MaxValue),
@@ -91,11 +91,12 @@ public static class CharacterStats
     public static (int str, int agi, int intel, int wis, int vit, int luk)? ClassBasePrimaries(StandardStat? s)
     {
         if (s is null) return null;
-        // Measured in-game (naked, titles off) across classes: every class's base primary is 1. The Standard_Stat
-        // Base_* columns (e.g. 10/7/0/0/3) are legacy starting-license values, not the live base; all stat identity
-        // comes from level/job/gear/allocation on top of this flat 1. The row is still required to exist (null = the
-        // class has no row, caller keeps its fallback).
-        return (1, 1, 1, 1, 1, 1);
+        // Measured in-game (naked, titles off) across classes: every class's base primary is 1 for STR..VIT and 0 for
+        // LUK. Retail's 2498 keeps the LUK slot (blob+24) at 0 in every captured frame, so the base is (1,1,1,1,1,0).
+        // The Standard_Stat Base_* columns (e.g. 10/7/0/0/3) are legacy starting-license values, not the live base; all
+        // stat identity comes from level/job/gear/allocation on top of this. The row is still required to exist (null =
+        // the class has no row, caller keeps its fallback).
+        return (1, 1, 1, 1, 1, 0);
     }
 
     /// <summary>
