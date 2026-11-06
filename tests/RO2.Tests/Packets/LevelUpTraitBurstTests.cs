@@ -293,6 +293,7 @@ public sealed class LevelUpTraitBurstTests
                 loot: null!, scopeFactory: null!, logger: NullLogger<EffectService>.Instance, emblems: TestEmblems.Create()));
             collection.AddSingleton<IInventoryRepository>(Inventory);
             collection.AddSingleton(data);
+            collection.AddSingleton(new RO2.Server.Zone.Configuration.ServerConfiguration());  // stat-reset path reads Game.ClassBaseStats
             _services = collection.BuildServiceProvider();
             Combat = withSheet
                 ? new CombatService(Players, npcs, broadcast, data, NullLogger<CombatService>.Instance,
