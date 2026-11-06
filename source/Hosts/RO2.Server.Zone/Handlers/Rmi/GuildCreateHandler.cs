@@ -96,7 +96,7 @@ public class GuildCreateHandler : ZoneRmiHandlerBase<GuildCreateHandler>
 
         var span = payload.Span;
         var guildName = span.Length >= MinNamedRequestLength ? GuildPackets.ReadWideNameAt(span, NameOff, GuildNameMaxChars) : string.Empty;
-        var notice = ReadNotice(span);
+        var (notice, noticeColor) = ReadNotice(span);
 
         var data = services.GetRequiredService<GameDataStore>();
         var fee = CreationFee(data);
@@ -138,7 +138,7 @@ public class GuildCreateHandler : ZoneRmiHandlerBase<GuildCreateHandler>
                 case CreateSettlement.AlreadyInGuildRefund: result = ResultAlreadyInGuild; player.Credit(fee); break;   // joined another guild meanwhile
                 default:
                     guild = created;
-                    if (notice.Length > 0) await GuildService.Instance.SetNoticeAsync(guild!, notice);
+                    if (notice.Length > 0) await GuildService.Instance.SetNoticeAsync(guild!, notice, noticeColor);
                     // The creation tax, charged only once the guild exists; it is taken on a creation and
                     // nothing on the refusal (see BuildAnsGuildCreate).
                     if (fee > 0)
@@ -179,12 +179,15 @@ public class GuildCreateHandler : ZoneRmiHandlerBase<GuildCreateHandler>
 
     /// <summary>The WStr16 notice after the name field: [u16 n @104][n UTF-16 chars @106]; empty when the
     /// request is too short to hold what its count claims.</summary>
-    private static string ReadNotice(ReadOnlySpan<byte> body)
+    private static (string Text, ushort Color) ReadNotice(ReadOnlySpan<byte> body)
     {
-        if (body.Length < NoticeOff + CountPrefixBytes) return string.Empty;
+        if (body.Length < NoticeOff + CountPrefixBytes) return (string.Empty, 0);
         int n = BinaryPrimitives.ReadUInt16LittleEndian(body.Slice(NoticeOff, CountPrefixBytes));
-        if (n == 0 || NoticeOff + CountPrefixBytes + n * WideCharBytes > body.Length) return string.Empty;
-        return Encoding.Unicode.GetString(body.Slice(NoticeOff + CountPrefixBytes, n * WideCharBytes));
+        if (n == 0 || NoticeOff + CountPrefixBytes + n * WideCharBytes > body.Length) return (string.Empty, 0);
+        var text = Encoding.Unicode.GetString(body.Slice(NoticeOff + CountPrefixBytes, n * WideCharBytes));
+        ushort color = 0;
+        if (text.Length > 0 && (text[^1] & 0xF800) == 0xF800) { color = text[^1]; text = text[..^1]; }   // split the trailing colour code, as the notice-update path does
+        return (text, color);
     }
 
     private const int GuildNameFieldBytes = 100;   // wchar[50], the same field 1426 sends

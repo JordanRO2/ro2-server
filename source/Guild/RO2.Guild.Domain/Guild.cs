@@ -121,6 +121,11 @@ public sealed class Guild
     public uint MasterCharId { get; set; }
     /// <summary>Guild notice text.</summary>
     public string Notice { get; set; } = string.Empty;
+    /// <summary>
+    /// The trailing colour-code character (U+F800..U+FFFF) the master chose for <see cref="Notice"/>, kept apart from the
+    /// text and echoed after it on the 2559 and 2564 notice. 0 = no colour set (default text): nothing is sent after the text.
+    /// </summary>
+    public ushort NoticeColorCode { get; set; }
     /// <summary>Guild funds.</summary>
     public long Gold { get; set; }
  /// <summary>When the guild was created. Null for guilds created before this was recorded.</summary>

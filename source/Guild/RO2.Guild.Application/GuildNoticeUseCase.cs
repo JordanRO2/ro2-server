@@ -26,10 +26,10 @@ public sealed class GuildNoticeUseCase(IGuildNoticeLedger ledger)
         => !inGuild ? ResultNoGuild : count > MaxNoticeCount ? ResultTooLong : ResultOk;
 
     /// <summary>Validates and, on <see cref="ResultOk"/>, sets <paramref name="notice"/> on <paramref name="guild"/> and writes the guild once.</summary>
-    public async Task<ushort> SetAsync(Guild? guild, int count, string notice)
+    public async Task<ushort> SetAsync(Guild? guild, int count, string notice, ushort colorCode = 0)
     {
         var result = Validate(guild is not null, count);
-        if (result == ResultOk) await ledger.SetNoticeAsync(guild!, notice);
+        if (result == ResultOk) await ledger.SetNoticeAsync(guild!, notice, colorCode);
         return result;
     }
 }

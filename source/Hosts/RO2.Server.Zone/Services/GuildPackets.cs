@@ -147,10 +147,11 @@ public static class GuildPackets
     // ---------- notice ----------
 
     /// <summary>
-    /// A guild notice ends with this private-use character, which the client expects as the last character of
-    /// every notice of a real guild. A guild without a notice sends exactly this one character.
+    /// The notice as sent on the wire: the text followed by the guild's stored colour-code character, or the bare
+    /// text when no colour is set (retail sends no code for default text).
     /// </summary>
-    private const string NoticeTerminator = "";
+    public static string NoticeWithColor(Guild g)
+        => (g.Notice ?? string.Empty) + (g.NoticeColorCode != 0 ? ((char)g.NoticeColorCode).ToString() : string.Empty);
 
     /// <summary>The 2929 reason code for a viewer who is not the guild master: there is no robe list to show.</summary>
     internal const ushort RobeCodeNotMaster = 0x13;
@@ -290,16 +291,16 @@ public static class GuildPackets
 
     /// <summary>
     /// Builds the 2564 notice update: [u32 len-4][16 guild GUID][u16 char count][UTF-16LE notice]. The char
-    /// count includes the notice terminator.
+    /// count includes the colour code, when the guild has one.
     /// </summary>
     public static byte[] BuildNfyGuildNoticeUpdated(Guild g)
     {
-        var noticeChars = (g.Notice ?? string.Empty) + NoticeTerminator;
+        var noticeChars = NoticeWithColor(g);
         using var w = new PacketWriter(32 + noticeChars.Length * 2);
         var lenPos = w.Reserve(LengthPrefixLen);
         var start = w.Length;
         w.WriteBytes(Guid16(g));
-        w.WriteUInt16((ushort)noticeChars.Length);                 // char count, terminator included
+        w.WriteUInt16((ushort)noticeChars.Length);                 // char count, colour code included
         w.WriteBytes(Encoding.Unicode.GetBytes(noticeChars));
         w.WriteAt(lenPos, (uint)(w.Length - start));
         return w.GetWrittenSpan().ToArray();

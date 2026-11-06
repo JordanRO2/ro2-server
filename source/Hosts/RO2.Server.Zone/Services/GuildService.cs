@@ -321,9 +321,10 @@ public sealed class GuildService : IGuildVaultLedger
     public GuildMember? FindMemberByGid(Guild g, ulong gid) => GuildMembershipRules.FindByGid(g, gid);
 
     
-    public async Task SetNoticeAsync(Guild g, string notice)
+    public async Task SetNoticeAsync(Guild g, string notice, ushort colorCode = 0)
     {
         g.Notice = notice ?? string.Empty;
+        g.NoticeColorCode = colorCode;
         await PersistAsync(g);
     }
 

@@ -8,6 +8,6 @@ namespace RO2.Guilds.Application;
 /// </summary>
 public interface IGuildNoticeLedger
 {
-    /// <summary>Sets the guild's notice to <paramref name="notice"/> and writes the guild.</summary>
-    Task SetNoticeAsync(Guild guild, string notice);
+    /// <summary>Sets the guild's notice to <paramref name="notice"/> with colour code <paramref name="colorCode"/> (0 = none) and writes the guild.</summary>
+    Task SetNoticeAsync(Guild guild, string notice, ushort colorCode);
 }

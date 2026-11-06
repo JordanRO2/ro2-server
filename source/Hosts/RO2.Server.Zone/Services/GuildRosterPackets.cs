@@ -179,9 +179,6 @@ public static class GuildRosterPackets
     // Length of the fixed part of object 2 (GUID, notice length, progress block); the notice follows.
     private const int Info2Base = 57;
 
-    /// <summary>Character that ends a guild notice: U+F801, a private-use code point the client reads as the end of the text.</summary>
-    private const string NoticeTerminator = "\uF801";
-
     /// <summary>Longest guild name written to the guild panel, in characters.</summary>
     private const int GuildNameMaxChars = 24;
 
@@ -249,7 +246,7 @@ public static class GuildRosterPackets
 
         var name = g.Name ?? string.Empty;
         if (name.Length > GuildNameMaxChars) name = name.Substring(0, GuildNameMaxChars);
-        var notice = (g.Notice ?? string.Empty) + NoticeTerminator;
+        var notice = GuildPackets.NoticeWithColor(g);
         var masterName = master?.Name ?? string.Empty;
         if (masterName.Length > MasterNameMaxChars) masterName = masterName.Substring(0, MasterNameMaxChars);
 

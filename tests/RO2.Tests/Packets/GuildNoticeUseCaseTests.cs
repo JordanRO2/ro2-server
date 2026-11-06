@@ -10,7 +10,7 @@ public class GuildNoticeUseCaseTests
     private sealed class CountingLedger : IGuildNoticeLedger
     {
         public readonly List<string> Writes = [];
-        public Task SetNoticeAsync(Guild guild, string notice) { Writes.Add(notice); return Task.CompletedTask; }
+        public Task SetNoticeAsync(Guild guild, string notice, ushort colorCode) { Writes.Add(notice); return Task.CompletedTask; }
     }
 
     [Fact]

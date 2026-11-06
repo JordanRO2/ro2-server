@@ -210,7 +210,7 @@ public class GuildNotice1428Tests
     {
         var body = Convert.FromHexString(Refused1428);
         Assert.Equal(224, body.Length);
-        var (count, text) = GuildNoticeUpdateHandler.ReadNotice(body);
+        var (count, text, _) = GuildNoticeUpdateHandler.ReadNotice(body);
 
         Assert.Equal(101, count);
         Assert.Equal(100, text.Length);   
@@ -223,7 +223,7 @@ public class GuildNotice1428Tests
     public void AnAcceptedNotice_Answers0000_AndBroadcastsRetails2564()
     {
         var request = Convert.FromHexString(Accepted1428);
-        var (count, text) = GuildNoticeUpdateHandler.ReadNotice(request);
+        var (count, text, colour) = GuildNoticeUpdateHandler.ReadNotice(request);
 
         Assert.Equal(94, count);
         Assert.Equal(GuildNoticeUpdateHandler.NoticeSet, GuildNoticeUpdateHandler.Validate(inGuild: true, count));
@@ -231,8 +231,36 @@ public class GuildNotice1428Tests
             GuildNoticeUpdateHandler.BuildAnsGuildUpdateNotice(GuildNoticeUpdateHandler.NoticeSet, Guid2dfbcba0));
 
         
-        var guild = new Guild { Guid16 = (byte[])Guid2dfbcba0.Clone(), Notice = text };
+        var guild = new Guild { Guid16 = (byte[])Guid2dfbcba0.Clone(), Notice = text, NoticeColorCode = colour };
+        Assert.Equal(0xF801, colour);
         Assert.Equal(request, GuildPackets.BuildNfyGuildNoticeUpdated(guild));
+    }
+
+    [Fact]
+    public void ReadNotice_CapturesTheTrailingColourCode_AndBuildersEchoItOrNothing()
+    {
+        static byte[] Request(string notice)
+        {
+            var body = new byte[4 + 16 + 2 + notice.Length * 2];
+            System.Buffers.Binary.BinaryPrimitives.WriteUInt16LittleEndian(body.AsSpan(4 + 16), (ushort)notice.Length);
+            System.Text.Encoding.Unicode.GetBytes(notice).CopyTo(body, 4 + 16 + 2);
+            return body;
+        }
+
+        var (_, text, colour) = GuildNoticeUpdateHandler.ReadNotice(Request("hi"));
+        Assert.Equal("hi", text);
+        Assert.Equal(0xF803, colour);
+        var (_, plain, none) = GuildNoticeUpdateHandler.ReadNotice(Request("hi"));
+        Assert.Equal("hi", plain);
+        Assert.Equal(0, none);
+
+        var coloured = new Guild { Guid16 = (byte[])Guid2dfbcba0.Clone(), Notice = "hi", NoticeColorCode = 0xF803 };
+        var uncoloured = new Guild { Guid16 = (byte[])Guid2dfbcba0.Clone(), Notice = "hi" };
+        Assert.Equal("hi", GuildPackets.NoticeWithColor(coloured));
+        Assert.Equal("hi", GuildPackets.NoticeWithColor(uncoloured));
+        // 2564 body: [u32 len][16 guid][u16 chars][UTF-16 text]; the char count follows the colour code.
+        Assert.Equal(3, BitConverter.ToUInt16(GuildPackets.BuildNfyGuildNoticeUpdated(coloured), 4 + 16));
+        Assert.Equal(2, BitConverter.ToUInt16(GuildPackets.BuildNfyGuildNoticeUpdated(uncoloured), 4 + 16));
     }
 
     [Fact]

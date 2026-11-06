@@ -68,9 +68,9 @@ public class GuildNoticeUpdateHandler : ZoneRmiHandlerBase<GuildNoticeUpdateHand
         var repo = services.GetRequiredService<IGuildRepository>();
         await GuildService.Instance.InitAsync(repo);
 
-        var (count, notice) = ReadNotice(payload.Span);
+        var (count, notice, colorCode) = ReadNotice(payload.Span);
         var guild = GuildService.Instance.GetByCharId(player.CharacterId);
-        ushort result = await services.GetRequiredService<GuildNoticeUseCase>().SetAsync(guild, count, notice);
+        ushort result = await services.GetRequiredService<GuildNoticeUseCase>().SetAsync(guild, count, notice, colorCode);
 
         Logger.LogInformation("Session {Id}: {Name} sets guild notice ({Count} chars with its colour code) -> result {Result}",
             session.SessionId, player.Name, count, result);
@@ -89,11 +89,11 @@ public class GuildNoticeUpdateHandler : ZoneRmiHandlerBase<GuildNoticeUpdateHand
         => GuildNoticeUseCase.Validate(inGuild, count);
 
  /// <summary>
- /// Reads the notice from the request body. Returns the declared character count, used for the length check, and the text without the trailing colour code. The colour code is appended again when the notice is sent.
+ /// Reads the notice from the request body. Returns the declared character count, used for the length check, the text without the trailing colour code, and that colour code (0 when the notice has none). The guild stores it and it is appended again when the notice is sent.
  /// </summary>
-    internal static (int Count, string Text) ReadNotice(ReadOnlySpan<byte> body)
+    internal static (int Count, string Text, ushort ColorCode) ReadNotice(ReadOnlySpan<byte> body)
     {
-        if (body.Length < NoticeCountOffset + CountFieldSize) return (0, string.Empty);
+        if (body.Length < NoticeCountOffset + CountFieldSize) return (0, string.Empty, 0);
         int n = BinaryPrimitives.ReadUInt16LittleEndian(body.Slice(NoticeCountOffset));
         int available = Math.Min(n, (body.Length - NoticeCountOffset - CountFieldSize) / CharSize);
         var chars = new System.Text.StringBuilder(available);
@@ -103,8 +103,9 @@ public class GuildNoticeUpdateHandler : ZoneRmiHandlerBase<GuildNoticeUpdateHand
             if (c == '\0') break;
             chars.Append(c);
         }
-        if (chars.Length > 0 && (chars[^1] & ColourCodeMask) == ColourCodeMask) chars.Length--;   // drop the trailing colour code
-        return (n, chars.ToString());
+        ushort colour = 0;
+        if (chars.Length > 0 && (chars[^1] & ColourCodeMask) == ColourCodeMask) { colour = chars[^1]; chars.Length--; }   // split off the trailing colour code
+        return (n, chars.ToString(), colour);
     }
 
  /// <summary>
