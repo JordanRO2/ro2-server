@@ -74,14 +74,26 @@ public static class GuildRobeRecord
     public static double BasicRobeDate => DateTime.UnixEpoch.ToLocalTime().ToOADate();
 
     /// <summary>
-    /// The robe item ids the master may pick: the Basic Robe followed by every robe in the Guild_Robe table. The
-    /// master's pick (1633) must name one of these.
+    /// The robe item ids the master may wear: the Basic Robe (always free) followed by every robe the guild has
+    /// unlocked, ascending. The master's pick (1633) must name one of these; a robe it has not bought is not wearable.
     /// </summary>
-    public static IReadOnlyList<uint> SelectableRobeItemIds(GameDataStore data)
+    public static IReadOnlyList<uint> SelectableRobeItemIds(Guild g)
     {
-        var ids = new List<uint>(1 + data.GuildRobe.Count) { BasicRobeItemId };
-        foreach (var r in data.GuildRobe) ids.Add(r.Robe_Item_ID);
-        return ids;
+        lock (g.Gate)
+        {
+            var ids = new List<uint>(1 + g.OwnedRobes.Count) { BasicRobeItemId };
+            foreach (var key in g.OwnedRobes.Keys)
+                if (uint.TryParse(key, out var id)) ids.Add(id);
+            ids.Sort();
+            return ids;
+        }
+    }
+
+    /// <summary>True when <paramref name="itemId"/> is one of the robes sold at the robe NPC (the Guild_Robe table).</summary>
+    public static bool IsBuyableRobe(GameDataStore data, uint itemId)
+    {
+        foreach (var r in data.GuildRobe) if (r.Robe_Item_ID == itemId) return true;
+        return false;
     }
 
     /// <summary>

@@ -246,6 +246,12 @@ public static class GuildPackets
     public static byte[] BuildAnsGuildListRegisteredRobe(Guild g, IReadOnlyList<uint> selectableRobeItemIds)
     {
         var (curItem, curColor) = GuildRobeRecord.Effective(g);
+        Dictionary<string, uint> owned;
+        lock (g.Gate) owned = new Dictionary<string, uint>(g.OwnedRobes);
+        uint ColorOf(uint id) => id == curItem ? curColor
+            : id == GuildRobeRecord.BasicRobeItemId ? GuildRobeRecord.BasicRobeColor
+            : owned.TryGetValue(id.ToString(), out var c) ? c : 0u;
+
         using var w = new PacketWriter(8 + (1 + selectableRobeItemIds.Count) * GuildRobeRecord.InfoFormLength);
         var lenPos = w.Reserve(LengthPrefixLen);   // body length - 4
         var start = w.Length;
@@ -253,7 +259,7 @@ public static class GuildPackets
         w.WriteBytes(GuildRobeRecord.InfoForm(curItem, curColor));   // current robe
         w.WriteUInt16((ushort)selectableRobeItemIds.Count);
         foreach (var id in selectableRobeItemIds)
-            w.WriteBytes(GuildRobeRecord.InfoForm(id, id == curItem ? curColor : 0u));
+            w.WriteBytes(GuildRobeRecord.InfoForm(id, ColorOf(id)));
         w.WriteAt(lenPos, (uint)(w.Length - start));
         return w.ToArray();
     }

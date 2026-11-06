@@ -129,14 +129,18 @@ public sealed class Guild
     /// <summary>Guild funds.</summary>
     public long Gold { get; set; }
     /// <summary>
-    /// Item id of the robe the guild wears, or 0 when it has never bought one and wears the default robe. Set when the
-    /// master picks a robe in the robe window.
+    /// Item id of the robe the guild currently wears, or 0 when it wears the default robe. It is one of
+    /// <see cref="OwnedRobes"/> or 0; the master switches it freely among owned robes in the robe window.
     /// </summary>
     public uint RobeItemId { get; set; }
-    /// <summary>
-    /// The robe's colour, assigned at random each time the master picks a robe, or 0 for the default robe's colour.
-    /// </summary>
+    /// <summary>The worn robe's colour, or 0 for the default robe's colour. Mirrors <see cref="OwnedRobes"/>[<see cref="RobeItemId"/>].</summary>
     public uint RobeColorCode { get; set; }
+    /// <summary>
+    /// The robes the guild has unlocked by buying them at the robe NPC, keyed by robe item id (as a string, so it
+    /// stores as a plain document in both providers) and mapped to its randomly assigned colour. Buying a robe adds or
+    /// rerolls its entry; the master may then wear any of them at no cost.
+    /// </summary>
+    public Dictionary<string, uint> OwnedRobes { get; set; } = new();
  /// <summary>When the guild was created. Null for guilds created before this was recorded.</summary>
     public DateTime? CreatedUtc { get; set; }
  /// <summary>

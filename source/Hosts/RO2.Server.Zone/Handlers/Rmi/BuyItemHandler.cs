@@ -18,6 +18,7 @@ using RO2.Economy.Domain;
 using RO2.Inventory.Domain;
 using RO2.Characters.Domain;
 using RO2.Skills.Domain;
+using RO2.Guilds.Domain;
 using RO2.Server.Zone.Configuration;
 
 namespace RO2.Server.Zone.Handlers.Rmi;
@@ -449,6 +450,25 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
             return;
         }
 
+        // A guild robe (Buy_Type 1) is the robe NPC's purchase: only the guild master may buy it, and the buy also
+        // unlocks it for the guild (registered after the item is handed over below). Resolve the guild up front so a
+        // non-master is refused before any charge.
+        var isGuildRobe = GuildRobeRecord.IsBuyableRobe(store, itemId);
+        Guild? robeGuild = null;
+        IGuildRepository? guildRepo = null;
+        if (isGuildRobe)
+        {
+            guildRepo = services.GetRequiredService<IGuildRepository>();
+            await GuildService.Instance.InitAsync(guildRepo);
+            robeGuild = GuildService.Instance.GetByCharId(player.CharacterId);
+            if (robeGuild == null || robeGuild.MasterCharId != player.CharacterId)
+            {
+                Logger.LogInformation("{Name} tried to buy guild robe {Item} without being a guild master; refused", player.Name, itemId);
+                await RefuseAsync(ShopCodes.BuyFailGeneric);
+                return;
+            }
+        }
+
         // The wallet, bag and placement rules are the economy flow's. The cost is TAKEN from the wallet first (a token
         // buy costs none), every later refusal hands it back, and the order stays debit -> read bag -> possession ->
         // tokens -> plan -> write -> ACK. The flow sends nothing: this handler sequences the packets around it.
@@ -499,5 +519,21 @@ public class BuyItemHandler : ZoneRmiHandlerBase<BuyItemHandler>
                 ShopItemPackets.BuyModeToken, tokenCost.ID);
         await session.SendRmiAsync(ZoneS2COpcodes.OnBuyItem,
             writer => writer.WriteBytes(buyBody));
+
+        // The buy succeeded: unlock the robe for the guild with a fresh random colour and wear it. Buying a robe the
+        // guild already owns rerolls its colour. The worn robe shows on guild members' views on their next refresh.
+        if (isGuildRobe && robeGuild is not null && guildRepo is not null)
+        {
+            uint colour = 0xFF000000u | (uint)Random.Shared.Next(0x1000000);   // full alpha, random 24-bit RGB
+            lock (robeGuild.Gate)
+            {
+                robeGuild.OwnedRobes[itemId.ToString()] = colour;
+                robeGuild.RobeItemId = itemId;
+                robeGuild.RobeColorCode = colour;
+            }
+            await guildRepo.SaveAsync(robeGuild);
+            Logger.LogInformation("{Name} unlocked guild robe {Item} (colour {Colour:X8}) for guild {Guild}",
+                player.Name, itemId, colour, robeGuild.Name);
+        }
     }
 }

@@ -31,14 +31,9 @@ public class GuildListRegisteredRobeHandler : ZoneRmiHandlerBase<GuildListRegist
 
         // The master gets the guild's current robe plus every pickable robe (Basic and the Guild_Robe table), so the
         // robe window can offer them; other members get the 0x13 body that does not open the window.
-        byte[] body;
-        if (isMaster)
-        {
-            var data = services.GetRequiredService<RO2.GameData.GameDataStore>();
-            body = GuildPackets.BuildAnsGuildListRegisteredRobe(guild!, GuildRobeRecord.SelectableRobeItemIds(data));
-        }
-        else
-            body = GuildPackets.BuildAnsGuildListRegisteredRobeEmpty();
+        byte[] body = isMaster
+            ? GuildPackets.BuildAnsGuildListRegisteredRobe(guild!, GuildRobeRecord.SelectableRobeItemIds(guild!))
+            : GuildPackets.BuildAnsGuildListRegisteredRobeEmpty();
 
         Logger.LogDebug("{Name} requests the registered guild robe list ({Form})",
             player.Name, isMaster ? "master" : "not the master: 0x13");

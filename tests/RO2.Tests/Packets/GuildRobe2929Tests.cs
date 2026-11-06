@@ -7,16 +7,12 @@ namespace RO2.Tests.Packets;
 
 /// <summary>
 /// 2929 AnsGuildListRegisteredRobe. The guild master receives the guild's current robe and the list of robes it may
-/// pick (the Basic Robe and the Guild_Robe table); every other member receives the 33-byte code 0x13 body.
+/// wear (the Basic Robe and every robe the guild has unlocked); every other member receives the 33-byte code 0x13 body.
 /// </summary>
 public class GuildRobe2929Tests
 {
     /// <summary>Non-master 2929 answer body (code 0x13).</summary>
     private const string RetailNonMaster = "1d000000130000000000000000000000000000000000000041fa00000000800000";
-
-    /// <summary>The robes the master may pick: the Basic Robe and the five Guild_Robe table robes.</summary>
-    private static readonly uint[] Selectable =
-        { GuildRobeRecord.BasicRobeItemId, 12711461, 12711462, 12711463, 12711464, 12711465 };
 
     private const int CodeOffset = 4;
     private const int CurrentRobeOffset = 6;
@@ -29,41 +25,42 @@ public class GuildRobe2929Tests
     private static uint ColorAt(byte[] body, int off) => BinaryPrimitives.ReadUInt32LittleEndian(body.AsSpan(off + 20));
 
     [Fact]
-    public void Master_answer_lists_the_current_robe_then_every_pickable_robe()
+    public void Fresh_guild_lists_only_the_basic_robe_it_wears()
     {
-        var body = GuildPackets.BuildAnsGuildListRegisteredRobe(new Guild(), Selectable);
+        var g = new Guild();
+        var ids = GuildRobeRecord.SelectableRobeItemIds(g);
+        Assert.Equal(new[] { GuildRobeRecord.BasicRobeItemId }, ids);
+
+        var body = GuildPackets.BuildAnsGuildListRegisteredRobe(g, ids);
 
         Assert.Equal((uint)body.Length - 4, BinaryPrimitives.ReadUInt32LittleEndian(body));         // inner length
         Assert.Equal(0, BinaryPrimitives.ReadUInt16LittleEndian(body.AsSpan(CodeOffset)));          // master code 0
-        Assert.Equal(Selectable.Length, BinaryPrimitives.ReadUInt16LittleEndian(body.AsSpan(CountOffset)));
-        for (int i = 0; i < Selectable.Length; i++)
-            Assert.Equal(Selectable[i], ItemIdAt(body, ListOffset + i * RecordLen));
+        Assert.Equal(1, BinaryPrimitives.ReadUInt16LittleEndian(body.AsSpan(CountOffset)));
+        Assert.Equal(GuildRobeRecord.InfoForm(), body.AsSpan(CurrentRobeOffset, RecordLen).ToArray());  // worn = Basic
+        Assert.Equal(GuildRobeRecord.BasicRobeItemId, ItemIdAt(body, ListOffset));
     }
 
     [Fact]
-    public void Fresh_guild_wears_the_basic_robe()
-    {
-        var body = GuildPackets.BuildAnsGuildListRegisteredRobe(new Guild(), Selectable);
-
-        Assert.Equal(GuildRobeRecord.InfoForm(), body.AsSpan(CurrentRobeOffset, RecordLen).ToArray());
-        Assert.Equal(GuildRobeRecord.BasicRobeItemId, ItemIdAt(body, CurrentRobeOffset));
-        Assert.Equal(GuildRobeRecord.BasicRobeColor, ColorAt(body, CurrentRobeOffset));
-    }
-
-    [Fact]
-    public void Chosen_robe_is_the_current_robe_and_carries_the_guilds_colour()
+    public void Master_answer_lists_the_current_robe_then_basic_and_every_owned_robe()
     {
         var g = new Guild { RobeItemId = 12711464, RobeColorCode = 0xFF88A868 };
+        g.OwnedRobes["12711461"] = 0xFF112233;
+        g.OwnedRobes["12711464"] = 0xFF88A868;
+        var ids = GuildRobeRecord.SelectableRobeItemIds(g);
+        Assert.Equal(new uint[] { GuildRobeRecord.BasicRobeItemId, 12711461, 12711464 }, ids);
 
-        var body = GuildPackets.BuildAnsGuildListRegisteredRobe(g, Selectable);
+        var body = GuildPackets.BuildAnsGuildListRegisteredRobe(g, ids);
 
-        // Current robe = the chosen robe with the guild colour.
+        Assert.Equal(ids.Count, BinaryPrimitives.ReadUInt16LittleEndian(body.AsSpan(CountOffset)));
+        for (int i = 0; i < ids.Count; i++)
+            Assert.Equal(ids[i], ItemIdAt(body, ListOffset + i * RecordLen));
+        // Worn robe is the current record, with the guild colour.
         Assert.Equal(12711464u, ItemIdAt(body, CurrentRobeOffset));
         Assert.Equal(0xFF88A868u, ColorAt(body, CurrentRobeOffset));
-        // Its list entry carries the colour; the others carry none.
-        int worn = Array.IndexOf(Selectable, 12711464u);
-        Assert.Equal(0xFF88A868u, ColorAt(body, ListOffset + worn * RecordLen));
-        Assert.Equal(0u, ColorAt(body, ListOffset)); // the Basic entry (not worn)
+        // Each list entry carries its own colour: Basic the default, each owned robe its stored colour.
+        Assert.Equal(GuildRobeRecord.BasicRobeColor, ColorAt(body, ListOffset + 0 * RecordLen));     // Basic
+        Assert.Equal(0xFF112233u, ColorAt(body, ListOffset + 1 * RecordLen));                        // 12711461
+        Assert.Equal(0xFF88A868u, ColorAt(body, ListOffset + 2 * RecordLen));                        // 12711464 (worn)
     }
 
     [Fact]
