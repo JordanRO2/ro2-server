@@ -1,4 +1,5 @@
 using System.Buffers.Binary;
+using System.Linq;
 using System.Text;
 using RO2.Application.Interfaces;
 using RO2.Network.Packets;
@@ -325,8 +326,10 @@ public static class GuildRosterPackets
     public static byte[] BuildAnsGuildAuthority(Guild? g)
     {
         GuildRank[] ranks;
+        // Retail sends the ranks descending by index (lowest default rank first, master last), measured in 97/100
+        // capture frames; our stored order is master-first, so sort for the wire without touching the stored table.
         if (g == null) ranks = Array.Empty<GuildRank>();
-        else lock (g.Gate) ranks = g.Ranks.ToArray();
+        else lock (g.Gate) ranks = g.Ranks.OrderByDescending(r => r.Index).ToArray();
         using var w = new PacketWriter(8 + ranks.Length * RankRecordLen);
         var lenPos = w.Reserve(4);
         var start = w.Length;
