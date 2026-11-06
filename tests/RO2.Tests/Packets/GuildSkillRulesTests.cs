@@ -17,6 +17,24 @@ public class GuildSkillRulesTests
     }.ToDictionary(r => r.Guild_Skill_ID);
 
     [Fact]
+    public void MaxCategoryValue_PicksTheHighestLearnedValueInTheCategory()
+    {
+        // Mirrors the real Guild_Skill_Level rows the 2559 panel reads: 220205 is supply (cat 7) value 5,
+        // 200104 is siege (cat 8) value 40; a second cat-7 row proves the max is taken.
+        var table = new[]
+        {
+            new GuildSkillLevel { Guild_Skill_ID = 220205, Skill_Category_1 = 7, Skill_Value_1 = 5 },
+            new GuildSkillLevel { Guild_Skill_ID = 220203, Skill_Category_1 = 7, Skill_Value_1 = 3 },
+            new GuildSkillLevel { Guild_Skill_ID = 200104, Skill_Category_1 = 8, Skill_Value_1 = 40 },
+        }.ToDictionary(r => r.Guild_Skill_ID);
+
+        Assert.Equal(5u, GuildSkillRules.MaxCategoryValue([220205, 220203, 200104], table, 7));
+        Assert.Equal(40u, GuildSkillRules.MaxCategoryValue([220205, 220203, 200104], table, 8));
+        Assert.Equal(0u, GuildSkillRules.MaxCategoryValue([220205], table, 8));   // category not learned
+        Assert.Equal(0u, GuildSkillRules.MaxCategoryValue([], table, 7));         // nothing learned
+    }
+
+    [Fact]
     public void IdLayoutAndLineLevels()
     {
         Assert.Equal(101u, GuildSkillRules.LineOf(10102));

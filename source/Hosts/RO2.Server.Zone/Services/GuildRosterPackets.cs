@@ -227,6 +227,12 @@ public static class GuildRosterPackets
             ? GuildSkillLearnPackets.UnspentPoints(guildLevel, skills, GuildSkillLearnPackets.Index(data.GuildSkillLevel))
             : (byte)0;
 
+    /// <summary>The 2559 capacity for a guild skill category: the largest learned Skill_Value in that category (7 = supply, 8 = siege weapon), 0 before the data loads.</summary>
+    private static uint SkillCap(uint[] skills, byte category) =>
+        RO2.GameData.GameDataStore.Loaded is { } data
+            ? GuildSkillRules.MaxCategoryValue(skills, GuildSkillLearnPackets.Index(data.GuildSkillLevel), category)
+            : 0u;
+
  /// <summary>
  /// Builds the guild branch of 2559: guild name and emblem, the current robe, the guild level and experience,
  /// the rank of the viewer, and the member counts and guild master. Members who are not online are counted as
@@ -271,8 +277,8 @@ public static class GuildRosterPackets
         w.WriteByte(guildLevel);                   // guild level
         w.WriteByte(UnspentGuildSkillPoints(guildLevel, skills));   // unspent guild skill points
         w.WriteByte(0);                            // not used: sent as zero
-        w.WriteUInt32(0);                          // not used: sent as zero
-        w.WriteUInt32(0);                          // not used: sent as zero
+        w.WriteUInt32(SkillCap(skills, 7));        // supply capacity (guild skill category 7)
+        w.WriteUInt32(SkillCap(skills, 8));        // siege-weapon capacity (guild skill category 8)
 
         w.WriteByte(viewer?.AuthId ?? (byte)0);    // the viewer's own rank index
 

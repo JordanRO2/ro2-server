@@ -54,6 +54,23 @@ public static class GuildSkillRules
     /// <summary>Returns the level of a Guild_Skill_ID within its line.</summary>
     public static int LevelOf(uint skillId) => (int)(skillId % 100);
 
+    /// <summary>
+    /// The largest <c>Skill_Value</c> of a learned skill in the given category, or 0 when no learned skill carries it.
+    /// The guild panel (2559) reads category 7 as the supply capacity and category 8 as the siege-weapon capacity.
+    /// </summary>
+    public static uint MaxCategoryValue(IEnumerable<uint> learned, IReadOnlyDictionary<uint, GuildSkillLevel> table, byte category)
+    {
+        uint max = 0;
+        foreach (var id in learned)
+        {
+            if (!table.TryGetValue(id, out var row)) continue;
+            if (row.Skill_Category_1 == category) max = Math.Max(max, row.Skill_Value_1);
+            if (row.Skill_Category_2 == category) max = Math.Max(max, row.Skill_Value_2);
+            if (row.Skill_Category_3 == category) max = Math.Max(max, row.Skill_Value_3);
+        }
+        return max;
+    }
+
     /// <summary>Returns the highest level held on each line, from a guild's learned ids.</summary>
     public static Dictionary<uint, int> LineLevels(IEnumerable<uint> learned)
     {
