@@ -280,7 +280,7 @@ public class GliderTeleportHandler : ZoneRmiHandlerBase<GliderTeleportHandler>
         var warpSheet = effects.BuildInWorldPcTrait(player, character, equipped);
         await WorldEntryService.SendWorldEntryAsync(
             session, character, player.CharacterUid, player.EntityId, Logger,
-            inventoryItems: bag, activeQuests: null, completedQuestCount: 0, learnedSkills: null,
+            inventoryItems: bag, activeQuests: null, completedQuestIds: null, learnedSkills: null,
             gameData: store, quickSlots: quickSlots,
             isWarp: true, warpSpawn: (dest.MapId, dest.X, dest.Y, dest.Z),
             collection: collection, keyConfig: keyConfig, warpPcTrait2498: warpSheet, vehicles: vehicles);

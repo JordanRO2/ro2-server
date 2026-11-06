@@ -373,13 +373,12 @@ public class LoginPCHandler : NetworkZoneRmiBase
 
         // Load active quests from DB and populate runtime state
         IReadOnlyList<RO2.Quests.Domain.CharacterQuest>? activeQuests = null;
-        int completedQuestCount = 0;
+        IReadOnlyList<uint> completedQuestIds = [];
         try
         {
             var questRepo = services.GetRequiredService<IQuestRepository>();
             activeQuests = await questRepo.GetActiveQuestsAsync(characterId);
-            var completedIds = await questRepo.GetCompletedQuestIdsAsync(characterId);
-            completedQuestCount = completedIds.Count;
+            completedQuestIds = await questRepo.GetCompletedQuestIdsAsync(characterId);
 
             // Populate runtime state with active quest IDs
             var playerState2 = playerManager.GetPlayer(session.SessionId);
@@ -551,7 +550,7 @@ public class LoginPCHandler : NetworkZoneRmiBase
 
         // Send world entry data (with resolved map/position from GameDataStore)
         await WorldEntryService.SendWorldEntryAsync(session, character, charUid, entityId, Logger,
-            inventoryItems, activeQuests, completedQuestCount, learnedSkills, store, quickSlots,
+            inventoryItems, activeQuests, completedQuestIds, learnedSkills, store, quickSlots,
             collection: collection, keyConfig: keyConfig, cardBookChargedUntil: cardBookChargedUntil,
             learnedCraftRecipes: learnedCraftRecipes, vehicles: vehicles, useSkillList: useSkillList);
 

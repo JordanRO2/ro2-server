@@ -221,7 +221,8 @@ internal static class WorldEntryPackets
         byte talentPointsRemaining = 0,
         GameDataStore? gameData = null,
         (uint CurHp, ushort CurSp, uint MaxHp, ushort MaxSp)? vitals = null,
-        IReadOnlyList<(uint Group, byte Level)>? skillList = null)
+        IReadOnlyList<(uint Group, byte Level)>? skillList = null,
+        IReadOnlyList<uint>? completedQuestIds = null)
     {
         var lengthPos = writer.Reserve(4);  // message length word, filled in at the end
         var dataStart = writer.Length;
@@ -278,7 +279,14 @@ internal static class WorldEntryPackets
         writer.WriteUInt16((ushort)qv.Count);
         foreach (var q in qv)
             QuestProgressStore.WriteLoginElement(writer, q, gameData, allItems);
-        writer.WriteUInt16(0);  // empty list
+
+        // Completed-quest-id list: a u16 count then one u32 per completed quest. Retail fills it with the character's
+        // whole completion history (the client's quest log reads it to mark one-time quests done); our builder wrote it
+        // empty, which was the single largest byte gap against the retail 2310.
+        var doneQuestIds = completedQuestIds ?? [];
+        writer.WriteUInt16((ushort)doneQuestIds.Count);
+        foreach (var id in doneQuestIds)
+            writer.WriteUInt32(id);
 
         
         

@@ -341,6 +341,33 @@ public class WorldEntry2310Tests
         Assert.Equal(built.Length - 4, (int)System.Buffers.Binary.BinaryPrimitives.ReadUInt32LittleEndian(built));
     }
 
+    [Fact]
+    public void CompletedQuestIds_AreWrittenAsCountThenU32List_AfterTheActiveQuestVector()
+    {
+        var c = BuildDonorCharacter();
+        c.Id = 0x7FFF_2312;
+
+        var without = BuildViaFieldByField(c);
+        using var w = new PacketWriter();
+        var ids = new uint[] { 1001u, 0x0001F5E2u };
+        WorldEntryPackets.WriteCharacterDetail(w, c, DonorCharUid, DonorEntityId, null, DonorMapId, DonorPosX, DonorPosY, DonorPosZ,
+            completedQuestIds: ids);
+        var withIds = w.ToArray();
+
+        // Two u32 ids add exactly 8 bytes; everything up to the count word is unchanged.
+        Assert.Equal(without.Length + 8, withIds.Length);
+        var off = 4;   // skip the u32 message-length word, which differs because the body is 8 bytes longer
+        while (without[off] == withIds[off]) off++;   // first body byte that differs = the list's count word
+        Assert.Equal(new byte[] { 0, 0 }, without.AsSpan(off, 2).ToArray());       // empty count
+        Assert.Equal(new byte[] { 2, 0 }, withIds.AsSpan(off, 2).ToArray());       // count 2
+        Assert.Equal(1001u, System.Buffers.Binary.BinaryPrimitives.ReadUInt32LittleEndian(withIds.AsSpan(off + 2)));
+        Assert.Equal(0x0001F5E2u, System.Buffers.Binary.BinaryPrimitives.ReadUInt32LittleEndian(withIds.AsSpan(off + 6)));
+        // The remainder (Khara, stat block, tail) is identical, only shifted by the 8 inserted bytes.
+        Assert.Equal(without.AsSpan(off + 2).ToArray(), withIds.AsSpan(off + 10).ToArray());
+        // Message length word reflects the longer body.
+        Assert.Equal(withIds.Length - 4, (int)System.Buffers.Binary.BinaryPrimitives.ReadUInt32LittleEndian(withIds));
+    }
+
     private static string Hex(byte[] data, int start, int count)
     {
         if (start < 0) { count += start; start = 0; }
