@@ -21,6 +21,10 @@ public static class GuildRankRules
     /// <summary>Display name of the default member rank. Custom content (retail's raw string id was "11833" = "member").</summary>
     public const string DefaultMemberTitle = "Member";
 
+    /// <summary>The raw client string-id rank titles older guilds were stored with; rewritten to the readable defaults on load.</summary>
+    private const string LegacyMasterTitle = " 11832";
+    private const string LegacyMemberTitle = " 11833";
+
     /// <summary>Permission byte with every one of the four rights (invite, remove member, storage, notice) set.</summary>
     public const byte PermissionsAll = 0x0F;
 
@@ -98,6 +102,13 @@ public static class GuildRankRules
             var changed = false;
             if (g.Ranks == null) g.Ranks = new List<GuildRank>();
             var defaults = DefaultRanks();
+
+            // Migrate guilds stored with the old raw string-id titles to the readable defaults.
+            foreach (var r in g.Ranks)
+            {
+                if (r.Name == LegacyMasterTitle) { r.Name = DefaultMasterTitle; changed = true; }
+                else if (r.Name == LegacyMemberTitle) { r.Name = DefaultMemberTitle; changed = true; }
+            }
 
 
             if (g.Ranks.All(r => r.Index != MasterRankIndex))

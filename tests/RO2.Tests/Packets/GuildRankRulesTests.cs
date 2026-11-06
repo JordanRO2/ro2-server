@@ -67,4 +67,13 @@ public class GuildRankRulesTests
         Assert.Equal(new[] { 0, 3, 4 }, noMaster.Ranks.Select(r => (int)r.Index));
         Assert.Equal("Master", noMaster.Ranks[0].Name);
     }
+
+    [Fact]
+    public void NormalizeRanks_RewritesLegacyStringIdTitles()
+    {
+        var g = new Guild { MasterCharId = 1, Ranks = { Rank(0, " 11832"), Rank(1, " 11833") } };
+        Assert.True(GuildRankRules.NormalizeRanks(g));
+        Assert.Equal(new[] { "Master", "Member" }, g.Ranks.Select(r => r.Name));
+        Assert.False(GuildRankRules.NormalizeRanks(g));   // idempotent once rewritten
+    }
 }
