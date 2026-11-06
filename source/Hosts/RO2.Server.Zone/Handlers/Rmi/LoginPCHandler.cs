@@ -374,11 +374,24 @@ public class LoginPCHandler : NetworkZoneRmiBase
         // Load active quests from DB and populate runtime state
         IReadOnlyList<RO2.Quests.Domain.CharacterQuest>? activeQuests = null;
         IReadOnlyList<uint> completedQuestIds = [];
+        IReadOnlyList<(uint QuestId, ulong CompletedUnix, byte Count)> questReacts = [];
         try
         {
             var questRepo = services.GetRequiredService<IQuestRepository>();
             activeQuests = await questRepo.GetActiveQuestsAsync(characterId);
             completedQuestIds = await questRepo.GetCompletedQuestIdsAsync(characterId);
+
+            // Login 2310 repeatable-quest react list: the repeatable (Quest_Frequency > 0) quests currently completed,
+            // each with its completion time. We store one completion row per quest, so the count is 1 (exact for a daily
+            // quest, clamped for a higher-frequency one until a lifetime counter exists).
+            var completions = await questRepo.GetCompletionsAsync(characterId);
+            questReacts = completions
+                .Where(x => QuestInfoExtraColumns.First(x.QuestId)?.Quest_Frequency is > 0)
+                .OrderBy(x => x.QuestId)
+                .Select(x => (x.QuestId,
+                    (ulong)((DateTimeOffset)DateTime.SpecifyKind(x.CompletedUtc, DateTimeKind.Utc)).ToUnixTimeSeconds(),
+                    (byte)1))
+                .ToList();
 
             // Populate runtime state with active quest IDs
             var playerState2 = playerManager.GetPlayer(session.SessionId);
@@ -550,7 +563,7 @@ public class LoginPCHandler : NetworkZoneRmiBase
 
         // Send world entry data (with resolved map/position from GameDataStore)
         await WorldEntryService.SendWorldEntryAsync(session, character, charUid, entityId, Logger,
-            inventoryItems, activeQuests, completedQuestIds, learnedSkills, store, quickSlots,
+            inventoryItems, activeQuests, completedQuestIds, questReacts, learnedSkills, store, quickSlots,
             collection: collection, keyConfig: keyConfig, cardBookChargedUntil: cardBookChargedUntil,
             learnedCraftRecipes: learnedCraftRecipes, vehicles: vehicles, useSkillList: useSkillList);
 

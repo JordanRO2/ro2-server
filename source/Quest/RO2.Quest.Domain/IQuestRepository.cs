@@ -7,6 +7,11 @@ public interface IQuestCompletionView
 
     /// <summary>When the character last completed <paramref name="questId"/> (UTC), or null if it never has.</summary>
     Task<DateTime?> GetLastCompletedAtAsync(uint characterId, uint questId);
+
+    /// <summary>Every completed quest with the UTC time it was completed, for the login 2310 repeatable-quest react
+    /// list. Defaults to empty so test doubles need not implement it; the real repositories override it.</summary>
+    Task<IReadOnlyList<(uint QuestId, DateTime CompletedUtc)>> GetCompletionsAsync(uint characterId)
+        => Task.FromResult<IReadOnlyList<(uint QuestId, DateTime CompletedUtc)>>([]);
 }
 
 public interface IQuestRepository : IQuestCompletionView

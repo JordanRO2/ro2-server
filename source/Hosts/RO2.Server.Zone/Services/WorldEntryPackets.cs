@@ -222,7 +222,8 @@ internal static class WorldEntryPackets
         GameDataStore? gameData = null,
         (uint CurHp, ushort CurSp, uint MaxHp, ushort MaxSp)? vitals = null,
         IReadOnlyList<(uint Group, byte Level)>? skillList = null,
-        IReadOnlyList<uint>? completedQuestIds = null)
+        IReadOnlyList<uint>? completedQuestIds = null,
+        IReadOnlyList<(uint QuestId, ulong CompletedUnix, byte Count)>? questReacts = null)
     {
         var lengthPos = writer.Reserve(4);  // message length word, filled in at the end
         var dataStart = writer.Length;
@@ -314,9 +315,19 @@ internal static class WorldEntryPackets
         writer.WriteUInt32(vitals?.MaxHp ?? DefaultHp);  // maximum HP
         writer.WriteUInt32(vitals?.MaxSp ?? DefaultSp);  // maximum SP
 
-        writer.WriteUInt16(0);  // empty list
+        // Repeatable-quest react list: a u16 count then per repeatable completed quest [u32 questId][u64 Unix UTC
+        // seconds][u8 count], distinct and sorted by questId (the same 13-byte record the live 2784 carries after its
+        // gid). Our builder wrote it empty.
+        var reacts = questReacts ?? [];
+        writer.WriteUInt16((ushort)reacts.Count);
+        foreach (var (questId, completedUnix, count) in reacts)
+        {
+            writer.WriteUInt32(questId);
+            writer.WriteUInt64(completedUnix);
+            writer.WriteByte(count);
+        }
 
-        
+
         writer.WriteUInt32(0);  // tail: zero word
         writer.WriteByte(Tail_Marker);  // tail marker
         writer.WriteByte(Tail_Marker);  // tail marker

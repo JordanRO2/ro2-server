@@ -105,6 +105,21 @@ public sealed class QuestRepository : IQuestRepository
         return value is null or DBNull ? null : (DateTime)value;
     }
 
+    public async Task<IReadOnlyList<(uint QuestId, DateTime CompletedUtc)>> GetCompletionsAsync(uint characterId)
+    {
+        await using var conn = await _db.OpenConnectionAsync();
+        await using var cmd = new NpgsqlCommand(
+            $"SELECT quest_id, completed_at FROM {TableName} " +
+            "WHERE character_id = @c AND status = @s AND completed_at IS NOT NULL ORDER BY quest_id", conn);
+        cmd.Parameters.AddWithValue("c", (long)characterId);
+        cmd.Parameters.AddWithValue("s", Completed);
+        await using var reader = await cmd.ExecuteReaderAsync();
+        var list = new List<(uint, DateTime)>();
+        while (await reader.ReadAsync())
+            list.Add(((uint)reader.GetInt64(0), DateTime.SpecifyKind(reader.GetDateTime(1), DateTimeKind.Utc)));
+        return list;
+    }
+
     public async Task AcceptQuestAsync(uint characterId, uint questId)
     {
         await using var conn = await _db.OpenConnectionAsync();

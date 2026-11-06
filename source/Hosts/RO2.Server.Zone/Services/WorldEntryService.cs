@@ -57,6 +57,7 @@ public static class WorldEntryService
         IReadOnlyList<RO2.Inventory.Domain.InventoryItem>? inventoryItems = null,
         IReadOnlyList<CharacterQuest>? activeQuests = null,
         IReadOnlyList<uint>? completedQuestIds = null,
+        IReadOnlyList<(uint QuestId, ulong CompletedUnix, byte Count)>? questReacts = null,
         IReadOnlyList<CharacterSkill>? learnedSkills = null,
         GameDataStore? gameData = null,
         IReadOnlyList<RO2.Characters.Domain.CharacterQuickSlot>? quickSlots = null,
@@ -166,7 +167,7 @@ public static class WorldEntryService
                     await session.SendRmiAsync(opcode, writer =>
                     {
                         WorldEntryPackets.WriteCharacterDetail(writer, character, charUid, entityId, inventoryItems, mapId, posX, posY, posZ, activeQuests, talentRemaining, gameData,
-                            vitals: vitals, skillList: loginSkills, completedQuestIds: completedQuestIds);
+                            vitals: vitals, skillList: loginSkills, completedQuestIds: completedQuestIds, questReacts: questReacts);
                     });
                     logger.LogDebug("Session {Id}: Sent OnCharacterDetailACK (RMI 2310) ENCRYPTED", session.SessionId);
                     break;

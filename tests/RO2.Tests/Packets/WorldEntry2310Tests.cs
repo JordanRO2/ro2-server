@@ -369,6 +369,34 @@ public class WorldEntry2310Tests
         Assert.Equal(withIds.Length - 4, (int)System.Buffers.Binary.BinaryPrimitives.ReadUInt32LittleEndian(withIds));
     }
 
+    [Fact]
+    public void QuestReacts_AreWrittenAsCountThenQuestIdTimeCount_AfterTheStatBlock()
+    {
+        var c = BuildDonorCharacter();
+        c.Id = 0x7FFF_2314;
+
+        var without = BuildViaFieldByField(c);
+        using var w = new PacketWriter();
+        var reacts = new (uint, ulong, byte)[] { (1001u, 1700000000UL, 1), (2002u, 1700000005UL, 3) };
+        WorldEntryPackets.WriteCharacterDetail(w, c, DonorCharUid, DonorEntityId, null, DonorMapId, DonorPosX, DonorPosY, DonorPosZ,
+            questReacts: reacts);
+        var withR = w.ToArray();
+
+        // Two 13-byte react records add 26 bytes; everything up to the react count word is unchanged.
+        Assert.Equal(without.Length + 26, withR.Length);
+        var off = 4;   // skip the u32 message-length word
+        while (without[off] == withR[off]) off++;   // first body byte that differs = the react list's count word
+        var B = System.Buffers.Binary.BinaryPrimitives.ReadUInt16LittleEndian(withR.AsSpan(off));
+        Assert.Equal((ushort)2, B);
+        Assert.Equal(1001u, System.Buffers.Binary.BinaryPrimitives.ReadUInt32LittleEndian(withR.AsSpan(off + 2)));
+        Assert.Equal(1700000000UL, System.Buffers.Binary.BinaryPrimitives.ReadUInt64LittleEndian(withR.AsSpan(off + 6)));
+        Assert.Equal((byte)1, withR[off + 14]);
+        Assert.Equal(2002u, System.Buffers.Binary.BinaryPrimitives.ReadUInt32LittleEndian(withR.AsSpan(off + 15)));
+        Assert.Equal(1700000005UL, System.Buffers.Binary.BinaryPrimitives.ReadUInt64LittleEndian(withR.AsSpan(off + 19)));
+        Assert.Equal((byte)3, withR[off + 27]);
+        Assert.Equal(withR.Length - 4, (int)System.Buffers.Binary.BinaryPrimitives.ReadUInt32LittleEndian(withR));
+    }
+
     private static string Hex(byte[] data, int start, int count)
     {
         if (start < 0) { count += start; start = 0; }

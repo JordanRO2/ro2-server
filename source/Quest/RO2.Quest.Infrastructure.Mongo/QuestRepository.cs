@@ -39,6 +39,17 @@ public class QuestRepository : IQuestRepository
         return last?.CompletedAt;
     }
 
+    public async Task<IReadOnlyList<(uint QuestId, DateTime CompletedUtc)>> GetCompletionsAsync(uint characterId)
+    {
+        var completed = await _quests
+            .Find(q => q.CharacterId == characterId && q.Status == QuestStatus.Completed && q.CompletedAt != null)
+            .ToListAsync();
+        return completed.Where(q => q.CompletedAt.HasValue)
+            .Select(q => (q.QuestId, q.CompletedAt!.Value))
+            .OrderBy(x => x.QuestId)
+            .ToList();
+    }
+
     public async Task AcceptQuestAsync(uint characterId, uint questId)
     {
         var maxId = await _quests.Find(_ => true)
