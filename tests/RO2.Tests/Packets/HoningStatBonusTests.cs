@@ -1,10 +1,12 @@
 using System;
+using System.Buffers.Binary;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using RO2.GameData;
 using RO2.Inventory.Domain;
+using RO2.Network.Packets;
 using RO2.Server.Zone.Services;
 using Xunit;
 
@@ -45,6 +47,34 @@ public class HoningStatBonusTests
 
         Assert.True(expected > 0);
         Assert.Equal(expected, honedFlat - bareFlat);
+    }
+
+    /// <summary>The item record's +0x49 carries the honing prefix-name index: the Grinding_Prefix_Abili row whose first
+    /// two ability ids match the item's first two honed lines. Un-honed items write 0.</summary>
+    [DataFact]
+    public async Task HonedItemRecord_CarriesTheGrindingPrefixIndexAt0x49()
+    {
+        var store = await Store.Value;   // LoadAsync sets GameDataStore.Loaded, which the record writer reads
+        var row = store.GrindingPrefixAbili.First(p => p.Index > 0 && p.Abili_ID_1 > 0 && p.Abili_ID_2 > 0);
+        var template = store.Items.Values.First(t => EquipRules.WornSlotsFor(t).Count > 0);
+        short slot = (short)EquipRules.WornSlotsFor(template)[0];
+
+        var honed = new InventoryItem
+        {
+            Id = 3, ItemId = template.ID, Count = 1, StorageType = 1, Slot = slot,
+            GrindingJson = GrindingLines.Serialize(new[] { new GrindingLine(row.Abili_ID_1, 1000), new GrindingLine(row.Abili_ID_2, 1000) }),
+        };
+        var plain = new InventoryItem { Id = 4, ItemId = template.ID, Count = 1, StorageType = 1, Slot = slot };
+
+        Assert.Equal(row.Index, BinaryPrimitives.ReadUInt16LittleEndian(RecordOf(honed).AsSpan(0x49)));
+        Assert.Equal(0, BinaryPrimitives.ReadUInt16LittleEndian(RecordOf(plain).AsSpan(0x49)));
+    }
+
+    private static byte[] RecordOf(InventoryItem item)
+    {
+        using var w = new PacketWriter();
+        ItemPackets.WriteItemInstance(w, item);
+        return w.ToArray();
     }
 
     /// <summary>An item with no honing adds nothing beyond its innate traits (the honing path is a no-op for a plain item).</summary>

@@ -281,7 +281,7 @@ public static class ItemPackets
         
         
         writer.WriteUInt32(RecordAbilityValue(item));  // +0x45 ability value
-        writer.WriteUInt16(0);  // +0x49 card set id
+        writer.WriteUInt16(GrindingPrefixIndex(item));  // +0x49 honing-prefix name index (Grinding_Prefix_Abili), 0 when un-honed
         WriteGrindingStats(writer, item);  // +0x4B grinding stats (5 honed lines, or zeros when un-honed)
         // +0x5F accessory trait block = the guardian-seal line (what UICharEnhanceExchangeWnd shows as Previous and the
         // tooltip reads): +0x5F stat index PLUS ONE, +0x60 category (1 flat), +0x61 value as a float. Zeros when unsealed.
@@ -358,6 +358,20 @@ public static class ItemPackets
  /// (1676) fills its lines from <see cref="RO2.Inventory.Domain.InventoryItem.GrindingJson"/>; unused slots
  /// and an un-honed item write zeros, exactly as before.
  /// </summary>
+    /// <summary>
+    /// Record +0x49: the honed item's prefix-name index (Grinding_Prefix_Abili), the row whose first two ability ids
+    /// match the item's first two grinding lines. The client reads it to show the honing name prefix. Zero when the
+    /// item is un-honed or no prefix row matches its lines.
+    /// </summary>
+    private static ushort GrindingPrefixIndex(RO2.Inventory.Domain.InventoryItem item)
+    {
+        var lines = RO2.Inventory.Domain.GrindingLines.Parse(item.GrindingJson);
+        if (lines.Count < 2 || GameDataStore.Loaded is not { } data) return 0;
+        foreach (var p in data.GrindingPrefixAbili)
+            if (p.Abili_ID_1 == lines[0].AbiliId && p.Abili_ID_2 == lines[1].AbiliId) return p.Index;
+        return 0;
+    }
+
     private static void WriteGrindingStats(PacketWriter writer, RO2.Inventory.Domain.InventoryItem item)
     {
         var lines = RO2.Inventory.Domain.GrindingLines.Parse(item.GrindingJson);
