@@ -349,12 +349,13 @@ public class WorldEntry2310Tests
 
         var without = BuildViaFieldByField(c);
         using var w = new PacketWriter();
-        var ids = new uint[] { 1001u, 0x0001F5E2u };
+        // Unsorted with a duplicate: retail sends the list distinct and sorted, so the builder must normalise it.
+        var ids = new uint[] { 0x0001F5E2u, 1001u, 1001u };
         WorldEntryPackets.WriteCharacterDetail(w, c, DonorCharUid, DonorEntityId, null, DonorMapId, DonorPosX, DonorPosY, DonorPosZ,
             completedQuestIds: ids);
         var withIds = w.ToArray();
 
-        // Two u32 ids add exactly 8 bytes; everything up to the count word is unchanged.
+        // Three inputs dedupe to two distinct ids = 8 added bytes; everything up to the count word is unchanged.
         Assert.Equal(without.Length + 8, withIds.Length);
         var off = 4;   // skip the u32 message-length word, which differs because the body is 8 bytes longer
         while (without[off] == withIds[off]) off++;   // first body byte that differs = the list's count word

@@ -281,9 +281,10 @@ internal static class WorldEntryPackets
             QuestProgressStore.WriteLoginElement(writer, q, gameData, allItems);
 
         // Completed-quest-id list: a u16 count then one u32 per completed quest. Retail fills it with the character's
-        // whole completion history (the client's quest log reads it to mark one-time quests done); our builder wrote it
-        // empty, which was the single largest byte gap against the retail 2310.
-        var doneQuestIds = completedQuestIds ?? [];
+        // completion history (the client's quest log reads it to mark one-time quests done); our builder wrote it empty,
+        // the single largest byte gap against the retail 2310. The source is a multiset in insertion order, but retail
+        // sends it DISTINCT and sorted ascending (measured across 29 capture 2310s), so normalise it here.
+        var doneQuestIds = (completedQuestIds ?? []).Distinct().OrderBy(id => id).ToList();
         writer.WriteUInt16((ushort)doneQuestIds.Count);
         foreach (var id in doneQuestIds)
             writer.WriteUInt32(id);
