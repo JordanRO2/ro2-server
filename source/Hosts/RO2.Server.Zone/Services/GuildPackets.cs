@@ -22,17 +22,11 @@ namespace RO2.Server.Zone.Services;
 /// Body layouts (offsets are body-relative):
 /// </para>
 /// <list type="bullet">
-/// <item>2560 AnsGuildMemList: [u32 len-4][16 guild GUID][u16 count][count x 115-byte member record].</item>
-/// <item>2573 NfyGuildMemberAdd (132 bytes): [u8 1][16 guild GUID][115-byte member record].</item>
+/// <item>2560 AnsGuildMemList and 2573 NfyGuildMemberAdd, and the 115-byte member record they share, are built
+/// from live per-member state by GuildRosterPackets, not here.</item>
 /// <item>2571 NfyGuildMemberRemove (77 bytes): [u8 reason][16 guild GUID][8 GID][wchar[22] name][8 GID].</item>
-/// <item>
-/// 2559 AnsMyGuildInfo: [u32 44+2*nameLen][16 guild GUID][u8 nameLen][name][27 identity fields]
-/// [u32 57+2*noticeLen][16 guild GUID][u16 noticeLen][notice][39 notice-object fields]
-/// [u8][u32 objLen][objLen character object][152 reserved][compact length n][n x u32 guild skill id].
-/// The 27 identity fields are [u16 emblem index][4][16 date record][4][u8 0x80]. The character object is
-/// [u16][u16][u8 nameLen][name][u16 n][n x u32][u16 m][m x u8]; the name in it does not identify the guild
-/// master.
-/// </item>
+/// <item>2559 AnsMyGuildInfo for a real guild is built by GuildRosterPackets; this file keeps only the guildless
+/// answer (BuildAnsMyGuildInfoNoGuild).</item>
 /// <item>
 /// 2929 AnsGuildListRegisteredRobe: [u32 len-4]{[u16 code][25-byte current robe][u16 count][count x 25-byte
 /// robe]}, where a robe record is [u32 item id][f64 OLE date][u32 status][u32][u32 colour][u8 0x80].
@@ -78,82 +72,9 @@ public static class GuildPackets
     /// <summary>Value of the trailing u32 of a null COleDateTime record.</summary>
     private const uint OleDateNullHighDword = 0xFFFFFFFFu;
 
-    // ---------- member record (shared by 2560 list and 2573 add) --------------------------------
-
-    /// <summary>Size of a roster member record.</summary>
-    internal const int MemberRecordLen = 115;
-
-    /// <summary>Record offset of the member's GID (u64).</summary>
-    private const int MemberRecGidOff = 0;
-
-    /// <summary>Record offset of the member's level (u8).</summary>
-    private const int MemberRecLevelOff = 21;
-
-    /// <summary>Record offset of the member's name field: a NUL-terminated UTF-16LE string that runs to the end of the record.</summary>
-    private const int MemberRecNameOff = 73;
-
-    /// <summary>The level written for a member whose level is 0.</summary>
-    private const byte MemberRecMinLevel = 1;
-
-    /// <summary>
-    /// A complete 115-byte member record. Only the GID, the level and the name field are replaced per member;
-    /// the rest is the fixed template the client renders as a valid roster row.
-    /// </summary>
-    /// <remarks>
-    /// Layout: [u64 GID][13 bytes zero][u8 level][51 bytes of class, job and date fields kept as the template
-    /// holds them][wchar[21] name field with its terminator].
-    /// </remarks>
-    private static readonly byte[] MemberRecordTemplate = HexToBytes(
-        "cb9e73a7b3b6e00d"       // +0   GID
-        + "00000000000000000000000000"     // +8   zero
-        + "32"   // +21  level
-        + "0009000400320000cb310000000000003e3ed276698ee64000000000698ee64009140300000000000000000000000000000000"     // +22  class, job and date fields
-        + "44006500610063006f006e0042006c00610063006b000000000000000000000000000000000000000000");  // +73  name field
-
-    private static byte[] BuildMemberRecord(GuildMember m)
-    {
-        var rec = (byte[])MemberRecordTemplate.Clone();
-        if (rec.Length != MemberRecordLen) Array.Resize(ref rec, MemberRecordLen);
-        BinaryPrimitives.WriteUInt64LittleEndian(rec.AsSpan(MemberRecGidOff), m.Gid);
-        rec[MemberRecLevelOff] = m.Level == 0 ? MemberRecMinLevel : m.Level;
-        // Name field: zero it, then write the real name (the client reads it NUL-terminated).
-        Array.Clear(rec, MemberRecNameOff, MemberRecordLen - MemberRecNameOff);
-        WriteWideInto(rec, MemberRecNameOff, m.Name, (MemberRecordLen - MemberRecNameOff - 2) / 2);
-        return rec;
-    }
-
-    // ---------- 2560 AnsGuildMemList ------------------------------------------------------------
-
-    public static byte[] BuildAnsGuildMemList(Guild g)
-    {
-        var members = g.Members;
-        using var w = new PacketWriter(32 + members.Count * MemberRecordLen);
-        var lenPos = w.Reserve(LengthPrefixLen);   // filled with (body length - 4)
-        var start = w.Length;
-        w.WriteBytes(Guid16(g));
-        w.WriteUInt16((ushort)members.Count);
-        foreach (var m in members) w.WriteBytes(BuildMemberRecord(m));
-        w.WriteAt(lenPos, (uint)(w.Length - start));
-        return w.GetWrittenSpan().ToArray();
-    }
-
-    // ---------- 2573 NfyGuildMemberAdd ----------------------------------------------------------
-
-    /// <summary>The first byte of the 2573 body.</summary>
-    private const byte MemberAddLeadByte = 0x01;
-
-    /// <summary>
-    /// Builds the 2573 NfyGuildMemberAdd notification: [u8 1][16 guild GUID][115-byte member record]. The body is
-    /// 132 bytes.
-    /// </summary>
-    public static byte[] BuildNfyGuildMemberAdd(Guild g, GuildMember m)
-    {
-        using var w = new PacketWriter(140);
-        w.WriteByte(MemberAddLeadByte);
-        w.WriteBytes(Guid16(g));
-        w.WriteBytes(BuildMemberRecord(m));
-        return w.GetWrittenSpan().ToArray();
-    }
+    // The 2560 AnsGuildMemList, 2573 NfyGuildMemberAdd and their 115-byte member record are built by the LIVE
+    // GuildRosterPackets (resolved from the Character row per member); the former hard-coded-template copy here was
+    // dead (no callers) and removed.
 
     // ---------- 2571 NfyGuildMemberRemove -------------------------------------------------------
 
@@ -223,42 +144,6 @@ public static class GuildPackets
     /// <summary>Size of the reserved block before the guild skill list.</summary>
     private const int Info2559ReservedLen = 152;
 
-    /// <summary>
-    /// The identity fields that follow the emblem index in a guild's 2559 answer, in order: a 4-byte field, a
-    /// 16-byte date record, a 4-byte field, and the 0x80 flag byte. 25 bytes.
-    /// </summary>
-    private static readonly byte[] Info2559MidTail = HexToBytes(
-        "25f6c100"                           // 4-byte field
-        + "823899644b88e640" + "00000000" + "4b88e640"   // date record {f64, status 0, high dword}
-        + "146ff0ff"                         // 4-byte field
-        + "80");                             // flag byte (Info2559IdentityFlag)
-
-    /// <summary>
-    /// Everything that follows the notice in a guild's 2559 answer, as a fixed template: the 39 notice-object
-    /// fields, the u8 before the character object, the character object with its length, the 152 reserved
-    /// bytes, and the empty guild skill list. 223 bytes.
-    /// </summary>
-    /// <remarks>
-    /// The character object holds a placeholder character name. The 152 reserved bytes are not read by the
-    /// client.
-    /// </remarks>
-    private static readonly byte[] Info2559Tail = HexToBytes(
-        // Notice-object fields (39 bytes).
-        "00000000"                                       // empty nested blob (u32 length 0)
-        + "8704830000000000"                             // 8-byte field
-        + "258f9322cb77e640" + "00000000" + "cb77e640"   // date record {f64, status 0, high dword}
-        + "170100"                                       // three 1-byte fields
-        + "05000000" + "32000000"                        // two 4-byte fields
-        // The u8 between the notice object and the character object.
-        + "03"
-        // Character object: u32 length 25, then [u16][u16][u8 nameLen][name][u16 0][u16 0].
-        + "19000000"
-        + "25000300" + "08" + "6c005300700065006500640079006c00" + "00000000"
-        // Reserved block (152 bytes).
-        + "00000000000000000000000000000000000000000000000000000000000000000000000000000000948dfe510000000060e69b0f0000000000000000f67f000058489aeff67f00001d6054eff67f000060e69b0f000000005e8762eff67f0000e0047c1500000000e8047c150000000008fcf31b000000000000000000000000000000000000000000000000000000000000000000000000"
-        // Guild skill list: compact length 0.
-        + "0100");
-
     // ---------- notice ----------
 
     /// <summary>
@@ -276,36 +161,9 @@ public static class GuildPackets
     /// <summary>Container id the client shows guild-vault items in.</summary>
     private const byte GuildStorageBag = 0x65;
 
-    /// <summary>
-    /// The emblem index written into the 2559 answer, read from the guild emblem registry that also answers
-    /// 2612. 0 means the guild has no emblem.
-    /// </summary>
-    /// <remarks>
-    /// The caller must have run <c>IGuildEmblemRepository.InitAsync</c>.
-    /// </remarks>
-    private static ushort EmblemIndexOf(Guild g, IGuildEmblemRepository emblems) => emblems.IndexOf(Guid16(g));
-
-    public static byte[] BuildAnsMyGuildInfo(Guild g, IGuildEmblemRepository emblems)
-    {
-        var name = g.Name ?? string.Empty;
-        if (name.Length > GuildNameMaxChars) name = name.Substring(0, GuildNameMaxChars);
-        var notice = g.Notice ?? string.Empty;
-        // The notice ends with the private-use terminator.
-        var noticeChars = notice + NoticeTerminator;
-        using var w = new PacketWriter(96 + name.Length * 2 + noticeChars.Length * 2 + Info2559Tail.Length);
-        w.WriteUInt32((uint)(Info2559Struct1Base + name.Length * 2));
-        w.WriteBytes(Guid16(g));
-        w.WriteByte((byte)name.Length);
-        w.WriteBytes(Encoding.Unicode.GetBytes(name));
-        w.WriteUInt16(EmblemIndexOf(g, emblems));          // emblem index, must agree with 2612
-        w.WriteBytes(Info2559MidTail);                     // remaining identity fields (25 bytes)
-        w.WriteUInt32((uint)(Info2559Struct2Base + noticeChars.Length * 2));
-        w.WriteBytes(Guid16(g));
-        w.WriteUInt16((ushort)noticeChars.Length);
-        w.WriteBytes(Encoding.Unicode.GetBytes(noticeChars));
-        w.WriteBytes(Info2559Tail);
-        return w.GetWrittenSpan().ToArray();
-    }
+    // The guild 2559 AnsMyGuildInfo is built by the LIVE GuildRosterPackets.BuildAnsMyGuildInfo from real guild
+    // state; the former fixed-template copy here (with hard-coded identity/notice tails) was dead and removed.
+    // BuildAnsMyGuildInfoNoGuild below stays: it is the live guildless answer.
 
     /// <summary>
     /// Builds the 2559 answer for a character that is in no guild. It has the same six top-level fields as a
